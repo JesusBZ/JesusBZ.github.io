@@ -1,0 +1,48 @@
+name: "my-website"
+output_dir: "." 
+navbar:
+  title: "Portafolio"
+  left:
+    - text: "Inicio"
+      icon: fa-home
+      href: comienzo.html
+    - text: "Acerca de"
+      href: index.html 
+    - text: "Contacto"
+      href: formulario.html  
+    - text: "Training"
+      menu:
+        - text: "Proyecto 1"
+          href: modelo-ventas.html
+        - text: "Proyecto 2"
+          href: proyecto2.html
+        - text: "Proyecto 3"
+          href: proyecto3.html 
+        - text: "Proyecto 4"
+          href: proyecto4.html
+        - text: "Proyecto 5"
+          href: Dashboard.html 
+        - text: "Proyecto 6"
+          href: EvaluacionProyecto.html 
+        - text: "Proyecto 7"
+          href: proyecto7.html 
+  right:
+    - icon: fa fa-skype
+      href: https://join.skype.com/invite/vfcMypZd0Ucf  
+    - icon: fa fa-telegram
+      href: https://t.me/jesusbz21   
+    - icon: fab fa-linkedin
+      href: https://www.linkedin.com/in/jesús-zerpa-807646129/
+    - icon: fa fa-scribd
+      href: https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa
+    - icon: fa fa-github
+      href: https://github.com/JesusBZ
+    - icon: far fa-envelope
+      href: mailto:jesuszerpaeconomia@gmail.com
+output:
+  html_document:
+    theme: cerulean
+    css: 'styles.css'
+    highlight: tango
+    include:
+      after_body: _footer.html
