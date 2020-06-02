@@ -1,0 +1,59 @@
+---
+title: ' '
+---
+<h3>
+</h3>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Evaluación y Formulación&nbsp;de Proyecto de Inversión</span></h2>
+<div class="separator" style="clear: both; text-align: center;">
+<a href=" " imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="532" data-original-width="800" src="imagenes/imagen-g.webp" /></a></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Descripción:</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La evaluación y formulación&nbsp;de proyectos de inversión es uno de los instrumentos prioritarios que deben acompañar todas las iniciativas de inversión para una toma de decisiones efectiva. Su contenido revela la información que de otra manera no es posible visualizar.&nbsp;</span><span style="font-size: large;">Al final, su veredicto puede determinar si un proyecto</span><span style="font-size: large;">&nbsp;es rentable o&nbsp; no. Su importancia radica en el trabajo multidisciplinario&nbsp;que genera&nbsp;donde economistas, contadores, ingenieros, administradores, etc, participan&nbsp;con el objeto de introducir una nueva iniciativa de inversión y mejorar sus posibilidades&nbsp;de éxito.&nbsp;</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En este sentido, se detalla la participación de Jesús B. Zerpa en&nbsp;</span><span style="font-size: large;">&nbsp;</span><span style="font-size: large;">la <i>evaluación y formulación de un proyecto de inversión</i>&nbsp;</span><span style="font-size: large;">denominado "Global Nutrition España 2017",</span><span style="font-size: large;">&nbsp;emprendido por</span><span style="font-size: large;">&nbsp;un importante Grupo Empresarial venezolano del sector salud.&nbsp;</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Contenido:</span></h3>
+<div style="text-align: justify;">
+<ul>
+<li><span style="font-size: large;">Identificación del producto&nbsp;</span></li>
+<li><span style="font-size: large;">Estudio Legal&nbsp;</span></li>
+<li><span style="font-size: large;">Estudio de Mercado&nbsp;</span></li>
+<li><span style="font-size: large;">Estudio Técnico&nbsp;</span></li>
+<li><span style="font-size: large;">Estudio Económico Financiero&nbsp;</span></li>
+</ul>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Dicho proyecto estaba orientado a la penetración de los mercados de la Comunidad Europea con un producto alimenticio especial con el fin  de solicitar financiamiento ante una institución española; elaborado para Global Nutrition España, empresa orientada hacia la producción de un complemento nutricional funcional para personas con enfermedad renal crónica, en procedimiento dialítico y de regímenes especiales.&nbsp;</span></div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Presentación del Proyecto:</span></h2>
+<span style="font-size: large;">
+</span>
+<br />
+<div>
+<div align="center">
+<div style="text-align: center;">
+<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="400" id="iframe_container" mozallowfullscreen="" src="https://prezi.com/embed/8wvf2gcohqf2/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;landing_data=bHVZZmNaNDBIWnNjdEVENDRhZDFNZGNIUE43MHdLNWpsdFJLb2ZHanI0enpkQXBUYUQ0bWZKQytGcGIzVW81bmtBPT0&amp;landing_sign=19Awz31MbIyabPX_6YVk3hggvLEXyQop4DHperkDCsQ" webkitallowfullscreen="" width="550"></iframe><br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Informe del Proyecto:</span></h2>
+</div>
+</div>
+</div>
+<div align="center">
+<iframe frameborder="0" height="1000" scrolling="no" src="https://onedrive.live.com/embed?cid=97B9EE70067CDD34&amp;resid=97B9EE70067CDD34%212132&amp;authkey=ACLS3e6FtN21b4g&amp;em=2" width="800"></iframe></div>
+<br />
+<br />
+<div style="box-sizing: border-box;">
+<div align="center" style="box-sizing: border-box;">
+<div style="box-sizing: border-box; text-align: justify;">
+<span style="font-size: x-small;"><b>Nota: Material para fines de portafolio profesional sin intención comercial, se respetan todos los derechos de las patentes y fórmulas.&nbsp;</b></span></div>
+</div>
+</div>
+<div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
+</div>

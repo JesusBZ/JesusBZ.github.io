@@ -1,0 +1,462 @@
+---
+title: ' '
+---
+<div>
+<ul>
+</ul>
+</div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Portafolios de Inversión</span></h2>
+<h3 style="text-align: center;">
+<span style="font-size: large;">Portafolio Eficiente: Optimización de la cartera de Markowitz</span></h3>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: center;">
+<div class="separator" style="clear: both; text-align: center;">
+<a href="" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="532" data-original-width="800" src="imagenes/imagen-f.webp" /></a></div>
+</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Descripción</b>: En el siguiente entrenamiento se aplicará la teoría de portafolios eficientes para la elaboración de una cartera de inversión con seis valores bursátiles, correspondientes a empresas pertenecientes a diferentes sectores económicos y registradas en el índice Standard and Poor 500 (S&amp;P 500).&nbsp;</span></div>
+<h3>
+<span style="font-size: large;">Contenido:</span></h3>
+<span style="font-size: large;"></span><br />
+<ul><span style="font-size: large;">
+<li><span style="font-size: large;">Introducción a la teoría de Markowitz&nbsp;</span></li>
+<li><span style="font-size: large;">Supuestos de la teoría de Markowitz&nbsp;</span></li>
+<li><span style="font-size: large;">Diversificación de la teoría de Markowitz</span></li>
+<li><span style="font-size: large;">Frontera eficiente</span></li>
+<li><span style="font-size: large;">Data</span></li>
+<li><span style="font-size: large;">Riesgo de cartera y rendimiento esperado</span></li>
+<li><span style="font-size: large;">Paqueterías</span></li>
+<li><span style="font-size: large;">Modelado&nbsp;</span></li>
+</span></ul>
+<span style="font-size: large;">
+</span>
+<br />
+<h3>
+<span style="font-size: large;">Introducción a la teoría de Markowitz&nbsp;</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En 1952, un economista llamado Harry Markowitz escribió un artículo titulado "<a href="https://www.math.ust.hk/~maykwok/courses/ma362/07F/markowitz_JF.pdf" rel="nofollow" target="_blank">Portfolio Selection</a>", un documento que contenía teorías que transformaron el panorama de la gestión de cartera, páginas que le otorgarían el Premio Nobel de Economía casi cuatro décadas después.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />Antagónica a las estrategias clásicas de inversión, su Teoría de Portafolio Moderna continúa siendo una estrategia de inversión utilizada por traders profesionales. Esta herramienta de gestión de cartera, si se usa correctamente, puede dar como resultado una cartera de inversión diversa y rentable.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La idea central de su teoría plantea que el inversor racional, buscará maximizar sus beneficios (retornos) asumiendo el menor riesgo (volatilidad) posible, esto se puede lograr con la diversificación de la cartera, eligiendo en principio, acciones que tengan una correlación baja o negativa. Por ejemplo, combinando acciones de empresas con distinta actividad económica.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La teoría de Markowitz también es conocida como análisis de varianza media, que se resume en: encontrar el mayor rendimiento en un determinado nivel de riesgo o el menor riesgo en un determinado nivel de rendimiento.&nbsp;</span></div>
+<div style="text-align: justify;">
+</div>
+<h3>
+<span style="font-size: large;">Supuestos de la teoría de Markowitz:&nbsp;</span></h3>
+<span style="font-size: large;"></span><br />
+<ul><span style="font-size: large;">
+<li><span style="font-size: large;">Los inversores son racionales y se comportan de manera que maximicen su utilidad con un determinado nivel de ingresos o dinero.&nbsp;</span></li>
+<li><span style="font-size: large;">Los inversores tienen acceso gratuito a información justa y correcta sobre los rendimientos y el riesgo.&nbsp;</span></li>
+<li><span style="font-size: large;">Los mercados son eficientes y absorben la información de manera rápida y perfecta.&nbsp;</span></li>
+<li><span style="font-size: large;">Los inversores son reacios al riesgo y tratan de minimizar el riesgo y maximizar el rendimiento.&nbsp;</span></li>
+<li><span style="font-size: large;">Los inversores basan sus decisiones en los rendimientos esperados y la varianza o desviación estándar de estos rendimientos de la media.&nbsp;</span></li>
+<li><span style="font-size: large;">Los inversores eligen rendimientos más altos a rendimientos más bajos para un determinado nivel de riesgo.&nbsp;</span></li>
+</span></ul>
+<h3>
+<span style="font-size: large;">
+Supuestos del modelo:</span></h3>
+<ul><span style="font-size: large;">
+<li><span style="font-size: large;">Los retornos siguen una distribución normal.&nbsp;</span></li>
+<li><span style="font-size: large;">Una función de utilidad cuadrática representa las decisiones de los inversores.&nbsp;</span></li>
+</span></ul>
+<span style="font-size: large;">
+</span>
+<br />
+<h3>
+<span style="font-size: large;">Diversificación de la teoría de Markowitz :</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Markowitz postuló que la diversificación no solo debe apuntar a reducir el riesgo de un valor reduciendo su variabilidad o desviación estándar, sino también reduciendo la covarianza o el riesgo interactivo de dos o más valores en una cartera. Como por combinación de diferentes valores, es teóricamente posible tener un rango de riesgo que varía de cero a infinito.</span></div>
+<h3>
+<span style="font-size: large;">Frontera eficiente:</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La frontera eficiente es el conjunto de carteras óptimas que ofrecen el rendimiento esperado más alto para un nivel de riesgo definido o el riesgo más bajo para un nivel dado de rendimiento esperado.</span></div>
+<h3>
+<span style="font-size: large;">Data</span></h3>
+<span style="font-size: large;">Los seis activos bursátiles de la cartera forman  parte del índice S&amp;P 500, se seleccionó el período desde enero 2010 hasta abril 2020:</span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/MSFT/" rel="nofollow" target="_blank">Microsotf Corporation</a> (MSFT):</b> Importante compañía tecnológica multinacional con sede en Redmond, Washington, EE.UU, es la de mayor capitalización dentro del índice S&amp;P 500.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/JNJ?p=JNJ&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">Johnson &amp; Johnson</a> (JNJ):</b>&nbsp;Histórico fabricante de dispositivos médicos, productos farmacéuticos, de cuidado personal, perfumes y artículos para bebés.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/MA?p=MA&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">Mastercard Incorporated</a> (MA):</b> Una de las más importantes multinacionales de servicios financieros con sede en Purchase, Nueva York, Estados Unidos.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/PEP?p=PEP&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">PepsiCo Inc</a> (PEP):</b>&nbsp;Exitosa empresa multinacional estadounidense dedicada a la fabricación, comercialización y distribución de bebidas y aperitivos.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/WMT?p=WMT&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">Walmart Corporate</a> (WMT):</b> Corporación multinacional de tiendas de origen estadounidense, que opera cadenas de grandes almacenes de descuento y clubes de almacenes.</span></div>
+<div>
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/MCD?p=MCD&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">McDonald's Corporation</a> (MCD): </b>Es una franquicia de restaurantes de servicio rápido estadounidense con sede en Illinois Chicago.</span><br />
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Riesgo de cartera y rendimiento esperado</span></h2>
+<div style="text-align: justify;">
+<span style="font-size: large;">El rendimiento esperado de la cartera se calcula como una suma ponderada de los rendimientos de los activos individuales. Para su cálculo se utiliza la siguiente fórmula:&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">$$Rep:\sum^{n}_{i=1}(Rep_{1}W_{1})+(Rep_{2}W_{2})+....(Rep_{6}W_{6})$$</span></div>
+<div>
+<span style="font-size: large;"><span style="background-color: white; box-sizing: border-box; color: #111111; font-family: &quot;sourcesanspro&quot; , sans-serif; vertical-align: inherit;"><span style="box-sizing: border-box; vertical-align: inherit;"><br /></span></span></span>
+<br />
+<div style="text-align: justify;">
+<span style="font-size: large;"><span style="background-color: white; box-sizing: border-box; color: #111111; font-family: &quot;sourcesanspro&quot; , sans-serif; vertical-align: inherit;"><span style="box-sizing: border-box; vertical-align: inherit;">Para calcular el riesgo de un portafolio se necesitan conocer antes dos medidas estadísticas: la covarianza y el coeficiente de correlación.</span></span></span></div>
+<h3>
+<span style="font-size: large;">Covarianza</span></h3>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La covarianza es una medida de la relación entre dos variables aleatorias. La métrica evalúa cuánto, en qué medida, las variables cambian juntas. En otras palabras, es esencialmente una medida de la varianza entre dos variables. Sin embargo, la métrica no evalúa la dependencia entre variables.&nbsp;Su cálculo se realiza mediante la sumatoria de la diferencia entre las rentabilidades de cada uno de los activos (Ri) y su rentabilidad esperada (Re), multiplicados por la probabilidad de ocurrencia (p). $$COV=\sum^{n}_{i=1}(Ri_{x}-Re_{x})(Ri_{y}-Re_{y})(p)$$</span></div>
+<h3>
+<span style="font-size: large;">Coeficiente de Correlación</span></h3>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La correlación mide la fuerza de la relación entre variables. La correlación es la medida a escala de la covarianza. Es adimensional. En otras palabras, el coeficiente de correlación siempre es un valor puro y no se mide en ninguna unidad.$$r=\frac{COV_{xy}}{\sigma_{x}\sigma_{y}}$$</span></div>
+<h3>
+<span style="font-size: large;">Riesgo (Desviación estándar)</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La variación de la cartera es un valor estadístico que evalúa el grado de dispersión de los rendimientos de una cartera. Es un concepto importante en la teoría moderna de la inversión. Aunque la medida estadística en sí misma puede no proporcionar información significativa, podemos calcular la desviación estándar de la cartera utilizando la varianza de la cartera.$$\sigma^{2}=\sum^{n}_{i=1}(W_{x}W_{y}COV_{(x,y)})$$</span></div>
+<br /></div>
+</div>
+</div>
+</div>
+<hr />
+<h3>
+<span style="font-size: x-large;">Paqueterías a utilizar:</span></h3>
+<h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/fPortfolio/fPortfolio.pdf" rel="nofollow" target="_blank">Portfolio</a></span></h3>
+<span style="font-size: large;">Proporciona una colección de funciones para optimizar carteras y analizarlas desde diferentes puntos de vista.</span><br />
+<h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/tseries/tseries.pdf" rel="nofollow" target="_blank">Tseries</a></span></h3>
+<span style="font-size: large;">Herramientas para análisis de series temporales y finanzas computacionales.</span><br />
+<div>
+<div>
+<span style="font-size: large;">
+</span></div>
+</div>
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tseries)
+library(fPortfolio)
+library(knitr)
+library(kableExtra)
+```
+<h3>
+<span style="font-size: large;">Modelado</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">A continuación se armarán los datos de cada serie temporal utilizando la paquetería de portfolio y se graficarán.&nbsp;</span></div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+Indice<- get.hist.quote(instrument = "^GSPC", 
+                        start=as.Date("2010-01-04"), 
+                        end=as.Date("2020-04-30"), quote = "AdjClose")
+plot(Indice, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico del Índice S&P 500 [2010-2020]") 
+summary(Indice)
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+MSFT<- get.hist.quote(instrument = "MSFT", 
+                      start=as.Date("2010-01-04"), 
+                      end=as.Date("2020-04-30"), quote = "AdjClose")
+plot(MSFT, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Microsoft Corporation [2010-2020]")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+JNJ<- get.hist.quote(instrument = "JNJ", 
+                     start=as.Date("2010-01-04"), 
+                     end=as.Date("2020-04-30"), quote = "AdjClose")
+plot(JNJ, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Johnson & Johnson [2010-2020]")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+MA<- get.hist.quote(instrument = "MA", 
+                      start=as.Date("2010-01-04"), 
+                      end=as.Date("2020-04-30"), quote = "AdjClose")
+plot(MA, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Mastercard Incorporated [2010-2020]")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+PEP<- get.hist.quote(instrument = "PEP", 
+                     start=as.Date("2010-01-04"), 
+                     end=as.Date("2020-04-30"), quote = "AdjClose")
+plot(PEP, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de PepsiCo Inc. [2010-2020]")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+WMT<- get.hist.quote(instrument = "WMT", 
+                     start=as.Date("2010-01-04"), 
+                     end=as.Date("2020-04-30"), quote = "AdjClose")
+plot(WMT, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Walmart Corporate [2010-2020]")
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+MCD<- get.hist.quote(instrument = "MCD", 
+                     start=as.Date("2010-01-04"), 
+                     end=as.Date("2020-04-30"), quote = "AdjClose")
+plot(MCD, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de McDonald's Corporation [2010-2020]")
+```
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span>
+<span style="font-size: large;">Se construye la cartera con los activos seleccionados:</span><br />
+<span style="font-size: large;"><br /></span></div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+CarteraInv <- merge(MSFT,JNJ,MA,PEP,WMT,MCD, all = FALSE) 
+names(CarteraInv)
+names(CarteraInv)<-c("MSFT","JNJ","MA", "PEP", "WMT","MCD")
+plot(CarteraInv, main=" ", col="deepskyblue", xlab="Fecha")
+title(main="Histórico de Cartera")
+```
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span>
+<span style="font-size: large;">Se observan&nbsp;en conjunto los históricos de las series temporales&nbsp;y se aprecia el comportamiento creciente en cada uno de ellos con algunos períodos de desaceleración. Por último, la perturbación al final del primer trimestre del 2020 impulsado&nbsp;por la alarma de pandemia &nbsp;del Covid-19.</span><br />
+<h3>
+<span style="font-size: large;">Rentabilidad logarítmica</span></h3>
+<div>
+<span style="font-size: large;">Uno de los supuestos del modelo es que los retornos (rentabilidades) tienen el comportamiento de una distribución normal. La rentabilidad logarítmica permite su uso en probabilidades que se basan en este tipo de distribución con la restricción de que los valores no pueden ser inferiores a (-1).&nbsp;</span></div>
+</div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+RetornoIndice<-diff(log(Indice))
+head(RetornoIndice,10)
+
+plot(RetornoIndice, main=" ", col="deepskyblue", xlab="Fecha", ylab="Rendimientos")
+title(main="Rendimientos del Indice S&P 500")
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+Rendimientos<-diff(log(CarteraInv))
+head(Rendimientos,10)
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+plot(Rendimientos, main=" ", col="deepskyblue", xlab="Fecha")
+title(main="Rendimientos de la Cartera")
+summary(Rendimientos)
+```
+<h3 style="text-align: center;">
+<span style="font-size: large;"><br /></span></h3>
+<h3 style="text-align: center;">
+<span style="font-size: large;">Rendimientos esperados (medios) y volatilidades:</span></h3>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+RendimientoPromedio = c(mean(RetornoIndice),mean(Rendimientos$MSFT),mean(Rendimientos$JNJ),mean(Rendimientos$MA),mean(Rendimientos$PEP),mean(Rendimientos$WMT),mean(Rendimientos$MCD))
+
+Volatilidad = c(sd(RetornoIndice),sd(Rendimientos$MSFT),sd(Rendimientos$JNJ),sd(Rendimientos$MA),sd(Rendimientos$PEP),sd(Rendimientos$WMT),sd(Rendimientos$MCD))
+
+Cuadro = data.frame (rbind(RendimientoPromedio,Volatilidad))
+colnames(Cuadro)<- c("GSPC","MSFT", "JNJ", "MA", "PEP", "WMT", "MCD")
+
+Cuadro*100  
+```
+<h3 style="text-align: left;">
+<span style="font-size: large;">Rendimiento promedio esperado:</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El rendimiento promedio esperado diario del mercado está representado por el Índice S&amp;P 500, en este caso es del 0,036%, un valor por debajo del rendimiento medio diario individual de&nbsp; todos los demás activos que componen la cartera.&nbsp;&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El activo de mayor rendimiento viene dado por las acciones de Marter Card (MA) con un rendimiento promedio diario esperado de 0,099%; le siguen los valores de Microsoft&nbsp;(MSFT )</span><span style="color: inherit; font-size: inherit; white-space: pre-wrap;">&nbsp;</span><span style="font-size: large;">con un 0,076%; en el tercer puesto se encuentra el instrumento de Mc Donalds (MCD) con un 0,054%. Y los últimos lugares son para</span><span style="font-size: large;"> Johnson &amp; Johnson (JNJ) con 0,044%; PepsiCo Inc (PEP) con 0,041% y&nbsp;Walmart Corporate (WMT) 0,041%.&nbsp;</span></div>
+<div style="text-align: justify;">
+<h3 style="text-align: left;">
+<span style="font-size: large;">Volatilidad:</span></h3>
+<div>
+<span style="font-size: large;">Observando la volatilidad representada por la desviación&nbsp;estándar del mercado es decir, del S&amp;P 500 para el caso, se ubica&nbsp;en 1,09% el valor más bajo comparado con los activos seleccionados excepto el de&nbsp;</span><span style="font-size: large;">Johnson &amp; Johnson (JNJ).&nbsp;</span></div>
+<div>
+<span style="font-size: large;"><br /></span></div>
+<div>
+<span style="font-size: large;">El activo de menor volatilidad es el de&nbsp;</span><span style="font-size: large;">Johnson &amp; Johnson (JNJ) con el 1,07% diario;&nbsp;</span><span style="font-size: large;">&nbsp;seguido por&nbsp;</span><span style="font-size: large;">PepsiCo Inc (PEP) con el 1,10%; el tercer lugar es para el instrumento de&nbsp;&nbsp;</span><span style="font-size: large;">Walmart Corporate (WMT) 1,18%.&nbsp;</span></div>
+<div>
+<span style="font-size: large;"><br /></span></div>
+<div>
+<span style="font-size: large;">Los más volátiles&nbsp;serían, en primer lugar&nbsp;</span><span style="font-size: large;">Marter Card (MA) con 1,75%&nbsp; que a su vez, es el de mayor rendimiento diario; siguen&nbsp;</span><span style="font-size: large;">Microsoft&nbsp;(MSFT ) y&nbsp;&nbsp;</span><span style="font-size: large;">Walmart Corporate (WMT) con 1,58% y 1,18% respectivamente.&nbsp;</span></div>
+<div>
+<span style="font-size: large;"><br /></span></div>
+<div>
+<span style="font-size: large;">Luego viene los cálculos de las matrices de covarianzas y correlaciones, para finalizar con un mapa de calor.&nbsp;</span></div>
+</div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+var(RetornoIndice)*100
+var(Rendimientos$MSFT)*100
+var(Rendimientos$JNJ)*100
+var(Rendimientos$MA)*100
+var(Rendimientos$PEP)*100
+var(Rendimientos$WMT)*100
+var(Rendimientos$MCD)*100
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+Cov <- cov(Rendimientos)*100
+Cov
+```
+<div style="text-align: justify;">
+</div>
+<h3>
+<span style="font-size: large;">Matriz de Varianza - Covarianza</span></h3>
+<span style="font-size: large;">La varianza es una medida de la variabilidad o propagación en un conjunto de datos. Matemáticamente, es la desviación estándar cuadrática  del puntaje promedio.</span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La covarianza es una medida en que los elementos correspondientes de dos conjuntos de datos ordenados se mueven en la misma dirección.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />En la matriz, los valores que se encuentra diagonal, son los valores de la varianza, y los que están por fuera de la diagonal la covarianza.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La varianza representa el riesgo individual de cada una de las acciones seleccionadas. Según la varianza, el activo de mayor riesgo son los instrumentos de Mastercard Incorporated (MA) con el 0,030%; y el de mínima varianza Johnson &amp; Johnson (JNJ) con un 0,011%. La varianza de mercado medida a través del S&amp;P 500 es de 0,012%. lo que quiere decir que las acciones de Johnson &amp; Johnson (JNJ) tienen un riesgo individual menor al riesgo de mercado.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La covarianza mide como cada par de variables se alejan de su media en un momento dado. Valores positivos indican que se mueven en la misma dirección y los valores negativos que se comportan de manera inversa.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />Los valores bajos de la matriz indican que las variables se alejan moderadamente de su media y en la misma dirección. La covarianza es uno de los estadísticos usados para medir el riesgo de una cartera.</span></div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+corr <- cor(Rendimientos) * 100
+corr
+```
+<div style="text-align: justify;">
+</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Coeficiente de Correlación</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La correlación simple, es usada como&nbsp;estadística en las industrias financieras y de inversión, para medir&nbsp; el grado en que dos valores se mueven en relación entre sí. Las correlaciones se utilizan en la gestión avanzada de cartera , calculada como el coeficiente de correlación , que tiene un valor que debe estar entre -1.0 y +1.0.</span></div>
+<span style="font-size: large;"></span><br />
+<ul><span style="font-size: large;">
+<li style="text-align: justify;"><span style="font-size: large;">La correlación mide el grado en que dos variables se mueven en relación entre sí.</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">En finanzas, la correlación puede medir el movimiento de una acción con el de un índice de referencia, como el Beta.</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">La correlación mide la asociación, pero no muestra si "X" causa "Y" o viceversa, o si la asociación es causada por un tercer factor, quizás invisible. Es decir, correlación no implica causalidad.</span></li>
+</span></ul>
+<span style="font-size: large;">
+La correlación puede expresarse: $$r=\frac{\sum(x-\bar{x})(y-\bar{y})}{\sqrt{\sum(x-\bar{x})^{2}}\sqrt{\sum(y-\bar{y})^{2}}}$$</span><br />
+<span style="font-size: large;"></span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;">En la teoría de Markowitz la diversificación de los diferentes activos que se incluirán en la cartera,  implica que se seleccionen aquellos con una correlación cercana a cero (0) o negativa. Una forma sencilla de hacerlo es tomar activos de empresas que pertenezcan a sectores económicos distintos, lo que implica que una crisis en alguno de ellos, no afecte el valor de las acciones de empresas de los otros sectores.&nbsp;</span></div>
+<span style="font-size: large;">
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+En la cartera seleccionada todas las correlaciones son positivas, lo que implica que se mueven en la misma dirección. La correlación más baja se encuentran en las acciones de Mastercard Incorporated (MA) y Walmart Corporate (WMT)  con un 32,6%; y las más altas entre Microsotf Corporation (MSFT) y Mastercard Incorporated (MA) con 57,35%; además de Johnson &amp; Johnson (JNJ) y PepsiCo Inc (PEP) con 57,88%.&nbsp;</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Para finalizar, se agregará un mapa de calor de correlaciones "HeatMap", el objetivo está en "rojo" y muestra las acciones con las correlaciones más bajas, mientras que el amarillo las correlaciones altas.</div>
+</span>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+library(gplots)
+
+generate_heat_map <- function(correlationMatrix, title)
+{
+
+  heatmap.2(x = correlationMatrix,    
+            cellnote = correlationMatrix,   
+            main = title,           
+            symm = TRUE,            
+            dendrogram="none",      
+            Rowv = FALSE,           
+            trace="none",           
+            density.info="none",        
+            notecol="black")          
+}
+
+corr1 <- round(cor(Rendimientos) * 100, 2)
+generate_heat_map(corr1,"Mapa de calor: Correlaciones")
+
+```
+<h3>
+<span style="font-size: large;">Modelo de Markowitz</span></h3>
+<span style="font-size: large;"></span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;">El conjunto eficiente de Markowitz es una cartera con rendimientos que se maximizan para un determinado nivel de riesgo en función de la construcción de la cartera de varianza media .</span></div>
+<span style="font-size: large;"><h3 style="text-align: justify;">
+<span style="font-size: large;">Tasa Libre de Riesgo</span></h3>
+</span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;">La tasa libre de riesgo representa el interés que un inversionista esperaría de una inversión absolutamente libre de riesgo durante un período de tiempo específico. La tasa real libre de riesgo puede calcularse restando la tasa de inflación actual del rendimiento del bono del Tesoro que coincida con la duración de su inversión.</span><br />
+<h3>
+<span style="font-size: large;">Restricciones</span></h3>
+<span style="font-size: large;">Solo posición en largo.</span></div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+markov<-portfolioSpec()
+
+setRiskFreeRate(markov)<- -0.001 #Tasa libre de riesgo
+setNFrontierPoints(markov) <- 20 #Cantidad de carteras en frontera
+
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+constraints="LongOnly"
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+Frontera <- portfolioFrontier(as.timeSeries(Rendimientos),spec=markov,constraints )
+Frontera
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+frontierPlot(Frontera)
+grid()
+tangencyPoints(Frontera, pch = 19, col = "red", cex=2)
+tangencyLines(Frontera, col="grey", pch=19, cex=2)
+minvariancePoints(Frontera, col="blue", pch=19, cex=2)
+monteCarloPoints(Frontera, mCsteps=2000, col="#0098D5", cex=0.001)
+```
+<h3>
+<span style="font-size: large;">Frontera Eficiente</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el gráfico de las fronteras eficientes se realizaron 2000 simulaciones MonteCarlo que son los pequeños puntos azules diseminados en el área, cada uno representa&nbsp;una cartera de rendimiento para un determinando nivel de riesgo.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En la frontera se encuentran veinte (20) círculos&nbsp;pequeños de color blanco, los que tienen el borde&nbsp;de color negro son los portafolios&nbsp;eficientes. El círculo rojo es el portafolio tangente y el círculo azul el portafolio con la mínima varianza global.&nbsp;</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Pesos de los portafolios</span></h3>
+<div style="text-align: justify;">
+<br /></div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+col <- qualiPalette(ncol(Rendimientos), "Pastel1")
+weightsPlot(Frontera, col=col)
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+efPortfolio <- efficientPortfolio(as.timeSeries(Rendimientos),markov,constraints)
+efPortfolio
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Portafolio Tangente</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El portafolio tangente se elabora a partir del índice o razón de Sharpe, el cual calcula el exceso de rentabilidad sobre la tasa de interés libre de riesgo logrado por el portafolio por unidad de volatilidad o riesgo propio del portafolio. El ratio de Sharpe muestra la rentabilidad ajustada por la tasa libre de riesgo y el riesgo de la covarianza.</span></div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+tgPortfolio <- tangencyPortfolio(as.timeSeries(Rendimientos),markov,constraints)
+tgPortfolio
+```
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Participación por portafolio:</span></h2>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Composición del Portafolio Eficiente</span></h3>
+<div style="text-align: justify;">
+<ol>
+<li><span style="font-size: large;">Johnson &amp; Johnson (JNJ): 31,9%</span></li>
+<li><span style="font-size: large;">PepsiCo Inc (PEP): 20,4%</span></li>
+<li><span style="font-size: large;">Walmart Corporate (WMT): 25,6%</span></li>
+<li><span style="font-size: large;">McDonald’s Corporation (MCD): 22,1%</span></li>
+</ol>
+</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Composición del Portafolio Tangente</span></h3>
+<div style="text-align: justify;">
+<ol>
+<li><span style="font-size: large;">Microsotf Corporation (MSFT):4,1%</span></li>
+<li><span style="font-size: large;">Johnson &amp; Johnson (JNJ): 27,8%</span></li>
+<li><span style="font-size: large;">Mastercard Incorporated (MA): 7,4%</span></li>
+<li><span style="font-size: large;">PepsiCo Inc (PEP): 14,2%</span></li>
+<li><span style="font-size: large;">Walmart Corporate (WMT): 23%</span></li>
+<li><span style="font-size: large;">McDonald’s Corporation (MCD): 23,4%</span></li>
+</ol>
+</div>
+<div>
+<span style="color: #555555; font-family: &quot;helvetica neue&quot; , &quot;helvetica&quot; , &quot;arial&quot; , sans-serif; font-size: medium;"><b><br /></b></span></div>
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+weightsPie(efPortfolio, col=col )
+mtext(text = "Portafolio eficiente", side = 3, line = 1.5,
+        font = 2, cex = 0.7, adj = 0)
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+weightsPie(tgPortfolio, col=col)
+mtext(text = "Portafolio tangente", side = 3, line = 1.5,
+        font = 2, cex = 0.7, adj = 0)
+```
+
+<span style="font-size: large;"><a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/Markowitz" rel="nofollow" target="_blank">Código del modelo</a></span><br />
+<br />
+

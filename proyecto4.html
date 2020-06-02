@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Portafolios de Inversión</title>
+<meta name="description" content="La teoría de portafolios eficientes con Rstudio para la elaboración de una cartera de inversión con seis valores bursátiles, correspondientes a empresas pertenecientes a diferentes sectores económicos y registradas en el índice Standard and Poor 500 (S&P 500). ."/>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="comienzo.html">Portafolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="comienzo.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li>
+  <a href="index.html">Acerca de</a>
+</li>
+<li>
+  <a href="formulario.html">Contacto</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Training
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="modelo-ventas.html">Proyecto 1</a>
+    </li>
+    <li>
+      <a href="Proyecto2.html">Proyecto 2</a>
+    </li>
+    <li>
+      <a href="proyecto3.html">Proyecto 3</a>
+    </li>
+    <li>
+      <a href="proyecto4.html">Proyecto 4</a>
+    </li>
+    <li>
+      <a href="Dashboard.html">Proyecto 5</a>
+    </li>
+    <li>
+      <a href="EvaluacionProyecto.html">Proyecto 6</a>
+    </li>
+    <li>
+      <a href="proyecto7.html">Proyecto 7</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://join.skype.com/invite/vfcMypZd0Ucf">
+    <span class="fa fa fa fa-skype"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://t.me/jesusbz21">
+    <span class="fa fa fa fa-telegram"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/jesús-zerpa-807646129/">
+    <span class="fab fa fab fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa">
+    <span class="fa fa fa fa-scribd"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/JesusBZ">
+    <span class="fa fa fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:jesuszerpaeconomia@gmail.com">
+    <span class="far fa far fa-envelope"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div>
+<ul>
+</ul>
+</div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Portafolios de Inversión</span>
+</h2>
+<h3 style="text-align: center;">
+<span style="font-size: large;">Portafolio Eficiente: Optimización de la cartera de Markowitz</span>
+</h3>
+<div style="text-align: justify;">
+<br />
+</div>
+<div style="text-align: center;">
+<div class="separator" style="clear: both; text-align: center;">
+<a href="" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="532" data-original-width="800" src="imagenes/imagen-f.webp" /></a>
+</div>
+</div>
+<div style="text-align: justify;">
+<br />
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Descripción</b>: En el siguiente entrenamiento se aplicará la teoría de portafolios eficientes para la elaboración de una cartera de inversión con seis valores bursátiles, correspondientes a empresas pertenecientes a diferentes sectores económicos y registradas en el índice Standard and Poor 500 (S&amp;P 500). </span>
+</div>
+<h3>
+<span style="font-size: large;">Contenido:</span>
+</h3>
+<span style="font-size: large;"></span><br />
+<ul>
+<span style="font-size: large;">
+<li>
+<span style="font-size: large;">Introducción a la teoría de Markowitz </span>
+</li>
+<li>
+<span style="font-size: large;">Supuestos de la teoría de Markowitz </span>
+</li>
+<li>
+<span style="font-size: large;">Diversificación de la teoría de Markowitz</span>
+</li>
+<li>
+<span style="font-size: large;">Frontera eficiente</span>
+</li>
+<li>
+<span style="font-size: large;">Data</span>
+</li>
+<li>
+<span style="font-size: large;">Riesgo de cartera y rendimiento esperado</span>
+</li>
+<li>
+<span style="font-size: large;">Paqueterías</span>
+</li>
+<li>
+<span style="font-size: large;">Modelado </span>
+</li>
+</span>
+</ul>
+<span style="font-size: large;"> </span> <br />
+<h3>
+<span style="font-size: large;">Introducción a la teoría de Markowitz </span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En 1952, un economista llamado Harry Markowitz escribió un artículo titulado “<a href="https://www.math.ust.hk/~maykwok/courses/ma362/07F/markowitz_JF.pdf" rel="nofollow" target="_blank">Portfolio Selection</a>”, un documento que contenía teorías que transformaron el panorama de la gestión de cartera, páginas que le otorgarían el Premio Nobel de Economía casi cuatro décadas después.</span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />Antagónica a las estrategias clásicas de inversión, su Teoría de Portafolio Moderna continúa siendo una estrategia de inversión utilizada por traders profesionales. Esta herramienta de gestión de cartera, si se usa correctamente, puede dar como resultado una cartera de inversión diversa y rentable.</span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La idea central de su teoría plantea que el inversor racional, buscará maximizar sus beneficios (retornos) asumiendo el menor riesgo (volatilidad) posible, esto se puede lograr con la diversificación de la cartera, eligiendo en principio, acciones que tengan una correlación baja o negativa. Por ejemplo, combinando acciones de empresas con distinta actividad económica. </span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La teoría de Markowitz también es conocida como análisis de varianza media, que se resume en: encontrar el mayor rendimiento en un determinado nivel de riesgo o el menor riesgo en un determinado nivel de rendimiento. </span>
+</div>
+<div style="text-align: justify;">
+
+</div>
+<h3>
+<span style="font-size: large;">Supuestos de la teoría de Markowitz: </span>
+</h3>
+<span style="font-size: large;"></span><br />
+<ul>
+<span style="font-size: large;">
+<li>
+<span style="font-size: large;">Los inversores son racionales y se comportan de manera que maximicen su utilidad con un determinado nivel de ingresos o dinero. </span>
+</li>
+<li>
+<span style="font-size: large;">Los inversores tienen acceso gratuito a información justa y correcta sobre los rendimientos y el riesgo. </span>
+</li>
+<li>
+<span style="font-size: large;">Los mercados son eficientes y absorben la información de manera rápida y perfecta. </span>
+</li>
+<li>
+<span style="font-size: large;">Los inversores son reacios al riesgo y tratan de minimizar el riesgo y maximizar el rendimiento. </span>
+</li>
+<li>
+<span style="font-size: large;">Los inversores basan sus decisiones en los rendimientos esperados y la varianza o desviación estándar de estos rendimientos de la media. </span>
+</li>
+<li>
+<span style="font-size: large;">Los inversores eligen rendimientos más altos a rendimientos más bajos para un determinado nivel de riesgo. </span>
+</li>
+</span>
+</ul>
+<h3>
+<span style="font-size: large;"> Supuestos del modelo:</span>
+</h3>
+<ul>
+<span style="font-size: large;">
+<li>
+<span style="font-size: large;">Los retornos siguen una distribución normal. </span>
+</li>
+<li>
+<span style="font-size: large;">Una función de utilidad cuadrática representa las decisiones de los inversores. </span>
+</li>
+</span>
+</ul>
+<span style="font-size: large;"> </span> <br />
+<h3>
+<span style="font-size: large;">Diversificación de la teoría de Markowitz :</span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Markowitz postuló que la diversificación no solo debe apuntar a reducir el riesgo de un valor reduciendo su variabilidad o desviación estándar, sino también reduciendo la covarianza o el riesgo interactivo de dos o más valores en una cartera. Como por combinación de diferentes valores, es teóricamente posible tener un rango de riesgo que varía de cero a infinito.</span>
+</div>
+<h3>
+<span style="font-size: large;">Frontera eficiente:</span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La frontera eficiente es el conjunto de carteras óptimas que ofrecen el rendimiento esperado más alto para un nivel de riesgo definido o el riesgo más bajo para un nivel dado de rendimiento esperado.</span>
+</div>
+<h3>
+<span style="font-size: large;">Data</span>
+</h3>
+<span style="font-size: large;">Los seis activos bursátiles de la cartera forman parte del índice S&amp;P 500, se seleccionó el período desde enero 2010 hasta abril 2020:</span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/MSFT/" rel="nofollow" target="_blank">Microsotf Corporation</a> (MSFT):</b> Importante compañía tecnológica multinacional con sede en Redmond, Washington, EE.UU, es la de mayor capitalización dentro del índice S&amp;P 500.</span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/JNJ?p=JNJ&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">Johnson &amp; Johnson</a> (JNJ):</b> Histórico fabricante de dispositivos médicos, productos farmacéuticos, de cuidado personal, perfumes y artículos para bebés.</span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/MA?p=MA&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">Mastercard Incorporated</a> (MA):</b> Una de las más importantes multinacionales de servicios financieros con sede en Purchase, Nueva York, Estados Unidos.</span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/PEP?p=PEP&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">PepsiCo Inc</a> (PEP):</b> Exitosa empresa multinacional estadounidense dedicada a la fabricación, comercialización y distribución de bebidas y aperitivos.</span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/WMT?p=WMT&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">Walmart Corporate</a> (WMT):</b> Corporación multinacional de tiendas de origen estadounidense, que opera cadenas de grandes almacenes de descuento y clubes de almacenes.</span>
+</div>
+<div>
+<span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/MCD?p=MCD&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">McDonald’s Corporation</a> (MCD): </b>Es una franquicia de restaurantes de servicio rápido estadounidense con sede en Illinois Chicago.</span><br />
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Riesgo de cartera y rendimiento esperado</span>
+</h2>
+<div style="text-align: justify;">
+<span style="font-size: large;">El rendimiento esperado de la cartera se calcula como una suma ponderada de los rendimientos de los activos individuales. Para su cálculo se utiliza la siguiente fórmula: </span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><span class="math display">\[Rep:\sum^{n}_{i=1}(Rep_{1}W_{1})+(Rep_{2}W_{2})+....(Rep_{6}W_{6})\]</span></span>
+</div>
+<div>
+<span style="font-size: large;"><span style="background-color: white; box-sizing: border-box; color: #111111; font-family: &quot;sourcesanspro&quot; , sans-serif; vertical-align: inherit;"><span style="box-sizing: border-box; vertical-align: inherit;"><br /></span></span></span> <br />
+<div style="text-align: justify;">
+<span style="font-size: large;"><span style="background-color: white; box-sizing: border-box; color: #111111; font-family: &quot;sourcesanspro&quot; , sans-serif; vertical-align: inherit;"><span style="box-sizing: border-box; vertical-align: inherit;">Para calcular el riesgo de un portafolio se necesitan conocer antes dos medidas estadísticas: la covarianza y el coeficiente de correlación.</span></span></span>
+</div>
+<h3>
+<span style="font-size: large;">Covarianza</span>
+</h3>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La covarianza es una medida de la relación entre dos variables aleatorias. La métrica evalúa cuánto, en qué medida, las variables cambian juntas. En otras palabras, es esencialmente una medida de la varianza entre dos variables. Sin embargo, la métrica no evalúa la dependencia entre variables. Su cálculo se realiza mediante la sumatoria de la diferencia entre las rentabilidades de cada uno de los activos (Ri) y su rentabilidad esperada (Re), multiplicados por la probabilidad de ocurrencia (p). <span class="math display">\[COV=\sum^{n}_{i=1}(Ri_{x}-Re_{x})(Ri_{y}-Re_{y})(p)\]</span></span>
+</div>
+<h3>
+<span style="font-size: large;">Coeficiente de Correlación</span>
+</h3>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La correlación mide la fuerza de la relación entre variables. La correlación es la medida a escala de la covarianza. Es adimensional. En otras palabras, el coeficiente de correlación siempre es un valor puro y no se mide en ninguna unidad.<span class="math display">\[r=\frac{COV_{xy}}{\sigma_{x}\sigma_{y}}\]</span></span>
+</div>
+<h3>
+<span style="font-size: large;">Riesgo (Desviación estándar)</span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La variación de la cartera es un valor estadístico que evalúa el grado de dispersión de los rendimientos de una cartera. Es un concepto importante en la teoría moderna de la inversión. Aunque la medida estadística en sí misma puede no proporcionar información significativa, podemos calcular la desviación estándar de la cartera utilizando la varianza de la cartera.<span class="math display">\[\sigma^{2}=\sum^{n}_{i=1}(W_{x}W_{y}COV_{(x,y)})\]</span></span>
+</div>
+<br />
+</div>
+</div>
+</div>
+</div>
+<hr />
+<h3>
+<span style="font-size: x-large;">Paqueterías a utilizar:</span>
+</h3>
+<h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/fPortfolio/fPortfolio.pdf" rel="nofollow" target="_blank">Portfolio</a></span>
+</h3>
+<span style="font-size: large;">Proporciona una colección de funciones para optimizar carteras y analizarlas desde diferentes puntos de vista.</span><br />
+<h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/tseries/tseries.pdf" rel="nofollow" target="_blank">Tseries</a></span>
+</h3>
+<span style="font-size: large;">Herramientas para análisis de series temporales y finanzas computacionales.</span><br />
+<div>
+<div>
+<span style="font-size: large;"> </span>
+</div>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(tseries)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(fPortfolio)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(knitr)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(kableExtra)</a></code></pre></div>
+<h3>
+<span style="font-size: large;">Modelado</span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">A continuación se armarán los datos de cada serie temporal utilizando la paquetería de portfolio y se graficarán. </span>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">Indice&lt;-<span class="st"> </span><span class="kw">get.hist.quote</span>(<span class="dt">instrument =</span> <span class="st">&quot;^GSPC&quot;</span>, </a>
+<a class="sourceLine" id="cb2-2" title="2">                        <span class="dt">start=</span><span class="kw">as.Date</span>(<span class="st">&quot;2010-01-04&quot;</span>), </a>
+<a class="sourceLine" id="cb2-3" title="3">                        <span class="dt">end=</span><span class="kw">as.Date</span>(<span class="st">&quot;2020-04-30&quot;</span>), <span class="dt">quote =</span> <span class="st">&quot;AdjClose&quot;</span>)</a></code></pre></div>
+<pre><code>## time series ends   2020-04-29</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">plot</span>(Indice, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;AdjClose&quot;</span>); <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico del Índice S&amp;P 500 [2010-2020]&quot;</span>) </a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">summary</span>(Indice)</a></code></pre></div>
+<pre><code>##      Index               Adjusted   
+##  Min.   :2010-01-04   Min.   :1023  
+##  1st Qu.:2012-07-31   1st Qu.:1399  
+##  Median :2015-03-03   Median :2003  
+##  Mean   :2015-03-01   Mean   :1995  
+##  3rd Qu.:2017-09-27   3rd Qu.:2481  
+##  Max.   :2020-04-29   Max.   :3386</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">MSFT&lt;-<span class="st"> </span><span class="kw">get.hist.quote</span>(<span class="dt">instrument =</span> <span class="st">&quot;MSFT&quot;</span>, </a>
+<a class="sourceLine" id="cb7-2" title="2">                      <span class="dt">start=</span><span class="kw">as.Date</span>(<span class="st">&quot;2010-01-04&quot;</span>), </a>
+<a class="sourceLine" id="cb7-3" title="3">                      <span class="dt">end=</span><span class="kw">as.Date</span>(<span class="st">&quot;2020-04-30&quot;</span>), <span class="dt">quote =</span> <span class="st">&quot;AdjClose&quot;</span>)</a></code></pre></div>
+<pre><code>## time series ends   2020-04-29</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">plot</span>(MSFT, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;AdjClose&quot;</span>); <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico de Microsoft Corporation [2010-2020]&quot;</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">JNJ&lt;-<span class="st"> </span><span class="kw">get.hist.quote</span>(<span class="dt">instrument =</span> <span class="st">&quot;JNJ&quot;</span>, </a>
+<a class="sourceLine" id="cb10-2" title="2">                     <span class="dt">start=</span><span class="kw">as.Date</span>(<span class="st">&quot;2010-01-04&quot;</span>), </a>
+<a class="sourceLine" id="cb10-3" title="3">                     <span class="dt">end=</span><span class="kw">as.Date</span>(<span class="st">&quot;2020-04-30&quot;</span>), <span class="dt">quote =</span> <span class="st">&quot;AdjClose&quot;</span>)</a></code></pre></div>
+<pre><code>## time series ends   2020-04-29</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">plot</span>(JNJ, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;AdjClose&quot;</span>); <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico de Johnson &amp; Johnson [2010-2020]&quot;</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">MA&lt;-<span class="st"> </span><span class="kw">get.hist.quote</span>(<span class="dt">instrument =</span> <span class="st">&quot;MA&quot;</span>, </a>
+<a class="sourceLine" id="cb13-2" title="2">                      <span class="dt">start=</span><span class="kw">as.Date</span>(<span class="st">&quot;2010-01-04&quot;</span>), </a>
+<a class="sourceLine" id="cb13-3" title="3">                      <span class="dt">end=</span><span class="kw">as.Date</span>(<span class="st">&quot;2020-04-30&quot;</span>), <span class="dt">quote =</span> <span class="st">&quot;AdjClose&quot;</span>)</a></code></pre></div>
+<pre><code>## time series ends   2020-04-29</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">plot</span>(MA, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;AdjClose&quot;</span>); <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico de Mastercard Incorporated [2010-2020]&quot;</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">PEP&lt;-<span class="st"> </span><span class="kw">get.hist.quote</span>(<span class="dt">instrument =</span> <span class="st">&quot;PEP&quot;</span>, </a>
+<a class="sourceLine" id="cb16-2" title="2">                     <span class="dt">start=</span><span class="kw">as.Date</span>(<span class="st">&quot;2010-01-04&quot;</span>), </a>
+<a class="sourceLine" id="cb16-3" title="3">                     <span class="dt">end=</span><span class="kw">as.Date</span>(<span class="st">&quot;2020-04-30&quot;</span>), <span class="dt">quote =</span> <span class="st">&quot;AdjClose&quot;</span>)</a></code></pre></div>
+<pre><code>## time series ends   2020-04-29</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">plot</span>(PEP, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;AdjClose&quot;</span>); <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico de PepsiCo Inc. [2010-2020]&quot;</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">WMT&lt;-<span class="st"> </span><span class="kw">get.hist.quote</span>(<span class="dt">instrument =</span> <span class="st">&quot;WMT&quot;</span>, </a>
+<a class="sourceLine" id="cb19-2" title="2">                     <span class="dt">start=</span><span class="kw">as.Date</span>(<span class="st">&quot;2010-01-04&quot;</span>), </a>
+<a class="sourceLine" id="cb19-3" title="3">                     <span class="dt">end=</span><span class="kw">as.Date</span>(<span class="st">&quot;2020-04-30&quot;</span>), <span class="dt">quote =</span> <span class="st">&quot;AdjClose&quot;</span>)</a></code></pre></div>
+<pre><code>## time series ends   2020-04-29</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">plot</span>(WMT, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;AdjClose&quot;</span>); <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico de Walmart Corporate [2010-2020]&quot;</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">MCD&lt;-<span class="st"> </span><span class="kw">get.hist.quote</span>(<span class="dt">instrument =</span> <span class="st">&quot;MCD&quot;</span>, </a>
+<a class="sourceLine" id="cb22-2" title="2">                     <span class="dt">start=</span><span class="kw">as.Date</span>(<span class="st">&quot;2010-01-04&quot;</span>), </a>
+<a class="sourceLine" id="cb22-3" title="3">                     <span class="dt">end=</span><span class="kw">as.Date</span>(<span class="st">&quot;2020-04-30&quot;</span>), <span class="dt">quote =</span> <span class="st">&quot;AdjClose&quot;</span>)</a></code></pre></div>
+<pre><code>## time series ends   2020-04-29</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">plot</span>(MCD, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;AdjClose&quot;</span>); <span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico de McDonald&#39;s Corporation [2010-2020]&quot;</span>)</a></code></pre></div>
+<img src="proyecto4_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span> <span style="font-size: large;">Se construye la cartera con los activos seleccionados:</span><br /> <span style="font-size: large;"><br /></span>
+</div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">CarteraInv &lt;-<span class="st"> </span><span class="kw">merge</span>(MSFT,JNJ,MA,PEP,WMT,MCD, <span class="dt">all =</span> <span class="ot">FALSE</span>) </a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="kw">names</span>(CarteraInv)</a></code></pre></div>
+<pre><code>## [1] &quot;Adjusted.MSFT&quot; &quot;Adjusted.JNJ&quot;  &quot;Adjusted.MA&quot;  
+## [4] &quot;Adjusted.PEP&quot;  &quot;Adjusted.WMT&quot;  &quot;Adjusted.MCD&quot;</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">names</span>(CarteraInv)&lt;-<span class="kw">c</span>(<span class="st">&quot;MSFT&quot;</span>,<span class="st">&quot;JNJ&quot;</span>,<span class="st">&quot;MA&quot;</span>, <span class="st">&quot;PEP&quot;</span>, <span class="st">&quot;WMT&quot;</span>,<span class="st">&quot;MCD&quot;</span>)</a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="kw">plot</span>(CarteraInv, <span class="dt">main=</span><span class="st">&quot; &quot;</span>, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>)</a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico de Cartera&quot;</span>)</a></code></pre></div>
+<img src="proyecto4_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span> <span style="font-size: large;">Se observan en conjunto los históricos de las series temporales y se aprecia el comportamiento creciente en cada uno de ellos con algunos períodos de desaceleración. Por último, la perturbación al final del primer trimestre del 2020 impulsado por la alarma de pandemia  del Covid-19.</span><br />
+<h3>
+<span style="font-size: large;">Rentabilidad logarítmica</span>
+</h3>
+<div>
+<span style="font-size: large;">Uno de los supuestos del modelo es que los retornos (rentabilidades) tienen el comportamiento de una distribución normal. La rentabilidad logarítmica permite su uso en probabilidades que se basan en este tipo de distribución con la restricción de que los valores no pueden ser inferiores a (-1). </span>
+</div>
+</div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">RetornoIndice&lt;-<span class="kw">diff</span>(<span class="kw">log</span>(Indice))</a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="kw">head</span>(RetornoIndice,<span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##                 Adjusted
+## 2010-01-05  0.0031108326
+## 2010-01-06  0.0005453718
+## 2010-01-07  0.0039932177
+## 2010-01-08  0.0028775830
+## 2010-01-11  0.0017452316
+## 2010-01-12 -0.0094254458
+## 2010-01-13  0.0082914563
+## 2010-01-14  0.0024234862
+## 2010-01-15 -0.0108821266
+## 2010-01-19  0.0124221511</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">plot</span>(RetornoIndice, <span class="dt">main=</span><span class="st">&quot; &quot;</span>, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Rendimientos&quot;</span>)</a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Rendimientos del Indice S&amp;P 500&quot;</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">Rendimientos&lt;-<span class="kw">diff</span>(<span class="kw">log</span>(CarteraInv))</a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="kw">head</span>(Rendimientos,<span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##                     MSFT           JNJ            MA
+## 2010-01-05  0.0003229773 -0.0116630454 -0.0029631990
+## 2010-01-06 -0.0061560136  0.0081009224  0.0038419676
+## 2010-01-07 -0.0104541103 -0.0071626468 -0.0065559169
+## 2010-01-08  0.0068731802  0.0034318714  0.0003544174
+## 2010-01-11 -0.0128017337  0.0001557476 -0.0165952875
+## 2010-01-12 -0.0066292077  0.0052802313 -0.0005601435
+## 2010-01-13  0.0092685167  0.0063307684  0.0256630528
+## 2010-01-14  0.0198993684  0.0019988538  0.0167630328
+## 2010-01-15 -0.0032352631 -0.0083296223  0.0082960661
+## 2010-01-19  0.0077472173  0.0121626041  0.0079639043
+##                      PEP           WMT           MCD
+## 2010-01-05  0.0120108978 -0.0100074536 -0.0076748158
+## 2010-01-06 -0.0100534060 -0.0022377085 -0.0137381667
+## 2010-01-07 -0.0063761433  0.0005599993  0.0072965412
+## 2010-01-08 -0.0032856544 -0.0050499611 -0.0009696502
+## 2010-01-11 -0.0011525859  0.0163661634  0.0077319522
+## 2010-01-12  0.0139061996  0.0095466441  0.0054409889
+## 2010-01-13  0.0080907160  0.0051030422 -0.0011177667
+## 2010-01-14  0.0120144503 -0.0146496863  0.0009579268
+## 2010-01-15 -0.0081539866 -0.0098251008 -0.0059232680
+## 2010-01-19  0.0006417164  0.0064990337  0.0190846895</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">plot</span>(Rendimientos, <span class="dt">main=</span><span class="st">&quot; &quot;</span>, <span class="dt">col=</span><span class="st">&quot;deepskyblue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Fecha&quot;</span>)</a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Rendimientos de la Cartera&quot;</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">summary</span>(Rendimientos)</a></code></pre></div>
+<pre><code>##      Index                 MSFT                 JNJ            
+##  Min.   :2010-01-05   Min.   :-0.1594534   Min.   :-0.1057812  
+##  1st Qu.:2012-08-01   1st Qu.:-0.0067681   1st Qu.:-0.0040714  
+##  Median :2015-03-04   Median : 0.0006323   Median : 0.0003368  
+##  Mean   :2015-03-02   Mean   : 0.0007656   Mean   : 0.0004430  
+##  3rd Qu.:2017-09-28   3rd Qu.: 0.0084151   3rd Qu.: 0.0056512  
+##  Max.   :2020-04-29   Max.   : 0.1329289   Max.   : 0.0769400  
+##        MA                  PEP                  WMT            
+##  Min.   :-0.1361114   Min.   :-0.1213581   Min.   :-0.1073986  
+##  1st Qu.:-0.0066711   1st Qu.:-0.0045814   1st Qu.:-0.0049795  
+##  Median : 0.0016620   Median : 0.0004190   Median : 0.0006589  
+##  Mean   : 0.0009901   Mean   : 0.0004188   Mean   : 0.0004145  
+##  3rd Qu.: 0.0087801   3rd Qu.: 0.0055736   3rd Qu.: 0.0060279  
+##  Max.   : 0.1536727   Max.   : 0.1216564   Max.   : 0.1107227  
+##       MCD            
+##  Min.   :-0.1728706  
+##  1st Qu.:-0.0045674  
+##  Median : 0.0008317  
+##  Mean   : 0.0005425  
+##  3rd Qu.: 0.0058528  
+##  Max.   : 0.1665769</code></pre>
+<h3 style="text-align: center;">
+<span style="font-size: large;"><br /></span>
+</h3>
+<h3 style="text-align: center;">
+<span style="font-size: large;">Rendimientos esperados (medios) y volatilidades:</span>
+</h3>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">RendimientoPromedio =<span class="st"> </span><span class="kw">c</span>(<span class="kw">mean</span>(RetornoIndice),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>MSFT),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>JNJ),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>MA),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>PEP),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>WMT),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>MCD))</a>
+<a class="sourceLine" id="cb36-2" title="2"></a>
+<a class="sourceLine" id="cb36-3" title="3">Volatilidad =<span class="st"> </span><span class="kw">c</span>(<span class="kw">sd</span>(RetornoIndice),<span class="kw">sd</span>(Rendimientos<span class="op">$</span>MSFT),<span class="kw">sd</span>(Rendimientos<span class="op">$</span>JNJ),<span class="kw">sd</span>(Rendimientos<span class="op">$</span>MA),<span class="kw">sd</span>(Rendimientos<span class="op">$</span>PEP),<span class="kw">sd</span>(Rendimientos<span class="op">$</span>WMT),<span class="kw">sd</span>(Rendimientos<span class="op">$</span>MCD))</a>
+<a class="sourceLine" id="cb36-4" title="4"></a>
+<a class="sourceLine" id="cb36-5" title="5">Cuadro =<span class="st"> </span><span class="kw">data.frame</span> (<span class="kw">rbind</span>(RendimientoPromedio,Volatilidad))</a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="kw">colnames</span>(Cuadro)&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;GSPC&quot;</span>,<span class="st">&quot;MSFT&quot;</span>, <span class="st">&quot;JNJ&quot;</span>, <span class="st">&quot;MA&quot;</span>, <span class="st">&quot;PEP&quot;</span>, <span class="st">&quot;WMT&quot;</span>, <span class="st">&quot;MCD&quot;</span>)</a>
+<a class="sourceLine" id="cb36-7" title="7"></a>
+<a class="sourceLine" id="cb36-8" title="8">Cuadro<span class="op">*</span><span class="dv">100</span>  </a></code></pre></div>
+<pre><code>##                           GSPC       MSFT        JNJ         MA
+## RendimientoPromedio 0.03671093 0.07656263 0.04429897 0.09900582
+## Volatilidad         1.09810127 1.58191835 1.07033231 1.75847819
+##                            PEP        WMT        MCD
+## RendimientoPromedio 0.04187942 0.04144703 0.05424796
+## Volatilidad         1.10295077 1.18539619 1.20532144</code></pre>
+<h3 style="text-align: left;">
+<span style="font-size: large;">Rendimiento promedio esperado:</span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El rendimiento promedio esperado diario del mercado está representado por el Índice S&amp;P 500, en este caso es del 0,036%, un valor por debajo del rendimiento medio diario individual de  todos los demás activos que componen la cartera.  </span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El activo de mayor rendimiento viene dado por las acciones de Marter Card (MA) con un rendimiento promedio diario esperado de 0,099%; le siguen los valores de Microsoft (MSFT )</span><span style="color: inherit; font-size: inherit; white-space: pre-wrap;"> </span><span style="font-size: large;">con un 0,076%; en el tercer puesto se encuentra el instrumento de Mc Donalds (MCD) con un 0,054%. Y los últimos lugares son para</span><span style="font-size: large;"> Johnson &amp; Johnson (JNJ) con 0,044%; PepsiCo Inc (PEP) con 0,041% y Walmart Corporate (WMT) 0,041%. </span>
+</div>
+<div style="text-align: justify;">
+<h3 style="text-align: left;">
+<span style="font-size: large;">Volatilidad:</span>
+</h3>
+<div>
+<span style="font-size: large;">Observando la volatilidad representada por la desviación estándar del mercado es decir, del S&amp;P 500 para el caso, se ubica en 1,09% el valor más bajo comparado con los activos seleccionados excepto el de </span><span style="font-size: large;">Johnson &amp; Johnson (JNJ). </span>
+</div>
+<div>
+<span style="font-size: large;"><br /></span>
+</div>
+<div>
+<span style="font-size: large;">El activo de menor volatilidad es el de </span><span style="font-size: large;">Johnson &amp; Johnson (JNJ) con el 1,07% diario; </span><span style="font-size: large;"> seguido por </span><span style="font-size: large;">PepsiCo Inc (PEP) con el 1,10%; el tercer lugar es para el instrumento de  </span><span style="font-size: large;">Walmart Corporate (WMT) 1,18%. </span>
+</div>
+<div>
+<span style="font-size: large;"><br /></span>
+</div>
+<div>
+<span style="font-size: large;">Los más volátiles serían, en primer lugar </span><span style="font-size: large;">Marter Card (MA) con 1,75%  que a su vez, es el de mayor rendimiento diario; siguen </span><span style="font-size: large;">Microsoft (MSFT ) y  </span><span style="font-size: large;">Walmart Corporate (WMT) con 1,58% y 1,18% respectivamente. </span>
+</div>
+<div>
+<span style="font-size: large;"><br /></span>
+</div>
+<div>
+<span style="font-size: large;">Luego viene los cálculos de las matrices de covarianzas y correlaciones, para finalizar con un mapa de calor. </span>
+</div>
+</div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">var</span>(RetornoIndice)<span class="op">*</span><span class="dv">100</span></a></code></pre></div>
+<pre><code>##            Adjusted
+## Adjusted 0.01205826</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">var</span>(Rendimientos<span class="op">$</span>MSFT)<span class="op">*</span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 0.02502466</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">var</span>(Rendimientos<span class="op">$</span>JNJ)<span class="op">*</span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 0.01145611</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">var</span>(Rendimientos<span class="op">$</span>MA)<span class="op">*</span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 0.03092246</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">var</span>(Rendimientos<span class="op">$</span>PEP)<span class="op">*</span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 0.012165</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">var</span>(Rendimientos<span class="op">$</span>WMT)<span class="op">*</span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 0.01405164</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">var</span>(Rendimientos<span class="op">$</span>MCD)<span class="op">*</span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 0.014528</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">Cov &lt;-<span class="st"> </span><span class="kw">cov</span>(Rendimientos)<span class="op">*</span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb52-2" title="2">Cov</a></code></pre></div>
+<pre><code>##             MSFT         JNJ          MA         PEP         WMT
+## MSFT 0.025024657 0.008163749 0.015953543 0.008694497 0.007211608
+## JNJ  0.008163749 0.011456113 0.008921192 0.006832574 0.005467158
+## MA   0.015953543 0.008921192 0.030922455 0.008902346 0.006811006
+## PEP  0.008694497 0.006832574 0.008902346 0.012165004 0.006386393
+## WMT  0.007211608 0.005467158 0.006811006 0.006386393 0.014051641
+## MCD  0.009283554 0.005950497 0.010680554 0.006640452 0.005065015
+##              MCD
+## MSFT 0.009283554
+## JNJ  0.005950497
+## MA   0.010680554
+## PEP  0.006640452
+## WMT  0.005065015
+## MCD  0.014527998</code></pre>
+<div style="text-align: justify;">
+
+</div>
+<h3>
+<span style="font-size: large;">Matriz de Varianza - Covarianza</span>
+</h3>
+<span style="font-size: large;">La varianza es una medida de la variabilidad o propagación en un conjunto de datos. Matemáticamente, es la desviación estándar cuadrática del puntaje promedio.</span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La covarianza es una medida en que los elementos correspondientes de dos conjuntos de datos ordenados se mueven en la misma dirección.</span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />En la matriz, los valores que se encuentra diagonal, son los valores de la varianza, y los que están por fuera de la diagonal la covarianza. </span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La varianza representa el riesgo individual de cada una de las acciones seleccionadas. Según la varianza, el activo de mayor riesgo son los instrumentos de Mastercard Incorporated (MA) con el 0,030%; y el de mínima varianza Johnson &amp; Johnson (JNJ) con un 0,011%. La varianza de mercado medida a través del S&amp;P 500 es de 0,012%. lo que quiere decir que las acciones de Johnson &amp; Johnson (JNJ) tienen un riesgo individual menor al riesgo de mercado. </span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />La covarianza mide como cada par de variables se alejan de su media en un momento dado. Valores positivos indican que se mueven en la misma dirección y los valores negativos que se comportan de manera inversa. </span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br />Los valores bajos de la matriz indican que las variables se alejan moderadamente de su media y en la misma dirección. La covarianza es uno de los estadísticos usados para medir el riesgo de una cartera.</span>
+</div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">corr &lt;-<span class="st"> </span><span class="kw">cor</span>(Rendimientos) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb54-2" title="2">corr</a></code></pre></div>
+<pre><code>##           MSFT       JNJ        MA       PEP       WMT       MCD
+## MSFT 100.00000  48.21553  57.35035  49.83154  38.45781  48.68860
+## JNJ   48.21553 100.00000  47.39879  57.87747  43.09029  46.12451
+## MA    57.35035  47.39879 100.00000  45.89986  32.67464  50.39111
+## PEP   49.83154  57.87747  45.89986 100.00000  48.84678  49.95036
+## WMT   38.45781  43.09029  32.67464  48.84678 100.00000  35.44984
+## MCD   48.68860  46.12451  50.39111  49.95036  35.44984 100.00000</code></pre>
+<div style="text-align: justify;">
+
+</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Coeficiente de Correlación</span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La correlación simple, es usada como estadística en las industrias financieras y de inversión, para medir  el grado en que dos valores se mueven en relación entre sí. Las correlaciones se utilizan en la gestión avanzada de cartera , calculada como el coeficiente de correlación , que tiene un valor que debe estar entre -1.0 y +1.0.</span>
+</div>
+<span style="font-size: large;"></span><br />
+<ul>
+<span style="font-size: large;">
+<li style="text-align: justify;">
+<span style="font-size: large;">La correlación mide el grado en que dos variables se mueven en relación entre sí.</span>
+</li>
+<li style="text-align: justify;">
+<span style="font-size: large;">En finanzas, la correlación puede medir el movimiento de una acción con el de un índice de referencia, como el Beta.</span>
+</li>
+<li style="text-align: justify;">
+<span style="font-size: large;">La correlación mide la asociación, pero no muestra si “X” causa “Y” o viceversa, o si la asociación es causada por un tercer factor, quizás invisible. Es decir, correlación no implica causalidad.</span>
+</li>
+</span>
+</ul>
+<span style="font-size: large;"> La correlación puede expresarse: <span class="math display">\[r=\frac{\sum(x-\bar{x})(y-\bar{y})}{\sqrt{\sum(x-\bar{x})^{2}}\sqrt{\sum(y-\bar{y})^{2}}}\]</span></span><br /> <span style="font-size: large;"></span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;">En la teoría de Markowitz la diversificación de los diferentes activos que se incluirán en la cartera, implica que se seleccionen aquellos con una correlación cercana a cero (0) o negativa. Una forma sencilla de hacerlo es tomar activos de empresas que pertenezcan a sectores económicos distintos, lo que implica que una crisis en alguno de ellos, no afecte el valor de las acciones de empresas de los otros sectores. </span>
+</div>
+<span style="font-size: large;">
+<div style="text-align: justify;">
+<br />
+</div>
+<div style="text-align: justify;">
+En la cartera seleccionada todas las correlaciones son positivas, lo que implica que se mueven en la misma dirección. La correlación más baja se encuentran en las acciones de Mastercard Incorporated (MA) y Walmart Corporate (WMT) con un 32,6%; y las más altas entre Microsotf Corporation (MSFT) y Mastercard Incorporated (MA) con 57,35%; además de Johnson &amp; Johnson (JNJ) y PepsiCo Inc (PEP) con 57,88%. 
+</div>
+<div style="text-align: justify;">
+<br />
+</div>
+<div style="text-align: justify;">
+Para finalizar, se agregará un mapa de calor de correlaciones “HeatMap”, el objetivo está en “rojo” y muestra las acciones con las correlaciones más bajas, mientras que el amarillo las correlaciones altas.
+</div>
+<p></span></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">library</span>(gplots)</a>
+<a class="sourceLine" id="cb56-2" title="2"></a>
+<a class="sourceLine" id="cb56-3" title="3">generate_heat_map &lt;-<span class="st"> </span><span class="cf">function</span>(correlationMatrix, title)</a>
+<a class="sourceLine" id="cb56-4" title="4">{</a>
+<a class="sourceLine" id="cb56-5" title="5"></a>
+<a class="sourceLine" id="cb56-6" title="6">  <span class="kw">heatmap.2</span>(<span class="dt">x =</span> correlationMatrix,    </a>
+<a class="sourceLine" id="cb56-7" title="7">            <span class="dt">cellnote =</span> correlationMatrix,   </a>
+<a class="sourceLine" id="cb56-8" title="8">            <span class="dt">main =</span> title,           </a>
+<a class="sourceLine" id="cb56-9" title="9">            <span class="dt">symm =</span> <span class="ot">TRUE</span>,            </a>
+<a class="sourceLine" id="cb56-10" title="10">            <span class="dt">dendrogram=</span><span class="st">&quot;none&quot;</span>,      </a>
+<a class="sourceLine" id="cb56-11" title="11">            <span class="dt">Rowv =</span> <span class="ot">FALSE</span>,           </a>
+<a class="sourceLine" id="cb56-12" title="12">            <span class="dt">trace=</span><span class="st">&quot;none&quot;</span>,           </a>
+<a class="sourceLine" id="cb56-13" title="13">            <span class="dt">density.info=</span><span class="st">&quot;none&quot;</span>,        </a>
+<a class="sourceLine" id="cb56-14" title="14">            <span class="dt">notecol=</span><span class="st">&quot;black&quot;</span>)          </a>
+<a class="sourceLine" id="cb56-15" title="15">}</a>
+<a class="sourceLine" id="cb56-16" title="16"></a>
+<a class="sourceLine" id="cb56-17" title="17">corr1 &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">cor</span>(Rendimientos) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb56-18" title="18"><span class="kw">generate_heat_map</span>(corr1,<span class="st">&quot;Mapa de calor: Correlaciones&quot;</span>)</a></code></pre></div>
+<img src="proyecto4_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<h3>
+<span style="font-size: large;">Modelo de Markowitz</span>
+</h3>
+<span style="font-size: large;"></span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;">El conjunto eficiente de Markowitz es una cartera con rendimientos que se maximizan para un determinado nivel de riesgo en función de la construcción de la cartera de varianza media .</span>
+</div>
+<span style="font-size: large;">
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Tasa Libre de Riesgo</span>
+</h3>
+</span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;">La tasa libre de riesgo representa el interés que un inversionista esperaría de una inversión absolutamente libre de riesgo durante un período de tiempo específico. La tasa real libre de riesgo puede calcularse restando la tasa de inflación actual del rendimiento del bono del Tesoro que coincida con la duración de su inversión.</span><br />
+<h3>
+<span style="font-size: large;">Restricciones</span>
+</h3>
+<span style="font-size: large;">Solo posición en largo.</span>
+</div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1">markov&lt;-<span class="kw">portfolioSpec</span>()</a>
+<a class="sourceLine" id="cb57-2" title="2"></a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="kw">setRiskFreeRate</span>(markov)&lt;-<span class="st"> </span><span class="fl">-0.001</span> <span class="co">#Tasa libre de riesgo</span></a>
+<a class="sourceLine" id="cb57-4" title="4"><span class="kw">setNFrontierPoints</span>(markov) &lt;-<span class="st"> </span><span class="dv">20</span> <span class="co">#Cantidad de carteras en frontera</span></a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">constraints=<span class="st">&quot;LongOnly&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">Frontera &lt;-<span class="st"> </span><span class="kw">portfolioFrontier</span>(<span class="kw">as.timeSeries</span>(Rendimientos),<span class="dt">spec=</span>markov,constraints )</a>
+<a class="sourceLine" id="cb59-2" title="2">Frontera</a></code></pre></div>
+<pre><code>## 
+## Title:
+##  MV Portfolio Frontier 
+##  Estimator:         covEstimator 
+##  Solver:            solveRquadprog 
+##  Optimize:          minRisk 
+##  Constraints:       LongOnly 
+##  Portfolio Points:  5 of 20 
+## 
+## Portfolio Weights:
+##      MSFT    JNJ     MA    PEP    WMT    MCD
+## 1  0.0000 0.0000 0.0000 0.0000 1.0000 0.0000
+## 5  0.0577 0.2597 0.1101 0.1198 0.2213 0.2313
+## 10 0.1565 0.1455 0.3245 0.0000 0.1643 0.2092
+## 15 0.2481 0.0000 0.5533 0.0000 0.0537 0.1449
+## 20 0.0000 0.0000 1.0000 0.0000 0.0000 0.0000
+## 
+## Covariance Risk Budgets:
+##      MSFT    JNJ     MA    PEP    WMT    MCD
+## 1  0.0000 0.0000 0.0000 0.0000 1.0000 0.0000
+## 5  0.0687 0.2397 0.1516 0.1082 0.1991 0.2327
+## 10 0.1736 0.0961 0.4612 0.0000 0.1020 0.1671
+## 15 0.2214 0.0000 0.6768 0.0000 0.0202 0.0817
+## 20 0.0000 0.0000 1.0000 0.0000 0.0000 0.0000
+## 
+## Target Returns and Risks:
+##      mean    Cov   CVaR    VaR
+## 1  0.0004 0.0119 0.0273 0.0166
+## 5  0.0005 0.0092 0.0213 0.0124
+## 10 0.0007 0.0110 0.0258 0.0159
+## 15 0.0008 0.0137 0.0324 0.0200
+## 20 0.0010 0.0176 0.0411 0.0263
+## 
+## Description:
+##  Mon Jun 01 18:22:11 2020 by user: Personal</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">frontierPlot</span>(Frontera)</a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="kw">grid</span>()</a>
+<a class="sourceLine" id="cb61-3" title="3"><span class="kw">tangencyPoints</span>(Frontera, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb61-4" title="4"><span class="kw">tangencyLines</span>(Frontera, <span class="dt">col=</span><span class="st">&quot;grey&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb61-5" title="5"><span class="kw">minvariancePoints</span>(Frontera, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb61-6" title="6"><span class="kw">monteCarloPoints</span>(Frontera, <span class="dt">mCsteps=</span><span class="dv">2000</span>, <span class="dt">col=</span><span class="st">&quot;#0098D5&quot;</span>, <span class="dt">cex=</span><span class="fl">0.001</span>)</a></code></pre></div>
+<img src="proyecto4_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<h3>
+<span style="font-size: large;">Frontera Eficiente</span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el gráfico de las fronteras eficientes se realizaron 2000 simulaciones MonteCarlo que son los pequeños puntos azules diseminados en el área, cada uno representa una cartera de rendimiento para un determinando nivel de riesgo. </span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En la frontera se encuentran veinte (20) círculos pequeños de color blanco, los que tienen el borde de color negro son los portafolios eficientes. El círculo rojo es el portafolio tangente y el círculo azul el portafolio con la mínima varianza global. </span>
+</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Pesos de los portafolios</span>
+</h3>
+<div style="text-align: justify;">
+<br />
+</div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">col &lt;-<span class="st"> </span><span class="kw">qualiPalette</span>(<span class="kw">ncol</span>(Rendimientos), <span class="st">&quot;Pastel1&quot;</span>)</a>
+<a class="sourceLine" id="cb62-2" title="2"><span class="kw">weightsPlot</span>(Frontera, <span class="dt">col=</span>col)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">efPortfolio &lt;-<span class="st"> </span><span class="kw">efficientPortfolio</span>(<span class="kw">as.timeSeries</span>(Rendimientos),markov,constraints)</a>
+<a class="sourceLine" id="cb63-2" title="2">efPortfolio</a></code></pre></div>
+<pre><code>## 
+## Title:
+##  MV Efficient Portfolio 
+##  Estimator:         covEstimator 
+##  Solver:            solveRquadprog 
+##  Optimize:          minRisk 
+##  Constraints:       LongOnly 
+## 
+## Portfolio Weights:
+##   MSFT    JNJ     MA    PEP    WMT    MCD 
+## 0.0000 0.3190 0.0000 0.2038 0.2559 0.2213 
+## 
+## Covariance Risk Budgets:
+##   MSFT    JNJ     MA    PEP    WMT    MCD 
+## 0.0000 0.3190 0.0000 0.2038 0.2559 0.2213 
+## 
+## Target Returns and Risks:
+##   mean    Cov   CVaR    VaR 
+## 0.0005 0.0088 0.0200 0.0121 
+## 
+## Description:
+##  Mon Jun 01 18:22:31 2020 by user: Personal</code></pre>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Portafolio Tangente</span>
+</h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El portafolio tangente se elabora a partir del índice o razón de Sharpe, el cual calcula el exceso de rentabilidad sobre la tasa de interés libre de riesgo logrado por el portafolio por unidad de volatilidad o riesgo propio del portafolio. El ratio de Sharpe muestra la rentabilidad ajustada por la tasa libre de riesgo y el riesgo de la covarianza.</span>
+</div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">tgPortfolio &lt;-<span class="st"> </span><span class="kw">tangencyPortfolio</span>(<span class="kw">as.timeSeries</span>(Rendimientos),markov,constraints)</a>
+<a class="sourceLine" id="cb65-2" title="2">tgPortfolio</a></code></pre></div>
+<pre><code>## 
+## Title:
+##  MV Tangency Portfolio 
+##  Estimator:         covEstimator 
+##  Solver:            solveRquadprog 
+##  Optimize:          minRisk 
+##  Constraints:       LongOnly 
+## 
+## Portfolio Weights:
+##   MSFT    JNJ     MA    PEP    WMT    MCD 
+## 0.0409 0.2778 0.0741 0.1425 0.2302 0.2345 
+## 
+## Covariance Risk Budgets:
+##   MSFT    JNJ     MA    PEP    WMT    MCD 
+## 0.0478 0.2655 0.0977 0.1339 0.2156 0.2395 
+## 
+## Target Returns and Risks:
+##   mean    Cov   CVaR    VaR 
+## 0.0005 0.0090 0.0208 0.0123 
+## 
+## Description:
+##  Mon Jun 01 18:22:32 2020 by user: Personal</code></pre>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Participación por portafolio:</span>
+</h2>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Composición del Portafolio Eficiente</span>
+</h3>
+<div style="text-align: justify;">
+<ol>
+<li>
+<span style="font-size: large;">Johnson &amp; Johnson (JNJ): 31,9%</span>
+</li>
+<li>
+<span style="font-size: large;">PepsiCo Inc (PEP): 20,4%</span>
+</li>
+<li>
+<span style="font-size: large;">Walmart Corporate (WMT): 25,6%</span>
+</li>
+<li>
+<span style="font-size: large;">McDonald’s Corporation (MCD): 22,1%</span>
+</li>
+</ol>
+</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Composición del Portafolio Tangente</span>
+</h3>
+<div style="text-align: justify;">
+<ol>
+<li>
+<span style="font-size: large;">Microsotf Corporation (MSFT):4,1%</span>
+</li>
+<li>
+<span style="font-size: large;">Johnson &amp; Johnson (JNJ): 27,8%</span>
+</li>
+<li>
+<span style="font-size: large;">Mastercard Incorporated (MA): 7,4%</span>
+</li>
+<li>
+<span style="font-size: large;">PepsiCo Inc (PEP): 14,2%</span>
+</li>
+<li>
+<span style="font-size: large;">Walmart Corporate (WMT): 23%</span>
+</li>
+<li>
+<span style="font-size: large;">McDonald’s Corporation (MCD): 23,4%</span>
+</li>
+</ol>
+</div>
+<div>
+<span style="color: #555555; font-family: &quot;helvetica neue&quot; , &quot;helvetica&quot; , &quot;arial&quot; , sans-serif; font-size: medium;"><b><br /></b></span>
+</div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw">weightsPie</span>(efPortfolio, <span class="dt">col=</span>col )</a>
+<a class="sourceLine" id="cb67-2" title="2"><span class="kw">mtext</span>(<span class="dt">text =</span> <span class="st">&quot;Portafolio eficiente&quot;</span>, <span class="dt">side =</span> <span class="dv">3</span>, <span class="dt">line =</span> <span class="fl">1.5</span>,</a>
+<a class="sourceLine" id="cb67-3" title="3">        <span class="dt">font =</span> <span class="dv">2</span>, <span class="dt">cex =</span> <span class="fl">0.7</span>, <span class="dt">adj =</span> <span class="dv">0</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw">weightsPie</span>(tgPortfolio, <span class="dt">col=</span>col)</a>
+<a class="sourceLine" id="cb68-2" title="2"><span class="kw">mtext</span>(<span class="dt">text =</span> <span class="st">&quot;Portafolio tangente&quot;</span>, <span class="dt">side =</span> <span class="dv">3</span>, <span class="dt">line =</span> <span class="fl">1.5</span>,</a>
+<a class="sourceLine" id="cb68-3" title="3">        <span class="dt">font =</span> <span class="dv">2</span>, <span class="dt">cex =</span> <span class="fl">0.7</span>, <span class="dt">adj =</span> <span class="dv">0</span>)</a></code></pre></div>
+<p><img src="proyecto4_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p><span style="font-size: large;"><a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/Markowitz" rel="nofollow" target="_blank">Código del modelo</a></span><br /> <br /></p>
+
+<div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
+</div>
+<span style="font-size: medium;"><br /></span>
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
+</span></span></span><br />
+<br />
+<div style="text-align: center;">
+<div style="text-align: left;">
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+</div>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<br /></div>
+</div>
+
+<hr />
+<h5>
+<div>
+<div style="text-align: center;">
+<span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;"><span style="color: #444444;">Copyright&nbsp;</span></span><span style="font-size: small;">©&nbsp;</span></span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">2020&nbsp;</span></span><span style="font-size: small;"><a href="https://github.com/JesusBZ">Jesús B. Zerpa</a> </span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">| Economist &amp; Data Scientist |&nbsp;Site created with</span></span><span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">&nbsp;<a href="https://rstudio.com/" rel="nofollow" target="_blank">RStudio</a><a href="https://www.blogger.com/blogger.g?blogID=3272883731674348977"></a>&nbsp;</span></div>
+<div style="text-align: center;">
+<span style="color: blue; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: xx-small;"><br /></span></div>
+<div style="text-align: center;">
+<span style="color: #0b5394; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: x-small;">| FINANCE | INTELLIGENCE BUSSINES | FORECASTING | TIME SERIES | FINANCIAL DASHBOARD | FINANCIAL BUDGET | SPATIAL ECONOMETRICS |&nbsp;</span></div>
+<!-- Add icon library -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"></link>
+<!-- Add font awesome icons -->
+<br />
+<div style="text-align: center;">
+<a class="fa fa-skype" href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-telegram" href="https://t.me/jesusbz21" rel="nofollow" target="_blank"></a>
+    <a class="fab fa-r-project" href="https://rpubs.com/JesusZ" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-linkedin" href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" rel="nofollow" target="_blank"></a>
+     <a class="fa fa-scribd" href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-github" href="https://github.com/JesusBZ" rel="nofollow" target="_blank"></a>
+</div>
+</div>
+</h5>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,436 @@
+---
+title: ' '
+---
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Ciencia de Datos para la Empresa</span></h2>
+<div class="separator" style="clear: both; text-align: center;">
+<a href=" " imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="549" data-original-width="848" src="imagenes/imagen-c.webp" /></a></div>
+<div>
+<span style="font-size: x-large;"><br /></span></div>
+<h3>
+<span style="font-size: large;">Descripción</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el siguiente entrenamiento se utilizarán las herramientas disponibles en R</span><span style="font-size: large;">&nbsp;para aplicar métodos e implementar el aprendizaje automático con el fin de predecir resultados futuros en un conjunto de datos basados en su histórico. El objetivo será construir un modelo básico de Machine Learning para predecir valores futuros utilizando las paqueterías de aprendizaje automático. La predicción tendrá un horizonte de seis meses de recuentos diarios del conjunto de datos del "<b><i>sistema de bicicletas compartidas".</i></b></span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Sistema de bicicletas Compartidas</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;"><span style="font-size: medium;">Empresa: <a href="https://www.capitalbikeshare.com/how-it-works" rel="nofollow" target="_blank">Capital Bikeshare</a>&nbsp;</span></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><span style="font-size: medium;"><br /></span></span></div>
+<div style="text-align: justify;">
+<table cellpadding="0" cellspacing="0" class="tr-caption-container" style="float: right; margin-left: 1em; text-align: right;"><tbody>
+<tr><td style="text-align: center;"><a href="" imageanchor="1" style="clear: right; margin-bottom: 1em; margin-left: auto; margin-right: auto;"><img border="0" data-original-height="432" data-original-width="645" height="213" src="imagenes/imagen-d.webp" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Bicicletas compartidas de Capital Bikeshare</td></tr>
+</tbody></table>
+<span style="font-size: large;">La empresa presta un servicio de bicicletas compartidas en Metro DC (EEUU), con 4.500 bicicletas y más de 500 estaciones en 7 jurisdicciones: Washington DC, Arlington, Alexandria, Montgomery, Condado de Prince George, El condado de Fairfax,&nbsp; y la ciudad de Falls Church.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El uso compartido de bicicletas (Bikeshare) es un modo innovador de transporte que permite a los usuarios realizar viajes utilizando bicicletas disponibles al público. Consiste en una flota de bicicletas especialmente diseñadas, resistentes y duraderas que están encerradas en una red de estaciones de acoplamiento en toda el área de servicio.</span></div>
+<h3>
+<span style="font-size: large;"> Data (conjunto de datos)</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los sistemas de bicicletas compartidas son un nuevo modelo de negocio, que se basa en alquileres de bicicletas tradicionales donde todo el proceso desde la membresía, el alquiler y la entrega se ha vuelto automático (uso de software). A través de estos sistemas, el usuario puede alquilar fácilmente una bicicleta desde una posición particular y regresarla en otro lugar.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Actualmente, hay alrededor de 500 programas de bicicletas compartidas en todo el mundo que se componen de más de 500 mil bicicletas.&nbsp;</span><span style="font-size: large;">Hoy en día, existe un gran interés en estos sistemas debido a su importante papel en cuestiones de tráfico, medio ambiente y salud.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Además de las interesantes aplicaciones del mundo real de los sistemas para compartir bicicletas, las características de los datos generados por estos sistemas (software) los hacen atractivos para la investigación.&nbsp;</span><span style="font-size: large;">Opuesto a otros servicios de transporte, como el autobús o el metro, la duración de la posición de viaje, salida y llegada se registra explícitamente en estos sistemas.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Esta característica convierte el sistema para compartir bicicletas en una red de sensores virtuales que se puede utilizar para detectar la movilidad en la ciudad. Por lo tanto, se espera que la mayoría de los eventos importantes en la ciudad puedan detectarse mediante el monitoreo de estos datos.&nbsp;</span><span style="font-size: large;">Utilizaremos </span><span style="font-size: large;">el <a href="https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset" rel="nofollow" target="_blank">conjunto</a> de <a href="https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset" rel="nofollow" target="_blank">datos Bike Sharing</a></span><span style="font-size: large;"> del repositorio de aprendizaje automático UCI (Centro de Aprendizaje Automático y Sistemas Inteligentes).</span></div>
+<h3>
+<span style="font-size: large;">Machine Learning (Aprendizaje Automático)</span></h3>
+<div style="text-align: justify;">
+<table cellpadding="0" cellspacing="0" class="tr-caption-container" style="float: right; margin-left: 1em; text-align: right;"><tbody>
+<tr><td style="text-align: center;"><a href=" " imageanchor="1" style="clear: right; margin-bottom: 1em; margin-left: auto; margin-right: auto;"><img border="0" data-original-height="500" data-original-width="500" height="320" src="imagenes/imagen-e.webp" width="320" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Tipos de Machine Learning</td></tr>
+</tbody></table>
+<span style="font-size: large;">El Machine Learning se define como el sub-campo de la "Inteligencia Artificial" que se centra en el desarrollo de programas informáticos que tienen acceso a los datos y proporcionan al sistema la capacidad de aprender y mejorar automáticamente, de encontrar patrones en la base de datos sin ninguna intervención o acción humana basado en el tipo de datos, es decir, datos etiquetados o no etiquetados, el enfoque de capacitación del modelo en aprendizaje automático se ha clasificado como aprendizaje supervisado y no supervisado.</span></div>
+<div>
+<br />
+<div style="text-align: justify;">
+<span style="font-size: large;">En este sentido, el proceso se resume en la búsqueda de un patrón en los datos, que luego&nbsp; usa esos patrones para predecir el futuro. El Machine Learning nos permite descubrir patrones en los datos existentes después de crear y utilizar un modelo que identifica esos patrones en datos innovadores. El aprendizaje automático se ha generalizado:</span><br />
+<span style="font-size: large;"><br /></span></div>
+<ul>
+<li><span style="font-size: large;">Los grandes vendedores creen que hay mucho dinero en este mercado.&nbsp;</span></li>
+<li><span style="font-size: large;">El Machine Learning a menudo respaldará cualquier modelo de negocio.</span></li>
+</ul>
+<h3>
+<span style="font-size: large;">¿Cómo es el aprendizaje?</span></h3>
+<span style="font-size: large;">Proceso de aprendizaje:</span><br />
+<ul><span style="font-size: large;">
+<li><span style="font-size: large;">Identificación de patrones</span></li>
+<li><span style="font-size: large;">Reconociendo esos patrones cuando se ven de nuevo</span></li>
+</span></ul>
+<span style="font-size: large;">
+</span>
+<br />
+<hr />
+<h3>
+</h3>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Librerías a utilizar (packages)</span></h2>
+<h3>
+<span style="font-size: large;">workflows (Flujo de trabajo)</span></h3>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El flujo de trabajo (<a href="https://cran.r-project.org/web/packages/workflows/workflows.pdf" rel="nofollow" target="_blank">workflows</a>) es un objeto que puede agrupar&nbsp; solicitudes de procesamiento previo, modelado y procesamiento posterior. Por ejemplo, si tenemos un modelo recipe y parsnip, estos se pueden combinar en un flujo de trabajo. Las ventajas son:</span><br />
+<span style="font-size: large;"><br /></span></div>
+<div>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">No hay que realizar un seguimiento de objetos separados en el espacio de trabajo.</span></li>
+</ul>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">La preparación de la receta y el ajuste del modelo se pueden ejecutar con una sola llamada a fit().</span></li>
+</ul>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">Si existen ajustes de parámetros&nbsp; personalizados, estos se pueden definir utilizando una interfaz más simple cuando se combina con el ajuste .</span></li>
+</ul>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">En el futuro, los flujos de trabajo podrán agregar operaciones de procesamiento posterior, como modificar el límite de probabilidad para modelos de dos clases.</span></li>
+</ul>
+</div>
+<h2>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/parsnip/parsnip.pdf" rel="nofollow" target="_blank">Parsnip</a></span></h2>
+<div>
+<span style="font-size: large; text-align: justify;">El objetivo de</span><span style="font-size: large;"><span style="text-align: justify;">l </span>parsnip<span style="text-align: justify;"> </span></span><span style="font-size: large; text-align: justify;">es proporcionar una interfaz ordenada y unificada a los modelos que se pueden utilizar para probar una gama de modelos sin atascarse en las minucias sintácticas de los paquetes subyacentes.</span><span style="font-size: large;"></span><br />
+<span style="font-size: large;">
+</span>
+<br />
+<h3 style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/recipes/recipes.pdf" rel="nofollow" target="_blank">Recipes</a></span></h3>
+<span style="font-size: large;">
+</span>
+<br />
+<div style="text-align: justify;">
+<span style="font-size: large;">La idea del paquete recipes es definir una receta o un plan que pueda usarse para definir secuencialmente las codificaciones y el preprocesamiento de los datos (es decir, "ingeniería de características"). Por ejemplo, para crear una receta simple que contenga solo un resultado y predictores, que tenga los predictores centrados y escalados.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/yardstick/yardstick.pdf" rel="nofollow" target="_blank">Yardstick</a></span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Yardstick son un conjunto de herramientas ordenadas para cuantificar qué tan bien se ajusta el modelo a un conjunto de datos, como matrices de confusión, resúmenes de curvas de probabilidad de clase y métricas de regresión (por ejemplo, RMSE).</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/tidyverse/tidyverse.pdf" rel="nofollow" target="_blank">Tidyverse&nbsp;</a></span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El tidyverse es una colección&nbsp;&nbsp;del paquetes R diseñado para la ciencia de datos. Todos los paquetes comparten una filosofía de diseño, gramática y estructuras de datos subyacentes.</span></div>
+<h3 style="text-align: justify;">
+<span style="text-align: start;"><span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/tidyquant/tidyquant.pdf" rel="nofollow" target="_blank">Tidyquant</a></span></span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Tidyquant integra los mejores recursos para la recolección y análisis de datos financieros, zoo, xts, quantmod, TTR, y PerformanceAnalytics, con la infraestructura de datos ordenada de la tidyverse que permite la interacción fluida entre cada uno.</span></div>
+<h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/timetk/timetk.pdf" rel="nofollow" target="_blank">Timetk</a></span></h3>
+<div>
+<span style="font-size: large;">Timetk es una fácil visualización de disputas y preprocesamiento de datos de series temporales para pronósticos y predicción de aprendizaje automático. Los métodos utilizados&nbsp; son comunes en el aprendizaje automático y han sido citados en diversas publicaciones.</span><br />
+<h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/plotly/plotly.pdf" rel="nofollow" target="_blank">Plotly</a></span></h3>
+<div>
+<span style="font-size: large;">Crea gráficos web interactivos a partir de gráficos 'ggplot2' y / o una interfaz personalizada a la biblioteca JavaScript (MITlicensed) 'plotly.js' está inspirada en la gramática de los gráficos.</span><br />
+<h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/knitr/knitr.pdf" rel="nofollow" target="_blank">Knitr</a></span></h3>
+<span style="font-size: large; text-align: justify;">Proporciona una herramienta de uso general para la generación dinámica de informes en R utilizando técnicas de programación literaria.</span><span style="font-size: large;"></span><br />
+<h3 style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf" rel="nofollow" target="_blank">KableExtra</a></span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Este paquete simplifica la forma de manipular los códigos HTML o 'LaTeX' generados por 'kable ()' y permite construir tablas complejas, además para personalizar estilos usando un formato de sintaxis legible.</span></div>
+</div>
+<hr />
+<hr />
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Preparación de data</span></h2>
+<div>
+<span style="font-size: large;">Lo primero es instalar cada uno de los paquetes que se utilizarán en el proceso del modelaje. La lectura de la base de datos y la creación del primer objeto.&nbsp;</span></div>
+</div>
+</div>
+<span style="font-size: large;">
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(workflows)
+library(parsnip)
+library(recipes)
+library(yardstick)
+library(glmnet)
+library(tidyverse)
+library(tidyquant)
+library(timetk)
+library(plotly)
+library(knitr)
+library(kableExtra)
+bicicleta <- read_csv("C:/Users/Personal/Desktop/Modelo en R/Arima manufactura/Prueba/day.csv")
+Bicicletas_tab <- bicicleta %>%
+    select(dteday, cnt) %>%
+    rename(date  = dteday,
+           value = cnt)
+kable(Bicicletas_tab, digits = 2, format = "html", row.names = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped"),
+                full_width = T,
+                font_size = 15) %>%
+   scroll_box(height = "200px")
+```
+<div style="text-align: justify;">
+<h3>
+<span style="font-size: large;">Gráfica de datos (entrenamiento / prueba)</span></h3>
+<span style="font-size: large;">Una visualización gráfica ayudará a comprender cómo abordar el problema de pronosticar. Se dividen los datos en dos regiones: una región de entrenamiento y una de prueba.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ggplotly(Bicicletas_tab %>%
+    ggplot(aes(x = date, y = value)) +
+    geom_rect(xmin = as.numeric(ymd("2012-07-01")),
+              xmax = as.numeric(ymd("2013-01-01")),
+              ymin = 0, ymax = 10000,
+              fill = "#ff4242", color = NA, size = 0, alpha = 0.4) +
+    annotate("text", x = ymd("2011-10-01"), y = 7800,
+             color = palette_light()[[1]], label = "Entrenamiento") +
+    annotate("text", x = ymd("2012-10-01"), y = 1550,
+             color = palette_light()[[1]], label = "Prueba") +
+    geom_point(alpha = 0.5, color = palette_light()[[1]]) +
+    labs(title = "Bicicletas compartidas Dataset: Frecuencia Diaria", x = "") +
+    theme_tq())
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se dividen los datos en entrenamiento y conjuntos de pruebas fecha común: "2012-07-01".</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+entrenamiento_tab <- Bicicletas_tab %>% filter(date < ymd("2012-07-01"))
+prueba_tab  <- Bicicletas_tab %>% filter(date >= ymd("2012-07-01"))
+```
+<div>
+<h2>
+<span style="font-size: x-large;">Modelo</span></h2>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se comienza con el conjunto de entrenamiento, que contienen las columnas "fecha" y "valor".</span></div>
+</div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE}
+kable(entrenamiento_tab, digits = 2, format = "html", row.names = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped"),
+                full_width = T,
+                font_size = 15) %>%
+   scroll_box(height = "200px")
+```
+<h2>
+<span style="font-size: x-large;">Especificación de pre-procesamiento de recetas</span></h2>
+<div>
+<span style="font-size: large;">El primer paso es agregar la serie temporal al conjunto de entrenamiento que se usará para aprender los patrones. El paquete "timetk"&nbsp; será la integración con el paquete "recipes":</span><br />
+<span style="font-size: large;"><br /></span>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">El paquete "recipe" nos permite agregar pasos de preprocesamiento que se aplicarán secuencialmente como parte de una tubería de transformación de datos.</span></li>
+</ul>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">La función "step_timeseries_signature", se utiliza para agregar una serie de características que pueden ayudar a los modelos de aprendizaje automático.</span></li>
+</ul>
+</div>
+<br />
+<span style="font-size: large;"></span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+recipe_spec_serietemporal <- recipe(value ~ ., data = entrenamiento_tab) %>%
+    step_timeseries_signature(date) 
+```
+<div>
+<ul>
+</ul>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se puede observar qué sucede cuando aplicamos una receta preparada "prep" usando la la función "bake". Se agregarán nuevas columnas en función de "fecha"(columna date). Estas son características que podemos usar en los modelos de aprendizaje automático.</span></div>
+<span style="font-size: large;"></span>
+```{r echo=TRUE, warning=FALSE, paged.print=FALSE}
+kable(bake(prep(recipe_spec_serietemporal), new_data = entrenamiento_tab), digits = 2, format = "html", row.names = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped"),
+                full_width = T,
+                font_size = 15) %>%
+   scroll_box(height = "200px")
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">A continuación, se aplicarán los primeros pasos de preprocesamiento para mejorar el comportamiento del modelo. Se agregarán características, como año, día de la semana y variables <i>dummy.</i></span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+recipe_spec_final <- recipe_spec_serietemporal%>%
+    step_rm(date) %>%
+    step_rm(contains("iso"), contains("minute"), contains("hour"),
+            contains("am.pm"), contains("xts")) %>%
+    step_normalize(contains("index.num"), date_year) %>%
+    step_dummy(contains("lbl"), one_hot = TRUE) 
+kable(bake(prep(recipe_spec_final), new_data = entrenamiento_tab), digits = 2, format = "html", row.names = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped"),
+                full_width = T,
+                font_size = 15) %>%
+   scroll_box(height = "200px")
+```
+<h3>
+<span style="font-size: large;">Especificación del modelo</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;"> En este paso, se creará una especificación del modelo. Se usará un modelo de regresión lineal. Tomado del paquete&nbsp;<a href="https://cran.r-project.org/web/packages/glmnet/glmnet.pdf" rel="nofollow" target="_blank">glmnet.</a>&nbsp;El cual contiene procedimientos extremadamente eficientes para ajustar&nbsp; el camino de regularización de lazo o red elástica para regresión lineal, modelos de regresión logística y multinomial, regresión de Poisson y el modelo de Cox.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+model_spec_glmnet <- linear_reg(mode = "regression") %>%
+    set_engine("lm")
+```
+<h3>
+<span style="font-size: large;">Flujo de trabajo&nbsp;</span></h3>
+<div style="text-align: justify;">
+<span style="font-weight: normal;"><span style="font-size: large;">Se pueden combinar la receta de preprocesamiento y el modelo utilizando un Workflow ().</span></span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+flujotrabajo_glmnet <- workflow() %>%
+    add_recipe(recipe_spec_final) %>%
+    add_model(model_spec_glmnet)
+
+flujotrabajo_glmnet
+```
+<h3>
+<span style="font-size: large;">Entrenamiento</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El flujo de trabajo se puede entrenar con la función fit ().</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+flujotrabajo_entrenamiento <- flujotrabajo_glmnet %>% fit(data = entrenamiento_tab)
+```
+<h3>
+<span style="font-size: large;">Prueba (validación)</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Con un modelo adecuado en la mano, podemos pronosticar utilizando el conjunto de "prueba" para fines de validación.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+pronostico_tab <- flujotrabajo_entrenamiento %>% 
+    predict(prueba_tab) %>%
+    bind_cols(prueba_tab) 
+
+kable(pronostico_tab, digits = 2, format = "html", row.names = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped"),
+                full_width = T,
+                font_size = 15) %>%
+   scroll_box(height = "200px")
+
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Gráfico utilizando la función ggplot() para darle la característica interactiva se envuelve con la función de plotly "ggplotly":</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ggplotly(ggplot(aes(x = date), data = Bicicletas_tab) +
+    geom_rect(xmin = as.numeric(ymd("2012-07-01")),
+              xmax = as.numeric(ymd("2013-01-01")),
+              ymin = 0, ymax = 10000,
+              fill = "#ff4242", color = NA, size = 0, alpha = 0.4) +
+    annotate("text", x = ymd("2011-10-01"), y = 7800,
+             color = palette_light()[[1]], label = "Entrenamiento") +
+    annotate("text", x = ymd("2012-10-01"), y = 1550,
+             color = palette_light()[[1]], label = "Prueba") + 
+    geom_point(aes(x = date, y = value),  
+               alpha = 0.5, color = palette_light()[[1]]) +
+    # se agregan los pronósticos de prueba
+    geom_point(aes(x = date, y = .pred), data = pronostico_tab, 
+               alpha = 0.5, color = palette_light()[[2]]) +
+    theme_tq()) 
+```
+<br />
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Precisión de validación (fuera de muestra)&nbsp;</span></h3>
+<span style="font-size: large;"><div style="text-align: justify;">
+La precisión del pronóstico fuera de la muestra se puede medir con un criterio.</div>
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+tbl_df(pronostico_tab %>% metrics(value, .pred))
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se pueden&nbsp; visualizar los residuos del conjunto de prueba. Los residuos del modelo no son perfectos, pero se puede trabajar con él. Los residuos muestran que el modelo predice baja en octubre y alta en diciembre.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ggplotly(pronostico_tab %>%
+    ggplot(aes(x = date, y = value - .pred)) +
+    geom_hline(yintercept = 0, color = "red") +
+    geom_point(color = palette_light()[[1]], alpha = 0.5) +
+    geom_smooth() +
+    theme_tq() +
+    labs(title = "Prueba Set: GLM Residuos del Modelo", x = "") +
+    scale_y_continuous(limits = c(-5000, 5000)))
+```
+<h3>
+<span style="font-size: large;">Pronósticos para 6 meses</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se usará el modelo para realizar un pronóstico de 6 meses utilizando las características&nbsp;agregadas anteriormente. Lo primero que se debe ajustar son las fechas. Se aplicará la función&nbsp;"tk_get_timeseries_summary()" que permite extraer las fechas de la base de datos original.&nbsp;</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+fechas <- Bicicletas_tab %>% tk_index()
+Bicicletas_summary <- fechas %>% tk_get_timeseries_summary()
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Los primeros seis parámetros son información de resumen general.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+Bicicletas_summary[1:6]
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Los segundos seis parámetros son la información de periodicidad.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+Bicicletas_summary[7:12]
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Por el resumen, se infiere que los datos son 100% regulares ya que la mediana y las diferencias de medias son 86400 segundos o 1 día. No se necesita alguna inspección especial cuando se usa la función "tk_make_future_timeseries ()". En caso de que los datos fueran irregulares, lo que significa que se excluyeron los fines de semana o días festivos, si se debe realizar. De lo contrario, el pronóstico sería inexacto.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+fecha_futuro <- fechas %>% tk_make_future_timeseries(n_future = 180)
+futuro_tab <- tibble(date = fecha_futuro) 
+futuro_tab
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Volvemos a entrenar la especificación del modelo en el conjunto de datos completo, luego la predicción de los próximos 6 meses.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+pronosticos_meses_tab <- flujotrabajo_glmnet %>% 
+    fit(data = Bicicletas_tab) %>%
+    predict(futuro_tab) %>%
+    bind_cols(futuro_tab)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ggplotly(Bicicletas_tab %>%
+    ggplot(aes(x = date, y = value)) +
+    geom_rect(xmin = as.numeric(ymd("2012-07-01")),
+              xmax = as.numeric(ymd("2013-01-01")),
+              ymin = 0, ymax = 10000,
+              fill = "#ff4242", color = NA, size = 0, alpha = 0.4) +
+    geom_rect(xmin = as.numeric(ymd("2013-01-01")),
+              xmax = as.numeric(ymd("2013-07-01")),
+              ymin = 0, ymax = 10000,
+              fill = "#42e3ff", color = NA, size = 0, alpha = 0.4) +
+    annotate("text", x = ymd("2011-10-01"), y = 7800,
+             color = palette_light()[[1]], label = "Entrenamiento") +
+    annotate("text", x = ymd("2012-10-01"), y = 1550,
+             color = palette_light()[[1]], label = "Prueba") +
+    annotate("text", x = ymd("2013-4-01"), y = 1550,
+             color = palette_light()[[1]], label = "Pronóstico") +
+    geom_point(alpha = 0.5, color = palette_light()[[1]]) +
+    # future data
+    geom_point(aes(x = date, y = .pred), data = pronosticos_meses_tab,
+               alpha = 0.5, color = palette_light()[[2]]) +
+    geom_smooth(aes(x = date, y = .pred), data = pronosticos_meses_tab,
+                method = 'loess') + 
+    labs(title = "Bicicletas compartidas Dataset: 6 meses de pronóstico", x = "") +
+    theme_tq())
+```
+<h3>
+<span style="font-size: large;">Error de pronóstico</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Un pronóstico nunca es perfecto. Se necesitan conocer los intervalos de predicción para tener en cuenta la varianza de las predicciones del modelo a los datos reales. Hay varios métodos para lograr esto.&nbsp;</span></div>
+```{r echo=TRUE, message=TRUE, warning=FALSE, paged.print=FALSE}
+test_resid_sd <- pronostico_tab %>%
+    summarize(stdev = sd(value - .pred))
+
+pronosticos_meses_tab <- pronosticos_meses_tab %>%
+    mutate(
+        lo.95 = .pred - 1.96 * test_resid_sd$stdev,
+        lo.80 = .pred - 1.28 * test_resid_sd$stdev,
+        hi.80 = .pred + 1.28 * test_resid_sd$stdev,
+        hi.95 = .pred + 1.96 * test_resid_sd$stdev
+    )
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ggplotly(Bicicletas_tab %>%
+    ggplot(aes(x = date, y = value)) +
+    geom_point(alpha = 0.5, color = palette_light()[[1]]) +
+    geom_ribbon(aes(y = .pred, ymin = lo.95, ymax = hi.95), 
+                data = pronosticos_meses_tab, 
+                fill = "#D5DBFF", color = NA, size = 0) +
+    geom_ribbon(aes(y = .pred, ymin = lo.80, ymax = hi.80, fill = key), 
+                data = pronosticos_meses_tab,
+                fill = "#596DD5", color = NA, size = 0, alpha = 0.8) +
+    geom_point(aes(x = date, y = .pred), data = pronosticos_meses_tab,
+               alpha = 0.5, color = palette_light()[[2]]) +
+    geom_smooth(aes(x = date, y = .pred), data = pronosticos_meses_tab,
+                method = 'loess', color = "white") + 
+    labs(title = "Bicicletas compartidas: 6 meses de pronóstico con intérvalos 80/95", x = "") +
+    theme_tq())
+```
+<span style="font-size: large;"><a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/Machine%20Learning">Código del modelo</a></span><br />
+<br />
+

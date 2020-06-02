@@ -1,0 +1,518 @@
+---
+title: " "
+---
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</span></h2>
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(plotly)
+library(quantmod)
+portfolio = c("BTC-USD")
+getSymbols(portfolio, src="yahoo", from="2014-01-01")
+
+df <- na.omit(data.frame(Date=index(`BTC-USD`),coredata(`BTC-USD`)))
+
+bbands <- BBands(na.omit(`BTC-USD`[,c("BTC-USD.High","BTC-USD.Low","BTC-USD.Close")]))
+
+df <- subset(cbind(df, data.frame(bbands[,1:3])), Date >= "2014-01-01")
+
+for (i in 1:length(df[,1])) {
+  if (df$BTC.USD.Close[i] >= df$BTC.USD.Open[i]) {
+      df$direction[i] = 'Increasing'
+  } else {
+      df$direction[i] = 'Decreasing'
+  }
+}
+
+i <- list(line = list(color = '#17BECF'))
+d <- list(line = list(color = '#7F7F7F'))
+
+
+fig <- df %>% plot_ly(x = ~Date, type="candlestick",
+          open = ~BTC.USD.Open, close = ~BTC.USD.Close,
+          high = ~BTC.USD.High, low = ~BTC.USD.Low, name = "BTC-USD",
+          increasing = i, decreasing = d) 
+fig <- fig %>% add_lines(x = ~Date, y = ~up , name = "B Bands",
+            line = list(color = '#ccc', width = 0.5),
+            legendgroup = "Bollinger Bands",
+            hoverinfo = "none", inherit = F) 
+fig <- fig %>% add_lines(x = ~Date, y = ~dn, name = "B Bands",
+            line = list(color = '#ccc', width = 0.5),
+            legendgroup = "Bollinger Bands", inherit = F,
+            showlegend = FALSE, hoverinfo = "none") 
+fig <- fig %>% add_lines(x = ~Date, y = ~mavg, name = "Mv Avg",
+            line = list(color = '#E377C2', width = 0.5),
+            hoverinfo = "none", inherit = F) 
+fig <- fig %>% layout(yaxis = list(title = "Precio"))
+
+fig2 <- df 
+fig2 <- fig2 %>% plot_ly(x=~Date, y=~BTC.USD.Volume, type='bar', name = "BTC.USD Volume",
+          color = ~direction, colors = c('#17BECF','#7F7F7F')) 
+fig2 <- fig2 %>% layout(yaxis = list(title = "Volumen"))
+
+rs <- list(visible = TRUE, x = 0.5, y = -0.055,
+           xanchor = 'center', yref = 'paper',
+           font = list(size = 9),
+           buttons = list(
+             list(count=1,
+                  label='RESET',
+                  step='all'),
+             list(count=1,
+                  label='1 YR',
+                  step='year',
+                  stepmode='backward'),
+             list(count=3,
+                  label='3 MO',
+                  step='month',
+                  stepmode='backward'),
+             list(count=1,
+                  label='1 MO',
+                  step='month',
+                  stepmode='backward')
+           ))
+
+fig <- subplot(fig, fig2, heights = c(0.7,0.2), nrows=2,
+             shareX = TRUE, titleY = TRUE)
+fig <- fig %>% layout(title = paste("Bitcoin - USD: 2014-01-01 -",Sys.Date()),
+         xaxis = list(rangeselector = rs),
+         legend = list(orientation = 'h', x = 0.5, y = 1,
+                       xanchor = 'center', yref = 'paper',
+                       font = list(size = 10),
+                       bgcolor = 'transparent'))
+
+fig
+
+```
+<div style="text-align: justify;">
+<h3>
+<span style="font-size: large;"><b>Descripción</b></span></h3>
+<span style="font-size: large;">Este entrenamiento evaluó la volatilidad y el Valor en Riesgo (VaR) de los retornos diarios de Bitcoins mediante la realización de un estudio comparativo en el desempeño del pronóstico de modelos GARCH simétricos y asimétricos basados en tres distribuciones de error diferentes, durante el período enero-2014 a enero-2020.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los modelos empleados son el SGARCH, TGARCH, eGARCH Y el gjrGARCH que fueron validados en base a medidas AIC, MAE y MSE. Los resultados indicaron que el eGARCH (2,1) con término de distribución de error T-Student se identificó como el modelo GARCH mejor ajustado. Sin embargo, este modelo mejor ajustado basado en la pérdida de información (AIC) no proporcionó el mejor pronóstico fuera de muestra, las diferencias fueron insignificantes.&nbsp;</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En ese sentido, el estudio demuestra claramente que es confiable usar el modelo mejor ajustado para el pronóstico de volatilidad. Además, para validar aún más el rendimiento del modelo mejor ajustado, se sometió a una prueba de respaldo histórica utilizando Value at Risk (VaR).&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Aunque, del estudio se hizo evidente que ningún modelo era superior significativamente, se indicó que se espera que una pérdida promedio del 0.8% se supere solo el 1% del tiempo.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: medium;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: medium;"><i><b>Palabras clave:</b> volatilidad, Bitcoin, Garch, valor en riesgo.<span style="font-size: large;">&nbsp;</span></i></span></div>
+<div style="text-align: justify;">
+<h3>
+<span style="font-size: large;">Librería Rmgarch</span></h3>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El <a href="https://cran.r-project.org/web/packages/rmgarch/rmgarch.pdf" rel="nofollow" target="_blank">rmgarch</a> proporciona una selección de modelos GARCH multivariantes con métodos de ajuste, filtrado, pronóstico y simulación con funciones de soporte adicionales para trabajar con diferentes objetos. En la actualidad, el GARCH ortogonal generalizado utiliza el análisis de componentes independientes (ICA) y la correlación condicional dinámica (con multivariante Normal, Laplace y distribución T-Student) los modelos se implementan completamente con métodos para especificaciones, ajuste, filtro, pronóstico, simulación, estimaciones y pronósticos continuos, así como funciones especializadas para calcular y trabajar con la densidad condicional de la cartera ponderada. El modelo Copula-GARCH también se implementa con
+las distribuciones multivariadas normales y de T-Student con estimación dinámica (DCC) y&nbsp; correlación estática.</span></div>
+<div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Especificación de los modelos Garch </span><span style="font-size: small;">[<a href="https://www.cepal.org/sites/default/files/events/files/cc_11.2011.horario.catalan.modelosarch.esp_.pdf" rel="nofollow" target="_blank">1</a>]</span></h2>
+<ul>
+<li style="text-align: left;"><span style="font-size: large;">Forward looking behaviour, requiere pronosticar adecuadamente la volatilidad y el riesgo de un activo.</span></li>
+<li style="text-align: left;"><span style="font-size: large;">La volatilidad no es una serie observable en el momento t, se requieren datos históricos para estimar la volatilidad.</span></li>
+<li style="text-align: left;"><span style="font-size: large;">Volatilidad histórica se estima con la varianza del rendimiento simple (cambio en el precio del activo).</span></li>
+</ul>
+<span style="font-size: large;"></span><br />
+<div>
+<span style="font-size: large;">Una opción: Exponantially Weigted Moving Average Models (EWMA) que es una extensión del promedio histórico pero haciendo que las observaciones más recientes tengan un mayor peso:</span><br />
+<span style="font-size: large;">$$ \alpha _{t}^{2}=(1-\lambda)\sum_{j=0}^{\infty}\lambda_{j-1}R_{t-1-j}^{2}$$&nbsp;</span><br />
+<span style="font-size: large;">$R_{t-1-j}^{2}$ Varianza de los rendimientos&nbsp;</span><br />
+<span style="font-size: large;">$\lambda$="decay factor"</span><br />
+<span style="font-size: large;"><br /></span>
+<span style="font-size: large;">La forma más sencilla es definida como:</span><br />
+<span style="font-size: large;">$\sigma_{t+1}^{2}=\lambda\sigma_{t}^{2}+(1- \lambda)R_{t}^{2}$</span><br />
+<span style="font-size: large;"><br /></span>
+<div style="text-align: justify;">
+<span style="font-size: large;">Implica que la varianza del periodo siguiente como un promedio ponderado de la varianza actual y el rendimiento actual al cuadrado.</span></div>
+<br /><span style="font-size: large;">Se asume un patrón sistemático en la evolución de la varianza.</span></div>
+<span style="font-size: large;"><div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al proponer que la varianza condicional dependa de sus propios rezagos:</div>
+<div style="text-align: justify;">
+$$h_{t}=\alpha _{0}+\sum_{i=1}^{m }\alpha_{i}\varepsilon_{t-i}^{2}+\sum_{j=1}^{p}\beta_{j}h_{t-i}$$</div>
+<div style="text-align: justify;">
+$\varepsilon\rightarrow N(0,h_{t})$</div>
+<div style="text-align: justify;">
+$\varepsilon_{t}\sqrt{ h_{t} v_{t}}$</div>
+<div style="text-align: justify;">
+$v_{t}\sim iidN(0,1)$</div>
+<div style="text-align: justify;">
+<br /></div>
+</span><div style="text-align: justify;">
+<span style="font-size: large;">La especificación GARCH se define como un modelo ARCH de orden infinito (Bollerslev, 1986).</span></div>
+<h3>
+<span style="font-size: large;">Modelo EGARCH(p,q) </span><span style="font-size: small;">[<a href="http://www.scielo.org.bo/scielo.php?script=sci_arttext&amp;pid=S2518-44312017000200003" rel="nofollow" target="_blank">2</a>]</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En 1990, Pagan y Schwert (1990), y al año siguiente en 1991 Nelson (1991), desarrollaron una versión nueva del modelo GARCH, el EGARCH (modelo exponencial generalizado, auto-regresivo, condicionalmente heterocedástico).El nuevo modelo acaba con las asimetrías en la estimación del efecto de los shocks, al implementar una función 𝑔(𝜀𝑡 ) de las innovaciones 𝜀𝑡,que son variables igual e independientemente distribuidas de media cero, y en las que por tanto el valor de las innovaciones queda recogido por medio de la expresión:</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">$$\ln \sigma_{t}^{2}= \omega + \beta (\sigma_{t-1}^{2})+ \gamma \frac{u_{t-1} }{\sqrt{ \sigma_{t-1} }}+ \alpha \left [ \frac{\left|u_{t-1}\right|}{\sqrt{\sigma_{t-1} }}- \sqrt{ \frac{2}{\sqrt{ \pi }} }\right]$$</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El modelo tiene varias ventajas sobre la especificación GARCH pura. En primer lugar, el $\ln(\sigma_{t}^{2})$;es modelado, esto quiere decir, que aunque los parámetros sean negativos, </span><span style="font-size: large;">$\sigma_{t}^{2}$</span><span style="font-size: large;">;será positivo. Por lo tanto, este modelo no tiene restricciones de no negatividad en los parámetros. En segundo lugar, las asimetrías se permiten bajo la formulación de EGARCH, ya que, si la relación entre la volatilidad y los rendimientos es negativa</span><span style="font-size: large;">$\gamma$</span><span style="font-size: large;">&nbsp;será negativa.</span></div>
+</div>
+<h3>
+<span style="font-size: large;">El modelo gjrGARCH</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El modelo gjrGARCH propuesto por Glosten, Jagannathan y Runkle, es una simple extensión de GARCH con un término adicional añadido para dar cuenta de posibles asimetrías. La variación condicional viene dada por la ecuación:</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">$$\sigma_{t}^{2}=\alpha_{0}+\alpha_{1}u_{t-1}^{2}+\beta\sigma_{t-1}^{2}+\gamma u_{t-1}^{2}I_{t-1}$$</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">donde si $I_{t-1}=1$ si $u_{t-1}<0$, $0$ en otro caso.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Frente a la presencia del efecto de apalancamiento, se vería que $\gamma>0$&nbsp;se observa ahora que la condición para la no negatividad será $\alpha_{0}>0$, $\alpha_{1}>0$,  $\beta\geq0$ y&nbsp;$\alpha_{1}+\gamma\geq0$.&nbsp;</span><span style="font-size: large;">Es decir, el modelo sigue siendo admisible, incluso si $\gamma<0$ siempre que&nbsp;$\alpha_{1}+\gamma\geq0$.&nbsp;</span></div>
+<h3>
+<span style="font-size: large;">Modelo TGARCH(p,q)</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La idea del modelo TGARCH (Treshold GARCH) es dividir la distribución de los shocks en intervalos disjuntos, para luego aproximar una función lineal por tramos bien para la desviación estándar condicional (Zakoian, 1994), bien la varianza condicional (Glosten, Jaganathan, &amp; Runkle , 1993). Si sólo hay dos intervalos, la división es normalmente en un umbral identificado con el número cero, donde la influencia de los shocks positivos se identifica con valores por encima de cero y negativos por debajo de este valor.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Especificación del TGARCH:</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">$$\sigma_{t}^{2}=\omega+\sum_{i=1}^{s}(\alpha_{i}+\gamma_{i}N_{t-i})a_{t-i}^{2}\sum_{j=1}^{m}\beta_{j}\sigma_{t-j}^{2}$$&nbsp;&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Condiciones:</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">$$N_{t-i}=\begin{bmatrix}1&\rightarrow&\alpha_{t-i}& <0\\0&\rightarrow&\alpha_{t-i}&\geq0\end{bmatrix}$$</span></div>
+<hr>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Suposiciones&nbsp;de distribución del término de error</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En la especificación del modelo GARCH, es más apropiado considerar la elección en el supuesto de distribución del término de error. Este ejercicio asumió tres supuestos de distribución; La distribución normal (NORM), la distribución de Student-t (STD) y la Distribución de errores generalizados (GED) para tener en cuenta las colas gruesas que son comunes en la mayoría de los datos financieros.</span></div>
+<div>
+<h3>
+<span style="font-size: large;">Distribución Normal (Norm)</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Para que los modelos funcionen completamente, el término de error debe tener una media cero. Ahí es $\varepsilon_{t}\sim N(0,1)$&nbsp;</span><span style="font-size: large;">donde el término de error en este caso se distribuye normalmente con media cero y varianza uno. La función de densidad para la distribución Normal viene dada por la Ecuación:&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">$$f(z,\mu,\sigma )=\frac{1}{\sqrt{2\pi}^{e^\frac{-z^2}{2}}}$$</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">$-\infty,<z,<\infty$
+
+</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<h3>
+<span style="font-size: large;"> Distribución de Student-t (STD) </span></h3>
+<span style="font-size: large;"><div style="text-align: justify;">
+Las colas más gruesas, frecuentemente observadas en series de tiempo financieras, están permitidas en la distribución t de Student, que está dada por la función de densidad que se muestra como la ecuación:&nbsp;$$f(z)=\frac{\Gamma\left [ \frac{v+1}{2} \right ] }{\sqrt{ v \pi  \Gamma }\left [ \frac{v}{2}\right ]}\left [ 1+\frac{z^{2}}{v}\right ]^\left[\frac{v+1}{2}\right]$$</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+$-\infty,<z,<\infty$</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+donde $v$ denota el número de grados de libertad y $\Gamma$ denota la función Gamma.&nbsp;</div>
+</span><h3>
+<span style="font-size: large;"> Distribución de errores generalizados (GED) </span></h3>
+<span style="font-size: large;"><div style="text-align: justify;">
+El uso del GED para tener en cuenta las colas gruesas observadas comúnmente en las series de tiempo financieras. Está dado por la ecuación:$$f(z, \mu , \sigma ,v)=\frac{\sigma^{-1}v e^\left [-0,5\left | \frac{z- \mu }{ \sigma } \right |^v  \right ]}{ \lambda^\left (1+\left (  \frac{1}{v}\right )  \right ) \Gamma \left (\frac{1}{v}  \right ) }$$</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+$v>0$ es el grado de libertad o el parámetro del grosor de la cola. Si $v=2$ , el GED produce la distribución normal. Si $v<1$ , la función de densidad tiene colas mas gruesas que la función de densidad normal, mientras que para $v>2$ tendrá colas más delgadas.&nbsp;</div>
+</span><h3>
+<span style="font-size: large;"> Criterio de selección de modelo </span></h3>
+<span style="font-size: large;"><div style="text-align: justify;">
+Se utilizará el criterio de información para la selección del modelo en este ejercicio estudio. El Criterio de información de Akaike (AIC) se define como las ecuación siguiente: $$AIC= \ln\left (   \sigma^2 \right )+\frac{2k}{s}$$</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+El mejor modelo es el que tiene menor valor de AIC.</div>
+<div style="text-align: justify;">
+<br /></div>
+<h2 style="clear: both; text-align: center;">
+<span style="font-size: x-large;">Modelos propuestos</span></h2>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="330" data-original-width="973" src="https://1.bp.blogspot.com/-eNHXa33g7YU/Xq9K7EeJGaI/AAAAAAAACPI/cX-nOLN20i0vw9fOxJT4znGpo7mGUHUVQCPcBGAYYCw/s1600/imagen-3.png" /></a></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se selecciona el modelo eGarch (2,1) según el criterio de selección de Akaike. Se contrastará con el Garch generalizado (1,1). Se revisarán parámetros y comportamiento de errores.</span></div>
+<div>
+<span style="font-size: large;">
+</span>
+<h3>
+<span style="font-size: large;">Preparación de datos</span></h3>
+<span style="font-size: large;">
+</span>
+<div>
+<span style="font-size: large;">
+</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+BTCSP <- read.csv("C:/Users/Personal/Desktop/BTCSP.csv", sep=";")
+precio<-BTCSP
+library(zoo)
+precio.zoo=zoo(precio[,-1], order.by=as.Date(strptime(as.character(precio[,1]), "%d.%m.%Y")))
+library(rmgarch)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(PerformanceAnalytics)
+model<- window(precio.zoo [,"BTC.Close"],  start="2014-01-01")
+model<- na.approx(na.trim(CalculateReturns(model), side="both"))
+spec = ugarchspec()
+print(spec)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+def.fit = ugarchfit(spec = spec, data = model)
+print(def.fit)
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+garch112e2.2.2.spec = ugarchspec(mean.model = list(armaOrder = c(0,0)), 
+                               variance.model = list(garchOrder = c(2,1),
+                                                     model = "eGARCH"), distribution.model = "std")
+garch.fit112e2.2.2= ugarchfit(garch112e2.2.2.spec, data = model, fit.control=list(scale=TRUE))
+print(garch.fit112e2.2.2)
+```
+<h3 style="text-align: center;">
+<span style="font-size: x-large;">Revisión de parámetros del modelo eGarch (2,1)&nbsp;</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>mu</b>: Es el rendimiento promedio diario a “LARGO PLAZO.” Según el modelo, el BTC tenderá a un rendimiento diario del 0,1% en el largo plazo. Con un P-valor significativo menor a 5%.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>omega:</b> Es la varianza a largo plazo del retorno del BTC, en este caso alrededor del 9% (volatilidad). P-valor no significativo 5.8%.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>alpha 1:</b> Es el impacto de la varianza cuadrada rezagada en el retorno de hoy. El rendimiento se explica un 9% por la volatilidad de hace un día. P-valor no significativo.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>alpha 2:</b> El rendimiento se explica en un 11 % por la volatilidad del 2 día anterior. P-valor no significativo.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>beta 1:</b> Es el impacto de los residuos cuadrados rezagados en el rendimiento y se explica un 98% por la varianza ajustada del día anterior. P-valor significativo.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>gamma 1:</b> Son los parámetros de apalancamiento. El valor positivo indica que el los retornos del BTC tienen efecto de apalancamiento,&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div>
+<span style="font-size: large;"><b>Shape:</b> Son los grados de libertad de la distribución t de Student y cuanto más grande más gruesa es la cola.</span><span style="font-size: large;">
+</span>
+<br />
+<h2 style="text-align: center;">
+<span style="font-size: x-large;"> Diagnóstico del modelo</span></h2>
+<div style="text-align: justify;">
+<span style="font-size: large;">Es esencial realizar una verificación de diagnóstico en el modelo después de determinar el mejor modelo y su distribución correspondiente para el término de error para establecer si el modelo y la distribución están especificados correctamente. Este ejercicio emplea las pruebas Ljung-Box y Multiplicador de Lagrange (LM) para evaluar la presencia de autocorrelación y efectos ARCH respectivamente. La presencia de autocorrelación y efectos ARCH para los residuos tanto del modelo medio como de los modelos de volatilidad se probará utilizando estos dos diagnósticos.</span></div>
+<h3>
+<span style="font-size: large;">Ljung Box</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La prueba de Ljung Box se usa para probar si existen autocorrelaciones en los residuos de un modelo.&nbsp;</span><span style="font-size: large;">La hipótesis nula de la prueba de Ljung-Box no se rechaza al nivel de significancia del 5%. Esto indica que los residuos estandarizados se consideran ruido blanco.</span></div>
+<h3>
+<span style="font-size: large;">Prueba efecto ARCH LM</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Además, la prueba ponderada ARCH LM indica que no hay efecto ARCH en los modelos. Estas pruebas sugieren que el modelo eGarch mejor ajustado es suficiente para corregir la correlación en serie de las series de retorno en la ecuación de varianza condicional</span>.</div>
+<div>
+<span style="font-size: large;">
+</span></div>
+</div>
+<hr>
+```{r}
+garch.fit = ugarchfit(garch112e2.2.2.spec, data = model, fit.control=list(scale=TRUE))
+plot(garch.fit, which=3)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(garch.fit, which=2)
+```
+<h2>
+<span style="font-size: x-large;"> Valor el Riesgo VaR</span></h2>
+<div style="text-align: justify;">
+<span style="font-weight: normal;"><span style="font-size: large;">Para validar el rendimiento del modelo eGARCH mejor ajustado, es útil realizar una prueba de respaldo histórica para comparar el Valor en riesgo estimado (VaR) con el rendimiento real durante el período de estudio. Si el retorno es menor que el VaR en la mayoría de los casos, tenemos un exceso de VaR. En este ejercicio, se establece una superación de VaR solo en el 1% de los casos, por lo tanto, las pruebas se evalúan en el nivel de significancia del 1%. El período de inicio de la prueba retrospectiva se establece 500 días después del comienzo de la serie (finales 2015). Además, los parámetros eGARCH se actualizan posteriormente en todo el conjunto de datos utilizando la estimación de la ventana móvil en lugar de mantenerse constante en el tiempo. Esto se hace para lograr flexibilidad en los parámetros.</span></span></div>
+<h2>
+<span style="font-size: large;">Retornos del Bitcoins con límites de VaR del 1%</span></h2>
+<span style="font-size: large;"><div style="text-align: justify;">
+Las estimaciones de VaR producidas por el modelo de volatilidad son evaluadas por la prueba de cobertura incondicional de Kupiec y la prueba de independencia de Christoffersen.&nbsp;</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Las pruebas se evalúan en el nivel de significancia del 1%, por lo tanto, se rechaza la hipótesis nula y el modelo se descarta posteriormente, si el valor p está por debajo del uno por ciento.&nbsp;</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Los retornos de los datos alcanzan el 1% Var (Rojo) 9 veces en comparación con las 11 veces esperadas, no se rechaza la hipótesis nula de que las superaciones son correctas e independientes. Esto implica que se espera que una pérdida del 0,8% se supere solo el 1% del tiempo.&nbsp;</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Se ha sobreestimado el riesgo de perder dinero</div>
+</span><h3 style="text-align: center;">
+<span style="font-size: large;">Cobertura VaR y validación del modelo&nbsp;Interpretación de la cobertura VaR con probabilidad de pérdida α (1%):</span></h3>
+<span style="font-size: large;"><div style="text-align: justify;">
+El modelo de predicción válido tiene una cobertura cercana al nivel de probabilidad α usado:</div>
+</span><ul>
+<li style="text-align: justify;"><span style="font-size: large;">Si la cobertura ≫ α: demasiadas superaciones: el cuantil pronosticado debería ser Más negativo. Se ha subestimado el riesgo de perder dinero </span></li>
+</ul>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">Si la cobertura ≪ α: muy pocas superaciones, el cuantil pronosticado también fue negativo. Se ha sobreestimado el riesgo de perder dinero.</span></li>
+</ul>
+<div style="text-align: center;">
+</div>
+<div>
+<div>
+<span style="font-size: large;">
+</span></div>
+</div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+garchroll <- ugarchroll(garch112e2.2.2.spec, data = model, n.start =500,
+                        refit.window = "moving"
+                        , refit.every = 100)
+garchVaR <- quantile(garchroll, probs=0.01)
+actual <- xts(as.data.frame(garchroll)$Realized, time(garchVaR))
+
+mean(actual < garchVaR)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+VaRplot(alpha = 0.01, actual = actual, VaR = garchVaR)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+report(garchroll, type = "VaR", VaR.alpha = 0.01, conf.level = 0.99)
+```
+
+```{r echo=TRUE, message=FALSE, paged.print=FALSE}
+plot(garch.fit, which=1)
+```
+<hr>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Análisis de residuos</span></h2>
+<hr>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(garch.fit, which=8)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(garch.fit, which=9)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(garch.fit, which=12)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(garch.fit, which = "all")
+```
+<hr/>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Pronósticos</span></h2>
+<h3>
+<span style="font-size: large;">1er Método</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El comando n.ahead indica cuántos períodos pronosticar por delante. Si es más de 1 período, los datos anteriores ya no son suficientes y el método utiliza el valor de pronóstico del&nbsp;pronóstico; da un paso adelante&nbsp;para calcular el pronóstico de dos&nbsp;pasos adelante. Los pronósticos para la volatilidad están dados por sigma&nbsp;y el 1% de VaR resultado (al lado)&nbsp;&nbsp;para cada período. Ejem: Para el&nbsp;&nbsp;período T+1 la volatilidad esperada es 0.001261 y el VaR del&nbsp;1% es 0.04461.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+forecast1<-ugarchforecast(garch.fit,n.ahead = 3) 
+forecast1
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(forecast1,which=1)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(forecast1,which=3)
+```
+<h2 style="text-align: justify;">
+<span style="font-size: large;">2do Método</span></h2>
+<div style="text-align: justify;">
+<span style="font-size: large;">Con el método forecast rolling se pueden hacer pronósticos manipulando los períodos de la serie dentro del histórico&nbsp;y seleccionando los datos que&nbsp;se dejan por fuera y así tener otro&nbsp;método de pronósticos. Forecast rolling&nbsp;n.roll nos da el número de&nbsp;pronósticos n-ahead. Entonces, desliza la ventana por una observación y hace el siguiente pronóstico n-ahead. Out.sample se usa para definir las observaciones&nbsp;que deben excluirse en el procedimiento de estimación para realizar pronósticos fuera de&nbsp;la muestra después.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+modelfit=ugarchfit(garch112e2.2.2.spec,data=model, solver="hybrid", out.sample=20)
+modelforecast<-ugarchforecast(modelfit, data = NULL, n.ahead = 30, n.roll = 20, external.forecasts = list(mregfor = NULL, vregfor = NULL))
+modelforecast
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+garch112.1.1.spec = ugarchspec(mean.model = list(armaOrder = c(1,1)), 
+                               variance.model = list(garchOrder = c(1,1),
+                                                     model = "sGARCH"), distribution.model = "norm")
+garch.fit112.1.1= ugarchfit(garch112.1.1.spec, data = model, fit.control=list(scale=TRUE))
+garchroll2 <- ugarchroll(garch112.1.1.spec, data = model, n.start =500,
+                        refit.window = "moving"
+                        , refit.every = 100)
+```
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(rugarch)
+report(garchroll, type="fpm")
+report(garchroll2, type="fpm")
+```
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(modelforecast,which=2)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(modelforecast,which=4)
+```
+<h2 style="text-align: justify;">
+<span style="font-size: large;">3er Método</span></h2>
+<div style="text-align: justify;">
+<span style="font-size: large;">Existen dos fuentes principales de incertidumbre sobre el pronóstico anticipado de los modelos Garch, a saber, el que surge de la forma de la densidad predictiva y debido a la estimación de parámetros. El método <a href="https://rdrr.io/cran/rugarch/man/ugarchboot-methods.html" rel="nofollow" target="_blank">bootstrap</a> se basa en innovaciones de muestreo de la distribución empírica del modelo Garch ajustado para generar realizaciones futuras de la serie y sigma. El método "parcial", solo considera la incertidumbre de distribución y, aunque es más rápido, no generará intervalos de predicción para el pronóstico sigma 1 adelantado para el cual solo la incertidumbre del parámetro es relevante en los modelos de tipo Garch.</span></div>
+```{r}
+bootp=ugarchboot(garch.fit,method=c("Partial","Full")[1],n.ahead = 12,n.bootpred=1000,n.bootfit=1000)
+bootp
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(bootp,which=2)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(bootp,which=3)
+```
+<h3>
+<span style="font-size: large;">Complementos:</span></h3>
+<div>
+<ul>
+<li><a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/btc.close.csv">Base de datos: Precios de cierre BTC. </a></li>
+<li><a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/script.Garch">Código completo del Modelo.</a></li>
+</ul>
+<ul>
+</ul>
+<h3>
+<span style="font-size: large;">Referencias:</span></h3>
+</div>
+[1] Horacio Catalán Alonso (2011). Especificación y Estimación de los Modelos Arch. Recuperado de: <a href="https://www.cepal.org/sites/default/files/events/files/cc_11.2011.horario.catalan.modelosarch.esp_.pdf">https://www.cepal.org/sites/default/files/events/files/cc_11.2011.horario.catalan.modelosarch.esp_.pdf</a><br />
+<br />
+[2] Alejandro Vargas Sanchez (2017). Estimación de la Volatilidad de los Fondos de Inversión Abiertos en  Bolivia. Centro de Investigación e Innovación en Finanzas (CIIFI). Recuperado de: <a href="http://www.scielo.org.bo/scielo.php?script=sci_arttext&amp;pid=S2518-44312017000200003">http://www.scielo.org.bo/scielo.php?script=sci_arttext&amp;pid=S2518-44312017000200003</a><br />
+<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
+</h1>
+<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
+</h1>
+<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
+Resultados de búsqueda</h1>
+<div data-async-context="query:cepal" eid="5garXsvbLeOJggeh7qqADg" id="rso" style="margin-top: 6px;">
+<div class="g" data-hveid="CBYQAA" style="line-height: 1.2; margin-bottom: 27px; margin-top: 0px; width: 600px;">
+<h2 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
+Resultado web con enlaces de partes del sit</h2>
+</div>
+</div>
+<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
+Resultados de búsqueda</h1>
+<div data-async-context="query:cepal" eid="5garXsvbLeOJggeh7qqADg" id="rso" style="margin-top: 6px;">
+<div class="g" data-hveid="CBYQAA" style="line-height: 1.2; margin-bottom: 27px; margin-top: 0px; width: 600px;">
+<h2 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
+Resultado web con enlaces de partes del sitio</h2>
+</div>
+</div>

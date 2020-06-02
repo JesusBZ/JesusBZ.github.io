@@ -1,0 +1,73 @@
+---
+title: ' '
+---
+
+<html>
+    <head>
+    
+ 	<title>app 1</title>
+ 	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+ 	
+ 
+<style>
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+body { background:rgb(255,255,255); }
+form { max-width:420px; margin:50px auto; }
+
+.feedback-input {
+  color:black;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight:500;
+  font-size: 18px;
+  border-radius: 5px;
+  line-height: 22px;
+  background-color: transparent;
+  border:2px solid #008ffb;
+  transition: all 0.3s;
+  padding: 13px;
+  margin-bottom: 15px;
+  width:100%;
+  box-sizing: border-box;
+  outline:0;
+}
+
+.feedback-input:focus { border:2px solid #008ffb; }
+
+textarea {
+  height: 150px;
+  line-height: 150%;
+  resize:vertical;
+}
+
+[type="submit"] {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  width: 100%;
+  background:#53a2fb;
+  border-radius:5px;
+  border:0;
+  cursor:pointer;
+  color:white;
+  font-size:24px;
+  padding-top:10px;
+  padding-bottom:10px;
+  transition: all 0.3s;
+  margin-top:-4px;
+  font-weight:700;
+}
+[type="submit"]:hover { background:#0914a7; }
+</style>
+</head> 
+  <body>
+<form name="contactform" method="post" action="https://app.99inbound.com/api/e/hB5ewb94" target="_blank">    
+  <input name="name" type="text" class="feedback-input" placeholder="Nombre" required />   
+  <input name="email" type="text" class="feedback-input" placeholder="Email" required/>
+<input name="phone" type="text" class="feedback-input" placeholder="Telefono" required/>
+  <textarea name="text" class="feedback-input" placeholder="Mensaje" required></textarea>
+  <input name="buttom"type="submit" value="ENVIAR"/>
+<div style="position: absolute; left: -5000px;">
+  <input type="checkbox" name="bluetooth_magenta_argyle_rhino" value="1" tabindex="-1" autocomplete="no">
+</form>
+</div>
+ </body>
+</html>

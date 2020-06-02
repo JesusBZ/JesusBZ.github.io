@@ -1,0 +1,494 @@
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Exploración de Datos Macroeconómicos&nbsp; con RStudio</span></h2>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-gt7hMtDuQLk/XtEWS2fJPhI/AAAAAAAACTU/yRKxWfSDPoUXvxpdyVGU__a5rlR6-JwAQCLcBGAsYHQ/s1600/imagen-j.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="740" data-original-width="1040" src="https://1.bp.blogspot.com/-gt7hMtDuQLk/XtEWS2fJPhI/AAAAAAAACTU/yRKxWfSDPoUXvxpdyVGU__a5rlR6-JwAQCLcBGAsYHQ/s1600/imagen-j.webp" /></a></div>
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<div>
+<br /></div>
+<h3>
+<span style="font-size: large;">Descripción</span></h3>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el entrenamiento se visualizará el contenido del paquete <a href="https://www.rdocumentation.org/packages/gapminder/versions/0.3.0" rel="nofollow" target="_blank">Gapminder</a>, en especial los datos globales de la esperanza de vida al nacer y el Producto Interno Bruto per Cápita. Igualmente se elaborarán gráficos interactivos, de tendencia y dispersión. Por último, algunas pruebas lineales para determinar correlación y comentarios de las principales observaciones.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La segunda parte del entrenamiento se hará con el paquete&nbsp;<a href="https://cran.r-project.org/web/packages/Quandl/Quandl.pdf" rel="nofollow" target="_blank">Quandl</a>, una herramienta poderosa para descargar directamente información macroeconómica, en este caso de Venezuela, utilizando la plataforma del</span><span style="font-size: large;">&nbsp;Banco Mundial y su base de datos llamada Indicadores del desarrollo mundial <a href="http://datatopics.worldbank.org/world-development-indicators/" rel="nofollow" target="_blank">(WDI)</a>&nbsp;"</span><span style="font-size: large;">World Development Indicators".</span></div>
+<br />
+<div style="text-align: justify;">
+<span style="font-size: large;">Para concluir, se va ha construir un mapa interactivo para acceder a los datos macroeconómicos a través de Quandl con <a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow" target="_blank">leaflet</a>, lo que permite al usuario elegir un indicador económico y hacer clic en un país para acceder a los valores de ese indicador, campo de estudio de la <i><b>Estadística Espacial.</b></i></span></div>
+</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Esperanza de Vida</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La&nbsp;</span><span style="font-size: large;">esperanza&nbsp;</span><a href="https://www.britannica.com/science/life-expectancy" rel="nofollow" target="_blank"><span style="font-size: medium;">[</span>1<span style="font-size: medium;">]</span></a><span style="font-size: large;">&nbsp;de vida es una&nbsp; estimación del número promedio de años adicionales que una persona de una edad determinada puede esperar vivir.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La medida más común de la esperanza de vida es la <i>esperanza de vida al nacer</i>. Es una medida hipotética. Se supone que las tasas de mortalidad específicas por edad para el año en cuestión se aplicarán durante toda la vida de las personas nacidas en ese año.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La estimación, en efecto, proyecta las tasas de mortalidad (muerte) específicas por edad para un período determinado durante toda la vida de la población nacido (o vivo) durante ese tiempo. </span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Producto Interior Bruto (PIB) per Cápita</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El producto interno bruto ( PIB ) per cápita es una métrica que desglosa la producción económica de un país por persona y se calcula dividiendo el PIB de un país por su población.</span><br />
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<ul>
+<li><span style="font-size: large;">El PIB per cápita es una medida global para medir la prosperidad de las naciones y es utilizado por analistas, junto con el PIB, para analizar la prosperidad de un país en función de su crecimiento económico.</span></li>
+<li><span style="font-size: large;">Los países pequeños y ricos y los países industrializados más desarrollados tienden a tener el PIB per cápita más alto.</span></li>
+</ul>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el entrenamiento se observará si existe alguna relación entre ambas variables: PIB per Cápita y Esperanza de Vida al Nacer agrupándolo los grupos por continentes y luego por países.</span></div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Paqueterías</span></h2>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/plotly/plotly.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Plotly</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Para crear gráficos web interactivos a partir de gráficos 'ggplot2' y / o una interfaz personalizada de la biblioteca JavaScript, 'plotly.js' está inspirado en la gramática de los gráficos.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/gganimate/gganimate.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Gganimate</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Para extender la API 'ggplot2' con gráficos animados, este paquete proporciona un conjunto completamente nuevo de gramática, totalmente compatible,  para especificar transiciones y animaciones de una manera flexible y extensible.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Ggplot2</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Sistema para crear gráficos declarativamente, basado en "La gramática de los gráficos ''. Se proporcionan los datos, se indica a 'ggplot2' cómo mapear variables y su decoración.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/gapminder/gapminder.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">GapMinder</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Un extracto de los datos disponibles en <a href="http://gapminder.org./" rel="nofollow" target="_blank">Gapminder.org.</a> Para cada uno de los 142 países del conjunto, el paquete proporciona valores para la esperanza de vida, el PIB per cápita, y población, cada cinco años, de 1952 a 2007.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/Quandl/Quandl.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Quandl</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Funciones para interactuar directamente con la API de Quandl y ofrecer datos en varios formatos utilizables en R, descargar un archivo zip con todos los datos de una base de datos de Quandl y la capacidad de buscarlos.&nbsp;</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/knitr/knitr.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">knitr</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Proporciona una herramienta de uso general para la generación dinámica de informes en R utilizando técnicas de programación literaria.&nbsp;</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/kableExtra/kableExtra.pdf" rel="nofollow" target="_blank">kableExtra</a></span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Crea tablas HTML o 'LaTeX' complejas utilizando 'kable ()' de 'knitr' y la sintaxis de tuberías de 'magrittr'. Este paquete simplifica la forma de manipular los códigos HTML o 'LaTeX' generados por 'kable ()' y permite usarlos para construir tablas complejas y personalizar estilos usando un formato legible sintaxis.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/purrr/purrr.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Purrr</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Es una programación funcional completa y consistente. Kit de herramientas para R.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/dygraphs/dygraphs.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Dygraphs</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Una interfaz R para la biblioteca de gráficos JavaScript 'dygraphs' (una copia la cual está incluida en el paquete). Proporciona instalaciones ricas para graficar datos de series temporales en R, incluidos los altamente configurables, la visualización en serie, eje y características interactivas.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/rnaturalearth/rnaturalearth.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Rnaturalearth</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Facilita el mapeo al hacer que los datos del mapa de la tierra natural de <a href="http://www.naturalearthdata.com/" rel="nofollow" target="_blank">http://www.naturalearthdata.com/</a> estén más fácilmente disponibles para los usuarios de R.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/sp/sp.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Sp</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Clases y métodos para datos espaciales; el documento de clases donde se encuentra la información de ubicación espacial, para datos 2D o 3D. Se proporcionan funciones de utilidad, p. para trazar datos como mapas, selección espacial, así como métodos para recuperación de coordenadas, para subconjuntos, impresión, resumen, etc.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.rstudio.com/web/packages/rgeos/rgeos.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Rgeos</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Interfaz con el motor de geometría: código abierto ('GEOS') utilizando la 'API C' para operaciones de topología en geometrías.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Leaflet&nbsp;</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Crea y personaliza mapas interactivos usando el 'Folleto' Biblioteca de JavaScript y el paquete 'htmlwidgets'. Estos mapas se pueden usar directamente desde la consola R, desde 'RStudio', en aplicaciones Shiny y documentos R Markdown.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/coefplot/coefplot.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Coefplot</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Traza los coeficientes de los objetos del modelo. Esto muestra rápidamente al usuario las estimaciones puntuales y los intervalos de confianza para los modelos ajustados.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/ggrepel/ggrepel.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Ggrepel</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Proporciona texto y etiquetas geoms para 'ggplot2' que ayudan a evitar etiquetas de texto superpuestas. Las etiquetas se repelen entre sí y lejos del punto de datos.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cloud.r-project.org/web/packages/socviz/socviz.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Socviz</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Materiales de apoyo sobre visualización de datos. Contiene funciones de utilidad para gráficos y varios conjuntos de datos de muestra.</span></div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Esperanza de vida y crecimiento económico</span></h2>
+<div style="text-align: justify;">
+<span style="font-size: large;">El Producto Interno Bruto (PIB) es el valor de mercado de los bienes y servicios finales producidos en un país durante un período determinado. El PIB se usa comúnmente para indicar el bienestar económico de un país. El crecimiento a largo plazo del PIB de un país a menudo se asocia con un mejor nivel de vida. El país con mayor PIB tiene acceso a abundantes recursos y puede asignar gastos adicionales en el sector de la salud. Por lo tanto, a menudo se percibe que el PIB de un país debería tener un impacto directo en la esperanza de vida de sus ciudadanos.</span><br />
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El crecimiento económico a veces se estima dividiendo el PIB por el tamaño de la población. De esta manera, intenta capturar el crecimiento y el bienestar de una vez.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">No obstante, se debe diferenciar claramente entre crecimiento y bienestar (así como crecimiento y desarrollo), el PIB per Cápita&nbsp; es una medida inadecuada como indicador de bienestar.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se supone que el PIB se distribuye en partes iguales a cada miembro de la sociedad.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Por lo tanto, es más acertado multiplicar una medida del ingreso promedio por una medida de desigualdad, es decir, al peso de acuerdo con la cantidad de la población que realmente tiene una participación en el PIB.&nbsp;</span></div>
+<div style="text-align: justify;">
+<br /></div>
+</div>
+<hr />
+<h3>
+<span style="font-size: large;">Gráficos de Dispersión: Esperanza de Vida y Producto Interno Bruto per Cápita&nbsp;</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Primero se preparan los paquetes y se instalan. Luego, utilizando la base de datos de Gapminder se realiza el primer gráfico. Muestra la panorámica de dispersión de dos variables macroeconómicas para el año 2007: La Esperanza de Vida al nacer y el PIB per Cápita. En el eje de coordenadas (Y) se encuentra los valores de la Esperanza de Vida al Nacer, en las&nbsp;abscisas&nbsp;(X) los valores del Producto Interno Bruto per Cápita, el tamaño de las burbujas viene determinado por el tamaño de la Población&nbsp;del país. Este tipo de gráficos es de 3 dimensiones.&nbsp;</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(plotly)
+library(gganimate)
+library(ggplot2)
+library(gapminder)
+library(Quandl)
+library(knitr)
+library(kableExtra)
+library(purrr)
+library(dygraphs)
+library(rnaturalearth)
+library(sp)
+library(rgeos)
+library(leaflet)
+library(coefplot)
+library(ggrepel)
+library(socviz)
+```
+
+```{r  out.width = "100%"}
+gdata <- gapminder[gapminder$year==2007, ]
+g <- ggplot(gdata, aes(x=gdpPercap, y=lifeExp, label=country)) + 
+  geom_point(aes(col=continent, size=pop/1e6)) + 
+  geom_text_repel(size=2, box.padding = unit(0.5, "lines"), force=1, 
+                  segment.size = .1, segment.color = 'grey', max.iter = 100) +
+  scale_x_log10() +
+  theme_classic()
+g
+
+```
+<h3>
+<span style="font-size: large;">Gráfico dinámico</span></h3>
+<div>
+<span style="font-size: large;">El gráfico muestra una animación del comportamiento&nbsp;de las variables en estudio agregando&nbsp;la temporalidad. Desde 1952 hasta 2007, los datos se actualizaron cada 5 años.&nbsp;</span></div>
+<span style="font-size: large;"><br /></span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+df <- gapminder 
+fig <- df %>%
+  plot_ly(
+    x = ~gdpPercap, 
+    y = ~lifeExp, 
+    size = ~pop, 
+    color = ~continent, 
+    frame = ~year, 
+    text = ~country, 
+    hoverinfo = "text",
+    type = 'scatter',
+    mode = 'markers'
+    
+  )
+fig <- fig %>% layout(
+    xaxis = list(
+      type = "log"
+    )
+  )
+
+fig
+```
+<h3>
+<span style="font-size: large;">Gráfico interactivo</span></h3>
+<div>
+<span style="font-size: large;">El gráfico permite interactuar con las variables y seleccionar un país para visualizar los valores completos: Esperanza de Vida, PIB per Cápita y Población.&nbsp;</span></div>
+<div>
+<span style="font-size: large;"><br /></span></div>
+```{r}
+ggplotly(p <- ggplot(
+  gapminder, 
+  aes(x = gdpPercap, y=lifeExp, size = pop, colour = country)
+  ) +
+  geom_point(show.legend = FALSE, alpha = 0.7) +
+  scale_color_viridis_d() +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  labs(x = "PIB per Cápita", y = "Esperanza de vida",title = "Experanza de Vida y PIB per Cápita"))
+```
+<h3>
+<span style="font-size: large;">Tablas de datos</span></h3>
+<div>
+<span style="font-size: large;">Elaboración de tablas para visualizar los datos ordenados.&nbsp;</span></div>
+<div>
+<span style="font-size: large;"><br /></span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+kable(aggregate(lifeExp ~ continent, gapminder, median), digits = 2, format = "html", row.names = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped"),
+                full_width = T,
+                font_size = 15) %>%
+   scroll_box(height = "200px")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library("dplyr")
+kable(gapminder %>%
+    filter(year == 2007) %>%
+    group_by(continent) %>%
+    summarise(lifeExp = median(lifeExp)), digits = 2, format = "html", row.names = TRUE) %>%
+  kable_styling(bootstrap_options = c("striped"),
+                full_width = T,
+                font_size = 15) %>%
+   scroll_box(height = "200px")
+```
+<h3>
+<span style="font-size: large;">Gráfico de datos suavizado utilizando el Algoritmo Loess</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El método utiliza una función de ponderación que hace que la influencia de los valores vecinos en el suavizado en una posición disminuya con la distancia a esta posición.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los valores atípicos se ponderan menos que con otros métodos. El factor decisivo es la elección del ancho de suavizado, que refleja el número de valores que se incluyen en el cálculo de un punto. Ayuda a detectar la relación entre variables, encontrar tendencias y ciclos en los datos.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+p <- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent))   
+
+ggplotly(p + geom_point() + geom_smooth(method = "loess") + scale_x_log10()+labs(
+  x = "PIB per Cápita", 
+  y = "Experanza de Vida", 
+  title = "Experanza de Vida y PIB per Cápita"
+)) 
+```
+<h3>
+<span style="font-size: large;">Suavizamiento de datos agrupándolos por continentes</span></h3>
+```{r out.width = "100%", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+p <- ggplot(gapminder, aes(x = year, y = gdpPercap))  
+
+ggplotly(p + geom_line(color = "gray70", aes(group = country)) + geom_smooth(size = 1.1, method = "loess", se = FALSE) + scale_y_log10(labels = scales::dollar) + facet_wrap(~ continent, ncol = 5) + labs(
+  x = "Año", 
+  y = "PIB per cápita", 
+  title = "PIB per cápita en los continentes"
+))
+```
+<h3>
+<span style="font-size: large;">Diagramas interactivos de caja</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los diagramas de caja son un tipo de gráfico que da información visual sobre cómo se distribuyen los valores en los datos. Los diagramas de caja son una forma estandarizada de mostrar la distribución de datos basada en un resumen de cinco indicadores:</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<ul>
+<li><span style="font-size: large;">Mínimo</span></li>
+<li><span style="font-size: large;">1er Cuartil</span></li>
+<li><span style="font-size: large;">Mediana</span></li>
+<li><span style="font-size: large;">3er Cuartil</span></li>
+<li><span style="font-size: large;">Máximo</span></li>
+</ul>
+</div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library("ggplot2")
+ggplotly(ggplot(gapminder, aes(x = continent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)+labs(
+  x = "Continentes", y = "Esperanza de Vida en Años", title = "Gráficos de caja", caption = "Fuente: gapminder."
+))
+```
+<h3>
+<span style="font-size: large;">Gráfica con suavizamiento GAM</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Un modelo aditivo generalizado (GAM) es un modelo lineal generalizado (GLM) en el que el predictor lineal es dado por una suma especificada por el usuario de funciones suaves de las covariables más un componente paramétrico convencional del predictor lineal.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Permite observar el comportamiento del conjunto de datos ordenados con respecto a línea para "visualmente" inferir si existe algún tipo de orden o correlación.&nbsp;</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+p <- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) 
+
+ggplotly(p + geom_point(alpha = 0.3) + geom_smooth(method = "gam") + scale_x_log10(labels = scales::dollar) + labs(
+  x = "PIB per capita", y = "Esperanza de Vida en Años", title = "Crecimiento Económico y Esperanza de Vida", subtitle = "Los puntos de datos son años-país", caption = "Fuente: gapminder."
+))
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">La Curva de Preston</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En 1975, Samuel Preston publicó un artículo influyente, "La relación cambiante entre la mortalidad y el nivel de desarrollo económico", en el que traza la relación global entre el PIB per cápita y la esperanza de vida en diferentes momentos. Él encuentra que con el tiempo la curva que describe la relación se ha movido hacia arriba, lo que implica que un nivel de ingresos similar se asocia con una mayor esperanza de vida en momentos posteriores.</span><h3>
+</h3>
+</div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+p <- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))
+ggplotly(p + geom_point() + geom_smooth(method = "gam",formula=y ~ s(x, bs = "cs"))+labs(
+  x = "PIB per cápita", y = "Esperanza de Vida en Años", title = "Curva de Preston", caption = "Fuente: gapminder."
+))
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Consideraciones</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">1.-&nbsp;</span><span style="font-size: large;">Las correlaciones no implican causalidad.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">2.-&nbsp;No se puede evaluar si el PIB per Cápita tiene un efecto causal en la esperanza de vida mediante un análisis simplista como el que se presenta aquí y la curva de Preston que presenta una considerable correlación puede ser fácilmente mal entendida para indicar tal causalidad.</span><br />
+<h3>
+<span style="font-size: large;">Regresión:</span></h3>
+<span style="font-size: large;">Modelización simple para conocer el R2, la valorización de parámetros y el comportamiento de errores de las variables utilizadas en el ejercicio, resultados que no afectarán las consideraciones anteriores pero permiten explorar un poco más la relación de los datos a través de un modelo li-log.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span>
+<span style="font-size: large;">Se utiliza la función <i>Coefplot</i> que permite u</span><span style="font-size: large;">na visualización gráfica de los coeficientes. Además, se incluyen los errores estándar del modelo ajustado.</span></div>
+```{r}
+out <- lm(lifeExp ~ log(gdpPercap) + pop + continent, data = gapminder)
+summary(out)
+plot(out, which = c(1, 2), ask = FALSE) 
+```
+
+```{r}
+out <- lm(lifeExp ~ log(gdpPercap) + log(pop) + continent, data = gapminder)
+
+coefplot(out, sort = "magnitude", intercept = FALSE)
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Exploración de datos Macroeconómicos</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se utilizará la fuente de datos macroeconómicos del Banco Mundial llamada Indicadores del desarrollo mundial <a href="http://data.worldbank.org/products/wdi" rel="nofollow" target="_blank">(WDI)</a> . El código&nbsp;</span><span style="font-size: large;"><i>Quandl</i>&nbsp;</span><span style="font-size: large;">para WDI es WWDI, y se antepone WWDI/ para cada llamada al conjunto de datos.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Comencemos con un ejemplo simple e importemos datos del PIB per cápita para Venezuela, cuyo código de país es VEN. Se puede solicitar el código ISO de cada país con la primera línea de código que se presenta, en el ejemplo son: Kenya, Venezuela, China.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se utiliza el código WWDI/VEN _NY_GDP_PCAP_KN&nbsp; Quandl, que consiste en el código WDI WWDI/, agregando el código de país de Venezuela VEN, por último el código del PIB per cápita _NY_GDP_PCAP_KN.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+gapminder %>%
+ filter(year == 2007, country %in% c("Kenya", "Venezuela", "China")) %>%
+ select(country, continent) %>% 
+ left_join(country_codes)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+Venezuela_GDPPC <- Quandl("WWDI/VEN_NY_GDP_PCAP_KN", type = 'xts') %>% 
+ `colnames<-`("PIB Per Capita")
+tail(Venezuela_GDPPC, n = 20)
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Extracción de Variables Macroeconómicas de la base de datos del Banco Mundial</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se seleccionan las variables macro que se observarán en el ejercicio en total son ocho (8): PIB per Cápita, crecimiento del PIB per Cápita, Tasa de Interés Real, Tipo de Cambio, Índice Nacional de Precios al Consumidor, Fuerza Laboral, Formación Bruta de Capital y por última Importación de Bienes y Servicios.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En los detalles, se usará la función reduce() del paquete <i>purrr </i>y se aplicará&nbsp;merge() para combinar las ocho listas de un objeto xts. La visualización se realizará con dygraphs. La última función&nbsp; colnames&lt;- se usa para limpiar los nombres de columna.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+econIndicators <- c("PIB Per Capita" = "WWDI/VEN_NY_GDP_PCAP_KN",
+                  "Crecimiento PIB Per Capita" = "WWDI/VEN_NY_GDP_PCAP_KD_ZG",
+                  "Tasa de Interés Real" = "WWDI/VEN_FR_INR_RINR",
+                  "Tipo de Cambio" = "WWDI/VEN_PX_REX_REER",
+                  "INPC" = "WWDI/VEN_FP_CPI_TOTL_ZG",
+                  "Parte de la Fuerza Laboral. Rate" = "WWDI/VEN_SL_TLF_ACTI_ZS","Formación Bruta de Capital" = "WWDI/VEN_NE_GDI_TOTL_ZS","Importación de Bienes y Servicios" = "WWDI/VEN_NE_IMP_GNFS_ZS")
+Quandl.api_key("SqUMJfB4VhjJaL9dQtaY")
+Venezuela_all_indicators <- 
+ 
+  econIndicators %>% 
+ 
+  map(Quandl, type = "xts") %>% 
+
+  reduce(merge) %>% 
+
+  `colnames<-`(names(econIndicators))
+
+tail(Venezuela_all_indicators, n = 6)
+
+```
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Luego de seleccionar las variables de interés se verifican las fechas disponibles, es decir la fecha de inicio y final, esto se puede observar cuando se grafiquen.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Luego de revisar los datos se utilizará la función de gráficos dygraph()&nbsp; para visualizar las&nbsp; series de tiempo y asegurarse que están todas correctas. En la página del Banco Mundial se pueden conocer las rutas de cada variable para luego cargarlas desde R.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dygraph(Venezuela_all_indicators$`PIB Per Capita`, main = "PIB Per Capita en Venezuela (US $ a precios actuales)")%>%
+dyRangeSelector
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dygraph(Venezuela_all_indicators$`Crecimiento PIB Per Capita`, main = "Crecimiento PIB Per Capita en Venezuela (% anual)")%>%
+dyRangeSelector
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dygraph(Venezuela_all_indicators$`Tasa de Interés Real`, main = "Tasa de Interés Real en Venezuela (%)")%>%
+dyRangeSelector
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dygraph(Venezuela_all_indicators$`Tipo de Cambio`, main = "Tipo de Cambio en Venezuela (VEF / US $)")%>%
+dyRangeSelector
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dygraph(Venezuela_all_indicators$`INPC`, main = "INPC en Venezuela (2010 = 100)")%>%
+dyRangeSelector
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dygraph(Venezuela_all_indicators$`Parte de la Fuerza Laboral. Rate`, main = "Parte de la Fuerza Laboral en Venezuela")%>%
+dyRangeSelector
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dygraph(Venezuela_all_indicators$`Formación Bruta de Capital`, main = "Formación Bruta de Capital en Venezuela (% de crecimiento anual)")%>%
+dyRangeSelector
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dygraph(Venezuela_all_indicators$`Importación de Bienes y Servicios`, main = "Importación de Bienes y Servicios en Venezuela (%) del PIB")%>%
+dyRangeSelector
+```
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el caso de Venezuela el año del desplome de su economía se aceleró en el 2015. Logrando nuevos records de mínimos históricos en casi todas sus variables macroeconómicas que indican&nbsp;prosperidad, bienestar&nbsp;y desarrollo. Y nuevos máximos históricos en las que indican pobreza, miseria, desigualdad, corrupción y subdesarrollo. No es el fin del entrenamiento profundizar en el tema. Sin embargo, se puede comenzar un análisis más completo utilizando la data no solo del Banco Mundial, sino de otros organismos internacionales.&nbsp;</span></div>
+<h3>
+<span style="font-size: large;">Construcción del Mapa para Estadística Espacial</span></h3>
+<span style="font-size: large;"><div style="text-align: justify;">
+Se utilizará el paquete <i>rnaturalearth </i>y su&nbsp; función ne_countries(). Vamos a especificar type = "countries" y returnclass = 'sf'. Se puede configurar returnclass = 'sp' si quisiéramos trabajar con un marco de datos espaciales, pero para comenzar con este tema el&nbsp;<i>sf</i> y el marco de datos de características simples sirve para proyectos de mapeo.&nbsp;</div>
+</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+world <- ne_countries(type = "countries",  returnclass = 'sf')
+tail(world[c('name', 'pop_est','gdp_md_est', 'economy','income_grp')], n = 10)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">En particular, observemos la columna geometry, que contiene las coordenadas de latitud y longitud multipolígono. El objeto sf&nbsp; parece más intuitivo en términos de cómo la geometría se corresponde con el resto de los datos.&nbsp;</span><span style="font-size: large;">Ahora se creará el sombreado y ventanas emergentes.&nbsp;</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+gdpPal <- colorQuantile("Greens", world$gdp_md_est, n = 20)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+popup <- paste0("<strong>Country: </strong>", 
+                world$name, 
+                "<br><strong>Market Stage: </strong>", 
+                world$income_grp)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Por último se construye el mapa. Necesitamos pasar un código de país a Quandl, no el nombre del país ni su símbolo de teletipo. Por lo tanto, no queremos establecer layerId = name, tampoco necesitamos agregar nada especial a nuestro objeto world. Ya contiene una columna llamada iso_a3, y esa columna contiene los códigos de país utilizados por Quandl.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<br /></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+leaf_world <- leaflet(world) %>%
+  addProviderTiles("CartoDB.Positron") %>% 
+  setView(lng =  20, lat =  15, zoom = 2) %>%
+      addPolygons(stroke = FALSE, smoothFactor = 0.2, fillOpacity = .7,
+                     color = ~gdpPal(gdp_md_est), layerId = ~iso_a3, popup = popup)
+
+leaf_world
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Debido a que Quandl usa el <a href="https://blog.quandl.com/api-for-economic-data">código ISO de 3 letras</a> para identificar un país, y porque el rnaturalearth objeto sf&nbsp;</span><span style="font-size: large;">&nbsp;ya contiene una columna con códigos de país iso_a3. Ahora, tenemos un mapa con layerID = iso_a3 la columna incorporada de códigos de país.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Las degradaciones del color indican los países con mayor o menor concentración de PIB per Cápita y al hacer clic en algún país se muestran algunos datos económicos.</span></div>
+<br /><div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<br /></div>

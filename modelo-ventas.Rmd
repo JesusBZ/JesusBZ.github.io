@@ -1,0 +1,375 @@
+---
+title: ' '
+---
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align="center")
+```
+<h2 style="text-align: center;">
+</h2>
+<h2 style="text-align: center;">
+</h2>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">
+Modelo de pronóstico para Ventas en Volumen</span></h2>
+<div style="text-align: justify;">
+<div class="separator" style="clear: both; text-align: center;">
+<a href="" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="477" data-original-width="848" src="imagenes/imagen-a.webp" /></a></div>
+<span style="font-size: large;"><br /></span>
+<br />
+<h3>
+<span style="font-size: large;">Descripción</span></h3>
+<span style="font-size: large;">El siguiente entrenamiento es una traducción del trabajo de Rami Krispin (2019), Time Series Analysis and Forecasting with the TSstudio Package; con una base de datos distinta. Se utilizará la librería <a href="https://cran.r-project.org/web/packages/TSstudio/TSstudio.pdf" rel="nofollow" target="_blank">TSstudio (Versión 0.1.6)</a> para realizar&nbsp; exploración de datos y elaborar pronósticos a través&nbsp;de los modelos <a href="https://www.rdocumentation.org/packages/forecast/versions/8.12/topics/Arima" rel="nofollow" target="_blank">ARIMA</a>, <a href="https://www.rdocumentation.org/packages/astsa/versions/1.10/topics/sarima" rel="nofollow" target="_blank">SARIMA</a>, <a href="https://www.rdocumentation.org/packages/fable/versions/0.0.0.9100/topics/ETS" rel="nofollow" target="_blank">ETS</a> y <a href="https://www.rdocumentation.org/packages/fable/versions/0.0.0.9100/topics/TSLM" rel="nofollow" target="_blank">TSLM</a>. Para completar el entrenamiento, se visualizarán los resultados en gráficos interactivos que permiten tener un acercamiento directo a los datos y al detalle, además se podrá realizar observaciones en las distintas regiones de la serie. Los datos utilizados pertenecen a las ventas en volumen (unidades) de una cadena de tiendas al detal en Venezuela para el período 2014-2019.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">TSstudio</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El paquete a utilizar será <a href="https://cran.r-project.org/web/packages/TSstudio/TSstudio.pdf" rel="nofollow" target="_blank">TSstudio </a>el cual proporciona una serie de herramientas potentes&nbsp;para el análisis descriptivo y predictivo en datos de tipo temporal. Incluye funciones de preprocesamiento de datos para series temporales, visualizaciones interactivas de la librería <a href="https://plotly.com/r/" rel="nofollow" target="_blank">plotly</a>, así como configuraciones de herramientas para entrenar y evaluar en un ambiente dinámico modelos de pronósticos, contiene las funciones de <a href="https://www.rdocumentation.org/packages/itsmr/versions/1.9/topics/forecast" rel="nofollow" target="_blank">forecast</a>, forecast hybrid y <a href="https://www.rdocumentation.org/packages/bsts/versions/0.9.2/topics/bsts" rel="nofollow" target="_blank">bsts</a>.</span></div>
+<h3>
+<span style="font-size: large;">Contenido</span></h3>
+<ul>
+<li><span style="font-size: large;"><span style="font-weight: normal;">Data (Serie Temporal)</span></span></li>
+<li><span style="font-size: large;"><span style="font-weight: normal;">Análisis exploratorio</span></span></li>
+<li><span style="font-size: large;">Descomposición&nbsp;de la serie</span></li>
+<li><span style="font-size: large;"><span style="font-weight: normal;">Análisis estacional</span></span></li>
+<li><span style="font-size: large;"><span style="font-weight: normal;">Análisis de correlación</span></span></li>
+<li><span style="font-size: large;"><span style="font-weight: normal;">Resumen de exploración y análisis</span></span></li>
+<li><span style="font-size: large;"><span style="font-weight: normal;">Pronósticos de la serie (forecasting)</span></span></li>
+<li><span style="font-size: large;"><span style="font-weight: normal;">Enfoque tradicional</span></span></li>
+<li><span style="font-size: large;"><span style="font-weight: normal;">Backtesting</span></span></li>
+</ul>
+<h3>
+<span style="font-size: large;">Data</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La serie temporal está compuesta por los datos de ventas en volumen de una cadena de tiendas al detal con presencia en las principales ciudades de Venezuela, a la que denominaremos empresa "X". El período seleccionado para el entrenamiento será 2014-2019 y para los pronósticos un horizonte a 12 meses.</span><br />
+<span style="font-size: large;"><br /></span>
+<span style="font-size: large;">El comportamiento de los datos se analizará bajo la perspectiva de la economía venezolana. Según datos de la <a href="https://repositorio.cepal.org/bitstream/handle/11362/45000/91/BPE2019_Venezuela_es.pdf" target="_blank">CEPAL</a> [2], al cierre del 2019 la economía tuvo una contracción en su Producto Interior Bruto (PIB) del 25%, el acumulado desde el 2013 al 2019 totalizó un decrecimiento del 62%. En la esfera monetaria, se diagnosticó hiperinflación a finales del 2017, en ese sentido, el INPC anualizado a septiembre del 2019 se ubicó en 39.113%.&nbsp;</span><br />
+<span style="font-size: large;"><br /></span>
+<span style="font-size: large;">Finalmente, en dicho informe, se estimó una fuerte caída de los ingresos petroleros cercana al 36% con respecto al 2018. En la esfera cambiaria,&nbsp; se espera una depreciación del tipo de cambio de 4.900%.&nbsp;</span><br />
+<span style="font-size: large;"><br /></span>
+<span style="font-size: large;">Para completar la escena, el país se caracteriza por inestabilidad social y política en conjunto con fuertes sanciones financieras externas que limitan el margen de maniobra del Estado. Todo esto como telón de fondo para ubicar a la empresa "X" en un mercado atomizado con presencia de nichos de diferenciación oligopólica.&nbsp;&nbsp;</span></div>
+<h2 style="text-align: center;">
+</h2>
+<h2 style="text-align: center;">
+</h2>
+```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+library(readxl)
+Ventas_unidades_Fao_2014_2019 <- read_excel("C:/Users/Personal/Desktop/Modelo en R/Arima manufactura/Ventas unidades Fao 2014 2019.xlsx")
+datax<-Ventas_unidades_Fao_2014_2019 
+```
+
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+library(TSstudio)
+Vol<-ts(datax,start=c(2014,1),frequency=12)
+ts_plot(Vol,
+        title = "Ventas en Volumen Empresa X 2014-2019",
+        Ytitle = "Unidades en miles",
+        Xtitle = "Source: Empresa X Venezuela", 
+        slider = TRUE)
+```
+<h3>
+<span style="font-size: large;">Análisis exploratorio</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El objetivo del análisis exploratorio es identificar las características clave de la serie con el uso de métodos de análisis descriptivo.&nbsp;</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el entrenamiento buscamos detectar:&nbsp;</span><br />
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<ul>
+<li><span style="font-size: large;">Patrón estacional: Simple o múltiple.&nbsp;</span></li>
+<li><span style="font-size: large;">Tipo de tendencia: Lineal, exponencial, polinómica.&nbsp;</span></li>
+<li><span style="font-size: large;">Roturas estructurales y valores atípicos.</span></li>
+<li><span style="font-size: large;">Cualquier otro patrón en la serie.</span></li>
+</ul>
+</div>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Esta información proporciona una amplia comprensión&nbsp;del pasado y puede utilizarse para pronosticar el futuro. En el caso particular de Venezuela es complejo realizar pronósticos a largo plazo por la naturaleza misma del hábitat económico o entorno que rodea a los datos, lo que representa un reto extra para elaboración de estimaciones.</span></div>
+<h3>
+<span style="font-size: large;">Descomposición de la serie</span></h3>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los tres componentes principales de toda serie de tiempo son: los componentes de tendencia, estacionales y aleatorios. La función ts_decompose proporciona una inferencia interactiva para la función de descomposición. A menudo, esto se usa para ayudar a mejorar la comprensión en series de tiempo, pero también se puede usar para mejorar la precisión del pronóstico.&nbsp;</span></div>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ts_decompose(Vol)
+```
+<h3>
+<span style="font-size: large;">Análisis estacional:</span></h3>
+<span style="font-size: large;"></span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;">Se puede observar tanto en la serie como en los gráficos de descomposición, que la serie tiene un patrón estacional fuerte junto con una tendencia no lineal. Se utilizarán las funciones ts_seasonal y ts_heatmap para explorar el patrón estacional de la serie:</span></div>
+<span style="font-size: large;">
+<div style="text-align: justify;">
+<br /></div>
+</span><span style="font-size: large;">En el gráfico se podrá verificar lo observado en la descomposición de la serie. Un fuerte componente estacional y una tendencia no lineal. La función Ts_seasonal proporciona tres vistas diferentes de la estacionalidad de la serie:</span><br />
+<div>
+<span style="font-size: large;"><br /></span>
+<ul>
+<li><span style="font-size: large;">El primer ciclo de trazado de la serie es mensual y cumple el año completo. La vista permite comparar la variación de cada unidad de frecuencia (mes) de año en año. </span></li>
+<li><span style="font-size: large;">En el caso de las series mensuales cada linea representa un mes de ventas a lo largo del tiempo. Permite verificar si el patrón estacional permanece igual en el tiempo.</span></li>
+<li><span style="font-size: large;">Al final aparecen los diagramas de caja. Son unos gráficos que permiten visualizar la distribución de datos en cada unidad de frecuencia. </span></li>
+</ul>
+<h3>
+<span style="font-size: large;">Componente estacional:</span></h3>
+</div>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ts_seasonal(Vol, type = "all")
+```
+<h3>
+<span style="font-size: large;">Componente estacional sin tendencia</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ts_seasonal(Vol - decompose(Vol)$trend, 
+            type = "all", 
+            title = "Seasonal Plot - Ventas en Volumen (sin tendencia)")
+```
+<h3>
+<span style="font-size: large;">Componente estacional</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Algunas observaciones son:</span><br />
+<span style="font-size: large;"><br /></span></div>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">La estructura del patrón estacional al eliminar la tendencia se mantiene de la siguiente manera: Decrecimiento de enero a junio y crecimiento de julio a diciembre.</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">Ese comportamiento puede estar relacionado con un aumento del ingreso durante el segundo semestre del año por incrementos de salario, sumado a vacaciones colectivas remuneradas y utilidades o prestaciones de fin de año. </span></li>
+<li style="text-align: justify;"><span style="font-size: large;">En general, se han venido deteriorando los  niveles de ventas en la evolución del histórico, motivado entre otros factores a la grave coyuntura económica que tiene el país en su último quinquenio.</span></li>
+</ul>
+<div style="text-align: justify;">
+<span style="font-size: large;">Añadiremos un mapa de calor para visualizar el patrón estacional desde otra perspectiva. </span></div>
+<h3>
+<span style="font-size: large;">Mapa de calor</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Un mapa de calor es una técnica de visualización de datos que muestra la magnitud de un fenómeno como color en dos dimensiones. Los colores intensos indican un valor más alto. En la gráfica se aprecia como el decrecimiento de las ventas se aceleró a partir del 2016.</span></div>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ts_heatmap(Vol)
+```
+<h3>
+<span style="font-size: large;">Análisis de correlación</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El siguiente paso es identificar el nivel de correlación entre la serie y sus retrasos, utilizando la función ts_cor una interfaz interactiva para la función.</span></div>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ts_cor(Vol)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se presume que la serie presenta una correlación con sus rezagos, es decir, dependencia entre ellos. Una forma más intuitiva de revisar la identificación de la relación entre la serie y sus rezagos es con la función ts_lags, veamos los gráficos que proporciona.</span></div>
+<h3>
+<span style="font-size: large;">Serie versus rezagos I</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+ts_lags(Vol)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Al igual que con la función ts_cor, se puede observar que el rezago uno (1) y el dos (2) de la serie tiene una fuerte correlación lineal. Del mismo modo, podemos acercarnos a los rezagos estacionales de la serie utilizando el argumento de los retrasos:</span></div>
+<h3>
+<span style="font-size: large;">Serie versus rezagos II</span></h3>
+```{r fig.align="center", echo=TRUE}
+ts_lags(Vol, lags = c(12, 24, 36, 48))
+```
+<h3>
+<span style="font-size: large;">Resumen de exploración y análisis</span></h3>
+<span style="font-size: large;">Puntos clave del análisis exploratorio:</span><br />
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">La serie tiene un patrón estacional fuerte, sin estacionalidad múltiple.</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">La tendencia muestra una ruptura estructural alrededor del año 2016 y un decrecimiento no lineal.</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">La serie presenta una fuerte correlación con sus rezagos estacionales.</span></li>
+</ul>
+<h3>
+<span style="text-align: justify;"><span style="font-size: large;">Pronósticos de la serie&nbsp;</span></span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Con todas las observaciones realizadas se diseñará un entrenamiento utilizando dos enfoques: El tradicional y el Backtesting. Seleccionando el que mejor se desempeñe en el conjunto de pruebas.&nbsp;</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<ul>
+<li><span style="font-size: large;">El enfoque tradicional divide la serie en particiones de capacitación y prueba (muestra). Entrena a cada modelo en el conjunto de entrenamiento y se evalúa el desempeño en el conjunto de pruebas. Se utilizarán los modelos: ARIMA, SARIMA, ETS y TSLM.&nbsp;</span></li>
+<li><span style="font-size: large;">El enfoque de Backtesting utiliza una ventana expansiva para entrenar y probar cada modelo en múltiples conjuntos de entrenamiento y prueba.&nbsp;</span></li>
+<li><span style="font-size: large;">Para la ruptura de la serie se utilizará una bandera (flag) binaria con un valor de 0 para cualquier observación antes del 2016 y 1 después.</span></li>
+</ul>
+</div>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+Vol_df <- ts_to_prophet(Vol) 
+head(Vol_df)
+library(lubridate)
+Vol_df$flag <- ifelse(year(Vol_df$ds) >= 2016, 1, 0)
+h1 <- 12 
+h2 <- 60 
+Vol_split <- ts_split(Vol, sample.out = h1)
+train <- Vol_split$train
+test <- Vol_split$test
+train_df <- Vol_df[1:(nrow(Vol_df) - h1), ]
+test_df <- Vol_df[(nrow(Vol_df) - h1 + 1):nrow(Vol_df), ]
+set.seed(1234)
+library(forecast)
+library(plotly)
+md1 <- auto.arima(train, 
+                  stepwise = FALSE, 
+                  approximation = FALSE,
+                  D = 1)
+```
+<h3>
+<span style="font-size: large;">Enfoque Tradicional</span></h3>
+<span style="font-size: large;">Práctica con tres enfoques de pronósticos:</span><br />
+<span style="font-size: large;"><br /></span>
+<ul>
+<li style="text-align: justify;"><span style="font-size: large;">ARIMA: Modelo Autorregresivo Integrado de Promedio Móvil que aplicaremos a través de la función auto.arima.</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">ETS: Estima un modelo de pronóstico de series temporales univariantes utilizando un método de suavizado exponencial. Se aplica con la función ETS (error, tendencia y componente estacional).</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">TSLM: Modelo de regresión lineal para series temporales. </span></li>
+</ul>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se recomienda diversificar el enfoque de modelado. El rendimiento de los modelos puede cambiar según la estructura de datos y los parámetros de ajuste. Se divide la serie en particiones de entrenamiento y prueba.</span></div>
+<h2 style="text-align: justify;">
+<span style="font-size: large;">Información de entrenamiento (training) y prueba (test)</span></h2>
+<h3>
+<span style="font-size: large;">Training</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El modelo se ajusta a los cambios en la tendencia pero no logra capturar los picos estacionales. La tasa de error (MAPE) en el conjunto de prueba (test) es más del doble que la del conjunto de entrenamiento (43%) (training). Posible sobreajuste.</span></div>
+<div style="text-align: justify;">
+<br />
+<ul>
+</ul>
+</div>
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+fc1 <- forecast(md1, h = h1)
+accuracy(fc1, test)
+```
+<h3>
+<span style="font-size: large;">Modelo SARIMA</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+test_forecast(forecast.obj = fc1, actual = Vol, test = test) %>% 
+  layout(legend = list(x = 0.6, y = 0.95))
+```
+<h3>
+<span style="font-size: large;">Modelo 2 ETS Training</span></h3>
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+md2 <- ets(train, opt.crit = "mse")
+fc2 <- forecast(md2, h = h1)
+accuracy(fc2, test)
+```
+<h3>
+<span style="font-size: large;">Modelo 2 ETS Gráfica</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+test_forecast(forecast.obj = fc2, actual = Vol, test = test) %>% 
+  layout(legend = list(x = 0.6, y = 0.95))
+```
+<h3>
+<span style="font-size: large;">Modelo 3 TSLM Training</span></h3>
+<br />
+<div style="text-align: justify;">
+<span style="font-size: large;">No captura los picos ni la estructura de tendencia. Resultado del manejo de errores por encima del SARIMA, el TSLM obtiene una tasa de error alta del 85% en el conjunto de pruebas.</span></div>
+<span style="font-size: large;"><div style="text-align: justify;">
+Aplicaremos la ruptura estructural agregando la variable flag que preparamos antes.</div>
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+md3 <- tslm(train ~ season + trend)
+fc3 <- forecast(md3, h = h1)
+accuracy(fc3, test)
+```
+<h3>
+<span style="font-size: large;">Modelo 3 TSLM Gráfica</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+test_forecast(forecast.obj = fc3, actual = Vol, test = test) %>% 
+  layout(legend = list(x = 0.6, y = 0.95))
+```
+<h3>
+<span style="font-size: large;">&nbsp;Modelo 4 TSLM con Flag -Training-</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Sigue por encima de los valores del modelo SARIMA. Aplicaremos en el próximo modelo una regresión polinómica elevando al cuadrado la tendencia.</span></div>
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+md3a <- tslm(train ~ season + trend + flag, data = train_df)
+fc3a <- forecast(md3a, h = h1, newdata = test_df)
+accuracy(fc3a, test)
+```
+<h3>
+<span style="font-size: large;">Modelo 4 TSLM Gráfica</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+test_forecast(forecast.obj = fc3a, actual = Vol, test = test) %>% 
+  layout(legend = list(x = 0.6, y = 0.95))
+```
+<h3>
+<span style="font-size: large;">&nbsp;Modelo 5 TSLM Training -Polinómico-</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Manejo de errores por encima de todos los anteriores. Se selecciona el modelo 1 SARIMA y evaluaremos los residuos</span></div>.  
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+md3b <- tslm(train ~ season + trend + I(trend ^ 2))
+fc3b <- forecast(md3b, h = h1)
+accuracy(fc3b, test)
+```
+<h3>
+<span style="font-size: large;">Modelo 5 TSLM Gráfica -Polinómico-</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+test_forecast(forecast.obj = fc3b, actual = Vol, test = test)  %>% 
+  layout(legend = list(x = 0.6, y = 0.95))
+```
+<h3>
+<span style="font-size: large;">Evaluación de residuos del Modelo 1 SARIMA</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+check_res(md1)
+```
+<h3>
+<span style="font-size: large;">Evaluación de residuos SARIMA</span></h3>
+<br />
+<div style="text-align: justify;">
+<span style="font-size: large;">Se observa en el correlograma que se logra el decrecimiento de los órdenes del polinomio puro, con alternancia de valores positivos y negativos. Estabilizado en media, y una distribución de errores que no es normal. Del mismo modo, queda correlación entre los rezagos de los residuos de la serie. Se podrían utilizar otros regresores para optimizar el modelo. No obstante, por razones de tiempo en el taller seguiremos con el SARIMA como ejemplo.</span></div>
+<span style="font-size: large;"><div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Para finalizar con el enfoque tradicional se realizarán los pronósticos para 12 meses del modelo SARIMA con intérvalos de confianza del 80% y 95%.</div>
+</span><br />
+<h3>
+<span style="font-size: large;">Pronósticos del modelo SARIMA</span></h3>
+```{r fig.align="center", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+md_final <- auto.arima(Vol, 
+                  stepwise = FALSE, 
+                  approximation = FALSE,
+                  D = 1)
+fc_final <- forecast(md_final, h = 12)
+plot_forecast(fc_final) %>% 
+  layout(legend = list(x = 0.6, y = 0.95))
+```
+<h3>
+<span style="font-size: large;">Enfoque Backtesting</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La ventaja del enfoque backtesting sobre el enfoque tradicional, es que proporciona una visión general del rendimiento de cada modelo. Permite identificar, además de la precisión, la estabilidad del rendimiento del modelo en distintas particiones temporales. Es un tipo especial de validación cruzada.  </span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+methods <- list(ets1 = list(method = "ets",
+                            method_arg = list(opt.crit = "mse"),
+                            notes = "ETS model with opt.crit = mse"),
+                ets2 = list(method = "ets",
+                            method_arg = list(opt.crit = "amse"),
+                            notes = "ETS model with opt.crit = amse"),
+                arima1 = list(method = "arima",
+                              method_arg = list(order = c(1,0,0)),
+                              notes = "ARIMA(1,0,0)"),
+                Sarima = list(method = "arima",
+                              method_arg = list(order = c(1,0,0),
+                                                seasonal = list(order = c(1,1,0))),
+                              notes = "SARIMA(1,0,0)(1,1,0)"),
+                tslm = list(method = "tslm",
+                            method_arg = list(formula = input ~ trend + season),
+                            notes = "tslm model with trend and seasonal components"))
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+md <- train_model(input = Vol,
+                  methods = methods,
+                  train_method = list(partitions = 6, 
+                                      sample.out = 12, 
+                                      space = 3),
+                  horizon = 12,
+                  error = "MAPE")
+```
+<h3>
+<span style="font-size: large;">Backtesting Gráfica</span></h3>
+```{r fig.align="center", echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+plot_model(md)
+```
+<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
+Resultados de búsqueda</h1>
+<div data-async-context="query:cepal" eid="5garXsvbLeOJggeh7qqADg" id="rso" style="margin-top: 6px;">
+<div class="g" data-hveid="CBYQAA" style="line-height: 1.2; margin-bottom: 27px; margin-top: 0px; width: 600px;">
+<h2 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
+Resultado web con enlaces de partes del sitio</h2>
+<h3>
+<span style="font-size: large;">Referencias</span></h3>
+Rami Krispin,&nbsp;Time Series Analysis and Forecasting with the TSstudio Package, 2019. Recuperado de:&nbsp;<a href="https://rpubs.com/ramkrisp/TSstudioDemo">https://rpubs.com/ramkrisp/TSstudioDemo</a></div>
+<div class="g" data-hveid="CBYQAA" style="line-height: 1.2; margin-bottom: 27px; margin-top: 0px; width: 600px;">
+[1] Comisión Económica para América Latina y el Caribe, balance Preliminar de las Economías de América Latina y el Caribe, 2019. Recuperado de <a href="https://repositorio.cepal.org/bitstream/handle/11362/45000/91/BPE2019_Venezuela_es.pdf">https://repositorio.cepal.org/bitstream/handle/11362/45000/91/BPE2019_Venezue</a><a href="https://repositorio.cepal.org/bitstream/handle/11362/45000/91/BPE2019_Venezuela_es.pdf">la_es.pdf</a></div>
+</div>
