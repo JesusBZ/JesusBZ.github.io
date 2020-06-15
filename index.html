@@ -228,6 +228,74 @@ $(document).ready(function () {
 .tabset-dropdown > .nav-tabs > li {
   display: none;
 }
+.widget_blog_subscription {
+	display: block;
+	margin: 50px auto;
+	width: 60%;
+	max-width: 490px;
+	min-width: 320px;
+	position: relative;
+	overflow: hidden;
+	background-color: #F6F6F2;
+}
+.widget_blog_subscription p {
+	margin: 0;
+	text-align: center;
+}
+.widget_blog_subscription p:first-child {
+	margin: 40px 15px 0;
+	color: #F38630;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 15px;
+	font-family: 'PT Sans Narrow', sans-serif;
+	letter-spacing: 1px;
+}
+.widget_blog_subscription input[type="text"] {
+	margin: 45px 30px;
+	color: #999;
+	padding: 25px 15px !important;
+	text-align: center;
+	width: 100% !important;
+	max-width: calc(100% - 90px);
+	outline: none;
+	border: 0;
+	text-transform: uppercase;
+	font-size: 15px;
+}
+.widget_blog_subscription input[type="text"]::-webkit-input-placeholder {
+	color: #69D2E7;
+}
+.widget_blog_subscription input[type="text"]:-moz-placeholder {
+	color: #69D2E7;
+}
+.widget_blog_subscription input[type="text"]::-moz-placeholder {
+	color: #69D2E7;
+}
+.widget_blog_subscription input[type="text"]:-ms-input-placeholder {
+	color: #69D2E7;
+}
+.widget_blog_subscription input[type="submit"] {
+	margin: 0;
+	background-color: #69D2E7;
+	color: #fff;
+	padding: 25px 15px !important;
+	text-align: center;
+	width: 100%;
+	max-width: 100%;
+	outline: none;
+	border: 0;
+	text-transform: uppercase;
+	font-size: 20px;
+	cursor: pointer;
+	-webkit-transition: .1s all ease-in-out;
+	-moz-transition: .1s all ease-in-out;
+	-o-transition: .1s all ease-in-out;
+	transition: .1s all ease-in-out;
+}
+.widget_blog_subscription input[type="submit"]:hover {
+	background-color: #F38630;
+}    
 </style>
 
 <!-- code folding -->
@@ -542,7 +610,17 @@ $(document).ready(function () {
 <div style="text-align: left;">
 <br /></div>
 </div>
-
+<section class="widget widget_blog_subscription">
+	<form action="https://formspree.io/jesuszerpaeconomia@gmail.com" target="_blank" method="post" accept-charset="utf-8" id="subscribe-blog">
+		<p>Subscríbete para nuevas publicaciones</p>
+		<p>
+			<input type="text" name="email" style="width: 95%; padding: 1px 2px" placeholder="Ingresa tu dirección e-mail" value="" id="subscribe-field">
+		</p>
+		<p>
+			<input type="submit" value="Enviar!">
+		</p>
+	</form>
+</section>
 <hr />
 <h5>
 <div>
