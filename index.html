@@ -295,6 +295,21 @@ $(document).ready(function () {
 }
 .widget_blog_subscription input[type="submit"]:hover {
 	background-color: #F38630;
+}
+.logos {
+    
+filter: url("data:image/svg xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10 */
+filter: gray; /*IE6-9*/
+-webkit-filter: grayscale(100%); /*Chrome 19+ & Safari 6+*/
+-webkit-transition: all 1.5s ease; /*Fade to color for Chrome and Safari*/
+-moz-transition: all 1.5s ease;
+-webkit-backface-visibility: hidden; /*Fix for transition flickering*/
+width: 100%;
+height: 100%;
+}
+.logos:hover {
+filter: none;
+-webkit-filter: grayscale(0%);
 }    
 </style>
 
@@ -608,7 +623,34 @@ $(document).ready(function () {
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Del sitio Web</span></h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Proyecto Web desarrollado desde cero con RStudio utilizando Rmarkdown y LateX en combinación con&nbsp; Htlm y&nbsp; Css. El código lo comparto en mi repositorio de Github, iré agregando otros módulos y optimizaciones.</span></div>
+<span style="font-size: large;">Proyecto Web desarrollado desde cero con RStudio utilizando Rmarkdown y LateX en combinación con&nbsp; Htlm, Css y Java Script. El código lo comparto en mi repositorio de Github, iré agregando otros módulos y optimizaciones. El contenido de los entrenamientos o informes contienen código en R o Python integrado en Html, lo que en algunos casos demora la carga de la página. </span></div>
+<br/>
+<hr>    
+<div class="logos">
+<div id="apDiv1">
+<table width="90%" border="0" align="center">
+<tr>
+<td><img src="imagenes/logos/rmarkdown.png"></td>
+<td width="25"></td>
+<td><img src="imagenes/logos/Rcran.png"></td>
+<td width="25"></td>
+<td><img src="imagenes/logos/Python.png"></td>
+<td width="25"></td>    
+<td><img src="imagenes/logos/VB.png"></td>   
+<td width="25"></td>
+<td><img src="imagenes/logos/Html.png"></td>   
+<td width="25"></td>
+<td><img src="imagenes/logos/Css.png"></td>   
+<td width="25"></td>  
+<td><img src="imagenes/logos/Js.png"></td>   
+<td width="25"></td>
+<td><img src="imagenes/logos/LateX%20.png"></td>   
+<td width="25"></td>    
+</tr>
+</table>
+</div>
+</div>   
+<hr>        
 <span style="font-size: medium;"><br /></span>
 <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
 </span></span></span><br />
@@ -620,7 +662,7 @@ $(document).ready(function () {
 <div style="text-align: center;">
 <div style="text-align: left;">
 <br /></div>
-</div>
+</div>  
 <section class="widget widget_blog_subscription">
 	<form action="https://formspree.io/jesuszerpaeconomia@gmail.com" target="_blank" method="post" accept-charset="utf-8" id="subscribe-blog">
 		<p>Suscríbete para nuevas publicaciones</p>
