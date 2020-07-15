@@ -13,13 +13,10 @@
 
 <title>Portafolios de Inversión</title>
 <meta name="description" content="La teoría de portafolios eficientes con Rstudio para la elaboración de una cartera de inversión con seis valores bursátiles, correspondientes a empresas pertenecientes a diferentes sectores económicos y registradas en el índice Standard and Poor 500 (S&P 500). ."/>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <link  rel="icon"   href="favi.png" type="image/png" />
@@ -88,27 +85,6 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 
 </style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -245,26 +221,6 @@ body {
 }
 </style>
 
-<script>
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.parent().addClass('active');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-});
-</script>
-
-<!-- tabsets -->
-
 <style type="text/css">
 .tabset-dropdown > .nav-tabs {
   display: inline-table;
@@ -332,9 +288,6 @@ $(document).ready(function () {
 
 <div class="container-fluid main-container">
 
-
-
-
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -343,81 +296,72 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="comienzo.html">Portafolio</a>
+      <a class="navbar-brand" href="index.html">Portafolio</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="comienzo.html">
+  <a href="index.html">
     <span class="fa fa-home"></span>
      
     Inicio
   </a>
 </li>
 <li>
-  <a href="index.html">Acerca de</a>
+  <a href="acercade.html">Acerca de</a>
 </li>
 <li>
   <a href="formulario.html">Contacto</a>
 </li>
+<li>
+  <a href="https://rpubs.com/JesusZ"rel="nofollow" target="_blank">Rpubs</a>
+</li>
+<li>
+  <a href="https://jesusbzerpa.github.io/"rel="nofollow" target="_blank">Mi Perfil</a>
+</li>
+<li>
+  <a href="https://jesusbezerpa.github.io/"rel="nofollow" target="_blank">Servicios</a>
+</li>          
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Training
+   Recursos
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="modelo-ventas.html">Proyecto 1</a>
-    </li>
-    <li>
-      <a href="Proyecto2.html">Proyecto 2</a>
-    </li>
-    <li>
-      <a href="proyecto3.html">Proyecto 3</a>
-    </li>
-    <li>
-      <a href="proyecto4.html">Proyecto 4</a>
-    </li>
-    <li>
-      <a href="Dashboard.html">Proyecto 5</a>
-    </li>
-    <li>
-      <a href="EvaluacionProyecto.html">Proyecto 6</a>
-    </li>
-    <li>
-      <a href="proyecto7.html">Proyecto 7</a>
-    </li>
-  </ul>
-</li>
+      <a href="https://onedrive.live.com/download?resid=97B9EE70067CDD34%212341&authkey=ABrxoNLIj1Woc0Q">Manual Excel</a>
+    </li>                
       </ul>
+    </li> 
+    </ul>      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://join.skype.com/invite/vfcMypZd0Ucf">
+  <a href="https://join.skype.com/invite/vfcMypZd0Ucf"rel="nofollow" target="_blank">
     <span class="fa fa fa fa-skype"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://t.me/jesusbz21">
+  <a href="https://t.me/jesusbz21"rel="nofollow" target="_blank">
     <span class="fa fa fa fa-telegram"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://www.linkedin.com/in/jesús-zerpa-807646129/">
+  <a href="https://www.linkedin.com/in/jesús-zerpa-807646129/"rel="nofollow" target="_blank">
     <span class="fab fa fab fa-linkedin"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa">
+  <a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa"rel="nofollow" target="_blank">
     <span class="fa fa fa fa-scribd"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/JesusBZ">
+  <a href="https://github.com/JesusBZ"rel="nofollow" target="_blank">
     <span class="fa fa fa fa-github"></span>
      
   </a>
@@ -434,7 +378,6 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
-
 
 
 
@@ -461,6 +404,7 @@ $(document).ready(function () {
 </div>
 <div style="text-align: justify;">
 <br />
+<br>    
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><b>Descripción</b>: En el siguiente entrenamiento se aplicará la teoría de portafolios eficientes para la elaboración de una cartera de inversión con seis valores bursátiles, correspondientes a empresas pertenecientes a diferentes sectores económicos y registradas en el índice Standard and Poor 500 (S&amp;P 500). </span>
@@ -1215,7 +1159,51 @@ Para finalizar, se agregará un mapa de calor de correlaciones “HeatMap”, el
 
 
 </div>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
 
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
 <script>
 
 // add bootstrap table styles to pandoc tables
