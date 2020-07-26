@@ -1,2 +1,2 @@
 # JesusBZ.github.io
-Proyecto web resumen de portafolio
+Proyecto web resumen de portafolio, modelización avanzada en Rstudio.
