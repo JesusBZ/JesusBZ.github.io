@@ -42,7 +42,6 @@ navbar:
 output:
   html_document:
     theme: cerulean
-    css: 'styles.css'
     highlight: tango
     include:
       after_body: _footer.html

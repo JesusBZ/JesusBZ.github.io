@@ -1,0 +1,186 @@
+---
+title: "Bitcoin y Ether Pronósticos con Prophet "
+---
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-mtFAypS4NwY/XxygxUAaXLI/AAAAAAAACWE/lwCqazQT9UAN_M33dFMHLKkbjJ-YsrP4ACLcBGAsYHQ/s1600/prophet.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="525" data-original-width="700" src="https://1.bp.blogspot.com/-mtFAypS4NwY/XxygxUAaXLI/AAAAAAAACWE/lwCqazQT9UAN_M33dFMHLKkbjJ-YsrP4ACLcBGAsYHQ/s1600/prophet.webp" /></a></div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Bitcoin &amp; Ether Pronósticos usando Prophet</span></h2>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Introducción:&nbsp;</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el siguiente entrenamiento se presenta una novedosa herramienta a traders y especialistas en criptomonedas para hacer  pronósticos. En un mundo tan dinámico, una de las necesidades para estos profesionales es estar actualizados en las técnicas para el análisis de datos con posibilidades predictivas muchas veces sin la rigurosidad técnica y teórica de los modelos robustos para este tipo de análisis que requieren de un vasto conocimiento en estadísticas o econometría como los modelos del catálogo</span><span style="font-size: large;"> "<a href="https://jesusbz.github.io/Proyecto2.html">Arch-Garch</a>" </span><span style="font-size: large;">por ejemplo.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Hace algunos meses leí sobre el paquete Prophet creado por el equipo&nbsp;</span><span style="font-size: large;"><a href="https://facebook.github.io/prophet/">Core Data Science</a> </span><span style="font-size: large;">de  Facebook y desarrollado en código abierto. El paquete está disponible para el entorno de desarrollo integrado de Rstudio y Python. En general, es rápido y proporciona pronósticos completamente automatizados para científicos y analistas de datos en solo unas cuántas líneas de código, lo que agiliza su aplicación.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Por estas razones, decidí ofrecerles un breve entrenamiento con Prophet realizando ejercicios predictivos con los precios de cierre del Bitcoin y Ether, comentando sus ventajas, posibles aplicaciones de apoyo para el trader profesional y sus limitaciones con respecto a otros modelos más elaborados.</span><br />
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">No obstante, el pronóstico es una de las áreas del análisis de datos que requiere del manejo de conceptos abstractos y una base matemática rigurosa, lo que puede ser suficientemente desalentador para alejar aquellos que quieran sumergirse en las profundidades de estos métodos.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En este sentido, Prophet ofrece una alternativa para todos aquellos aficionados que quieran iniciarse en el apasionante mundo del Pronóstico, logrando que sus predicciones se asemejen a las de un profesional, sin necesidad de tener un conocimiento denso del tema.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Sin embargo, Prophet no puede considerarse el mejor de los modelos en la mayoría de los casos. Su máximo rendimiento se consigue en series con estacionalidad, tendencia y deriva. Por ejemplo, en series temporales de ventas comerciales en volumen, donde existe un comportamiento relacionado con épocas del año, días festivos o fines de semana.&nbsp;</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Descripción:&nbsp;</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se aplicará el paquete Prophet utilizando la plataforma de Rstudio para realizar el análisis de tendencia, ciclos y estacionalidad finalizando con pronósticos a las dos criptomonedas de mayor capitalización: el Bitcoin (BTC) y Ether (ETH), seleccionando el período 2016-2020, la data es de frecuencia diaria y se tomarán los precios ajustados de cierre directamente del portal&nbsp;</span><span style="font-size: large;"><a href="https://es.investing.com/" target="_blank">investing.com</a></span><span style="font-size: large;">. Los pronósticos se realizarán para un horizonte de 31 días.&nbsp;</span></div>
+<div style="text-align: justify;">
+<h3>
+<span style="font-size: large;">Packpages:&nbsp;</span></h3>
+</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/prophet/prophet.pdf">Prophet</a> (0.6.1)</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Implementa un procedimiento para pronosticar datos de series de tiempo basados en un modelo aditivo en el que las tendencias no lineales se ajustan a las anuales, semanales y estacionalidad diaria, más efectos de vacaciones. Funciona mejor con series de tiempo que tienen fuertes efectos estacionales y varias temporadas de datos históricos. Prophet es robusto ante los datos faltantes y los cambios en la tendencia, y generalmente maneja los valores atípicos bien.</span></div>
+<h3 style="text-align: justify;">
+<a href="https://cran.r-project.org/web/packages/tidyverse/tidyverse.pdf"><span style="font-size: large;">Tidyverse</span></a></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El 'tidyverse' es un conjunto de paquetes que funcionan en armonía porque comparten representaciones de datos comunes y 'API' diseño. Este paquete está diseñado para facilitar la instalación y carga múltiples paquetes 'tidyverse' en un solo paso.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Data</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se utilizará una muestra de la principales criptomonedas a la fecha, el Bitcoin y Ether, desde del 2016 (año de inicio de la cripto Ether), hasta el 24 de julio del 2020. Y a partir de esa fecha un pronóstico de 31 días.&nbsp;</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Bitcoin:</b> El Bitcoin es una criptomoneda (moneda que usa criptografía fuerte) originada tras el colapso inmobiliario del año 2009, según su White Paper (documento de importancia capital que describe en detalle el proyecto de cada cripto) fue creada bajo el seudónimo de Satoshi Nakamoto, a la fecha se desconoce quién o quiénes fueron sus creadores.&nbsp;</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Al ser operado por una entidad descentralizada se desliga del dinero tradicional emitido por gobiernos o Banca Central. Este hecho a desatado una revolución en la economía digital global que pone en duda el futuro del sistema monetario y financiero mundial que actualmente conocemos. Colocando a las criptomonedas como una alternativa que rompe los esquemas tradicionales y cada vez son más los que se interesan por ellas y se alejan del dinero fiat.&nbsp;</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El Bitcoin es considerada la reina de las criptomonedas por ser la de mayor capitalización. Está respaldada por una tecnología denominada Blockchain que ha demostrado su enorme potencial en diversas áreas desde simples transacciones, hasta en sistemas complejos de distribución logística.</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Ether:</b> Según el portal especializado <a href="http://investopedia.com/">Investopedia.com</a><a href="https://www.blogger.com/"></a>, Ether es el elemento integral de la red Ethereum blockchain que actúa como combustible de la red, manteniéndola ágil y funcional. Si bien muchos creen que el Ether es la moneda digital nativa de Ethereum (red), actúa como un medio de incentivo o forma de pago para que los participantes de la red ejecuten sus operaciones solicitadas en la red.</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La red Ethereum admite la creación y ejecución de aplicaciones digitales descentralizadas ( dApps ) para uso comercial y personal. Un desarrollador que construye aplicaciones Ethereum puede necesitar pagar cargos para alojar y ejecutar las aplicaciones en la red Ethereum, y un usuario que usa dichas aplicaciones puede tener que pagar por usar la aplicación. Ether actúa como un medio para permitir tales pagos. Un desarrollador que crea una aplicación que utiliza recursos mínimos de red pagará menos Ether en comparación con el que crea aplicaciones de alto recurso.</span></div>
+<div style="text-align: justify;">
+<h3>
+<span style="font-size: large;">Carga de paquetes</span></h3>
+<div>
+<span style="font-size: large;">Las primeras líneas de código son para cargar en el entorno de Rstudio las funciones de los dos paquetes que se utilizarán. En caso de que los paquetes no se hayan instalado previamente se deberá aplicar el comando install.packpages("nombre del paquete"). Y luego se hace el llamado con el comando library(nombre del paquete).</span></div>
+<h3>
+<span style="font-size: large;">Carga de datos</span></h3>
+<div>
+<span style="font-size: large;">Para estructurar la data se necesita seguir la siguiente secuencia. La primera columna (de las fechas) se identifica con la las letras "ds" y el orden será "yyy-m-d" es decir año-mes-día. La siguiente columna (datos) se identifica con la letra "y". <a href="https://raw.githubusercontent.com/JesusBZ/Bases-de-datos/master/cripto/bitcoin%20032016-072020" target="_blank">Aquí</a> puedes ver como estructuré los datos para el Bitcoin. Para descargarlos una vez que esté en el raw de github, clic derecho en la página guardar como texto.&nbsp;</span></div>
+</div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(prophet)
+library(tidyverse)
+```
+
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Comandos Head y Tail</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El comando "head" nos muestras los datos del pricipio y "tail" los del final, esto permite saber si Rstudio leyó la base de datos completos para realizar las prácticas.  El comando "summary" nos arroja un resumen de estadísticos y la distribución de los datos de la muestra.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+btc_model <- read.csv("C:/Users/Personal/Desktop/Escritorio/prophet/BTC2.txt", sep=";")
+head(btc_model)
+tail(btc_model)
+summary(btc_model)
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Primeras predicciones</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Su aplicación se asemeja a la utilización del Machine Learning, el packpage “propheta” se ajusta a un modelo en el marco de datos y luego desplegará el modelo usando el comando de predicción "make_future_dataframe" para recibir predicciones en el horizonte de pronóstico o los 31 días requeridos, en el comnado “periods”.</span></div>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+modelo1 <- prophet(btc_model)
+horizonte1 <- make_future_dataframe(modelo1, periods = 31)
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Pronósticos</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se conocerán los valores del pronóstico utilizando el comando "predict" y crearemos un objeto denominado "forecast1" para almacenarlos y hacer el llamado. El comando "tail" enumerará las últimas observaciones pronosticadas (mes de agosto 2020) que contienen los detalles sobre la fecha (ds), el valor pronosticado (yhat) y el intervalo de confianza de la estimación: valores mínimo-máximo.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+forecast1 <- predict(modelo1, horizonte1)
+tail(forecast1[c('ds','yhat','yhat_lower','yhat_upper')])
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Gráfica interactiva</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Con el comando "dyplot.prophet" se representa gráficamente el pronóstico que nos da información de las cifras de los datos. Se puede ajustar en detalle el alcance utilizando el control deslizante en la parte inferior del área de trazado.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dyplot.prophet(modelo1, forecast1)
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Observaciones</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Parece haber una probabilidad de que el precio se mantenga en el soporte de los 9000 USD$ hasta la fecha del prónóstico en agosto 2020 para el&nbsp; Bitcoin. Se pueden ver los valores específicos desplazándose por el área del gráfico o imprimiendo los valores en Rstudio. También podemos ver ciertos efectos de estacionalidad o día de la semana usando el comando "prophet_plot_components" .</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+prophet_plot_components(modelo1, forecast1)
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Componentes estacionales</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el gráfico "trend" se puede apreciar la crecida en el precio del Bitcoin ocurrida durante el año 2018. Y a partir de finales del 2019 una estabilización de la tendencia, a pesar de los estragos&nbsp;ocurridos durante la pandemia 2020 el precio vuelve&nbsp;a estabilizarse.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el gráfico "weekly" días de la semana, parece haber un decrecimiento&nbsp;más acentuado de miércoles a jueves que en el resto de la semana.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">En el gráfico "yearly" se nota un crecimiento del precio en el último&nbsp;trimestre del año calendario hacia el mes de diciembre, y un decrecimiento al final del primer trimestre o finales de marzo a comienzos de abril y una estabilización de mayo a octubre.&nbsp;</span></div>
+
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Comentarios</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Prophet es ideal para realizar informes rápidos y analizar distintos tipos de datos comerciales, tráfico web, ventas y cualquier dato que tenga una frecuencia de medición diaria o sub-diaria, es decir por hora o minutos por ejemplo. Se adapta a las necesidades de analistas que requieran de una herramienta que puedan aprender a manejar rápidamente con unas pocas líneas de código en R o Python, de buen desempeño sin las especificaciones técnicas de los modelos estadísticos más elaborados.</span><br />
+<span style="font-size: large;"><br /></span>
+<span style="font-size: large;">A continuación dejo los datos arrojados para la criptomoneda Ether. Y <a href="https://raw.githubusercontent.com/JesusBZ/Bases-de-datos/master/cripto/ether%20032016-072020" target="_blank">aquí</a> puedes descargar la data ya transformada para hacer prácticas.&nbsp;&nbsp;</span></div>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+eth_model <- read.csv("C:/Users/Personal/Desktop/Escritorio/prophet/ETH.txt", sep=";")
+head(eth_model)
+tail(eth_model)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+modelo2 <- prophet(eth_model)
+horizonte2 <- make_future_dataframe(modelo2, periods = 31)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+forecast2 <- predict(modelo2, horizonte2)
+tail(forecast2[c('ds','yhat','yhat_lower','yhat_upper')])
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dyplot.prophet(modelo2, forecast2)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+prophet_plot_components(modelo2, forecast2)
+```
+
+
+
+<hr>
+<div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
+</div>
+<span style="font-size: medium;"><br /></span>
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
+</span></span></span><br />
+<br />
+<div style="text-align: center;">
+<div style="text-align: left;">
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+</div>
