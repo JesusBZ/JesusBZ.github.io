@@ -289,7 +289,30 @@ height: 100%;
 .logos:hover {
 filter: none;
 -webkit-filter: grayscale(0%);
-}  
+} 
+.w3l-footer-22-main #movetop {
+  position: fixed;
+  bottom: 12px;
+  right: 15px;
+  z-index: 99;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  background: #67bdff;
+  padding: 0;
+  line-height: 38px;
+  transition: 0.5s ease-out;
+  border-radius: 50%;
+}
+
+.w3l-footer-22-main #movetop:hover {
+  background: #213e54;
+}
+ 
 </style>
 
 <!-- code folding -->
@@ -698,6 +721,11 @@ Hace algunos meses leí sobre el paquete Prophet creado por el equipo <a href="h
 	</form>
 </section>
 <hr />
+<section class="w3l-footer-22-main">
+<button onclick="topFunction()" id="movetop" title="Ir a Inicio">
+<span class="fa fa-arrow-up"></span>
+</button>
+</section>
 <h5>
 <div>
 <div style="text-align: center;">
@@ -781,6 +809,28 @@ $(document).ready(function () {
   gtag('config', 'UA-169665920-1');
 gtag('set', {'user_id': 'USER_ID'}); 
 ga('set', 'userId', 'USER_ID');    
-</script>    
+</script> 
+<!-- move top -->
+ <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function () {
+                scrollFunction()
+            };
+    
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+    
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+        <!-- /move top -->   
 </body>
 </html>
