@@ -274,6 +274,47 @@ body {
 .tabset-dropdown > .nav-tabs > li {
   display: none;
 }
+.code-box {
+background: #FAFAFA;
+padding: 15px 20px;
+border: 1px solid #EAEAEA;
+color: #237DAC;
+webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, .06);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .06);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.code-box a{
+    color: #237DAC;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+font-size: 15px !important;
+font-weight: 300;
+    line-height: 1.5em;
+
+}
+.w3l-footer-22-main #movetop {
+  position: fixed;
+  bottom: 12px;
+  right: 15px;
+  z-index: 99;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  background: #67bdff;
+  padding: 0;
+  line-height: 38px;
+  transition: 0.5s ease-out;
+  border-radius: 50%;
+}
+
+.w3l-footer-22-main #movetop:hover {
+  background: #213e54;
+}
 </style>
 
 <!-- code folding -->
@@ -402,6 +443,25 @@ body {
 <a href="" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="532" data-original-width="800" src="imagenes/imagen-f.webp" /></a>
 </div>
 </div>
+<br>
+<br>
+<span style="font-size: 24px;"><b>Contenido</b></span>
+<div class="code-box">
+<a href="#Descripción">Descripción</a> <br />
+<a href="#introduccion">1. Introducción a la teoría de Markowitz</a> <br />
+<a href="#supuestos">2. Supuestos de la teoría de Markowitz</a> <br />
+<a href="#diversificacion">3. Diversificación de la teoría de Markowitz</a> <br />
+<a href="#fronteras">4. Fronteras eficientes</a> <br />
+<a href="#data">5. Data</a><br />
+<a href="#riesgo">6. Riesgo de cartera<br />
+<a href="#paqueterias">7. Paqueterías a utilizar</a> <br />
+<a href="#modelo">8. Modelado</a> <br />
+<a href="#rentabilidad">9. Rentabilidad logarítmica</a> <br />
+<a href="#rendimientos">10 Rendimiento esperado y volatilidades</a> <br />
+<a href="#markowitz">11. Modelo de Markowitz</a> <br />
+<a href="#participacion">12. Participación por portafolio</a> <br />
+</div><br />
+
 <div style="text-align: justify;">
 <br />
 <br>    
@@ -409,41 +469,9 @@ body {
 <div style="text-align: justify;">
 <span style="font-size: large;"><b>Descripción</b>: En el siguiente entrenamiento se aplicará la teoría de portafolios eficientes para la elaboración de una cartera de inversión con seis valores bursátiles, correspondientes a empresas pertenecientes a diferentes sectores económicos y registradas en el índice Standard and Poor 500 (S&amp;P 500). </span>
 </div>
+<span style="font-size: large;"> </span>
 <h3>
-<span style="font-size: large;">Contenido:</span>
-</h3>
-<span style="font-size: large;"></span><br />
-<ul>
-<span style="font-size: large;">
-<li>
-<span style="font-size: large;">Introducción a la teoría de Markowitz </span>
-</li>
-<li>
-<span style="font-size: large;">Supuestos de la teoría de Markowitz </span>
-</li>
-<li>
-<span style="font-size: large;">Diversificación de la teoría de Markowitz</span>
-</li>
-<li>
-<span style="font-size: large;">Frontera eficiente</span>
-</li>
-<li>
-<span style="font-size: large;">Data</span>
-</li>
-<li>
-<span style="font-size: large;">Riesgo de cartera y rendimiento esperado</span>
-</li>
-<li>
-<span style="font-size: large;">Paqueterías</span>
-</li>
-<li>
-<span style="font-size: large;">Modelado </span>
-</li>
-</span>
-</ul>
-<span style="font-size: large;"> </span> <br />
-<h3>
-<span style="font-size: large;">Introducción a la teoría de Markowitz </span>
+<span style="font-size: large;"><a name="introduccion">1. Introducción a la teoría de Markowitz</a> </span>
 </h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">En 1952, un economista llamado Harry Markowitz escribió un artículo titulado “<a href="https://www.math.ust.hk/~maykwok/courses/ma362/07F/markowitz_JF.pdf" rel="nofollow" target="_blank">Portfolio Selection</a>”, un documento que contenía teorías que transformaron el panorama de la gestión de cartera, páginas que le otorgarían el Premio Nobel de Economía casi cuatro décadas después.</span>
@@ -461,7 +489,7 @@ body {
 
 </div>
 <h3>
-<span style="font-size: large;">Supuestos de la teoría de Markowitz: </span>
+<span style="font-size: large;"><a name="supuestos">2. Supuestos de la teoría de Markowitz: </a></span>
 </h3>
 <span style="font-size: large;"></span><br />
 <ul>
@@ -501,19 +529,19 @@ body {
 </ul>
 <span style="font-size: large;"> </span> <br />
 <h3>
-<span style="font-size: large;">Diversificación de la teoría de Markowitz :</span>
+<span style="font-size: large;"><a name="diversificacion">3. Diversificación de la teoría de Markowitz :</a></span>
 </h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">Markowitz postuló que la diversificación no solo debe apuntar a reducir el riesgo de un valor reduciendo su variabilidad o desviación estándar, sino también reduciendo la covarianza o el riesgo interactivo de dos o más valores en una cartera. Como por combinación de diferentes valores, es teóricamente posible tener un rango de riesgo que varía de cero a infinito.</span>
 </div>
 <h3>
-<span style="font-size: large;">Frontera eficiente:</span>
+<span style="font-size: large;"><a name="fronteras">4. Frontera eficiente:</a></span>
 </h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">La frontera eficiente es el conjunto de carteras óptimas que ofrecen el rendimiento esperado más alto para un nivel de riesgo definido o el riesgo más bajo para un nivel dado de rendimiento esperado.</span>
 </div>
 <h3>
-<span style="font-size: large;">Data</span>
+<span style="font-size: large;"><a name="data">5. Data</a></span>
 </h3>
 <span style="font-size: large;">Los seis activos bursátiles de la cartera forman parte del índice S&amp;P 500, se seleccionó el período desde enero 2010 hasta abril 2020:</span><br />
 <div style="text-align: justify;">
@@ -534,7 +562,7 @@ body {
 <div>
 <span style="font-size: large;"><br /><b><a href="https://finance.yahoo.com/quote/MCD?p=MCD&amp;.tsrc=fin-srch" rel="nofollow" target="_blank">McDonald’s Corporation</a> (MCD): </b>Es una franquicia de restaurantes de servicio rápido estadounidense con sede en Illinois Chicago.</span><br />
 <h2 style="text-align: center;">
-<span style="font-size: x-large;">Riesgo de cartera y rendimiento esperado</span>
+<span style="font-size: x-large;"><a name="riesgo">6. Riesgo de cartera y rendimiento esperado</a></span>
 </h2>
 <div style="text-align: justify;">
 <span style="font-size: large;">El rendimiento esperado de la cartera se calcula como una suma ponderada de los rendimientos de los activos individuales. Para su cálculo se utiliza la siguiente fórmula: </span>
@@ -574,7 +602,7 @@ body {
 </div>
 <hr />
 <h3>
-<span style="font-size: x-large;">Paqueterías a utilizar:</span>
+<span style="font-size: x-large;"><a name="paqueterias">7. Paqueterías a utilizar:</a></span>
 </h3>
 <h3>
 <span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/fPortfolio/fPortfolio.pdf" rel="nofollow" target="_blank">Portfolio</a></span>
@@ -594,7 +622,7 @@ body {
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(knitr)</a>
 <a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(kableExtra)</a></code></pre></div>
 <h3>
-<span style="font-size: large;">Modelado</span>
+<span style="font-size: large;"><a name="modelo">8. Modelado</a></span>
 </h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">A continuación se armarán los datos de cada serie temporal utilizando la paquetería de portfolio y se graficarán. </span>
@@ -663,7 +691,7 @@ body {
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span> <span style="font-size: large;">Se observan en conjunto los históricos de las series temporales y se aprecia el comportamiento creciente en cada uno de ellos con algunos períodos de desaceleración. Por último, la perturbación al final del primer trimestre del 2020 impulsado por la alarma de pandemia  del Covid-19.</span><br />
 <h3>
-<span style="font-size: large;">Rentabilidad logarítmica</span>
+<span style="font-size: large;"><a name="rentabilidad">9. Rentabilidad logarítmica</a></span>
 </h3>
 <div>
 <span style="font-size: large;">Uno de los supuestos del modelo es que los retornos (rentabilidades) tienen el comportamiento de una distribución normal. La rentabilidad logarítmica permite su uso en probabilidades que se basan en este tipo de distribución con la restricción de que los valores no pueden ser inferiores a (-1). </span>
@@ -738,7 +766,7 @@ body {
 <span style="font-size: large;"><br /></span>
 </h3>
 <h3 style="text-align: center;">
-<span style="font-size: large;">Rendimientos esperados (medios) y volatilidades:</span>
+<span style="font-size: large;"><a name="rendimientos">10. Rendimientos esperados (medios) y volatilidades:</a></span>
 </h3>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">RendimientoPromedio =<span class="st"> </span><span class="kw">c</span>(<span class="kw">mean</span>(RetornoIndice),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>MSFT),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>JNJ),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>MA),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>PEP),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>WMT),<span class="kw">mean</span>(Rendimientos<span class="op">$</span>MCD))</a>
 <a class="sourceLine" id="cb36-2" title="2"></a>
@@ -915,7 +943,7 @@ Para finalizar, se agregará un mapa de calor de correlaciones “HeatMap”, el
 <a class="sourceLine" id="cb56-18" title="18"><span class="kw">generate_heat_map</span>(corr1,<span class="st">&quot;Mapa de calor: Correlaciones&quot;</span>)</a></code></pre></div>
 <img src="proyecto4_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 <h3>
-<span style="font-size: large;">Modelo de Markowitz</span>
+<span style="font-size: large;"><a name="markowitz">11. Modelo de Markowitz</a></span>
 </h3>
 <span style="font-size: large;"></span><br />
 <div style="text-align: justify;">
@@ -1058,7 +1086,7 @@ Para finalizar, se agregará un mapa de calor de correlaciones “HeatMap”, el
 ## Description:
 ##  Mon Jun 01 18:22:32 2020 by user: Personal</code></pre>
 <h2 style="text-align: center;">
-<span style="font-size: x-large;">Participación por portafolio:</span>
+<span style="font-size: x-large;"><a name="participacion">12. Participación por portafolio:</a></span>
 </h2>
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Composición del Portafolio Eficiente</span>
@@ -1119,6 +1147,11 @@ Para finalizar, se agregará un mapa de calor de correlaciones “HeatMap”, el
 
 <div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
 </div>
+<section class="w3l-footer-22-main">
+<button onclick="topFunction()" id="movetop" title="Ir a Inicio">
+<span class="fa fa-arrow-up"></span>
+</button>
+</section>
 <span style="font-size: medium;"><br /></span>
 <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
 </span></span></span><br />
@@ -1243,6 +1276,27 @@ $(document).ready(function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
-
+<!-- move top -->
+ <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function () {
+                scrollFunction()
+            };
+    
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+    
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+        <!-- /move top -->
 </body>
 </html>
