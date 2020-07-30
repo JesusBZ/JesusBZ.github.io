@@ -1,0 +1,402 @@
+---
+title: "."
+---
+<br>
+<br>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-UZKrKnYKhMI/XyGTrgYJ4mI/AAAAAAAACXY/b_f676hNoHcSm6RAj2XrTaK_adb3qxllACLcBGAsYHQ/s1600/monte%2Bcarlo.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1280" src="https://1.bp.blogspot.com/-UZKrKnYKhMI/XyGTrgYJ4mI/AAAAAAAACXY/b_f676hNoHcSm6RAj2XrTaK_adb3qxllACLcBGAsYHQ/s1600/monte%2Bcarlo.webp" /></a></div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Simulación Monte Carlo</span></h2>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Descripción: </b>En el siguiente entrenamiento se realizará una introducción a la Simulación Monte Carlo utilizando los resultados de cartera que se obtuvieron del entrenamiento <a href="https://jesusbz.github.io/proyecto4.html" target="_blank">"Portafolio de Fronteras Eficientes -Markowitz-"</a> que se encuentra en una de las entradas de esta página.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se realizará en el entorno de desarrollo integrado de Rstudio, y el diseño del mismo permitirá conocer los puntos prácticos de su aplicación.&nbsp;No es una inmersión profunda en la Simulación&nbsp; Monte Carlo para problemas industriales muy específicos y bien definidos.   </span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Para entender de manera sencilla la Simulación Monte Carlo es necesario tener presente el significado de dos términos estadísticos: Probabilístico y Determinístico.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Probabilístico: En síntesis, es "algo" que pueda cuantificarse mediante una distribución de probabilidad. Por ejemplo: ¿Cuántas personas se presentan para una función de cine?</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Determinístico: "Algo" que se puede calcular a partir de parámetros. Por ejemplo, si se presentan 200 personas para una función de cine que tiene 185 asientos, ¿cuántas personas se van a la siguiente función?</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Una simulación de Monte Carlo puede explicar la incertidumbre (naturaleza probabilística) en los parámetros de un modelo determinista que produce una distribución de probabilidad de posibles resultados.</span></div>
+<div style="text-align: justify;">
+<br />
+<h3>
+<span style="font-size: large;">Paqueterías</span></h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/tidyquant/tidyquant.pdf" target="_blank">Tidyquant:</a> Lleva el análisis comercial y financiero al 'tidyverse'. El paquete proporciona un contenedor compatible con objetos 'xts', 'zoo', 'quantmod', 'TTR'; el 'PerformanceAnalytics' se activa y devuelve los objetos en el formato ordenado 'tibble'. La principal ventaja es el poder usar funciones cuantitativas con el 'tidyverse' funciones que incluyen 'purrr', 'dplyr', 'tidyr', 'ggplot2', 'lubridate', etc. <br /><br /><a href="https://cran.r-project.org/web/packages/tidyverse/tidyverse.pdf" target="_blank">Tidyverse:</a> El 'tidyverse' es un conjunto de paquetes que funcionan en armonía porque comparten representaciones de datos comunes y 'API' diseño. Este paquete está diseñado para facilitar la instalación y carga múltiples paquetes 'tidyverse'.</span><br /><br /><span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/timetk/timetk.pdf" target="_blank">Timetk:</a>&nbsp;Fácil visualización, discusión e ingeniería de características de datos en series de tiempo para pronósticos&nbsp; y predicción en aprendizaje automático.
+Los métodos discutidos aquí son comunes en el aprendizaje automático y han sido citados
+en diversas publicaciones.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/broom/broom.pdf" target="_blank">Broom:</a>&nbsp;Resume información clave sobre objetos estadísticos ordenados en tibbles. Esto hace que sea fácil informar resultados, crear
+trazas y trabaja constantemente con grandes cantidades de modelos a la vez.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Broom proporciona tres funciones que proporcionan diferentes tipos de información sobre un modelo. "tidy" () resume la información sobre el modelo,&nbsp; componentes como los coeficientes de una regresión. "glance" () información sobre un modelo completo, como medidas de bondad de ajuste: AIC y BIC. "augment" () agrega información sobre observaciones individuales a un conjunto de datos como valores ajustados.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/highcharter/highcharter.pdf" target="_blank">Highcharter:</a>&nbsp;Un contenedor para la biblioteca 'Highcharts' que incluye funciones de acceso directo para trazar objetos R. Highcharts&nbsp;</span><span style="font-size: large;"><a href="https://www.highcharts.com/">https://www.highcharts.com</a>/&nbsp;</span><span style="font-size: large;">es una oferta de numerosos tipos de gráficos con una sintaxis de configuración simple.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Data</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los seis activos bursátiles de la cartera forman parte del índice S&amp;P 500, se seleccionó el período desde enero 2010 hasta abril 2020:</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://finance.yahoo.com/quote/MSFT/" target="_blank">Microsotf Corporation</a> (MSFT): Importante compañía tecnológica multinacional con sede en Redmond, Washington, EE.UU, es la de mayor capitalización dentro del índice S&amp;P 500.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://finance.yahoo.com/quote/JNJ?p=JNJ&amp;.tsrc=fin-srch" target="_blank">Johnson &amp; Johnson</a> (JNJ): Histórico fabricante de dispositivos médicos, productos farmacéuticos, de cuidado personal, perfumes y artículos para bebés.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://finance.yahoo.com/quote/MA?p=MA&amp;.tsrc=fin-srch" target="_blank">Mastercard Incorporated</a> (MA): Una de las más importantes multinacionales de servicios financieros con sede en Purchase, Nueva York, Estados Unidos.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://finance.yahoo.com/quote/PEP?p=PEP&amp;.tsrc=fin-srch" target="_blank">PepsiCo Inc</a> (PEP): Exitosa empresa multinacional estadounidense dedicada a la fabricación, comercialización y distribución de bebidas y aperitivos.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://finance.yahoo.com/quote/WMT?p=WMT&amp;.tsrc=fin-srch" target="_blank">Walmart Corporate</a> (WMT): Corporación multinacional de tiendas de origen estadounidense, que opera cadenas de grandes almacenes de descuento y clubes de almacenes.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://finance.yahoo.com/quote/MCD?p=MCD&amp;.tsrc=fin-srch" target="_blank">McDonald’s Corporation</a> (MCD): Es una franquicia de restaurantes de servicio rápido estadounidense con sede en Illinois Chicago.</span></div>
+<div style="text-align: justify;">
+<h3>
+<span style="font-size: large;">Pesos de la cartera</span></h3>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El peso de la cartera viene dado por el&nbsp;<b>Portafolio Tangente</b> realizado en mi post <a href="https://jesusbz.github.io/proyecto4.html" target="_blank">"Portafolios de Inversión"</a>&nbsp;y&nbsp; que distribuyó los activos de la siguiente manera:</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<ol>
+<li style="text-align: justify;"><span style="font-size: large;">Microsotf Corporation (MSFT):4,1%</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">Johnson &amp; Johnson (JNJ): 27,8%</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">Mastercard Incorporated (MA): 7,4%</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">PepsiCo Inc (PEP): 14,2%</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">Walmart Corporate (WMT): 23%</span></li>
+<li style="text-align: justify;"><span style="font-size: large;">McDonald’s Corporation (MCD): 23,4%</span></li>
+</ol>
+<h3 style="text-align: center;">
+<span style="font-size: large;">Simulación Monte Carlo en Gestión de Carteras -Enfoque histórico-&nbsp;</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los especialistas en gestión de cartera pueden evaluar los posibles rendimientos de muchas maneras. El enfoque histórico, que a la fecha es el más usado, considera todas las posibilidades que ya han sucedido (serie temporal).&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Sin embargo, esto no es todo en el mundo de la gestión de carteras y el análisis de riesgo. El método Monte Carlo es un método estocástico (muestreo aleatorio) para resolver un problema estadístico, y una simulación es una representación virtual de un problema. La simulación Monte Carlo combina ambos para obtener una herramienta poderosa que permite arrojar una distribución (matriz) de resultados para cualquier problema estadístico con numerosas entradas muestreadas una y otra vez.</span></div>
+</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">¿Qué es una cartera de inversión?</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Una cartera <b>es una agrupación</b> de activos financieros como acciones, bonos, materias primas, monedas y equivalentes de efectivo, así como sus contrapartes de fondos, incluidos fondos mutuos, negociados en bolsa y cerrados. Una cartera también puede consistir en valores no negociables públicamente, como bienes raíces, arte e inversiones privadas.&nbsp;</span><br />
+<span style="font-size: large;"><br /></span></div>
+<span style="font-size: large; text-align: justify;">La razón teórica por la que los inversores racionales prefieren una cartera a un solo activo es que una cartera puede ofrecer una mejor compensación de riesgo / rendimiento debido a una covarianza baja o negativa entre los componentes de la cartera.</span><br />
+<span style="font-size: large;">
+</span><span style="font-size: large;"></span>
+<h3>
+<span style="font-size: large;">Principales limitaciones:</span></h3>
+<span style="font-size: large;"><div>
+<br /></div>
+<ul>
+<li><span style="font-size: large;"><div style="text-align: justify;">
+Ignoran todo lo que no está integrado en el modelo. Tendencias macro, compañías líderes, factores cíclicos. Asumen un mercado perfectamente eficiente.&nbsp;</div>
+</span></li>
+<li><span style="font-size: large;"><div style="text-align: justify;">
+Una simulación buena puede resultar complicada por el gran número de variables.&nbsp;&nbsp;</div>
+</span></li>
+</ul>
+<br />
+<h3 style="text-align: center;">
+Modelado de la Simulación Montecarlo en el entorno R&nbsp;</h3>
+<blockquote class="tr_bq">
+<span style="text-align: justify;">"</span><span style="text-align: justify;">En este entrenamiento l</span><span style="text-align: justify;">a</span><span style="text-align: justify;">&nbsp;Simulación Montecarlo permitirá conocer a través de 100 simulaciones aleatorias y basadas en el histórico de cada uno de los 6 instrumentos financieros&nbsp;seleccionados, cual será el crecimiento (tasa compuesta anual) de 1 USD$ invertido en esa cartera (Portafolio Tangente) durante los próximos 120 meses (10 años)."</span></blockquote>
+<div>
+<span style="text-align: justify;"><br /></span></div>
+<div style="text-align: justify;">
+El primer paso será transformar el histórico de precios diarios de los instrumentos seleccionados en un objeto de rendimiento de registro de cartera. Se activan la librerías de R.</div>
+<div style="text-align: justify;">
+<br /></div>
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tidyquant)
+library(tidyverse)
+library(timetk)
+library(broom)
+library(highcharter)
+library(plotly)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se importarán los precios desde el portal de “Yahoo” de los 6 activos que componen el <a href="https://jesusbz.github.io/proyecto4.html" target="_blank">Portafolio Tangente,</a> utilizando el comando “getSymbols” para obtener los valores, especificando que el valor requerido será el de los precios ajustados de cierre con la acción "map(~Ad(get(.)))". Se combinaran los objetos en un objeto “xts” utilizando la línea "reduce(merge)".</span></div>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+instrumentos<- c("MSFT", "JNJ", "MA", "PEP", "WMT", "MCD")
+
+precios <- 
+  getSymbols(instrumentos, src = 'yahoo', 
+             from = "2010-01-04",
+             to = "2020-04-30",
+             auto.assign = TRUE, warnings = FALSE) %>% 
+  map(~Ad(get(.))) %>%
+  reduce(merge) %>% 
+  `colnames<-`(instrumentos)
+
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se convertirá el objeto "xts" a "tibble" que es otro tipo de formato para la manipulación de los datos y que el paquete lee mejor con la siguiente línea de comando: "tk_tbl(preserve_index = TRUE, rename_index = "date")". Se añadirá otra columna para los retornos de los activos: "mutate(returns = (log(returns) - log(lag(returns))))".</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los pesos (participación % de activos) del portafolio se determinaron con el <a href="https://jesusbz.github.io/proyecto4.html" target="_blank">"Portafolio Tangente"</a> de un post anterior.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+comp <- c(0.041, 0.278, 0.074, 0.142, 0.23,0.234)
+
+retornosp <-  
+ precios %>% 
+  to.monthly(indexAt = "lastof", OHLC = FALSE) %>% 
+  tk_tbl(preserve_index = TRUE, rename_index = "date") %>%
+  gather(asset, returns, -date) %>% 
+  group_by(asset) %>%  
+  mutate(returns = (log(returns) - log(lag(returns)))) %>% 
+  na.omit()
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se usará para continuar con la simulación, el objeto "retornos_rebalanceados_mensual" y se calcularán la media y la desviación estándar de los retornos: "media_retornos"; "destandar_retornos".&nbsp; La linea de comando "tq_portfolio" agrega un grupo de retornos por activo en los de la cartera.</span></div>
+<br /><div style="text-align: justify;">
+<span style="font-size: large;">En la ecuación manual, los pesos ("comp") de la cartera son fijos, lo que significa que nunca cambian mes a mes. Eso es equivalente a reequilibrar cada mes, lo que en la práctica sería extraño.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+retornos_rebalanceados_mensual <- 
+  retornosp %>%
+  tq_portfolio(assets_col  = asset, 
+               returns_col = returns,
+               weights     = comp,
+               col_rename  = "returns",
+               rebalance_on = "months")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+media_retornos <- 
+  mean(retornos_rebalanceados_mensual$returns)
+
+destandar_retornos <- 
+  sd(retornos_rebalanceados_mensual$returns)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">La siguiente&nbsp;línea de código será parta ejecutar la simulación&nbsp;de crecimiento de un (1) USD$ invertido en nuestra cartera de inversión durante los próximos 120 meses (10 años). Se creará un objeto llamado&nbsp;</span><span style="font-size: large;">&nbsp;"</span><span style="font-size: large;">simulacion_acumul_1()". Luego diseñaremos la ejecución de 100 simulaciones, siempre se puede colocar cualquier número.</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se necesitará una matriz una matriz vacía con 100 columnas, un valor inicial de 1 USD$&nbsp; y los nombres de las columnas intuitivos.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Usaremos la función "</span><span style="font-size: large;">rep()"&nbsp;</span><span style="font-size: large;">para crear las 100 columnas con un "1" como valor, y para nombrar cada columna con el número de simulación apropiado la función "</span><span style="font-size: large;">set_names()"</span><span style="font-size: large;">.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+simulacion_acumul_1 <- function(init_value, N, mean, stdev) {
+    tibble(c(init_value, 1 + rnorm(N, mean, stdev))) %>% 
+    `colnames<-`("returns") %>%
+    mutate(growth = 
+             accumulate(returns, 
+                        function(x, y) x * y)) %>% 
+    select(growth)
+}
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+simu <- 100
+comienzo<- 
+  rep(1, simu) %>%
+  set_names(paste("sim", 1:simu, sep = ""))
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Revisamos el objeto "comienzo" para ver lo que acabamos de crear y cómo se pueden albergar las simulaciones.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+head(comienzo)
+tail(comienzo)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Tenemos 100 columnas, con un valor de 1 por fila. Aquí se almacenarán los resultados de las 100 simulaciones.</span></div>
+<span style="font-size: large;"><div style="text-align: justify;">
+<br /></div>
+</span><span style="font-size: large;"><div style="text-align: justify;">
+Luego, se debe aplicar "simulacion_acumul_1" a cada una de las 100 columnas de la matriz "comienzo", y se hará utilizando la función "map_dfc()" del paquete "purrr".</div>
+</span><span style="font-size: large;"><div style="text-align: justify;">
+<br /></div>
+</span><span style="font-size: large;"><div style="text-align: justify;">
+Se necesita tomar un vector con la función "map_dfc()", en este caso, las columnas de "comienzo". Al agregar "dfc()" a la "map_función", le pedimos que almacene cada uno de los resultados como columna de un marco de datos.&nbsp;</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Después de ejecutar el siguiente código, tendremos un marco de datos con 100 columnas, una para cada una de las simulaciones.</div>
+</span><span style="font-size: large;"><div style="text-align: justify;">
+<br /></div>
+</span><span style="font-size: large;"><div style="text-align: justify;">
+También debemos elegir cuántos meses simular (el argumento N para nuestra función de simulación) y proporcionar los parámetros de distribución. No proporcionamos el argumento "init_value"&nbsp; porque "init_value" es 1, el mismo 1 que ya está en las 100 columnas.</div>
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+monte_carlo_sim_100 <-map_dfc(comienzo,simulacion_acumul_1,N = 120, mean = media_retornos,stdev =destandar_retornos)
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+tail(monte_carlo_sim_100 %>%  select(growth...1, growth...2,        growth...99, growth...100), 3)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Ahora se tienen 100 simulaciones del crecimiento de un dólar, y simulamos ese crecimiento durante 120 meses; sin embargo, a los resultados les falta una pieza que se necesita para visualizar, una "monthcolumna", es decir la columna para los 120 meses de la simulación.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se agregará "monthcolumna mutate()" y le daremos el mismo número de filas que nuestro marco de datos. Estos son meses en el futuro. Usaremos mutate(month = seq(1:nrow(.))), y luego limpiaremos los nombres de las columnas. nrow()es igual al número de filas en nuestro objeto.</span></div>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+monte_carlo_sim_100 <- 
+  monte_carlo_sim_100 %>% 
+  mutate(month = seq(1:nrow(.))) %>% 
+  select(month, everything()) %>% 
+  `colnames<-`(c("month", names(comienzo))) %>% 
+   mutate_all(funs(round(., 2))) 
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+tail(monte_carlo_sim_100 %>%  select(month, sim1, sim2,
+                                    sim99, sim100), 3)
+```
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Observar simulaciones</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se han logrado correr las 100 simulaciones. Ahora utilizaremos un&nbsp; segundo método usando la línea de comando&nbsp;para la función "rerun()" del paquete "purrr". Esta función "volverá a ejecutar" otra función, y calibramos cuántas veces hacerlo mediante la configuración .n = número de tiempos de rerun. Por ejemplo, para ejecutar la "simulacion_acum_1" 6 veces, este sería el código.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+monte_carlo_rerun_6 <-  
+  rerun(.n = 6, 
+      simulacion_acumul_1(1, 
+                        120,
+                        media_retornos, 
+                        destandar_retornos))
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Nos arrojó una lista de 6 marcos de datos, o 6 simulaciones. Podemos mirar las primeras filas de cada marco de datos usando "map(..., head)".</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+map(monte_carlo_rerun_6, head)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se consolida la lista de marcos de datos en uno de tipo "tibble". Comenzamos colapsando a vectores con la línea "simplify_all()", luego agregamos nombres más distinguibles con la&nbsp;</span><span style="font-size: large;">función "</span><span style="font-size: large;">names()" y finalmente coaccionamos para tibbilizar "as_tibble()". Se ejecutará 100 veces.</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+reruns <- 100
+
+monte_carlo_rerun_100<- 
+rerun(.n = reruns, 
+      simulacion_acumul_1(1, 
+                        120,
+                        media_retornos, 
+                        destandar_retornos)) %>%
+  simplify_all() %>% 
+  `names<-`(paste("sim", 1:reruns, sep = " ")) %>%
+  as_tibble() %>% 
+  mutate(month = seq(1:nrow(.))) %>% 
+  select(month, everything())
+
+tail(monte_carlo_rerun_100 %>%  select(`sim 1`, `sim 2`,
+                                    `sim 99`, `sim 100`), 3)
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se tienen dos objetos que contienen los resultados de 100 simulaciones, "monte_carlo_rerun_100" y "monte_carlo_sim_100."</span></div>
+<span style="font-size: large;"><div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Cada uno tiene 100 columnas de simulaciones y 1 columna de meses. Igualmente, tenemos 121 filas porque se comenzó con un valor inicial de 1 y luego los retornos simulados durante 120 meses.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Ahora vamos a visualizar "ggplot()" y visualizar los resultados en "monte_carlo_sim_100". Los mismos flujos de código para la visualización de "monte_carlo_rerun_100" serán las mismas, pero los ejecutaremos como "monte_carlo_sim_100".</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Comenzamos con un gráfico de las 100 simulaciones y asignamos un color diferente a cada una mediante la configuración "ggplot(aes(x = month, y = growth, color = sim))". ggplot() generará automáticamente una leyenda para las 100 series de tiempo, pero eso llenaría la gráfica casi completa. Suprimiremos la leyenda con "theme(legend.position = "none")".</div>
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+monte_carlo_sim_100 %>% 
+  gather(sim, growth, -month) %>% 
+  group_by(sim) %>% 
+  ggplot(aes(x = month, y = growth, color = sim)) + 
+  geom_line() +
+  theme(legend.position="none")
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Le agregaremos la función "ggplotly" para generar un gráfico "plotly" interactivo.</span></div>
+<span style="font-size: large;">
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+ggplotly(monte_carlo_sim_100 %>% 
+  gather(sim, growth, -month) %>% 
+  group_by(sim) %>% 
+  ggplot(aes(x = month, y = growth, color = sim)) + 
+  geom_line() +
+  theme(legend.position="none"))
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Se pueden verificar la simulación mínima, máxima y mediana con la función "</span><span style="font-size: large;">summarise()".</span></div>
+<span style="font-size: large;">
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+resumen<- 
+  monte_carlo_sim_100 %>% 
+  gather(sim, growth, -month) %>% 
+  group_by(sim) %>% 
+  summarise(final = last(growth)) %>% 
+  summarise(
+    max = max(final), 
+    min = min(final),
+    median = median(final, na.rm = TRUE))
+resumen
+```
+<div style="text-align: justify;">
+<span style="font-size: large;">Observamos las tres tasas anuales compuestas que arroja el modelo mínima, máxima y mediana, la mediana es la que se toma como el escenario con más "probabilidades de ocurrencia". Se puede limpiar la visualización original incluyendo solo la mediana, el máximo y el mínimo. Existen tres simulaciones que coinciden con la mediana final.</span></div>
+<span style="font-size: large;">
+</span>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+monte_carlo_sim_100 %>% 
+  gather(sim, growth, -month) %>% 
+  group_by(sim) %>%
+  filter(
+    last(growth) == resumen$max ||
+    last(growth) == resumen$median ||   
+    last(growth) == resumen$min) %>% 
+  ggplot(aes(x = month, y = growth)) + 
+  geom_line(aes(color = sim)) 
+```
+
+
+```{r}
+ggplotly(monte_carlo_sim_100 %>% 
+  gather(sim, growth, -month) %>% 
+  group_by(sim) %>%
+  filter(
+    last(growth) == resumen$max ||
+    last(growth) == resumen$median ||  
+    last(growth) == resumen$min) %>% 
+  ggplot(aes(x = month, y = growth)) + 
+  geom_line(aes(color = sim))) 
+```
+<br>
+<div style="text-align: justify;">
+<span style="font-size: large;">Aquí puedes ver el código completo: <a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/Simulaci%C3%B3n%20Monte%20Carlo" target="_blank">Modelo Monte Carlo</a></span></div>
+<span style="font-size: large;">
+</span>
