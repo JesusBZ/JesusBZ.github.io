@@ -475,6 +475,7 @@ font-weight: 300;
 <div style="text-align: justify;">
 <span style="font-size: medium;"><i><b>Palabras clave:</b> volatilidad, Bitcoin, Garch, valor en riesgo.<span style="font-size: large;"> </span></i></span>
 </div>
+
 <div style="text-align: justify;">
 <h3>
 <span style="font-size: large;">Librería Rmgarch</span>
@@ -483,6 +484,10 @@ font-weight: 300;
 <div style="text-align: justify;">
 <span style="font-size: large;">El <a href="https://cran.r-project.org/web/packages/rmgarch/rmgarch.pdf" rel="nofollow" target="_blank">rmgarch</a> proporciona una selección de modelos GARCH multivariantes con métodos de ajuste, filtrado, pronóstico y simulación con funciones de soporte adicionales para trabajar con diferentes objetos. En la actualidad, el GARCH ortogonal generalizado utiliza el análisis de componentes independientes (ICA) y la correlación condicional dinámica (con multivariante Normal, Laplace y distribución T-Student) los modelos se implementan completamente con métodos para especificaciones, ajuste, filtro, pronóstico, simulación, estimaciones y pronósticos continuos, así como funciones especializadas para calcular y trabajar con la densidad condicional de la cartera ponderada. El modelo Copula-GARCH también se implementa con las distribuciones multivariadas normales y de T-Student con estimación dinámica (DCC) y  correlación estática.</span>
 </div>
+<br><br>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://jesusbezerpa.github.io/" target="_blank"><img border="0" data-original-height="90" data-original-width="728" src="imagenes/banner2.jpg"/></div>
+<br><br>
 <div>
 <h2 style="text-align: center;">
 <span style="font-size: x-large;"><a name="especificacion">1. Especificación de los modelos Garch</a> </span><span style="font-size: small;">[<a href="https://www.cepal.org/sites/default/files/events/files/cc_11.2011.horario.catalan.modelosarch.esp_.pdf" rel="nofollow" target="_blank">1</a>]</span>
@@ -664,6 +669,11 @@ El mejor modelo es el que tiene menor valor de AIC.
 <div style="text-align: justify;">
 <br />
 </div>
+<br>
+<br>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://jesusbezerpa.github.io/" target="_blank"><img border="0" data-original-height="90" data-original-width="728" src="imagenes/banner1.png"/></div>
+<br><br>
 <h2 style="clear: both; text-align: center;">
 <span style="font-size: x-large;">Modelos propuestos</span>
 </h2>
@@ -923,41 +933,44 @@ El mejor modelo es el que tiene menor valor de AIC.
 ## 
 ## 
 ## Elapsed time : 7.888568</code></pre>
+<br>
 <h3 style="text-align: center;">
-<span style="font-size: x-large;"><a name="parametros">5. Revisión de parámetros del modelo eGarch (2,1)</a> </span>
+<span style="font-size: x-large;"><a href="https://www.blogger.com/null" name="parametros">5. Revisión de parámetros del modelo eGarch (2,1)</a>&nbsp;</span>
 </h3>
+<br>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>mu</b>: Es el rendimiento promedio diario a “LARGO PLAZO.” Según el modelo, el BTC tenderá a un rendimiento diario del 0,1% en el largo plazo. Con un P-valor significativo menor a 5%. </span>
+<a href="https://jesusbezerpa.github.io/" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;" target="_blank"><img alt="Jesús Benjamín Zerpa" border="0" data-original-height="250" data-original-width="300" src="https://1.bp.blogspot.com/-z3th5qIjpcM/XyReT6sKnnI/AAAAAAAACYA/3YfqFSZgYtAqtzc_2J67JbODBDV7r44kwCLcBGAsYHQ/s1600/Copy%2Bof%2BGTR%2B007%2Banimated-300x250%2B%25281%2529.png" title="Jesús Benjamín Zerpa" /></a><span style="font-size: large;"><b>mu</b>: Es el rendimiento promedio diario a “LARGO PLAZO.” Según el modelo, el BTC tenderá a un rendimiento diario del 0,1% en el largo plazo. Con un P-valor significativo menor a 5%.&nbsp;</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>omega:</b> Es la varianza a largo plazo del retorno del BTC, en este caso alrededor del 9% (volatilidad). P-valor no significativo 5.8%. </span>
+<span style="font-size: large;"><b>omega:</b> Es la varianza a largo plazo del retorno del BTC, en este</span><br />
+<span style="font-size: large;"> caso alrededor del 9% (volatilidad). P-valor no significativo 5.8%.&nbsp;</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>alpha 1:</b> Es el impacto de la varianza cuadrada rezagada en el retorno de hoy. El rendimiento se explica un 9% por la volatilidad de hace un día. P-valor no significativo. </span>
+<span style="font-size: large;"><b>alpha 1:</b> Es el impacto de la varianza cuadrada rezagada en el retorno de hoy. El rendimiento se explica un 9% por la volatilidad de hace un día. P-valor no significativo.&nbsp;</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>alpha 2:</b> El rendimiento se explica en un 11 % por la volatilidad del 2 día anterior. P-valor no significativo. </span>
+<span style="font-size: large;"><b>alpha 2:</b> El rendimiento se explica en un 11 % por la volatilidad del 2 día anterior. P-valor no significativo.&nbsp;</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>beta 1:</b> Es el impacto de los residuos cuadrados rezagados en el rendimiento y se explica un 98% por la varianza ajustada del día anterior. P-valor significativo. </span>
+<span style="font-size: large;"><b>beta 1:</b> Es el impacto de los residuos cuadrados rezagados en el rendimiento y se explica un 98% por la varianza ajustada del día anterior. P-valor significativo.&nbsp;</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>gamma 1:</b> Son los parámetros de apalancamiento. El valor positivo indica que el los retornos del BTC tienen efecto de apalancamiento, </span>
+<span style="font-size: large;"><b>gamma 1:</b> Son los parámetros de apalancamiento. El valor positivo indica que el los retornos del BTC tienen efecto de apalancamiento,&nbsp;</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -971,13 +984,13 @@ El mejor modelo es el que tiene menor valor de AIC.
 <span style="font-size: large;">Es esencial realizar una verificación de diagnóstico en el modelo después de determinar el mejor modelo y su distribución correspondiente para el término de error para establecer si el modelo y la distribución están especificados correctamente. Este ejercicio emplea las pruebas Ljung-Box y Multiplicador de Lagrange (LM) para evaluar la presencia de autocorrelación y efectos ARCH respectivamente. La presencia de autocorrelación y efectos ARCH para los residuos tanto del modelo medio como de los modelos de volatilidad se probará utilizando estos dos diagnósticos.</span>
 </div>
 <h3>
-<span style="font-size: large;"><a name="ljungbox">6. Ljung Box</a></span>
+<span style="font-size: large;"><a href="https://www.blogger.com/null" name="ljungbox">6. Ljung Box</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">La prueba de Ljung Box se usa para probar si existen autocorrelaciones en los residuos de un modelo. </span><span style="font-size: large;">La hipótesis nula de la prueba de Ljung-Box no se rechaza al nivel de significancia del 5%. Esto indica que los residuos estandarizados se consideran ruido blanco.</span>
+<span style="font-size: large;">La prueba de Ljung Box se usa para probar si existen autocorrelaciones en los residuos de un modelo.&nbsp;</span><span style="font-size: large;">La hipótesis nula de la prueba de Ljung-Box no se rechaza al nivel de significancia del 5%. Esto indica que los residuos estandarizados se consideran ruido blanco.</span>
 </div>
 <h3>
-<span style="font-size: large;"><a name="la">7. Prueba efecto ARCH LM</a></span>
+<span style="font-size: large;"><a href="https://www.blogger.com/null" name="la">7. Prueba efecto ARCH LM</a></span>
 </h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">Además, la prueba ponderada ARCH LM indica que no hay efecto ARCH en los modelos. Estas pruebas sugieren que el modelo eGarch mejor ajustado es suficiente para corregir la correlación en serie de las series de retorno en la ecuación de varianza condicional</span>.
@@ -986,6 +999,7 @@ El mejor modelo es el que tiene menor valor de AIC.
 <span style="font-size: large;"> </span>
 </div>
 </div>
+
 <hr>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">garch.fit =<span class="st"> </span><span class="kw">ugarchfit</span>(garch112e2.<span class="dv">2</span>.<span class="fl">2.</span>spec, <span class="dt">data =</span> model, <span class="dt">fit.control=</span><span class="kw">list</span>(<span class="dt">scale=</span><span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="kw">plot</span>(garch.fit, <span class="dt">which=</span><span class="dv">3</span>)</a></code></pre></div>
