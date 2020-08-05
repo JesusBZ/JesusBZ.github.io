@@ -228,6 +228,34 @@ $(document).ready(function () {
 .tabset-dropdown > .nav-tabs > li {
   display: none;
 }
+.btn-3d {
+  padding: .6rem 1rem;
+  border: 1px solid #995309;
+  border-radius: 4px;
+  background-color: #d9750b;
+  color: #fff;
+
+  font-size: 1.5rem;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+  box-shadow: 0 1px 0 rgba(255,255,255,.5) inset,
+    0 1px 3px rgba(0,0,0,.2);
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f90),to(#e76a00));
+  background-image: linear-gradient(#f90 10%,#e76a00 100%);
+}
+
+.btn-3d:hover, .btn-3d:focus {
+  background-color: #e0811b;
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
+  background-image: linear-gradient(#f0a100 10%,#f70 100%);
+}
+
+.btn-3d:active {
+  background-color: #cf6a00;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.2) inset;
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
+  background-image: linear-gradient(#f0a100 10%,#f70 100%);
+}
+
 </style>
 
 <!-- code folding -->
@@ -346,8 +374,8 @@ $(document).ready(function () {
 <a href=" " imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="532" data-original-width="800" src="imagenes/imagen-h.webp" /></a>
 </div>
 <span style="color: #0000ee; font-size: large; text-align: justify;"><br /></span> <br />
-<div style="text-align: right;">
-<a href="https://jesusbz.github.io/FinancialDashboard.htm" rel="nofollow" target="_blank"><span style="font-size: large;">Ir al Dashboard aquí.</span></a>
+<div style="text-align: right">
+<a role="button" id="btn5" class="btn btn-3d" type="button" href="https://jesusbz.github.io/FinancialDashboard.htm" target="_blank">Ir al Dashboard</a>
 </div>
 <h3>
 <span style="font-size: large;">Descripción:</span>
@@ -381,11 +409,11 @@ Un panel de control financiero (Financial Dashboard) es una herramienta de “in
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Esta nueva versión, tiene una serie de optimizaciones para hacerlo personalizable y el anexo del asistente que permite hacer la inducción al usuario de manera interactiva sin necesidad de intermediarios. Así como la integración a <a href="https://powerbi.microsoft.com/es-es/" rel="nofollow" target="_blank">Power BI</a> y pasar una extensión del diseño de la hoja a la plataforma BI. Lo que convierte a la herramienta en un modelo y no una hoja de excel.</span><br /> <span style="font-size: large;"><br /></span> <span style="font-size: large;"><span style="color: #0000ee; text-decoration-line: underline;"><a href="https://jesusbz.github.io/FinancialDashboard.htm" rel="nofollow" target="_blank">Ir al Dashboard aquí.</a></span></span>
+<span style="font-size: large;">Esta nueva versión, tiene una serie de optimizaciones para hacerlo personalizable y el anexo del asistente que permite hacer la inducción al usuario de manera interactiva sin necesidad de intermediarios. Así como la integración a <a href="https://powerbi.microsoft.com/es-es/" rel="nofollow" target="_blank">Power BI</a> y pasar una extensión del diseño de la hoja a la plataforma BI. Lo que convierte a la herramienta en un modelo y no una hoja de excel.</span><br /> <span style="font-size: large;"><br /></span> <span style="font-size: large;"><span style="color: #0000ee; text-decoration-line: underline;"><a href="https://jesusbz.github.io/FinancialDashboard.htm" rel="nofollow" target="_blank"></a></span></span>
 </div>
 <br><br>
 <div class="separator" style="clear: both; text-align: center;">
-<a href="https://jesusbezerpa.github.io/" target="_blank"><img border="0" data-original-height="90" data-original-width="728" src="imagenes/banner2.jpg"/></a></div>
+<a role="button" id="btn5" class="btn btn-3d" type="button" href="https://jesusbz.github.io/FinancialDashboard.htm" target="_blank">Ir al Dashboard</a>
 
 <div style="text-align: justify;">
 <br />
