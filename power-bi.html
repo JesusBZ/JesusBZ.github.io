@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Power BI</title>
+<meta name="description" content="Potente herramienta de análisis financiero con cuatro (4) niveles de interpretación para presentación de resultados, basado en el Estado de Ganancias y Pérdidas (Estado de Resultados). Tiene la opción de exportar información en Power Point o PDF , ambos con highlight automáticos personalizables."/>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link  rel="icon"   href="favi.png" type="image/png" />
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+.btn-3d {
+  padding: .6rem 1rem;
+  border: 1px solid #995309;
+  border-radius: 4px;
+  background-color: #d9750b;
+  color: #fff;
+
+  font-size: 1.5rem;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+  box-shadow: 0 1px 0 rgba(255,255,255,.5) inset,
+    0 1px 3px rgba(0,0,0,.2);
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f90),to(#e76a00));
+  background-image: linear-gradient(#f90 10%,#e76a00 100%);
+}
+
+.btn-3d:hover, .btn-3d:focus {
+  background-color: #e0811b;
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
+  background-image: linear-gradient(#f0a100 10%,#f70 100%);
+}
+
+.btn-3d:active {
+  background-color: #cf6a00;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.2) inset;
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
+  background-image: linear-gradient(#f0a100 10%,#f70 100%);
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Portafolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li>
+  <a href="acercade.html">Acerca de</a>
+</li>
+<li>
+  <a href="formulario.html">Contacto</a>
+</li>
+<li>
+  <a href="https://rpubs.com/JesusZ"rel="nofollow" target="_blank">Rpubs</a>
+</li>          
+<li>
+  <a href="https://jesusbzerpa.github.io/"rel="nofollow" target="_blank">Mi Perfil</a>
+</li>
+<li>
+  <a href="https://jesusbezerpa.github.io/"rel="nofollow" target="_blank">Servicios</a>
+</li>          
+   <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+   Recursos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://onedrive.live.com/download?resid=97B9EE70067CDD34%212341&authkey=ABrxoNLIj1Woc0Q">Manual Excel</a>
+    </li>                
+      </ul>
+    </li> 
+    </ul>      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-skype"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://t.me/jesusbz21" rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-telegram"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/jesús-zerpa-807646129/" rel="nofollow" target="_blank">
+    <span class="fab fa fab fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-scribd"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/JesusBZ" rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:jesuszerpaeconomia@gmail.com">
+    <span class="far fa far fa-envelope"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+<h3 style="clear: both; text-align: center;">
+</h3>
+<div style="text-align: justify;">
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<h2 style="box-sizing: border-box; clear: both; line-height: 1.2; margin-bottom: 10px; margin-top: 20px; text-align: center;">
+<span style="font-size: x-large;">Power BI herramienta para la visualización de datos desde cualquier parte</span></h2>
+<div>
+<span style="font-size: x-large;"></span></div>
+<h2 style="box-sizing: border-box; clear: both; line-height: 1.2; margin-bottom: 10px; margin-top: 20px; text-align: center;">
+<a href="https://1.bp.blogspot.com/-fv0sWnlFd4Q/Xywvi2S4xqI/AAAAAAAACZQ/TVwarZN9FUQVRvjEb7aULxsU5TE_pYMgQCPcBGAYYCw/s1600/power-bi-dashboard.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1280" src="https://1.bp.blogspot.com/-fv0sWnlFd4Q/Xywvi2S4xqI/AAAAAAAACZQ/TVwarZN9FUQVRvjEb7aULxsU5TE_pYMgQCPcBGAYYCw/s1600/power-bi-dashboard.webp" /></a></h2>
+<h2 style="text-align: center;">
+</h2>
+</div>
+<div style="text-align: justify;"><br>
+<span style="font-size: large;">Para conocer a una de las mejores herramientas de inteligencia de empresarial comenzaremos con un breve concepto de <b>"Inteligencia de Negocios" (Business Intelligence), </b>el más general sacado de&nbsp;</span><span style="font-size: large; text-align: justify;">Google, Wikipedia:</span><span style="font-size: large; text-align: justify;">&nbsp;</span><br />
+<span style="font-size: large; text-align: justify;"><br /></span></div>
+<blockquote class="tr_bq" style="text-align: justify;">
+<span style="font-size: large;"><i>"Business Intelligence (BI) es un conjunto de teorías, metodologías, procesos, arquitecturas y tecnologías que transforman los datos sin procesar en información significativa y útil para fines comerciales. BI puede manejar grandes cantidades de información para ayudar a identificar y desarrollar nuevas oportunidades. Hacer uso de nuevas oportunidades e implementar una estrategia efectiva puede proporcionar una ventaja competitiva en el mercado y una estabilidad a largo plazo ".</i></span></blockquote>
+
+<h3 style="text-align: justify;">
+<span style="font-size: large;">¿Qué es un software de Business Intelligence?</span>&nbsp;</h3>
+<div style="text-align: justify;"><br>
+<span style="font-size: large;">El software Business Intelligence (software BI) es una forma de software que ayuda a todo tipo de empresas a medir y mejorar la productividad.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El tamaño de la empresa no determina el uso de un software de Business Intelligence, erróneamente&nbsp;se cree que estas metodologías solo aplican para empresas que manejan altos volúmenes de transacciones, olvidando que los procesos de una empresa pequeña pueden estar relacionados con grandes cantidades de datos exógenos. El BI permite utilizar&nbsp; y "medir" esas relaciones.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">El software de BI trabaja para extraer datos, analizarlos, formar informes y calcular la productividad. En las grandes empresas, los datos producidos por el software de BI pueden presentarse a quienes son responsables o tienen intereses creados en los márgenes de beneficio, como los miembros de la junta empresarial, los inversores comerciales, los CEO, los gerentes de ventas y los administradores ejecutivos.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div>
+<span style="font-size: large;">El software de BI también se conoce como un sistema de soporte de decisiones.</span><br />
+<span style="font-size: large;"></span>
+
+<h3 style="text-align: justify;">
+<span style="font-size: large;">¿Realmente necesita herramientas de BI?</span></h3>
+<div style="text-align: justify;"><br>
+<a href="https://1.bp.blogspot.com/-lk4Po_bTYDI/Xyw01-7vSjI/AAAAAAAACZY/jDNd6EsKC9kTgjwOrK1BSHwzOf18B1xQwCLcBGAsYHQ/s1600/BI.gif" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1280" height="225" src="https://1.bp.blogspot.com/-lk4Po_bTYDI/Xyw01-7vSjI/AAAAAAAACZY/jDNd6EsKC9kTgjwOrK1BSHwzOf18B1xQwCLcBGAsYHQ/s400/BI.gif" width="400" /></a><span style="font-size: large;">A veces, se ha preguntado: ¿Es necesario un sistema de BI en mi empresa? o ¿Cómo pueden ayudarme las herramientas de BI a tomar decisiones beneficiosas para mi organización?.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Si se utiliza una capacitación efectiva en Business Intelligence en cualquier organización, puede mejorar sus procesos de toma de decisiones e incluso procesos como la gestión estratégica táctica.</span></div>
+<h3 style="text-align: justify;"><br>
+<span style="font-size: large;">Efectos inmediatos con el uso de herramientas BI:</span></h3>
+<span style="font-size: large;"></span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Elimina conjeturas:</b> Con la ayuda del software Business Intelligence, uno puede tener datos precisos, actualizaciones en tiempo real y medios para pronosticar e incluso predecir condiciones como 'qué sucederá si'. Por lo tanto, la necesidad de adivinar se ha ido.</span></div>
+<span style="font-size: large;">
+</span>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<span style="font-size: large;">
+</span>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Obtén&nbsp;respuestas rápidas:</b> Otro gran beneficio que obtiene un usuario de Business Intelligence son las respuestas inmediatas a las preguntas relacionadas con el negocio, lo que ayuda a tomar decisiones más rápidas basadas en estas respuestas sin tener que pasar por un gran número de páginas de informes escritos.</div><br />
+
+</span><br />
+<div class="separator" style="clear: both; text-align: center;">
+<span style="font-size: large;"><a href="https://jesusbezerpa.github.io/" target="_blank"><img border="0" data-original-height="90" data-original-width="728" src="imagenes/banner5.webp" /></a></span></div>
+<span style="font-size: large;">
+</span><br />
+<h3>
+<span style="font-size: large;">¿Qué es Power BI?</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Power BI es una herramienta de inteligencia empresarial y visualización de datos que le ayuda a convertir datos de varias fuentes de datos en paneles interactivos e informes de BI. Proporciona múltiples conectores y servicios de software.</span></div>
+
+<h3>
+<span style="font-size: large;">¿Cómo es el servicio?</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Es un servicio seguro en la nube alojado por Microsoft que permite a los usuarios ver paneles, informes y aplicaciones Power BI, un tipo de contenido que combina paneles e informes relacionados, utilizando un navegador web o mediante aplicaciones móviles para Windows, iOS y Android.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">¿Existe una versión Gratuita?</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Power BI Desktop es una herramienta gratuita de análisis de datos de autoservicio y creación de informes que se instala en una computadora con Windows. Se puede conectar a más de 70 fuentes de datos locales y en la nube para convertir la información en imágenes interactivas. Los científicos y desarrolladores de datos trabajan con Power BI Desktop para producir informes y ponerlos a disposición del servicio Power BI.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">¿Y las versiones pagas?</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Power BI Pro es un software basado en la nube que viene con una tarifa mensual de $ 10 por usuario. La mayor diferencia entre Power BI Desktop y Power BI Pro es la capacidad de colaborar con otros usuarios de Power BI y distribuir informes y visualizaciones a otros suscriptores de Power BI en toda la organización.</span></div>
+<span style="font-size: large;"></span>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">
+<span style="font-size: large;">Power BI Premium</span></span></h3>
+<span style="font-size: large;">
+<div style="text-align: justify;">
+<span style="font-size: large;">A diferencia de Power BI Desktop y Pro, Power BI Premium no es una aplicación. Premium le da a la organización espacio y capacidad en una nube alojada por Microsoft para compartir informes. Una organización puede elegir cómo aplicar su capacidad dedicada asignándola en función del número de usuarios, las necesidades de carga de trabajo u otros factores, y ampliar o reducir según sea necesario</span>.</div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">¿Porqué usar Power BI?</span></h3>
+</span><br>
+<div style="text-align: justify;">
+<ol>
+<li><span style="font-size: large;">Cuadros de mando e informes preconstruidos para soluciones SaaS</span></li>
+<li><span style="font-size: large;">Permite actualizaciones en el tablero en tiempo real.</span></li>
+<li><span style="font-size: large;">Ofrece una conexión segura y confiable a sus fuentes de datos en la nube o en las instalaciones.</span></li>
+<li><span style="font-size: large;">Implementación rápida, configuración híbrida y entorno seguro.</span></li>
+<li><span style="font-size: large;">Permite la exploración de datos mediante consultas en lenguaje natural.</span></li>
+<li><span style="font-size: large;">Brinda una función para la visualización del tablero actualizada regularmente con la comunidad Power BI.</span></li>
+</ol>
+<div>
+<br>
+<span style="font-size: large;">En el siguiente botón naranja puedes interactuar con un cuadro de mando financiero (con data real) en Power BI, para compartir dicho informe solo se debe enviar el link y cualquier persona <b>desde cualquier parte</b>, podrá visualizar la información en un navegador:&nbsp;</span></div>
+</div>
+</div>
+<span style="font-size: large;">
+</span></div>
+
+<br>
+<br>
+<div style="text-align: center;">
+<a role="button" id="btn5" class="btn btn-3d" type="button" href="https://app.powerbi.com/view?r=eyJrIjoiMTQ0YTFlYzEtOGVmZC00Mzc0LWI1MDQtYWQ3ODBlMTVhZmMxIiwidCI6IjYwMDg1ZTYzLWUyOGUtNDVhNS05YmIwLTQ0YjAwZjNjMWY4NyJ9" target="_blank">Ir al Dashboard Power BI</a>
+</div>
+<br>
+<br>
+
+<span style="font-size: medium;"><br /></span>
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
+</span></span></span><br />
+<br />
+<div style="text-align: center;">
+<div style="text-align: left;">
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+</div>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<br /></div>
+</div>
+
+<hr />
+<h5>
+<div>
+<div style="text-align: center;">
+<span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;"><span style="color: #444444;">Copyright&nbsp;</span></span><span style="font-size: small;">©&nbsp;</span></span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">2020&nbsp;</span></span><span style="font-size: small;"><a href="https://github.com/JesusBZ">Jesús B. Zerpa</a> </span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">| Economist &amp; Data Scientist |&nbsp;Site created with</span></span><span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">&nbsp;<a href="https://rstudio.com/" rel="nofollow" target="_blank">RStudio</a><a href="https://www.blogger.com/blogger.g?blogID=3272883731674348977"></a>&nbsp;</span></div>
+<div style="text-align: center;">
+<span style="color: blue; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: xx-small;"><br /></span></div>
+<div style="text-align: center;">
+<span style="color: #0b5394; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: x-small;">| FINANCE | INTELLIGENCE BUSSINES | FORECASTING | TIME SERIES | FINANCIAL DASHBOARD | FINANCIAL BUDGET | SPATIAL ECONOMETRICS |&nbsp;</span></div>
+<!-- Add icon library -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"></link>
+<!-- Add font awesome icons -->
+<br />
+<div style="text-align: center;">
+<a class="fa fa-skype" href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-telegram" href="https://t.me/jesusbz21" rel="nofollow" target="_blank"></a>
+    <a class="fab fa-r-project" href="https://rpubs.com/JesusZ" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-linkedin" href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" rel="nofollow" target="_blank"></a>
+     <a class="fa fa-scribd" href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-github" href="https://github.com/JesusBZ" rel="nofollow" target="_blank"></a>
+</div>
+</div>
+</h5>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<script>
+document.getElementById("btn3").onclick = botonActivado;
+function botonActivado() {
+  saludar(this);
+}
+
+function saludar(elemento) {
+  console.log("Buenos días, " + elemento.textContent);
+}
+
+function enlaceActivadoRaton(e) {
+  // Impide que el <a> haga aparecer la # en la barra de direcciones
+  e.preventDefault();
+
+  saludar(this);
+}
+
+function enlaceActivadoTecla(e) {
+  // La barra espaciadora debe activar el botón implementado con un <a>
+  if (e.key === " " || e.key === "Spacebar") {
+    // Impide que se intente navegar a #0
+    e.preventDefault();
+
+    saludar(this);
+  }
+}
+
+
+
+Resources
+</script>
+<!-- code folding -->
+
+</body>
+</html>
