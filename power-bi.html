@@ -153,6 +153,28 @@ body {
   margin-left: 10px;
   border-radius: 6px 0 6px 6px;
 }
+.w3l-footer-22-main #movetop {
+  position: fixed;
+  bottom: 12px;
+  right: 15px;
+  z-index: 99;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  background: #67bdff;
+  padding: 0;
+  line-height: 38px;
+  transition: 0.5s ease-out;
+  border-radius: 50%;
+}
+
+.w3l-footer-22-main #movetop:hover {
+  background: #213e54;
+}
 </style>
 
 <script>
@@ -481,7 +503,11 @@ $(document).ready(function () {
 </div>
 <br>
 <br>
-
+<section class="w3l-footer-22-main">
+<button onclick="topFunction()" id="movetop" title="Ir a Inicio">
+<span class="fa fa-arrow-up"></span>
+</button>
+</section>
 <span style="font-size: medium;"><br /></span>
 <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
 </span></span></span><br />
@@ -581,6 +607,27 @@ function enlaceActivadoTecla(e) {
 Resources
 </script>
 <!-- code folding -->
-
+<!-- move top -->
+ <script>
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function () {
+                scrollFunction()
+            };
+    
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("movetop").style.display = "block";
+                } else {
+                    document.getElementById("movetop").style.display = "none";
+                }
+            }
+    
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+        <!-- /move top -->   
 </body>
 </html>
