@@ -1,9 +1,7 @@
 ---
-title: "."
+title: " "
 ---
-<br>
-<br>
-<div class="separator" style="clear: both; text-align: center;">
+<br><div class="separator" style="clear: both; text-align: center;">
 <a href="https://1.bp.blogspot.com/-UZKrKnYKhMI/XyGTrgYJ4mI/AAAAAAAACXY/b_f676hNoHcSm6RAj2XrTaK_adb3qxllACLcBGAsYHQ/s1600/monte%2Bcarlo.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1280" src="https://1.bp.blogspot.com/-UZKrKnYKhMI/XyGTrgYJ4mI/AAAAAAAACXY/b_f676hNoHcSm6RAj2XrTaK_adb3qxllACLcBGAsYHQ/s1600/monte%2Bcarlo.webp" /></a></div>
 <h2 style="text-align: center;">
 <span style="font-size: x-large;">Simulación Monte Carlo</span></h2>
@@ -362,9 +360,9 @@ resumen<-
   group_by(sim) %>% 
   summarise(final = last(growth)) %>% 
   summarise(
-    max = max(final), 
-    min = min(final),
-    median = median(final, na.rm = TRUE))
+    max_1 = max(final), 
+    min_2 = min(final),
+    median_3 = median(final, na.rm = TRUE))
 resumen
 ```
 <div style="text-align: justify;">
@@ -376,9 +374,9 @@ monte_carlo_sim_100 %>%
   gather(sim, growth, -month) %>% 
   group_by(sim) %>%
   filter(
-    last(growth) == resumen$max ||
-    last(growth) == resumen$median ||   
-    last(growth) == resumen$min) %>% 
+    last(growth) == resumen$max_1 ||
+    last(growth) == resumen$min_2 ||   
+    last(growth) == resumen$median_3) %>% 
   ggplot(aes(x = month, y = growth)) + 
   geom_line(aes(color = sim)) 
 ```
@@ -389,9 +387,9 @@ ggplotly(monte_carlo_sim_100 %>%
   gather(sim, growth, -month) %>% 
   group_by(sim) %>%
   filter(
-    last(growth) == resumen$max ||
-    last(growth) == resumen$median ||  
-    last(growth) == resumen$min) %>% 
+    last(growth) == resumen$max_1 ||
+    last(growth) == resumen$min_2 ||  
+    last(growth) == resumen$median_3) %>% 
   ggplot(aes(x = month, y = growth)) + 
   geom_line(aes(color = sim))) 
 ```

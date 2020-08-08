@@ -1,0 +1,327 @@
+---
+title: " "
+---
+<h2 style="clear: both; text-align: center;">
+<span style="font-size: x-large;">Data Mining</span></h2>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-Gj8ksLxxznc/XymbZKzg2nI/AAAAAAAACYU/-hX0WYwQ5rQkPbbgELOiwcuV7biJEXlWACLcBGAsYHQ/s1200/dataminning.webp" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1200" height="596" src="https://1.bp.blogspot.com/-Gj8ksLxxznc/XymbZKzg2nI/AAAAAAAACYU/-hX0WYwQ5rQkPbbgELOiwcuV7biJEXlWACLcBGAsYHQ/w1000-h596/dataminning.webp" width="1000" /></a></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">¿Qué es la minería de datos?</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La minería de datos, también conocida como Knowledge Discovery in Data (KDD), es una herramienta prometedora que ayuda a descubrir conocimiento valioso oculto, encontrar patrones, correlaciones dentro de grandes conjuntos de datos y relaciones dentro de sus datos.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">La Ciencia de Datos&nbsp;es multidisciplinaria. Es el Paraguas y la minería de datos es uno de sus componentes. Se pueden reconocer y calificar Patrones con Data Mining, que no se pudieron determinar antes. La minería de datos es una tecnología relativamente nueva que analiza grandes cantidades de datos y tendencias almacenadas en bases de datos o depósitos de datos&nbsp;, con lo que anteriormente no se podía ir más allá del simple análisis.</span></div>
+<h3>
+</h3>
+<h2 style="text-align: left;">
+<span style="font-size: large;">Aplicaciones del Data Mining</span></h2>
+<div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-UafU8sEvPzw/XymrrwotiaI/AAAAAAAACYg/1qvNnGB0zSM_DTjtiiyJ2Bx9T1yVQJmvACLcBGAsYHQ/s1280/aplicaciones-data-mining.webp" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="721" data-original-width="1280" height="450" src="https://1.bp.blogspot.com/-UafU8sEvPzw/XymrrwotiaI/AAAAAAAACYg/1qvNnGB0zSM_DTjtiiyJ2Bx9T1yVQJmvACLcBGAsYHQ/w800-h450/aplicaciones-data-mining.webp" width="800" /></a></div>
+<div style="text-align: justify;">
+<br /></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Marketing de base de datos y orientación</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los minoristas utilizan la minería de datos para comprender mejor a sus clientes. La minería de datos les permite segmentar mejor los grupos de mercado y personalizar las promociones para profundizar y ofrecer promociones personalizadas a diferentes consumidores.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Gestión del riesgo del crédito y calificación crediticia</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los bancos implementan modelos de minería de datos para predecir la capacidad del prestatario de asumir y pagar deudas. Utilizando una variedad de información demográfica y personal, estos modelos seleccionan automáticamente una tasa de interés basada en el nivel de riesgo asignado al cliente. Los solicitantes con mejores puntajes de crédito generalmente reciben tasas de interés más bajas ya que el modelo usa este puntaje como un factor en su evaluación.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Detección y Prevención de Fraudes</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Las instituciones financieras implementan modelos de minería de datos para detectar y detener automáticamente las transacciones fraudulentas. Esta forma de informática forense ocurre detrás de escena con cada transacción y, a veces, sin que el consumidor lo sepa. Al rastrear los hábitos de gasto, estos modelos marcarán transacciones aberrantes y retendrán pagos instantáneamente hasta que los clientes verifiquen la compra. Los algoritmos de minería de datos pueden funcionar de forma autónoma para proteger a los consumidores de transacciones fraudulentas a través de un correo electrónico o una notificación de texto para confirmar una compra.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Bioinformática Sanitaria</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los profesionales de la salud utilizan modelos estadísticos para predecir la probabilidad de un paciente de diferentes afecciones de salud en función de los factores de riesgo. Los datos demográficos, familiares y genéticos pueden modelarse para ayudar a los pacientes a realizar cambios para prevenir o mediar la aparición de condiciones de salud negativas. Estos modelos se implementaron recientemente en países en desarrollo para ayudar a diagnosticar y priorizar a los pacientes antes de que los médicos llegaran al sitio para administrar el tratamiento.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Filtrado de Spam</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La minería de datos también se usa para combatir la afluencia de correo electrónico no deseado y malware. Los sistemas pueden analizar las características comunes de millones de mensajes maliciosos para informar el desarrollo de software de seguridad. Más allá de la detección, este software especializado puede ir un paso más allá y eliminar estos mensajes incluso antes de que lleguen a la bandeja de entrada del usuario.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Sistemas de recomendación</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Los sistemas de recomendación ahora se usan ampliamente entre los minoristas en línea. El modelo predictivo de comportamiento del consumidor es ahora un foco central de muchas organizaciones y se considera esencial para competir. Empresas como Amazon y Macy's crearon sus propios modelos de minería de datos patentados para pronosticar la demanda y mejorar la experiencia del cliente en todos los puntos de contacto. Netflix ofreció un premio de un millón de dólares por un algoritmo que aumentaría significativamente la precisión de su sistema de recomendación. El modelo ganador mejoró la precisión de las recomendaciones en más del 8%.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Análisis de los sentimientos</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El análisis de sentimientos de los datos de las redes sociales es una aplicación común de minería de datos que utiliza una técnica llamada minería de texto. Este es un método utilizado para comprender cómo se siente un grupo agregado de personas con respecto a un tema. La minería de texto implica el uso de una entrada de los canales de redes sociales u otra forma de contenido público para obtener información clave como resultado del reconocimiento de patrones estadísticos. Un paso más allá, las técnicas de procesamiento del lenguaje natural (PNL) se pueden utilizar para encontrar el significado contextual detrás del lenguaje humano utilizado.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Minería de datos cualitativa</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La investigación cualitativa puede estructurarse y luego analizarse utilizando técnicas de minería de texto para dar sentido a grandes conjuntos de datos no estructurados. Investigadores de Berkley publicaron una mirada en profundidad sobre cómo se ha utilizado esto para estudiar el bienestar infantil.</span></div>
+</div>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Minería de Datos en el conjunto de procesos de Inteligencia de Negocios (BI)</span></h2>
+<div>
+<span style="font-size: x-large;"><br /></span></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://1.bp.blogspot.com/-Vlpb-ulgkHE/Xy198Pmm6yI/AAAAAAAACZw/v37t-LMYx5MK7a3BW2-jsHqaf3pyyz58wCLcBGAsYHQ/s1600/Inteligencia-de-negocio.webp" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1280" src="https://1.bp.blogspot.com/-Vlpb-ulgkHE/Xy198Pmm6yI/AAAAAAAACZw/v37t-LMYx5MK7a3BW2-jsHqaf3pyyz58wCLcBGAsYHQ/s1600/Inteligencia-de-negocio.webp" /></a></div>
+<div>
+<span style="font-size: x-large;"><br /></span>
+<br />
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Análisis de procesos de negocio utilizando la plataforma de Rstudio</span></h2>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Hoy en día las organizaciones almacenan o manejan grandes cantidades de datos provenientes de distintas áreas del negocio, dichos datos están relacionados con diversos procesos comerciales. La minería de datos permite optimizar esos procesos mediante el análisis y la aplicación de técnicas. Las empresas que desarrollan esta área les permitirá tener una ventaja competitiva. La minería de procesos se inició con el descubrimiento de modelos de flujo de trabajo a partir de datos de eventos. Sin embargo, durante los últimos 20 años, el campo de la minería de datos se ha convertido en una disciplina de investigación amplia y diversa.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Para la plataforma de Rstudio un grupo d</span><span style="font-size: large;">e investigación de Business Informatics de la Universidad Hasselt, Bélgica, desarrolló un interesante paquete en código abierto denominado bupaR. El paquete central incluye una funcionalidad básica para crear objetos de registro de eventos en R.&nbsp;</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Contiene varias funciones para obtener información sobre un registro de eventos y también proporciona versiones de registro de eventos específicos de funciones genéricas en R. Junto con los paquetes relacionados, cada uno de los cuales tiene su propio propósito específico, bupaR tiene como objetivo apoyar cada paso en el análisis de datos de eventos con R, desde la importación de datos hasta el monitoreo de procesos en línea.</span><span style="font-size: large;">&nbsp;<a href="http://bupar.net/materials/20170904%20poster%20bupaR.pdf" target="_blank">Aquí</a> puedes visualizar todo lo que hace el paquete.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Descripción: </b>En el siguiente entrenamiento utilizaré las principales funciones del paquete bupaR para conocer el potencial y alcance de su contenido en ser aplicado al Anaysis Business, Data Analytics y Data Mining. Igualmente utilizaré otros paquetes que ayudaran a realizar el análisis completo&nbsp; añadiendo otras características.&nbsp;</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Paqueterías</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b><a href="https://cran.r-project.org/web/packages/bupaR/bupaR.pdf" target="_blank">bupaR:</a></b>&nbsp;Conjunto de herramientas completo de análisis de procesos de negocio. Crea la clase S3 para objetos de registro de eventos y funciones de controlador relacionadas. Importa paquetes relacionados para el filtrado de datos de eventos, cálculo de estadísticas descriptivas, manejo de objetos 'Petri Net' y visualización de mapas de procesos. Consulte también los paquetes 'edeaR', 'processmapR', 'eventdataR' y 'processmonitR'.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/eventdataR/eventdataR.pdf" target="_blank"><b>eventdataR:</b></a> Repositorio de conjuntos de datos de eventos que incluye registros de eventos tanto de la vida real como artificiales. Se pueden usar en combinación con las funcionalidades proporcionadas por los paquetes 'bupaR' 'edeaR', 'processmapR', etc.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<span style="font-size: large;"></span><br />
+<div style="text-align: justify;">
+<span style="font-size: large;"><b><a href="https://cran.r-project.org/web/packages/processanimateR/processanimateR.pdf" target="_blank">processanimateR</a>:</b> Proporciona mapas de procesos animados basados en el paquete 'procesmapR'. Los casos almacenados en registros de eventos creados con el registro de eventos de clase S3 'bupaR' son renderizados como tokens (formas SVG) y animados según su ocurrencia veces en la parte superior del mapa de procesos. Para renderizar animaciones SVG ('SMIL') y el Se utilizan el paquete 'htmlwidget'.</span></div>
+<span style="font-size: large;">
+</span>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<span style="font-size: large;">
+</span><br />
+<h3>
+<span style="font-size: large;">Creación de un Event-log</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Esta función necesita como argumentos un data.frame y los nombres de columna de los campos apropiados que describen el identificador de caso, identificador de actividad, marca de tiempo, transición del ciclo de vida, recurso e identificador de instancia de actividad. Se puede crear un registro de eventos con requisitos mínimos (marca de tiempo, caso e identificador de actividad) con la función simple_eventlog. Ambas funciones tienen una alternativa, prefijada con la letra i de interfaz, para configurar los identificadores con una GUI. En ese caso, solo se deben proporcionar los datos como argumento.</span></div>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">¿Qué es un Data Frame?</span></h3>
+<div>
+<div style="text-align: justify;">
+<span style="font-size: large;">Es una tabla o una estructura bidimensional similar a una matriz en la que cada columna contiene valores de una variable y cada fila contiene un conjunto de valores de cada columna.</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;">A continuación se muestran las características de un data frame:</span></div>
+<div style="text-align: justify;">
+<ol>
+<li><span style="font-size: large;">Los nombres de las columnas no deben estar vacíos.</span></li>
+<li><span style="font-size: large;">Los nombres de las filas deben ser únicos.</span></li>
+<li><span style="font-size: large;">Los datos almacenados en un marco de datos pueden ser de tipo numérico, factorial o de carácter.</span></li>
+<li><span style="font-size: large;">Cada columna debe contener el mismo número de elementos de datos.</span></li>
+</ol>
+</div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>La función data.frame()</b> crea marcos de datos, colecciones de variables estrechamente acopladas que comparten muchas de las propiedades de las matrices y de las listas, utilizadas como la estructura de datos fundamental por la mayoría del software de modelado de R.</span></div>
+</div>
+
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(bupaR)
+library(eventdataR)
+library(edeaR)
+library(processanimateR)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+t=Sys.time()
+data <- data.frame(case = rep("A",5),
+                   activity_id = c("A","B","C","D","E"),
+                   activity_instance_id = 1:5,
+                   lifecycle_id = rep("complete",5),
+                   timestamp = c(t,t+1000,t+2000,t+3000,t+4000),
+                   resource = rep("resource 1", 5))
+data
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+class(data)
+```
+<br>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Objeto de registro de eventos</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Así se crea el objeto de registro de eventos con la función eventlog():</span></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+primer_log <- bupaR::eventlog(data,case_id = "case",
+                       activity_id = "activity_id",
+                       activity_instance_id = "activity_instance_id",
+                       lifecycle_id = "lifecycle_id",
+                       timestamp = "timestamp",
+                       resource_id = "resource")
+
+activity_presence(primer_log)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+class(primer_log)
+```
+<br><h3 style="text-align: justify;">
+<span style="font-size: large;">Análisis de datos exploratorio y descriptivo basado en eventos&nbsp;</span></h3><br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+data("patients")
+class(patients)
+```
+<br>
+<div style="text-align: justify;">
+<span style="font-size: large;">Después de preparar los datos y crear un objeto de registro de eventos, podemos usar algunas funciones del paquete para obtener información básica del registro, así como metadatos. Utilizaremos el comando "Head" para conocer los primeros datos.</span></div><br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+head(patients)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+mi_log = patients
+activity_presence(mi_log)
+```
+<br><div style="text-align: justify;">
+<span style="font-size: large;">Podemos ver un resumen general del registro de eventos llamando a la función "summary".</span></div><br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+summary(mi_log)
+```
+<br><div style="text-align: justify;">
+<h3>
+<span style="font-size: large;">Frecuencias de actividades</span></h3>
+<div>
+<span style="font-size: large;">A continuación se realizarán llamados para obtener información de las frecuencias absolutas y relativas.&nbsp;</span></div>
+</div><br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+x=end_activities(mi_log, level_of_analysis="resource")    
+plot(x)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+data("sepsis")
+mi_log = sepsis
+activity_presence(mi_log)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+x=end_activities(mi_log, level_of_analysis="resource")    
+plot(x)
+```
+<br><div>
+<h3>
+<span style="font-size: large;">Construcción&nbsp;de Mapa de Procesos</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">La función "process_map" se encarga de diseñar y elaborar un mapa de procesos de un registro de eventos. En el paquete, se puede encontrar un ejemplo de un mapa de proceso para el registro de eventos de los pacientes.</span></div>
+</div><br>
+```{r out.width = "100%"}
+process_map(patients)
+```
+
+```{r out.width = "100%"}
+resource_map(patients)
+```
+<br><h3 style="text-align: justify;">
+<span style="font-size: large;">Perfil de frecuencia</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">De forma predeterminada, el mapa de procesos está anotado con frecuencias de actividades y flujos. Es lo que se llama perfil de frecuencia y se puede crear explícitamente utilizando la&nbsp; función "frequency". Esta función tiene un "argumento de valor", que puede usarse para ajustar las frecuencias mostradas, por ejemplo, usando frecuencias relativas en lugar de las absolutas predeterminadas.</span></div><br>
+```{r out.width = "100%"}
+patients %>%
+    process_map(type = frequency("relative"))
+```
+
+```{r out.width = "100%"}
+patients %>%
+    process_map(type = frequency("relative_case"))
+```
+<br><h3 style="text-align: justify;">
+<span style="font-size: large;">Perfil de rendimiento</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">En lugar de un perfil de frecuencia, también se puede utilizar un perfil de desempeño, centrándose en el tiempo de procesamiento de las actividades. El perfil de rendimiento tiene dos argumentos: el argumento FUN para especificar la función que se aplicará en el tiempo de procesamiento (p. Ej., Mínimo, máximo, media aritmética, mediana, etc.) y el argumento de las unidades para especificar la unidad de tiempo que se utilizará.</span></div><br>
+```{r out.width = "100%"}
+patients %>%
+    process_map(performance(median, "days"))
+```
+
+```{r out.width = "100%"}
+patients %>%
+    process_map(performance(mean, "hours"))
+```
+<br><h3 style="text-align: justify;">
+<span style="font-size: large;">Perfil personalizado</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Junto a los perfiles específicos anteriores, también se pueden proyectar atributos numéricos personalizados. Esto se puede lograr con el comando "custom". Requiere una función de agregación (media, mediana, suma, mínima, etc.) y un atributo numérico. El argumento de las unidades se puede utilizar para indicar cómo se deben interpretar los valores (por ejemplo, "USD" para valores monetarios). Para las aristas, mostrará los valores relacionados con la actividad saliente.</span></div><br>
+```{r out.width = "100%"}
+traffic_fines %>% 
+    process_map(type = custom(attribute = "amount", units = "USD"))
+```
+<br><h3 style="text-align: justify;">
+<span style="font-size: large;">Combinando diferentes perfiles</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">El perfil utilizado para los bordes y los nodos se puede diferenciar mediante los atributos "type_edges" y en "type_nodes" lugar del argumento "type". De esta forma, la información sobre frecuencias y rendimiento, o cualquier otro valor, se puede combinar en un mismo gráfico.</span></div><br>
+```{r out.width = "100%"}
+patients %>%
+    process_map(type_nodes = frequency("relative_case"),
+                type_edges = performance(mean))
+```
+<br>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Animación del Mapa de Procesos</span></h3><br>
+```{r}
+animate_process(patients, mapping = token_aes(color = token_scale("red")))
+```
+
+```{r}
+animate_process(patients, mode = "relative", jitter = 10, legend = "color",
+  mapping = token_aes(color = token_scale("employee", 
+    scale = "ordinal", 
+    range = RColorBrewer::brewer.pal(7, "Paired"))))
+```
+<br>
+<h3 style="text-align: justify;">
+<span style="font-size: large;">Gráficos de puntos</span></h3>
+<div style="text-align: justify;">
+<span style="font-size: large;">Se pueden hacer gráficos de puntos con la función "dotted_chart". Un gráfico de puntos es un gráfico en el que cada instancia de actividad se muestra con un punto. El eje "x" se refiere al aspecto del tiempo, mientras que el eje "y" se refiere a casos. La función de gráfico de puntos tiene 3 argumentos</span></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><br /></span></div>
+<div style="text-align: justify;">
+<ol>
+<li><span style="font-size: large;">x: ya sea absoluto (tiempo absoluto en el eje x) o relativo (diferencia de tiempo desde el caso de inicio en el eje x)</span></li>
+<li><span style="font-size: large;">y: el orden de los casos a lo largo del eje y: por inicio, finalización o duración.</span></li>
+<li><span style="font-size: large;">color: el atributo utilizado para colorear las instancias de actividad. Por defecto al tipo de actividad.</span></li>
+</ol>
+</div>
+<div>
+<br /></div>
+<blockquote class="tr_bq" style="text-align: justify;">
+<span style="font-size: large;"><i>El gráfico de puntos es un gráfico similar a un gráfico de Gannt. Muestra una distribución de eventos de un registro de eventos a lo largo del tiempo. La idea básica del gráfico de puntos es trazar puntos de acuerdo con el tiempo.</i></span></blockquote>
+<br>
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dotted_chart(patients, x = "relative", y ="duration", color = NULL, units ="hours")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dotted_chart(sepsis, x = "absolute", y ="duration", color = NULL, units ="hours")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dotted_chart(patients, x = "relative", y ="start", color = NULL, units ="hours")
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dotted_chart(sepsis, x = "absolute", y ="start", color = NULL, units ="hours")
+```
+<br>
+<h3 style="text-align: left;">
+<span style="font-size: large;">Referencias:</span></h3>
+<div style="text-align: right;">
+<span style="font-size: large;">Janssenswillen, G., Depaire, B., Swennen, M., Jans, M. y Vanhoof, K. (2019). bupaR: Habilitación de análisis de procesos comerciales reproducibles. Sistemas basados en el conocimiento, 163, 927-930.</span></div>
+<br>
