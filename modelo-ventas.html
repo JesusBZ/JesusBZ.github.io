@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://jesusbz.github.io/modelo-ventas.html"/>
 <meta property="og:author" content="Jesús Benjamín Zerpa"/>
-<meta name="twitter:card" content="summary" /> 
+<meta name="twitter:card" content="summary_large_image" /> 
 
 
 
@@ -318,6 +318,61 @@ font-weight: 300;
 
 .w3l-footer-22-main #movetop:hover {
   background: #213e54;
+}
+/* container */
+
+#share {
+	width: 100%;
+  	margin: 100px auto;
+  	text-align: center;
+}
+
+/* buttons */
+
+#share a {
+	width: 50px;
+  	height: 50px;
+  	display: inline-block;
+  	margin: 8px;
+  	border-radius: 50%;
+  	font-size: 24px;
+  	color: #fff;
+	opacity: 0.75;
+	transition: opacity 0.15s linear;
+}
+
+#share a:hover {
+	opacity: 1;
+}
+
+/* icons */
+
+#share i {
+  	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+/* colors */
+
+.facebook {
+ 	background: #3b5998;
+}
+
+.twitter {
+  	background: #55acee;
+}
+
+.googleplus {
+  	background: #000000;
+}
+
+.linkedin {
+  	background: #0077b5;
+}
+
+.pinterest {
+  	background: #cb2027;
 }
 </style>
 
@@ -901,6 +956,26 @@ Resultado web con enlaces de partes del sitio
 <span class="fa fa-arrow-up"></span>
 </button>
 </section>
+<hr>
+<div style="text-align: center;">
+<span style="font-size: 7;"><b>Puedes compartir este material:</b></span>
+<div id="share">
+
+  <!-- facebook -->
+  <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjesusbz.github.io%2Fmodelo-ventas.html" target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook"></i></a>
+
+  <!-- twitter -->
+  <a class="twitter" href="https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fjesusbz.github.io%2Fmodelo-ventas.html" target="blank"  onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-twitter"></i></a>
+
+  <!-- linkedin -->
+  <a class="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https://jesusbz.github.io/modelo-ventas.html" target="blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-linkedin"></i></a>
+
+  <!-- google plus -->
+  <a class="googleplus" href="mailto:?subject=&body=https%3A%2F%2Fjesusbz.github.io%2Fmodelo-ventas.html&recipient=" target="blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="far fa-envelope"></i></a>
+  
+</div>  
+</div>
+<hr>
 <h3>
 <span style="font-size: large;">Referencias</span>
 </h3>
@@ -925,7 +1000,26 @@ Rami Krispin, Time Series Analysis and Forecasting with the TSstudio Package, 2
 <div style="text-align: left;">
 <br /></div>
 </div>
+<div id="disqus_thread"></div>
+<script>
 
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://portafolio-11.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <hr />
 <h5>
 <div>
@@ -1093,5 +1187,6 @@ $(document).ready(function () {
             }
         </script>
         <!-- /move top -->
+		<script id="dsq-count-scr" src="//portafolio-11.disqus.com/count.js" async></script>
 </body>
 </html>
