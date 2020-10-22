@@ -337,6 +337,187 @@ font-size: 20px;
 display:block;
 text-align:right;
 }
+
+ .blog-card {
+	 display: flex;
+	 flex-direction: column;
+	 margin: 1rem auto;
+	 box-shadow: 0 3px 7px -1px rgba(0, 0, 0, .1);
+	 margin-bottom: 5%;
+	 background: #d1d1d1;
+	 line-height: 1.4;
+	 font-family: sans-serif;
+	 border-radius: 5px;
+	 overflow: hidden;
+	 z-index: 0;
+}
+ .blog-card a {
+	 color: inherit;
+}
+ .blog-card a:hover {
+	 color: #246da4;
+}
+ .blog-card:hover .photo {
+	 transform: scale(1.3) rotate(3deg);
+}
+ .blog-card .meta {
+	 position: relative;
+	 z-index: 0;
+	 height: 200px;
+}
+ .blog-card .photo {
+	 position: absolute;
+	 top: 0;
+	 right: 0;
+	 bottom: 0;
+	 left: 0;
+	 background-size: cover;
+	 background-position: center;
+	 transition: transform 0.2s;
+}
+ .blog-card .details, .blog-card .details ul {
+	 margin: auto;
+	 padding: 0;
+	 list-style: none;
+}
+ .blog-card .details {
+	 position: absolute;
+	 top: 0;
+	 bottom: 0;
+	 left: -100%;
+	 margin: auto;
+	 transition: left 0.2s;
+	 background: rgba(0, 0, 0, .6);
+	 color: #fff;
+	 padding: 10px;
+	 width: 100%;
+	 font-size: 0.9rem;
+}
+ .blog-card .details a {
+	 text-decoration: dotted underline;
+}
+ .blog-card .details ul li {
+	 display: inline-block;
+}
+ .blog-card .details .author:before {
+	 font-family: FontAwesome;
+	 margin-right: 10px;
+	 content: "\f007";
+}
+ .blog-card .details .date:before {
+	 font-family: FontAwesome;
+	 margin-right: 10px;
+	 content: "\f133";
+}
+ .blog-card .details .tags ul:before {
+	 font-family: FontAwesome;
+	 content: "\f02b";
+	 margin-right: 10px;
+}
+ .blog-card .details .tags li {
+	 margin-right: 2px;
+}
+ .blog-card .details .tags li:first-child {
+	 margin-left: -4px;
+}
+ .blog-card .description {
+	 padding: 1rem;
+	 background: #fff;
+	 position: relative;
+	 z-index: 1;
+}
+ .blog-card .description h1, .blog-card .description h2 {
+	 font-family: Poppins, sans-serif;
+}
+ .blog-card .description h1 {
+	 line-height: 1;
+	 margin: 0;
+	 font-size: 2rem;
+}
+ .blog-card .description h2 {
+	 font-size: 1.7rem;
+	 font-weight: 300;
+	 text-transform: uppercase;
+	 color: #a2a2a2;
+	 margin-top: 5px;
+}
+ .blog-card .description .read-more {
+	 text-align: right;
+}
+ .blog-card .description .read-more a {
+	 color: #246da4;
+	 display: inline-block;
+	 position: relative;
+}
+ .blog-card .description .read-more a:after {
+	 content: "\f061";
+	 font-family: FontAwesome;
+	 margin-left: -10px;
+	 opacity: 0;
+	 vertical-align: middle;
+	 transition: margin 0.3s, opacity 0.3s;
+}
+ .blog-card .description .read-more a:hover:after {
+	 margin-left: 5px;
+	 opacity: 1;
+}
+ .blog-card p {
+	 position: relative;
+	 margin: 1rem 0 0;
+	 font-size:16px;
+	 text-align : justify; 
+	 
+}
+ .blog-card p:first-of-type {
+	 margin-top: 1.25rem;
+}
+ .blog-card p:first-of-type:before {
+	 content: "";
+	 position: absolute;
+	 height: 5px;
+	 background: #246da4;
+	 width: 35px;
+	 top: -0.75rem;
+	 border-radius: 3px;
+}
+ .blog-card:hover .details {
+	 left: 0%;
+}
+ @media (min-width: 640px) {
+	 .blog-card {
+		 flex-direction: row;
+		 max-width: auto;
+	}
+	 .blog-card .meta {
+		 flex-basis: 40%;
+		 height: auto;
+	}
+	 .blog-card .description {
+		 flex-basis: 60%;
+	}
+	 .blog-card .description:before {
+		 transform: skewX(-3deg);
+		 content: "";
+		 background: #fff;
+		 width: 30px;
+		 position: absolute;
+		 left: -10px;
+		 top: 0;
+		 bottom: 0;
+		 z-index: -1;
+	}
+	 .blog-card.alt {
+		 flex-direction: row-reverse;
+	}
+	 .blog-card.alt .description:before {
+		 left: inherit;
+		 right: -10px;
+		 transform: skew(3deg);
+	}
+	 .blog-card.alt .details {
+		 padding-left: 25px;
+	}
+}
  
 </style>
 
@@ -578,180 +759,344 @@ text-align:right;
 <div class="separator" style="clear: both; text-align: center;">
 <a href="https://jesusbezerpa.github.io/" target="_blank"><img border="0" data-original-height="90" data-original-width="728" src="imagenes/banner2.jpg"/></a></div>
 
-<hr />
+<br>
+<br>
+ 
 <h2 style="text-align: center;">
 <span style="font-size: x-large;">Contenido de Portafolio:</span></h2>
-<h3 style="text-align: justify;">
-<span style="font-size: large;">1. Modelo de Pronósticos para Ventas en Volumen</span></h3>
-<div style="text-align: justify;">
-<a href="https://www.blogger.com/blogger.g?blogID=3272883731674348977" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" data-original-height="477" data-original-width="848" height="180" src="https://1.bp.blogspot.com/-Ua06A3bmHW0/Xs8fI-i8EvI/AAAAAAAACSY/Sbe4_e-ZuuUm3vcyAoh6fawLtVjWWTqVgCLcBGAsYHQ/s320/imagen-a.webp" width="320" /></a><span style="font-size: large;">El área vital de todo negocio y base del presupuesto anual son las ventas. Existen muchos métodos para realizar un pronóstico de ventas a partir de la experiencia y la observación del propio negocio sin embargo, cuando combinamos esos métodos con la modelización estadística los resultados no solo mejoran, sino, que se ahorra tiempo y disminuye el margen de error.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">En el portafolio se encuentra una metodología para realizar un pronóstico de ventas en volumen a partir del histórico del negocio, se utilizan varios modelos estadísticos a través de la paquetería de R TSstudio para generar gráficos interactivos que permitirán una mejor manipulación y visualización de datos vanguardista.<a href="https://jesusbz.github.io/modelo-ventas.html" rel="nofollow" target="_blank"><span style="color: #2b00ff;"> Seguir leyendo (...)</span></a>&nbsp;</span></div>
-<hr />
-<h3 style="text-align: justify;">
-<span style="font-size: large;">2. Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</span></h3>
-<div style="text-align: justify;">
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://1.bp.blogspot.com/-GrcO37XO3Xs/Xs8fpuhJXnI/AAAAAAAACSg/-5p0WLugw7IJy0zKEyYFlm0XPnfET1L1wCLcBGAsYHQ/s1600/imagen-7.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="667" data-original-width="1000" height="212" src="https://1.bp.blogspot.com/-GrcO37XO3Xs/Xs8fpuhJXnI/AAAAAAAACSg/-5p0WLugw7IJy0zKEyYFlm0XPnfET1L1wCLcBGAsYHQ/s320/imagen-7.jpg" width="320" /></a></div>
-<span style="font-size: large;">En los últimos años las criptomonedas se han convertido en un tema recurrente de emprendedores con los nuevos modelos de negocio. La alternativa de utilizar el Bitcoin como resguardo de valor a largo plazo es una práctica que ha mostrado el interés de especialistas en finanzas y traders reconocidos.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">En este sentido, el Bitcoin se puede considerar una especie de activo de renta variable con una importante volatilidad y un atractivo rendimiento a largo plazo. El modelo Garch y sus variantes son un instrumento estadístico que permite modelar esa volatilidad y tomar posición para decisiones de compra / venta. El Valor en riesgo VaR evalúa el riesgo y la probabilidad de una pérdida en la decisión y respalda los tiempos de recuperación de la inversión. <a href="https://jesusbz.github.io/Proyecto2.html" rel="nofollow" target="_blank"><span style="color: #2b00ff;"> Seguir leyendo (...)</span></a>&nbsp;</span></div>
-<hr />
-<h3 style="text-align: justify;">
-<span style="font-size: large;">3. Aprendizaje Automático (Machine Learning)</span></h3>
-<div style="text-align: justify;">
-<a href="https://1.bp.blogspot.com/-O7wnFe0uqhE/Xs8f28mbbaI/AAAAAAAACSk/BrZYqPLKowshXQPC7stk2ZjYyU8C3raXwCLcBGAsYHQ/s1600/imagen-c.webp" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" data-original-height="549" data-original-width="848" height="207" src="https://1.bp.blogspot.com/-O7wnFe0uqhE/Xs8f28mbbaI/AAAAAAAACSk/BrZYqPLKowshXQPC7stk2ZjYyU8C3raXwCLcBGAsYHQ/s320/imagen-c.webp" width="320" /></a><span style="font-size: large;">El Machine Learning se define como el sub-campo de la “Inteligencia Artificial” que se centra en el desarrollo de programas informáticos que tienen acceso a los datos y proporcionan al sistema la capacidad de aprender y mejorar automáticamente, de encontrar patrones en la base de datos sin ninguna intervención o acción humana basado en el tipo de datos, es decir, datos etiquetados o no etiquetados, el enfoque de capacitación del modelo en aprendizaje automático se ha clasificado como aprendizaje supervisado y no supervisado.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">El Machine Learning permite realizar un tipo de pronóstico que se crea automáticamente a partir de patrones pasados que pueden repetirse en el futuro, a diferencia de los modelos estadísticos, el aprendizaje automático ajusta el pronóstico de manera autónoma, ofrece la posibilidad de realizar combinaciones de variables relacionadas al pronóstico y de un entrenamiento por fases.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">En el lenguaje R se encuentran una series de paquetes dedicados a la investigación del Machine Learning, a la Big data y a Redes Neuronales lo que permite a los innovadores de otras ciencias distintas a la informática realizar prácticas y aplicaciones en sus campos de estudios particulares. <a href="https://jesusbz.github.io/proyecto3.html" rel="nofollow" target="_blank"><span style="color: #2b00ff;">Seguir leyendo (...)</span></a>&nbsp;</span></div>
 <br>
-<br>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://jesusbezerpa.github.io/" target="_blank"><img border="0" data-original-height="90" data-original-width="728" src="imagenes/banner4.webp"/></a></div>
-<br>
-<br>
-
-<hr />
-<h3 style="text-align: justify;">
-<span style="font-size: large;">4. Portafolio de Fronteras Eficientes Markowitz</span></h3>
-<div style="text-align: justify;">
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://1.bp.blogspot.com/-R6Bv6KL6SFc/Xs8f-qZ1EQI/AAAAAAAACSs/hTFmR6QXFeIOw-sf0mRS-RJITuyhRw0AACLcBGAsYHQ/s1600/imagen-f.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="532" data-original-width="800" height="212" src="https://1.bp.blogspot.com/-R6Bv6KL6SFc/Xs8f-qZ1EQI/AAAAAAAACSs/hTFmR6QXFeIOw-sf0mRS-RJITuyhRw0AACLcBGAsYHQ/s320/imagen-f.webp" width="320" /></a></div>
-<span style="font-size: large;">Una de las primeras teorías que se deben aplicar para acceder al mundo de los portafolios de inversión es el de las fronteras eficientes perfeccionada por Markowitz.&nbsp;</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">Su idea central es que el inversor racional buscará maximizar sus beneficios (retornos) asumiendo el menor riesgo (volatilidad) posible, esto se puede lograr con la diversificación de la cartera, eligiendo en principio, acciones que tengan una correlación baja o negativa. Por ejemplo, combinando acciones de empresas con distinta actividad económica.&nbsp;</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">Toda la teoría la aplicaremos con el paquete Portfolio que incluye la versión completa de fronteras eficientes y permite elaborar distintos tipos de portafolios descargando automáticamente los valores de los instrumentos que necesitemos, incluso criptomonedas.<a href="https://jesusbz.github.io/proyecto4.html" rel="nofollow" target="_blank"><span style="color: #2b00ff;"> Seguir leyendo (...)</span></a>&nbsp;</span><br />
-<hr />
-<br>
+ <hr>
+<div class="blog-card">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/imagen-a.webp);" alt="Pronosticos de ventas con Rstudio"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">blog</a></li>
+            <li><a href="#">Rstudio</a></li>
+            <li><a href="#">Forecast</a></li>
+            <li><a href="#">Backtesting</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>1. Modelo de Pronósticos para Ventas en Volumen</h1>
+      <h2>Modelización en Rstudio</h2>
+      <p>El área vital de todo negocio y base del presupuesto anual son las ventas. Existen muchos métodos para realizar un pronóstico de ventas a partir de la experiencia y la observación del propio negocio sin embargo, cuando combinamos esos métodos con la modelización estadística los resultados no solo mejoran, sino, que se ahorra tiempo y disminuye el margen de error.</p>
+      <p>En el portafolio se encuentra una metodología para realizar un pronóstico de ventas en volumen a partir del histórico del negocio, se utilizan varios modelos estadísticos a través de la paquetería de R TSstudio para generar gráficos interactivos que permitirán una mejor manipulación y visualización de datos vanguardista.</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/modelo-ventas.html" target="_blank">Leer Más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="blog-card alt">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/imagen-i.webp);" alt="Modelo garch con RStudio"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Bitcoin</a></li>
+            <li><a href="#">eGarch</a></li>
+            <li><a href="#">VaR</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>2. Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h1>
+      <h2>Código en Rstudio</h2>
+      <p>En los últimos años las criptomonedas se han convertido en un tema recurrente de emprendedores con los nuevos modelos de negocio. La alternativa de utilizar el Bitcoin como resguardo de valor a largo plazo es una práctica que ha mostrado el interés de especialistas en finanzas y traders reconocidos..</p>
+      <p>En este sentido, el Bitcoin se puede considerar una especie de activo de renta variable con una importante volatilidad y un atractivo rendimiento a largo plazo. El modelo Garch y sus variantes son un instrumento estadístico que permite modelar esa volatilidad y tomar posición para decisiones de compra / venta. El Valor en riesgo VaR evalúa el riesgo y la probabilidad de una pérdida en la decisión y respalda los tiempos de recuperación de la inversión.</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/Proyecto2.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+ <div class="blog-card">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/imagen-c.webp);" alt="Machine Learning en Rstudio"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Machine Learning</a></li>
+            <li><a href="#">Rstudio</a></li>
+            <li><a href="#">Forecast</a></li>
+            <li><a href="#">Model</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>3. Aprendizaje Automático (Machine Learning)</h1>
+      <h2>Ciencia de Datos</h2>
+      <p>El Machine Learning se define como el sub-campo de la “Inteligencia Artificial” que se centra en el desarrollo de programas informáticos que tienen acceso a los datos y proporcionan al sistema la capacidad de aprender y mejorar automáticamente, de encontrar patrones en la base de datos sin ninguna intervención o acción humana basado en el tipo de datos, es decir, datos etiquetados o no etiquetados, el enfoque de capacitación del modelo en aprendizaje automático se ha clasificado como aprendizaje supervisado y no supervisado.</p>
+      <p>El Machine Learning permite realizar un tipo de pronóstico que se crea automáticamente a partir de patrones pasados que pueden repetirse en el futuro, a diferencia de los modelos estadísticos, el aprendizaje automático ajusta el pronóstico de manera autónoma, ofrece la posibilidad de realizar combinaciones de variables relacionadas al pronóstico y de un entrenamiento por fases.</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/proyecto3.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="blog-card alt">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/imagen-f.webp);"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Markowitz</a></li>
+            <li><a href="#">Gestión de Cartera</a></li>
+            <li><a href="#">Fronteras Eficientes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>4. Portafolio de Fronteras Eficientes Markowitz</h1>
+      <h2>Gestión de Carteras</h2>
+      <p>Una de las primeras teorías que se deben aplicar para acceder al mundo de los portafolios de inversión es el de las fronteras eficientes perfeccionada por Markowitz.</p>
+      <p>Su idea central es que el inversor racional buscará maximizar sus beneficios (retornos) asumiendo el menor riesgo (volatilidad) posible, esto se puede lograr con la diversificación de la cartera, eligiendo en principio, acciones que tengan una correlación baja o negativa. Por ejemplo, combinando acciones de empresas con distinta actividad económica. </p>
+	  <p>Toda la teoría la aplicaremos con el paquete Portfolio que incluye la versión completa de fronteras eficientes y permite elaborar distintos tipos de portafolios descargando automáticamente los valores de los instrumentos que necesitemos, incluso criptomonedas.</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/proyecto4.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  
+  <br>
 <br>
 <blockquote>
-<p style="font-size:2.5vw;"><i><span style="color: #4f4f4f;">"La ciencia será siempre una búsqueda, jamás un descubrimiento real. Es un viaje,</span><strong><span style="color:#006eff;"> nunca una llegada..."</span></i></strong><cite style="font-size:2.5vw;">-Karl Popper</cite></p>
+<p style="font-size:2.5vw;"><i><span style="color: #4f4f4f;">"Alcanzar cualquier objetivo en el comercio requiere conocimientos de dominio específicos y habilidades técnicas. Pero luego, después de eso, todo es gestión de la mentalidad. Sin embargo, la mayoría de la gente ignora eso; automáticamente piensan que ya han resuelto la última parte </span><strong><span style="color:#006eff;">  y es un error..."</span></i></strong><br><br><cite style="font-size:2vw;">- Yvan Byeajee, Paradigm Shift: <br>Cómo cultivar la ecuanimidad frente a la incertidumbre del mercado</cite></p>
 </blockquote>
 <br>
+<br>
+<hr>
+ <div class="blog-card">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/imagen-g.webp);" alt="Formulación y Evaluación de Proyectos"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Evaluación de Proyectos</a></li>
+            <li><a href="#">Proyecto de Inversión</a></li>
+            <li><a href="#">Producción tercerizada</a></li>
+            <li><a href="#">Estudio Económico</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>Evaluación y Formulación de Proyectos de Inversión</h1>
+      <h2>Informe, presentación y Plan de Cuenta</h2>
+      <p>La evaluación y formulación de proyectos de inversión es uno de los instrumentos prioritarios que deben acompañar todas las iniciativas de inversión para una toma de decisiones efectiva. Su contenido revela la información que de otra manera no es posible visualizar. Al final, su veredicto puede determinar si un proyecto es rentable o no. Su importancia radica en el trabajo multidisciplinario que genera donde economistas, contadores, ingenieros, administradores, etc, participan con el objeto de introducir una nueva iniciativa de inversión y mejorar sus posibilidades de éxito.</p>
+      <p>En este sentido, se detalla mi participación en la evaluación y formulación de un proyecto de inversión denominado “Global Nutrition España 2017” emprendido por un importante Grupo Empresarial venezolano del sector salud.</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/EvaluacionProyecto.html"target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="blog-card alt">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/imagen-h.webp);" alt="Dasboard Financiero"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Dashboard Financiero</a></li>
+            <li><a href="#">Kpi's Financieros</a></li>
+            <li><a href="#">Panorámica Financiera</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>Financial Dashboard</h1>
+      <h2>Desarrollado en Excel y Visual Basic</h2>
+      <p>Un panel de control financiero (Financial Dashboard) es una herramienta de “inteligencia empresarial” que ayuda a rastrear todos los KPI financieros relevantes, permite una visión amplia y eficiente del negocio y facilita el seguimiento de los márgenes de ventas y ganancias en detalle para cumplir y superar los objetivos financieros proyectados de un área, línea de negocio, departamento, empresa o grupo de ellas.</p>
+      <p>La herramienta la desarrollé en el 2018. En la primera versión se diseñó para la presentación de resultados financieros de la V.P de Finanzas de un importante Grupo Empresarial en cuya actividad económica se incluyen: Producción, distribución, venta al mayor, comercialización y una cadena de tiendas al detal. </p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/Dashboard.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+ <div class="blog-card">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/imagen-j.webp);" alt="Exploración de Datos con Rstudio"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Macroeconomía</a></li>
+            <li><a href="#">Exploración de datos</a></li>
+            <li><a href="#">PIB per Cápita</a></li>
+            <li><a href="#">Estadística Espacial</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>Exploración de Datos Macroeconómicos con Rstudio</h1>
+      <h2>Introducción a la estadística espacial</h2>
+      <p>El análisis del entorno macroeconómico y económico mundial se ha convertido en una puerta para la búsqueda de nuevos mercados emergentes. En el entrenamiento se visualizará el contenido del paquete <a href="https://www.rdocumentation.org/packages/gapminder/versions/0.3.0" target="_blank"><font color="blue">Gapminder</font></a> en especial los datos globales de la esperanza de vida al nacer y el producto Interno Bruto per Cápita. Igualmente se elaborarán gráficos interactivos de tendencia y dispersión. Por último, algunas pruebas lineales para determinar correlación y comentarios de las principales observaciones.</p>
+      <p>La segunda parte del entrenamiento se hará con el paquete <a href="https://cran.r-project.org/web/packages/Quandl/Quandl.pdf" target="_blank"><font color="blue">Quandl</font></a> una herramienta poderosa para descargar directamente información macroeconómica (en este caso de Venezuela) utilizando la plataforma del Banco Mundial y su base de datos llamada Indicadores del desarrollo mundial <a href="http://datatopics.worldbank.org/world-development-indicators/" target="_blank">(WDI)</a> "World Development Indicators".</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/proyecto7.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="blog-card alt">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/ima-x.webp);" alt="Power Map"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Power Map</a></li>
+            <li><a href="#">Modelo de Datos</a></li>
+            <li><a href="#">Exploración 1 capa</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1> Sistema Integrado Geográfico SIG</h1>
+      <h2>Modelo de datos</h2>
+      <p>El término geoespacial recientemente ha ganado popularidad y se utiliza para definir los datos colectivos y la tecnología asociada tiene un componente geográfico o de ubicación. Una búsqueda con <a href="https://books.google.com/ngrams" target="_blank"><font color="blue">Ngram Viewer</font></a> de Google muestra que el término solo ingresó a la literatura a fines de la década de 1980 y ha aumentado rápidamente en frecuencia desde entonces.</p>
+      <p>La palabra geoespacial se usa para indicar los datos que tienen un componente geográfico. Esto significa que los registros en un conjunto de datos tienen información de ubicación vinculada a ellos como datos geográficos en forma de coordenadas, dirección, ciudad o código postal. Los datos SIG son una forma de datos geoespaciales. Otros datos geoespaciales pueden originarse a partir de datos GPS, imágenes satelitales y geoetiquetado. 	 	</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/powermap.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="blog-card">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/miniatura/prophet.jpg);" alt="Pronósticos del Bitcoin con Prophet"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Prophet de Facebook</a></li>
+            <li><a href="#">Forecast</a></li>
+            <li><a href="#">Bitcoin</a></li>
+            <li><a href="#">Ether</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>Pronósticos con Prophet para el Bitcoin y Ether</h1>
+      <h2>Prophet de Facebook</h2>
+      <p>En el siguiente entrenamiento se presenta una novedosa herramienta a los traders y especialistas en criptomonedas para hacer pronósticos.</p>
+      <p>En un mundo tan dinámico, una de las necesidades para estos profesionales es estar actualizados en las técnicas para el análisis de datos con posibilidades predictivas, muchas veces sin la rigurosidad técnica y teórica de los modelos robustos para este tipo de análisis que requieren de un vasto conocimiento en estadísticas o econometría como los modelos del catálogo <a href="https://jesusbz.github.io/Proyecto2.html" target="_blank">“Arch-Garch”</a> por ejemplo.</p>
+	  <p>Hace algunos meses leí sobre el paquete Prophet creado por el equipo <a href="https://facebook.github.io/prophet/" target="_blank"><font color="blue">Core Data Science</font></a> de Facebook y desarrollado en código abierto. El paquete está disponible para el entorno de desarrollo integrado de Rstudio y Python. En general, es rápido y proporciona pronósticos completamente automatizados para científicos y analistas de datos en solo unas cuántas líneas de código lo que agiliza su aplicación.</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/bitcoin-ether-pronosticos-con-prophet.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="blog-card alt">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/ima-x1.webp);" alt="Simulación Monte Carlo"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Monte Carlo</a></li>
+            <li><a href="#">Gestión de Carteras</a></li>
+            <li><a href="#">Modelo en Rstudio</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>Simulación Monte Carlo</h1>
+      <h2>Gestión de Carteras</h2>
+      <p>En el siguiente ejercicio se realizará una introducción a la Simulación Monte Carlo utilizando los resultados de cartera que se obtuvieron del entrenamiento <a href="https://jesusbz.github.io/proyecto4.html" target="_blank"><font color="blue">“Portafolio de Fronteras Eficientes -Markowitz-”</font></a> que se encuentra en una de las entradas de esta página.</p>
+      <p>Se realizará en el entorno de desarrollo integrado de Rstudio y el diseño del mismo permitirá conocer los puntos prácticos de su aplicación. No es una inmersión profunda en la Simulación Monte Carlo para problemas industriales muy específicos y bien definidos.</p>
+	  <p>Para entender de manera sencilla la Simulación Monte Carlo es necesario tener presente el significado de dos términos estadísticos: Probabilístico y Determinístico. </p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/modelizacion-monte-carlo-portafolios.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+ <div class="blog-card">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/ima-x2.webp);" alt="Power BI"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Power BI</a></li>
+            <li><a href="#">Dashboard Financiero</a></li>
+            <li><a href="#">Kpi's Financieros</a></li>
+            <li><a href="#">Business Intelligence</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>Power BI, una de las mejores herramientas BI</h1>
+      <h2>Dashboard Financiero</h2>
+      <p>Un software de Business Intelligence (BI) es una forma de software que ayuda a todo tipo de empresas a medir y mejorar la productividad.</p>
+      <p>El tamaño de la empresa no determina el uso de un software de Business Intelligence. Erróneamente se cree que estas metodologías solo aplican para empresas que manejan altos volúmenes de transacciones olvidando que los procesos de una empresa pequeña pueden estar relacionados con grandes cantidades de datos exógenos. El BI permite utilizar y "medir" esas relaciones.</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/power-bi.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <div class="blog-card alt">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/data-mining-blog.webp);" alt="Business Analysis"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Data Analytics</a></li>
+            <li><a href="#">Data mining</a></li>
+            <li><a href="#">Business Analysis</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>Análisis de procesos de negocio utilizando la plataforma de Rstudio </h1>
+      <h2>Business Analysis</h2>
+      <p>La minería de datos, también conocida como Knowledge Discovery in Data (KDD), es una herramienta prometedora que ayuda a descubrir conocimiento valioso oculto, encontrar patrones dentro de grandes conjuntos de datos y/o correlaciones.</p>
+      <p>La Ciencia de Datos es multidisciplinaria. Es como un Paraguas y la minería de datos uno de sus componentes. Se pueden reconocer y calificar Patrones con Data Mining que no se pudieron determinar antes. La minería de datos es una tecnología relativamente nueva que analiza grandes cantidades de datos y tendencias almacenadas en bases de datos o depósitos de datos con lo que anteriormente no se podía ir más allá del simple análisis.</p>
+	  <p class="read-more">
+        <a href="https://jesusbz.github.io/analisis-de-procesos-comerciales-data-mining.html" target="_blank">Leer más</a>
+      </p>
+    </div>
+  </div>
+<hr>
 
-<hr>
-<h3 style="text-align: justify;">
-<span style="font-size: large;">5. Evaluación y Formulación de Proyectos de Inversión</span></h3>
-<div style="text-align: justify;">
-<a href="https://1.bp.blogspot.com/--9Hd76FovPo/Xs8gFRdiAsI/AAAAAAAACSw/Dwd3-KnV-fQeh7XPem2iyTCupTFGlcriACLcBGAsYHQ/s1600/imagen-g.webp" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" data-original-height="532" data-original-width="800" height="212" src="https://1.bp.blogspot.com/--9Hd76FovPo/Xs8gFRdiAsI/AAAAAAAACSw/Dwd3-KnV-fQeh7XPem2iyTCupTFGlcriACLcBGAsYHQ/s320/imagen-g.webp" width="320" /></a><span style="font-size: large;">La evaluación y formulación de proyectos de inversión es uno de los instrumentos prioritarios que deben acompañar todas las iniciativas de inversión para una toma de decisiones efectiva. Su contenido revela la información que de otra manera no es posible visualizar. Al final, su veredicto puede determinar si un proyecto es rentable o no. Su importancia radica en el trabajo multidisciplinario que genera donde economistas, contadores, ingenieros, administradores, etc, participan con el objeto de introducir una nueva iniciativa de inversión y mejorar sus posibilidades de éxito.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">En este sentido, se detalla mi participación en la evaluación y formulación de un proyecto de inversión denominado “Global Nutrition España 2017” emprendido por un importante Grupo Empresarial venezolano del sector salud. <a href="https://jesusbz.github.io/EvaluacionProyecto.html" rel="nofollow" target="_blank"><span style="color: #2b00ff;"> Seguir leyendo (...)</span></a></span></div>
-<h3 style="text-align: justify;">
-<hr />
-<span style="font-size: large;">6. Financial Dashboard</span></h3>
-<div style="text-align: justify;">
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://1.bp.blogspot.com/-egSzPTFlJs4/Xs8gM1x167I/AAAAAAAACS4/yDkndU3RXYseM2dE3B5lXzLOHWj7zZLlgCLcBGAsYHQ/s1600/imagen-h.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="532" data-original-width="800" height="212" src="https://1.bp.blogspot.com/-egSzPTFlJs4/Xs8gM1x167I/AAAAAAAACS4/yDkndU3RXYseM2dE3B5lXzLOHWj7zZLlgCLcBGAsYHQ/s320/imagen-h.webp" width="320" /></a></div>
-<span style="font-size: large;">Un panel de control financiero (Financial Dashboard) es una herramienta de “inteligencia empresarial” que ayuda a rastrear todos los KPI financieros relevantes, permite una visión amplia y eficiente del negocio y facilita el seguimiento de los márgenes de ventas y ganancias en detalle para cumplir y superar los objetivos financieros proyectados de un área, línea de negocio, departamento, empresa o grupo de ellas.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div>
-<div style="text-align: justify;">
-<span style="font-size: large;">La herramienta la desarrollé en el 2018. En la primera versión se diseñó para la presentación de resultados financieros de la V.P de Finanzas de un importante Grupo Empresarial en cuya actividad económica se incluyen: Producción, distribución, venta al mayor, comercialización y una cadena de tiendas al detal. <a href="https://jesusbz.github.io/Dashboard.html" rel="nofollow" target="_blank"> <span style="color: #2b00ff;">Seguir leyendo (...)</a></span><br />
-</span><br />
-<span style="font-size: large;"><br /></span>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://jesusbezerpa.github.io/" target="_blank"><img border="0" data-original-height="90" data-original-width="728" src="imagenes/banner1.png"/></a></div>
-<span style="font-size: large;"><br /></span></div>
-<h3>
-<hr />
-<span style="font-size: large;">
-<span style="font-size: large;">7. Exploración de Datos Macroeconómicos con Rstudio</span></span></h3>
-<div style="text-align: justify;">
-<span style="font-size: large;"><a href="https://1.bp.blogspot.com/-gt7hMtDuQLk/XtEWS2fJPhI/AAAAAAAACTY/3hS_HH-2hSwkojwvx5nwP-pW3stRfPf6wCPcBGAYYCw/s1600/imagen-j.webp" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" data-original-height="740" data-original-width="1040" height="227" src="https://1.bp.blogspot.com/-gt7hMtDuQLk/XtEWS2fJPhI/AAAAAAAACTY/3hS_HH-2hSwkojwvx5nwP-pW3stRfPf6wCPcBGAYYCw/s320/imagen-j.webp" width="320" /></a></span><span style="font-size: large;">El análisis del entorno macroeconómico y económico mundial se ha convertido en una puerta para la búsqueda de nuevos mercados emergentes. En el entrenamiento se visualizará el contenido del paquete  <a href="https://www.rdocumentation.org/packages/gapminder/versions/0.3.0" target="_blank">Gapminder</a> en especial los datos globales de la esperanza de vida al nacer y el producto Interno Bruto per Cápita. Igualmente se elaborarán gráficos interactivos de tendencia y dispersión. Por último, algunas pruebas lineales para determinar correlación y comentarios de las principales observaciones.<br /><br />La segunda parte del entrenamiento se hará con el paquete <a href="https://cran.r-project.org/web/packages/Quandl/Quandl.pdf" target="_blank">Quandl</a> una herramienta poderosa para descargar directamente información macroeconómica (en este caso de Venezuela) utilizando la plataforma del Banco Mundial y su base de datos llamada Indicadores del desarrollo mundial <a href="http://datatopics.worldbank.org/world-development-indicators/" target="_blank">(WDI)</a> "World Development Indicators". <a href="https://jesusbz.github.io/proyecto7.html" target="_blank"> <span style="color: #2b00ff;">Seguir leyendo (...)</a></span></div>
-<div>
-<hr />
-<h3>
-<span style="font-size: large;">8. Sistema Integrado Geográfico SIG</span></h3>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://1.bp.blogspot.com/-Z6mS2UkdgBI/XwzFBki_DdI/AAAAAAAACVc/lIwtOcETMvQJYvrM9KEaC23euz46Zx2awCLcBGAsYHQ/s1600/MAPAS.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1280" height="179" src="https://1.bp.blogspot.com/-Z6mS2UkdgBI/XwzFBki_DdI/AAAAAAAACVc/lIwtOcETMvQJYvrM9KEaC23euz46Zx2awCLcBGAsYHQ/s320/MAPAS.jpg" width="320" /></a></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">El término geoespacial recientemente ha ganado popularidad y se utiliza para definir los datos colectivos y la tecnología asociada tiene un componente geográfico o de ubicación. Una búsqueda con <a href="https://books.google.com/ngrams" target="_blank">Ngram Viewer</a> de Google muestra que el término solo ingresó a la literatura a fines de la década de 1980 y ha aumentado rápidamente en frecuencia desde entonces.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">La palabra geoespacial se usa para indicar los datos que tienen un componente geográfico. Esto significa que los registros en un conjunto de datos tienen información de ubicación vinculada a ellos como datos geográficos en forma de coordenadas, dirección, ciudad o código postal. Los datos SIG son una forma de datos geoespaciales. Otros datos geoespaciales pueden originarse a partir de datos GPS, imágenes satelitales y geoetiquetado.<a href="https://jesusbz.github.io/powermap.html" rel="nofollow" target="_blank"><span style="color: #2b00ff;"> Seguir leyendo (...)</span></a><br />
-</span></div>
-<hr />
-<h3>
-<span style="font-size: large; text-align: justify;"></span></h3>
-<h3>
-<span style="font-size: large;">9. Pronósticos con Prophet para el Bitcoin y Ether</span></h3>
-<div style="text-align: justify;">
-<span style="font-size: large;"><a href="https://1.bp.blogspot.com/-FcZaPf4XYD8/Xx4PS2HNDVI/AAAAAAAACWo/_RWYPLwmzeIqENS_hHSHKM2m7wMFNjIrwCLcBGAsYHQ/s1600/prophet2.webp" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" data-original-height="525" data-original-width="700" height="240" src="https://1.bp.blogspot.com/-FcZaPf4XYD8/Xx4PS2HNDVI/AAAAAAAACWo/_RWYPLwmzeIqENS_hHSHKM2m7wMFNjIrwCLcBGAsYHQ/s320/prophet2.webp" width="320" /></a></span><span style="font-size: large;">En el siguiente entrenamiento se presenta una novedosa herramienta a los traders y especialistas en criptomonedas para hacer pronósticos.<br /><br />En un mundo tan dinámico, una de las necesidades para estos profesionales es estar actualizados en las técnicas para el análisis de datos con posibilidades predictivas, muchas veces sin la rigurosidad técnica y teórica de los modelos robustos para este tipo de análisis que requieren de un vasto conocimiento en estadísticas o econometría como los modelos del catálogo “<a href="https://jesusbz.github.io/Proyecto2.html" target="_blank">Arch-Garch</a>” por ejemplo. <br /><br />Hace algunos meses leí sobre el paquete Prophet creado por el equipo <a href="https://facebook.github.io/prophet/" target="_blank">Core Data Science</a> de Facebook y desarrollado en código abierto. El paquete está disponible para el entorno de desarrollo integrado de Rstudio y Python. En general, es rápido y proporciona pronósticos completamente automatizados para científicos y analistas de datos en solo unas cuántas líneas de código lo que agiliza su aplicación.<a href="https://jesusbz.github.io/bitcoin-ether-pronosticos-con-prophet.html" target="_blank"> <span style="color: #2b00ff;">Seguir leyendo (...)</a></span></div>
-</div>
-<span style="font-size: large;">
-</span></div>
-<hr />
-<h3>
-<span style="font-size: large;">10. Simulación Monte Carlo</span></h3>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://1.bp.blogspot.com/-UZKrKnYKhMI/XyGTrgYJ4mI/AAAAAAAACXc/TZ9YEsGR_-EfVPyOpkNSJdAcIW2qvHcdQCPcBGAYYCw/s1600/monte%2Bcarlo.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1280" height="180" src="https://1.bp.blogspot.com/-UZKrKnYKhMI/XyGTrgYJ4mI/AAAAAAAACXc/TZ9YEsGR_-EfVPyOpkNSJdAcIW2qvHcdQCPcBGAYYCw/s320/monte%2Bcarlo.webp" width="320" /></a></div>
-<span style="font-size: large;">
-</span>
 
-<div style="text-align: justify;">
-<span style="font-size: large;">En el siguiente ejercicio se realizará una introducción a la Simulación Monte Carlo utilizando los resultados de cartera que se obtuvieron del entrenamiento <a href="https://jesusbz.github.io/proyecto4.html">“Portafolio de Fronteras Eficientes -Markowitz-”</a> que se encuentra en una de las entradas de esta página.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<span style="font-size: large;"></span>
-<div style="text-align: justify;">
-<span style="font-size: large;">Se realizará en el entorno de desarrollo integrado de Rstudio y el diseño del mismo permitirá conocer los puntos prácticos de su aplicación. No es una inmersión profunda en la Simulación Monte Carlo para problemas industriales muy específicos y bien definidos.&nbsp;</span></div>
-<span style="font-size: large;">
-</span>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<span style="font-size: large;">
-<div style="text-align: justify;">
-Para entender de manera sencilla la Simulación Monte Carlo es necesario tener presente el significado de dos términos estadísticos: Probabilístico y Determinístico. <a href="https://jesusbz.github.io/modelizacion-monte-carlo-portafolios.html" target="_blank"> <span style="color: #2b00ff;">Seguir leyendo (...)</a></span></div>
-</span>
-<br>
-<br>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://jesusbezerpa.github.io/" target="_blank"><img border="0" data-original-height="90" data-original-width="728" src="imagenes/banner3.webp"/></a></div>
-<br>
-<hr>
-<h3 style="text-align: justify;">
-<span style="font-size: large;">11. Power BI, una de las mejores herramientas BI</span></h3>
-<div style="text-align: justify;">
-<a href="https://1.bp.blogspot.com/-fv0sWnlFd4Q/Xywvi2S4xqI/AAAAAAAACZQ/TVwarZN9FUQVRvjEb7aULxsU5TE_pYMgQCPcBGAYYCw/s1600/power-bi-dashboard.webp" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" data-original-height="720" data-original-width="1280" height="225" src="https://1.bp.blogspot.com/-fv0sWnlFd4Q/Xywvi2S4xqI/AAAAAAAACZQ/TVwarZN9FUQVRvjEb7aULxsU5TE_pYMgQCPcBGAYYCw/s400/power-bi-dashboard.webp" width="400" /></a><span style="font-size: large;">Un software de Business Intelligence (BI) es una forma de software que ayuda a todo tipo de empresas a medir y mejorar la productividad.</span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">El tamaño de la empresa no determina el uso de un software de Business Intelligence. Erróneamente se cree que estas metodologías solo aplican para empresas que manejan altos volúmenes de transacciones olvidando que los procesos de una empresa pequeña pueden estar relacionados con grandes cantidades de datos exógenos. El BI permite utilizar  y "medir" esas relaciones.&nbsp;<a href="https://jesusbz.github.io/power-bi.html" target="_blank"> <span style="color: #2b00ff;">Seguir leyendo (...)</a></span></div>
-<div style="text-align: justify;">
-<span style="font-size: large;"></span></div>
-<div style="text-align: justify;">
-</div>
-<hr>
-<h3 style="text-align: justify;">
-<span style="font-size: large;">12.&nbsp;Análisis de procesos de negocio utilizando la plataforma de Rstudio [Business Analysis]</span></h3>
-<div class="separator" style="clear: both; text-align: center;">
-<a href="https://1.bp.blogspot.com/-Gj8ksLxxznc/XymbZKzg2nI/AAAAAAAACYY/tMd6MAZuaqYWlJuIy2rAui902uIVFPZNQCPcBGAYYCw/s1600/dataminning.webp" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" data-original-height="720" data-original-width="1200" height="192" src="https://1.bp.blogspot.com/-Gj8ksLxxznc/XymbZKzg2nI/AAAAAAAACYY/tMd6MAZuaqYWlJuIy2rAui902uIVFPZNQCPcBGAYYCw/s320/dataminning.webp" width="320" /></a></div>
-<div style="text-align: justify;">
-<span style="font-size: large;">La minería de datos, también conocida como Knowledge Discovery in Data (KDD), es una herramienta prometedora que ayuda a descubrir conocimiento valioso oculto, encontrar patrones dentro de grandes conjuntos de datos y/o correlaciones.&nbsp;</span></div>
 <span style="font-size: large;"><div style="text-align: justify;">
-<br /></div>
-<div style="text-align: justify;">
-La Ciencia de Datos es multidisciplinaria. Es como un Paraguas y la minería de datos uno de sus componentes. Se pueden reconocer y calificar Patrones con Data Mining que no se pudieron determinar antes. La minería de datos es una tecnología relativamente nueva que analiza grandes cantidades de datos y tendencias almacenadas en bases de datos o depósitos de datos  con lo que anteriormente no se podía ir más allá del simple análisis.&nbsp;<a href="https://jesusbz.github.io/analisis-de-procesos-comerciales-data-mining.html" target="_blank"> <span style="color: #2b00ff;">Seguir leyendo (...)</a></span></div>
-</span>
-<hr>
 <h3>
 <span style="font-size: large; text-align: justify;">Del sitio Web</span></h3>
 <div style="text-align: justify;">
