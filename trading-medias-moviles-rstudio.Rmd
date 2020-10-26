@@ -1,0 +1,272 @@
+---
+title: ' '
+---
+
+<h1 style="text-align: center;"><div class="separator" style="clear: both; text-align: center;"><a href="https://share-psi.eu/wp-content/uploads/2019/12/pieges-trading-en-ligne-1024x616.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="481" data-original-width="800" src="https://share-psi.eu/wp-content/uploads/2019/12/pieges-trading-en-ligne-1024x616.jpg" /></a></div><br /><div class="separator" style="clear: both; text-align: center;"><span style="font-size: xx-large;">Bitcoin Trading en Rstudio Capítulo 1&nbsp;</span></div></h1><h1 style="text-align: center;"><span style="font-size: x-large;">[El Análisis Técnico]</span></h1><div><span style="font-size: x-large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Durante el año 2020 se ha desatado un gran interés por conocer el mundo del Trading, a medida que pasan los días son más los que intentan iniciarse&nbsp;en una actividad&nbsp;que hace apenas unos 10 años era un tema dedicado a gente especializada en el área.&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Sin embargo, muchos creen que cualquiera puede convertirse en un trader de éxito, que esta actividad no requiere&nbsp;de un estudio y una práctica constante que debe desarrollarse progresivamente y a largo plazo, finalmente vienen&nbsp;los desencantos, fracasos y en muchos casos pérdidas financieras.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">El Trading es una actividad que no es nueva, de hecho una de las primeras crisis en mercados financieros especulativos y recordada por sus resultados catastróficos fue la Tulipomanía hace ya más de 350 años.&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><h2 style="text-align: center;"><span style="font-size: x-large;">¿Qué es el Trading?</span><span style="font-size: large;">&nbsp;</span></h2><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Según Wikipedia, el trading es la especulación sobre instrumentos financieros con el objetivo de obtener un beneficio. El trading se basa principalmente en el análisis técnico, el análisis fundamental y la aplicación de una estrategia concreta para operar.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">En otras palabras, el trading consiste básicamente en realizar transacciones de compra y venta (de Instrumentos Financieros) en el corto plazo para obtener una ganancia, basándose en una estrategia. La temporalidad de "corto plazo" es lo que diferencia al trading de una inversión, esto hay que tenerlo claro:</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Trading= Corto Plazo</span></div><div style="text-align: justify;"><span style="font-size: large;">Inversión= Largo Plazo</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><h3 style="text-align: justify;"><span style="font-size: large;">Análisis Técnico</span></h3><div style="text-align: justify;"><span style="font-size: large;">Es una disciplina comercial empleada para evaluar inversiones e identificar oportunidades comerciales mediante el análisis de tendencias estadísticas recopiladas de la actividad comercial, como el movimiento de precios y el volumen.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">La principales fuentes de información del análisis técnico son:</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">1. Precio o cotización.&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;">2. Volumen Bursátil.</span></div><div style="text-align: justify;"><span style="font-size: large;">3. Interés abierto.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><h2 style="text-align: justify;"><span style="font-size: x-large;">Los 3 Principios del Análisis Técnico</span></h2><div><span style="font-size: x-large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Un principio fundamental del análisis técnico es que el precio de un mercado refleja toda la información relevante que afecta a ese mercado. Por lo tanto, un analista técnico analiza el historial de un patrón de negociación de valores o productos básicos en lugar de factores externos como eventos económicos, fundamentales y noticiosos.&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><h3 style="text-align: justify;"><span style="font-size: large;">Primer Principio:&nbsp;La acción del mercado lo descuenta todo</span></h3><div style="text-align: justify;"><span style="font-size: large;">Los analistas técnicos creen que todo, desde los fundamentos de una empresa hasta los factores generales del mercado y  la psicología del mercado  , ya está incluido en el precio de las acciones. Este punto de vista es congruente con la Hipótesis de Mercados Eficientes (HME) que asume una conclusión similar sobre los precios.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><h3><span style="font-size: large;">Segundo Principio:&nbsp;El precio se mueve en tendencias</span></h3><div><span style="font-size: large;">Este principio establece que los precios, incluso en movimientos aleatorios del mercado, muestren tendencias independientemente del período de tiempo que se observe. En otras palabras, es más probable que el precio de una acción continúe una tendencia pasada a que se mueva erráticamente. La mayoría de las estrategias comerciales técnicas se basan en esta suposición.&nbsp;</span></div><div><span style="font-size: large;"><br /></span></div><div><h3><span style="font-size: large;">Tercer Principio:&nbsp;la historia tiende a repetirse</span></h3></div><div><span style="font-size: large;">La naturaleza repetitiva de los movimientos de precios a menudo se atribuye a la psicología del mercado, que tiende a ser muy predecible en función de emociones como el miedo o la euforia. El análisis técnico utiliza patrones de gráficos para analizar estas emociones y los movimientos posteriores del mercado para comprender las tendencias.</span></div><div><br /></div><div><h2><span style="font-size: x-large;">Limitaciones del Análisis Técnico</span></h2></div><div><span style="font-size: large;">Algunos analistas e investigadores académicos esperan que la HME demuestre por qué no deberían esperar que ninguna información procesable esté contenida en los datos históricos de precios y volúmenes. Sin embargo, con el mismo razonamiento, los fundamentos empresariales tampoco deberían proporcionar información procesable.&nbsp;</span></div><div><span style="font-size: x-large;"><br /></span></div><div><span style="font-size: large;">Otra crítica al análisis técnico es que la historia no se repite exactamente, por lo que el estudio de los patrones de precios es de dudosa importancia y puede ignorarse. Los precios parecen estar mejor modelados asumiendo un paseo aleatorio.</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">Una tercera crítica al análisis técnico es que funciona en algunos casos, pero solo porque constituye una profecía autocumplida.</span></div><h2 style="text-align: center;"><span style="font-size: x-large;">Los pioneros del análisis técnico</span></h2><h3><span style="font-size: x-large;">Charles Dow&nbsp;</span></h3><div><span style="font-size: large;">Fundó The Wall Street Journal, el punto de referencia por el que se miden todos los documentos financieros, y, lo que es más importante, creó el índice industrial Dow Jones . Al hacerlo, Dow abrió la puerta al análisis técnico. Dow registró los altibajos de su promedio diario, semanal y mensual, correlacionando los patrones con el flujo y reflujo del mercado.&nbsp;</span></div><div><span style="font-size: large;"><br /></span></div><h3><span style="font-size: x-large;">William P. Hamilton -Primero en el agua-</span></h3><div><span style="font-size: large;">Hamilton usó el promedio ferroviario y el promedio industrial que confirman la dirección del otro, para llamar a los mercados alcistas y bajistas con una precisión loable. Aunque calificó el accidente de 1929 demasiado pronto (1927, 1928), hizo una apelación final el 21 de octubre de 1929, tres días antes del accidente y pocas semanas antes de su muerte a la edad de 63 años.</span></div><div><span style="font-size: large;"><br /></span></div><h3><span style="font-size: x-large;">Robert Rhea -El practicante-</span></h3><div><span style="font-size: large;">Tomó la teoría de Dow y la convirtió en un indicador práctico de posiciones largas o cortas en el mercado. Literalmente escribió el libro sobre el tema: " La teoría de Dow " (1932). Rhea tuvo éxito al usar la teoría para llamar a los máximos y mínimos, y fue lo suficientemente capaz de beneficiarse de esas llamadas.&nbsp;</span></div><div><span style="font-size: large;"><br /></span></div><h3><span style="font-size: x-large;">Edson Gould -El Mago-</span></h3><div><div><span style="font-size: large;">Quizás el pronosticador más preciso con el historial más largo, Edson Gould, todavía estaba haciendo pronósticos en 1983 a la edad de 81 años. Ganó la mayor parte de su dinero escribiendo boletines en lugar de invertir, vendiendo suscripciones por $ 500 en 1930. Describió los principales puntos del mercado alcista y bajista, haciendo varias predicciones inquietantemente precisas, como el Dow subiendo 400 puntos en un mercado alcista de 20 años, o que el Dow superaría los 1.040 en 1973 y así sucesivamente.</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">Gould utilizó gráficos, psicología de mercado e indicadores, incluido el "Sentímetro" (Senti-Meter), el DJIA dividido por los dividendos por acción de las empresas. Gould era tan bueno en su oficio que continuó haciendo pronósticos precisos desde el más allá. Gould murió en 1987, pero en 1991, el Dow alcanzó los 3.000, como había predicho. En el momento de su predicción en 1979, el Dow aún no había superado los 1.000.</span></div></div><div><span style="font-size: large;"><br /></span></div><h3><span style="font-size: large;">John Magee -El Cartista-</span></h3><div><span style="font-size: large;">Escribió la Biblia del análisis técnico , " Technical Analysis of Stock Trends " (1948). Magee fue uno de los primeros en negociar únicamente con el precio de las acciones y su patrón en los gráficos históricos. Magee graficó todo: acciones individuales, promedios, volúmenes de operaciones, básicamente cualquier cosa que pudiera graficarse. Luego se dedicó a analizar estos gráficos para identificar patrones amplios y formas específicas como triángulos débiles, banderas , cuerpos, hombros, etc.</span></div><div><span style="font-size: large;"><br /></span></div><h2 style="text-align: center;"><span style="font-size: x-large;">Software a utilizar: Rstudio</span></h2></div><h2 style="text-align: justify;"><span style="font-size: x-large;">Porqué utilizar Rstudio</span></h2><div style="text-align: justify;"><span style="font-size: large;">Rstudio es un entorno de desarrollo integrado que funciona con el lenguaje de programación R principalmente y adicionalmente se puede utilizar Phyton.</span><span style="font-size: x-large;">&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">El lenguaje R es de código abierto lo que significa que todos los paquetes&nbsp;de funciones y aplicaciones están en constante actualización prácticamente en línea con cientos de investigadores de todas partes del mundo.&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">En Rstudio puedes desarrollar, innovar, combinar no tiene límites ni un estándar de uso como la mayoría de programas estadísticos y econométricos -de licencia paga- que tienen interfaz de usuario estandarizado en Windows por ejemplo y están automatizados con un botón para cada actividad.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">No quiere decir que los programas de licencia paga sean malos, se trata de "resaltar" que Rstudio está a la altura de esos programas incluso con varias ventajas sobre ellos. En la red puedes encontrar cientos de comparaciones y tablas de análisis técnicos.&nbsp;&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Además de eso, en Rstudio se amplían las posibilidades porque todas las actividades se realizan con líneas de comandos directamente en lenguaje&nbsp;R lo que posibilita personalizarlos.&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Entre muchas opciones tiene un módulo en Rmarkdown que permite desarrollar informes avanzados automatizados en escritura Markdown y desarrollar inclusive páginas web completas y subirlas con los comandos de Git a Github como esta que estás observando en este momento.&nbsp;</span></div><div><h2 style="text-align: left;"><span style="font-size: x-large;"><br />Cuál es la ventaja de hacer trading con Rstudio</span></h2><span style="font-size: large;"><div style="text-align: justify;">En el Trading Rstudio no solo te permitirá hacer el análisis técnico que puedes realizar igualmente desde cualquier página online u herramienta sencilla por ejemplo excel, sino que puedes profundizar a través de modelos estadísticos o econométricos avanzados&nbsp;para complementar tu estrategia, y esto si no lo podrás&nbsp;hacer desde una página online.&nbsp;</div></span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Conocer el proceso de modelado es la posibilidad de hacer pronósticos profesionales y analizar el riesgo de tu estrategia eso te diferencia radicalmente del promedio de los trader actuales que se basan exclusivamente en los análisis técnico / fundamental.&nbsp;&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Esta es la razón -a mi criterio- para utilizar Rstudio si piensas dedicarte de lleno en una actividad tan exigente y con una gran competencia. En el siguiente enlace puedes descargarlo fácilmente:<a href="https://rstudio.com/products/rstudio/download/" target="_blank"> Rstudio.</a></span></div><div style="text-align: justify;"><br /></div><h1 style="text-align: justify;"><span style="font-size: x-large;">Análisis técnico del histórico del Bitcoin Indicadores básicos</span></h1><div style="text-align: justify;"><span style="font-size: large;">En el siguiente ejercicio&nbsp;se utilizarán los indicadores básicos para el análisis técnico del Bitcoin utilizando la plataforma de Rstudio.&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><h3 style="text-align: justify;"><span style="font-size: x-large;">Paquetes a utilizar:</span></h3><div style="text-align: justify;"><span style="font-size: large;"><b><a href="https://cran.r-project.org/web/packages/quantmod/quantmod.pdf" target="_blank">Quantmod:</a></b> Fue diseñado para especificar, crear, negociar y analizar estrategias comerciales financieras cuantitativas.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/TTR/TTR.pdf" target="_blank">TTR:</a>&nbsp;Una colección de más de 50 indicadores técnicos para crear reglas técnicas de negociación. El paquete también proporciona implementaciones rápidas de funciones comunes de ventana móvil y varios cálculos de volatilidad.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Para utilizar las técnicas solo debes instalar Rstudio en tu PC y luego copiar y pegar en la consola cada uno de los códigos que iré colocando.&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Lo primero es instalar y activar los dos paquetes mencionados con los siguientes comandos:&nbsp;</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div>
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(quantmod)
+library(TTR)
+```
+<br>
+<div style="text-align: justify;"><span style="font-size: large;">Utilizaremos el comando getSymbols para descargar datos de yahoo o Google (el predeterminado es yahoo). Es necesario colocar el símbolo de comillas ("BTC-USD").</span></div>
+<br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+portfolio = c("BTC-USD")
+getSymbols(portfolio, src="yahoo", from="2014-01-01")
+```
+<br>
+<p style="text-align: justify;"><span style="color: #333333; font-size: large;"><span style="background-color: white; letter-spacing: 0.2px;">El comando <b>head </b>permite conocer los valores al final del período&nbsp;</span></span><span style="text-align: left;"><span style="color: #333333; font-size: large;"><span style="letter-spacing: 0.2px;">seleccionado para comprobar que se han leído correctamente los datos de interés. A partir de aquí se cambian las comillas por el símbolo de apóstrofe para encerrar la criptomoneda seleccionada en este caso <i>BTC-USD</i>. Bitcoin y su valor en dólares americanos.&nbsp;</span></span></span></p>
+<br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+head(`BTC-USD`,n=3)
+```
+<br>
+<h2 style="text-align: center;"><span style="font-size: x-large;">Principales Gráficos</span></h2><h3 style="text-align: justify;"><span style="font-size: x-large;">Gráfico de líneas&nbsp;</span></h3><div style="text-align: justify;"><span style="font-size: large;">Muestra el precio de cierre del Bitcoin. El siguiente código muestra el precio del Bitcoin en 2014 mediante la opción de subconjunto . El tema de la opción está configurado para ser blanco chartTheme (White) ya que la opción predeterminada en negro chartTheme (Black) no se puede imprimir.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">Además del gráfico de líneas en la parte superior, la parte inferior del gráfico es el volumen.</span></div>
+<br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+chartSeries(`BTC-USD`,
+            type="line",
+            subset='2020',
+            theme=chartTheme('white'))
+```
+<br>
+<h3 style="text-align: left;"><span style="font-size: x-large;">Gráfico de Barras</span></h3><div style="text-align: justify;"><span style="font-size: large;">El gráfico de barras muestra el precio de cierre de apertura, máximo, mínimo, cierre y volumen de la acción. La parte superior de la barra es alta y la parte inferior de la barra es baja. El joystick izquierdo está abierto y el joystick derecho está cerca.</span></div>
+<br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+chartSeries(`BTC-USD`,
+            type="bar",
+            subset='2020-09',
+            theme=chartTheme('white'))
+```
+<br>
+<h3 style="text-align: left;"><span style="font-size: x-large;">Gráfico de Velas</span></h3><div style="text-align: justify;"><div><span style="font-size: large;">Un gráfico de velas es muy similar a un gráfico de barras. También muestra el precio de cierre de apertura, máximo, mínimo, cierre y volumen de la acción.</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">La parte superior de una vela está alta y la parte inferior de una vela está baja. Los dos extremos del cuerpo de la vela están abiertos o cerrados, dependiendo de si la apertura es más alta que la cerrada, lo que también está representado por el color naranja (rojo, negro) o verde (blanco).</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">Si el cierre es más alto que abierto, la barra es de color verde. De lo contrario, es de color naranja.</span></div></div>
+<br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+chartSeries(`BTC-USD`,
+            type="candlesticks",
+            subset='2020-09',
+            up.col = 'white',
+            down.col = 'black',
+            theme=chartTheme('white'))
+```
+
+<br>
+<h2 style="text-align: center;"><span style="font-size: x-large;">Indicadores Técnicos</span></h2><h3 style="text-align: justify;"><span style="font-size: x-large;">Media móvil simple</span></h3><div style="text-align: justify;"><span style="font-size: large;">Un promedio móvil simple de n días (MMS de n días) es el promedio aritmético de los precios de los últimos n días.</span></div>
+
+<div style="letter-spacing: 0.2px; text-align: justify;">&nbsp;$$MMS_t(n) = \frac{P_t+\ldots+P_{t-n+1}}{n}$$</span></div>
+<br />
+<div style="text-align: justify;"><span style="color: #333333; font-size: large;"><span style="background-color: white; letter-spacing: 0.2px;">A continuación visualizaremos tres gráficos en el primero los precios de cierre del Bitcoin período 2017-2020. En es segundo gráfico se agregará un línea azul, esta línea es una línea de corto plazo y se calcula en base a los promedio móviles de 30 días. En el tercer gráfico se anexará una línea roja, está línea es la de largo plazo y la calculamos en base al promedio móvil de 200 días.&nbsp;</span></span></div>
+<br>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+chartSeries(`BTC-USD`,
+            subset='2017-05::2020-09',
+            theme=chartTheme('white')
+            )
+addSMA(n=30,on=1,col = "blue")
+addSMA(n=200,on=1,col = "red")
+```
+<br>
+<div style="text-align: justify;"><h3><span style="color: #333333; font-size: large;"><span style="letter-spacing: 0.2px;">Señal comercial ¿Cómo se interpretan estas líneas en el Trading?</span></span></h3><div><span style="font-size: large;"><b style="color: #333333; letter-spacing: 0.2px;">La señal de compra</b><span style="color: #333333; letter-spacing: 0.2px;"> surge cuando un Promedio Móvil de corto plazo (azul) cruza de arriba hacia un Promedio Móvil de largo plazo (roja).</span></span></div><div><span style="color: #333333; font-size: large;"><span style="letter-spacing: 0.2px;"><br /></span></span></div><div><span style="font-size: large;"><span style="color: #333333;"><span style="letter-spacing: 0.2px;"><b>La señal de venta</b> surge cuando un&nbsp;</span></span><span style="color: #333333; letter-spacing: 0.2px;">Promedio Móvil</span><span style="color: #333333; letter-spacing: 0.2px;">&nbsp;de corto plazo (azul) cruza hacia arriba un&nbsp;</span><span style="color: #333333; letter-spacing: 0.2px;">Promedio Móvil</span><span style="color: #333333; letter-spacing: 0.2px;">&nbsp;de largo plazo (rojo).</span></span></div><div><br /></div></div>
+<br>
+
+<h2 style="text-align: justify;"><span style="color: #333333; font-size: x-large;"><span style="background-color: white; letter-spacing: 0.2px;">Media móvil exponencial (MME)</span></span></h2><br><div><span style="background-color: white;"><span style="color: #333333; font-size: large;"><div style="letter-spacing: 0.2px; text-align: justify;">MME con&nbsp;&nbsp;<span style="letter-spacing: 0.2px;">$n$&nbsp;</span><span style="letter-spacing: 0.2px;">período retrasado en el momento $t$:</span></div><div style="letter-spacing: 0.2px; text-align: justify;"><span style="letter-spacing: 0.2px;"><br /></span></div><div style="letter-spacing: 0.2px; text-align: justify;">&nbsp;$$\begin{align*}
+&ema_t(P,n)\\
+&= \beta P_t + \beta (1-\beta)P_{t-1}+\beta(1-\beta )^{2}P_{t-2}+ \cdots\\
+&=\beta P_t + (1-\beta) ema_{t-1}(P,n)
+\end{align*}$$</span></div><div style="letter-spacing: 0.2px; text-align: justify;"><span style="background-color: transparent;"><br /></span></div><div style="text-align: justify;"><span style="background-color: transparent;"><div style="letter-spacing: 0.2px;">donde el coeficiente de suavizado&nbsp; $β$&nbsp;</span><span style="background-color: transparent; letter-spacing: 0.2px;">&nbsp;es usualmente:$$\beta=\frac{2}{n+1}$$</span></div><div style="letter-spacing: 0.2px;"><span style="background-color: transparent; letter-spacing: 0.2px;"><br /></span></div><div style="letter-spacing: 0.2px;"><span style="background-color: transparent; letter-spacing: 0.2px;">La diferencia de la Media Móvil Exponencial con la simple es que nos ofrece una línea más suavizada.&nbsp;</span></div></span></div></span></span></div>
+<br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+chartSeries(`BTC-USD`,
+            subset='2017-05::2020-09',
+            theme=chartTheme('white'))
+addEMA(n=30,on=1,col = "blue")
+addEMA(n=200,on=1,col = "red")
+```
+<br>
+<h2 style="text-align: justify;"><span style="color: #333333; font-size: x-large;"><span style="background-color: white; letter-spacing: 0.2px;">Bandas de Bollinger</span></span></h2><div><span><span style="background-color: white; color: #333333; font-size: large; letter-spacing: 0.2px;"><div style="text-align: justify;">Las bandas de Bollinger son una técnica muy popular. Muchos traders creen que cuanto más se acercan los precios a la banda superior, más sobrecomprado está el mercado, y cuanto más se acercan los precios a la banda inferior, más sobrevendido es el mercado. John Bollinger tiene un conjunto de 22 reglas a seguir al usar las bandas como sistema de negociación.&nbsp;</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;"><span style="letter-spacing: 0.2px;">En el gráfico que se muestra a continuación, las Bandas de Bollinger abarcan la MMS de 20 días del Bitcoin con una banda superior e inferior junto con los movimientos diarios del precio. Debido a que la desviación estándar es una medida de volatilidad, cuando los mercados se vuelven más volátiles, las bandas se ensanchan; durante períodos menos volátiles, las bandas se contraen.</span></div></span></span></div><div><span style="background-color: white;"><span style="color: #333333; font-size: large;"><div style="letter-spacing: 0.2px; text-align: justify;"><br /></div></span></span></div>
+<br>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE }
+myBBands <- function (price,n,sd){
+  mavg <- SMA(price,n)
+  sdev <- rep(0,n)
+  N <- nrow(price)
+  for (i in (n+1):N){
+    sdev[i]<- sd(price[(i-n+1):i])
+  }
+  sdev <- sqrt((n-1)/n)*sdev
+  up <- mavg + sd*sdev
+  dn <- mavg - sd*sdev
+  pctB <- (price - dn)/(up - dn)
+  output <- cbind(dn, mavg, up, pctB)
+  colnames(output) <- c("dn", "mavg", "up", 
+        "pctB")
+  return(output)
+}
+p<-na.omit(`BTC-USD`)
+bb <-myBBands(Cl(p),n=20,sd=2)
+tail(bb,n=5)
+
+```
+<div style="text-align: justify;"><h3 style="text-align: justify;"><span style="background-color: white; color: #333333; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-weight: 400; letter-spacing: 0.2px; orphans: 3; text-align: start; widows: 3;"><span style="font-size: large;">Donde es mayor que 1 si está por encima de la banda superior y menor que 0 cuando está por debajo de la banda inferior.</span></span></h3></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE }
+chartSeries(`BTC-USD`,
+            subset='2020-05::2020-09',
+            theme=chartTheme('white'))
+addBBands(n=20,sd=2)
+```
+<br />
+<h3 style="text-align: justify;"><span style="font-size: x-large;">Señal comercial ¿Cómo se interpretan estas líneas en el Trading?</span></h3><span style="font-size: large;"><div style="text-align: justify;">Cuando el precio toca la banda inferior es una Señal de compra.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">Si el precio toca la banda superior es una Señal de venta.</div></span><div style="text-align: justify;"><br /></div><h3 style="text-align: justify;"><span style="font-size: large;">Momentum&nbsp;<span>&nbsp;&nbsp; &nbsp;</span></span></h3><div><span style="font-size: large;"><span><div style="text-align: justify;">El momentum es la velocidad o velocidad de los cambios de precio en una acción, valor o instrumento negociable. Momentum muestra la tasa de cambio en el movimiento de precios durante un período de tiempo para ayudar a los inversores a determinar la fuerza de una tendencia. Las acciones que tienden a moverse con la fuerza del impulso se denominan acciones de impulso.</div><div style="text-align: justify;"><br /></div><div style="text-align: justify;">Los inversores utilizan el impulso para negociar acciones en una tendencia alcista yendo en largo (o comprando acciones) y en corto (o vendiendo acciones) en una tendencia bajista. En otras palabras, una acción puede exhibir un impulso alcista, lo que significa que el precio está subiendo, o un impulso bajista cuando el precio está cayendo constantemente.</div><div><br /></div></span></span></div><span style="font-size: large;"><div style="text-align: justify;"><div>Un&nbsp; $n$ impulso del día en el día&nbsp; $t$&nbsp; es igual a:</div><div><br /></div></div></span><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><span style="font-size: large;">
+$$M_t(n)=P_t-P_{t-n}$$&nbsp;</span><div><span style="font-size: large;"><br />
+</span><div style="text-align: justify;"><span style="font-size: large;">La siguiente función implementa la fórmula anterior:</span></div>
+<br />
+</div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE }
+mymom <- function (price,n){
+  mom <- rep(0,n)
+  N <- nrow(price)
+  Lprice <- Lag(price,n)
+  for (i in (n+1):N){
+    mom[i]<-price[i]-Lprice[i]
+  }
+  mom <- reclass(mom,price)
+  return(mom)
+}
+p<-na.omit(`BTC-USD`)
+M <- mymom(Cl(p), n=2)
+tail(M,n=5)
+```
+
+<br>
+<div style="text-align: justify;"><span style="font-size: large;">Calculamos el impulso de 2 días en función del precio de cierre de Bitcoin:</span></div><br>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE }
+chartSeries(`BTC-USD`,
+            subset='2020-05::2020-09',
+            theme=chartTheme('white'))
+addMomentum(n=1)
+```
+<br>
+<h3 style="text-align: justify;"><span style="font-size: x-large;">Señal comercial ¿Cómo se interpreta el Momentum?</span></h3><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">La señal de compra surge cuando el impulso cambia de negativo a positivo.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">La señal de venta surge cuando el impulso cambia de positivo a negativo.</span></div>
+<br />
+<br>
+<h3 style="text-align: justify;"><span style="font-size: x-large;">Tasa de cambio (ROC)</span></h3><div style="text-align: justify;"><span style="font-size: large;">La tasa de cambio de precio (ROC) es un indicador técnico basado en el impulso que mide el cambio porcentual en el precio entre el precio actual y el precio hace un cierto número de períodos. El indicador ROC se traza contra cero, con el indicador moviéndose hacia arriba en territorio positivo si los cambios de precio son al alza y moviéndose hacia territorio negativo si los cambios de precio son a la baja.</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: x-large;">Tasa de cambio (ROC) con $K$  impulso del día en el día t equivale a devolución de $K$ días.</span></div><div style="text-align: justify;"><br /></div><div style="text-align: justify;"><span style="font-size: large;">Para tipo discreto, tenemos:</span></div><div style="text-align: justify;"><br /></div><div style="text-align: justify;"><span style="font-size: large;">$$ROC_t(K)=\frac{P_t-P_{t-K}}{P_{t-K}}$$</span></div><div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: x-large;">Para el tipo continuo, tenemos:&nbsp;</span></div> <div style="text-align: justify;"><span style="font-size: large;"><br /></span></div><div style="text-align: justify;"><span style="font-size: large;">$$ROC_t(K)=log(P_t)-log(P_{t-K})$$</span></div>
+<br>
+<br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE }
+myROC <- function (price,n){
+  roc <- rep(0,n)
+  N <- nrow(price)
+  Lprice <- Lag(price,n)
+  for (i in (n+1):N){
+    roc[i]<-(price[i]-Lprice[i])/Lprice[i]
+  }
+  roc <- reclass(roc,price)
+  return(roc)
+}
+p<-na.omit(`BTC-USD`)
+roc <- myROC(Cl(p),n=2)
+tail(roc,n=3)
+```
+<br>
+<br>
+<div style="text-align: justify;"><span style="font-size: large;">Al utilizar la función ROC en el paquete R TTR, se puede elegir entre continuo (el predeterminado) y discreto, pero sin orientación sobre cuál elegir cuándo.&nbsp;</span></div><br><br>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE }
+p<-na.omit(`BTC-USD`)
+roc <- ROC(Cl(p),type="discrete",n=2)
+tail(roc,n=3)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+chartSeries(`BTC-USD`,
+            subset='2020-05::2020-09',
+            theme=chartTheme('white'))
+addROC(n=7)
+```
+<br>
+<br>
+<div style="text-align: justify;"><h3><span style="font-size: x-large;">Señal comercial ¿Cómo se interpretan estas líneas en el Trading?</span></h3><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">La señal de compra surge cuando ROC cambia de negativo a positivo.</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">La señal de venta surge cuando ROC cambia de positivo a negativo.</span></div></div><br><br>
+<div style="text-align: justify;"><h3><span style="font-size: x-large;">Divergencia de convergencia de la media móvil (MACD)&nbsp;</span></h3><div><span style="font-size: large;">Es un indicador de impulso que sigue la tendencia y muestra la relación entre dos medias móviles del precio de un valor. El MACD se calcula restando la media móvil exponencial (EMA) de 26 períodos de la EMA de 12 períodos.</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">El resultado de ese cálculo es la línea MACD. Una EMA de nueve días del MACD llamada "línea de señal" se traza luego en la parte superior de la línea MACD, que puede funcionar como un disparador de señales de compra y venta. Los operadores pueden comprar el valor cuando el MACD cruza por encima de su línea de señal y vender, o vender, el valor cuando el MACD cruza por debajo de la línea de señal. Los indicadores de divergencia de convergencia de media móvil (MACD) se pueden interpretar de varias maneras, pero los métodos más comunes son cruces , divergencias y subidas / caídas rápidas.</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">La convergencia / divergencia promedio móvil (MACD) es la diferencia entre una EMA de período corto (rápido) y una SMA de período largo (lenta):</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">$$MACD_t(S,L)=ema_t(P,S)-ema_t(P,L)$$</span></div><div><span style="font-size: x-large;"><br /></span></div><div><span style="font-size: large;">Para su uso, lo comparamos con su línea suavizada exponencial. Esta línea se llama:</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">$$sig_{t}(S,L,K)=ema_t(MACD(S,L), K)$$</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;"><div>Generalmente,&nbsp; $K=9$&nbsp; dias, $S=12$&nbsp; días y $L=26$ dias. Tenga en cuenta que MACD a veces aparece como el formato de porcentaje:</div><div><br /></div><div>$$MACD_t(S,L)= ema_t(P, S)-ema_t(P, L))/ema_t(P, L)$$</div><div><br /></div><div>Código corto para MACD:</div><div><br /></div></span></div></div>
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+myMACD <- function (price,S,L,K){
+  MACD <- EMA(price,S) - EMA(price,L)
+  signal <- EMA(MACD,K)
+  output <- cbind(MACD,signal)
+  colnames(output) <- c("MACD","signal")
+  return(output)
+}
+p<-na.omit(`BTC-USD`)
+macd <- myMACD(Cl(p), 12, 26,9)
+tail(macd,n=5)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+macd <- MACD(Cl(p), nFast=12, nSlow=26,
+             nSig=9, percent=FALSE)
+tail(macd,n=5)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+chartSeries(`BTC-USD`,
+            subset='2020-05::2020-09',
+            theme=chartTheme('white'))
+addMACD(fast=12,slow=26,signal=9,type="EMA")
+```
+<br>
+<br>
+<div style="text-align: justify;"><h3><span style="font-size: x-large;">Señal comercial</span></h3><div><div><span style="font-size: large;">La señal de compra surge cuando el MACD cruza de abajo hacia arriba la línea de señal.</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">La señal de venta surge cuando el MACD cruza de arriba hacia abajo la línea de señal.</span></div></div><div><span style="font-size: large;"><div><br /></div></span></div></div><br><br>
+<div style="text-align: justify;"><h3><span style="font-size: large;">Índice de fuerza relativa (RSI)</span></h3><div><div><span style="font-size: large;">El cálculo de RSI requiere varios pasos:</span></div><div><span style="font-size: large;"><br /></span></div><div><span style="font-size: large;">Si el precio ha subido o bajado cada día</span></div><div><ul><li><span style="font-size: large;">Fuerza relativa (RS): la relación entre los números promedio (simples o exponenciales) del día al alza y el promedio del día al alza</span></li><li><span style="font-size: large;">Índice de fuerza relativa (RSI): normalice RS a la escala de 0 a 100.</span></li></ul></div><div><span style="font-size: large;">Paso 1. Indicadores ascendentes y descendentes, son </span> $U_tD_t$ 
+$$U_{t}=\left\{
+        \begin{array}{cl}
+                1, & P_t>P_{t-1} \\
+                0, & P_t \leq P_{t-1}
+        \end{array}
+        \right.$$
+$$D_{t}=\left\{
+        \begin{array}{cl}
+                0, & P_t\geq P_{t-1} \\
+                1, & P_t < P_{t-1}
+        \end{array}
+        \right.$$
+<br /><div>Paso 2. Entonces y son los números promedio de movimientos ascendentes y descendentes del precio de cierre de los últimos días $up_{t}(N)down_{t}(N)$</pre></td></tr></tbody></table></td></tr></tbody></table><div>:</div></div><div><br /></div><div>$$up_{t}(n)=\frac{U_t+U_{t-1}+...+U_{t-n+1}}{n}$$</div><div><br /></div><div>$$down_{t}(n)=\frac{D_t+D_{t-1}+...+D_{t-n+1}}{n}$$</div><div><br /></div><div><div>En cambio, podemos usar una media móvil exponencial.</div><div><br /></div><div>La fuerza relativa (RS) es la proporción relativa de días con movimientos al alza y movimientos a la baja durante los últimos n días. Formalmente, si:</div></div><div>$$RS=\frac{up_{t}(n)}{down_{t}(n)}$$</div><div><br /></div><div>Paso 3. Finalmente, un RSI de n días viene dado por:</div><div><br /></div><div>$$RSI_t(n) = 100\frac{RS_{t}(n)}{1+RS_{t}(n)}$$</div><div><br /></div><div><div>donde RSI es fuerza relativa normalizada.</div><div><br /></div><div>En el cálculo, solemos considerar directamente:</div></div><div>$$RSI_t(n) = 100\frac{up_{t}(n)}{up_{t}(n)+down_{t}(n)}$$</pre></td></tr></tbody></table></div></div><br><br>
+```{r}
+myRSI <- function (price,n){
+  N <- length(price)
+  U <- rep(0,N)
+  D <- rep(0,N)
+  rsi <- rep(NA,N)
+  Lprice <- Lag(price,1)
+  for (i in 2:N){
+    if (price[i]>=Lprice[i]){
+      U[i] <- price[i]- Lprice[i]
+    } else{
+      D[i] <- Lprice[i]- price[i]
+    }
+    if (i>n){
+      AvgUp <- mean(U[(i-n+1):i])
+      AvgDn <- mean(D[(i-n+1):i])
+      rsi[i] <- AvgUp/(AvgUp+AvgDn)*100 
+      }
+    }
+  rsi <- reclass(rsi, price)
+  return(rsi)
+}
+p<-na.omit(`BTC-USD`)
+rsi <- myRSI(Cl(p), n=14)
+tail(rsi,n=3)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+chartSeries(`BTC-USD`,
+            subset='2020-05::2020-09',
+            theme=chartTheme('white'))
+addRSI(n=14,maType="EMA")
+```
+<br>
+<div style="text-align: justify;"><h3><span style="font-weight: normal;"><span style="font-size: x-large;">Señal comercial</span></span></h3><h3><span style="font-weight: normal;"><span style="font-size: large;">La señal de compra surge cuando el RSI es inferior a 30.</span></span></h3><h3><span style="font-weight: normal;"><span style="font-size: large;">La señal de venta aparece cuando el RSI es superior a 30.</span></span></h3><div><span style="font-size: large;"><div><br /></div><div><br /></div></span></div></div>
