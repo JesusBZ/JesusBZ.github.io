@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<title>Cursos</title>
+<meta name="description" content="Introduccíon al análisis de datos: Cursos de Excel Financiero, Rstudio, Power BI, Big Data, Machine Learning, Neural Network, Time Series, Forecast,Dashboard Financiero."/>
+<meta name="keywords" content="cursos, excel financiero, business intelligence, Rstudio, Power BI">
+<meta name="author" content="jesusbz.github.io">    
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title"  content= "Cursos de Introduccíon al análisis de datos"/>
+<meta property="og:image" content= "https://jesusbz.github.io/imagenes/cursos/caratula.jpg"/>
+<meta property="og:description"  content="Códigos y Técnicas de Finanzas Avanzadas."/>
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jesusbz.github.io/cursos.html"/>
+<meta property="og:author" content="Jesús Benjamín Zerpa"/>
+<meta name="twitter:card" content="summary_large_image" /> 
+
+
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link  rel="icon"   href="favi.png" type="image/png" />
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Portafolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+ </a>
+</li>
+<li>
+  <a href="acercade.html">Acerca de</a>
+</li>
+<li>
+  <a href="formulario.html">Contacto</a>
+</li>
+<li>
+  <a href="https://rpubs.com/JesusZ"rel="nofollow" target="_blank">Rpubs</a>
+</li>
+ <li>
+  <a href="https://jesusbzerpa.github.io/"rel="nofollow" target="_blank">Mi Perfil</a>
+</li>
+ <li>
+  <a href="https://jesusbezerpa.github.io/"rel="nofollow" target="_blank">Servicios</a>
+</li>          
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+   Recursos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://onedrive.live.com/download?resid=97B9EE70067CDD34%212341&authkey=ABrxoNLIj1Woc0Q">Manual Excel</a>
+    </li>                
+      </ul>
+    </li> 
+    </ul>      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://join.skype.com/invite/vfcMypZd0Ucf"rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-skype"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://t.me/jesusbz21"rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-telegram"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/jesús-zerpa-807646129/"rel="nofollow" target="_blank">
+    <span class="fab fa fab fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa"rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-scribd"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/JesusBZ"rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:jesuszerpaeconomia@gmail.com">
+    <span class="far fa far fa-envelope"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<html>
+<head>
+<title>
+app 1
+</title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+body { background:rgb(255,255,255); }
+form { max-width:420px; margin:50px auto; }
+
+.feedback-input {
+  color:black;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight:500;
+  font-size: 18px;
+  border-radius: 5px;
+  line-height: 22px;
+  background-color: transparent;
+  border:2px solid #008ffb;
+  transition: all 0.3s;
+  padding: 13px;
+  margin-bottom: 15px;
+  width:100%;
+  box-sizing: border-box;
+  outline:0;
+}
+
+.feedback-input:focus { border:2px solid #008ffb; }
+
+textarea {
+  height: 150px;
+  line-height: 150%;
+  resize:vertical;
+}
+
+[type="submit"] {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  width: 100%;
+  background:#53a2fb;
+  border-radius:5px;
+  border:0;
+  cursor:pointer;
+  color:white;
+  font-size:24px;
+  padding-top:10px;
+  padding-bottom:10px;
+  transition: all 0.3s;
+  margin-top:-4px;
+  font-weight:700;
+}
+[type="submit"]:hover { background:#0914a7; }
+
+.blog-card {
+	 display: flex;
+	 flex-direction: column;
+	 margin: 1rem auto;
+	 box-shadow: 0 3px 7px -1px rgba(0, 0, 0, .1);
+	 margin-bottom: 5%;
+	 background: #d1d1d1;
+	 line-height: 1.4;
+	 font-family: sans-serif;
+	 border-radius: 5px;
+	 overflow: hidden;
+	 z-index: 0;
+}
+ .blog-card a {
+	 color: inherit;
+}
+ .blog-card a:hover {
+	 color: #246da4;
+}
+ .blog-card:hover .photo {
+	 transform: scale(1.3) rotate(3deg);
+}
+ .blog-card .meta {
+	 position: relative;
+	 z-index: 0;
+	 height: 200px;
+}
+ .blog-card .photo {
+	 position: absolute;
+	 top: 0;
+	 right: 0;
+	 bottom: 0;
+	 left: 0;
+	 background-size: cover;
+	 background-position: center;
+	 transition: transform 0.2s;
+}
+ .blog-card .details, .blog-card .details ul {
+	 margin: auto;
+	 padding: 0;
+	 list-style: none;
+}
+ .blog-card .details {
+	 position: absolute;
+	 top: 0;
+	 bottom: 0;
+	 left: -100%;
+	 margin: auto;
+	 transition: left 0.2s;
+	 background: rgba(0, 0, 0, .6);
+	 color: #fff;
+	 padding: 10px;
+	 width: 100%;
+	 font-size: 0.9rem;
+}
+ .blog-card .details a {
+	 text-decoration: dotted underline;
+}
+ .blog-card .details ul li {
+	 display: inline-block;
+}
+ .blog-card .details .author:before {
+	 font-family: FontAwesome;
+	 margin-right: 10px;
+	 content: "\f007";
+}
+ .blog-card .details .date:before {
+	 font-family: FontAwesome;
+	 margin-right: 10px;
+	 content: "\f133";
+}
+ .blog-card .details .tags ul:before {
+	 font-family: FontAwesome;
+	 content: "\f02b";
+	 margin-right: 10px;
+}
+ .blog-card .details .tags li {
+	 margin-right: 2px;
+}
+ .blog-card .details .tags li:first-child {
+	 margin-left: -4px;
+}
+ .blog-card .description {
+	 padding: 1rem;
+	 background: #fff;
+	 position: relative;
+	 z-index: 1;
+}
+ .blog-card .description h1, .blog-card .description h2 {
+	 font-family: Poppins, sans-serif;
+}
+ .blog-card .description h1 {
+	 line-height: 1;
+	 margin: 0;
+	 font-size: 2rem;
+}
+ .blog-card .description h2 {
+	 font-size: 1.7rem;
+	 font-weight: 300;
+	 text-transform: uppercase;
+	 color: #a2a2a2;
+	 margin-top: 5px;
+}
+ .blog-card .description .read-more {
+	 text-align: right;
+}
+ .blog-card .description .read-more a {
+	 color: #246da4;
+	 display: inline-block;
+	 position: relative;
+}
+ .blog-card .description .read-more a:after {
+	 content: "\f061";
+	 font-family: FontAwesome;
+	 margin-left: -10px;
+	 opacity: 0;
+	 vertical-align: middle;
+	 transition: margin 0.3s, opacity 0.3s;
+}
+ .blog-card .description .read-more a:hover:after {
+	 margin-left: 5px;
+	 opacity: 1;
+}
+ .blog-card p {
+	 position: relative;
+	 margin: 1rem 0 0;
+	 font-size:16px;
+	 text-align : justify; 
+	 
+}
+ .blog-card p:first-of-type {
+	 margin-top: 1.25rem;
+}
+ .blog-card p:first-of-type:before {
+	 content: "";
+	 position: absolute;
+	 height: 5px;
+	 background: #246da4;
+	 width: 35px;
+	 top: -0.75rem;
+	 border-radius: 3px;
+}
+ .blog-card:hover .details {
+	 left: 0%;
+}
+ @media (min-width: 640px) {
+	 .blog-card {
+		 flex-direction: row;
+		 max-width: auto;
+	}
+	 .blog-card .meta {
+		 flex-basis: 40%;
+		 height: auto;
+	}
+	 .blog-card .description {
+		 flex-basis: 60%;
+	}
+	 .blog-card .description:before {
+		 transform: skewX(-3deg);
+		 content: "";
+		 background: #fff;
+		 width: 30px;
+		 position: absolute;
+		 left: -10px;
+		 top: 0;
+		 bottom: 0;
+		 z-index: -1;
+	}
+	 .blog-card.alt {
+		 flex-direction: row-reverse;
+	}
+	 .blog-card.alt .description:before {
+		 left: inherit;
+		 right: -10px;
+		 transform: skew(3deg);
+	}
+	 .blog-card.alt .details {
+		 padding-left: 25px;
+	}
+
+.modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+.modalDialog:target {
+	opacity:1;
+	pointer-events: auto;
+}
+.modalDialog > div {
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #999);
+	background: -webkit-linear-gradient(#fff, #999);
+	background: -o-linear-gradient(#fff, #999);
+  -webkit-transition: opacity 400ms ease-in;
+-moz-transition: opacity 400ms ease-in;
+transition: opacity 400ms ease-in;
+}
+.close {
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+.close:hover { background: #00d9ff; }
+</style>
+</head>
+<body> 
+<br>
+<br>
+ 
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Catálogo de Cursos para Empresas de Cartera:</span></h2>
+<br>
+<p align="justify">El siguiente catálogo forma parte opcional y complementaria de los servicios de asesoría tecnológica. Muchas veces en las asesorías y los talleres de inducción de nuevas tecnologías, principalmente de Power BI y Rstudio,  quedan secciones prácticas o teóricas que no se pueden abordar en una semana, tiempo promedio para este tipo de servicios.</p>
+<br><p align="justify"> En el caso de Power BI el personal (usuarios) de la empresa debe tener un buen conocimiento de excel para poder manejar el DAX o “Data Analysis Expressions” y en el caso de Rstudio se debe entender el lenguaje R. Para estas situaciones particulares se requiere una inducción completa, ya que una tarde de un viernes, por ejemplo, no es suficiente para el personal que no tenga  las habilidades mínimas necesarias. Esto a ocasionando para ambas partes cambios en cronogramas de última hora y en algunos casos suspensión de otros compromisos.</p>
+<br><p align="justify">En este orden de ideas, me enfoqué en terminar de desarrollar una serie de cursos que venía trabajando desde hace un año y medio. Están estructurados para que complementen las asesorías, inducciones, actualizaciones y proyectos. Abordan todos los temas de interés que necesita saber el personal que finalmente queda en la empresa para ser el operario correspondiente de las herramientas diseñadas: Panóramicas financieras en BI, Cuadros de mando, Presupuestos, Dashboards Funcionales y de Control de Gestión. Igualmente para aquel personal que tenga poco conocimiento de las herramientas básicas y necesite una actualización, esto aplica para cualquier área de la empresa (administrativa - operativa).</p>
+
+
+<div id="openModal" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<h2>Contenido Principal</h2>
+		<br>
+		<p><i class="fa fa-check"></i> Las Fórmulas.</p>
+		<p><i class="fa fa-check"></i> Formatos de celda.</p>
+		<p><i class="fa fa-check"></i> Gestión Financiera con excel.</p>
+		<p><i class="fa fa-check"></i> Préstamos con excel.</p>
+		<p><i class="fa fa-check"></i> Amortización sin tasas de intereses.</p>
+		<p><i class="fa fa-check"></i> Bonos.</p>
+		<p><i class="fa fa-check"></i> Inversiones Finacieras.</p>
+		<p><i class="fa fa-check"></i> Moneda y Letra de Cambio.</p>
+		<p>Puedes solicitar el contenido programático completo a través del formulario de contactos al final de esta página.</p>
+		
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+
+<div id="openModal2" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+	<h2>Contenido Principal</h2>
+		<br>
+		<p><i class="fa fa-check"></i> Las Fórmulas.</p>
+		<p><i class="fa fa-check"></i> Formatos de celda.</p>
+		<p><i class="fa fa-check"></i> Gestión Financiera con excel.</p>
+		<p><i class="fa fa-check"></i> Préstamos con excel.</p>
+		<p><i class="fa fa-check"></i> Amortización sin tasas de intereses.</p>
+		<p><i class="fa fa-check"></i> Bonos.</p>
+		<p><i class="fa fa-check"></i> Inversiones Finacieras.</p>
+		<p><i class="fa fa-check"></i> Moneda y Letra de Cambio.</p>
+		<p><i class="fa fa-check"></i> Macros.</p>
+		<p><i class="fa fa-check"></i> Función Objetivo y Solver.</p>
+		<p><i class="fa fa-check"></i> Herramienta de análisis de datos.</p>
+		<p><i class="fa fa-check"></i> Microsoft query.</p>
+		<p><i class="fa fa-check"></i> Entorno de programación VBA.</p>
+	
+		
+		<p>Puedes solicitar el contenido programático completo a través del formulario de contactos al final de esta página.</p>
+		
+	</div>
+</div>
+
+<div id="openModal3" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+	    <h2>Contenido Principal</h2>
+		<br>
+		<p><i class="fa fa-check"></i> Introducción al entorno R.</p>
+		<p><i class="fa fa-check"></i> Cálculos sencillos. Números y vectores.</p>
+		<p><i class="fa fa-check"></i> Objetos modos y atributos.</p>
+		<p><i class="fa fa-check"></i> Lectura de datos.</p>
+		<p><i class="fa fa-check"></i> Creación de Data Frame.</p>
+		<p><i class="fa fa-check"></i> Análisis descriptivo de datos.</p>
+		<p><i class="fa fa-check"></i> Procedimientos gráficos.</p>
+		<p><i class="fa fa-check"></i> Modelos de regresión lineal.</p>
+		<p><i class="fa fa-check"></i> Modelos de regresión no lineal.</p>
+		<p><i class="fa fa-check"></i> Análisis de residuos.</p>
+		<p><i class="fa fa-check"></i> Introducción a series de tiempo.</p>
+		<p><i class="fa fa-check"></i> Metodología Box - Jenkins.</p>
+		<p><i class="fa fa-check"></i> Modelos AR, MA, ARMA, ARIMA y SARIMA.</p>
+	
+		
+		<p>Puedes solicitar el contenido programático completo a través del formulario de contactos al final de esta página.</p>
+		
+	</div>
+</div>
+
+<div id="openModal4" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+	     <h2>Contenido Principal</h2>
+		<br>
+		<p><i class="fa fa-check"></i> Entorno del Business Intelligence. Conceptos básicos.</p>
+		<p><i class="fa fa-check"></i> Introducción a Power BI Desktop, Pro, Premium, Mobile, Embedded y Cloud.</p>
+		<p><i class="fa fa-check"></i> Componentes de Power BI.</p>
+		<p><i class="fa fa-check"></i> Análisis y fuentes de datos.</p>
+		<p><i class="fa fa-check"></i> Primeros pasos para: Conectar, integrar, modelar y visualizar.</p>
+		<p><i class="fa fa-check"></i> Introducción al Dashbard Financiero.</p>
+		<p><i class="fa fa-check"></i> Origen de datos.</p>
+		<p><i class="fa fa-check"></i> Cargar modelo de datos.</p>
+		<p>Puedes solicitar el contenido programático completo a través del formulario de contactos al final de esta página.</p>
+		
+	</div>
+</div>
+
+
+ <hr>
+<div class="blog-card">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/cursos/curso-2.webp);" alt="Curso de Excel Financiero Básico"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">blog</a></li>
+            <li><a href="#">Excel Básico</a></li>
+            <li><a href="#">Análisis Financiero</a></li>
+            <li><a href="#">Excel Financiero</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>1. Curso de Excel Financiero Básico</h1>
+      <h2>Duración 8 Hrs Cod: 001A</h2>
+	  <h2>Precio: 60$ USD</h2>
+	  <p>El curso está dirigido a profesionales que se desenvuelven en las áreas financieras, administrativas, contables, auditorías, tesorerías, planificación y control de gestión de empresas que tengan un conocimiento muy limitado de la herramienta excel para el desarrollo de sus actividades diarias. Igualmente el curso se adapta a las áreas de mayor responsabilidad y Gerencia.</p>
+      <p>El participante se irá familiarizando progresivamente con cada uno de los módulos de excel en una experiencia interactiva. El contenido variado y práctico permitirá una comprensión rápida con ejercicios de análisis utilizando las herramientas de excel para potenciar la toma de decisiones en las distintas áreas estratégicas de la empresa.</p>
+	  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="BTMWYUZHXYMUQ">
+<input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+	  <p class="read-more">
+        <a href="#openModal">Leer Más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="blog-card alt">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/cursos/curso-1.webp);" alt="Curso de Excel Financiero Nivel Básico - Avanzado"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Excel avanzado</a></li>
+            <li><a href="#">Análisis financiero</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>2. Curso de Excel Financiero Nivel Básico - Avanzado</h1>
+      <h2>Duración: 10 Hrs Cod: 001B</h2>
+	  <h2>Precio: 80$ USD</h2>
+	  <p>El curso está dirigido a profesionales que se desenvuelven en las áreas financieras, administrativas, contables, auditorías, tesorerías, planificación y control de gestión de empresas que tengan un conocimiento muy limitado de la herramienta excel para el desarrollo de sus actividades diarias.</p>
+      <p>La parte del curso para los usuarios avanzados les permitirá desarrollar funciones condicionales y funciones lógicas para que sus fórmulas sean mucho más efectivas además de utilizar rangos personalizados, importar información de otras fuentes de datos, análisis avanzados para buscar soluciones, creación de macros, sencillas pero efectivas. Ya no requerirán  hacer tareas repetitivas y tener que preguntar a sus compañeros cada vez que  manden a realizar una tarea.</p>
+	  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="5VBNK3K6S2S6J">
+<input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+	  <p class="read-more">
+        <a href="#openModal2">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+ <div class="blog-card">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/cursos/curso-4.webp);" alt="Curso de Introducción al análisis de datos con Rstudio"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Rstudio</a></li>
+            <li><a href="#">Forecast</a></li>
+            <li><a href="#">Model</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>3. Curso de Introducción al análisis de datos con Rstudio</h1>
+      <h2>Duración 8 Hrs Cod: 001C</h2>
+	  <h2>Precio: 60$ USD</h2>
+       <p>El curso de Rstudio está diseñado para personas que se encuentren en áreas de análisis de datos, intelligence business, analysis business, data mining o que lleven áreas financieras complejas como pueden ser carteras de inversión, gestión de riesgo financiero, pronósticos y desarrollo de escenarios comerciales. Igualmente para profesionales que manejen alguna herramienta de gestión de datos y requieran complementarla con el lenguaje R o simplemente que necesiten actualizar conocimientos básicos para el análisis de datos. </p>
+       <p>Al finalizar el curso tendrán las bases para realizar análisis de datos, análisis descriptivo estadístico, gráficos de caja, histogramas, modelos de regresión lineal, no lineal,  introducción al análisis de series de tiempo, paquetes en lenguaje R: TS, Time Series, Forecast, Zoo, metodología de Box- Jenkins y primeros pronósticos con modelos autorregresivos ( AR, MA, ARMA, ARIMA, SARIMA).</p>
+	  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="BTMWYUZHXYMUQ">
+<input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+</form>
+	  <p class="read-more">
+        <a href="#openModal3">Leer más</a>
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="blog-card alt">
+    <div class="meta">
+      <div class="photo" style="background-image: url(imagenes/cursos/curso-3.webp);" alt="Curso de Introducción al análisis de datos con Power BI"></div>
+      <ul class="details">
+        <li class="author"><a href="https://jesusbz.github.io/acercade.html">Jesús B. Zerpa</a></li>
+        <li class="date">2020</li>
+        <li class="tags">
+          <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Power BI</a></li>
+            <li><a href="#">Análisis de datos</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="description">
+      <h1>4. Curso de Introducción al análisis de datos con Power BI</h1>
+       <h2>Duración 40 Hrs Cod: 001D</h2>
+	  <h2>Precio: 60$ USD</h2>
+      <p>Power BI se ha convertido en una de las principales herramientas para analizar datos de origen financiero. Este curso fue diseñado para promover el uso de Power BI y desarrollar áreas de Intelligence Business.</p>
+      <p>El contenido del mismo abarca todo lo que necesita saber un operario principiante de Power BI para realizar sus primeros cuadros de mando financiero y diseño de KPI's funcionales. Por lo tanto es un curso diseñado para profesionales financieros que dominen un cierto nivel de excel y se les facilite el manejo de las instrucciones DAX de Power BI.</p>
+	  <p>Al finalizar el curso se podrán realizar extracciones de datos desde bases de datos como SQL y estructutar paneles de visualización gráfica de ventas, gastos, Estados Financieros, indicadores y desarrollar informes para cada una de las áreas estratégicas.</p>
+	  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="BTMWYUZHXYMUQ">
+<input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+	  <p class="read-more">
+        <a href="#openModal4">Leer más</a>
+      </p>
+    </div>
+  </div>
+  
+  <br>
+<br>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Formulario de Compra:</span></h2>
+  
+<form name="contactform" method="post" action="https://app.99inbound.com/api/e/hB5ewb94" target="_blank">
+<input name="name" type="text" class="feedback-input" placeholder="Nombre Completo" required /><br />
+<input name="email" type="text" class="feedback-input" placeholder="Email" required/> <input name="phone" type="text" class="feedback-input" placeholder="Teléfono" required/><input name="codigo" type="text" class="feedback-input" placeholder="Código de curso" required/><input name="empresa" type="text" class="feedback-input" placeholder="Empresa" required/>
+<textarea name="text" class="feedback-input" placeholder="Mensaje" required></textarea>
+<input name="buttom"type="submit" value="ENVIAR"/>
+<div style="position: absolute; left: -5000px;">
+<input type="checkbox" name="bluetooth_magenta_argyle_rhino" value="1" tabindex="-1" autocomplete="no">
+</form>
+</div>
+<br><br>
+<p><b>Términos y Condiciones:</b></p>
+<p align="justify"> Los productos que a continuación se presentan están disponibles solo para las Empresas que tienen un contrato activo en cualquiera de los servicios que componen mi oferta profesional, no es para un público general ya que el precio tiene un descuento incluido. Por ese motivo atenderé exclusivamente las solicitudes de clientes  activos, cualquier otra persona interesada en alguno de estos cursos tendrá un precio distinto por el producto y debe solicitarlo previamente. En caso de que alguna persona haga un depósito por error se le devolverá el importe una vez se cumplan los plazos establecidos en las políticas de <b>Paypal</b> para hacerse efectivo.</p>  
+<p align="justify">El formato de los cursos es digital en HD, con sonido estéreo y una buena edición. Se encuentran en una plataforma de videos con acceso privado o en los formatos MP4, AVI y MOV que se podrán descargar desde un link que se enviará por e-mail, sin embargo tengo la versión física limitada con su cover y DVD Blu-ray que puede ser enviada a cuaquier parte con cobro a destino a nivel local, fuera de Venezuela tendrá otro precio basado en tarifas internacionales de envío.</p>
+<p align="justify">Antes de realizar cualquier compra revise el contenido del curso en las descripciones y recuerde llenar el formulario de compra que se encuentra en la parte inferior de la página. Llénelo con detalle y revise antes de enviar:</p>
+<br>
+<p align="justify">1. Nombre completo.</p>
+<p align="justify">2. E-mail.</p>
+<p align="justify">3. Teléfono.</p>
+<p align="justify">4. Código de curso.</p>
+<p align="justify">5. Empresa.</p>
+<p align="justify">6. Mensaje.</p>
+<br>
+<p align="justify">Una vez confirmado el pago le será enviado el link con clave de acceso al video para ver online y el link de descarga del archivo comprimido.</p>
+<br>
+<p align="justify"><b>Confidencialidad de los datos:</b></p>
+<p align="justify">Todos los datos que se envían a través de los fomularios de contacto de esta Web son tratados con responsabilidad, seguridad y resguardo a través de una empresa privada llamada <a href="https://www.99inbound.com/" target="_blank">99 inbound,</a>  el tratamiento de dichos datos son única y exclusivamente para enviar información de mis publicaciones, servicios y para cualquier información que se solicite con respecto al contenido de la Web.</p>
+<br>
+    
+</body>
+</html>
+
+<div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
+</div>
+<span style="font-size: medium;"><br /></span>
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
+</span></span></span><br />
+<br />
+<div style="text-align: center;">
+<div style="text-align: left;">
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+</div>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<br /></div>
+</div>
+
+<hr />
+<h5>
+<div>
+<div style="text-align: center;">
+<span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;"><span style="color: #444444;">Copyright&nbsp;</span></span><span style="font-size: small;">©&nbsp;</span></span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">2020&nbsp;</span></span><span style="font-size: small;"><a href="https://github.com/JesusBZ">Jesús B. Zerpa</a> </span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">| Economist &amp; Data Scientist |&nbsp;Site created with</span></span><span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">&nbsp;<a href="https://rstudio.com/" rel="nofollow" target="_blank">RStudio</a><a href="https://www.blogger.com/blogger.g?blogID=3272883731674348977"></a>&nbsp;</span></div>
+<div style="text-align: center;">
+<span style="color: blue; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: xx-small;"><br /></span></div>
+<div style="text-align: center;">
+<span style="color: #0b5394; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: x-small;">| FINANCE | INTELLIGENCE BUSSINES | FORECASTING | TIME SERIES | FINANCIAL DASHBOARD | FINANCIAL BUDGET | SPATIAL ECONOMETRICS |&nbsp;</span></div>
+<!-- Add icon library -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"></link>
+<!-- Add font awesome icons -->
+<br />
+<div style="text-align: center;">
+<a class="fa fa-skype" href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-telegram" href="https://t.me/jesusbz21" rel="nofollow" target="_blank"></a>
+    <a class="fab fa-r-project" href="https://rpubs.com/JesusZ" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-linkedin" href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" rel="nofollow" target="_blank"></a>
+     <a class="fa fa-scribd" href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-github" href="https://github.com/JesusBZ" rel="nofollow" target="_blank"></a>
+</div>
+</div>
+</h5>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

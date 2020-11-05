@@ -1,0 +1,161 @@
+---
+title: " "
+---
+
+```{r}
+library(tidyquant)
+library(tidyverse)
+library(plotly)
+library(vars)
+```
+
+
+```{r}
+# Extract basket prices
+tickers <- c("MSFT","JNJ","MA", "PEP", "WMT","MCD")
+```
+
+```{r}
+# Load basket prices
+tickers <- c("MSFT","JNJ","MA", "PEP", "WMT","MCD")
+basket_prices <- tq_get(tickers, get='stock.prices', from='2008-01-01', to = '2020-09-30') %>%
+  rename(ticker = symbol)
+basket_prices %>%
+  ggplot(aes(x = date, y = adjusted)) +
+    geom_line(aes(color = ticker))
+```
+
+```{r}
+# Calculate returns
+ret <- basket_prices %>%
+  group_by(ticker) %>%
+  filter(date >= '2008-01-01', date < '2020-09-30') %>%
+  tq_transmute(select=adjusted, mutate_fun=periodReturn, period="daily", type="log")
+# make wide dataframe of returns
+ret_wide <- ret %>%
+  spread(key=ticker, value=daily.returns)
+```
+
+```{r}
+wdw <- 250
+var <- VAR(ret_wide[1:wdw, -1], p=1, type="const")
+summary(var)
+```
+
+```{r}
+# step ahead predictions
+p <- predict(var, n.ahead = 1) 
+fcsts <- t(do.call(rbind, lapply(p$fcst, "[", 1)))
+fcsts
+```
+
+```{r}
+# predictions vs actuals
+ret_wide[wdw+1, -1] - fcsts
+```
+
+```{r}
+# sign of predictions vs actuals
+sign(ret_wide[wdw+1, -1]/fcsts)
+```
+
+```{r}
+# rank of predictions vs actuals
+rank(t(ret_wide[wdw+1, -1]))
+rank(fcsts)
+```
+
+```{r}
+# dollar weight assets based on normalised difference to forecast mean basket return
+dollar_wgts <- (fcsts - mean(fcsts))/sum(abs(fcsts - mean(fcsts)))  # h.t. Ernie Chan
+dollar_wgts
+```
+
+```{r}
+port_ret <- sum(dollar_wgts * ret_wide[wdw+1, -1])
+port_ret
+```
+
+```{r}
+# rolling VAR estimation and prediction
+wdw <- 500
+dollar_wgts <- vector('list', nrow(ret_wide)-wdw)
+for(i in (wdw):(nrow(ret_wide)-1)) {  # don't need to get a forecast for the final data point for backtesting purposes
+  
+  var <- ret_wide %>%
+    slice((i-wdw):(i-1)) %>%
+    dplyr::select(-date) %>%
+    VAR(p=1, type="const")
+  
+  p <- var %>% 
+    predict(n.ahead = 1)
+  
+  fcsts <- t(do.call(rbind, lapply(p$fcst, "[", 1)))
+  dollar_wgts[[i]] <- (fcsts - mean(fcsts))/sum(abs(fcsts - mean(fcsts))) 
+}
+```
+
+```{r}
+wgts <- bind_rows(lapply(dollar_wgts, as.data.frame))
+port_ret <- data.frame('date' = ret_wide[(wdw+1):(nrow(ret_wide)), 'date'], 
+                       'ret' = rowSums(wgts * ret_wide[(wdw+1):(nrow(ret_wide)), -1]))  # first wgt is from idx==wdw, assign return from wdw:(wdw+1)
+port_ret <- port_ret %>%
+  mutate('cum_ret' = cumsum(ret))
+port_ret %>%
+  ggplot(aes(x = date, y = cum_ret)) +
+    geom_line() +
+    labs(
+      title = 'Cumulative Returns to VAR Trading Model',
+      x = 'Date',
+      y = 'Return'
+    )
+```
+
+```{r}
+# check stability of window length parameter
+wdws <- c(250, 500, 750, 1000)
+ports <- vector("list")
+for (wdw in wdws) {
+  dollar_wgts <- vector('list', nrow(ret_wide)-wdw)
+  for(i in (wdw):(nrow(ret_wide)-1)) {  # don't need to get a forecast for the final data point for backtesting purposes
+    
+    var <- ret_wide %>%
+      slice((i-wdw):(i-1)) %>%
+      dplyr::select(-date) %>%
+      VAR(p=1, type="const")
+    
+    p <- var %>% 
+      predict(n.ahead = 1)
+    
+    fcsts <- t(do.call(rbind, lapply(p$fcst, "[", 1)))
+    dollar_wgts[[i]] <- (fcsts - mean(fcsts))/sum(abs(fcsts - mean(fcsts)))  # h.t. Ernie Chan
+    
+  }
+  
+  wgts <- bind_rows(lapply(dollar_wgts, as.data.frame))
+  port_ret <- data.frame('date' = ret_wide[(wdw+1):(nrow(ret_wide)), 'date'], 
+                         'ret' = rowSums(wgts * ret_wide[(wdw+1):(nrow(ret_wide)), -1]))  # first wgt is from idx==wdw, assign return from wdw:(wdw+1)
+  
+  name <- paste0(wdw)
+  port_ret <- port_ret %>%
+    mutate(!!name := cumsum(ret))
+  
+  ports <- c(ports, list(port_ret))
+}
+```
+
+```{r}
+# plot returns by window length
+ports %>%
+  map(~ (.x %>% dplyr::select(-ret))) %>%  # drop ret column from each dataframe in list
+  reduce(left_join, by="date") %>%  
+  pivot_longer(-date, names_to = "window", values_to = "return") %>%
+  ggplot(aes(x = date, y = return)) +
+    geom_line(aes(color = window)) +
+    labs(
+      title = 'Return to VAR models of different data windows',
+      x = "Date",
+      y = "Return"
+    )
+```
+
