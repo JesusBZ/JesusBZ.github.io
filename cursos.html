@@ -41,7 +41,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 <link  rel="icon"   href="favi.png" type="image/png" />
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
 
 
 <style type="text/css">
@@ -649,6 +649,136 @@ transition: opacity 400ms ease-in;
 	box-shadow: 1px 1px 3px #000;
 }
 .close:hover { background: #00d9ff; }
+
+ 
+.post-slide{
+    margin: 0 15px;
+    padding: 0 25px 20px 25px;
+    background: #fff;
+    box-shadow:0 2px 3px rgba(0, 0, 0, 0.07);
+}
+.post-slide .post-img{
+    position: relative;
+    margin-bottom: 20px;
+}
+.post-slide .post-img img{
+    width: 100%;
+    height: auto;
+}
+.post-slide .post-icon{
+    width: 60px;
+    height: 60px;
+    display: block;
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    text-align: center;
+    background: #333;
+    opacity: 0;
+    border-radius: 3px;
+    transition: all 300ms ease-in-out 0s;
+}
+.post-slide:hover .post-icon{
+    opacity: 1;
+}
+.post-slide .post-icon i{
+    font-size: 20px;
+    color: #fff;
+    line-height: 60px;
+}
+.post-slide .post-bar{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-transform: uppercase;
+}
+.post-slide .post-bar li{
+    display: inline-block;
+    font-size: 15px;
+    color: #676767;
+    margin-right: 5px;
+}
+.post-slide .post-bar li:after{
+    content: "/";
+    margin-left: 5px;
+}
+.post-slide .post-bar li:last-child:after{
+    content: "";
+}
+.post-slide .post-bar li a{
+    color: #8e44ad;
+    transition: all 0.3s ease 0s;
+}
+.post-slide .post-bar li a:hover{
+    color: #333;
+    text-decoration: none;
+}
+.post-slide .post-bar li a:after{
+    content: ",";
+    margin: 0 5px;
+}
+.post-slide .post-bar li a:last-child:after{
+    content: "";
+}
+.post-slide .post-title{
+    margin: 15px 0;
+    text-transform: capitalize;
+}
+.post-slide .post-title a{
+    font-size: 22px;
+    font-weight: 600;
+    color: #3c3c3c;
+    transition: all 300ms linear 0ms;
+}
+.post-slide .post-title a:hover{
+    color: #8e44ad;
+    text-decoration: none;
+}
+.post-slide .post-description{
+    font-size: 16px;
+    color: #676767;
+    line-height: 24px;
+    padding-bottom: 15px;
+}
+.post-slide .read-more{
+    display: inline-block;
+}
+.post-slide .read-more:hover{
+    text-decoration: none;
+}
+.post-slide .read-more i{
+    font-size: 19px;
+    color: #333;
+    margin-right: 5px;
+    transition: all 0.40s linear 0s;
+}
+.post-slide .read-more span{
+    font-size: 16px;
+    color: #333;
+    opacity: 0;
+    text-transform: uppercase;
+    transition: all 0.40s linear 0s;
+}
+.post-slide .read-more:after{
+    content: "";
+    display: block;
+    width: 40%;
+    position: relative;
+    bottom: -20px;
+    border-bottom: 3px solid #333;
+    opacity: 0;
+    transition: all 0.40s linear 0s;
+}
+.post-slide:hover .read-more span,
+.post-slide:hover .read-more:after{
+    opacity: 1;
+}
+.post-slide .read-more:hover span,
+.post-slide .read-more:hover i,
+.post-slide .read-more:hover:after{
+    color: #8e44ad;
+    border-bottom-color: #8e44ad;
+}
 </style>
 </head>
 <body> 
@@ -961,9 +1091,197 @@ Catálogo de Cursos para Empresas en Cartera:</font></h1>
 <p style="font-size: large;" align="justify"><b>Confidencialidad de los datos:</b></p>
 <br><p style="font-size: large;" align="justify">Todos los datos que se envían a través de los fomularios de contacto de esta Web son tratados con responsabilidad, seguridad y resguardo a través de una empresa privada llamada <a href="https://www.99inbound.com/" target="_blank">99 inbound,</a>  el tratamiento de dichos datos son única y exclusivamente para enviar información de mis publicaciones, servicios y para cualquier información que se solicite con respecto al contenido de la Web.</p>
 <br>
-    
-</body>
-</html>
+<br>
+<h2 style="text-align: center;">
+<span style="font-size: x-large;">Entradas Populares:</span></h2>
+<br>
+<hr>
+ <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="news-slider" class="owl-carousel">
+                <div class="post-slide">
+                    <div class="post-img">
+                        <img src="imagenes/post/post-1.webp" alt="">
+                        <span class="post-icon">
+                            <i class="fa fa-book"></i>
+                        </span>
+                    </div>
+                    <ul class="post-bar">
+                        <li>may, 2020</li>
+                        <li>
+                            <a href="#">Modelización</a>
+                            <a href="#">Rstudio</a>
+                        </li>
+                    </ul>
+                    <h3 class="post-title"><a href="https://jesusbz.github.io/modelo-ventas.html" target="_blank">Modelo de Ventas en Volumen</a></h3>
+                    <p class="post-description">
+                        
+                        El área vital de todo negocio y base del presupuesto anual son las ventas. Existen muchos métodos para realizar un pronóstico de ventas a partir (...)
+					</p>
+                    <a href="https://jesusbz.github.io/modelo-ventas.html" target="_blank" class="read-more">
+                        <i class="fa fa-arrow"></i>
+                        <span>Leer más</span>
+                    </a>
+                </div>
+				
+				<div class="post-slide">
+                    <div class="post-img">
+                        <img src="imagenes/post/post-2.webp" alt="">
+                        <span class="post-icon">
+                            <i class="fa fa-book"></i>
+                        </span>
+                    </div>
+                    <ul class="post-bar">
+                        <li>may, 2020</li>
+                        <li>
+                            <a href="#">Modelización</a>
+                            <a href="#">Rstudio</a>
+                        </li>
+                    </ul>
+                    <h3 class="post-title"><a href="https://jesusbz.github.io/Proyecto2.html" target="_blank">Pronóstico y VaR del Bitcoin</a></h3>
+                    <p class="post-description">
+                        
+                        En los últimos años las criptomonedas se han convertido en un tema recurrente de emprendedores con los nuevos modelos de negocio. La (...) 
+					</p>
+                    <a href="https://jesusbz.github.io/Proyecto2.html" target="_blank" class="read-more">
+                        <i class="fa fa-arrow"></i>
+                        <span>Leer más</span>
+                    </a>
+                </div>
+ 
+ 
+                <div class="post-slide">
+                    <div class="post-img">
+                        <img src="imagenes/post/post-3.webp" alt="">
+                        <span class="post-icon">
+                            <i class="fa fa-book"></i>
+                        </span>
+                    </div>
+                    <ul class="post-bar">
+                        <li>may, 2020</li>
+                        <li>
+                            <a href="#">Ciencia de Datos</a>
+                            <a href="#">Código en R</a>
+                        </li>
+                    </ul>
+                    <h3 class="post-title"><a href="https://jesusbz.github.io/proyecto3.html" target="_blank">Machine Learning</a></h3>
+                    <p class="post-description">
+                       
+                        El Machine Learning se define como el sub-campo de la “Inteligencia Artificial” que se centra en el desarrollo de programas informáticos que (...)
+					</p>
+                    <a href="https://jesusbz.github.io/proyecto3.html" target="_blank" class="read-more">
+                        <i class="fa fa-arrow"></i>
+                        <span>Leer más</span>
+                    </a>
+                </div>
+				
+				<div class="post-slide">
+                    <div class="post-img">
+                        <img src="imagenes/post/post-4.webp" alt="">
+                        <span class="post-icon">
+                            <i class="fa fa-book"></i>
+                        </span>
+                    </div>
+                    <ul class="post-bar">
+                        <li>jul, 2020</li>
+                        <li>
+                            <a href="#">Gestión de Carteras</a>
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                    <h3 class="post-title"><a href="https://jesusbz.github.io/proyecto4.html" target="_blank">Portafolio de Markowitz</a></h3>
+                    <p class="post-description">
+                       
+					    Una de las primeras teorías que se deben aplicar para acceder al mundo de los portafolios de inversión es el de las fronteras eficientes (...)
+					</p>
+                    <a href="https://jesusbz.github.io/proyecto4.html" target="_blank" class="read-more">
+                        <i class="fa fa-arrow"></i>
+                        <span>Leer más</span>
+                    </a>
+                </div>
+				
+				<div class="post-slide">
+                    <div class="post-img">
+                        <img src="imagenes/post/post-5.webp" alt="">
+                        <span class="post-icon">
+                            <i class="fa fa-book"></i>
+                        </span>
+                    </div>
+                    <ul class="post-bar">
+                        <li>jul, 2020</li>
+                        <li>
+                            <a href="#">Informe</a>
+                            <a href="#">Plan de cuenta</a>
+                        </li>
+                    </ul>
+                    <h3 class="post-title"><a href="https://jesusbz.github.io/EvaluacionProyecto.html" target="_blank">Evaluación de Proyectos</a></h3>
+                    <p class="post-description">
+                
+					    La evaluación y formulación de proyectos de inversión es uno de los instrumentos prioritarios que deben acompañar todas las iniciativas (...)
+					</p>
+                    <a href="https://jesusbz.github.io/EvaluacionProyecto.html" target="_blank" class="read-more">
+                        <i class="fa fa-arrow"></i>
+                        <span>Leer más</span>
+                    </a>
+                </div>
+				
+				<div class="post-slide">
+                    <div class="post-img">
+                        <img src="imagenes/post/post-6.webp" alt="">
+                        <span class="post-icon">
+                            <i class="fa fa-book"></i>
+                        </span>
+                    </div>
+                    <ul class="post-bar">
+                        <li>jul, 2020</li>
+                        <li>
+                            <a href="#">Excel</a>
+                            <a href="#">Visual Basic</a>
+                        </li>
+                    </ul>
+                    <h3 class="post-title"><a href="https://jesusbz.github.io/Dashboard.html" target="_blank">Financial Dashboard</a></h3>
+                    <p class="post-description">
+                        Un panel de control financiero (Financial Dashboard) es una herramienta de “inteligencia empresarial” que ayuda a rastrear todos los KPI (...)
+					    
+					</p>
+                    <a href="https://jesusbz.github.io/Dashboard.html" target="_blank" class="read-more">
+                        <i class="fa fa-arrow"></i>
+                        <span>Leer más</span>
+                    </a>
+                </div>
+				
+				<div class="post-slide">
+                    <div class="post-img">
+                        <img src="imagenes/post/post-7.webp" alt="">
+                        <span class="post-icon">
+                            <i class="fa fa-book"></i>
+                        </span>
+                    </div>
+                    <ul class="post-bar">
+                        <li>jul, 2020</li>
+                        <li>
+                            <a href="#">Dashboard</a>
+                            <a href="#">Finance</a>
+                        </li>
+                    </ul>
+                    <h3 class="post-title"><a href="https://jesusbz.github.io/power-bi.html" target="_blank">Power BI</a></h3>
+                    <p class="post-description">
+                        
+					    Un software de Business Intelligence (BI) es una forma de software que ayuda a todo tipo de empresas a medir y mejorar la productividad. (...)
+
+					</p>
+                    <a href="https://jesusbz.github.io/power-bi.html" target="_blank" class="read-more">
+                        <i class="fa fa-arrow"></i>
+                        <span>Leer más</span>
+                    </a>
+                </div>
+				
+            </div>
+        </div>
+    </div>
+</div>   
+<hr>
 
 <div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
 </div>
@@ -1058,6 +1376,19 @@ ga('set', 'userId', 'USER_ID');
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+<script> 
+$(document).ready(function() {
+    $("#news-slider").owlCarousel({
+        items:3,
+        itemsDesktop:[1199,2],
+        itemsDesktopSmall:[1000,2],
+        itemsMobile:[700,1],
+        pagination:false,
+        navigationText:false,
+        autoPlay:true
+    });
+});</script>
 </body>
 </html>
