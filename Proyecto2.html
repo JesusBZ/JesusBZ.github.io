@@ -525,31 +525,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3>
 <span style="font-size: large;"><b>Descripción</b></span>
 </h3>
-<span style="font-size: large;">Este entrenamiento evaluó la volatilidad y el Valor en Riesgo (VaR) de los retornos diarios de Bitcoins mediante la realización de un estudio comparativo en el desempeño del pronóstico de modelos GARCH simétricos y asimétricos basados en tres distribuciones de error diferentes, durante el período enero-2014 a enero-2020. </span>
+<span style="font-size: large;">Este entrenamiento evaluó la volatilidad y el Valor en Riesgo (VaR) de los retornos diarios de Bitcoins mediante la realización de un estudio comparativo en el desempeño de los pronósticos de los modelos GARCH simétricos y asimétricos basados en tres distribuciones de error durante el período enero-2014 a enero-2020. </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Los modelos empleados son el SGARCH, TGARCH, eGARCH Y el gjrGARCH que fueron validados en base a medidas AIC, MAE y MSE. Los resultados indicaron que el eGARCH (2,1) con término de distribución de error T-Student se identificó como el modelo GARCH mejor ajustado. Sin embargo, este modelo mejor ajustado basado en la pérdida de información (AIC) no proporcionó el mejor pronóstico fuera de muestra, las diferencias fueron insignificantes. </span>
+<span style="font-size: large;">Los modelos empleados son el SGARCH, TGARCH, eGARCH Y el gjrGARCH que fueron validados en base a indicadores de la precisión de la previsión: AIC, MAE y MSE. Los resultados indicaron que el eGARCH (2,1) con término de distribución de error T-Student se identificó como el modelo GARCH mejor ajustado. Sin embargo, este modelo mejor ajustado basado en la pérdida de información (AIC) no proporcionó el mejor pronóstico fuera de muestra, las diferencias fueron insignificantes. </span>
 </div>
 <div style="text-align: justify;">
 <br />
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">En ese sentido, el estudio demuestra claramente que es confiable usar el modelo mejor ajustado para el pronóstico de volatilidad. Además, para validar aún más el rendimiento del modelo mejor ajustado, se sometió a una prueba de respaldo histórica utilizando Value at Risk (VaR). </span>
+<span style="font-size: large;">En ese sentido, los test estadísticos aplicados al comportamiento de los errores demuestran que es confiable usar el modelo mejor ajustado para el pronóstico de volatilidad. Además, para validar ampliamente y desde la perspectiva del riesgo el rendimiento del modelo mejor ajustado, se sometió a una prueba de respaldo histórica utilizando Value at Risk (VaR). </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Aunque, del estudio se hizo evidente que ningún modelo era superior significativamente, se indicó que se espera que una pérdida promedio del 0.8% se supere solo el 1% del tiempo. </span>
+<span style="font-size: large;">Aunque, con los resultados de las pruebas se hizo evidente que ningún modelo era superior significativamente, se indicó que se espera que una pérdida promedio del 0.8% se supere solo en el 1% del tiempo. </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: medium;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: medium;"><i><b>Palabras clave:</b> volatilidad, Bitcoin, Garch, valor en riesgo.<span style="font-size: large;"> </span></i></span>
+<span style="font-size: medium;"><i><b>Palabras clave:</b> volatilidad, Bitcoin, Garch, valor en riesgo, rendimiento, Rstudio, econometría, criptomonedas, modelo estadístico.<span style="font-size: large;"> </span></i></span>
 </div>
 
 <div style="text-align: justify;">
@@ -558,7 +558,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </h3>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">El <a href="https://cran.r-project.org/web/packages/rmgarch/rmgarch.pdf" rel="nofollow" target="_blank">rmgarch</a> proporciona una selección de modelos GARCH multivariantes con métodos de ajuste, filtrado, pronóstico y simulación con funciones de soporte adicionales para trabajar con diferentes objetos. En la actualidad, el GARCH ortogonal generalizado utiliza el análisis de componentes independientes (ICA) y la correlación condicional dinámica (con multivariante Normal, Laplace y distribución T-Student) los modelos se implementan completamente con métodos para especificaciones, ajuste, filtro, pronóstico, simulación, estimaciones y pronósticos continuos, así como funciones especializadas para calcular y trabajar con la densidad condicional de la cartera ponderada. El modelo Copula-GARCH también se implementa con las distribuciones multivariadas normales y de T-Student con estimación dinámica (DCC) y  correlación estática.</span>
+<span style="font-size: large;">El <a href="https://cran.r-project.org/web/packages/rmgarch/rmgarch.pdf" rel="nofollow" target="_blank">rmgarch</a> proporciona una selección de modelos GARCH multivariantes con métodos de ajuste, filtrado, pronóstico y simulación con funciones de soporte adicionales para trabajar con diferentes objetos. En la actualidad, el GARCH ortogonal generalizado utiliza el análisis de componentes independientes (ICA) y con la correlación condicional dinámica (multivariante Normal, Laplace y distribución T-Student) los modelos se implementan completamente con métodos para especificaciones en simulaciones, estimaciones y pronósticos continuos, así como funciones especializadas para calcular y trabajar con la densidad condicional de la cartera ponderada. El modelo Copula-GARCH también se implementa con las distribuciones multivariadas normales y de T-Student para estimación dinámica (DCC) y  correlación estática.</span>
 </div>
 <br><br>
 <div class="separator" style="clear: both; text-align: center;">
@@ -566,11 +566,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <br><br>
 <div>
 <h2 style="text-align: center;">
-<span style="font-size: x-large;"><a name="especificacion">1. Especificación de los modelos Garch</a> </span><span style="font-size: small;">[<a href="https://www.cepal.org/sites/default/files/events/files/cc_11.2011.horario.catalan.modelosarch.esp_.pdf" rel="nofollow" target="_blank">1</a>]</span>
+<span style="font-size: x-large;"><a name="especificacion">1. Especificación de los modelos Garch (restricciones)</a> </span><span style="font-size: small;">[<a href="https://www.cepal.org/sites/default/files/events/files/cc_11.2011.horario.catalan.modelosarch.esp_.pdf" rel="nofollow" target="_blank">1</a>]</span>
 </h2>
 <ul>
 <li style="text-align: left;">
-<span style="font-size: large;">Forward looking behaviour, requiere pronosticar adecuadamente la volatilidad y el riesgo de un activo.</span>
+<span style="font-size: large;">Forward looking behaviour, se requiere pronosticar adecuadamente la volatilidad y el riesgo de un activo.</span>
 </li>
 <li style="text-align: left;">
 <span style="font-size: large;">La volatilidad no es una serie observable en el momento t, se requieren datos históricos para estimar la volatilidad.</span>
@@ -583,7 +583,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div>
 <span style="font-size: large;">Una opción: Exponantially Weigted Moving Average Models (EWMA) que es una extensión del promedio histórico pero haciendo que las observaciones más recientes tengan un mayor peso:</span><br /> <span style="font-size: large;"><span class="math display">\[ \alpha _{t}^{2}=(1-\lambda)\sum_{j=0}^{\infty}\lambda_{j-1}R_{t-1-j}^{2}\]</span> </span><br /> <span style="font-size: large;"><span class="math inline">\(R_{t-1-j}^{2}\)</span> Varianza de los rendimientos </span><br /> <span style="font-size: large;"><span class="math inline">\(\lambda\)</span>=“decay factor”</span><br /> <span style="font-size: large;"><br /></span> <span style="font-size: large;">La forma más sencilla es definida como:</span><br /> <span style="font-size: large;"><span class="math inline">\(\sigma_{t+1}^{2}=\lambda\sigma_{t}^{2}+(1- \lambda)R_{t}^{2}\)</span></span><br /> <span style="font-size: large;"><br /></span>
 <div style="text-align: justify;">
-<span style="font-size: large;">Implica que la varianza del periodo siguiente como un promedio ponderado de la varianza actual y el rendimiento actual al cuadrado.</span>
+<span style="font-size: large;">Implica que la varianza del periodo siguiente será un promedio ponderado de la varianza  y el rendimiento actual al cuadrado.</span>
 </div>
 <br /><span style="font-size: large;">Se asume un patrón sistemático en la evolución de la varianza.</span>
 </div>
@@ -617,7 +617,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="egarch">1.1 Modelo EGARCH(p,q) </a></span><span style="font-size: small;">[<a href="http://www.scielo.org.bo/scielo.php?script=sci_arttext&amp;pid=S2518-44312017000200003" rel="nofollow" target="_blank">2</a>]</span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">En 1990, Pagan y Schwert (1990), y al año siguiente en 1991 Nelson (1991), desarrollaron una versión nueva del modelo GARCH, el EGARCH (modelo exponencial generalizado, auto-regresivo, condicionalmente heterocedástico).El nuevo modelo acaba con las asimetrías en la estimación del efecto de los shocks, al implementar una función 𝑔(𝜀𝑡 ) de las innovaciones 𝜀𝑡,que son variables igual e independientemente distribuidas de media cero, y en las que por tanto el valor de las innovaciones queda recogido por medio de la expresión:</span>
+<span style="font-size: large;">En 1990, Pagan y Schwert (1990), y al año siguiente en 1991 Nelson (1991), desarrollaron una versión nueva del modelo GARCH, el EGARCH (modelo exponencial generalizado, auto-regresivo, condicionalmente heterocedástico).El nuevo modelo acaba con las asimetrías en la estimación por el efecto de los shocks, al implementar una función 𝑔(𝜀𝑡 ) de las innovaciones 𝜀𝑡,que son variables igual e independientemente distribuidas de media cero, y en las que por tanto el valor de las innovaciones queda recogido por medio de la expresión:</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><span class="math display">\[\ln \sigma_{t}^{2}= \omega + \beta (\sigma_{t-1}^{2})+ \gamma \frac{u_{t-1} }{\sqrt{ \sigma_{t-1} }}+ \alpha \left [ \frac{\left|u_{t-1}\right|}{\sqrt{\sigma_{t-1} }}- \sqrt{ \frac{2}{\sqrt{ \pi }} }\right]\]</span></span>
@@ -633,7 +633,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="gjrgarch">1.2 El modelo gjrGARCH</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">El modelo gjrGARCH propuesto por Glosten, Jagannathan y Runkle, es una simple extensión de GARCH con un término adicional añadido para dar cuenta de posibles asimetrías. La variación condicional viene dada por la ecuación:</span>
+<span style="font-size: large;">El modelo gjrGARCH propuesto por Glosten, Jagannathan y Runkle, es una simple extensión del GARCH con un término adicional añadido para dar cuenta de posibles asimetrías. La variación condicional viene dada por la ecuación:</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><span class="math display">\[\sigma_{t}^{2}=\alpha_{0}+\alpha_{1}u_{t-1}^{2}+\beta\sigma_{t-1}^{2}+\gamma u_{t-1}^{2}I_{t-1}\]</span></span>
@@ -648,7 +648,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="tgarch">1.3 Modelo TGARCH(p,q)</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">La idea del modelo TGARCH (Treshold GARCH) es dividir la distribución de los shocks en intervalos disjuntos, para luego aproximar una función lineal por tramos bien para la desviación estándar condicional (Zakoian, 1994), bien la varianza condicional (Glosten, Jaganathan, &amp; Runkle , 1993). Si sólo hay dos intervalos, la división es normalmente en un umbral identificado con el número cero, donde la influencia de los shocks positivos se identifica con valores por encima de cero y negativos por debajo de este valor.</span>
+<span style="font-size: large;">La idea del modelo TGARCH (Treshold GARCH) es dividir la distribución de los shocks en intervalos disjuntos, para luego aproximar una función lineal por tramos para la desviación estándar condicional (Zakoian, 1994) o la varianza condicional (Glosten, Jaganathan, &amp; Runkle , 1993). Si sólo hay dos intervalos, la división es normalmente en un umbral identificado con el número cero, donde la influencia de los shocks positivos se identifican con valores por encima de cero y negativos por debajo de ese valor.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -673,7 +673,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="suposiciones">2. Suposiciones de distribución del término de error</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">En la especificación del modelo GARCH, es más apropiado considerar la elección en el supuesto de distribución del término de error. Este ejercicio asumió tres supuestos de distribución; La distribución normal (NORM), la distribución de Student-t (STD) y la Distribución de errores generalizados (GED) para tener en cuenta las colas gruesas que son comunes en la mayoría de los datos financieros.</span>
+<span style="font-size: large;">En la especificación del modelo GARCH, es más apropiado considerar la elección sobre el supuesto de distribución del término de error. Este ejercicio asumió tres supuestos de distribución estadística; La distribución normal (NORM), la distribución de Student-t (STD) y la distribución de errores generalizados (GED) para tener en cuenta las colas gruesas que son comunes en la mayoría de los datos financieros.</span>
 </div>
 <div>
 <h3>
@@ -734,7 +734,7 @@ El uso del GED para tener en cuenta las colas gruesas observadas comúnmente en 
 </h3>
 <span style="font-size: large;">
 <div style="text-align: justify;">
-Se utilizará el criterio de información para la selección del modelo en este ejercicio estudio. El Criterio de información de Akaike (AIC) se define como las ecuación siguiente: <span class="math display">\[AIC= \ln\left (   \sigma^2 \right )+\frac{2k}{s}\]</span>
+Se utilizará el criterio de información para la selección del modelo en este ejercicio. El Criterio de información de Akaike (AIC) se define como las ecuación siguiente: <span class="math display">\[AIC= \ln\left (   \sigma^2 \right )+\frac{2k}{s}\]</span>
 </div>
 <div style="text-align: justify;">
 <br />
@@ -1069,7 +1069,7 @@ El mejor modelo es el que tiene menor valor de AIC.
 <span style="font-size: large;"><a href="https://www.blogger.com/null" name="la">7. Prueba efecto ARCH LM</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Además, la prueba ponderada ARCH LM indica que no hay efecto ARCH en los modelos. Estas pruebas sugieren que el modelo eGarch mejor ajustado es suficiente para corregir la correlación en serie de las series de retorno en la ecuación de varianza condicional</span>.
+<span style="font-size: large;">La prueba ponderada ARCH LM indica que no hay efecto ARCH en los modelos. Estas pruebas sugieren que el modelo eGarch mejor ajustado es suficiente para corregir la correlación en serie de las series de retorno en la ecuación de varianza condicional</span>.
 </div>
 <div>
 <span style="font-size: large;"> </span>
@@ -1085,17 +1085,17 @@ El mejor modelo es el que tiene menor valor de AIC.
 ## please wait...calculating quantiles...</code></pre>
 <img src="Proyecto2_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 <h2>
-<span style="font-size: x-large;"> <a name="var">8. Valor el Riesgo VaR</a></span>
+<span style="font-size: x-large;"> <a name="var">8. Valor en Riesgo VaR</a></span>
 </h2>
 <div style="text-align: justify;">
 <span style="font-weight: normal;"><span style="font-size: large;">Para validar el rendimiento del modelo eGARCH mejor ajustado, es útil realizar una prueba de respaldo histórica para comparar el Valor en riesgo estimado (VaR) con el rendimiento real durante el período de estudio. Si el retorno es menor que el VaR en la mayoría de los casos, tenemos un exceso de VaR. En este ejercicio, se establece una superación de VaR solo en el 1% de los casos, por lo tanto, las pruebas se evalúan en el nivel de significancia del 1%. El período de inicio de la prueba retrospectiva se establece 500 días después del comienzo de la serie (finales 2015). Además, los parámetros eGARCH se actualizan posteriormente en todo el conjunto de datos utilizando la estimación de la ventana móvil en lugar de mantenerse constante en el tiempo. Esto se hace para lograr flexibilidad en los parámetros.</span></span>
 </div>
 <h2>
-<span style="font-size: large;">Retornos del Bitcoins con límites de VaR del 1%</span>
+<span style="font-size: large;">Retornos del Bitcoins con límites del VaR al 1%</span>
 </h2>
 <span style="font-size: large;">
 <div style="text-align: justify;">
-Las estimaciones de VaR producidas por el modelo de volatilidad son evaluadas por la prueba de cobertura incondicional de Kupiec y la prueba de independencia de Christoffersen. 
+Las estimaciones del VaR producidas por el modelo de volatilidad son evaluadas por la prueba de cobertura incondicional de Kupiec y la prueba de independencia de Christoffersen. 
 </div>
 <div style="text-align: justify;">
 <br />
@@ -1113,7 +1113,7 @@ Los retornos de los datos alcanzan el 1% Var (Rojo) 9 veces en comparación con 
 <br />
 </div>
 <div style="text-align: justify;">
-Se ha sobreestimado el riesgo de perder dinero
+En el modelo se ha sobreestimado el riesgo de perder dinero.
 </div>
 </span>
 <h3 style="text-align: center;">
@@ -1126,12 +1126,12 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
 </span>
 <ul>
 <li style="text-align: justify;">
-<span style="font-size: large;">Si la cobertura ≫ α: demasiadas superaciones: el cuantil pronosticado debería ser Más negativo. Se ha subestimado el riesgo de perder dinero </span>
+<span style="font-size: large;">Si la cobertura ≫ α: tiene demasiadas superaciones: el cuantil pronosticado debería ser más negativo. En este caso se ha subestimado el riesgo de perder dinero. </span>
 </li>
 </ul>
 <ul>
 <li style="text-align: justify;">
-<span style="font-size: large;">Si la cobertura ≪ α: muy pocas superaciones, el cuantil pronosticado también fue negativo. Se ha sobreestimado el riesgo de perder dinero.</span>
+<span style="font-size: large;">Si la cobertura ≪ α: tiene muy pocas superaciones, el cuantil pronosticado también fue negativo. En este caso se ha sobreestimado el riesgo de perder dinero.</span>
 </li>
 </ul>
 <div style="text-align: center;">
@@ -1204,7 +1204,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
 <span style="font-size: large;">1er Método</span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">El comando n.ahead indica cuántos períodos pronosticar por delante. Si es más de 1 período, los datos anteriores ya no son suficientes y el método utiliza el valor de pronóstico del pronóstico; da un paso adelante para calcular el pronóstico de dos pasos adelante. Los pronósticos para la volatilidad están dados por sigma y el 1% de VaR resultado (al lado)  para cada período. Ejem: Para el  período T+1 la volatilidad esperada es 0.001261 y el VaR del 1% es 0.04461.</span>
+<span style="font-size: large;">El comando n.ahead indica cuántos períodos se requieren pronosticar. Si es más de 1 período, los datos anteriores ya no son suficientes y el método utiliza el valor de pronóstico del pronóstico; da un paso adelante para calcular el pronóstico de dos períodos. Los pronósticos para la volatilidad están dados por sigma y el 1% de VaR se aplica a cada período. Ejem: Para el  período T+1 la volatilidad esperada es 0.001261 y el VaR del 1% es 0.04461.</span>
 </div>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">forecast1&lt;-<span class="kw">ugarchforecast</span>(garch.fit,<span class="dt">n.ahead =</span> <span class="dv">3</span>) </a>
 <a class="sourceLine" id="cb23-2" title="2">forecast1</a></code></pre></div>
@@ -1230,7 +1230,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
 <span style="font-size: large;">2do Método</span>
 </h2>
 <div style="text-align: justify;">
-<span style="font-size: large;">Con el método forecast rolling se pueden hacer pronósticos manipulando los períodos de la serie dentro del histórico y seleccionando los datos que se dejan por fuera y así tener otro método de pronósticos. Forecast rolling n.roll nos da el número de pronósticos n-ahead. Entonces, desliza la ventana por una observación y hace el siguiente pronóstico n-ahead. Out.sample se usa para definir las observaciones que deben excluirse en el procedimiento de estimación para realizar pronósticos fuera de la muestra después.</span>
+<span style="font-size: large;">Con el método forecast rolling se pueden hacer pronósticos manipulando los períodos de la serie dentro del histórico y seleccionando los datos que se dejan por fuera y así tener otro método de pronósticos. Forecast rolling n.roll nos da el número de pronósticos n-ahead. Entonces, desliza la ventana sobre el histórico y hace el siguiente pronóstico n-ahead. Out.sample se usa para definir las observaciones que deben excluirse en el procedimiento de estimación para realizar pronósticos fuera de la muestra.</span>
 </div>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">modelfit=<span class="kw">ugarchfit</span>(garch112e2.<span class="dv">2</span>.<span class="fl">2.</span>spec,<span class="dt">data=</span>model, <span class="dt">solver=</span><span class="st">&quot;hybrid&quot;</span>, <span class="dt">out.sample=</span><span class="dv">20</span>)</a>
 <a class="sourceLine" id="cb27-2" title="2">modelforecast&lt;-<span class="kw">ugarchforecast</span>(modelfit, <span class="dt">data =</span> <span class="ot">NULL</span>, <span class="dt">n.ahead =</span> <span class="dv">30</span>, <span class="dt">n.roll =</span> <span class="dv">20</span>, <span class="dt">external.forecasts =</span> <span class="kw">list</span>(<span class="dt">mregfor =</span> <span class="ot">NULL</span>, <span class="dt">vregfor =</span> <span class="ot">NULL</span>))</a>
@@ -1309,7 +1309,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
 <span style="font-size: large;">3er Método</span>
 </h2>
 <div style="text-align: justify;">
-<span style="font-size: large;">Existen dos fuentes principales de incertidumbre sobre el pronóstico anticipado de los modelos Garch, a saber, el que surge de la forma de la densidad predictiva y debido a la estimación de parámetros. El método <a href="https://rdrr.io/cran/rugarch/man/ugarchboot-methods.html" rel="nofollow" target="_blank">bootstrap</a> se basa en innovaciones de muestreo de la distribución empírica del modelo Garch ajustado para generar realizaciones futuras de la serie y sigma. El método “parcial”, solo considera la incertidumbre de distribución y, aunque es más rápido, no generará intervalos de predicción para el pronóstico sigma 1 adelantado para el cual solo la incertidumbre del parámetro es relevante en los modelos de tipo Garch.</span>
+<span style="font-size: large;">Existen dos fuentes principales de incertidumbre sobre el pronóstico anticipado de los modelos Garch, el que surge de la forma de la densidad predictiva y el otro debido a la estimación de parámetros. El método <a href="https://rdrr.io/cran/rugarch/man/ugarchboot-methods.html" rel="nofollow" target="_blank">bootstrap</a> se basa en innovaciones de muestreo de la distribución empírica del modelo Garch ajustado para generar estimaciones futuras de la serie y del valor sigma. El método “parcial”, solo considera la incertidumbre de distribución y, aunque es más rápido, no generará intervalos de predicción para el pronóstico de sigma (1) para el cual solo la incertidumbre del parámetro es relevante en los modelos de tipo Garch.</span>
 </div>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">bootp=<span class="kw">ugarchboot</span>(garch.fit,<span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;Partial&quot;</span>,<span class="st">&quot;Full&quot;</span>)[<span class="dv">1</span>],<span class="dt">n.ahead =</span> <span class="dv">12</span>,<span class="dt">n.bootpred=</span><span class="dv">1000</span>,<span class="dt">n.bootfit=</span><span class="dv">1000</span>)</a>
 <a class="sourceLine" id="cb35-2" title="2">bootp</a></code></pre></div>
