@@ -60,6 +60,12 @@ p { font-size:16px; text-align : justify; line-height: 1.8; margin-bottom: 20px;
 pre.sourceCode { display: block !important; visibility: visible !important; opacity: 1 !important; background-color: #1e1e1e !important; color: #d4d4d4 !important; padding: 20px !important; border-radius: 8px !important; overflow-x: auto !important; font-family: Consolas, "Courier New", monospace !important; font-size: 14px !important; line-height: 1.6 !important; border: 1px solid #333 !important; margin-bottom: 30px !important; }
 .sourceCode code { white-space: pre; display: block; }
 code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce9178; } code span.co { color: #6a9955; font-style: italic; } code span.fu { color: #dcdcaa; }
+
+/* BOTONERA DE REDES SOCIALES (Centrada y con correo) */
+#share { width: 100%; margin: 15px auto; text-align: center; display: flex; justify-content: center; gap: 15px; }
+#share a { display: flex !important; align-items: center !important; justify-content: center !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; font-size: 20px !important; color: #fff !important; text-decoration: none !important; opacity: 0.85; transition: all 0.2s ease-in-out; }
+#share a:hover { opacity: 1; transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.facebook { background: #3b5998 !important; } .twitter { background: #55acee !important; } .linkedin { background: #0077b5 !important; } .mail { background: #dd4b39 !important; }
 </style>
 </head>
 
@@ -188,7 +194,7 @@ modelo_rf.fit(X, y)
 
 <br>
 <h3 id="P4">4. Backtesting 5 Años: Bot vs Buy & Hold</h3>
-<p>Las matemáticas no mienten. Vamos a reproducir los últimos 1825 días de operativa partiendo de un capital base de $10,000 USD. Las animaciones asíncronas han sido ralentizadas ópticamente para facilitar el análisis del trazo.</p>
+<p>Las matemáticas no mienten. Vamos a reproducir los últimos 1825 días de operativa partiendo de un capital base de $10,000 USD. Las animaciones asíncronas han sido ralentizadas ópticamente para facilitar el análisis de cómo las estrategias operan el mercado con el tiempo.</p>
 
 <button id="btn-p1" class="btn-quant" onclick="playEq('chart-eq-p1', 'btn-p1', cHold, cP1)">▶ SIMULAR P1</button>
 <div id="chart-eq-p1" class="plotly-container plotly-med"></div>
@@ -228,6 +234,18 @@ modelo_rf.fit(X, y)
 
 <br>
 <hr />
+
+<div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+  <span style="font-size: 16px; font-weight: bold; color: #333; display: block; margin-bottom: 10px;">Puedes compartir este material:</span>
+  <div id="share">
+    <a class="facebook" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fa fa-facebook"></i></a>
+    <a class="twitter" href="#" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fa fa-twitter"></i></a>
+    <a class="linkedin" href="#" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fa fa-linkedin"></i></a>
+    <a class="mail" href="mailto:?subject=Masterclass%20Quant:%20Robot%20Algorítmico&body=Revisa%20este%20post:%20" onclick="this.href += encodeURIComponent(window.location.href);" ><i class="fa fa-envelope"></i></a>
+  </div>
+</div>
+<hr />
+
 </div> <div class="container-fluid main-container">
 <h3 class="text-center" style="margin-top: 20px; margin-bottom: 30px; font-weight: bold; color: #1a252f;">Otros Artículos Recomendados</h3>
 <div id="postsCarousel" class="carousel slide" data-ride="carousel" style="background: #fdfdfd; padding: 25px; border-radius: 8px; border: 1px solid #e3e3e3; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 50px;">
@@ -317,7 +335,7 @@ modelo_rf.fit(X, y)
   let cHold=[10000], cP1=[10000], cP2=[10000], cP3=[10000];
   let ddH=[0], ddP1=[0], ddP2=[0], ddP3=[0];
   let mH=10000, mP1=10000, mP2=10000, mP3=10000;
-  let sigBx=[], sigBy=[], sigSx=[], sigSy[];
+  let sigBx=[], sigBy=[], sigSx=[], sigSy=[];
 
   let currentBtc = 35000;
   for(let i=0; i<dias; i++) {
@@ -358,7 +376,7 @@ modelo_rf.fit(X, y)
   };
 
   // ----------------------------------------------------
-  // G1: BAR CHART RACE
+  // G1: BAR CHART RACE CORREGIDO
   // ----------------------------------------------------
   let raceFramesData = [];
   let dRace = new Date(2021, 4, 30);
@@ -402,7 +420,7 @@ modelo_rf.fit(X, y)
   Plotly.newPlot('chart-frontier', [{ x: efX, y: efY, mode: 'markers', type: 'scatter', marker: {color: efY, colorscale: 'Portland', size: 6}, name: 'Simulaciones' }, { x: [0.15, 0.34, 0.49], y: [0.19, 0.43, 0.57], mode: 'markers+text', text: ['P1', 'P2', 'P3(IA)'], textposition: 'top center', marker: {color: '#00ff00', size: 14, symbol:'star'}, name: 'Óptimos'}], lFront, {responsive:true});
 
   // ----------------------------------------------------
-  // G4, G5, G6: EQUIDAD RALENTIZADA ELEGANTEMENTE (140ms)
+  // G4, G5, G6: EQUIDAD RALENTIZADA ELEGANTEMENTE (220ms)
   // ----------------------------------------------------
   function initStaticEq(divId, title, colorHex, eqP) {
       let l = JSON.parse(JSON.stringify(layoutBase)); l.title = {text: title, font: {color: colorHex, size:18}};
@@ -434,7 +452,7 @@ modelo_rf.fit(X, y)
               y: [framesY1[fIdx], framesY2[fIdx]]
           });
           fIdx++;
-          if (fIdx < framesX1.length) { setTimeout(renderNext, 140); } else { btn.disabled = false; }
+          if (fIdx < framesX1.length) { setTimeout(renderNext, 220); } else { btn.disabled = false; }
       }
       renderNext();
   }
@@ -442,41 +460,44 @@ modelo_rf.fit(X, y)
   // ----------------------------------------------------
   // G7: EVOLUCIÓN RIESGO VS RETORNO (BURBUJAS COMPLETAS Y MUY LENTO)
   // ----------------------------------------------------
-  let lRR = JSON.parse(JSON.stringify(layoutBase)); lRR.title = {text:'Evolución Riesgo vs Retorno', font:{color:'#ff00ff', size:18}};
-  lRR.xaxis.title = 'Riesgo (Drawdown)'; lRR.yaxis.title = 'Capital ($)';
+  let lRR = JSON.parse(JSON.stringify(layoutBase)); 
+  lRR.title = {text:'Evolución Riesgo vs Retorno', font:{color:'#ff00ff', size:18}};
+  lRR.xaxis.title = 'Riesgo (Máx Drawdown %)'; lRR.yaxis.title = 'Capital ($)';
   
   // MARGENES EXPANSORES EXCLUSIVOS: Evitan que cualquier burbuja se recorte
-  lRR.xaxis.range = [-0.15, 0.95]; 
-  lRR.yaxis.range = [2000, mP3 * 1.25];
+  lRR.xaxis.range = [-5, 85]; 
+  lRR.yaxis.range = [1000, mP3 * 1.25];
   
   Plotly.newPlot('chart-risk-return', [{ 
-      x: [Math.abs(ddH[0]/100), Math.abs(ddP1[0]/100), Math.abs(ddP3[0]/100)], 
+      x: [Math.abs(ddH[0]), Math.abs(ddP1[0]), Math.abs(ddP3[0])], 
       y: [cHold[0], cP1[0], cP3[0]], 
       mode: 'markers+text', 
       text: ['Hold', 'P1', 'IA'], 
       textposition: 'top center', 
-      marker: {size: [24, 24, 34], color: ['#888', '#00f3ff', '#00ff00'], cliponaxis: false}, 
+      marker: {size: [24, 24, 34], color: ['#888', '#00f3ff', '#00ff00']}, 
       type: 'scatter' 
   }], lRR, {responsive:true});
 
   function playRiskReturn() {
       let btn = document.getElementById('btn-rr'); btn.disabled = true;
-      let framesX = [], framesY = [];
-      for (let m = 1; m <= 60; m++) {
-          let idx = m * 30; if (idx >= dias) idx = dias - 1;
-          framesX.push([Math.abs(ddH[idx]/100), Math.abs(ddP1[idx]/100), Math.abs(ddP3[idx]/100)]);
-          framesY.push([cHold[idx], cP1[idx], cP3[idx]]);
-      }
-      let fIdx = 0;
+      let m = 1;
       function renderNext() {
-          Plotly.update('chart-risk-return', { 
-              x: [framesX[fIdx]], 
-              y: [framesY[fIdx]],
-              'marker.cliponaxis': false // Garantiza renderizado por encima de las grillas
-          });
-          fIdx++; 
+          let idx = m * 30; if (idx >= dias) idx = dias - 1;
+          let currentLayout = JSON.parse(JSON.stringify(lRR));
+          
+          Plotly.react('chart-risk-return', [{ 
+              x: [Math.abs(ddH[idx]), Math.abs(ddP1[idx]), Math.abs(ddP3[idx])], 
+              y: [cHold[idx], cP1[idx], cP3[idx]], 
+              mode: 'markers+text', 
+              text: ['Hold', 'P1', 'IA'], 
+              textposition: 'top center', 
+              marker: {size: [24, 24, 34], color: ['#888', '#00f3ff', '#00ff00']}, 
+              type: 'scatter' 
+          }], currentLayout);
+          
+          m++; 
           // 450ms de retardo permite auditar perfectamente las esferas de rendimiento
-          if (fIdx < framesX.length) { setTimeout(renderNext, 450); } else { btn.disabled = false; }
+          if (m <= 60) { setTimeout(renderNext, 450); } else { btn.disabled = false; }
       }
       renderNext();
   }
