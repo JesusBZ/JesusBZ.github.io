@@ -151,18 +151,39 @@ code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce917
 <span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
 <span class="kw">import</span> ccxt
 
-<span class="co"># Conexión Exchange y Extracción de 5 años</span>
+<span class="co"># 1. ENTORNO ALGORÍTMICO Y EXTRACCIÓN HISTÓRICA (5 AÑOS)</span>
 exchange = ccxt.binance({<span class="st">'enableRateLimit'</span>: <span class="kw">True</span>})
-df = pd.DataFrame(exchange.fetch_ohlcv(<span class="st">'BTC/USDT'</span>, <span class="st">'1d'</span>, limit=<span class="dv">1825</span>), 
-                  columns=[<span class="st">'timestamp'</span>, <span class="st">'open'</span>, <span class="st">'high'</span>, <span class="st">'low'</span>, <span class="st">'close'</span>, <span class="st">'volume'</span>])
+raw_data = exchange.fetch_ohlcv(<span class="st">'BTC/USDT'</span>, <span class="st">'1d'</span>, limit=<span class="dv">1825</span>)
+df = pd.DataFrame(raw_data, columns=[<span class="st">'timestamp'</span>, <span class="st">'open'</span>, <span class="st">'high'</span>, <span class="st">'low'</span>, <span class="st">'close'</span>, <span class="st">'volume'</span>])
+df[<span class="st">'fecha'</span>] = pd.to_datetime(df[<span class="st">'timestamp'</span>], unit=<span class="st">'ms'</span>)
 
-<span class="co"># Entrenamiento del Modelo Quant</span>
+<span class="co"># 2. VECTORIZACIÓN DE ESTRATEGIAS CUANTITATIVAS</span>
+<span class="co"># Portafolio 1: Reversión a la Media (Bollinger Bands)</span>
+df[<span class="st">'MA_20'</span>] = df[<span class="st">'close'</span>].rolling(window=<span class="dv">20</span>).mean()
+df[<span class="st">'STD_20'</span>] = df[<span class="st">'close'</span>].rolling(window=<span class="dv">20</span>).std()
+df[<span class="st">'Z_Score'</span>] = (df[<span class="st">'close'</span>] - df[<span class="st">'MA_20'</span>]) / df[<span class="st">'STD_20'</span>]
+df[<span class="st">'Señal_P1'</span>] = np.where(df[<span class="st">'Z_Score'</span>] < -<span class="dv">2</span>, <span class="dv">1</span>, np.where(df[<span class="st">'Z_Score'</span>] > <span class="dv">2</span>, -<span class="dv">1</span>, <span class="dv">0</span>))
+
+<span class="co"># Portafolio 2: Trend Following (EMA Crossover)</span>
+df[<span class="st">'EMA_Rápida'</span>] = df[<span class="st">'close'</span>].ewm(span=<span class="dv">10</span>, adjust=<span class="kw">False</span>).mean()
+df[<span class="st">'EMA_Lenta'</span>] = df[<span class="st">'close'</span>].ewm(span=<span class="dv">30</span>, adjust=<span class="kw">False</span>).mean()
+df[<span class="st">'Señal_P2'</span>] = np.where(df[<span class="st">'EMA_Rápida'</span>] > df[<span class="st">'EMA_Lenta'</span>], <span class="dv">1</span>, -<span class="dv">1</span>)
+
+<span class="co"># 3. FEATURE ENGINEERING Y MODELADO GENERATIVO CON MACHINE LEARNING (P3)</span>
 df[<span class="st">'Retorno'</span>] = df[<span class="st">'close'</span>].pct_change()
-df[<span class="st">'Volatilidad'</span>] = df[<span class="st">'Retorno'</span>].rolling(<span class="dv">20</span>).std()
-df[<span class="st">'Target'</span>] = np.where(df[<span class="st">'Retorno'</span>].shift(-<span class="dv">1</span>) > <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)
+df[<span class="st">'Volatilidad_Log'</span>] = df[<span class="st">'Retorno'</span>].rolling(<span class="dv">20</span>).std() * np.sqrt(<span class="dv">365</span>)
+df[<span class="st">'RSI_14'</span>] = 100 - (100 / (1 + (df[<span class="st">'Retorno'</span>].clip(lower=<span class="dv">0</span>).rolling(14).mean() / 
+                                  df[<span class="st">'Retorno'</span>].clip(upper=<span class="dv">0</span>).abs().rolling(14).mean())))
 
-modelo_rf = RandomForestClassifier(n_estimators=<span class="dv">200</span>, max_depth=<span class="dv">5</span>, random_state=<span class="dv">42</span>)
-modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span>, <span class="st">'volume'</span>, <span class="st">'Volatilidad'</span>]].dropna(), df[<span class="st">'Target'</span>].dropna())
+<span class="co"># Definición de Target Binario Asimétrico</span>
+df[<span class="st">'Target'</span>] = np.where(df[<span class="st">'Retorno'</span>].shift(-<span class="dv">1</span>) > <span class="dv">0.005</span>, <span class="dv">1</span>, <span class="dv">0</span>)
+features = [<span class="st">'Z_Score'</span>, <span class="st">'Volatilidad_Log'</span>, <span class="st">'RSI_14'</span>]
+df_clean = df[features + [<span class="st">'Target'</span>]].dropna()
+
+<span class="co"># Entrenamiento Predictivo</span>
+X, y = df_clean[features], df_clean[<span class="st">'Target'</span>]
+modelo_rf = RandomForestClassifier(n_estimators=<span class="dv">250</span>, max_depth=<span class="dv">6</span>, random_state=<span class="dv">42</span>)
+modelo_rf.fit(X, y)
 </code></pre>
 
 <br>
@@ -208,19 +229,36 @@ modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span
 <br>
 <hr />
 </div> <div class="container-fluid main-container">
-<span style="font-size: medium;"><br /></span>
-<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
-</span></span></span><br />
-<br />
-
-<div style="text-align: center;">
-<div style="text-align: left;">
-<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+<h3 class="text-center" style="margin-top: 20px; margin-bottom: 30px; font-weight: bold; color: #1a252f;">Otros Artículos Recomendados</h3>
+<div id="postsCarousel" class="carousel slide" data-ride="carousel" style="background: #fdfdfd; padding: 25px; border-radius: 8px; border: 1px solid #e3e3e3; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 50px;">
+  <div class="carousel-inner">
+    <div class="item active">
+      <div style="text-align: center; padding: 10px 45px;">
+        <h4><a href="modelo-ventas.html" style="color: #1f8ab1; font-weight: bold; text-decoration: none;">Pronóstico de Ventas en RStudio</a></h4>
+        <p style="text-align: center; font-size: 14px; color: #555; margin-bottom: 0;">Modelado predictivo de series temporales utilizando arquitecturas ARIMA, SARIMA, ETS y TSLM con validación cruzada avanzada.</p>
+      </div>
+    </div>
+    <div class="item">
+      <div style="text-align: center; padding: 10px 45px;">
+        <h4><a href="index.html" style="color: #1f8ab1; font-weight: bold; text-decoration: none;">Business Intelligence y Control Presupuestario</a></h4>
+        <p style="text-align: center; font-size: 14px; color: #555; margin-bottom: 0;">Modelos analíticos dinámicos orientados al diseño de Dashboards financieros interactivos y optimización de recursos.</p>
+      </div>
+    </div>
+  </div>
+  <a class="left carousel-control" href="#postsCarousel" data-slide="prev" style="background: none; color: #1f8ab1; width: 5%;"><span class="glyphicon glyphicon-chevron-left"></span></a>
+  <a class="right carousel-control" href="#postsCarousel" data-slide="next" style="background: none; color: #1f8ab1; width: 5%;"><span class="glyphicon glyphicon-chevron-right"></span></a>
 </div>
 
-<div style="text-align: center;">
-<div style="text-align: left;">
-<br /></div>
+<div style="text-align: left; margin-top: 40px; margin-bottom: 30px;">
+  <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista</b><br />JesusZerpaEconomia@Gmail.Com</span>
+</div>
+
+<div style="text-align: left; margin-bottom: 50px;">
+  <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="float: left; margin-right: 15px;">
+    <img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" />
+  </a>
+  <span style="font-size: medium; display: block; line-height: 1.5;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
+  <div style="clear: both;"></div>
 </div>
 
 <div id="disqus_thread"></div>
@@ -279,7 +317,7 @@ modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span
   let cHold=[10000], cP1=[10000], cP2=[10000], cP3=[10000];
   let ddH=[0], ddP1=[0], ddP2=[0], ddP3=[0];
   let mH=10000, mP1=10000, mP2=10000, mP3=10000;
-  let sigBx=[], sigBy=[], sigSx=[], sigSy=[];
+  let sigBx=[], sigBy=[], sigSx=[], sigSy[];
 
   let currentBtc = 35000;
   for(let i=0; i<dias; i++) {
@@ -320,7 +358,7 @@ modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span
   };
 
   // ----------------------------------------------------
-  // G1: BAR CHART RACE CORREGIDO
+  // G1: BAR CHART RACE
   // ----------------------------------------------------
   let raceFramesData = [];
   let dRace = new Date(2021, 4, 30);
@@ -364,7 +402,7 @@ modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span
   Plotly.newPlot('chart-frontier', [{ x: efX, y: efY, mode: 'markers', type: 'scatter', marker: {color: efY, colorscale: 'Portland', size: 6}, name: 'Simulaciones' }, { x: [0.15, 0.34, 0.49], y: [0.19, 0.43, 0.57], mode: 'markers+text', text: ['P1', 'P2', 'P3(IA)'], textposition: 'top center', marker: {color: '#00ff00', size: 14, symbol:'star'}, name: 'Óptimos'}], lFront, {responsive:true});
 
   // ----------------------------------------------------
-  // G4, G5, G6: EXCELENTE VISIBILIDAD DE LÍNEAS Y CONTROL DE VELOCIDAD
+  // G4, G5, G6: EQUIDAD RALENTIZADA ELEGANTEMENTE (140ms)
   // ----------------------------------------------------
   function initStaticEq(divId, title, colorHex, eqP) {
       let l = JSON.parse(JSON.stringify(layoutBase)); l.title = {text: title, font: {color: colorHex, size:18}};
@@ -380,7 +418,7 @@ modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span
   function playEq(divId, btnId, eqH, eqP) {
       let btn = document.getElementById(btnId); btn.disabled = true;
       let framesX1 = [], framesY1 = [], framesX2 = [], framesY2 = [];
-      let step = 12; // Reducido drásticamente el salto para un avance suave y progresivo
+      let step = 12; 
       
       for (let i = 1; i < dias; i += step) {
           framesX1.push(fechas.slice(0, i)); framesY1.push(eqH.slice(0, i));
@@ -396,18 +434,30 @@ modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span
               y: [framesY1[fIdx], framesY2[fIdx]]
           });
           fIdx++;
-          // setTimeout de 90ms frena la simulación para que se aprecie perfectamente la comparativa
-          if (fIdx < framesX1.length) { setTimeout(renderNext, 90); } else { btn.disabled = false; }
+          if (fIdx < framesX1.length) { setTimeout(renderNext, 140); } else { btn.disabled = false; }
       }
       renderNext();
   }
 
   // ----------------------------------------------------
-  // G7: RIESGO VS RETORNO OPTIMIZADO ASÍNCRONO
+  // G7: EVOLUCIÓN RIESGO VS RETORNO (BURBUJAS COMPLETAS Y MUY LENTO)
   // ----------------------------------------------------
   let lRR = JSON.parse(JSON.stringify(layoutBase)); lRR.title = {text:'Evolución Riesgo vs Retorno', font:{color:'#ff00ff', size:18}};
-  lRR.xaxis.title = 'Riesgo (Drawdown)'; lRR.yaxis.title = 'Capital ($)'; lRR.xaxis.range=[0, 0.85]; lRR.yaxis.range=[5000, mP3 * 1.15];
-  Plotly.newPlot('chart-risk-return', [{ x: [Math.abs(ddH[0]/100), Math.abs(ddP1[0]/100), Math.abs(ddP3[0]/100)], y: [cHold[0], cP1[0], cP3[0]], mode: 'markers+text', text: ['Hold', 'P1', 'IA'], textposition: 'top center', marker: {size: [20, 20, 30], color: ['#888', '#00f3ff', '#00ff00']}, type: 'scatter' }], lRR, {responsive:true});
+  lRR.xaxis.title = 'Riesgo (Drawdown)'; lRR.yaxis.title = 'Capital ($)';
+  
+  // MARGENES EXPANSORES EXCLUSIVOS: Evitan que cualquier burbuja se recorte
+  lRR.xaxis.range = [-0.15, 0.95]; 
+  lRR.yaxis.range = [2000, mP3 * 1.25];
+  
+  Plotly.newPlot('chart-risk-return', [{ 
+      x: [Math.abs(ddH[0]/100), Math.abs(ddP1[0]/100), Math.abs(ddP3[0]/100)], 
+      y: [cHold[0], cP1[0], cP3[0]], 
+      mode: 'markers+text', 
+      text: ['Hold', 'P1', 'IA'], 
+      textposition: 'top center', 
+      marker: {size: [24, 24, 34], color: ['#888', '#00f3ff', '#00ff00'], cliponaxis: false}, 
+      type: 'scatter' 
+  }], lRR, {responsive:true});
 
   function playRiskReturn() {
       let btn = document.getElementById('btn-rr'); btn.disabled = true;
@@ -419,8 +469,14 @@ modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span
       }
       let fIdx = 0;
       function renderNext() {
-          Plotly.update('chart-risk-return', { x: [framesX[fIdx]], y: [framesY[fIdx]] });
-          fIdx++; if (fIdx < framesX.length) { setTimeout(renderNext, 110); } else { btn.disabled = false; }
+          Plotly.update('chart-risk-return', { 
+              x: [framesX[fIdx]], 
+              y: [framesY[fIdx]],
+              'marker.cliponaxis': false // Garantiza renderizado por encima de las grillas
+          });
+          fIdx++; 
+          // 450ms de retardo permite auditar perfectamente las esferas de rendimiento
+          if (fIdx < framesX.length) { setTimeout(renderNext, 450); } else { btn.disabled = false; }
       }
       renderNext();
   }
