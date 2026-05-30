@@ -1326,13 +1326,19 @@ ga('set', 'userId', 'USER_ID');
             }
         </script>
         <!-- /move top --> 
-         <!-- === INICIO DEL WIDGET DE CHAT === -->
-<!-- Fíjate que aquí cambié "bottom: 90px" para que no tape tu flecha -->
-<div id="jbz-chat-container" style="position: fixed; bottom: 90px; right: 20px; width: 350px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; z-index: 9999; display: flex; flex-direction: column;">
+        <!-- === INICIO DEL WIDGET DE CHAT === -->
+<!-- 1. Botón flotante circular para abrir el chat -->
+<div id="jbz-chat-toggle" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #0056b3; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 10000; transition: transform 0.3s;">
+  💬
+</div>
+
+<!-- 2. Ventana principal del chat (Oculta al inicio) -->
+<div id="jbz-chat-container" style="position: fixed; bottom: 90px; right: 20px; width: 350px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; z-index: 9999; display: none; flex-direction: column;">
   
-  <!-- Cabecera -->
-  <div style="background: #0056b3; color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 16px;">
-    Asistente Virtual - Jesús Zerpa
+  <!-- Cabecera con botón X para cerrar -->
+  <div style="background: #0056b3; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 16px;">
+    <span>Asistente Virtual - Jesús Zerpa</span>
+    <span id="jbz-close-chat" style="cursor: pointer; font-size: 24px; line-height: 1;">&times;</span>
   </div>
 
   <!-- Historial de mensajes -->
@@ -1342,63 +1348,80 @@ ga('set', 'userId', 'USER_ID');
     </div>
   </div>
 
-  <!-- Área de entrada -->
+  <!-- Área de entrada de texto y botón -->
   <div style="display: flex; padding: 10px; background: #fff; border-top: 1px solid #ddd;">
     <input type="text" id="jbz-user-input" placeholder="Pregunta sobre un proyecto..." style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
-    <button onclick="enviarMensaje()" id="jbz-send-btn" style="background: #0056b3; color: white; border: none; padding: 0 15px; margin-left: 8px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s;">Enviar</button>
+    <button id="jbz-send-btn" style="background: #0056b3; color: white; border: none; padding: 0 15px; margin-left: 8px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s;">Enviar</button>
   </div>
 </div>
 
 <script>
-  // === PON TU URL AQUÍ ABAJO ===
-  const vercelURL = ''https://gemini-backend-ecru.vercel.app/api/chat';
-
-  // Memoria del chat
+  // Tu URL de Vercel
+  const vercelURL = 'https://gemini-backend-ecru.vercel.app/api/chat';
   let chatHistory = [];
 
-  // Función para formatear el texto de Gemini (Negritas y saltos de línea)
+  // Variables de la interfaz
+  const chatToggleBtn = document.getElementById('jbz-chat-toggle');
+  const chatContainer = document.getElementById('jbz-chat-container');
+  const chatCloseBtn = document.getElementById('jbz-close-chat');
+  const sendBtn = document.getElementById('jbz-send-btn');
+  const userInput = document.getElementById('jbz-user-input');
+  const chatHistoryBox = document.getElementById('jbz-chat-history');
+
+  // Funciones para abrir y cerrar el chat
+  chatToggleBtn.addEventListener('click', () => {
+    chatContainer.style.display = 'flex';
+    chatToggleBtn.style.display = 'none'; // Oculta la burbuja cuando el chat está abierto
+  });
+
+  chatCloseBtn.addEventListener('click', () => {
+    chatContainer.style.display = 'none';
+    chatToggleBtn.style.display = 'flex'; // Muestra la burbuja de nuevo
+  });
+
+  // Función para dar formato (Negritas y saltos de línea)
   function formatearTexto(texto) {
-    return texto
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
-      .replace(/\n/g, '<br>'); 
+    return texto.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
   }
 
+  // Lógica principal para comunicarse con Vercel
   async function enviarMensaje() {
-    const inputEl = document.getElementById('jbz-user-input');
-    const message = inputEl.value.trim();
-    const chatBox = document.getElementById('jbz-chat-history');
-    const btn = document.getElementById('jbz-send-btn');
-
+    const message = userInput.value.trim();
     if (!message) return;
 
-    chatBox.innerHTML += `
+    // 1. Mostrar tu mensaje en pantalla
+    chatHistoryBox.innerHTML += `
       <div style="background: #0056b3; color: white; padding: 10px; border-radius: 8px; align-self: flex-end; max-width: 85%;">
         <strong>Tú:</strong> ${message}
       </div>`;
     
-    inputEl.value = '';
-    btn.disabled = true;
-    btn.style.background = '#ccc';
-    btn.innerText = '...';
-    chatBox.scrollTop = chatBox.scrollHeight;
+    // 2. Limpiar input y mostrar estado "Cargando"
+    userInput.value = '';
+    sendBtn.disabled = true;
+    sendBtn.style.background = '#ccc';
+    sendBtn.innerText = '...';
+    chatHistoryBox.scrollTop = chatHistoryBox.scrollHeight;
 
     try {
+      // 3. Enviar a Vercel
       const response = await fetch(vercelURL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: message, history: chatHistory })
       });
 
-      if (!response.ok) throw new Error('Error de servidor');
+      if (!response.ok) throw new Error('Error en el servidor');
 
       const data = await response.json();
       const botResponse = data.text;
 
-      chatBox.innerHTML += `
+      // 4. Mostrar respuesta del bot
+      chatHistoryBox.innerHTML += `
         <div style="background: #e9ecef; color: #333; padding: 10px; border-radius: 8px; align-self: flex-start; max-width: 85%;">
           <strong>Asistente:</strong> ${formatearTexto(botResponse)}
         </div>`;
 
+      // 5. Guardar en memoria
       chatHistory.push(
         { role: "user", parts: [{ text: message }] },
         { role: "model", parts: [{ text: botResponse }] }
@@ -1406,25 +1429,30 @@ ga('set', 'userId', 'USER_ID');
 
     } catch (error) {
       console.error("Error:", error);
-      chatBox.innerHTML += `
-        <div style="background: #ffebee; color: #c62828; padding: 10px; border-radius: 8px; align-self: center; font-size: 12px;">
-          Error de conexión. Intenta de nuevo más tarde.
+      chatHistoryBox.innerHTML += `
+        <div style="background: #ffebee; color: #c62828; padding: 10px; border-radius: 8px; align-self: center; font-size: 12px; margin-top: 5px;">
+          Ocurrió un error al conectar. ¿Probaste el código subiéndolo a GitHub? Recuerda que por seguridad bloqueamos la ejecución local.
         </div>`;
     } finally {
-      btn.disabled = false;
-      btn.style.background = '#0056b3';
-      btn.innerText = 'Enviar';
-      chatBox.scrollTop = chatBox.scrollHeight;
+      // 6. Restaurar botón
+      sendBtn.disabled = false;
+      sendBtn.style.background = '#0056b3';
+      sendBtn.innerText = 'Enviar';
+      chatHistoryBox.scrollTop = chatHistoryBox.scrollHeight;
     }
   }
 
-  document.getElementById("jbz-user-input").addEventListener("keypress", function(event) {
+  // Activar botón de enviar al hacer clic
+  sendBtn.addEventListener("click", enviarMensaje);
+
+  // Activar envío al presionar la tecla Enter
+  userInput.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
       event.preventDefault();
       enviarMensaje();
     }
   });
 </script>
-<!-- === FIN DEL WIDGET DE CHAT === --> 
+<!-- === FIN DEL WIDGET DE CHAT === -->
 </body>
 </html>
