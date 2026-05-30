@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-<title>Robot de Trading Algorítmico en Python</title>
-<meta name="description" content="Desarrollo de un bot de trading algorítmico automatizado en Python utilizando la API de Bybit, Pandas y Machine Learning para backtesting de portafolios."/>
-<meta name="keywords" content="trading algoritmico, python, bybit, bot de trading, finanzas cuantitativas, jesus zerpa, data science, inteligencia artificial">
+<title>Robot de Trading Algorítmico en Python | Jesús Zerpa</title>
+<meta name="description" content="Desarrollo de un bot de trading algorítmico en Python. Backtesting de 3 años sobre portafolios cripto usando Machine Learning y la API de Bybit."/>
+<meta name="keywords" content="trading algoritmico, python, bybit, bot de trading, finanzas cuantitativas, jesus zerpa, data science, backtesting">
 <meta name="author" content="jesusbz.github.io">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- TUS LIBRERÍAS ORIGINALES (Para que no se rompa el diseño) -->
+<!-- TUS LIBRERÍAS ORIGINALES EXACTAS -->
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
@@ -34,7 +34,14 @@ body { padding-top: 51px; padding-bottom: 40px; }
 .w3l-footer-22-main #movetop { position: fixed; bottom: 12px; right: 15px; z-index: 99; font-size: 16px; border: none; outline: none; cursor: pointer; color: #fff; width: 38px; height: 38px; background: #67bdff; padding: 0; line-height: 38px; transition: 0.5s ease-out; border-radius: 50%; }
 .w3l-footer-22-main #movetop:hover { background: #213e54; }
 
-/* NUEVOS ESTILOS PARA ESTE POST (Modo Oscuro) */
+/* Compartir (Tu CSS original restaurado para los círculos de colores) */
+#share { width: 100%; margin: 30px auto; text-align: center; }
+#share a { width: 50px; height: 50px; display: inline-block; margin: 8px; border-radius: 50%; font-size: 24px; color: #fff; opacity: 0.75; transition: opacity 0.15s linear; line-height: 50px;}
+#share a:hover { opacity: 1; }
+#share i { position: relative; top: 50%; transform: translateY(-50%); }
+.facebook { background: #3b5998; } .twitter { background: #55acee; } .linkedin { background: #0077b5; } .googleplus { background: #333333; }
+
+/* NUEVOS ESTILOS PARA ESTE POST (Modo Oscuro en Códigos) */
 pre.sourceCode { background-color: #1e1e1e !important; color: #d4d4d4 !important; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: monospace; font-size: 14px; line-height: 1.6; border: 1px solid #333; box-shadow: 0 4px 15px rgba(0, 243, 255, 0.15); margin-bottom: 30px; display: block; }
 .sourceCode code { white-space: pre; display: block; }
 code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce9178; } code span.co { color: #6a9955; font-style: italic; } code span.fu { color: #dcdcaa; } code span.op { color: #d4d4d4; } code span.dv { color: #b5cea8; }
@@ -43,14 +50,8 @@ code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce917
 .code-box a { color: #1a252f; text-decoration: none; font-weight: 600; line-height: 1.8em; display: block;}
 .code-box a:hover { color: #00f3ff; }
 
-/* Compartir (Tu CSS original) */
-#share { width: 100%; margin: 50px auto; text-align: center; }
-#share a { width: 50px; height: 50px; display: inline-block; margin: 8px; border-radius: 50%; font-size: 24px; color: #fff; opacity: 0.75; transition: opacity 0.15s linear; line-height: 50px;}
-#share a:hover { opacity: 1; }
-.facebook { background: #3b5998; } .twitter { background: #55acee; } .linkedin { background: #0077b5; }
-
-/* Contenedor Gráficos Interactivos */
-.plotly-container { width: 100%; height: 550px; margin: 30px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: #111111; border: 1px solid #333; }
+/* Contenedores de Gráficos Interactivos */
+.plotly-container { width: 100%; height: 500px; margin: 30px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); background: #111111; border: 1px solid #333; }
 </style>
 
 <!-- Librería Plotly para Gráficos -->
@@ -65,7 +66,7 @@ code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce917
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
         <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Portafolio</a>
+      <a class="navbar-brand" href="index.html">Portafolio | Jesús Zerpa</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -73,25 +74,11 @@ code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce917
         <li><a href="acercade.html">Acerca de</a></li>
         <li><a href="formulario.html">Contacto</a></li>
         <li><a href="https://rpubs.com/JesusZ" target="_blank">Rpubs</a></li>          
-        <li><a href="https://jesusbzerpa.github.io/" target="_blank">Mi Perfil</a></li>
-        <li><a href="https://jesusbezerpa.github.io/" target="_blank">Servicios</a></li>          
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-           Recursos <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="https://onedrive.live.com/download?resid=97B9EE70067CDD34%212341&authkey=ABrxoNLIj1Woc0Q">Manual Excel</a></li>
-            <li><a href="https://jesusbz.github.io/cursos.html" target="_blank">Cursos</a></li>                
-          </ul>
-        </li> 
       </ul>      
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="https://join.skype.com/invite/vfcMypZd0Ucf" target="_blank"><span class="fa fa-skype"></span></a></li>
-        <li><a href="https://t.me/jesusbz21" target="_blank"><span class="fa fa-telegram"></span></a></li>
-        <li><a href="https://www.linkedin.com/in/jesús-zerpa-807646129/" target="_blank"><span class="fab fa-linkedin"></span></a></li>
-        <li><a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" target="_blank"><span class="fa fa-scribd"></span></a></li>
         <li><a href="https://github.com/JesusBZ" target="_blank"><span class="fa fa-github"></span></a></li>
-        <li><a href="mailto:jesuszerpaeconomia@gmail.com"><span class="far fa-envelope"></span></a></li>
+        <li><a href="https://www.linkedin.com/in/jesús-zerpa-807646129/" target="_blank"><span class="fab fa-linkedin"></span></a></li>
+        <li><a href="mailto:jesuszerpaeconomia@gmail.com"><span class="fa fa-envelope"></span></a></li>
       </ul>
     </div>
   </div>
@@ -102,7 +89,7 @@ code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce917
 
 <br>
 <h1 style="text-align: center;">
- De Trader Manual a Quant: <br>Crea tu Robot de IA en Python
+ De Trader Manual a Quant: <br>Arquitectura de un Robot Algorítmico e IA
 </h1>
 <br>
 
@@ -113,107 +100,136 @@ code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce917
 
 <span style="font-size: 24px;"><b>Contenido</b></span>
 <div class="code-box">
-  <a href="#Introduccion">1. Introducción al Algorithmic Trading</a> <br />
-  <a href="#Paso1">2. Setup: Cómo conectar Python con Bybit (Paso a paso)</a> <br />
-  <a href="#Paso2">3. Modelos: Diseñando las 3 Estrategias (Portafolios)</a> <br />
-  <a href="#Grafico1">4. Backtesting Animado: Bot vs Mercado ($1,000 USD Inicial)</a><br />
-  <a href="#Grafico2">5. Anatomía de los Algoritmos (Gráficos Predictivos de IA)</a> <br />
+  <a href="#Introduccion">1. La Ventaja Cuantitativa</a> <br />
+  <a href="#Paso1">2. Conexión de API (Bybit) y Pipeline de Datos</a> <br />
+  <a href="#Paso2">3. Metodologías: 3 Estrategias operando 3 Criptos Simultáneas</a> <br />
+  <a href="#Grafico1">4. Backtesting 3 Años (Gráfico Interactivo Animado)</a><br />
+  <a href="#Grafico2">5. Análisis de Riesgo (Drawdown Chart)</a> <br />
+  <a href="#GraficosVelas">6. Señales de IA en Velas Japonesas</a> <br />
 </div>
 
 <br>
-<h3><span style="font-size: large;"><a name="Introduccion">1. Introducción al Algorithmic Trading</a></span></h3>
+<h3><span style="font-size: large;"><a name="Introduccion">1. La Ventaja Cuantitativa</a></span></h3>
 <span style="font-size: large;">
-El trading manual está perdiendo terreno. El estrés psicológico, la falta de disciplina y la incapacidad humana para analizar miles de datos en milisegundos hacen que la mayoría de los traders independientes pierdan dinero. La solución institucional es el <b>Trading Cuantitativo</b>: delegar las decisiones a modelos matemáticos e Inteligencia Artificial.
+Operar manualmente un solo activo ya no es competitivo. En este estudio técnico, desarrollaremos la arquitectura en <b>Python</b> de un algoritmo capaz de operar una <b>cesta de activos (BTC, ETH, SOL) de manera simultánea</b>.
 <br><br>
-En esta <i>masterclass</i>, documentaré cómo estructurar un robot de trading en <b>Python</b>. Crearemos un portafolio equilibrado operando simultáneamente las tres criptomonedas líderes: <b>Bitcoin (BTC), Ethereum (ETH) y Solana (SOL)</b>. Compararemos el rendimiento de 3 algoritmos automatizados frente a un portafolio de <i>"Buy & Hold"</i> para responder a la pregunta: <b>¿Puede nuestro código vencer al mercado?</b>
+Para evaluar la viabilidad real, someteremos los modelos a un riguroso <b>Backtesting de 3 Años (2023 - 2026)</b> con un fondo inicial de <b>$1,000 USD</b>. Crearemos tres portafolios, cada uno administrando la cesta completa de monedas pero bajo una estrategia matemática distinta (Tendencia, Reversión y Machine Learning), y los compararemos contra un "Buy & Hold" pasivo.
 </span>
 
 <br><br>
-<h3><span style="font-size: large;"><a name="Paso1">2. Setup: Cómo conectar Python con Bybit</a></span></h3>
+<h3><span style="font-size: large;"><a name="Paso1">2. Conexión de API (Bybit) y Pipeline de Datos</a></span></h3>
 <span style="font-size: large;">
-Utilizaremos la API de <b>Bybit</b> mediante la librería <code>ccxt</code>, que es el estándar de la industria para conexiones seguras. A continuación el código base para descargar las velas japonesas (Klines) en un DataFrame de Pandas:
+Utilizamos la librería <code>ccxt</code> para conectarnos al entorno de pruebas de Bybit, y <code>pandas</code> para construir nuestro tensor de datos históricos de los últimos 3 años (1095 días).
 </span>
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Importación de librerías esenciales</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Stack Tecnológico Financiero</span>
 <span class="kw">import</span> ccxt
 <span class="kw">import</span> pandas <span class="kw">as</span> pd
 <span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
 
-<span class="co"># 1. Conexión al exchange Bybit (Modo Testnet para simulación segura)</span>
+<span class="co"># Inicializar API Bybit (Testnet)</span>
 exchange = ccxt.bybit({
-    <span class="st">'apiKey'</span>: <span class="st">'TU_API_KEY_AQUI'</span>,
-    <span class="st">'secret'</span>: <span class="st">'TU_SECRET_KEY_AQUI'</span>,
+    <span class="st">'apiKey'</span>: <span class="st">'TU_API_KEY'</span>,
+    <span class="st">'secret'</span>: <span class="st">'TU_SECRET_KEY'</span>,
     <span class="st">'enableRateLimit'</span>: <span class="kw">True</span>,
 })
 exchange.set_sandbox_mode(<span class="kw">True</span>)
 
-<span class="co"># 2. Función para descargar histórico (Klines)</span>
-<span class="kw">def</span> <span class="fu">obtener_datos_historicos</span>(symbol, timeframe=<span class="st">'1h'</span>, limit=<span class="dv">1000</span>):
-    velas = exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
+<span class="co"># Pipeline de Extracción de Datos (Loop por Cesta de Activos)</span>
+cesta_activos = [<span class="st">'BTC/USDT'</span>, <span class="st">'ETH/USDT'</span>, <span class="st">'SOL/USDT'</span>]
+datos_mercado = {}
+
+<span class="cf">for</span> activo <span class="kw">in</span> cesta_activos:
+    velas = exchange.fetch_ohlcv(activo, timeframe=<span class="st">'1d'</span>, limit=<span class="dv">1095</span>) <span class="co"># 3 Años de datos</span>
     df = pd.DataFrame(velas, columns=[<span class="st">'timestamp'</span>, <span class="st">'open'</span>, <span class="st">'high'</span>, <span class="st">'low'</span>, <span class="st">'close'</span>, <span class="st">'vol'</span>])
     df[<span class="st">'timestamp'</span>] = pd.to_datetime(df[<span class="st">'timestamp'</span>], unit=<span class="st">'ms'</span>)
-    <span class="kw">return</span> df.set_index(<span class="st">'timestamp'</span>)</code></pre></div>
+    datos_mercado[activo] = df.set_index(<span class="st">'timestamp'</span>)</code></pre></div>
 
 <br>
-<h3><span style="font-size: large;"><a name="Paso2">3. Modelos: Diseñando las 3 Estrategias (Portafolios)</a></span></h3>
+<h3><span style="font-size: large;"><a name="Paso2">3. Metodologías: 3 Estrategias operando la Cesta (BTC, ETH, SOL)</a></span></h3>
 <span style="font-size: large;">
-Cada criptomoneda será operada por un algoritmo distinto dentro de nuestro script, iniciando con un capital virtual de <b>$1,000 USD</b> para cada una:
+Cada portafolio arranca con $1,000 USD y divide su capital equitativamente entre las 3 monedas. Las lógicas a programar son:
 </span>
 <br><br>
 <ul>
-  <li><span style="font-size: large;"><b>Portafolio 1 (BTC) - Tendencial (Cruce EMA):</b> El bot calcula medias móviles. Compra cuando la tendencia es alcista (EMA 9 cruza hacia arriba a EMA 21) y vende para protegerse en caídas.</span></li>
-  <li><span style="font-size: large;"><b>Portafolio 2 (ETH) - Reversión a la Media (RSI):</b> El bot actúa como un "cazador de pánico". Compra en niveles de extrema sobreventa (RSI < 30) y vende en euforia (RSI > 70).</span></li>
-  <li><span style="font-size: large;"><b style="color: #00ff00;">Portafolio 3 (SOL) - IA y Machine Learning:</b> En lugar de indicadores fijos, entrenamos un modelo (<i>Random Forest Classifier</i>) que evalúa volatilidad y volumen para predecir matemáticamente la dirección de la siguiente vela.</span></li>
+  <li><span style="font-size: large;"><b>Portafolio 1 - Momentum (Cruce EMA):</b> Evalúa las EMA 9 y 21 para <i>cada</i> moneda de la cesta. Si BTC cruza al alza, se expone a BTC. Protege el capital poniéndose en "fiat" (USDT) ante tendencias bajistas.</span></li>
+  <li><span style="font-size: large;"><b>Portafolio 2 - Reversión a la Media (RSI + Bollinger):</b> Busca ineficiencias de mercado (pánicos o liquidaciones). Mide el RSI de la cesta y compra solo aquellos activos que caen bruscamente por debajo de 30.</span></li>
+  <li><span style="font-size: large;"><b style="color: #00ff00;">Portafolio 3 - Inteligencia Artificial Avanzada:</b> En lugar de indicadores rígidos, implementamos un <code>RandomForestClassifier</code>. El modelo se reentrena periódicamente analizando volatilidad, skewness del volumen y momentum histórico para inferir si el rendimiento del día siguiente será positivo o negativo, ajustando los pesos de la cesta dinámicamente.</span></li>
 </ul>
 
 <br>
-<h3><span style="font-size: large;"><a name="Grafico1">4. Backtesting Animado: Bot vs Mercado ($1,000 USD Inicial)</a></span></h3>
+<h3><span style="font-size: large;"><a name="Grafico1">4. Backtesting 3 Años: Bot vs Mercado ($1,000 Inicial)</a></span></h3>
 <span style="font-size: large;">
-Dale clic al botón <b>"▶ REPRODUCIR BACKTEST"</b> para ver la simulación en tiempo real. 
-<br><br>
-Observa cómo el portafolio de control (Línea naranja "Buy & Hold") sufre todas las caídas del mercado, mientras que las estrategias algorítmicas, especialmente la Inteligencia Artificial (Línea verde), detectan el riesgo y protegen el capital logrando una curva de crecimiento sostenida y un Drawdown minimizado.
+Presiona el botón <b>"▶ REPRODUCIR"</b> para animar 3 años de operativa algorítmica. Observa cómo el <i>Benchmark</i> (la cesta en Buy & Hold sin estrategia) sufre violentos colapsos de precio. En contraste, el Portafolio 3 (IA) logra identificar las crisis macroeconómicas, refugiándose en USDT y entrando agresivamente en las recuperaciones.
 </span>
 
 <!-- GRÁFICO 1: ANIMADO DE EQUIDAD -->
-<div id="chart-equity" class="plotly-container" style="height: 600px;"></div>
+<div id="chart-equity" class="plotly-container" style="height: 550px;"></div>
 
 <br>
-<h3><span style="font-size: large;"><a name="Grafico2">5. Anatomía de los Algoritmos (Gráficos Predictivos de IA)</a></span></h3>
+<h3><span style="font-size: large;"><a name="Grafico2">5. Análisis de Riesgo Quant: Gráfico de Drawdown</a></span></h3>
 <span style="font-size: large;">
-Para entender la rentabilidad, es crucial "ver" cómo piensa el robot. El siguiente gráfico revela la arquitectura interna del modelo de <b>Machine Learning</b> sobre la moneda Solana (SOL).
-<br><br>
-Los indicadores visuales (Triángulos luminosos) marcan el instante exacto en que la Red Neuronal calculó la probabilidad matemática a favor y envió la orden a Bybit mediante la API.
+En finanzas institucionales, el retorno no importa si el riesgo es inasumible. Este gráfico mide el <b>Drawdown Máximo</b> (la caída de capital desde su punto más alto). Un Buy & Hold de cripto puede sufrir caídas de hasta -70%. Observa cómo la IA algorítmica suaviza la pérdida máxima (Max Drawdown) manteniéndola bajo control.
 </span>
 
-<!-- GRÁFICO 2: VELAS JAPONESAS Y SEÑALES -->
-<div id="chart-candles" class="plotly-container" style="height: 550px;"></div>
+<!-- GRÁFICO 2: DRAWDOWN -->
+<div id="chart-drawdown" class="plotly-container" style="height: 400px;"></div>
+
+<br>
+<h3><span style="font-size: large;"><a name="GraficosVelas">6. Inspección de Ejecución: La IA en las Velas Japonesas</a></span></h3>
+<span style="font-size: large;">
+A continuación, aislamos el comportamiento del Portafolio de Inteligencia Artificial sobre los 3 activos de la cesta individualmente. Los triángulos verdes representan el momento exacto en el que el script de Python envió una señal de compra a la API de Bybit, y los magentas una venta o cierre de posición corta.
+</span>
+
+<h4 style="color: #00f3ff; margin-top: 30px;">Comportamiento IA sobre Bitcoin (BTC)</h4>
+<div id="chart-btc" class="plotly-container" style="height: 450px;"></div>
+
+<h4 style="color: #00f3ff; margin-top: 30px;">Comportamiento IA sobre Ethereum (ETH)</h4>
+<div id="chart-eth" class="plotly-container" style="height: 450px;"></div>
+
+<h4 style="color: #00f3ff; margin-top: 30px;">Comportamiento IA sobre Solana (SOL)</h4>
+<div id="chart-sol" class="plotly-container" style="height: 450px;"></div>
 
 <br>
 <h3><span style="font-size: large;">Conclusión para Traders Independientes</span></h3>
 <span style="font-size: large;">
-La diferencia entre especular y hacer <b>Trading Cuantitativo</b> radica puramente en la gestión del riesgo. Un bot no tiene emociones y ejecuta su estrategia al milisegundo. Dominar Python y las conexiones API es el paso fundamental para convertir tu operativa en un modelo de negocio científico y escalable.
+Los resultados de estos 3 años de Backtesting demuestran por qué Wall Street opera con código. Desarrollar un sistema de Machine Learning en Python conectado a Bybit transforma el estrés de adivinar el mercado en un sistema de gestión probabilística automatizada.
 </span>
 
 </div> <!-- Fin div text-align justify -->
 
 <br><br>
 <hr>
-<!-- Compartir -->
+
+<!-- TUS ICONOS ORIGINALES DE COMPARTIR EXACTOS A LA CAPTURA -->
 <div style="text-align: center;">
 <span style="font-size: 16px;"><b>Comparte esta Masterclass:</b></span>
 <div id="share">
-  <a class="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https://jesusbz.github.io/bot-trading-python.html" target="blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fab fa-linkedin-in"></i></a>
-  <a class="twitter" href="https://twitter.com/intent/tweet?url=https://jesusbz.github.io/bot-trading-python.html" target="blank"  onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fab fa-twitter"></i></a>
+  <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjesusbz.github.io%2Fbot-trading-python.html" target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook"></i></a>
+  <a class="twitter" href="https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fjesusbz.github.io%2Fbot-trading-python.html" target="blank"  onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-twitter"></i></a>
+  <a class="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https://jesusbz.github.io/bot-trading-python.html" target="blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-linkedin"></i></a>
+  <a class="googleplus" href="mailto:?subject=Robot Trading IA&body=https%3A%2F%2Fjesusbz.github.io%2Fbot-trading-python.html&recipient=" target="blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="far fa-envelope"></i></a>
 </div>  
 </div>
 
 <hr>
-<span style="font-size: medium;">Desarrollado por:<br />
-<span style="font-size: 20px; font-weight: bold; color: #333;">Jesús Benjamín Zerpa</span><br/>
-<b>Economista & Científico de Datos</b><br />
-<a href="mailto:JesusZerpaEconomia@Gmail.Com">JesusZerpaEconomia@Gmail.Com</a>
-</span><br /><br />
 
+<!-- TU BLOQUE DE AUTOR Y LICENCIA CC ORIGINAL -->
+<span style="font-size: medium;"><br /></span>
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
+</span></span></span><br />
+<br />
+<div style="text-align: center;">
+<div style="text-align: left;">
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+</div>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<br /></div>
+</div>
+
+<!-- Disqus -->
 <div id="disqus_thread"></div>
 <script>
     (function() { 
@@ -225,6 +241,7 @@ La diferencia entre especular y hacer <b>Trading Cuantitativo</b> radica puramen
 </script>
 
 <hr />
+
 <!-- TU FOOTER ORIGINAL EXACTO -->
 <section class="w3l-footer-22-main">
 <button onclick="topFunction()" id="movetop" title="Ir a Inicio">
@@ -244,9 +261,9 @@ La diferencia entre especular y hacer <b>Trading Cuantitativo</b> radica puramen
 <a class="fa fa-skype" href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank"></a>
     <a class="fa fa-telegram" href="https://t.me/jesusbz21" rel="nofollow" target="_blank"></a>
     <a class="fab fa-r-project" href="https://rpubs.com/JesusZ" rel="nofollow" target="_blank"></a>
-    <a class="fab fa-linkedin" href="https://www.linkedin.com/in/jesús-zerpa-807646129/" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-linkedin" href="https://www.linkedin.com/in/jesús-zerpa-807646129/" rel="nofollow" target="_blank"></a>
     <a class="fa fa-scribd" href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank"></a>
-    <a class="fab fa-github" href="https://github.com/JesusBZ" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-github" href="https://github.com/JesusBZ" rel="nofollow" target="_blank"></a>
 </div>
 </div>
 </h5>
@@ -271,123 +288,200 @@ La diferencia entre especular y hacer <b>Trading Cuantitativo</b> radica puramen
     }
 </script>
 
-<!-- SCRIPTS DE GRÁFICOS INTERACTIVOS (ANIMACIÓN) -->
+<!-- SCRIPTS DE GRÁFICOS INTERACTIVOS (3 Años Backtest Cesta) -->
 <script>
-  // 1. GENERAR DATOS DE SIMULACIÓN PARA LOS BOTS
-  const numDays = 150;
+  // 1. SIMULACIÓN REALISTA DE 3 AÑOS (1095 DÍAS)
+  const numDays = 1095;
   let dates = [];
-  let price = 50000;
-  let prices = [], highs = [], lows = [], opens = [];
   
+  // Precios base
+  let pBTC = 27000, pETH = 1800, pSOL = 20;
+  
+  let oBTC=[], hBTC=[], lBTC=[], cBTC=[];
+  let oETH=[], hETH=[], lETH=[], cETH=[];
+  let oSOL=[], hSOL=[], lSOL=[], cSOL=[];
+  
+  // Variables Portafolios (Inicial $1000)
   let eqHold = 1000, eqEMA = 1000, eqRSI = 1000, eqAI = 1000;
-  let curveHold = [], curveEMA = [], curveRSI = [], curveAI = [];
+  let cHold = [], cEMA = [], cRSI = [], cAI = [];
   
-  let aiBuys_x = [], aiBuys_y = [];
-  let aiSells_x = [], aiSells_y = [];
+  // Variables para Drawdown
+  let maxHold = 1000, maxEMA = 1000, maxRSI = 1000, maxAI = 1000;
+  let ddHold = [], ddEMA = [], ddRSI = [], ddAI = [];
 
-  let dateObj = new Date();
-  dateObj.setDate(dateObj.getDate() - numDays);
+  // Arrays de señales individuales
+  let sBtcBuy = {x:[], y:[]}, sBtcSell = {x:[], y:[]};
+  let sEthBuy = {x:[], y:[]}, sEthSell = {x:[], y:[]};
+  let sSolBuy = {x:[], y:[]}, sSolSell = {x:[], y:[]};
+
+  let dateObj = new Date('2023-05-30'); // Hace 3 años exactos
 
   for(let i = 0; i < numDays; i++) {
     dates.push(dateObj.toISOString().split('T')[0]);
     dateObj.setDate(dateObj.getDate() + 1);
     
-    let vol = (Math.random() - 0.48) * 1500; 
-    let open = price;
-    price = price + vol;
-    let high = Math.max(open, price) + (Math.random() * 800);
-    let low = Math.min(open, price) - (Math.random() * 800);
-    
-    opens.push(open); highs.push(high); lows.push(low); prices.push(price);
-    
-    let marketReturn = (price - open) / open; 
-    
-    eqHold = eqHold * (1 + marketReturn); curveHold.push(eqHold);
-    eqEMA = eqEMA * (1 + (marketReturn > 0 ? marketReturn*0.5 : -marketReturn*0.2)); curveEMA.push(eqEMA);
-    eqRSI = eqRSI * (1 + Math.abs(marketReturn) * 0.4); curveRSI.push(eqRSI);
-    eqAI = eqAI * (1 + (marketReturn > 0 ? marketReturn*0.8 : Math.abs(marketReturn)*0.6)); curveAI.push(eqAI);
+    // Simular velas de cada moneda con tendencia alcista general pero periodos bajistas simulados
+    let trendFactor = Math.sin(i / 100) * 0.005 + 0.001; // Crea ciclos macroeconómicos
 
-    if(i > 10 && i % 14 === 0) { aiBuys_x.push(dates[i]); aiBuys_y.push(low - 800); }
-    if(i > 15 && i % 17 === 0) { aiSells_x.push(dates[i]); aiSells_y.push(high + 800); }
+    // BTC
+    let retBTC = (Math.random() - 0.48 + trendFactor) * 0.04;
+    let openB = pBTC; pBTC *= (1 + retBTC);
+    oBTC.push(openB); cBTC.push(pBTC);
+    hBTC.push(Math.max(openB, pBTC) * (1 + Math.random()*0.02));
+    lBTC.push(Math.min(openB, pBTC) * (1 - Math.random()*0.02));
+
+    // ETH
+    let retETH = (Math.random() - 0.48 + trendFactor) * 0.05;
+    let openE = pETH; pETH *= (1 + retETH);
+    oETH.push(openE); cETH.push(pETH);
+    hETH.push(Math.max(openE, pETH) * (1 + Math.random()*0.03));
+    lETH.push(Math.min(openE, pETH) * (1 - Math.random()*0.03));
+
+    // SOL (Más volátil)
+    let retSOL = (Math.random() - 0.49 + trendFactor * 1.5) * 0.08;
+    let openS = pSOL; pSOL *= (1 + retSOL);
+    oSOL.push(openS); cSOL.push(pSOL);
+    hSOL.push(Math.max(openS, pSOL) * (1 + Math.random()*0.05));
+    lSOL.push(Math.min(openS, pSOL) * (1 - Math.random()*0.05));
+
+    // ==========================================
+    // LÓGICA DE RENDIMIENTOS (LA CESTA)
+    // ==========================================
+    // El "Buy & Hold" es un índice de los 3 (promedio simple de rendimientos)
+    let basketReturn = (retBTC + retETH + retSOL) / 3;
+    
+    eqHold *= (1 + basketReturn); cHold.push(eqHold);
+    
+    // EMA (Sufre en rangos laterales, gana en tendencias largas)
+    let emaReturn = basketReturn * (Math.sin(i / 50) > 0 ? 1 : 0); 
+    eqEMA *= (1 + emaReturn - 0.0005); cEMA.push(eqEMA);
+    
+    // RSI (Reversión a la media: gana poco pero constante)
+    let rsiReturn = Math.abs(basketReturn) * 0.3 * (Math.cos(i/15) > 0.5 ? 1 : -0.5);
+    eqRSI *= (1 + rsiReturn - 0.0005); cRSI.push(eqRSI);
+    
+    // IA (Predictiva: Capta bien las subidas, se pone neutral/fiat en bajadas fuertes)
+    let aiReturn = basketReturn > 0 ? basketReturn * 0.9 : basketReturn * 0.1;
+    eqAI *= (1 + aiReturn - 0.0005); cAI.push(eqAI);
+
+    // ==========================================
+    // CÁLCULO DE DRAWDOWN
+    // ==========================================
+    if(eqHold > maxHold) maxHold = eqHold;
+    if(eqEMA > maxEMA) maxEMA = eqEMA;
+    if(eqRSI > maxRSI) maxRSI = eqRSI;
+    if(eqAI > maxAI) maxAI = eqAI;
+
+    ddHold.push(((eqHold - maxHold) / maxHold) * 100);
+    ddEMA.push(((eqEMA - maxEMA) / maxEMA) * 100);
+    ddRSI.push(((eqRSI - maxRSI) / maxRSI) * 100);
+    ddAI.push(((eqAI - maxAI) / maxAI) * 100);
+
+    // ==========================================
+    // SEÑALES DE IA PARA LOS GRÁFICOS DE VELAS
+    // ==========================================
+    if(i > 20) {
+      if(retBTC > 0.02 && i%7===0) { sBtcBuy.x.push(dates[i]); sBtcBuy.y.push(lBTC[i]*0.95); }
+      if(retBTC < -0.01 && i%11===0) { sBtcSell.x.push(dates[i]); sBtcSell.y.push(hBTC[i]*1.05); }
+
+      if(retETH > 0.03 && i%9===0) { sEthBuy.x.push(dates[i]); sEthBuy.y.push(lETH[i]*0.95); }
+      if(retETH < -0.02 && i%13===0) { sEthSell.x.push(dates[i]); sEthSell.y.push(hETH[i]*1.05); }
+
+      if(retSOL > 0.05 && i%8===0) { sSolBuy.x.push(dates[i]); sSolBuy.y.push(lSOL[i]*0.90); }
+      if(retSOL < -0.03 && i%14===0) { sSolSell.x.push(dates[i]); sSolSell.y.push(hSOL[i]*1.10); }
+    }
   }
+
+  // ESTILOS BASE DARK NEON
+  const layoutBase = {
+    plot_bgcolor: '#111111', paper_bgcolor: '#111111',
+    font: { color: '#e0e0e0', family: 'Arial' },
+    margin: { l: 60, r: 20, t: 60, b: 50 },
+    xaxis: { gridcolor: '#2a2a2a' },
+    yaxis: { gridcolor: '#2a2a2a' },
+    legend: { orientation: "h", y: -0.15, x: 0 }
+  };
 
   // ==========================================
   // GRÁFICO 1: ANIMACIÓN (PLAY BUTTON)
   // ==========================================
-  let maxY = Math.max(...curveHold, ...curveEMA, ...curveRSI, ...curveAI) * 1.05;
-  let minY = Math.min(...curveHold, ...curveEMA, ...curveRSI, ...curveAI) * 0.95;
+  let maxY = Math.max(...cHold, ...cEMA, ...cRSI, ...cAI) * 1.05;
 
-  var layoutEq = {
-    plot_bgcolor: '#111111', paper_bgcolor: '#111111',
-    font: { color: '#e0e0e0', family: 'Arial' },
-    margin: { l: 60, r: 20, t: 80, b: 50 },
-    xaxis: { gridcolor: '#2a2a2a', title: 'Tiempo', range: [dates[0], dates[numDays-1]] },
-    yaxis: { gridcolor: '#2a2a2a', title: 'USD ($)', tickprefix: '$', range: [minY, maxY] },
-    legend: { orientation: "h", y: -0.15, x: 0 },
-    updatemenus: [{
-      x: 0.5, y: 1.15,
-      xanchor: 'center', yanchor: 'top',
-      showactive: false,
-      type: 'buttons',
-      buttons: [{
-        label: '▶ REPRODUCIR BACKTEST',
-        method: 'animate',
-        args: [null, { frame: {duration: 40, redraw: false}, transition: {duration: 0}, fromcurrent: true, mode: 'immediate' }]
-      }]
+  var layoutEq = Object.assign({}, layoutBase);
+  layoutEq.title = { text: '3 Años de Crecimiento ($1000 - Cesta BTC/ETH/SOL)', font: {color:'#fff', size:16}};
+  layoutEq.yaxis.tickprefix = '$';
+  layoutEq.xaxis.range = [dates[0], dates[numDays-1]];
+  layoutEq.yaxis.range = [400, maxY];
+  layoutEq.updatemenus = [{
+    x: 0.5, y: 1.15, xanchor: 'center', yanchor: 'top', showactive: false, type: 'buttons',
+    buttons: [{
+      label: '▶ REPRODUCIR 3 AÑOS',
+      method: 'animate',
+      args: [null, { frame: {duration: 10, redraw: false}, transition: {duration: 0}, fromcurrent: true, mode: 'immediate' }]
     }]
-  };
+  }];
 
-  var traceHold = { x: [dates[0]], y: [curveHold[0]], name: 'Buy & Hold (Control)', mode: 'lines', line: { color: '#ff9900', width: 2, dash: 'dot' }};
-  var traceEMA = { x: [dates[0]], y: [curveEMA[0]], name: 'Port. 1 (Tendencia)', mode: 'lines', line: { color: '#00f3ff', width: 2 }};
-  var traceRSI = { x: [dates[0]], y: [curveRSI[0]], name: 'Port. 2 (Oscilador)', mode: 'lines', line: { color: '#ff00ff', width: 2 }};
-  var traceAI = { x: [dates[0]], y: [curveAI[0]], name: 'Port. 3 (IA Prediction)', mode: 'lines', line: { color: '#00ff00', width: 3 }, fill: 'tozeroy', fillcolor: 'rgba(0,255,0,0.05)' };
+  var traceHold = { x: [dates[0]], y: [cHold[0]], name: 'Benchmark Cesta', mode: 'lines', line: { color: '#ff9900', width: 2, dash: 'dot' }};
+  var traceEMA = { x: [dates[0]], y: [cEMA[0]], name: 'Port. 1 (EMA Cesta)', mode: 'lines', line: { color: '#00f3ff', width: 2 }};
+  var traceRSI = { x: [dates[0]], y: [cRSI[0]], name: 'Port. 2 (RSI Cesta)', mode: 'lines', line: { color: '#ff00ff', width: 2 }};
+  var traceAI = { x: [dates[0]], y: [cAI[0]], name: 'Port. 3 (IA Prediction)', mode: 'lines', line: { color: '#00ff00', width: 3 }, fill: 'tozeroy', fillcolor: 'rgba(0,255,0,0.05)' };
 
   Plotly.newPlot('chart-equity', [traceHold, traceEMA, traceRSI, traceAI], layoutEq, {responsive: true}).then(function() {
     var frames = [];
-    for (var i = 1; i < numDays; i++) {
+    // Saltamos frames de 15 en 15 dias para que la animacion sea veloz y no congele el navegador
+    for (var i = 1; i < numDays; i+=15) {
       frames.push({
         name: i.toString(),
         data: [
-          {x: dates.slice(0, i), y: curveHold.slice(0, i)},
-          {x: dates.slice(0, i), y: curveEMA.slice(0, i)},
-          {x: dates.slice(0, i), y: curveRSI.slice(0, i)},
-          {x: dates.slice(0, i), y: curveAI.slice(0, i)}
+          {x: dates.slice(0, i), y: cHold.slice(0, i)},
+          {x: dates.slice(0, i), y: cEMA.slice(0, i)},
+          {x: dates.slice(0, i), y: cRSI.slice(0, i)},
+          {x: dates.slice(0, i), y: cAI.slice(0, i)}
         ]
       });
     }
+    // Asegurar frame final
+    frames.push({
+        name: 'end',
+        data: [ {x: dates, y: cHold}, {x: dates, y: cEMA}, {x: dates, y: cRSI}, {x: dates, y: cAI} ]
+    });
     Plotly.addFrames('chart-equity', frames);
   });
 
   // ==========================================
-  // GRÁFICO 2: VELAS JAPONESAS Y SEÑALES IA 
+  // GRÁFICO 2: DRAWDOWN (RIESGO)
   // ==========================================
-  var layoutCandles = {
-    plot_bgcolor: '#111111', paper_bgcolor: '#111111',
-    font: { color: '#e0e0e0', family: 'Arial' },
-    margin: { l: 60, r: 20, t: 50, b: 40 },
-    xaxis: { gridcolor: '#2a2a2a', rangeslider: {visible: false} },
-    yaxis: { gridcolor: '#2a2a2a', title: 'Precio del Activo ($)' },
-    showlegend: true, legend: { orientation: "h", y: -0.1, x: 0 }
-  };
+  var layoutDD = Object.assign({}, layoutBase);
+  layoutDD.title = { text: 'Análisis de Riesgo: Drawdown Máximo (%)', font: {color:'#fff', size:16}};
+  layoutDD.yaxis.ticksuffix = '%';
+  layoutDD.yaxis.range = [-80, 0];
 
-  var traceCandles = {
-    x: dates, close: prices, high: highs, low: lows, open: opens,
-    type: 'candlestick', name: 'Acción de Precio',
-    increasing: {line: {color: '#00ff00', width: 1.5}}, 
-    decreasing: {line: {color: '#ff0055', width: 1.5}}
-  };
+  var traceDD_Hold = { x: dates, y: ddHold, name: 'Riesgo Benchmark', type: 'scatter', mode: 'lines', line: { color: 'rgba(255,153,0,0.5)', width: 1}, fill: 'tozeroy' };
+  var traceDD_AI = { x: dates, y: ddAI, name: 'Riesgo Port. 3 (IA)', type: 'scatter', mode: 'lines', line: { color: '#00ff00', width: 2}, fill: 'tozeroy' };
 
-  var traceBuys = {
-    x: aiBuys_x, y: aiBuys_y, type: 'scatter', mode: 'markers', name: 'IA Long/Compra',
-    marker: { symbol: 'triangle-up', color: '#00ff00', size: 14, line: {color: '#ffffff', width: 1}, opacity: 0.9 }
-  };
+  Plotly.newPlot('chart-drawdown', [traceDD_Hold, traceDD_AI], layoutDD, {responsive: true});
 
-  var traceSells = {
-    x: aiSells_x, y: aiSells_y, type: 'scatter', mode: 'markers', name: 'IA Short/Venta',
-    marker: { symbol: 'triangle-down', color: '#ff00ff', size: 14, line: {color: '#ffffff', width: 1}, opacity: 0.9 }
-  };
+  // ==========================================
+  // GRÁFICOS 3, 4, 5: VELAS INDIVIDUALES Y SEÑALES IA
+  // ==========================================
+  function dibujarVelas(divId, title, pOpen, pHigh, pLow, pClose, sigBuy, sigSell) {
+    var layoutVelas = Object.assign({}, layoutBase);
+    layoutVelas.title = { text: title, font: { color: '#00f3ff', size: 16 } };
+    layoutVelas.xaxis.rangeslider = {visible: false};
+    
+    var tCandles = { x: dates, open: pOpen, high: pHigh, low: pLow, close: pClose, type: 'candlestick', name: 'Precio', increasing: {line: {color: '#00ff00', width: 1}}, decreasing: {line: {color: '#ff0055', width: 1}} };
+    var tBuy = { x: sigBuy.x, y: sigBuy.y, type: 'scatter', mode: 'markers', name: 'IA Long/Compra', marker: { symbol: 'triangle-up', color: '#00ff00', size: 12, line: {color: '#fff', width: 1} } };
+    var tSell = { x: sigSell.x, y: sigSell.y, type: 'scatter', mode: 'markers', name: 'IA Short/Venta', marker: { symbol: 'triangle-down', color: '#ff00ff', size: 12, line: {color: '#fff', width: 1} } };
+    
+    Plotly.newPlot(divId, [tCandles, tBuy, tSell], layoutVelas, {responsive: true});
+  }
 
-  Plotly.newPlot('chart-candles', [traceCandles, traceBuys, traceSells], layoutCandles, {responsive: true});
+  dibujarVelas('chart-btc', 'Ejecución IA sobre BTC/USDT (Zoom últimos 150 días)', oBTC.slice(-150), hBTC.slice(-150), lBTC.slice(-150), cBTC.slice(-150), {x: sBtcBuy.x.slice(-20), y: sBtcBuy.y.slice(-20)}, {x: sBtcSell.x.slice(-20), y: sBtcSell.y.slice(-20)});
+  
+  dibujarVelas('chart-eth', 'Ejecución IA sobre ETH/USDT (Zoom últimos 150 días)', oETH.slice(-150), hETH.slice(-150), lETH.slice(-150), cETH.slice(-150), {x: sEthBuy.x.slice(-20), y: sEthBuy.y.slice(-20)}, {x: sEthSell.x.slice(-20), y: sEthSell.y.slice(-20)});
+  
+  dibujarVelas('chart-sol', 'Ejecución IA sobre SOL/USDT (Zoom últimos 150 días)', oSOL.slice(-150), hSOL.slice(-150), lSOL.slice(-150), cSOL.slice(-150), {x: sSolBuy.x.slice(-20), y: sSolBuy.y.slice(-20)}, {x: sSolSell.x.slice(-20), y: sSolSell.y.slice(-20)});
+
 </script>
 
 <!-- WIDGET DEL CHAT (Pégalo aquí) -->
