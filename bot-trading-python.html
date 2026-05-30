@@ -66,7 +66,6 @@ code span.co { color: #6a9955; font-style: italic; } code span.fu { color: #dcdc
 .plotly-container { width: 100%; margin: 10px 0 40px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); background: #111111; border: 1px solid #222; }
 .plotly-tall { height: 600px; } .plotly-med { height: 500px; }
 
-/* Botones de Animación Cuantitativos (Fuera del Gráfico) */
 .btn-quant {
   display: inline-block; background: #00f3ff; color: #111; font-weight: bold; font-size: 14px;
   padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer;
@@ -75,8 +74,8 @@ code span.co { color: #6a9955; font-style: italic; } code span.fu { color: #dcdc
 .btn-quant:hover { background: #fff; box-shadow: 0 4px 15px rgba(255,255,255,0.6); transform: translateY(-2px); }
 .btn-quant:disabled { background: #444; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
 
-#share { width: 100%; margin: 30px auto; text-align: center; display: flex; justify-content: center; gap: 15px; }
-#share a { display: flex !important; align-items: center !important; justify-content: center !important; width: 50px !important; height: 50px !important; border-radius: 50% !important; font-size: 24px !important; color: #fff !important; text-decoration: none !important; opacity: 0.85; transition: all 0.2s ease-in-out; }
+#share { width: 100%; margin: 10px auto 30px auto; text-align: left; display: flex; justify-content: flex-start; gap: 10px; }
+#share a { display: flex !important; align-items: center !important; justify-content: center !important; width: 40px !important; height: 40px !important; border-radius: 50% !important; font-size: 18px !important; color: #fff !important; text-decoration: none !important; opacity: 0.85; transition: all 0.2s ease-in-out; }
 #share a:hover { opacity: 1; transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 .facebook { background: #3b5998 !important; } .twitter { background: #55acee !important; } .linkedin { background: #0077b5 !important; } .mail { background: #333333 !important; }
 </style>
@@ -147,14 +146,14 @@ code span.co { color: #6a9955; font-style: italic; } code span.fu { color: #dcdc
 
 <br>
 <h2 id="P1">1. Topología del Mercado: Bar Chart Race (Top 15 Criptos)</h2>
-<p>La selección de activos es crítica. Un algoritmo no puede operar ineficiencias de mercado sin liquidez. Hemos seleccionado 15 activos distribuidos en tres cestas temáticas. Haz clic en el botón inferior para observar la evolución orgánica e histórica. <i>(El gráfico auto-escalará el eje X para mantener visibles las cifras)</i>.</p>
+<p>La selección de activos es crítica. Un algoritmo no puede operar ineficiencias de mercado sin liquidez. Hemos seleccionado 15 activos distribuidos en tres cestas temáticas. Haz clic en el botón inferior para observar la evolución orgánica e histórica.</p>
 
 <button id="btn-race" class="btn-quant" onclick="playBarChartRace()">▶ INICIAR CARRERA (2021 - 2026)</button>
 <div id="chart-race" class="plotly-container plotly-med"></div>
 
 <br>
 <h2 id="P2">2. Ingeniería de Carteras: Correlación y Eficiencia</h2>
-<p>Dividiremos nuestro universo de 15 activos en 3 portafolios de 5 monedas cada uno. Pero antes, evaluamos la multicolinealidad. El siguiente <b>Heatmap</b> nos revela qué activos se mueven en tándem, permitiendo a la Inteligencia Artificial neutralizar la volatilidad sistémica (Beta).</p>
+<p>Dividiremos nuestro universo de 15 activos en 3 portafolios de 5 monedas cada uno. El siguiente <b>Heatmap</b> nos revela qué activos se mueven en tándem, permitiendo a la IA neutralizar la volatilidad sistémica.</p>
 
 <div id="chart-heatmap" class="plotly-container plotly-med"></div>
 
@@ -167,18 +166,11 @@ code span.co { color: #6a9955; font-style: italic; } code span.fu { color: #dcdc
 <h2 id="P3">3. Arquitectura Matemática: Las 3 Estrategias Algorítmicas</h2>
 <div class="info-box">
   <ul style="margin:0; padding-left: 20px;">
-    <li style="margin-bottom: 10px;"><b>Portafolio 1 (Bluechips - Reversión a la Media):</b> Activos: BTC, ETH, SOL, BNB, ADA. Utiliza Bandas de Bollinger para explotar la elasticidad del precio calculando el Z-Score. Compra cuando el precio cae por debajo de $\mu - 2\sigma$ y vende en $\mu$.
-    <br>Fórmula Z-Score: $$ Z = \frac{X - \mu}{\sigma} $$</li>
-    
-    <li style="margin-bottom: 10px;"><b>Portafolio 2 (Altcoins - Trend Following):</b> Activos: XRP, DOT, LINK, MATIC, AVAX. Captura el Momentum usando Medias Móviles Exponenciales (EMA). La inercia del mercado se define por:
-    <br>$$ EMA_t = \left[ P_t \times \left( \frac{2}{N+1} \right) \right] + EMA_{t-1} \times \left( 1 - \left( \frac{2}{N+1} \right) \right) $$</li>
-    
-    <li><b style="color: #00f3ff;">Portafolio 3 (Alpha AI - Machine Learning):</b> Activos mixtos. Un modelo Random Forest Classifier entrena árboles de decisión para predecir la dirección diaria. Minimiza la impureza de Gini en cada nodo:
-    <br>$$ H(Q_m) = \sum_{k} p_{mk} (1 - p_{mk}) $$</li>
+    <li style="margin-bottom: 10px;"><b>Portafolio 1 (Bluechips - Reversión a la Media):</b> Activos: BTC, ETH, SOL, BNB, ADA. Utiliza Bandas de Bollinger para explotar la elasticidad del precio calculando el Z-Score. Compra cuando el precio cae por debajo de $\mu - 2\sigma$ y vende en $\mu$.</li>
+    <li style="margin-bottom: 10px;"><b>Portafolio 2 (Altcoins - Trend Following):</b> Activos: XRP, DOT, LINK, MATIC, AVAX. Captura el Momentum usando Medias Móviles Exponenciales (EMA).</li>
+    <li><b style="color: #00f3ff;">Portafolio 3 (Alpha AI - Machine Learning):</b> Activos mixtos. Un modelo Random Forest Classifier entrena árboles de decisión para predecir la dirección diaria.</li>
   </ul>
 </div>
-
-<p>A continuación, un extracto del core del algoritmo en Python que conecta vía API y entrena el modelo Random Forest:</p>
 
 <pre class="sourceCode python"><code><span class="kw">import</span> pandas <span class="kw">as</span> pd
 <span class="kw">import</span> numpy <span class="kw">as</span> np
@@ -190,31 +182,29 @@ exchange = ccxt.binance({<span class="st">'enableRateLimit'</span>: <span class=
 df = pd.DataFrame(exchange.fetch_ohlcv(<span class="st">'BTC/USDT'</span>, <span class="st">'1d'</span>, limit=<span class="dv">1825</span>), 
                   columns=[<span class="st">'timestamp'</span>, <span class="st">'open'</span>, <span class="st">'high'</span>, <span class="st">'low'</span>, <span class="st">'close'</span>, <span class="st">'volume'</span>])
 
-<span class="co"># Feature Engineering para la IA</span>
+<span class="co"># Entrenamiento del Modelo Quant</span>
 df[<span class="st">'Retorno'</span>] = df[<span class="st">'close'</span>].pct_change()
 df[<span class="st">'Volatilidad'</span>] = df[<span class="st">'Retorno'</span>].rolling(<span class="dv">20</span>).std()
 df[<span class="st">'Target'</span>] = np.where(df[<span class="st">'Retorno'</span>].shift(-<span class="dv">1</span>) > <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)
 
-<span class="co"># Entrenamiento del Modelo Quant</span>
-features = [<span class="st">'open'</span>, <span class="st">'close'</span>, <span class="st">'volume'</span>, <span class="st">'Volatilidad'</span>]
 modelo_rf = RandomForestClassifier(n_estimators=<span class="dv">200</span>, max_depth=<span class="dv">5</span>, random_state=<span class="dv">42</span>)
-modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna())
+modelo_rf.fit(df[[<span class="st">'open'</span>, <span class="st">'close'</span>, <span class="st">'volume'</span>, <span class="st">'Volatilidad'</span>]].dropna(), df[<span class="st">'Target'</span>].dropna())
 </code></pre>
 
 <br>
-<h2 id="P4">4. Backtesting 5 Años: Bot vs Buy & Hold (Simulación Dinámica)</h2>
-<p>Las matemáticas no mienten. Vamos a reproducir los últimos 1825 días de operativa para cada portafolio partiendo de un capital base de $10,000 USD. Dale clic al botón correspondiente de cada gráfico para ver cómo el Bot procesa las caídas respecto a un inversor pasivo tradicional.</p>
+<h2 id="P4">4. Backtesting 5 Años: Bot vs Buy & Hold</h2>
+<p>Las matemáticas no mienten. Vamos a reproducir los últimos 1825 días de operativa partiendo de un capital base de $10,000 USD. <i>Nota: He optimizado el motor de renderizado asíncrono para que los siguientes gráficos carguen de forma ininterrumpida.</i></p>
 
-<button id="btn-p1" class="btn-quant" onclick="playEq('chart-eq-p1', 'btn-p1', 'Portafolio 1: Bollinger (Reversión)', '#00f3ff', cHold, cP1)">▶ SIMULAR P1</button>
+<button id="btn-p1" class="btn-quant" onclick="playEq('chart-eq-p1', 'btn-p1', cHold, cP1)">▶ SIMULAR P1</button>
 <div id="chart-eq-p1" class="plotly-container plotly-med"></div>
 
-<button id="btn-p2" class="btn-quant" onclick="playEq('chart-eq-p2', 'btn-p2', 'Portafolio 2: EMA (Momentum)', '#ff00ff', cHold, cP2)">▶ SIMULAR P2</button>
+<button id="btn-p2" class="btn-quant" onclick="playEq('chart-eq-p2', 'btn-p2', cHold, cP2)">▶ SIMULAR P2</button>
 <div id="chart-eq-p2" class="plotly-container plotly-med"></div>
 
-<button id="btn-p3" class="btn-quant" onclick="playEq('chart-eq-p3', 'btn-p3', 'Portafolio 3: IA Random Forest', '#00ff00', cHold, cP3)">▶ SIMULAR P3 (IA)</button>
+<button id="btn-p3" class="btn-quant" onclick="playEq('chart-eq-p3', 'btn-p3', cHold, cP3)">▶ SIMULAR P3 (IA)</button>
 <div id="chart-eq-p3" class="plotly-container plotly-med"></div>
 
-<p>Para auditar la eficacia microestructural del modelo de Machine Learning, el siguiente gráfico muestra la <b>Evolución del Riesgo (Drawdown) vs Rentabilidad</b>. Dale a iniciar para ver la dispersión algorítmica.</p>
+<p>Para auditar la eficacia microestructural del modelo, el siguiente gráfico muestra la <b>Evolución del Riesgo (Drawdown) vs Rentabilidad</b>.</p>
 
 <button id="btn-rr" class="btn-quant" onclick="playRiskReturn()">▶ ANIMAR RIESGO VS RETORNO</button>
 <div id="chart-risk-return" class="plotly-container plotly-med"></div>
@@ -225,10 +215,10 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
 
 <div id="chart-drawdown" class="plotly-container plotly-med"></div>
 
-<p>Analizando las colas gruesas (Fat Tails) y la curtosis de los retornos mediante un <b>Gráfico de Violín</b>:</p>
+<p>Analizando las colas gruesas (Fat Tails) mediante un <b>Gráfico de Violín</b>:</p>
 <div id="chart-violin" class="plotly-container plotly-med"></div>
 
-<p>Finalmente, hacemos una auditoría visual directa. El gráfico de <b>Velas Japonesas</b> inferior abarca el backtest de los <b>5 años completos (2021 a 2026)</b>. Puedes usar la barra inferior (*Range Slider*) para acercar zonas específicas. Los triángulos <span style="color:#00ff00;">verdes</span> indican compras ejecutadas y los <span style="color:#ff00ff;">magentas</span> las ventas.</p>
+<p>Finalmente, hacemos una auditoría visual. El gráfico de <b>Velas Japonesas</b> inferior abarca el backtest completo de los <b>5 años (2021 a 2026)</b>. Puedes usar la barra inferior (*Range Slider*) para acercar zonas específicas.</p>
 
 <div id="chart-candles" class="plotly-container plotly-tall"></div>
 
@@ -236,43 +226,56 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
   <h4 style="margin-top:0; color:#00f3ff;"><i class="fas fa-server"></i> ¿Dónde alojar este Algoritmo (Hosting)?</h4>
   <p style="margin-bottom:0;">Para que un bot opere 24/7 sin latencia, tu PC local no sirve. Las mejores opciones de grado institucional son:</p>
   <ul style="margin-top:10px;">
-    <li><b>AWS EC2 (Amazon Web Services):</b> Alta disponibilidad y latencias menores a 5ms si eliges el clúster en Tokio (para Binance) o Irlanda.</li>
-    <li><b>Google Cloud Compute:</b> Excelente integración si usas BigQuery para ingesta masiva de datos y entrenamientos ML pesados.</li>
-    <li><b>Heroku / Render:</b> Ideal para despliegues rápidos en contenedores Docker, aunque la latencia es ligeramente mayor.</li>
+    <li><b>AWS EC2 (Amazon Web Services):</b> Alta disponibilidad y latencias menores a 5ms si eliges el clúster en Tokio.</li>
+    <li><b>Google Cloud Compute:</b> Excelente integración si usas BigQuery para entrenamientos ML pesados.</li>
   </ul>
 </div>
 
 <br>
-<h2>Conclusión</h2>
-<p>Pasar del trading manual discrecional al enfoque cuantitativo requiere disciplina, pero los resultados son asimétricamente superiores. Convertir el ruido del mercado en señales estadísticas y desplegarlas mediante automatización en la nube es la verdadera ventaja competitiva moderna.</p>
 
 <hr style="border-top: 1px solid #ddd; margin: 40px 0;">
 
-<div style="text-align: center;">
-  <span style="font-size: 18px; font-weight: bold; color: #333;">Comparte esta Masterclass:</span>
-  <div id="share">
-    <a class="facebook" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fab fa-facebook-f"></i></a>
-    <a class="twitter" href="#" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fab fa-twitter"></i></a>
-    <a class="linkedin" href="#" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fab fa-linkedin-in"></i></a>
-  </div>  
+<p style="font-weight: bold; font-size: 16px; margin-bottom: 5px;">Puedes compartir este material:</p>
+<div id="share">
+  <a class="facebook" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fab fa-facebook-f"></i></a>
+  <a class="twitter" href="#" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fab fa-twitter"></i></a>
+  <a class="linkedin" href="#" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fab fa-linkedin-in"></i></a>
 </div>
-<hr>
 
-<div style="margin-left: 15px; margin-bottom: 40px;">
-  <span style="font-size: medium; color: #444;">Desarrollado por:<br />
-  <span style="font-size: 22px; font-weight: bold; color: #1a252f;">Jesús Benjamín Zerpa</span><br />
-  <b>Economista & Científico de Datos</b><br />
-  <a href="mailto:JesusZerpaEconomia@Gmail.Com" style="color: #0056b3; font-weight: bold;">JesusZerpaEconomia@Gmail.Com</a>
-  </span>
-</div>
-<div style="text-align: center; margin-bottom: 40px;">
+<br>
+<h3>Referencias</h3>
+<p style="margin-bottom: 5px;">Rami Krispin, Time Series Analysis and Forecasting with the TSstudio Package, 2019. Recuperado de: <a href="https://rpubs.com/ramkrisp/TSstudioDemo" target="_blank" style="word-break: break-all;">https://rpubs.com/ramkrisp/TSstudioDemo</a></p>
+<p>[1] Markowitz, H. (1952). Portfolio Selection. The Journal of Finance, 7(1), 77-91.</p>
+<p>[2] Breiman, L. (2001). Random Forests. Machine Learning, 45(1), 5-32.</p>
+
+<br>
+<p>Por:<br>
+Jesús Benjamín Zerpa<br>
+<b>Economista</b><br>
+<a href="mailto:JesusZerpaEconomia@Gmail.Com" style="color: #333; text-decoration: none;">JesusZerpaEconomia@Gmail.Com</a></p>
+
+<div style="text-align: center; margin-top: 30px;">
   <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">
     <img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" />
   </a>
-  <span style="font-size: 14px; color: #666; display: block; margin-top: 10px;">
+  <br>
+  <span style="font-size: 14px; color: #666; display: inline-block; margin-top: 5px;">
     Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.
   </span>
 </div>
+
+<br><br>
+
+<div id="disqus_thread"></div>
+<script>
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://portafolio-11.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 </div> <section class="widget widget_blog_subscription">
 	<form action="https://formspree.io/jesuszerpaeconomia@gmail.com" target="_blank" method="post" accept-charset="utf-8" id="subscribe-blog">
@@ -313,7 +316,7 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
   function topFunction() { document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }
   window.onscroll = function () { document.getElementById("movetop").style.display = (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? "block" : "none"; };
 
-  // 1. GENERACIÓN DE DATA: 5 Años (1825 Días) - Inicia en Mayo 2021 hasta Mayo 2026
+  // 1. GENERACIÓN DE DATA: 5 Años (1825 Días)
   const dias = 1825;
   const criptos = ['BTC','ETH','SOL','BNB','ADA', 'XRP','DOT','LINK','MATIC','AVAX', 'DOGE','LTC','ATOM','UNI','XLM'];
   const colores = ['#f7931a','#627eea','#14f195','#f3ba2f','#0033ad', '#23292f','#e6007a','#2a5ada','#8247e5','#e84142', '#c2a633','#345d9d','#2e3148','#ff007a','#000000'];
@@ -321,15 +324,14 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
   let caps = [800, 350, 60, 50, 30, 25, 20, 15, 12, 10, 18, 9, 7, 6, 5]; 
   
   let fechas = [];
-  let dObj = new Date(2021, 4, 30); // Arranca 5 años exactos atrás
-  let btc = {o:[], h:[], l:[], p:[]}; // Para velas
+  let dObj = new Date(2021, 4, 30); 
+  let btc = {o:[], h:[], l:[], p:[]}; 
 
   let cHold=[10000], cP1=[10000], cP2=[10000], cP3=[10000];
   let ddH=[0], ddP1=[0], ddP2=[0], ddP3=[0];
   let mH=10000, mP1=10000, mP2=10000, mP3=10000;
   let sigBx=[], sigBy=[], sigSx=[], sigSy=[];
 
-  // Generación determinística sin fallos
   let currentBtc = 35000;
   for(let i=0; i<dias; i++) {
       fechas.push(dObj.toISOString().split('T')[0]);
@@ -337,7 +339,6 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
       
       let mktRet = (Math.random() - 0.49 + Math.sin(i/100)*0.01) * 0.05;
       
-      // Velas BTC
       let op = currentBtc;
       currentBtc *= (1 + mktRet);
       btc.o.push(op); btc.p.push(currentBtc);
@@ -345,7 +346,6 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
       btc.l.push(Math.min(op, currentBtc) * 0.98);
 
       if(i > 0) {
-          // Portafolios (Diferenciados visualmente)
           let h_val = cHold[i-1] * (1 + mktRet); cHold.push(h_val);
           mH = Math.max(mH, h_val); ddH.push((h_val - mH)/mH * 100);
           
@@ -361,7 +361,6 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
           let p3_val = cP3[i-1] * (1 + p3Ret); cP3.push(p3_val);
           mP3 = Math.max(mP3, p3_val); ddP3.push((p3_val - mP3)/mP3 * 100);
 
-          // Señales (Repartidas en todo el histórico)
           if(p3Ret > 0.02 && i%25===0) { sigBx.push(fechas[i]); sigBy.push(btc.l[i]*0.92); }
           if(p3Ret < -0.01 && i%30===0) { sigSx.push(fechas[i]); sigSy.push(btc.h[i]*1.08); }
       }
@@ -375,7 +374,7 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
   };
 
   // ----------------------------------------------------
-  // G1: BAR CHART RACE (SOLUCIÓN VALORES Y MES/AÑO)
+  // G1: BAR CHART RACE
   // ----------------------------------------------------
   let raceFramesData = [];
   let dRace = new Date(2021, 4, 30);
@@ -383,7 +382,6 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
       let mesData = [];
       dRace.setMonth(dRace.getMonth() + 1);
       let dateLabel = mesesAbrev[dRace.getMonth()] + " " + dRace.getFullYear();
-      
       for(let j=0; j<criptos.length; j++) {
           caps[j] = caps[j] * (1 + ((Math.random()-0.4)*0.1)); 
           mesData.push({name: criptos[j], val: caps[j], color: colores[j]});
@@ -392,10 +390,9 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
       raceFramesData.push({ month: dateLabel, names: mesData.map(d=>d.name), vals: mesData.map(d=>d.val), colors: mesData.map(d=>d.color) });
   }
 
-  // Se inicializa el gráfico en estático
   let lRace = JSON.parse(JSON.stringify(layoutBase));
   lRace.title = { text: 'Dominancia: ' + raceFramesData[0].month, font: {color:'#00f3ff', size:22}};
-  lRace.xaxis.range = [0, Math.max(...raceFramesData[0].vals) * 1.2]; // Auto escalado inicial
+  lRace.xaxis.range = [0, Math.max(...raceFramesData[0].vals) * 1.2];
   Plotly.newPlot('chart-race', [{ x: raceFramesData[0].vals, y: raceFramesData[0].names, type: 'bar', orientation: 'h', marker: {color: raceFramesData[0].colors}, text: raceFramesData[0].vals.map(v => '$'+v.toFixed(1)+'B'), textposition: 'outside', textfont: {color: '#fff', size:13, weight: 'bold'} }], lRace, {responsive:true});
 
   function playBarChartRace() {
@@ -405,7 +402,7 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
           let f = raceFramesData[frameIdx];
           let lUpdate = JSON.parse(JSON.stringify(layoutBase));
           lUpdate.title = { text: 'Dominancia: ' + f.month, font: {color:'#00f3ff', size:22}};
-          lUpdate.xaxis.range = [0, Math.max(...f.vals) * 1.25]; // Evita que se tape el texto
+          lUpdate.xaxis.range = [0, Math.max(...f.vals) * 1.25];
           Plotly.react('chart-race', [{ x: f.vals, y: f.names, type: 'bar', orientation: 'h', marker: {color: f.colors}, text: f.vals.map(v => '$'+v.toFixed(1)+'B'), textposition: 'outside', textfont: {color: '#fff', size:13, weight: 'bold'} }], lUpdate);
           frameIdx++;
           if(frameIdx < raceFramesData.length) setTimeout(next, 200); else btn.disabled = false;
@@ -425,47 +422,68 @@ modelo_rf.fit(df[features].dropna(), df[<span class="st">'Target'</span>].dropna
   Plotly.newPlot('chart-frontier', [{ x: efX, y: efY, mode: 'markers', type: 'scatter', marker: {color: efY, colorscale: 'Portland', size: 6}, name: 'Simulaciones' }, { x: [0.15, 0.35, 0.5], y: [0.2, 0.45, 0.55], mode: 'markers+text', text: ['P1', 'P2', 'P3(IA)'], textposition: 'top center', marker: {color: '#00ff00', size: 14, symbol:'star'}, name: 'Óptimos'}], lFront, {responsive:true});
 
   // ----------------------------------------------------
-  // G4, G5, G6: ANIMACIÓN DE PORTAFOLIOS (Bucle robusto)
+  // GRÁFICOS 4, 5, 6: ANIMACIÓN SOLUCIONADA (PLOTLY.UPDATE)
   // ----------------------------------------------------
   function initStaticEq(divId, title, colorHex, eqP) {
       let l = JSON.parse(JSON.stringify(layoutBase)); l.title = {text: title, font: {color: colorHex, size:18}};
-      Plotly.newPlot(divId, [{x: fechas, y: cHold, name: 'Buy & Hold', mode: 'lines', line: {color: '#888', dash: 'dot', width:2}}, {x: fechas, y: eqP, name: 'Bot Algorítmico', mode: 'lines', line: {color: colorHex, width: 2}}], l, {responsive:true});
+      Plotly.newPlot(divId, [
+          {x: fechas, y: cHold, name: 'Buy & Hold', mode: 'lines', line: {color: '#888', dash: 'dot', width:2}}, 
+          {x: fechas, y: eqP, name: 'Bot Algorítmico', mode: 'lines', line: {color: colorHex, width: 2}}
+      ], l, {responsive:true});
   }
   initStaticEq('chart-eq-p1', 'Portafolio 1: Bollinger (Reversión)', '#00f3ff', cP1);
   initStaticEq('chart-eq-p2', 'Portafolio 2: EMA (Momentum)', '#ff00ff', cP2);
   initStaticEq('chart-eq-p3', 'Portafolio 3: IA Random Forest', '#00ff00', cP3);
 
-  function playEq(divId, btnId, title, colorHex, eqH, eqP) {
+  function playEq(divId, btnId, eqH, eqP) {
       let btn = document.getElementById(btnId); btn.disabled = true;
-      let i = 1; let step = 30; // Animación ágil, saltos de 30 días
-      function next() {
-          i += step; if(i > dias) i = dias;
-          let lUpdate = JSON.parse(JSON.stringify(layoutBase));
-          lUpdate.title = {text: title, font: {color: colorHex, size:18}};
-          lUpdate.xaxis.range = [fechas[0], fechas[dias-1]];
-          lUpdate.yaxis.range = [0, Math.max(...eqH.slice(0,i), ...eqP.slice(0,i)) * 1.1]; // Escala Y Dinámica
-          Plotly.react(divId, [{x: fechas.slice(0,i), y: eqH.slice(0,i), name: 'Hold', mode: 'lines', line: {color: '#888', dash: 'dot', width:2}}, {x: fechas.slice(0,i), y: eqP.slice(0,i), name: 'Bot AI', mode: 'lines', line: {color: colorHex, width: 3}}], lUpdate);
-          if(i < dias) requestAnimationFrame(next); else btn.disabled = false;
+      let framesX1 = [], framesY1 = [], framesX2 = [], framesY2 = [];
+      let step = 45; // Genera saltos eficientes para evitar lag
+      
+      for (let i = 1; i < dias; i += step) {
+          framesX1.push(fechas.slice(0, i)); framesY1.push(eqH.slice(0, i));
+          framesX2.push(fechas.slice(0, i)); framesY2.push(eqP.slice(0, i));
       }
-      next();
+      framesX1.push(fechas); framesY1.push(eqH); // Frame final
+      framesX2.push(fechas); framesY2.push(eqP);
+
+      let fIdx = 0;
+      function renderNext() {
+          // Plotly.update reescribe solo la data X e Y, salvando la memoria de la web.
+          Plotly.update(divId, {
+              x: [framesX1[fIdx], framesX2[fIdx]],
+              y: [framesY1[fIdx], framesY2[fIdx]]
+          });
+          fIdx++;
+          if (fIdx < framesX1.length) { setTimeout(renderNext, 40); } else { btn.disabled = false; }
+      }
+      renderNext();
   }
 
   // ----------------------------------------------------
-  // G7: RIESGO VS RETORNO (ANIMADO EXTERNO)
+  // GRÁFICO 7: RIESGO VS RETORNO (PLOTLY.UPDATE SOLUCIONADO)
   // ----------------------------------------------------
   let lRR = JSON.parse(JSON.stringify(layoutBase)); lRR.title = {text:'Evolución Riesgo vs Retorno', font:{color:'#ff00ff', size:18}};
-  lRR.xaxis.title = 'Riesgo (Drawdown)'; lRR.yaxis.title = 'Capital ($)'; lRR.xaxis.range=[0, 0.8]; lRR.yaxis.range=[5000, mP3];
-  Plotly.newPlot('chart-risk-return', [{ x: [Math.abs(ddH[0]/100), Math.abs(ddP1[0]/100), Math.abs(ddP3[0]/100)], y: [cHold[0], cP1[0], cP3[0]], mode: 'markers+text', text: ['Hold', 'P1', 'IA'], marker: {size: [20, 20, 30], color: ['#888', '#00f3ff', '#00ff00']}, type: 'scatter' }], lRR, {responsive:true});
+  lRR.xaxis.title = 'Riesgo (Drawdown)'; lRR.yaxis.title = 'Capital ($)'; lRR.xaxis.range=[0, 0.8]; lRR.yaxis.range=[5000, mP3 * 1.1];
+  
+  Plotly.newPlot('chart-risk-return', [{ x: [Math.abs(ddH[0]/100), Math.abs(ddP1[0]/100), Math.abs(ddP3[0]/100)], y: [cHold[0], cP1[0], cP3[0]], mode: 'markers+text', text: ['Hold', 'P1', 'IA'], textposition: 'top center', marker: {size: [20, 20, 30], color: ['#888', '#00f3ff', '#00ff00']}, type: 'scatter' }], lRR, {responsive:true});
 
   function playRiskReturn() {
       let btn = document.getElementById('btn-rr'); btn.disabled = true;
-      let m=1;
-      function next() {
-          let idx = m*30; if(idx >= dias) idx = dias-1;
-          Plotly.react('chart-risk-return', [{ x: [Math.abs(ddH[idx]/100), Math.abs(ddP1[idx]/100), Math.abs(ddP3[idx]/100)], y: [cHold[idx], cP1[idx], cP3[idx]], mode: 'markers+text', text: ['Hold', 'P1', 'IA'], marker: {size: [20, 20, 30], color: ['#888', '#00f3ff', '#00ff00']}, type: 'scatter' }], lRR);
-          m++; if(m < 60) setTimeout(next, 100); else btn.disabled = false;
+      let framesX = [], framesY = [];
+      
+      for (let m = 1; m < 61; m++) {
+          let idx = m * 30; if (idx >= dias) idx = dias - 1;
+          framesX.push([Math.abs(ddH[idx]/100), Math.abs(ddP1[idx]/100), Math.abs(ddP3[idx]/100)]);
+          framesY.push([cHold[idx], cP1[idx], cP3[idx]]);
       }
-      next();
+      let fIdx = 0;
+      function renderNext() {
+          Plotly.update('chart-risk-return', { x: [framesX[fIdx]], y: [framesY[fIdx]] });
+          fIdx++;
+          if (fIdx < framesX.length) { setTimeout(renderNext, 80); } else { btn.disabled = false; }
+      }
+      renderNext();
   }
 
   // ----------------------------------------------------
