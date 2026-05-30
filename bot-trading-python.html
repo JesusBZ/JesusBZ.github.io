@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+<title>Robot de Trading Algorítmico en Python</title>
+<meta name="description" content="Desarrollo de un bot de trading algorítmico automatizado en Python utilizando la API de Bybit, Pandas y Plotly para backtesting y ejecución de estrategias cuantitativas."/>
+<meta name="keywords" content="trading algoritmico, python, bybit, bot de trading, finanzas cuantitativas, jesus zerpa, data science">
+<meta name="author" content="jesusbz.github.io">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title"  content= "Robot de Trading Algorítmico en Python"/>
+<meta property="og:image" content= "https://jesusbz.github.io/imagenes/miniatura/trading-bot.jpg"/>
+<meta property="og:description"  content="Construcción y Backtesting de un bot de trading automatizado usando Python."/>
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jesusbz.github.io/bot-trading-python.html"/>
+<meta property="og:author" content="Jesús Benjamín Zerpa"/>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NC4HGWB');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Estilos Base -->
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link rel="icon" href="favi.png" type="image/png" />
+
+<!-- Estilos de Código y Layout (Extraídos de tu web original) -->
+<style type="text/css">
+  code{white-space: pre;}
+  .sourceCode { overflow: visible; background-color: #f8f8f8; border: 1px solid #cccccc; border-radius: 4px; padding: 10px; margin: 1.5em 0; }
+  code.sourceCode { white-space: pre; position: relative; font-size: 14px; }
+  code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+  code span.st { color: #4e9a06; } /* String */
+  code span.co { color: #8f5902; font-style: italic; } /* Comment */
+  code span.dt { color: #204a87; } /* DataType */
+  code span.dv { color: #0000cf; } /* DecVal */
+  code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+  code span.fu { color: #000000; } /* Function */
+  
+  h1 { font-size: 34px; } h2 { font-size: 30px; } h3 { font-size: 24px; }
+  .main-container { max-width: 940px; margin-left: auto; margin-right: auto; }
+  body { padding-top: 51px; padding-bottom: 40px; }
+  
+  .code-box {
+    background: #FAFAFA;
+    padding: 15px 20px;
+    border: 1px solid #EAEAEA;
+    color: #237DAC;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .06);
+    box-sizing: border-box;
+    margin-bottom: 30px;
+  }
+  .code-box a { color: #237DAC; text-decoration: none; font-size: 16px; font-weight: bold; line-height: 1.8em; }
+  .code-box a:hover { text-decoration: underline; }
+  
+  #share { width: 100%; margin: 50px auto; text-align: center; }
+  #share a { width: 50px; height: 50px; display: inline-block; margin: 8px; border-radius: 50%; font-size: 24px; color: #fff; opacity: 0.75; transition: opacity 0.15s linear; line-height: 50px;}
+  #share a:hover { opacity: 1; }
+  .facebook { background: #3b5998; } .twitter { background: #55acee; } .linkedin { background: #0077b5; }
+  
+  .w3l-footer-22-main #movetop { position: fixed; bottom: 12px; right: 15px; z-index: 99; font-size: 16px; border: none; outline: none; cursor: pointer; color: #fff; width: 38px; height: 38px; background: #67bdff; padding: 0; line-height: 38px; transition: 0.5s ease-out; border-radius: 50%; }
+  .w3l-footer-22-main #movetop:hover { background: #213e54; }
+</style>
+
+<!-- Script para gráficos interactivos (Plotly.js) -->
+<script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+</head>
+
+<body>
+<!-- Navegación -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Portafolio</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html"><span class="fa fa-home"></span> Inicio</a></li>
+        <li><a href="acercade.html">Acerca de</a></li>
+        <li><a href="formulario.html">Contacto</a></li>
+        <li><a href="https://rpubs.com/JesusZ" target="_blank">Rpubs</a></li>          
+        <li><a href="https://jesusbzerpa.github.io/" target="_blank">Mi Perfil</a></li>
+        <li><a href="https://jesusbezerpa.github.io/" target="_blank">Servicios</a></li>          
+      </ul>      
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://github.com/JesusBZ" target="_blank"><span class="fa fa-github"></span></a></li>
+        <li><a href="https://www.linkedin.com/in/jesús-zerpa-807646129/" target="_blank"><span class="fab fa-linkedin"></span></a></li>
+        <li><a href="mailto:jesuszerpaeconomia@gmail.com"><span class="far fa-envelope"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Contenedor Principal -->
+<div class="container-fluid main-container">
+
+<br>
+<h1 style="text-align: center; color: #2c3e50; font-weight: bold;">
+ Desarrollo de un Robot de Trading Algorítmico en Python
+</h1>
+<br>
+
+<div style="text-align: justify;">
+<!-- BANNER (Puedes cambiar esta URL por una imagen real tuya en la carpeta de imagenes) -->
+<div class="separator" style="clear: both; text-align: center; margin-bottom: 30px;">
+  <img border="0" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=940&auto=format&fit=crop" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Trading Bot en Python"/>
+</div>
+
+<span style="font-size: 24px; color: #2c3e50;"><b>Contenido</b></span>
+<div class="code-box">
+  <a href="#Introduccion">Descripción e Introducción</a> <br />
+  <a href="#Arquitectura">1. Arquitectura del Bot y Conexión a Bybit</a> <br />
+  <a href="#Data">2. Extracción de Datos (Klines) con Pandas</a> <br />
+  <a href="#Estrategia">3. Diseño de la Estrategia: Cruce de EMA's</a> <br />
+  <a href="#Backtesting">4. Backtesting Vectorizado</a><br />
+  <a href="#Grafico">5. Visualización Interactiva (Plotly)</a> <br />
+  <a href="#Conclusiones">6. Conclusiones y Gestión de Riesgo</a> <br />
+</div>
+
+<h3 id="Introduccion"><span style="font-size: large; color: #00526d;"><b>Descripción e Introducción</b></span></h3>
+<p style="font-size: large;">
+El avance de la <strong>Ciencia de Datos</strong> y la apertura de APIs por parte de los principales exchanges de criptomonedas han democratizado el acceso a las finanzas cuantitativas. En este entrenamiento, desarrollaremos desde cero la estructura de un robot de trading automatizado (Algorithmic Trading Bot) utilizando <strong>Python</strong>.
+</p>
+<p style="font-size: large;">
+Para este caso práctico, construiremos un entorno de backtesting y ejecución orientado al exchange <strong>Bybit</strong>, enfocándonos en una estrategia clásica de seguimiento de tendencia: el cruce de Medias Móviles Exponenciales (EMA). Utilizaremos librerías como <code>pandas</code> para la manipulación de datos espaciales y <code>plotly</code> para generar gráficos financieros altamente interactivos, sustituyendo el análisis visual tradicional por reglas matemáticas estrictas.
+</p>
+
+<hr style="border-top: 1px solid #eee; margin: 30px 0;">
+
+<h3 id="Arquitectura"><span style="font-size: large; color: #00526d;"><b>1. Arquitectura del Bot y Conexión a Bybit</b></span></h3>
+<p style="font-size: large;">
+El primer paso en el trading cuantitativo es establecer una conexión robusta con el mercado. En Python, la librería <code>ccxt</code> es el estándar de la industria, ya que proporciona una interfaz unificada para conectar con más de 100 exchanges, incluyendo Bybit.
+</p>
+
+<div class="sourceCode" id="cb1">
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Importación de librerías esenciales</span>
+<span class="kw">import</span> ccxt
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> plotly.graph_objects <span class="kw">as</span> go
+<span class="kw">import</span> time
+
+<span class="co"># Inicialización del cliente de Bybit (Modo Testnet para seguridad)</span>
+exchange = ccxt.bybit({
+    <span class="st">'apiKey'</span>: <span class="st">'TU_API_KEY_AQUI'</span>,
+    <span class="st">'secret'</span>: <span class="st">'TU_SECRET_KEY_AQUI'</span>,
+    <span class="st">'enableRateLimit'</span>: <span class="kw">True</span>,
+})
+exchange.set_sandbox_mode(<span class="kw">True</span>) <span class="co"># Activar entorno de pruebas</span>
+
+<span class="kw">print</span>(<span class="st">"Conexión exitosa a Bybit. Balance disponible:"</span>, exchange.fetch_balance()[<span class="st">'USDT'</span>][<span class="st">'free'</span>])
+</code></pre>
+</div>
+
+<h3 id="Data"><span style="font-size: large; color: #00526d;"><b>2. Extracción y Limpieza de Datos (Klines)</b></span></h3>
+<p style="font-size: large;">
+Para que nuestro bot pueda analizar el mercado, necesitamos extraer el histórico de precios (Velas japonesas o OHLCV). Usaremos la función <code>fetch_ohlcv</code> y convertiremos los datos brutos en un <strong>DataFrame de Pandas</strong> para su análisis matemático.
+</p>
+
+<div class="sourceCode" id="cb2">
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> <span class="fu">obtener_datos</span>(symbol, timeframe, limit=<span class="dv">500</span>):
+    <span class="co"># Descargar velas (Open, High, Low, Close, Volume)</span>
+    velas = exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
+    
+    <span class="co"># Convertir a DataFrame</span>
+    df = pd.DataFrame(velas, columns=[<span class="st">'timestamp'</span>, <span class="st">'open'</span>, <span class="st">'high'</span>, <span class="st">'low'</span>, <span class="st">'close'</span>, <span class="st">'volume'</span>])
+    
+    <span class="co"># Formatear la fecha para hacerla legible</span>
+    df[<span class="st">'timestamp'</span>] = pd.to_datetime(df[<span class="st">'timestamp'</span>], unit=<span class="st">'ms'</span>)
+    df.set_index(<span class="st">'timestamp'</span>, inplace=<span class="kw">True</span>)
+    
+    <span class="kw">return</span> df
+
+<span class="co"># Obteniendo datos de Bitcoin a 1 hora</span>
+df_btc = obtener_datos(<span class="st">'BTC/USDT'</span>, <span class="st">'1h'</span>)
+<span class="kw">print</span>(df_btc.head())
+</code></pre>
+</div>
+
+<h3 id="Estrategia"><span style="font-size: large; color: #00526d;"><b>3. Diseño de la Estrategia: Cruce de EMA's</b></span></h3>
+<p style="font-size: large;">
+Tal como expliqué en el capítulo de <em>Análisis Técnico del Bitcoin</em>, la señal de compra/venta más clásica surge del cruce de medias móviles. En código, esto se reduce a calcular la EMA rápida y la EMA lenta, y generar una columna booleana (1 o -1) cuando ambas se crucen.
+</p>
+
+<div class="sourceCode" id="cb3">
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Cálculo de Medias Móviles Exponenciales (EMA)</span>
+df_btc[<span class="st">'EMA_9'</span>] = df_btc[<span class="st">'close'</span>].ewm(span=<span class="dv">9</span>, adjust=<span class="kw">False</span>).mean()
+df_btc[<span class="st">'EMA_21'</span>] = df_btc[<span class="st">'close'</span>].ewm(span=<span class="dv">21</span>, adjust=<span class="kw">False</span>).mean()
+
+<span class="co"># Generación de Señales (Lógica Condicional)</span>
+df_btc[<span class="st">'Signal'</span>] = <span class="dv">0</span>
+df_btc.loc[df_btc[<span class="st">'EMA_9'</span>] > df_btc[<span class="st">'EMA_21'</span>], <span class="st">'Signal'</span>] = <span class="dv">1</span>  <span class="co"># Señal de Compra (Bullish)</span>
+df_btc.loc[df_btc[<span class="st">'EMA_9'</span>] < df_btc[<span class="st">'EMA_21'</span>], <span class="st">'Signal'</span>] = -<span class="dv">1</span> <span class="co"># Señal de Venta (Bearish)</span>
+
+<span class="co"># Detectar el momento exacto del cruce</span>
+df_btc[<span class="st">'Posicion'</span>] = df_btc[<span class="st">'Signal'</span>].diff()
+</code></pre>
+</div>
+
+<h3 id="Grafico"><span style="font-size: large; color: #00526d;"><b>5. Visualización Interactiva Financiera (Plotly)</b></span></h3>
+<p style="font-size: large;">
+Una ventaja enorme de Python sobre Excel u otras herramientas, es la librería <code>Plotly</code>. Esta nos permite renderizar gráficos de Velas Japonesas (Candlesticks) altamente interactivos que pueden ser incrustados en aplicaciones web. A continuación, presento la simulación de nuestro algoritmo operando en el mercado:
+</p>
+
+<!-- CONTENEDOR DEL GRÁFICO INTERACTIVO DE PLOTLY -->
+<div id="grafico-trading" style="width:100%; height:600px; border: 1px solid #ccc; border-radius: 8px; margin: 30px 0; background: #fff;"></div>
+
+<h3 id="Conclusiones"><span style="font-size: large; color: #00526d;"><b>6. Conclusiones y Siguientes Pasos</b></span></h3>
+<p style="font-size: large;">
+El desarrollo de un Bot en Python transforma el trading de una actividad emocional a un sistema determinístico. Sin embargo, un cruce de medias móviles es solo el bloque fundacional. En mis proyectos profesionales (como <code>bot_red_neuronal.py</code> o el <code>optimizador_top10.py</code>), integro modelos de <strong>Machine Learning</strong> para predecir falsos rompimientos, así como el <strong>Modelo de Markowitz</strong> para determinar el tamaño óptimo de la posición (Position Sizing) reduciendo la exposición al riesgo del algoritmo.
+</p>
+<p style="font-size: large;">
+La automatización financiera, combinada con la Inteligencia de Negocios, es el verdadero motor para crear modelos de negocio altamente rentables y escalables en la nueva economía digital.
+</p>
+
+</div> <!-- Fin justificado -->
+
+<!-- Sección de Compartir -->
+<div id="share">
+  <p style="font-size: 16px; color: #666; font-weight: bold;">Comparte este análisis técnico:</p>
+  <a class="linkedin" href="#" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;"><i class="fab fa-linkedin"></i></a>
+  <a class="twitter" href="#" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;"><i class="fab fa-twitter"></i></a>
+</div>  
+
+<hr>
+
+<!-- Firma de Autor -->
+<div style="margin-top: 40px; margin-bottom: 40px;">
+  <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista & Científico de Datos</b><br />JesusZerpaEconomia@Gmail.Com</span>
+</div>
+
+<!-- Disqus Comments -->
+<div id="disqus_thread"></div>
+<script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://portafolio-11.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<hr />
+<!-- Pie de página -->
+<section class="w3l-footer-22-main">
+  <button onclick="topFunction()" id="movetop" title="Ir a Inicio"><span class="fa fa-arrow-up"></span></button>
+</section>
+<h5 style="text-align: center; color: #444; font-size: small; font-family: 'arial', sans-serif;">
+  Copyright © 2024 <a href="https://github.com/JesusBZ">Jesús B. Zerpa</a> | Economist & Data Scientist
+  <br><br>
+  <span style="color: #0b5394; font-size: x-small;">| FINANCE | INTELLIGENCE BUSINESS | ALGORITHMIC TRADING | MACHINE LEARNING | DATA ANALYTICS |</span>
+</h5>
+
+</div><!-- /.container-fluid -->
+
+<!-- Scripts de Bootstrap y comportamientos -->
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script>
+    window.onscroll = function () { scrollFunction() };
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("movetop").style.display = "block";
+        } else {
+            document.getElementById("movetop").style.display = "none";
+        }
+    }
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+
+<!-- SCRIPT DEL GRÁFICO INTERACTIVO DE PLOTLY -->
+<script>
+  // Generando datos simulados para el backtest del Bot de Trading
+  function generarDatosVelas() {
+    let dates = [], opens = [], highs = [], lows = [], closes = [], ema9 = [], ema21 = [];
+    let price = 60000; // Precio inicial simulado BTC
+    let e9 = price, e21 = price;
+    
+    // Generar 100 velas simuladas
+    for(let i = 0; i < 100; i++) {
+      let date = new Date();
+      date.setHours(date.getHours() - (100 - i));
+      dates.push(date.toISOString().replace('T', ' ').substring(0, 16));
+      
+      let change = (Math.random() - 0.45) * 1000; // Volatilidad
+      let o = price;
+      let h = price + (Math.random() * 500);
+      let l = price - (Math.random() * 500);
+      let c = price + change;
+      
+      if(c > h) h = c;
+      if(c < l) l = c;
+      
+      opens.push(o); highs.push(h); lows.push(l); closes.push(c);
+      
+      // Calcular EMAs
+      e9 = (c - e9) * (2/10) + e9;
+      e21 = (c - e21) * (2/22) + e21;
+      ema9.push(e9); ema21.push(e21);
+      
+      price = c;
+    }
+    return {dates, opens, highs, lows, closes, ema9, ema21};
+  }
+
+  const dataTrading = generarDatosVelas();
+
+  // Configuración del gráfico de velas
+  var traceVelas = {
+    x: dataTrading.dates, close: dataTrading.closes, high: dataTrading.highs, low: dataTrading.lows, open: dataTrading.opens,
+    type: 'candlestick', xaxis: 'x', yaxis: 'y', name: 'BTC/USDT'
+  };
+
+  // Configuración de Medias Móviles
+  var traceEMA9 = { x: dataTrading.dates, y: dataTrading.ema9, type: 'scatter', mode: 'lines', line: {color: '#1f77b4', width: 2}, name: 'EMA 9' };
+  var traceEMA21 = { x: dataTrading.dates, y: dataTrading.ema21, type: 'scatter', mode: 'lines', line: {color: '#d62728', width: 2}, name: 'EMA 21' };
+
+  var data = [traceVelas, traceEMA9, traceEMA21];
+
+  var layout = {
+    title: 'Backtesting Estrategia Algorítmica (BTC/USDT)',
+    dragmode: 'zoom',
+    margin: { r: 10, t: 40, b: 40, l: 60 },
+    showlegend: true,
+    xaxis: { autorange: true, title: 'Fecha (Hora)', rangeslider: {visible: false} },
+    yaxis: { autorange: true, title: 'Precio USDT' },
+    plot_bgcolor: '#f9f9f9',
+    paper_bgcolor: '#ffffff'
+  };
+
+  Plotly.newPlot('grafico-trading', data, layout);
+</script>
+
+<!-- WIDGET DE CHAT (El que acabamos de configurar en pasos anteriores) -->
+<!-- Pega aquí debajo tu código del chat con la burbuja verde/azul -->
+
+</body>
+</html>
