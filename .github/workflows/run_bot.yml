@@ -1,0 +1,38 @@
+name: Exec_Bot_Live
+
+on:
+  schedule:
+    # Corre automáticamente de lunes a viernes a las 22:00 UTC (Cierre de mercados)
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch: # Activa el botón de "Play" manual en la web de GitHub
+
+jobs:
+  build_and_run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar Repositorio
+      uses: actions/checkout@v3
+
+    - name: Configurar Entorno Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Instalar Dependencias Cuantitativas
+      run: |
+        python -m pip install --upgrade pip
+        pip install yfinance numpy pandas scikit-learn scipy arch matplotlib
+
+    - name: Ejecutar Inteligencia Artificial
+      run: |
+        cd bot-trading-python
+        python main.py
+
+    - name: Auto-Commit y Push de los Datos a la Web
+      run: |
+        git config --global user.name "GitHub Actions Bot"
+        git config --global user.email "actions@github.com"
+        git add bot-trading-python/history.json
+        git diff-index --quiet HEAD || git commit -m "Actualización del Portafolio: $(date +'%Y-%m-%d')"
+        git push
