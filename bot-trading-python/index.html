@@ -384,9 +384,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h2 style="text-align: center; margin-top: 20px; font-weight: bold; color: #2e6da4;">
 <span style="font-size: x-large;">Dashboard de Inversión Cuantitativa Live</span></h2>
-<p style="text-align: center; color: #666; font-size: 14px; margin-bottom: 30px;">
-    Monitoreo automatizado en tiempo real. Red Neuronal Profunda acoplada con Filtro Asimétrico GJR-GARCH.
-</p>
+
+<div class="well well-sm" style="background-color: #f4f9fc; border-left: 4px solid #2fa4e7; font-size: 14px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+    <strong><i class="fa fa-microchip"></i> Arquitectura del Sistema:</strong> Este dashboard visualiza en tiempo real el comportamiento de un agente de <strong>Inteligencia Artificial (Red Neuronal Profunda)</strong> acoplado a un filtro de riesgo asimétrico <strong>GJR-GARCH</strong>. El algoritmo escanea la volatilidad del mercado y reasigna el capital dinámicamente entre Renta Variable y Criptoactivos para maximizar la rentabilidad y comprimir los drawdowns.
+</div>
+
+<div class="tradingview-widget-container" style="margin-bottom: 30px; border-radius: 4px; overflow: hidden; border: 1px solid #e0e0e0;">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {"proName": "BITSTAMP:BTCUSD", "title": "Bitcoin"},
+    {"proName": "BITSTAMP:ETHUSD", "title": "Ethereum"},
+    {"proName": "BINANCE:SOLUSDT", "title": "Solana"},
+    {"proName": "NASDAQ:NVDA", "title": "NVIDIA"},
+    {"proName": "NASDAQ:MSFT", "title": "Microsoft"},
+    {"proName": "AMEX:SPY", "title": "S&P 500"}
+  ],
+  "showSymbolLogo": true,
+  "colorTheme": "light",
+  "isTransparent": false,
+  "displayMode": "adaptive",
+  "locale": "es"
+}
+  </script>
+</div>
 
 <div class="row" style="margin-bottom: 25px;">
     <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
@@ -501,47 +523,63 @@ document.addEventListener("DOMContentLoaded", function() {
             const fundCurve = historyData.map(r => r.portfolio_value);
             const spyCurve = historyData.map(r => r.spy_value);
             
-            // Dibujar la curva interactiva en el Canvas
+            // Crear gradiente futurista para la IA
             const chartCanvas = document.getElementById('equityLiveChart').getContext('2d');
+            let gradientFund = chartCanvas.createLinearGradient(0, 0, 0, 400);
+            gradientFund.addColorStop(0, 'rgba(0, 212, 255, 0.5)'); // Cian brillante
+            gradientFund.addColorStop(1, 'rgba(0, 212, 255, 0.02)'); // Transparente en la base
+
             new Chart(chartCanvas, {
                 type: 'line',
                 data: {
                     labels: timeLabels,
                     datasets: [
                         {
-                            label: 'Fondo Inteligente (IA + GJR-GARCH)',
+                            label: 'Motor IA + GARCH',
                             data: fundCurve,
-                            borderColor: '#7a43b6',
-                            backgroundColor: 'rgba(122, 67, 182, 0.04)',
-                            borderWidth: 2.5,
+                            borderColor: '#00d4ff', // Línea cian neón
+                            backgroundColor: gradientFund,
+                            borderWidth: 3,
                             pointRadius: 0,
+                            pointHoverRadius: 6,
+                            pointBackgroundColor: '#fff',
+                            pointBorderColor: '#00d4ff',
                             fill: true,
-                            tension: 0.1
+                            tension: 0.4 // Esto curva las líneas dándole aspecto fluido y futurista
                         },
                         {
-                            label: 'S&P 500 Index (SPY Pasivo)',
+                            label: 'S&P 500 Index (Benchmark)',
                             data: spyCurve,
-                            borderColor: '#999999',
-                            borderWidth: 1.5,
-                            borderDash: [4, 4],
+                            borderColor: '#b0b0b0',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
                             pointRadius: 0,
                             fill: false,
-                            tension: 0.1
+                            tension: 0.4
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
                     scales: {
                         x: { grid: { display: false } },
                         y: { 
-                            grid: { color: 'rgba(0,0,0,0.04)' },
+                            grid: { color: 'rgba(0,0,0,0.05)' },
                             ticks: { callback: val => '$' + val }
                         }
                     },
                     plugins: {
-                        legend: { position: 'top', labels: { boxWidth: 12 } }
+                        legend: { position: 'top', labels: { boxWidth: 12, font: { weight: 'bold' } } },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#00d4ff',
+                            bodyFont: { size: 14 }
+                        }
                     }
                 }
             });
