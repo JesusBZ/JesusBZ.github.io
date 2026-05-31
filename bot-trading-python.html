@@ -1,534 +1,694 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-<title>De Trader Manual a Quant: Crea tu Robot con Inteligencia Artificial</title>
-<meta name="description" content="Códigos en lenguaje R y Python, tratamiento y modelaje de datos; training en Business Intelligence, Portafolios, Big Data, Machine Learning, Neural Network, Time Series, Forecast, Dashboard Financiero y Evaluación de Proyectos."/>
-<meta name="keywords" content="jesús benjamín zerpa, economía, business intelligence, finanzas, presupuesto, control">
-<meta name="author" content="jesusbz.github.io">    
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 
+
+<title>Dashboard Cuantitativo Híbrido</title>
+<meta name="description" content="Simulación en vivo y directo de un fondo de inversión híbrido que combina Inteligencia Artificial Profunda (MLP) con filtrado de riesgo asimétrico GJR-GARCH operando sobre criptomonedas y renta variable americana."/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title"  content= "Dashboard Cuantitativo Híbrido"/>
+<meta property="og:image" content= "https://jesusbz.github.io/imagenes/miniatura/power-map.jpg"/>
+<meta property="og:description"  content="Simulación automatizada multiactivo mediante IA en vivo."/>
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jesusbz.github.io/index.html"/>
+<meta property="og:author" content="Jesús Benjamín Zerpa"/>
+<meta name="twitter:card" content="summary_large_image" /> 
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NC4HGWB');</script>
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-<link rel="icon" href="favi.png" type="image/png" />
+<link  rel="icon"   href="favi.png" type="image/png" />
 
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 
 <style type="text/css">
-/* Estilos Base idénticos a modelo-ventas.html */
-h1 { font-size: 34px; }
-h1.title { font-size: 38px; }
-h2 { font-size: 30px; }
-h3 { font-size: 24px; }
-h4 { font-size: 18px; }
-h5 { font-size: 16px; }
-h6 { font-size: 12px; }
-.table th:not([align]) { text-align: left; }
-
-body { padding-top: 51px; padding-bottom: 40px; }
-.main-container { max-width: 940px; margin-left: auto; margin-right: auto; }
-code { color: inherit; background-color: rgba(0, 0, 0, 0.04); }
-img { max-width:100%; }
-p { font-size:16px; text-align : justify; line-height: 1.8; margin-bottom: 20px;}
-
-.dropdown-submenu { position: relative; }
-.dropdown-submenu>.dropdown-menu { top: 0; left: 100%; margin-top: -6px; margin-left: -1px; border-radius: 0 6px 6px 6px; }
-.dropdown-submenu:hover>.dropdown-menu { display: block; }
-
-.w3l-footer-22-main #movetop { position: fixed; bottom: 12px; right: 15px; z-index: 99; font-size: 16px; border: none; outline: none; cursor: pointer; color: #fff; width: 38px; height: 38px; background: #67bdff; padding: 0; line-height: 38px; transition: 0.5s ease-out; border-radius: 50%; }
-.w3l-footer-22-main #movetop:hover { background: #213e54; }
-
-/* Estilos específicos Dark Quant para gráficos */
-.plotly-container { width: 100%; margin: 10px 0 40px 0; border-radius: 12px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); background: #111111; border: 1px solid #222; }
-.plotly-tall { height: 600px; } .plotly-med { height: 500px; }
-.info-box { background: #1a252f; color: #fff; padding: 20px; border-radius: 8px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-.code-box { background: #f8f9fa; padding: 15px 20px; border-left: 4px solid #00f3ff; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; }
-.code-box a { color: #1a252f; text-decoration: none; font-weight: 600; line-height: 1.8em; display: block;}
-.code-box a:hover { color: #00f3ff; }
-
-.btn-quant {
-  display: inline-block; background: #00f3ff; color: #111; font-weight: bold; font-size: 14px;
-  padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,243,255,0.3); transition: all 0.3s ease; margin-top: 15px;
+h1 {
+  font-size: 34px;
 }
-.btn-quant:hover { background: #fff; box-shadow: 0 4px 15px rgba(255,255,255,0.6); transform: translateY(-2px); }
-.btn-quant:disabled { background: #444; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
-pre.sourceCode { display: block !important; visibility: visible !important; opacity: 1 !important; background-color: #1e1e1e !important; color: #d4d4d4 !important; padding: 20px !important; border-radius: 8px !important; overflow-x: auto !important; font-family: Consolas, "Courier New", monospace !important; font-size: 14px !important; line-height: 1.6 !important; border: 1px solid #333 !important; margin-bottom: 30px !important; }
-.sourceCode code { white-space: pre; display: block; }
-code span.kw { color: #569cd6; font-weight: bold; } code span.st { color: #ce9178; } code span.co { color: #6a9955; font-style: italic; } code span.fu { color: #dcdcaa; }
-
-/* BOTONERA DE REDES SOCIALES (Centrada y con correo) */
-#share { width: 100%; margin: 15px auto; text-align: center; display: flex; justify-content: center; gap: 15px; }
-#share a { display: flex !important; align-items: center !important; justify-content: center !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; font-size: 20px !important; color: #fff !important; text-decoration: none !important; opacity: 0.85; transition: all 0.2s ease-in-out; }
-#share a:hover { opacity: 1; transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-.facebook { background: #3b5998 !important; } .twitter { background: #55acee !important; } .linkedin { background: #0077b5 !important; } .mail { background: #dd4b39 !important; }
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+.video-responsive {
+    height: 0;
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    position: relative;
+    }
+.video-responsive iframe, .video-responsive object, .video-responsive embed {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    } 
+#share {
+	width: 100%;
+  	margin: 100px auto;
+  	text-align: center;
+}
+
+/* buttons */
+
+#share a {
+	width: 50px;
+  	height: 50px;
+  	display: inline-block;
+  	margin: 8px;
+  	border-radius: 50%;
+  	font-size: 24px;
+  	color: #fff;
+	opacity: 0.75;
+	transition: opacity 0.15s linear;
+}
+
+#share a:hover {
+	opacity: 1;
+}
+
+/* icons */
+
+#share i {
+  	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+/* colors */
+
+.facebook {
+ 	background: #3b5998;
+}
+
+.twitter {
+  	background: #55acee;
+}
+
+.googleplus {
+  	background: #000000;
+}
+
+.linkedin {
+  	background: #0077b5;
+}
+
+.pinterest {
+  	background: #cb2027;
+}	
+</style>
+
 </head>
 
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NC4HGWB"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="container-fluid main-container">
 
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="index.html">Portafolio</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="index.html"><span class="fa fa-home"></span> Inicio</a></li>
-        <li><a href="acercade.html">Acerca de</a></li>
-        <li><a href="formulario.html">Contacto</a></li>
-        <li><a href="https://rpubs.com/JesusZ" rel="nofollow" target="_blank">Rpubs</a></li>
-        <li><a href="https://jesusbzerpa.github.io/" rel="nofollow" target="_blank">Mi Perfil</a></li>
-        <li><a href="https://jesusbezerpa.github.io/" rel="nofollow" target="_blank">Servicios</a></li>          
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Recursos <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="https://onedrive.live.com/download?resid=97B9EE70067CDD34%212341&authkey=ABrxoNLIj1Woc0Q">Manual Excel</a></li> 
-            <li><a href="https://jesusbz.github.io/cursos.html" target="_blank">Cursos</a></li>                
-          </ul>
-        </li> 
-      </ul>      
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank"><span class="fa fa fa fa-skype"></span></a></li>
-        <li><a href="https://t.me/jesusbz21" rel="nofollow" target="_blank"><span class="fa fa fa fa-telegram"></span></a></li>
-        <li><a href="https://www.linkedin.com/in/jesús-zerpa-807646129/" rel="nofollow" target="_blank"><span class="fab fa-linkedin"></span></a></li>
-        <li><a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank"><span class="fa fa-scribd"></span></a></li>
-        <li><a href="https://github.com/JesusBZ" rel="nofollow" target="_blank"><span class="fa fa-github"></span></a></li>
-        <li><a href="mailto:jesuszerpaeconomia@gmail.com"><span class="far fa-envelope"></span></a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid main-container">
-<div class="fluid-row" id="header"></div>
-<br>
-<h2 style="text-align: justify;">Masterclass Quant: Arquitectura de un Robot Algorítmico en Python</h2>
-<br>
-
-<p>Bienvenidos a esta inmersión técnica. El ecosistema financiero actual exige superar el análisis manual. Sistematizar, modelar matemáticamente y ejecutar mediante algoritmos es la única vía para aislar el sesgo cognitivo. En esta sesión, diseñaremos la arquitectura de un bot cuantitativo evaluando <b>3 estrategias avanzadas sobre 3 portafolios cripto distintos</b>, respaldado con un backtest de 5 años ininterrumpidos (1825 días de data).</p>
-
-<div class="code-box">
-  <h4 style="margin-top: 0; color: #1a252f;"><i class="fas fa-sitemap"></i> Índice Cuantitativo</h4>
-  <a href="#P1">1. Topología del Mercado: Bar Chart Race a 5 Años</a>
-  <a href="#P2">2. Ingeniería de Carteras: Heatmap y Frontera Eficiente</a>
-  <a href="#P3">3. Arquitectura Matemática: Las 3 Estrategias Algorítmicas</a>
-  <a href="#P4">4. Backtesting Interactivo: Bot vs Buy & Hold (Simulación Animada)</a>
-  <a href="#P5">5. Gestión de Riesgos Institucional y Hostíng del Algoritmo</a>
-</div>
-
-<br>
-<h3 id="P1">1. Topología del Mercado: Bar Chart Race (Top 15 Criptos)</h3>
-<p>La selección de activos es crítica. Un algoritmo no puede operar ineficiencias de mercado sin liquidez. Hemos seleccionado 15 activos distribuidos en tres cestas temáticas. Haz clic en el botón inferior para observar la evolución orgánica e histórica.</p>
-
-<button id="btn-race" class="btn-quant" onclick="playBarChartRace()">▶ INICIAR CARRERA (2021 - 2026)</button>
-<div id="chart-race" class="plotly-container plotly-med"></div>
-
-<br>
-<h3 id="P2">2. Ingeniería de Carteras: Correlación y Eficiencia</h3>
-<p>Dividiremos nuestro universo de 15 activos en 3 portafolios de 5 monedas cada uno. El siguiente <b>Heatmap</b> nos revela qué activos se mueven en tándem, permitiendo a la IA neutralizar la volatilidad sistémica.</p>
-
-<div id="chart-heatmap" class="plotly-container plotly-med"></div>
-
-<p>Aplicando la Teoría Moderna de Carteras de Harry Markowitz, el bot calcula la <b>Frontera Eficiente</b> para encontrar la ponderación exacta que maximiza el Ratio de Sharpe:</p>
-<p>$$ S_p = \frac{E[R_p] - R_f}{\sigma_p} $$</p>
-
-<div id="chart-frontier" class="plotly-container plotly-med"></div>
-
-<br>
-<h3 id="P3">3. Arquitectura Matemática: Las 3 Estrategias Algorítmicas</h3>
-<div class="info-box">
-  <ul style="margin:0; padding-left: 20px;">
-    <li style="margin-bottom: 10px;"><b>Portafolio 1 (Bluechips - Reversión a la Media):</b> Activos: BTC, ETH, SOL, BNB, ADA. Utiliza Bandas de Bollinger para explotar la elasticidad del precio calculando el Z-Score. Compra cuando el precio cae por debajo de $\mu - 2\sigma$ y vende en $\mu$.</li>
-    <li style="margin-bottom: 10px;"><b>Portafolio 2 (Altcoins - Trend Following):</b> Activos: XRP, DOT, LINK, MATIC, AVAX. Captura el Momentum usando Medias Móviles Exponenciales (EMA).</li>
-    <li><b style="color: #00f3ff;">Portafolio 3 (Alpha AI - Machine Learning):</b> Activos mixtos. Un modelo Random Forest Classifier entrena árboles de decisión para predecir la dirección diaria.</li>
-  </ul>
-</div>
-
-<pre class="sourceCode python"><code><span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">import</span> numpy <span class="kw">as</span> np
-<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
-<span class="kw">import</span> ccxt
-
-<span class="co"># 1. ENTORNO ALGORÍTMICO Y EXTRACCIÓN HISTÓRICA (5 AÑOS)</span>
-exchange = ccxt.binance({<span class="st">'enableRateLimit'</span>: <span class="kw">True</span>})
-raw_data = exchange.fetch_ohlcv(<span class="st">'BTC/USDT'</span>, <span class="st">'1d'</span>, limit=<span class="dv">1825</span>)
-df = pd.DataFrame(raw_data, columns=[<span class="st">'timestamp'</span>, <span class="st">'open'</span>, <span class="st">'high'</span>, <span class="st">'low'</span>, <span class="st">'close'</span>, <span class="st">'volume'</span>])
-df[<span class="st">'fecha'</span>] = pd.to_datetime(df[<span class="st">'timestamp'</span>], unit=<span class="st">'ms'</span>)
-
-<span class="co"># 2. VECTORIZACIÓN DE ESTRATEGIAS CUANTITATIVAS</span>
-<span class="co"># Portafolio 1: Reversión a la Media (Bollinger Bands)</span>
-df[<span class="st">'MA_20'</span>] = df[<span class="st">'close'</span>].rolling(window=<span class="dv">20</span>).mean()
-df[<span class="st">'STD_20'</span>] = df[<span class="st">'close'</span>].rolling(window=<span class="dv">20</span>).std()
-df[<span class="st">'Z_Score'</span>] = (df[<span class="st">'close'</span>] - df[<span class="st">'MA_20'</span>]) / df[<span class="st">'STD_20'</span>]
-df[<span class="st">'Señal_P1'</span>] = np.where(df[<span class="st">'Z_Score'</span>] < -<span class="dv">2</span>, <span class="dv">1</span>, np.where(df[<span class="st">'Z_Score'</span>] > <span class="dv">2</span>, -<span class="dv">1</span>, <span class="dv">0</span>))
-
-<span class="co"># Portafolio 2: Trend Following (EMA Crossover)</span>
-df[<span class="st">'EMA_Rápida'</span>] = df[<span class="st">'close'</span>].ewm(span=<span class="dv">10</span>, adjust=<span class="kw">False</span>).mean()
-df[<span class="st">'EMA_Lenta'</span>] = df[<span class="st">'close'</span>].ewm(span=<span class="dv">30</span>, adjust=<span class="kw">False</span>).mean()
-df[<span class="st">'Señal_P2'</span>] = np.where(df[<span class="st">'EMA_Rápida'</span>] > df[<span class="st">'EMA_Lenta'</span>], <span class="dv">1</span>, -<span class="dv">1</span>)
-
-<span class="co"># 3. FEATURE ENGINEERING Y MODELADO GENERATIVO CON MACHINE LEARNING (P3)</span>
-df[<span class="st">'Retorno'</span>] = df[<span class="st">'close'</span>].pct_change()
-df[<span class="st">'Volatilidad_Log'</span>] = df[<span class="st">'Retorno'</span>].rolling(<span class="dv">20</span>).std() * np.sqrt(<span class="dv">365</span>)
-df[<span class="st">'RSI_14'</span>] = 100 - (100 / (1 + (df[<span class="st">'Retorno'</span>].clip(lower=<span class="dv">0</span>).rolling(14).mean() / 
-                                  df[<span class="st">'Retorno'</span>].clip(upper=<span class="dv">0</span>).abs().rolling(14).mean())))
-
-<span class="co"># Definición de Target Binario Asimétrico</span>
-df[<span class="st">'Target'</span>] = np.where(df[<span class="st">'Retorno'</span>].shift(-<span class="dv">1</span>) > <span class="dv">0.005</span>, <span class="dv">1</span>, <span class="dv">0</span>)
-features = [<span class="st">'Z_Score'</span>, <span class="st">'Volatilidad_Log'</span>, <span class="st">'RSI_14'</span>]
-df_clean = df[features + [<span class="st">'Target'</span>]].dropna()
-
-<span class="co"># Entrenamiento Predictivo</span>
-X, y = df_clean[features], df_clean[<span class="st">'Target'</span>]
-modelo_rf = RandomForestClassifier(n_estimators=<span class="dv">250</span>, max_depth=<span class="dv">6</span>, random_state=<span class="dv">42</span>)
-modelo_rf.fit(X, y)
-</code></pre>
-
-<br>
-<h3 id="P4">4. Backtesting 5 Años: Bot vs Buy & Hold</h3>
-<p>Las matemáticas no mienten. Vamos a reproducir los últimos 1825 días de operativa partiendo de un capital base de $10,000 USD. Las animaciones asíncronas han sido ralentizadas ópticamente para facilitar el análisis de cómo las estrategias operan el mercado con el tiempo.</p>
-
-<button id="btn-p1" class="btn-quant" onclick="playEq('chart-eq-p1', 'btn-p1', cHold, cP1)">▶ SIMULAR P1</button>
-<div id="chart-eq-p1" class="plotly-container plotly-med"></div>
-
-<button id="btn-p2" class="btn-quant" onclick="playEq('chart-eq-p2', 'btn-p2', cHold, cP2)">▶ SIMULAR P2</button>
-<div id="chart-eq-p2" class="plotly-container plotly-med"></div>
-
-<button id="btn-p3" class="btn-quant" onclick="playEq('chart-eq-p3', 'btn-p3', cHold, cP3)">▶ SIMULAR P3 (IA)</button>
-<div id="chart-eq-p3" class="plotly-container plotly-med"></div>
-
-<p>Para auditar la eficacia de la gestión patrimonial, el siguiente gráfico dinámico muestra la evolución interactiva de la relación <b>Riesgo (Drawdown) vs Rentabilidad</b> mensual.</p>
-
-<button id="btn-rr" class="btn-quant" onclick="playRiskReturn()">▶ ANIMAR RIESGO VS RETORNO</button>
-<div id="chart-risk-return" class="plotly-container plotly-med"></div>
-
-<br>
-<h3 id="P5">5. Gestión de Riesgos Institucional y Auditoría de Velas</h3>
-<p>El Santo Grial del análisis cuantitativo no es ganar más, sino perder menos. El <b>Máximo Drawdown</b> mide la peor caída de capital desde un pico histórico. Observa cómo el portafolio de Inteligencia Artificial logra blindar el capital durante los peores colapsos del mercado.</p>
-
-<div id="chart-drawdown" class="plotly-container plotly-med"></div>
-
-<p>Analizando la curtosis y el comportamiento de las colas gruesas (*Fat Tails*) mediante un <b>Gráfico de Violín</b>:</p>
-<div id="chart-violin" class="plotly-container plotly-med"></div>
-
-<p>Finalmente, realizamos una auditoría visual directa. El gráfico de <b>Velas Japonesas</b> inferior abarca el backtest de los <b>5 años completos (2021 a 2026)</b>. Puedes usar la barra inferior (*Range Slider*) para acercar zonas específicas.</p>
-
-<div id="chart-candles" class="plotly-container plotly-tall"></div>
-
-<div class="info-box">
-  <h4 style="margin-top:0; color:#00f3ff;"><i class="fas fa-server"></i> ¿Dónde alojar este Algoritmo (Hosting)?</h4>
-  <p style="margin-bottom:0;">Para que un bot opere 24/7 sin latencia, tu PC local no sirve. Las mejores opciones de grado institucional son:</p>
-  <ul style="margin-top:10px;">
-    <li><b>AWS EC2 (Amazon Web Services):</b> Alta disponibilidad y latencias menores a 5ms si eliges el clúster en Tokio.</li>
-    <li><b>Google Cloud Compute:</b> Excelente integración si usas BigQuery para entrenamientos ML pesados.</li>
-  </ul>
-</div>
-
-<br>
-<hr />
-
-<div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-  <span style="font-size: 16px; font-weight: bold; color: #333; display: block; margin-bottom: 10px;">Puedes compartir este material:</span>
-  <div id="share">
-    <a class="facebook" href="#" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fa fa-facebook"></i></a>
-    <a class="twitter" href="#" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fa fa-twitter"></i></a>
-    <a class="linkedin" href="#" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(window.location.href), 'mywin', 'width=500,height=500'); return false;" ><i class="fa fa-linkedin"></i></a>
-    <a class="mail" href="mailto:?subject=Masterclass%20Quant:%20Robot%20Algorítmico&body=Revisa%20este%20post:%20" onclick="this.href += encodeURIComponent(window.location.href);" ><i class="fa fa-envelope"></i></a>
-  </div>
-</div>
-<hr />
-
-</div> <div class="container-fluid main-container">
-<h3 class="text-center" style="margin-top: 20px; margin-bottom: 30px; font-weight: bold; color: #1a252f;">Otros Artículos Recomendados</h3>
-<div id="postsCarousel" class="carousel slide" data-ride="carousel" style="background: #fdfdfd; padding: 25px; border-radius: 8px; border: 1px solid #e3e3e3; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 50px;">
-  <div class="carousel-inner">
-    <div class="item active">
-      <div style="text-align: center; padding: 10px 45px;">
-        <h4><a href="modelo-ventas.html" style="color: #1f8ab1; font-weight: bold; text-decoration: none;">Pronóstico de Ventas en RStudio</a></h4>
-        <p style="text-align: center; font-size: 14px; color: #555; margin-bottom: 0;">Modelado predictivo de series temporales utilizando arquitecturas ARIMA, SARIMA, ETS y TSLM con validación cruzada avanzada.</p>
-      </div>
-    </div>
-    <div class="item">
-      <div style="text-align: center; padding: 10px 45px;">
-        <h4><a href="index.html" style="color: #1f8ab1; font-weight: bold; text-decoration: none;">Business Intelligence y Control Presupuestario</a></h4>
-        <p style="text-align: center; font-size: 14px; color: #555; margin-bottom: 0;">Modelos analíticos dinámicos orientados al diseño de Dashboards financieros interactivos y optimización de recursos.</p>
-      </div>
-    </div>
-  </div>
-  <a class="left carousel-control" href="#postsCarousel" data-slide="prev" style="background: none; color: #1f8ab1; width: 5%;"><span class="glyphicon glyphicon-chevron-left"></span></a>
-  <a class="right carousel-control" href="#postsCarousel" data-slide="next" style="background: none; color: #1f8ab1; width: 5%;"><span class="glyphicon glyphicon-chevron-right"></span></a>
-</div>
-
-<div style="text-align: left; margin-top: 40px; margin-bottom: 30px;">
-  <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista</b><br />JesusZerpaEconomia@Gmail.Com</span>
-</div>
-
-<div style="text-align: left; margin-bottom: 50px;">
-  <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="float: left; margin-right: 15px;">
-    <img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" />
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
   </a>
-  <span style="font-size: medium; display: block; line-height: 1.5;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
-  <div style="clear: both;"></div>
+</li>
+<li>
+  <a href="acercade.html">Acerca de</a>
+</li>
+<li>
+  <a href="formulario.html">Contacto</a>
+</li>
+<li>
+  <a href="https://rpubs.com/JesusZ"rel="nofollow" target="_blank">Rpubs</a>
+</li>          
+<li>
+  <a href="https://jesusbzerpa.github.io/"rel="nofollow" target="_blank">Mi Perfil</a>
+</li>
+<li>
+  <a href="https://jesusbezerpa.github.io/"rel="nofollow" target="_blank">Servicios</a>
+</li>          
+   <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+   Recursos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://onedrive.live.com/download?resid=97B9EE70067CDD34%212341&authkey=ABrxoNLIj1Woc0Q">Manual Excel</a>
+    </li>  
+     <li>
+      <a href="https://jesusbz.github.io/cursos.html" target="_blank">Cursos</a>
+    </li>                
+   			
+      </ul>
+    </li> 
+    </ul>      
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-skype"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://t.me/jesusbz21" rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-telegram"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/jesús-zerpa-807646129/" rel="nofollow" target="_blank">
+    <span class="fab fa fab fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-scribd"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/JesusBZ" rel="nofollow" target="_blank">
+    <span class="fa fa fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:jesuszerpaeconomia@gmail.com">
+    <span class="far fa far fa-envelope"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div></div></div><div class="fluid-row" id="header">
+
+
+
+
 </div>
 
-<div id="disqus_thread"></div>
+<h2 style="text-align: center; margin-top: 20px; font-weight: bold; color: #2e6da4;">
+<span style="font-size: x-large;">Dashboard de Inversión Cuantitativa Live</span></h2>
+<p style="text-align: center; color: #666; font-size: 14px; margin-bottom: 30px;">
+    Monitoreo automatizado en tiempo real. Red Neuronal Profunda acoplada con Filtro Asimétrico GJR-GARCH.
+</p>
+
+<div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
+        <div style="background: #f4f9fc; border-left: 4px solid #2fa4e7; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <h5 style="margin-top: 0; color: #777; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Capital de Control</h5>
+            <h3 style="margin: 5px 0 0 0; color: #333; font-weight: bold;">$2,000.00</h3>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
+        <div style="background: #f4f9fc; border-left: 4px solid #51a351; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <h5 style="margin-top: 0; color: #777; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Balance en Vivo</h5>
+            <h3 id="lbl-live-balance" style="margin: 5px 0 0 0; color: #51a351; font-weight: bold;">Cargando...</h3>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
+        <div style="background: #f4f9fc; border-left: 4px solid #f89406; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <h5 style="margin-top: 0; color: #777; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Rendimiento Neto</h5>
+            <h3 id="lbl-live-return" style="margin: 5px 0 0 0; color: #f89406; font-weight: bold;">Cargando...</h3>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6" style="margin-bottom: 15px;">
+        <div style="background: #f4f9fc; border-left: 4px solid #bd362f; padding: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <h5 style="margin-top: 0; color: #777; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Drawdown / Sharpe</h5>
+            <h3 id="lbl-live-risk" style="margin: 5px 0 0 0; color: #bd362f; font-weight: bold; font-size: 18px; padding-top: 5px;">Cargando...</h3>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default" style="border-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.05);">
+    <div class="panel-heading" style="background-color: #f5f5f5; font-weight: bold; color: #2e6da4;">
+        <i class="fa fa-line-chart"></i> Evolución Patrimonial vs S&P 500 (Actualización Automática Diario)
+    </div>
+    <div class="panel-body">
+        <div style="position: relative; width: 100%; height: 360px;">
+            <canvas id="equityLiveChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default" style="border-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 30px;">
+    <div class="panel-heading" style="background-color: #f5f5f5; font-weight: bold; color: #2e6da4;">
+        <i class="fa fa-th-list"></i> Composición del Fondo y Asignación de Pesos Actuales (Filtro GARCH Activo)
+    </div>
+    <div class="panel-body" style="padding: 0;">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" style="margin-bottom: 0; font-size: 13px;">
+                <thead>
+                    <tr style="background: #ebf3f7; color: #2e6da4;">
+                        <th>Activo</th>
+                        <th>Clase de Activo</th>
+                        <th style="text-align: right;">Peso Objetivo</th>
+                        <th style="text-align: right;">Capital Asignado</th>
+                    </tr>
+                </thead>
+                <tbody id="live-allocation-rows">
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #999; padding: 25px;">
+                            <i class="fa fa-spinner fa-spin"></i> Leyendo registros del servidor...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    (function() { 
-    var d = document, s = d.createElement('script');
-    s.src = 'https://portafolio-11.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-    })();
+document.addEventListener("DOMContentLoaded", function() {
+    // Lectura asíncrona del historial actualizado por GitHub Actions
+    fetch('history.json')
+        .then(response => response.json())
+        .then(historyData => {
+            if (!historyData || historyData.length === 0) return;
+            
+            // Extraer el estado más reciente de la simulación
+            const lastUpdate = historyData[historyData.length - 1];
+            
+            // Inyectar datos en tarjetas HTML
+            document.getElementById('lbl-live-balance').innerText = '$' + parseFloat(lastUpdate.portfolio_value).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('lbl-live-return').innerText = '+' + parseFloat(lastUpdate.net_return).toFixed(2) + '%';
+            document.getElementById('lbl-live-risk').innerText = lastUpdate.max_drawdown + '% / ' + lastUpdate.sharpe_ratio;
+            
+            // Diccionario para asignar descripciones institucionales
+            const categoryMap = {
+                'BTC-USD': 'Criptomoneda', 'ETH-USD': 'Criptomoneda', 'SOL-USD': 'Criptomoneda',
+                'MSFT': 'Tecnología / IA', 'NVDA': 'Tecnología / IA', 'JPM': 'Finanzas / Banca',
+                'JNJ': 'Salud / Defensivo', 'XOM': 'Energía', 'PG': 'Consumo Masivo',
+                'GLD': 'Oro (Refugio)', 'TLT': 'Bonos Tesoro (Renta Fija)'
+            };
+            
+            // Reconstruir dinámicamente la tabla de posiciones
+            const tableBody = document.getElementById('live-allocation-rows');
+            tableBody.innerHTML = '';
+            
+            for (const [ticker, metrics] of Object.entries(lastUpdate.allocations)) {
+                const tr = document.createElement('tr');
+                const cashValue = (lastUpdate.portfolio_value * (metrics.weight_pct / 100)).toFixed(2);
+                const isCrypto = ticker.includes('USD');
+                
+                tr.innerHTML = `
+                    <td><strong>${ticker}</strong></td>
+                    <td><span class="label" style="background-color: ${isCrypto ? '#7a43b6' : '#2fa4e7'}">${categoryMap[ticker] || 'Acción'}</span></td>
+                    <td style="text-align: right; font-weight: bold; color: #333;">${metrics.weight_pct.toFixed(2)}%</td>
+                    <td style="text-align: right; color: #444;">$${parseFloat(cashValue).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+                `;
+                tableBody.appendChild(tr);
+            }
+            
+            // Mapear arrays cronológicos para graficación
+            const timeLabels = historyData.map(r => r.date);
+            const fundCurve = historyData.map(r => r.portfolio_value);
+            const spyCurve = historyData.map(r => r.spy_value);
+            
+            // Dibujar la curva interactiva en el Canvas
+            const chartCanvas = document.getElementById('equityLiveChart').getContext('2d');
+            new Chart(chartCanvas, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [
+                        {
+                            label: 'Fondo Inteligente (IA + GJR-GARCH)',
+                            data: fundCurve,
+                            borderColor: '#7a43b6',
+                            backgroundColor: 'rgba(122, 67, 182, 0.04)',
+                            borderWidth: 2.5,
+                            pointRadius: 0,
+                            fill: true,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'S&P 500 Index (SPY Pasivo)',
+                            data: spyCurve,
+                            borderColor: '#999999',
+                            borderWidth: 1.5,
+                            borderDash: [4, 4],
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { 
+                            grid: { color: 'rgba(0,0,0,0.04)' },
+                            ticks: { callback: val => '$' + val }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top', labels: { boxWidth: 12 } }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error("Fallo crítico cargando la matriz histórica JSON:", error);
+        });
+});
 </script>
 
-</div> <section class="w3l-footer-22-main">
-<button onclick="topFunction()" id="movetop" title="Ir a Inicio">
-<span class="fa fa-arrow-up"></span>
-</button>
-</section>
+<hr>
+<div style="text-align: center;">
+<span style="font-size: 7;"><b>Puedes compartir este material:</b></span>
+<div id="share">
 
+  <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjesusbz.github.io%2Fpowermap.html" target="_blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-facebook"></i></a>
+
+  <a class="twitter" href="https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fjesusbz.github.io%2Fpowermap.html" target="blank"  onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-twitter"></i></a>
+
+  <a class="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https://jesusbz.github.io/powermap.html" target="blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="fa fa-linkedin"></i></a>
+
+  <a class="googleplus" href="mailto:?subject=&body=https%3A%2F%2Fjesusbz.github.io%2Fpowermap.html&recipient=" target="blank" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" ><i class="far fa-envelope"></i></a>
+  
+</div>  
+</div>
+<hr>
+
+<span style="font-size: medium;"><br /></span>
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
+</span></span></span><br />
+<br />
+<div style="text-align: center;">
+<div style="text-align: left;">
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+</div>
+<div style="text-align: center;">
+<div style="text-align: left;">
+<br /></div>
+</div>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://portafolio-11.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+<hr />
 <h5>
 <div>
 <div style="text-align: center;">
-<span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;"><span style="color: #444444;">Copyright&nbsp;</span></span><span style="font-size: small;">©&nbsp;</span></span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">2026&nbsp;</span></span><span style="font-size: small;"><a href="https://github.com/JesusBZ">Jesús B. Zerpa</a> </span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">| Economist &amp; Data Scientist |&nbsp;Site created with</span></span><span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">&nbsp;<a href="https://rstudio.com/" rel="nofollow" target="_blank">RStudio</a>&nbsp;</span></div>
+<span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;"><span style="color: #444444;">Copyright&nbsp;</span></span><span style="font-size: small;">©&nbsp;</span></span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">2020&nbsp;</span></span><span style="font-size: small;"><a href="https://github.com/JesusBZ">Jesús B. Zerpa</a> </span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">| Economist &amp; Data Scientist |&nbsp;Site created with</span></span><span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">&nbsp;<a href="https://rstudio.com/" rel="nofollow" target="_blank">RStudio</a><a href="https://www.blogger.com/blogger.g?blogID=3272883731674348977"></a>&nbsp;</span></div>
 <div style="text-align: center;">
 <span style="color: blue; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: xx-small;"><br /></span></div>
 <div style="text-align: center;">
-<span style="color: #0b5394; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: x-small;">| FINANCE | INTELLIGENCE BUSSINES | ALGORITHMIC TRADING | MACHINE LEARNING | DATA ANALYTICS | FORECASTING | TIME SERIES | FINANCIAL DASHBOARD | FINANCIAL BUDGET | SPATIAL ECONOMETRICS |&nbsp;</span></div>
+<span style="color: #0b5394; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: x-small;">| FINANCE | INTELLIGENCE BUSSINES | FORECASTING | TIME SERIES | FINANCIAL DASHBOARD | FINANCIAL BUDGET | SPATIAL ECONOMETRICS |&nbsp;</span></div>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"></link>
 <br />
 <div style="text-align: center;">
-    <a class="fa fa-skype" href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank" style="margin: 0 5px; font-size:18px; color:#555; text-decoration:none;"></a>
-    <a class="fa fa-telegram" href="https://t.me/jesusbz21" rel="nofollow" target="_blank" style="margin: 0 5px; font-size:18px; color:#555; text-decoration:none;"></a>
-    <a class="fab fa-r-project" href="https://rpubs.com/JesusZ" rel="nofollow" target="_blank" style="margin: 0 5px; font-size:18px; color:#555; text-decoration:none;"></a>
-    <a class="fa fa-linkedin" href="https://www.linkedin.com/in/jesús-zerpa-807646129/" rel="nofollow" target="_blank" style="margin: 0 5px; font-size:18px; color:#555; text-decoration:none;"></a>
-    <a class="fa fa-scribd" href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank" style="margin: 0 5px; font-size:18px; color:#555; text-decoration:none;"></a>
-    <a class="fa fa-github" href="https://github.com/JesusBZ" rel="nofollow" target="_blank" style="margin: 0 5px; font-size:18px; color:#555; text-decoration:none;"></a>
+<a class="fa fa-skype" href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-telegram" href="https://t.me/jesusbz21" rel="nofollow" target="_blank"></a>
+    <a class="fab fa-r-project" href="https://rpubs.com/JesusZ" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-linkedin" href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" rel="nofollow" target="_blank"></a>
+     <a class="fa fa-scribd" href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow" target="_blank"></a>
+    <a class="fa fa-github" href="https://github.com/JesusBZ" rel="nofollow" target="_blank"></a>
 </div>
 </div>
 </h5>
-<br><br>
 
+
+
+</div>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
 
 <script>
-  // 1. DATA MASTER GENERATION: 5 Años (1825 Días) - Rango Temporal: Mayo 2021 a Mayo 2026
-  const dias = 1825;
-  const criptos = ['BTC','ETH','SOL','BNB','ADA', 'XRP','DOT','LINK','MATIC','AVAX', 'DOGE','LTC','ATOM','UNI','XLM'];
-  const colores = ['#f7931a','#627eea','#14f195','#f3ba2f','#0033ad', '#23292f','#e6007a','#2a5ada','#8247e5','#e84142', '#c2a633','#345d9d','#2e3148','#ff007a','#000000'];
-  const mesesAbrev = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-  let caps = [800, 350, 60, 50, 30, 25, 20, 15, 12, 10, 18, 9, 7, 6, 5]; 
-  
-  let fechas = [];
-  let dObj = new Date(2021, 4, 30); 
-  let btc = {o:[], h:[], l:[], p:[]}; 
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
 
-  let cHold=[10000], cP1=[10000], cP2=[10000], cP3=[10000];
-  let ddH=[0], ddP1=[0], ddP2=[0], ddP3=[0];
-  let mH=10000, mP1=10000, mP2=10000, mP3=10000;
-  let sigBx=[], sigBy=[], sigSx=[], sigSy=[];
-
-  let currentBtc = 35000;
-  for(let i=0; i<dias; i++) {
-      fechas.push(dObj.toISOString().split('T')[0]);
-      dObj.setDate(dObj.getDate() + 1);
-      
-      let mktRet = (Math.random() - 0.49 + Math.sin(i/120)*0.012) * 0.045;
-      let op = currentBtc; currentBtc *= (1 + mktRet);
-      btc.o.push(op); btc.p.push(currentBtc);
-      btc.h.push(Math.max(op, currentBtc) * 1.015);
-      btc.l.push(Math.min(op, currentBtc) * 0.985);
-
-      if(i > 0) {
-          let h_val = cHold[i-1] * (1 + mktRet); cHold.push(h_val);
-          mH = Math.max(mH, h_val); ddH.push((h_val - mH)/mH * 100);
-          
-          let p1Ret = mktRet < -0.018 ? Math.abs(mktRet)*0.85 : mktRet*0.55;
-          let p1_val = cP1[i-1] * (1 + p1Ret); cP1.push(p1_val);
-          mP1 = Math.max(mP1, p1_val); ddP1.push((p1_val - mP1)/mP1 * 100);
-          
-          let p2Ret = mktRet > 0.008 ? mktRet*1.25 : (mktRet < 0 ? -0.001 : mktRet);
-          let p2_val = cP2[i-1] * (1 + p2Ret); cP2.push(p2_val);
-          mP2 = Math.max(mP2, p2_val); ddP2.push((p2_val - mP2)/mP2 * 100);
-          
-          let p3Ret = mktRet > 0 ? mktRet*1.55 : (mktRet < -0.015 ? 0.005 : -0.001); 
-          let p3_val = cP3[i-1] * (1 + p3Ret); cP3.push(p3_val);
-          mP3 = Math.max(mP3, p3_val); ddP3.push((p3_val - mP3)/mP3 * 100);
-
-          if(p3Ret > 0.022 && i%24===0) { sigBx.push(fechas[i]); sigBy.push(btc.l[i]*0.94); }
-          if(p3Ret < -0.012 && i%28===0) { sigSx.push(fechas[i]); sigSy.push(btc.h[i]*1.06); }
-      }
-  }
-
-  const layoutBase = {
-      plot_bgcolor: '#111111', paper_bgcolor: '#111111', font: { color: '#e0e0e0', family: 'Consolas, monospace' },
-      margin: { l: 65, r: 40, t: 70, b: 65 }, xaxis: { gridcolor: '#2a2a2a', tickfont: {color: '#888'} },
-      yaxis: { gridcolor: '#2a2a2a', tickfont: {color: '#888'} }, legend: { orientation: "h", y: -0.18, x: 0, font: {color: '#fff'} }
-  };
-
-  // ----------------------------------------------------
-  // G1: BAR CHART RACE CORREGIDO
-  // ----------------------------------------------------
-  let raceFramesData = [];
-  let dRace = new Date(2021, 4, 30);
-  for(let m=0; m<60; m++) { 
-      let mesData = []; dRace.setMonth(dRace.getMonth() + 1);
-      let dateLabel = mesesAbrev[dRace.getMonth()] + " " + dRace.getFullYear();
-      for(let j=0; j<criptos.length; j++) {
-          caps[j] = caps[j] * (1 + ((Math.random()-0.39)*0.09)); 
-          mesData.push({name: criptos[j], val: caps[j], color: colores[j]});
-      }
-      mesData.sort((a,b) => a.val - b.val);
-      raceFramesData.push({ month: dateLabel, names: mesData.map(d=>d.name), vals: mesData.map(d=>d.val), colors: mesData.map(d=>d.color) });
-  }
-
-  let lRace = JSON.parse(JSON.stringify(layoutBase));
-  lRace.title = { text: 'Dominancia: ' + raceFramesData[0].month, font: {color:'#00f3ff', size:22}};
-  lRace.xaxis.range = [0, Math.max(...raceFramesData[0].vals) * 1.25];
-  Plotly.newPlot('chart-race', [{ x: raceFramesData[0].vals, y: raceFramesData[0].names, type: 'bar', orientation: 'h', marker: {color: raceFramesData[0].colors}, text: raceFramesData[0].vals.map(v => '$'+v.toFixed(1)+'B'), textposition: 'outside', textfont: {color: '#fff', size:12, weight: 'bold'} }], lRace, {responsive:true});
-
-  function playBarChartRace() {
-      let btn = document.getElementById('btn-race'); btn.disabled = true;
-      let frameIdx = 0;
-      function next() {
-          let f = raceFramesData[frameIdx];
-          let lUpdate = JSON.parse(JSON.stringify(layoutBase));
-          lUpdate.title = { text: 'Dominancia: ' + f.month, font: {color:'#00f3ff', size:22}};
-          lUpdate.xaxis.range = [0, Math.max(...f.vals) * 1.3];
-          Plotly.react('chart-race', [{ x: f.vals, y: f.names, type: 'bar', orientation: 'h', marker: {color: f.colors}, text: f.vals.map(v => '$'+v.toFixed(1)+'B'), textposition: 'outside', textfont: {color: '#fff', size:12, weight: 'bold'} }], lUpdate);
-          frameIdx++; if(frameIdx < raceFramesData.length) setTimeout(next, 200); else btn.disabled = false;
-      }
-      next();
-  }
-
-  // G2 & G3: HEATMAP Y FRONTERA EFICIENTE
-  let zCorr = []; for(let i=0; i<15; i++) { let f=[]; for(let j=0; j<15; j++) { f.push(i===j?1: 0.35+Math.random()*0.55); } zCorr.push(f); }
-  let lHeat = JSON.parse(JSON.stringify(layoutBase)); lHeat.title = {text:'Matriz de Correlación', font:{color:'#00f3ff', size:18}};
-  Plotly.newPlot('chart-heatmap', [{ z: zCorr, x: criptos, y: criptos, type: 'heatmap', colorscale: 'Viridis' }], lHeat, {responsive:true});
-
-  let efX = [], efY = []; for(let i=0; i<300; i++) { let vol = 0.1+(i*0.0025); efX.push(vol); efY.push(0.04+Math.sqrt(vol)*0.43+(Math.random()*0.04)); }
-  let lFront = JSON.parse(JSON.stringify(layoutBase)); lFront.title = {text:'Frontera Eficiente de Markowitz', font:{color:'#00f3ff', size:18}};
-  Plotly.newPlot('chart-frontier', [{ x: efX, y: efY, mode: 'markers', type: 'scatter', marker: {color: efY, colorscale: 'Portland', size: 6}, name: 'Simulaciones' }, { x: [0.15, 0.34, 0.49], y: [0.19, 0.43, 0.57], mode: 'markers+text', text: ['P1', 'P2', 'P3(IA)'], textposition: 'top center', marker: {color: '#00ff00', size: 14, symbol:'star'}, name: 'Óptimos'}], lFront, {responsive:true});
-
-  // ----------------------------------------------------
-  // G4, G5, G6: EQUIDAD RALENTIZADA ELEGANTEMENTE (220ms)
-  // ----------------------------------------------------
-  function initStaticEq(divId, title, colorHex, eqP) {
-      let l = JSON.parse(JSON.stringify(layoutBase)); l.title = {text: title, font: {color: colorHex, size:18}};
-      Plotly.newPlot(divId, [
-          {x: fechas, y: cHold, name: 'Buy & Hold', mode: 'lines', line: {color: '#888', dash: 'dot', width:2}}, 
-          {x: fechas, y: eqP, name: 'Bot Algorítmico', mode: 'lines', line: {color: colorHex, width: 3.5}}
-      ], l, {responsive:true});
-  }
-  initStaticEq('chart-eq-p1', 'Portafolio 1: Bollinger (Reversión)', '#00f3ff', cP1);
-  initStaticEq('chart-eq-p2', 'Portafolio 2: EMA (Momentum)', '#ff00ff', cP2);
-  initStaticEq('chart-eq-p3', 'Portafolio 3: IA Random Forest', '#00ff00', cP3);
-
-  function playEq(divId, btnId, eqH, eqP) {
-      let btn = document.getElementById(btnId); btn.disabled = true;
-      let framesX1 = [], framesY1 = [], framesX2 = [], framesY2 = [];
-      let step = 12; 
-      
-      for (let i = 1; i < dias; i += step) {
-          framesX1.push(fechas.slice(0, i)); framesY1.push(eqH.slice(0, i));
-          framesX2.push(fechas.slice(0, i)); framesY2.push(eqP.slice(0, i));
-      }
-      framesX1.push(fechas); framesY1.push(eqH); 
-      framesX2.push(fechas); framesY2.push(eqP);
-
-      let fIdx = 0;
-      function renderNext() {
-          Plotly.update(divId, {
-              x: [framesX1[fIdx], framesX2[fIdx]],
-              y: [framesY1[fIdx], framesY2[fIdx]]
-          });
-          fIdx++;
-          if (fIdx < framesX1.length) { setTimeout(renderNext, 220); } else { btn.disabled = false; }
-      }
-      renderNext();
-  }
-
-  // ----------------------------------------------------
-  // G7: EVOLUCIÓN RIESGO VS RETORNO (BURBUJAS COMPLETAS Y MUY LENTO)
-  // ----------------------------------------------------
-  let lRR = JSON.parse(JSON.stringify(layoutBase)); 
-  lRR.title = {text:'Evolución Riesgo vs Retorno', font:{color:'#ff00ff', size:18}};
-  lRR.xaxis.title = 'Riesgo (Máx Drawdown %)'; lRR.yaxis.title = 'Capital ($)';
-  
-  // MARGENES EXPANSORES EXCLUSIVOS: Evitan que cualquier burbuja se recorte
-  lRR.xaxis.range = [-5, 85]; 
-  lRR.yaxis.range = [1000, mP3 * 1.25];
-  
-  Plotly.newPlot('chart-risk-return', [{ 
-      x: [Math.abs(ddH[0]), Math.abs(ddP1[0]), Math.abs(ddP3[0])], 
-      y: [cHold[0], cP1[0], cP3[0]], 
-      mode: 'markers+text', 
-      text: ['Hold', 'P1', 'IA'], 
-      textposition: 'top center', 
-      marker: {size: [24, 24, 34], color: ['#888', '#00f3ff', '#00ff00']}, 
-      type: 'scatter' 
-  }], lRR, {responsive:true});
-
-  function playRiskReturn() {
-      let btn = document.getElementById('btn-rr'); btn.disabled = true;
-      let m = 1;
-      function renderNext() {
-          let idx = m * 30; if (idx >= dias) idx = dias - 1;
-          let currentLayout = JSON.parse(JSON.stringify(lRR));
-          
-          Plotly.react('chart-risk-return', [{ 
-              x: [Math.abs(ddH[idx]), Math.abs(ddP1[idx]), Math.abs(ddP3[idx])], 
-              y: [cHold[idx], cP1[idx], cP3[idx]], 
-              mode: 'markers+text', 
-              text: ['Hold', 'P1', 'IA'], 
-              textposition: 'top center', 
-              marker: {size: [24, 24, 34], color: ['#888', '#00f3ff', '#00ff00']}, 
-              type: 'scatter' 
-          }], currentLayout);
-          
-          m++; 
-          // 450ms de retardo permite auditar perfectamente las esferas de rendimiento
-          if (m <= 60) { setTimeout(renderNext, 450); } else { btn.disabled = false; }
-      }
-      renderNext();
-  }
-
-  // G8, G9 & G10: COMPONENTES INTERACTIVOS FINALES
-  let lDD = JSON.parse(JSON.stringify(layoutBase)); lDD.title = {text:'Máximo Drawdown Institucional', font:{color:'#ff00ff', size:18}}; lDD.yaxis.ticksuffix='%'; lDD.yaxis.range=[-85, 0];
-  Plotly.newPlot('chart-drawdown', [{x: fechas, y: ddH, name: 'Hold', type: 'scatter', fill: 'tozeroy', line: {color:'rgba(136,136,136,0.5)'}}, {x: fechas, y: ddP1, name: 'P1', type: 'scatter', fill: 'tozeroy', line: {color:'rgba(0,243,255,0.4)'}}, {x: fechas, y: ddP3, name: 'P3(IA)', type: 'scatter', fill: 'tozeroy', line: {color:'rgba(0,255,0,0.6)'}}], lDD, {responsive:true});
-
-  let lViolin = JSON.parse(JSON.stringify(layoutBase)); lViolin.title = {text:'Riesgo Estructural: Fat Tails', font:{color:'#00f3ff', size:18}};
-  Plotly.newPlot('chart-violin', [{type:'violin', y: cHold.map((v,i,a)=>i===0?0:(v-a[i-1])/a[i-1]), name:'Hold', line:{color:'#888'}}, {type:'violin', y: cP3.map((v,i,a)=>i===0?0:(v-a[i-1])/a[i-1]), name:'IA Bot', line:{color:'#00ff00'}}], lViolin, {responsive:true});
-
-  let lVelas = JSON.parse(JSON.stringify(layoutBase)); lVelas.title = {text:'Auditoría de IA (Backtest Completo 2021-2026)', font:{color:'#00ff00', size:18}};
-  lVelas.xaxis.rangeslider = {visible: true}; lVelas.margin.b = 50;
-  Plotly.newPlot('chart-candles', [
-      { x: fechas, open: btc.o, high: btc.h, low: btc.l, close: btc.p, type: 'candlestick', name: 'BTC/USDT', increasing: {line:{color:'#00ff00'}}, decreasing: {line:{color:'#ff0055'}} },
-      { x: sigBx, y: sigBy, type: 'scatter', mode: 'markers', name: 'Compra IA', marker: {symbol: 'triangle-up', color: '#00ff00', size: 11} },
-      { x: sigSx, y: sigSy, type: 'scatter', mode: 'markers', name: 'Venta IA', marker: {symbol: 'triangle-down', color: '#ff00ff', size: 11} }
-  ], lVelas, {responsive:true});
-
-  // FUNCIÓN MOVETOP
-  function topFunction() {
-      document.body.scrollTop = 0; 
-      document.documentElement.scrollTop = 0;
-  }
-  window.onscroll = function () {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-          document.getElementById("movetop").style.display = "block";
-      } else {
-          document.getElementById("movetop").style.display = "none";
-      }
-  };
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+<script id="dsq-count-scr" src="//portafolio-11.disqus.com/count.js" async></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169665920-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169665920-1');
+gtag('set', {'user_id': 'USER_ID'}); 
+ga('set', 'userId', 'USER_ID');    
+</script> 
+		
 </body>
 </html>
