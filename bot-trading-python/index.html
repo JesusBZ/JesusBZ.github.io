@@ -58,10 +58,6 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="../styles.css" type="text/css" />
-
-
-
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -532,7 +528,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             fill: false,
                             tension: 0.1
                         }
-                    }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -687,7 +683,7 @@ $(document).ready(function () {
 
   gtag('config', 'UA-169665920-1');
 gtag('set', {'user_id': 'USER_ID'}); 
-ga('set', 'userId', 'USER_ID');    
+// ga('set', 'userId', 'USER_ID'); // ga is not defined, removed to prevent ReferenceError
 </script> 
     
 </body>
