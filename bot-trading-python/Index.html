@@ -460,9 +460,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Lectura asíncrona del historial actualizado por GitHub Actions
     // Lectura asíncrona del historial actualizado por GitHub Actions con ruta absoluta segura
-fetch('/bot-trading-python/history.json')
+    fetch('/bot-trading-python/history.json')
         .then(response => response.json())
         .then(historyData => {
             if (!historyData || historyData.length === 0) return;
