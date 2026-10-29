@@ -69,7 +69,40 @@ function fnBuildTabStrip()
 {
  var szHTML=
   "<html><head><style>.clScroll {font:8pt Courier New;color:"+c_rgszClr[6]+";cursor:default;line-height:10pt;}"+
-  ".clScroll2 {font:10pt Arial;color:"+c_rgszClr[6]+";cursor:default;line-height:11pt;}</style></head>"+
+  ".clScroll2 {font:10pt Arial;color:"+c_rgszClr[6]+";cursor:default;line-height:11pt;}</style>  <link rel="stylesheet" href="css/post-enhancement.css" />
+
+  <!-- Advanced Quantitative SEO & Author Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Financial Dashboard en Excel y Visual Basic",
+    "description": "Cuadro de mando financiero automatizado con macros VBA y reporting ejecutivo.",
+    "image": "https://jesusbz.github.io/imagenes/miniatura/principal.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Jesús Benjamín Zerpa",
+      "jobTitle": "Economist & Quantitative Data Scientist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Consorcio Credicard"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/jesús-zerpa-807646129/",
+        "https://github.com/JesusBZ",
+        "https://rpubs.com/JesusZ"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Jesús Benjamín Zerpa"
+    },
+    "url": "https://jesusbz.github.io/FinancialDashboard.htm",
+    "keywords": ["Quantitative Finance", "RStudio", "Python", "Econometrics", "Machine Learning", "Time Series", "Value at Risk", "GARCH"]
+  }
+  </script>
+
+</head>"+
   "<body onclick=\"event.returnValue=false;\" ondragstart=\"event.returnValue=false;\" onselectstart=\"event.returnValue=false;\" bgcolor="+c_rgszClr[4]+" topmargin=0 leftmargin=0><table cellpadding=0 cellspacing=0 width=100%>"+
   "<tr><td colspan=6 height=1 bgcolor="+c_rgszClr[2]+"></td></tr>"+
   "<tr><td style=\"font:1pt\">&nbsp;<td>"+
@@ -77,7 +110,8 @@ function fnBuildTabStrip()
   "<td valign=top id=tdScroll class=\"clScroll2\" onclick=\"parent.fnScrollTabs(0);\" ondblclick=\"parent.fnScrollTabs(0);\" onmouseover=\"parent.fnMouseOverScroll(1);\" onmouseout=\"parent.fnMouseOutScroll(1);\"><a>&lt</a></td>"+
   "<td valign=top id=tdScroll class=\"clScroll2\" onclick=\"parent.fnScrollTabs(1);\" ondblclick=\"parent.fnScrollTabs(1);\" onmouseover=\"parent.fnMouseOverScroll(2);\" onmouseout=\"parent.fnMouseOutScroll(2);\"><a>&gt</a></td>"+
   "<td valign=top id=tdScroll class=\"clScroll\" onclick=\"parent.fnFastScrollTabs(1);\" onmouseover=\"parent.fnMouseOverScroll(3);\" onmouseout=\"parent.fnMouseOutScroll(3);\"><a>&#187;</a></td>"+
-  "<td style=\"font:1pt\">&nbsp;<td></tr></table></body></html>";
+  "<td style=\"font:1pt\">&nbsp;<td></tr></table>  <script src="js/futuristic-app.js"></script>
+</body></html>";
 
  with (frames['frScroll'].document) {
   open("text/html","replace");
@@ -90,7 +124,40 @@ function fnBuildTabStrip()
   "<style>A:link,A:visited,A:active {text-decoration:none;"+"color:"+c_rgszClr[3]+";}"+
   ".clTab {cursor:hand;background:"+c_rgszClr[1]+";font:9pt Arial;padding-left:3px;padding-right:3px;text-align:center;}"+
   ".clBorder {background:"+c_rgszClr[2]+";font:1pt;}"+
-  "</style></head><body onload=\"parent.fnInit();\" onselectstart=\"event.returnValue=false;\" ondragstart=\"event.returnValue=false;\" bgcolor="+c_rgszClr[4]+
+  "</style>  <link rel="stylesheet" href="css/post-enhancement.css" />
+
+  <!-- Advanced Quantitative SEO & Author Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Financial Dashboard en Excel y Visual Basic",
+    "description": "Cuadro de mando financiero automatizado con macros VBA y reporting ejecutivo.",
+    "image": "https://jesusbz.github.io/imagenes/miniatura/principal.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Jesús Benjamín Zerpa",
+      "jobTitle": "Economist & Quantitative Data Scientist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Consorcio Credicard"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/jesús-zerpa-807646129/",
+        "https://github.com/JesusBZ",
+        "https://rpubs.com/JesusZ"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Jesús Benjamín Zerpa"
+    },
+    "url": "https://jesusbz.github.io/FinancialDashboard.htm",
+    "keywords": ["Quantitative Finance", "RStudio", "Python", "Econometrics", "Machine Learning", "Time Series", "Value at Risk", "GARCH"]
+  }
+  </script>
+
+</head><body onload=\"parent.fnInit();\" onselectstart=\"event.returnValue=false;\" ondragstart=\"event.returnValue=false;\" bgcolor="+c_rgszClr[4]+
   " topmargin=0 leftmargin=0><table id=tbTabs cellpadding=0 cellspacing=0>";
 
  var iCellCount=(c_lTabs+1)*2;
@@ -134,7 +201,8 @@ function fnBuildTabStrip()
   szHTML+="</tr>";
  }
 
- szHTML+="</table></body></html>";
+ szHTML+="</table>  <script src="js/futuristic-app.js"></script>
+</body></html>";
  with (frames['frTabs'].document) {
   open("text/html","replace");
   charset=document.charset;
@@ -311,6 +379,39 @@ function fnSetActiveSheet(iSh)
   <x:ProtectWindows>False</x:ProtectWindows>
  </x:ExcelWorkbook>
 </xml><![endif]-->
+  <link rel="stylesheet" href="css/post-enhancement.css" />
+
+  <!-- Advanced Quantitative SEO & Author Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Financial Dashboard en Excel y Visual Basic",
+    "description": "Cuadro de mando financiero automatizado con macros VBA y reporting ejecutivo.",
+    "image": "https://jesusbz.github.io/imagenes/miniatura/principal.jpg",
+    "author": {
+      "@type": "Person",
+      "name": "Jesús Benjamín Zerpa",
+      "jobTitle": "Economist & Quantitative Data Scientist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Consorcio Credicard"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/jesús-zerpa-807646129/",
+        "https://github.com/JesusBZ",
+        "https://rpubs.com/JesusZ"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Jesús Benjamín Zerpa"
+    },
+    "url": "https://jesusbz.github.io/FinancialDashboard.htm",
+    "keywords": ["Quantitative Finance", "RStudio", "Python", "Econometrics", "Machine Learning", "Time Series", "Value at Risk", "GARCH"]
+  }
+  </script>
+
 </head>
 
 <frameset rows="*,39" border=0 width=0 frameborder=no framespacing=0>
@@ -318,8 +419,9 @@ function fnSetActiveSheet(iSh)
  <frame src="FinancialDashboard_archivos/tabstrip.htm" name="frTabs" marginwidth=0 marginheight=0>
  <noframes>
   <body>
-   <p>Esta p�gina utiliza marcos que su explorador no admite.</p>
-  </body>
+   <p>Esta pgina utiliza marcos que su explorador no admite.</p>
+    <script src="js/futuristic-app.js"></script>
+</body>
  </noframes>
 </frameset>
 </html>

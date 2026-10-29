@@ -1,0 +1,673 @@
+/* ==========================================================================
+   JesusBZ - Post & R Project Enhancement Theme
+   Author: Jesús Benjamín Zerpa | Economist & Data Scientist
+   Estética: Futuristic Light / Clean Corporate FinTech for R Markdown Pages
+   Hard Overrides against Bootstrap 3 Cerulean Gradients & Dated Styles
+   ========================================================================== */
+
+@import url("futuristic-corporate.css");
+
+/* Page Background & Typography */
+html, body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif !important;
+  line-height: 1.75 !important;
+  font-size: 16px !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Main Post Paper Container */
+.main-container, .container-fluid.main-container {
+  max-width: 1040px !important;
+  margin: 20px auto 40px auto !important;
+  padding: 2.5rem 2.5rem 5rem 2.5rem !important;
+  background-color: #ffffff !important;
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6, .section h1, .section h2, .section h3 {
+  color: #091e42 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.025em !important;
+  margin-top: 2rem !important;
+  margin-bottom: 0.85rem !important;
+  text-shadow: none !important;
+}
+
+h1, h1.title, .section h1 { 
+  font-size: 2.2rem !important; 
+  line-height: 1.25 !important;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.5rem !important;
+}
+
+h2, .section h2 { 
+  font-size: 1.65rem !important; 
+  border-bottom: 1px solid #e2e8f0 !important; 
+  padding-bottom: 0.5rem !important; 
+}
+
+h3, .section h3 { font-size: 1.35rem !important; }
+h4, .section h4 { font-size: 1.15rem !important; }
+
+/* Paragraphs and Text */
+p, div, span {
+  font-family: inherit;
+}
+
+p {
+  color: #334155 !important;
+  font-size: 1.025rem !important;
+  line-height: 1.8 !important;
+  margin-bottom: 1.25rem !important;
+}
+
+/* Links */
+a {
+  color: #0052cc !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: #0747a6 !important;
+  text-decoration: underline !important;
+}
+
+/* ==========================================================================
+   KILL CERULEAN BLUE GRADIENT NAVBAR
+   ========================================================================== */
+.navbar-default, 
+.navbar-inverse, 
+.navbar,
+.navbar-fixed-top {
+  background-image: none !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: 0 2px 10px -1px rgba(15, 23, 42, 0.05) !important;
+  min-height: 64px !important;
+  filter: none !important;
+}
+
+.navbar-default .navbar-brand, 
+.navbar-brand {
+  color: #091e42 !important;
+  font-weight: 800 !important;
+  font-size: 1.15rem !important;
+  letter-spacing: -0.02em !important;
+  text-shadow: none !important;
+  padding: 20px 15px !important;
+  height: 64px !important;
+  line-height: 24px !important;
+}
+
+.navbar-default .navbar-nav > li > a, 
+.navbar-nav > li > a {
+  position: relative !important;
+  color: #334155 !important;
+  font-weight: 600 !important;
+  font-size: 0.925rem !important;
+  text-shadow: none !important;
+  padding: 20px 14px !important;
+  height: 64px !important;
+  line-height: 24px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  background-image: none !important;
+  background-color: transparent !important;
+}
+
+.navbar-default .navbar-nav > li > a::after,
+.navbar-nav > li > a::after {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  right: 14px;
+  height: 2.5px;
+  background: #0052cc;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar-default .navbar-nav > li > a:hover::after,
+.navbar-default .navbar-nav > .active > a::after {
+  transform: scaleX(1);
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-nav > li > a:hover {
+  color: #0052cc !important;
+  transform: translateY(-1px);
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Caret & Dropdown */
+.navbar-nav .caret {
+  border-top-color: #64748b !important;
+  border-bottom-color: #64748b !important;
+}
+
+.dropdown-menu {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.1) !important;
+  padding: 0.5rem 0 !important;
+}
+
+.dropdown-menu > li > a {
+  padding: 8px 18px !important;
+  font-size: 0.9rem !important;
+  color: #334155 !important;
+  text-shadow: none !important;
+  background-image: none !important;
+}
+
+.dropdown-menu > li > a:hover {
+  background-color: #eff6ff !important;
+  color: #0052cc !important;
+  background-image: none !important;
+}
+
+/* ==========================================================================
+   High-Definition Images & Visual Perfection
+   ========================================================================== */
+img {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.08) !important;
+  border: 1px solid #e2e8f0 !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 1.5rem auto !important;
+  display: block;
+}
+
+img:hover {
+  box-shadow: 0 10px 28px -4px rgba(15, 23, 42, 0.14) !important;
+  transform: translateY(-2px);
+}
+
+.imgRedonda {
+  border-radius: 9999px !important;
+  border: 3px solid #0052cc !important;
+  box-shadow: 0 4px 16px rgba(0, 82, 204, 0.2) !important;
+  width: 90px !important;
+  height: 90px !important;
+}
+
+/* ==========================================================================
+   Futuristic IDE Syntax Highlighting on Deep Dark Background (#0b0f19)
+   ========================================================================== */
+pre, .sourceCode, div.sourceCode, pre.sourceCode {
+  background-color: #0b0f19 !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 10px !important;
+  padding: 1.35rem 1.25rem 1.25rem 1.25rem !important;
+  font-family: "JetBrains Mono", "Fira Code", Menlo, Monaco, Consolas, monospace !important;
+  font-size: 0.88rem !important;
+  line-height: 1.65 !important;
+  overflow-x: auto !important;
+  margin: 1.75rem 0 !important;
+  box-shadow: 0 8px 24px -4px rgba(11, 15, 25, 0.25) !important;
+  position: relative !important;
+}
+
+pre code, code.sourceCode {
+  color: #f1f5f9 !important;
+  background-color: transparent !important;
+  font-family: inherit !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* Syntax Highlighting Tokens (Futuristic Quant Theme) */
+code span.kw { color: #c084fc !important; font-weight: 700 !important; } /* Keywords: neon purple */
+code span.dt { color: #38bdf8 !important; } /* DataType: electric cyan */
+code span.dv, code span.bn, code span.fl { color: #fbbf24 !important; font-weight: 600 !important; } /* Numbers: neon gold */
+code span.ch, code span.st { color: #34d399 !important; } /* Strings: neon mint / emerald */
+code span.co, code span.do, code span.cv { color: #64748b !important; font-style: italic !important; } /* Comments: muted slate */
+code span.ot { color: #38bdf8 !important; } /* Other */
+code span.al { color: #f43f5e !important; font-weight: bold !important; } /* Alert */
+code span.fu { color: #60a5fa !important; font-weight: 600 !important; } /* Functions: bright blue */
+code span.cf { color: #f472b6 !important; font-weight: 700 !important; } /* ControlFlow: pink */
+code span.op { color: #94a3b8 !important; } /* Operators */
+code span.va { color: #e2e8f0 !important; } /* Variables */
+code span.cn { color: #38bdf8 !important; font-weight: 600 !important; } /* Constants */
+code span.sc { color: #a78bfa !important; } /* SpecialChar */
+code span.ss { color: #34d399 !important; } /* SpecialString */
+
+/* Inline Code */
+code {
+  background-color: #f1f5f9 !important;
+  color: #0052cc !important;
+  border-radius: 4px !important;
+  padding: 0.15rem 0.4rem !important;
+  font-family: "JetBrains Mono", "Fira Code", monospace !important;
+  font-size: 0.88em !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Copy Code Floating Button */
+.btn-copy-code {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: "JetBrains Mono", monospace;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  z-index: 10;
+}
+
+.btn-copy-code:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn-copy-code.copied {
+  background: #059669;
+  color: #ffffff;
+  border-color: #10b981;
+}
+
+.btn-copy-code svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+}
+
+/* ==========================================================================
+   Modern Social Sharing Strip (Replaces old round buttons)
+   ========================================================================== */
+.corporate-share-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  margin: 3rem 0 2rem 0;
+  box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+
+.share-box-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #091e42;
+  letter-spacing: -0.01em;
+}
+
+.share-buttons-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-share-corporate {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.55rem 1.15rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.btn-share-corporate svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.btn-share-corporate.linkedin {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+.btn-share-corporate.linkedin:hover {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.btn-share-corporate.twitter-x {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+.btn-share-corporate.twitter-x:hover {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.btn-share-corporate.whatsapp {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+.btn-share-corporate.whatsapp:hover {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.btn-share-corporate.copylink {
+  background: #f8fafc;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+.btn-share-corporate.copylink:hover,
+.btn-share-corporate.copylink.copied {
+  background: #0052cc;
+  color: #ffffff;
+  border-color: #0052cc;
+}
+
+/* ==========================================================================
+   Post Navigation / Related Articles with Motion
+   ========================================================================== */
+.related-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 2.5rem 0;
+}
+
+.related-post-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+}
+
+.related-post-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(0, 82, 204, 0.15);
+  border-color: #0052cc;
+}
+
+.related-post-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+}
+
+.related-post-content {
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.related-post-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #091e42;
+  line-height: 1.35;
+}
+
+.related-post-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Plotly & Interactive Widgets
+   ========================================================================== */
+.html-widget, .plotly {
+  width: 100% !important;
+  margin: 2rem 0 !important;
+  border-radius: 10px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06) !important;
+  background-color: #ffffff !important;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Tables & Dataframes
+   ========================================================================== */
+table, .table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  border: 1px solid #e2e8f0 !important;
+  margin: 1.75rem 0 !important;
+  font-size: 0.9rem !important;
+}
+
+table th, .table th {
+  background-color: #091e42 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  padding: 0.85rem 1rem !important;
+  text-align: left !important;
+  border: none !important;
+}
+
+table td, .table td {
+  padding: 0.75rem 1rem !important;
+  border-top: 1px solid #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+table tr:nth-child(even) td, .table tr:nth-child(even) td {
+  background-color: #f8fafc !important;
+}
+
+table tr:hover td, .table tr:hover td {
+  background-color: #eff6ff !important;
+}
+
+/* ==========================================================================
+   Audio Testimonial Cards
+   ========================================================================== */
+audio {
+  width: 100% !important;
+  max-width: 480px !important;
+  height: 44px !important;
+  border-radius: 9999px !important;
+  margin: 0.75rem 0 1.25rem 0 !important;
+  outline: none !important;
+  box-shadow: 0 2px 8px rgba(0, 82, 204, 0.12) !important;
+}
+
+.audio-testimonial-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #0052cc;
+  border-radius: 10px;
+  padding: 1.5rem 1.75rem;
+  margin: 1.5rem 0 2rem 0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.testimonial-author-badge {
+  font-weight: 800;
+  color: #091e42;
+  font-size: 1.1rem;
+  display: block;
+}
+
+.testimonial-university-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0052cc;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.65rem;
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.testimonial-quote {
+  font-size: 0.975rem;
+  color: #475569;
+  font-style: italic;
+  margin-bottom: 0.85rem;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Disqus Thread Card
+   ========================================================================== */
+#disqus_thread {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  padding: 2.25rem !important;
+  margin-top: 3.5rem !important;
+  margin-bottom: 3.5rem !important;
+  box-shadow: 0 6px 20px -4px rgba(15, 23, 42, 0.06) !important;
+  position: relative;
+  min-height: 180px;
+}
+
+#disqus_thread::before {
+  content: "Comentarios y Discusión Técnica de la Comunidad";
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #091e42;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ==========================================================================
+   KILL MARKETING BANNERS EVERYWHERE
+   ========================================================================== */
+.separator a[href*="jesusbezerpa.github.io"],
+a[href*="jesusbezerpa.github.io"] img[src*="banner"],
+img[src*="banner1"],
+img[src*="banner2"],
+img[src*="banner3"],
+img[src*="banner4"],
+img[src*="banner5"],
+.banner-container,
+div[class*="banner"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ==========================================================================
+   FIX COLLISION: SCROLL TO TOP VS. AI COPILOT
+   ========================================================================== */
+#movetop, 
+#scrollTopBtn, 
+.btn-scroll-top, 
+.w3l-footer-22-main #movetop {
+  position: fixed !important;
+  bottom: 96px !important;
+  right: 32px !important;
+  left: auto !important;
+  z-index: 9990 !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: #091e42 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  line-height: 44px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+}
+
+#movetop:hover, 
+#scrollTopBtn:hover, 
+.btn-scroll-top:hover, 
+.w3l-footer-22-main #movetop:hover {
+  background: #0052cc !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 18px rgba(0, 82, 204, 0.4) !important;
+  color: #ffffff !important;
+}
+
+/* Code block futuristic border glow */
+pre, .sourceCode {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+pre:hover, .sourceCode:hover {
+  border-color: rgba(56, 189, 248, 0.45) !important;
+  box-shadow: 0 10px 30px -4px rgba(56, 189, 248, 0.15) !important;
+}
+
+
+/* Dividers */
+hr {
+  border: 0 !important;
+  height: 1px !important;
+  background: #e2e8f0 !important;
+  margin: 2.5rem 0 !important;
+}
+
+@media (max-width: 768px) {
+  .main-container, .container-fluid.main-container {
+    padding: 1.5rem 1rem 3rem 1rem !important;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+  h1, h1.title, .section h1 { font-size: 1.7rem !important; }
+  h2, .section h2 { font-size: 1.35rem !important; }
+  #disqus_thread { padding: 1.25rem !important; }
+}

@@ -33,12 +33,10 @@ def generate_production_data():
         logger.error(f"Error descargando datos de Yahoo Finance: {str(e)}")
         return
 
-    # 1. Entrenar el modelo base con el grueso histórico
     prices = raw_data[assets]
     spy_prices = raw_data[benchmark]
     model.train_model(prices)
     
-    # 2. Reconstruir la simulación histórica para pintar la web de inmediato
     returns = prices.pct_change().dropna()
     garch_vols = model._calculate_garch_volatilities(returns)
     lag_1 = returns.shift(1)
@@ -47,12 +45,12 @@ def generate_production_data():
     common_index = X_features.dropna().index
     
     X_scaled = model.scaler.transform(X_features.loc[common_index].values)
-    ai_predictions = model.dnn_model.predict(X_scaled)
+    ai_predictions = model.dnn_model.predict(X_scaled) 
     correlation_matrix = returns.loc[common_index].corr().values
     garch_vols_aligned = garch_vols.loc[common_index].values
     real_daily_returns = returns.loc[common_index].values
     
-    logger.info("Procesando matriz cronológica para el Dashboard estático...")
+    logger.info("Activando Arquitectura GARCH Pura con Comisiones Reales (0.1%)...")
     dynamic_weights = []
     num_assets = len(assets)
     init_guess = [1.0 / num_assets] * num_assets
@@ -60,80 +58,80 @@ def generate_production_data():
     constraints = ({'type': 'eq', 'fun': lambda x: np.sum(x) - 1})
     
     import scipy.optimize as sco
-    # Ejecución por optimización numérica de la serie temporal
+    commission_rate = 0.001  
+    
     for t in range(len(common_index)):
-        expected_rets_today = ai_predictions[t]
         vols_today = garch_vols_aligned[t]
         current_cov_matrix = np.diag(vols_today) @ correlation_matrix @ np.diag(vols_today)
+        start_idx = max(0, t - 60)
+        drift = np.mean(real_daily_returns[start_idx:t], axis=0) if t > 0 else np.zeros(num_assets)
+        prev_w = dynamic_weights[-1] if len(dynamic_weights) > 0 else init_guess
         
         def objective_function(weights):
-            p_ret = np.sum(expected_rets_today * weights)
+            p_ret_gross = np.sum(drift * weights)
             p_vol = np.sqrt(np.dot(weights.T, np.dot(current_cov_matrix, weights)))
-            return -p_ret / (p_vol + 1e-6)
+            turnover_cost = np.sum(np.abs(weights - prev_w)) * commission_rate
+            p_ret_net = p_ret_gross - turnover_cost
+            penalty = turnover_cost * 5.0
+            return -(p_ret_net - penalty) / (p_vol + 1e-6)
         
-        res = sco.minimize(objective_function, init_guess, method='SLSQP', bounds=bounds, constraints=constraints, tol=1e-2)
-        dynamic_weights.append(res['x'] if res.success else init_guess)
+        res = sco.minimize(objective_function, prev_w, method='SLSQP', bounds=bounds, constraints=constraints, tol=1e-3)
+        optimal_weights = res['x'] if res.success else prev_w
+        
+        if np.sum(np.abs(optimal_weights - prev_w)) < 0.05:
+            optimal_weights = prev_w
+            
+        dynamic_weights.append(optimal_weights)
         
     dynamic_weights = np.array(dynamic_weights)
     
-    # ---------------------------------------------------------
-    # LÓGICA INSTITUCIONAL: Comisiones, Sharpe Real, MoM, YoY y Convencionalidad de IA
-    # ---------------------------------------------------------
+    # Cálculos Financieros
+    prev_weights_arr = np.roll(dynamic_weights, shift=1, axis=0)
+    prev_weights_arr[0] = 0.0 
+    turnover = np.sum(np.abs(dynamic_weights - prev_weights_arr), axis=1)
+    turnover[0] = 1.0 
     
-    # Cálculo de Comisiones (0.1% de fricción) basado en la rotación de portafolio (Turnover)
-    prev_weights = np.roll(dynamic_weights, shift=1, axis=0)
-    prev_weights[0] = 0.0 # El primer día entramos desde 100% liquidez
-    turnover = np.sum(np.abs(dynamic_weights - prev_weights), axis=1)
-    turnover[0] = 1.0 # Compra inicial total
-    
-    commission_rate = 0.001 # 0.1% por movimiento (Crypto/Acciones combinadas)
     commission_costs_pct = turnover * commission_rate
-    
-    # Retornos Netos post-comisión
     gross_portfolio_returns = np.sum(dynamic_weights * real_daily_returns, axis=1)
     net_portfolio_returns = gross_portfolio_returns - commission_costs_pct
     portfolio_equity = np.cumprod(1 + net_portfolio_returns) * initial_capital
     
-    # Cálculo de Comisiones en Dólares (USD) Acumuladas
     prev_equity = np.roll(portfolio_equity, shift=1)
     prev_equity[0] = initial_capital
     daily_usd_commissions = turnover * commission_rate * prev_equity
-    accumulated_commissions = np.cumsum(daily_usd_commissions)
     
-    # Cálculo Mensual (MoM) y Anual (YoY)
     equity_series = pd.Series(portfolio_equity)
-    mom_returns = equity_series.pct_change(periods=21).fillna(0).values * 100 # 21 días hábiles en un mes
-    yoy_returns = equity_series.pct_change(periods=252).fillna(0).values * 100 # 252 días hábiles en un año
-    
-    # Protagonismo IA (Convicción basada en desviación estándar de predicciones)
-    ai_conviction = np.std(ai_predictions, axis=1) * 100
+    mom_returns = equity_series.pct_change(periods=21).fillna(0).values * 100 
+    yoy_returns = equity_series.pct_change(periods=252).fillna(0).values * 100 
     
     spy_returns = spy_prices.pct_change().dropna().loc[common_index].values.flatten()
     spy_equity = np.cumprod(1 + spy_returns) * initial_capital
     
-    # 3. Estructurar el array JSON para el front-end con la nueva data
+    # Generación de Logs de Transacciones
     json_output = []
     for i, date_idx in enumerate(common_index):
         date_str = date_idx.strftime('%Y-%m-%d')
-        
-        # Drawdown Dinámico
         sub_equity = portfolio_equity[:i+1]
         max_val = np.maximum.accumulate(sub_equity)
         dd = ((sub_equity - max_val) / max_val).min() * 100
         
-        # Sharpe Ratio Dinámico Anualizado
-        if i > 5:
-            sub_rets = net_portfolio_returns[:i+1]
-            sharpe = (np.mean(sub_rets) / (np.std(sub_rets) + 1e-6)) * np.sqrt(252)
-        else:
-            sharpe = 0.0
-        
+        # Detector de Compras y Ventas Exactas
+        trade_action = "HOLD (Inacción)"
+        if i > 0 and turnover[i] > 0.01:
+            delta_w = dynamic_weights[i] - prev_weights_arr[i]
+            bought = [assets[j] for j in range(num_assets) if delta_w[j] > 0.02]
+            sold = [assets[j] for j in range(num_assets) if delta_w[j] < -0.02]
+            
+            b_str = f"+{', '.join(bought)}" if bought else ""
+            s_str = f"-{', '.join(sold)}" if sold else ""
+            trade_action = f"{b_str} {s_str}".strip()
+            if trade_action == "": trade_action = "Micro-ajuste"
+        elif i == 0:
+            trade_action = "Compra Inicial"
+            
         allocations_dict = {}
         for j, asset in enumerate(assets):
-            allocations_dict[asset] = {
-                "weight_pct": float(dynamic_weights[i][j] * 100),
-                "predicted_alpha_score": float(ai_predictions[i][j])
-            }
+            allocations_dict[asset] = {"weight_pct": float(dynamic_weights[i][j] * 100)}
             
         json_output.append({
             "date": date_str,
@@ -141,18 +139,17 @@ def generate_production_data():
             "spy_value": float(spy_equity[i]),
             "net_return": float(((portfolio_equity[i] / initial_capital) - 1) * 100),
             "max_drawdown": f"{dd:.2f}",
-            "sharpe_ratio": f"{sharpe:.2f}",
             "mom_return_pct": float(mom_returns[i]),
             "yoy_return_pct": float(yoy_returns[i]),
-            "acc_commissions_usd": float(accumulated_commissions[i]),
-            "ai_conviction": float(ai_conviction[i]),
+            "daily_commission_usd": float(daily_usd_commissions[i]),
             "turnover_pct": float(turnover[i] * 100),
+            "trade_action": trade_action,
             "allocations": allocations_dict
         })
         
     with open('history.json', 'w') as f:
         json.dump(json_output, f, indent=2)
-    logger.info("¡Archivo history.json exportado correctamente con métricas institucionales avanzadas!")
+    logger.info("¡Archivo JSON exportado con registro de compras/ventas exactas!")
 
 if __name__ == "__main__":
     generate_production_data()
