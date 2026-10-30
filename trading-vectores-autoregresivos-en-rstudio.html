@@ -2071,7 +2071,7 @@ $(document).ready(function () {
 
 
 
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030e" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030f" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
@@ -2169,7 +2169,7 @@ $(document).ready(function () {
       <span class="study-badge emerald">RSTUDIO • VARS • SERIES MACROFINANCIERAS</span>
       <span class="study-badge amber">PUBLICACIÓN: NOVIEMBRE 2020</span>
     </div>
-    <h2 class="study-hero-title">Modelización Econométrica de Vectores Autorregresivos VAR(p) en RStudio</h2>
+    <h1 class="study-hero-title">Modelización Econométrica de Vectores Autorregresivos VAR(p) en RStudio</h1>
     <p>Estimación de sistemas dinámicos multivariantes VAR(p), pruebas de raíz unitaria y estacionariedad (Dickey-Fuller Aumentado), causalidad en el sentido de Granger, funciones de impulso-respuesta (IRF) y descomposición de varianza.</p>
     <div class="study-meta-bar">
       <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Noviembre de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> R, vars, urca, tseries, forecast</div>
@@ -2212,7 +2212,10 @@ $(document).ready(function () {
     <p>En macroeconomía y finanzas, las variables evolucionan de forma mutuamente endógena. Los modelos de <strong>Vectores Autorregresivos VAR(p)</strong> tratan cada variable del sistema como función de sus propios rezagos y de los rezagos de las demás variables, permitiendo cuantificar <strong>causalidad de Granger</strong> y <strong>funciones de impulso-respuesta (IRF)</strong>.</p>
   </div>
 <!-- EXEC-HEADER-END -->
-</div><div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(tidyquant)</a></code></pre></div>
+</div>
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(tidyquant)</a></code></pre></div>
 <pre><code>## Loading required package: lubridate</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;lubridate&#39;</code></pre>
@@ -2290,7 +2293,10 @@ $(document).ready(function () {
 <div style="text-align: left;">
 <a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAfCAMAAABUFvrSAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAEZ0FNQQAAsY58+1GTAAAAAXNSR0IB2cksfwAAAW5QTFRF////////////////7+/v39/f1tXV09bS0tXS0tXR0dTR0dTQ0NTQ0NPPz9PPztLOztHNzdHNzdHMz8/PzdDMzNDMzNDLzM/Ly8/Ly8/Ky87Kys3Jyc3Jyc3IyMzIyMzHx8vHxsrGxsrFxcnFxcnExMnExMjDw8jDxMfDw8fCwsfCwcXAwMXAwMW/wMS/v8S+v8O+vsO+vsK9vcK9vcK8v7+/vMG8vMG7vMC8u8C7u8C6ur+6ur+5ub65ub64uL23t7y2tru1tbq0tLqztLmzs7iysrixsrexsbewsbawsLavsLWvr7Wur7SusLOvrrStrrOtr7KvrbOsrLKrr6+vq7Gqn6OenqCdn5+flpmWk5iTkZSRkZORj4+PiYyJhIaEhIWEgoWCgICAfX98fH98eXx5cHJvcHBwYGBgXV5dUFFQUFBQQ0RDQEBAPj8+NTY1MjMxMDAwKSkpKCkoICAgGxsbEBAQDg4ODQ4NAAAAlzoSDQAAAAN0Uk5TAAoO5yEBUwAAAvhJREFUeNq1lutX2kAQxWmXFDVGYy1EIjQ2VZDiu1CsRQQURYvV+qSKj6II8rANYOT+9z0JqIASo9Y5ydkP2f2d2Ts7d2N4jRcJgwEIBwO+SbdTFGw8ZzZz1n5BdLgnfLPBcCT6fW1jY3P78QEYEA76PWMu0W5lGbrNZGrrYNg+u+ga9fgVcmxtY/NJZAOCfs+IY4Bn6eN8RdlEJX9Ed1uFIfdnfzC8uBJbv5tyqqhMLKa0wQHPiEOwMInLW4Eu9xmzfdDtmQ0uLK3cSXmvBBTS6QJQ2tMC+8YcgpnOApAzSa83mZEBZIff2odGfYFQJNqc8s4VchQhhFA5XO1pgCddAxaFKyeNpBpxGSgNmwXXxMxcWE25fkkJGUIIoExESQPsFnkmC0gUuQmjBGQZq+j2BEKR5dUGLVLIvbkGkxxSrcHO92wCkIyENJL3u+2O8Zng/FJsvR5cRF0GFIqtwaKVvoTcSxrCKOOS7hPdXwLhxUYtUFC+Z6AKQgpoDRZ6joEkaYo4cMQKril/KLLcCE4TVYmqFmkNsK0rD9lIiDdXKCSrwwEhREae6Ve0WIiuPg3M0xVlW171BBe21CGjbLbSYR0c/To3H409TQquHTggREKZ8pbjEiRqqxxXtWjjRLdvLrzUAK4Vr5qwZvEsJsCrzExWF9Tk9gIm84e74BRyRN9xeyS4vkHSmg1yK4Wxt5yUIClDayn0t3SteLWq3RQvjQrN31O87e2dEiBl0tJDJmTrykImN8dtq6AOpIw8Y3OMf2s+bvptU+hJqFrc1yCfpmZDkWYX0mv0H9WWpvS2tH6w8z27e58JJVi7c2ImuNBkQvrBOOWZc0CqsyFKtU3+97OuaQBnXGe90RuTMvCHtpziuWCcmDvPm64m+t2vlmuq/YHqqwnGCcfs1l+mCcbSmgtSe8iDGQNnPEsnrq//fZrltXS4tk3oAOPvT2tPF91uMrXTDNv340JrjQ4hbsHAxeE0z1ksHD99eKFdl0dl/P//Cl+9EPcfS+yBAoqk3eUAAAAASUVORK5CYII=" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
 </div>
-
+<div style="text-align: center;">
+<div style="text-align: left;">
+<br /></div>
+</div>
 
 <!-- EXEC-SYNTHESIS-START -->
 <div class="callout-quant emerald">
