@@ -615,12 +615,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="code-box">
 <a href="#Descripción">Descripción</a> <br />
 <a href="#esperanza">1. Esperanza de vida</a> <br />
-<a href="#pib">2. Producto interior bruto percápita</a> <br />
+<a href="#pib">2. Producto Interior Bruto per cápita</a> <br />
 <a href="#paqueterias">3. Paqueterías</a> <br />
 <a href="#crecimiento">4. Esperanza de vida y crecimiento económico</a> <br />
 <a href="#grafico1">5. Gráfico de dispersión</a><br />
 <a href="#grafico2">6. Gráfico dinámico<br />
-<a href="#grafico3">7. Gráfico de datos suavizados algorítmo loess</a> <br />
+<a href="#grafico3">7. Gráfico de datos suavizados con algoritmo Loess</a> <br />
 <a href="#grafico4">8. Diagramas interactivos de caja</a> <br />
 <a href="#grafico5">9. Gráfica con suavizamiento GAM</a> <br />
 <a href="#grafico6">10. Curva de Preston</a> <br />
@@ -644,7 +644,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 <br />
 <div style="text-align: justify;">
-<span style="font-size: large;">Para concluir, se va ha construir un mapa interactivo para acceder a los datos macroeconómicos a través de Quandl con <a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow noopener noreferrer" target="_blank">leaflet</a>, lo que permite al usuario elegir un indicador económico y hacer clic en un país para acceder a los valores de ese indicador, campo de estudio de la <i><b>Estadística Espacial.</b></i></span>
+<span style="font-size: large;">Para concluir, se construirá un mapa interactivo que permite consultar los datos macroeconómicos a través de Quandl con <a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow noopener noreferrer" target="_blank">leaflet</a>, lo que permite al usuario elegir un indicador económico y hacer clic en un país para acceder a los valores de ese indicador, campo de estudio de la <i><b>Estadística Espacial.</b></i></span>
 </div>
 </div>
 <h3 style="text-align: justify;">
@@ -663,7 +663,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">La estimación, en efecto, proyecta las tasas de mortalidad (muerte) específicas por edad para un período determinado durante toda la vida de la población nacido (o vivo) durante ese tiempo. </span>
+<span style="font-size: large;">La estimación, en efecto, proyecta las tasas de mortalidad (muerte) específicas por edad para un período determinado durante toda la vida de la población nacida (o viva) en dicho período. </span>
 </div>
 <h3 style="text-align: justify;">
 <span style="font-size: large;"><a name="pib">2. Producto Interior Bruto (PIB) per Cápita</a></span>
@@ -682,7 +682,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">En el entrenamiento se observará si existe alguna relación entre ambas variables: PIB per Cápita y Esperanza de Vida al Nacer agrupando los grupos por continentes y luego por países.</span>
+<span style="font-size: large;">En el estudio se analizará la existencia de asociación estadística entre ambas variables —PIB per Cápita y Esperanza de Vida al Nacer—, segmentando las observaciones por continente y por país.</span>
 </div>
 <h2 style="text-align: center;">
 <span style="font-size: x-large;"><a name="paqueterias">3. Paqueterías</a></span>
@@ -739,7 +739,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a href="https://cran.r-project.org/web/packages/dygraphs/dygraphs.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Dygraphs</span></a>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Una interfaz R para la biblioteca de gráficos JavaScript ‘dygraphs’ (una copia la cual está incluida en el paquete). Proporciona instalaciones ricas para graficar datos de series temporales en R, incluidos los altamente configurables, la visualización en serie, eje y características interactivas.</span>
+<span style="font-size: large;">Una interfaz R para la biblioteca de gráficos JavaScript ‘dygraphs’ (una copia la cual está incluida en el paquete). Ofrece funcionalidades avanzadas y altamente configurables para graficar series temporales en R, incluyendo visualización multicapa, ajuste dinámico de ejes y controles interactivos.</span>
 </div>
 <h3 style="text-align: justify;">
 <a href="https://cran.r-project.org/web/packages/rnaturalearth/rnaturalearth.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Rnaturalearth</span></a>
@@ -763,7 +763,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Leaflet </span></a>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Crea y personaliza mapas interactivos usando el ‘Folleto’ Biblioteca de JavaScript y el paquete ‘htmlwidgets’. Estos mapas se pueden usar directamente desde la consola R, desde ‘RStudio’, en aplicaciones Shiny y documentos R Markdown.</span>
+<span style="font-size: large;">Crea y personaliza mapas interactivos utilizando la librería de JavaScript ‘Leaflet’ y el paquete ‘htmlwidgets’. Estos mapas se pueden usar directamente desde la consola R, desde ‘RStudio’, en aplicaciones Shiny y documentos R Markdown.</span>
 </div>
 <h3 style="text-align: justify;">
 <a href="https://cran.r-project.org/web/packages/coefplot/coefplot.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Coefplot</span></a>
@@ -819,7 +819,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><a name="grafico1">5. Gráficos de Dispersión: Esperanza de Vida y Producto Interno Bruto per Cápita </a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Primero se preparan los paquetes y se instalan. Luego, utilizando la base de datos de Gapminder se realiza el primer gráfico. Muestra la panorámica de dispersión de dos variables macroeconómicas para el año 2007: La Esperanza de Vida al nacer y el PIB per Cápita. En el eje de coordenadas (Y) se encuentra los valores de la Esperanza de Vida al Nacer, en las abscisas (X) los valores del Producto Interno Bruto per Cápita, el tamaño de las burbujas viene determinado por el tamaño de la Población del país. Este tipo de gráficos es de 3 dimensiones. </span>
+<span style="font-size: large;">Primero se preparan los paquetes y se instalan. Luego, utilizando la base de datos de Gapminder se realiza el primer gráfico. Muestra la panorámica de dispersión de dos variables macroeconómicas para el año 2007: La Esperanza de Vida al nacer y el PIB per Cápita. En el eje de ordenadas (Y) se encuentran los valores de la Esperanza de Vida al Nacer y en el eje de abscisas (X) los valores del Producto Interno Bruto per Cápita, mientras que el tamaño de cada burbuja está determinado por el volumen poblacional de cada país. Este tipo de gráficos es de 3 dimensiones. </span>
 </div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(plotly)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(gganimate)</a>
@@ -1174,7 +1174,7 @@ Oceania
 <h3>
 <span style="font-size: large;">Regresión:</span>
 </h3>
-<span style="font-size: large;">Modelización simple para conocer el R2, la valorización de parámetros y el comportamiento de errores de las variables utilizadas en el ejercicio, resultados que no afectarán las consideraciones anteriores pero permiten explorar un poco más la relación de los datos a través de un modelo li-log. </span>
+<span style="font-size: large;">Modelización simple para conocer el R2, la valorización de parámetros y el comportamiento de errores de las variables utilizadas en el ejercicio, resultados que no afectarán las consideraciones anteriores pero permiten explorar con mayor rigor la relación funcional entre las variables mediante un modelo lin-log (lineal-logarítmico). </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span> <span style="font-size: large;">Se utiliza la función <i>Coefplot</i> que permite u</span><span style="font-size: large;">na visualización gráfica de los coeficientes. Además, se incluyen los errores estándar del modelo ajustado.</span>
@@ -1266,7 +1266,7 @@ Oceania
 <span style="font-size: large;">Extracción de Variables Macroeconómicas de la base de datos del Banco Mundial</span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Se seleccionan las variables macro que se observarán en el ejercicio en total son ocho (8): PIB per Cápita, crecimiento del PIB per Cápita, Tasa de Interés Real, Tipo de Cambio, Índice Nacional de Precios al Consumidor, Fuerza Laboral, Formación Bruta de Capital y por última Importación de Bienes y Servicios.</span>
+<span style="font-size: large;">Se seleccionan las variables macro que se observarán en el ejercicio en total son ocho (8): PIB per Cápita, crecimiento del PIB per Cápita, Tasa de Interés Real, Tipo de Cambio, Índice Nacional de Precios al Consumidor, Fuerza Laboral, Formación Bruta de Capital y, por último, Importación de Bienes y Servicios.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1323,7 +1323,7 @@ Oceania
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Luego de revisar los datos se utilizará la función de gráficos dygraph()  para visualizar las  series de tiempo y asegurarse que están todas correctas. En la página del Banco Mundial se pueden conocer las rutas de cada variable para luego cargarlas desde R.</span>
+<span style="font-size: large;">Tras validar la estructura de los datos, se empleará la función dygraph() para visualizar las series temporales y asegurarse de que estén completas y correctamente escaladas. En la página del Banco Mundial se pueden conocer las rutas de cada variable para luego cargarlas desde R.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1354,7 +1354,7 @@ Oceania
 <div id="htmlwidget-06768c6d35946b2ee55f" style="width:672px;height:480px;" class="dygraphs html-widget"></div>
 <div>
 <div style="text-align: justify;">
-<span style="font-size: large;">En el caso de Venezuela el año del desplome de su economía se aceleró en el 2015. Logrando nuevos records de mínimos históricos en casi todas sus variables macroeconómicas que indican prosperidad, bienestar y desarrollo. Y nuevos máximos históricos en las que indican pobreza, miseria, desigualdad, corrupción y subdesarrollo. No es el fin del entrenamiento profundizar en el tema. Sin embargo, se puede comenzar un análisis más completo utilizando la data no solo del Banco Mundial, sino de otros organismos internacionales. </span>
+<span style="font-size: large;">En el caso de Venezuela, la contracción estructural de su economía se aceleró drásticamente a partir del año 2015, registrando mínimos históricos en los principales indicadores macroeconómicos asociados con prosperidad, bienestar y desarrollo. Y nuevos máximos históricos en las que indican pobreza, miseria, desigualdad, corrupción y subdesarrollo. No es el fin del entrenamiento profundizar en el tema. Sin embargo, se puede comenzar un análisis más completo utilizando la data no solo del Banco Mundial, sino de otros organismos internacionales. </span>
 </div>
 <h3>
 <span style="font-size: large;"><a name="mapa">12. Construcción del Mapa para Estadística Espacial</a></span>
@@ -1403,7 +1403,7 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
 <a class="sourceLine" id="cb33-3" title="3">                <span class="st">&quot;&lt;br&gt;&lt;strong&gt;Market Stage: &lt;/strong&gt;&quot;</span>, </a>
 <a class="sourceLine" id="cb33-4" title="4">                world<span class="op">$</span>income_grp)</a></code></pre></div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Por último se construye el mapa. Necesitamos pasar un código de país a Quandl, no el nombre del país ni su símbolo de teletipo. Por lo tanto, no queremos establecer layerId = name, tampoco necesitamos agregar nada especial a nuestro objeto world. Ya contiene una columna llamada iso_a3, y esa columna contiene los códigos de país utilizados por Quandl.</span>
+<span style="font-size: large;">Por último se construye el mapa. Necesitamos pasar un código estandarizado de país a la API de Quandl, en lugar del nombre común del país o un identificador bursátil (ticker). Por lo tanto, no queremos establecer layerId = name, tampoco necesitamos agregar nada especial a nuestro objeto world. Ya contiene una columna llamada iso_a3, y esa columna contiene los códigos de país utilizados por Quandl.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1420,7 +1420,7 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
 <a class="sourceLine" id="cb34-7" title="7">leaf_world</a></code></pre></div>
 <div id="htmlwidget-9166973f99d7daa6cee6" style="width:672px;height:480px;" class="leaflet html-widget"></div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Debido a que Quandl usa el <a href="https://blog.quandl.com/api-for-economic-data">código ISO de 3 letras</a> para identificar un país, y porque el rnaturalearth objeto sf </span><span style="font-size: large;"> ya contiene una columna con códigos de país iso_a3. Ahora, tenemos un mapa con layerID = iso_a3 la columna incorporada de códigos de país. </span>
+<span style="font-size: large;">Dado que Quandl emplea el <a href="https://blog.quandl.com/api-for-economic-data">código ISO de 3 letras</a> para identificar a cada nación y el objeto espacial ‘sf’ generado por rnaturalearth ya incorpora la columna ‘iso_a3’, vinculamos directamente el mapa interactivo estableciendo layerId = ~iso_a3. </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>

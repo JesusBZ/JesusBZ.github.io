@@ -618,7 +618,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3>
 <span style="font-size: large;"><a name="Descripción">Descripción</a></span>
 </h3>
-<span style="font-size: large;">El siguiente entrenamiento es una traducción del trabajo de Rami Krispin (2019), Time Series Analysis and Forecasting with the TSstudio Package; con una base de datos distinta. Se utilizará la librería <a href="https://cran.r-project.org/web/packages/TSstudio/TSstudio.pdf" rel="nofollow noopener noreferrer" target="_blank">TSstudio (Versión 0.1.6)</a> para realizar  exploración de datos y elaborar pronósticos a través de los modelos <a href="https://www.rdocumentation.org/packages/forecast/versions/8.12/topics/Arima" rel="nofollow noopener noreferrer" target="_blank">ARIMA</a>, <a href="https://www.rdocumentation.org/packages/astsa/versions/1.10/topics/sarima" rel="nofollow noopener noreferrer" target="_blank">SARIMA</a>, <a href="https://www.rdocumentation.org/packages/fable/versions/0.0.0.9100/topics/ETS" rel="nofollow noopener noreferrer" target="_blank">ETS</a> y <a href="https://www.rdocumentation.org/packages/fable/versions/0.0.0.9100/topics/TSLM" rel="nofollow noopener noreferrer" target="_blank">TSLM</a>. Para completar el entrenamiento, se visualizarán los resultados en gráficos interactivos que permiten tener un acercamiento directo a los datos y al detalle, además se podrá realizar observaciones en las distintas regiones de la serie. Los datos utilizados pertenecen a las ventas en volumen (unidades) de una cadena de tiendas al detal en Venezuela para el período 2014-2019.</span>
+<span style="font-size: large;">El siguiente entrenamiento es una traducción del trabajo de Rami Krispin (2019), Time Series Analysis and Forecasting with the TSstudio Package; con una base de datos distinta. Se utilizará la librería <a href="https://cran.r-project.org/web/packages/TSstudio/TSstudio.pdf" rel="nofollow noopener noreferrer" target="_blank">TSstudio (Versión 0.1.6)</a> para realizar  exploración de datos y elaborar pronósticos a través de los modelos <a href="https://www.rdocumentation.org/packages/forecast/versions/8.12/topics/Arima" rel="nofollow noopener noreferrer" target="_blank">ARIMA</a>, <a href="https://www.rdocumentation.org/packages/astsa/versions/1.10/topics/sarima" rel="nofollow noopener noreferrer" target="_blank">SARIMA</a>, <a href="https://www.rdocumentation.org/packages/fable/versions/0.0.0.9100/topics/ETS" rel="nofollow noopener noreferrer" target="_blank">ETS</a> y <a href="https://www.rdocumentation.org/packages/fable/versions/0.0.0.9100/topics/TSLM" rel="nofollow noopener noreferrer" target="_blank">TSLM</a>. Para completar el entrenamiento, se visualizarán los resultados en gráficos interactivos que permiten tener un acercamiento directo a los datos y al detalle, además se podrán realizar observaciones detalladas en las distintas regiones de la serie. Los datos utilizados pertenecen a las ventas en volumen (unidades) de una cadena de tiendas al detal en Venezuela para el período 2014-2019.</span>
 </div>
 <h3 style="text-align: justify;">
 <span style="font-size: large;">TSstudio</span>
@@ -676,7 +676,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 <div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Esta información proporciona una amplia comprensión del pasado y puede utilizarse para pronosticar el futuro. En el caso particular de Venezuela es complejo realizar pronósticos a largo plazo por la naturaleza misma del hábitat económico o entorno que rodea a los datos, lo que representa un reto extra para elaboración de estimaciones.</span>
+<span style="font-size: large;">Esta información proporciona una amplia comprensión del pasado y puede utilizarse para pronosticar el futuro. En el caso particular de Venezuela es complejo realizar pronósticos a largo plazo por la naturaleza misma del hábitat económico o entorno que rodea a los datos, lo que representa un reto adicional para la elaboración de estimaciones.</span>
 </div>
 <h3>
 <span style="font-size: large;"><a name="Descomposición de la serie">3. Descomposición de la serie</a></span>
@@ -698,7 +698,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div style="text-align: justify;">
 <br />
 </div>
-</span><span style="font-size: large;">En el gráfico se podrá verificar lo observado en la descomposición de la serie. Un fuerte componente estacional y una tendencia no lineal. La función Ts_seasonal proporciona tres vistas diferentes de la estacionalidad de la serie:</span><br />
+</span><span style="font-size: large;">En el gráfico se podrá verificar lo observado en la descomposición de la serie. Un fuerte componente estacional y una tendencia no lineal. La función ts_seasonal proporciona tres vistas complementarias de la estacionalidad de la serie:</span><br />
 <div>
 <span style="font-size: large;"><br /></span>
 <ul>
@@ -706,10 +706,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;">El primer ciclo de trazado de la serie es mensual y cumple el año completo. La vista permite comparar la variación de cada unidad de frecuencia (mes) de año en año. </span>
 </li>
 <li>
-<span style="font-size: large;">En el caso de las series mensuales cada linea representa un mes de ventas a lo largo del tiempo. Permite verificar si el patrón estacional permanece igual en el tiempo.</span>
+<span style="font-size: large;">En el caso de las series mensuales, cada línea representa un mes de ventas a lo largo del tiempo. Permite verificar si el patrón estacional permanece igual en el tiempo.</span>
 </li>
 <li>
-<span style="font-size: large;">Al final aparecen los diagramas de caja. Son unos gráficos que permiten visualizar la distribución de datos en cada unidad de frecuencia. </span>
+<span style="font-size: large;">Al final se presentan los diagramas de caja (boxplots), gráficos que permiten evaluar visualmente la dispersión y distribución de los datos en cada unidad de frecuencia. </span>
 </li>
 </ul>
 <h3>
@@ -739,7 +739,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;">Ese comportamiento puede estar relacionado con un aumento del ingreso durante el segundo semestre del año por incrementos de salario, sumado a vacaciones colectivas remuneradas y utilidades o prestaciones de fin de año. </span>
 </li>
 <li style="text-align: justify;">
-<span style="font-size: large;">En general, se han venido deteriorando los niveles de ventas en la evolución del histórico, motivado entre otros factores a la grave coyuntura económica que tiene el país en su último quinquenio.</span>
+<span style="font-size: large;">En general, los niveles de ventas han registrado un deterioro progresivo a lo largo de la serie histórica, motivado, entre otros factores, por la compleja coyuntura macroeconómica que atravesó el país durante el último quinquenio.</span>
 </li>
 </ul>
 <div style="text-align: justify;">
@@ -749,7 +749,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;">Mapa de calor</span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Un mapa de calor es una técnica de visualización de datos que muestra la magnitud de un fenómeno como color en dos dimensiones. Los colores intensos indican un valor más alto. En la gráfica se aprecia como el decrecimiento de las ventas se aceleró a partir del 2016.</span>
+<span style="font-size: large;">Un mapa de calor es una técnica de visualización de datos que muestra la magnitud de un fenómeno como color en dos dimensiones. Los colores intensos indican un valor más alto. En la gráfica se aprecia cómo el decrecimiento de las ventas se aceleró a partir del año 2016.</span>
 </div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">ts_heatmap</span>(Vol)</a></code></pre></div>
 <div id="htmlwidget-89b98226a5107a9993a9" style="width:672px;height:480px;" class="plotly html-widget"></div>
@@ -772,7 +772,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">ts_lags</span>(Vol)</a></code></pre></div>
 <div id="htmlwidget-ae22de93d66509593e5e" style="width:672px;height:480px;" class="plotly html-widget"></div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Al igual que con la función ts_cor, se puede observar que el rezago uno (1) y el dos (2) de la serie tiene una fuerte correlación lineal. Del mismo modo, podemos acercarnos a los rezagos estacionales de la serie utilizando el argumento de los retrasos:</span>
+<span style="font-size: large;">Al igual que con la función ts_cor, se observa que los rezagos uno (1) y dos (2) de la serie tienen una fuerte correlación lineal. Del mismo modo, podemos acercarnos a los rezagos estacionales de la serie utilizando el argumento de los retrasos:</span>
 </div>
 <h3>
 <span style="font-size: large;">Serie versus rezagos II</span>
@@ -806,7 +806,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div style="text-align: justify;">
 <ul>
 <li>
-<span style="font-size: large;">El enfoque tradicional divide la serie en particiones de capacitación y prueba (muestra). Entrena a cada modelo en el conjunto de entrenamiento y se evalúa el desempeño en el conjunto de pruebas. Se utilizarán los modelos: ARIMA, SARIMA, ETS y TSLM. </span>
+<span style="font-size: large;">El enfoque tradicional divide la serie en particiones de entrenamiento (training) y prueba (testing). Entrena a cada modelo en el conjunto de entrenamiento y se evalúa el desempeño en el conjunto de pruebas. Se utilizarán los modelos: ARIMA, SARIMA, ETS y TSLM. </span>
 </li>
 <li>
 <span style="font-size: large;">El enfoque de Backtesting utiliza una ventana expansiva para entrenar y probar cada modelo en múltiples conjuntos de entrenamiento y prueba. </span>
@@ -957,9 +957,9 @@ Aplicaremos la ruptura estructural agregando la variable flag que preparamos ant
 <span style="font-size: large;"> Modelo 5 TSLM Training -Polinómico-</span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Manejo de errores por encima de todos los anteriores. Se selecciona el modelo 1 SARIMA y evaluaremos los residuos</span>
+<span style="font-size: large;">Presenta una tasa de error superior a las especificaciones anteriores. En consecuencia, se selecciona el Modelo 1 (SARIMA) y se procede a evaluar el comportamiento de sus residuos.</span>
 </div>
-<p>.</p>
+
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">md3b &lt;-<span class="st"> </span><span class="kw">tslm</span>(train <span class="op">~</span><span class="st"> </span>season <span class="op">+</span><span class="st"> </span>trend <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(trend <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb24-2" title="2">fc3b &lt;-<span class="st"> </span><span class="kw">forecast</span>(md3b, <span class="dt">h =</span> h1)</a>
 <a class="sourceLine" id="cb24-3" title="3"><span class="kw">accuracy</span>(fc3b, test)</a></code></pre></div>
@@ -992,7 +992,7 @@ Aplicaremos la ruptura estructural agregando la variable flag que preparamos ant
 <br />
 </div>
 <div style="text-align: justify;">
-Para finalizar con el enfoque tradicional se realizarán los pronósticos para 12 meses del modelo SARIMA con intérvalos de confianza del 80% y 95%.
+Para finalizar con el enfoque tradicional, se generarán los pronósticos a 12 meses mediante el modelo SARIMA con intervalos de confianza del 80% y 95%.
 </div>
 </span><br />
 <h3>
@@ -1010,7 +1010,7 @@ Para finalizar con el enfoque tradicional se realizarán los pronósticos para 1
 <span style="font-size: large;"><a name="Backtesting">9. Enfoque Backtesting</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">La ventaja del enfoque backtesting sobre el enfoque tradicional, es que proporciona una visión general del rendimiento de cada modelo. Permite identificar, además de la precisión, la estabilidad del rendimiento del modelo en distintas particiones temporales. Es un tipo especial de validación cruzada. </span>
+<span style="font-size: large;">La ventaja del enfoque de Backtesting frente al enfoque tradicional radica en que proporciona una evaluación integral de la estabilidad y el rendimiento predictivo de cada modelo. Permite identificar, además de la precisión, la estabilidad del rendimiento del modelo en distintas particiones temporales. Es un tipo especial de validación cruzada. </span>
 </div>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">methods &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">ets1 =</span> <span class="kw">list</span>(<span class="dt">method =</span> <span class="st">&quot;ets&quot;</span>,</a>
 <a class="sourceLine" id="cb29-2" title="2">                            <span class="dt">method_arg =</span> <span class="kw">list</span>(<span class="dt">opt.crit =</span> <span class="st">&quot;mse&quot;</span>),</a>
@@ -1048,14 +1048,10 @@ Para finalizar con el enfoque tradicional se realizarán los pronósticos para 1
 <span style="font-size: large;">Backtesting Gráfica</span>
 </h3>
 <div id="htmlwidget-f624b7ed06e4fbcbc51d" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
-Resultados de búsqueda
-</h1>
+
 <div id="rso" data-async-context="query:cepal" eid="5garXsvbLeOJggeh7qqADg" style="margin-top: 6px;">
 <div class="g" data-hveid="CBYQAA" style="line-height: 1.2; margin-bottom: 27px; margin-top: 0px; width: 600px;">
-<h2 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
-Resultado web con enlaces de partes del sitio
-</h2>
+
 <section class="w3l-footer-22-main">
 <button onclick="topFunction()" id="movetop" title="Ir a Inicio">
 <span class="fa fa-arrow-up"></span>

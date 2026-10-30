@@ -608,7 +608,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a href="#egarch"> &nbsp; &nbsp;1.1 Modelos eGarch</a> <br />
 <a href="#gjrgarch"> &nbsp; &nbsp;1.2 Modelos gjrGarch</a> <br />
 <a href="#tgarch"> &nbsp; &nbsp;1.3 Modelos TGarch</a> <br /><br>
-<a href="#supocisiones">2. Supocisiones de distribución de error</a><br />
+<a href="#suposiciones">2. Suposiciones de distribución del término de error</a><br />
 <a href="#normal"> &nbsp; &nbsp;2.1 Distribución normal <br />
 <a href="#t-student">&nbsp; &nbsp;2.2 Distribución T-Student</a> <br />
 <a href="#generalizados"> &nbsp; &nbsp;2.3 Distribución de errores generalizados</a> <br /><br>
@@ -625,13 +625,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3>
 <span style="font-size: large;"><b>Descripción</b></span>
 </h3>
-<span style="font-size: large;">Este entrenamiento evaluó la volatilidad y el Valor en Riesgo (VaR) de los retornos diarios de Bitcoins mediante la realización de un estudio comparativo en el desempeño de los pronósticos de los modelos GARCH simétricos y asimétricos basados en tres distribuciones de error durante el período enero-2014 a enero-2020. </span>
+<span style="font-size: large;">En este estudio se evaluó la volatilidad condicional y el Valor en Riesgo (VaR) de los retornos diarios de Bitcoin mediante un análisis comparativo del desempeño predictivo de modelos GARCH simétricos y asimétricos, bajo tres distribuciones teóricas para el término de error durante el período enero 2014 – enero 2020. </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Los modelos empleados son el SGARCH, TGARCH, eGARCH Y el gjrGARCH que fueron validados en base a indicadores de la precisión de la previsión: AIC, MAE y MSE. Los resultados indicaron que el eGARCH (2,1) con término de distribución de error T-Student se identificó como el modelo GARCH mejor ajustado. Sin embargo, este modelo mejor ajustado basado en la pérdida de información (AIC) no proporcionó el mejor pronóstico fuera de la muestra, las diferencias fueron insignificantes. </span>
+<span style="font-size: large;">Los modelos estimados son sGARCH, TGARCH, eGARCH y gjrGARCH, validados con base en criterios de información y métricas de precisión predictiva: AIC, MAE y MSE. Los resultados determinaron que la especificación eGARCH(2,1) bajo una distribución t-Student para el término de error constituye el modelo con mejor ajuste muestral. Si bien el modelo óptimo según el criterio de Akaike (AIC) no registró el menor error absoluto fuera de muestra, las diferencias frente a las demás especificaciones resultaron estadísticamente marginales. </span>
 </div>
 <div style="text-align: justify;">
 <br />
@@ -679,7 +679,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <span style="font-size: large;"></span><br />
 <div>
-<span style="font-size: large;">Una opción: Exponantially Weigted Moving Average Models (EWMA) que es una extensión del promedio histórico pero haciendo que las observaciones más recientes tengan un mayor peso:</span><br /> <span style="font-size: large;"><span class="math display">\[ \alpha _{t}^{2}=(1-\lambda)\sum_{j=0}^{\infty}\lambda_{j-1}R_{t-1-j}^{2}\]</span> </span><br /> <span style="font-size: large;"><span class="math inline">\(R_{t-1-j}^{2}\)</span> Varianza de los rendimientos </span><br /> <span style="font-size: large;"><span class="math inline">\(\lambda\)</span>=“decay factor”</span><br /> <span style="font-size: large;"><br /></span> <span style="font-size: large;">La forma más sencilla es definida como:</span><br /> <span style="font-size: large;"><span class="math inline">\(\sigma_{t+1}^{2}=\lambda\sigma_{t}^{2}+(1- \lambda)R_{t}^{2}\)</span></span><br /> <span style="font-size: large;"><br /></span>
+<span style="font-size: large;">Una primera aproximación corresponde a los modelos Exponentially Weighted Moving Average (EWMA), los cuales extienden el promedio móvil histórico asignando una ponderación exponencialmente mayor a las observaciones más recientes:</span><br /> <span style="font-size: large;"><span class="math display">\[ \alpha _{t}^{2}=(1-\lambda)\sum_{j=0}^{\infty}\lambda_{j-1}R_{t-1-j}^{2}\]</span> </span><br /> <span style="font-size: large;"><span class="math inline">\(R_{t-1-j}^{2}\)</span> Varianza de los rendimientos </span><br /> <span style="font-size: large;"><span class="math inline">\(\lambda\)</span>=“decay factor”</span><br /> <span style="font-size: large;"><br /></span> <span style="font-size: large;">La forma más sencilla es definida como:</span><br /> <span style="font-size: large;"><span class="math inline">\(\sigma_{t+1}^{2}=\lambda\sigma_{t}^{2}+(1- \lambda)R_{t}^{2}\)</span></span><br /> <span style="font-size: large;"><br /></span>
 <div style="text-align: justify;">
 <span style="font-size: large;">Implica que la varianza del periodo siguiente será un promedio ponderado de la varianza  y el rendimiento actual al cuadrado.</span>
 </div>
@@ -715,7 +715,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="egarch">1.1 Modelo EGARCH(p,q) </a></span><span style="font-size: small;">[<a href="http://www.scielo.org.bo/scielo.php?script=sci_arttext&amp;pid=S2518-44312017000200003" rel="nofollow noopener noreferrer" target="_blank">2</a>]</span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">En 1990, Pagan y Schwert (1990), y al año siguiente en 1991 Nelson (1991), desarrollaron una versión nueva del modelo GARCH, el EGARCH (modelo exponencial generalizado, auto-regresivo, condicionalmente heterocedástico).El nuevo modelo acaba con las asimetrías en la estimación por el efecto de los shocks, al implementar una función 𝑔(𝜀𝑡 ) de las innovaciones 𝜀𝑡,que son variables igual e independientemente distribuidas de media cero, y en las que por tanto el valor de las innovaciones queda recogido por medio de la expresión:</span>
+<span style="font-size: large;">En 1990, Pagan y Schwert (1990), y al año siguiente en 1991 Nelson (1991), desarrollaron una extensión fundamental del modelo GARCH: el EGARCH (modelo autorregresivo con heterocedasticidad condicional generalizada exponencial). Esta especificación captura las asimetrías en la estimación por el efecto de los shocks, al implementar una función 𝑔(𝜀𝑡 ) de las innovaciones 𝜀𝑡,que son variables igual e independientemente distribuidas de media cero, y en las que por tanto el valor de las innovaciones queda recogido por medio de la expresión:</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><span class="math display">\[\ln \sigma_{t}^{2}= \omega + \beta (\sigma_{t-1}^{2})+ \gamma \frac{u_{t-1} }{\sqrt{ \sigma_{t-1} }}+ \alpha \left [ \frac{\left|u_{t-1}\right|}{\sqrt{\sigma_{t-1} }}- \sqrt{ \frac{2}{\sqrt{ \pi }} }\right]\]</span></span>
@@ -724,7 +724,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">El modelo tiene varias ventajas sobre la especificación GARCH pura. En primer lugar, el <span class="math inline">\(\ln(\sigma_{t}^{2})\)</span>;es modelado, esto quiere decir, que aunque los parámetros sean negativos, </span><span style="font-size: large;"><span class="math inline">\(\sigma_{t}^{2}\)</span></span><span style="font-size: large;">;será positivo. Por lo tanto, este modelo no tiene restricciones de no negatividad en los parámetros. En segundo lugar, las asimetrías se permiten bajo la formulación de EGARCH, ya que, si la relación entre la volatilidad y los rendimientos es negativa</span><span style="font-size: large;"><span class="math inline">\(\gamma\)</span></span><span style="font-size: large;"> será negativa.</span>
+<span style="font-size: large;">El modelo tiene varias ventajas sobre la especificación GARCH pura. En primer lugar, al modelar el logaritmo natural de la varianza condicional <span class="math inline">\(\ln(\sigma_{t}^{2})\)</span>, se garantiza que, incluso si los parámetros estimados toman valores negativos, la varianza <span class="math inline">\(\sigma_{t}^{2}\)</span> será estrictamente positiva. Por lo tanto, este modelo no tiene restricciones de no negatividad en los parámetros. En segundo lugar, las asimetrías se permiten bajo la formulación de EGARCH, ya que, si la relación entre la volatilidad y los rendimientos es negativa</span><span style="font-size: large;"><span class="math inline">\(\gamma\)</span></span><span style="font-size: large;"> será negativa.</span>
 </div>
 </div>
 <h3>
@@ -746,7 +746,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="tgarch">1.3 Modelo TGARCH(p,q)</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">La idea del modelo TGARCH (Treshold GARCH) es dividir la distribución de los shocks en intervalos disjuntos, para luego aproximar una función lineal por tramos para la desviación estándar condicional (Zakoian, 1994) o la varianza condicional (Glosten, Jaganathan, &amp; Runkle , 1993). Si sólo hay dos intervalos, la división es normalmente en un umbral identificado con el número cero, donde la influencia de los shocks positivos se identifican con valores por encima de cero y negativos por debajo de ese valor.</span>
+<span style="font-size: large;">El fundamento del modelo TGARCH (Threshold GARCH) consiste en particionar la distribución de los shocks en intervalos disjuntos para aproximar una función lineal por tramos sobre la desviación estándar condicional (Zakoian, 1994) o la varianza condicional (Glosten, Jagannathan &amp; Runkle, 1993). Cuando se definen dos regímenes, el umbral suele fijarse en cero, diferenciando el impacto asimétrico de las innovaciones positivas (superiores a cero) frente a las negativas (inferiores a cero).</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -824,7 +824,7 @@ El uso del GED para tener en cuenta las colas gruesas observadas comúnmente en 
 <br />
 </div>
 <div style="text-align: justify;">
-<span class="math inline">\(v&gt;0\)</span> es el grado de libertad o el parámetro del grosor de la cola. Si <span class="math inline">\(v=2\)</span> , el GED produce la distribución normal. Si <span class="math inline">\(v&lt;1\)</span> , la función de densidad tiene colas mas gruesas que la función de densidad normal, mientras que para <span class="math inline">\(v&gt;2\)</span> tendrá colas más delgadas. 
+<span class="math inline">\(v&gt;0\)</span> es el grado de libertad o el parámetro del grosor de la cola. Si <span class="math inline">\(v=2\)</span> , el GED produce la distribución normal. Si <span class="math inline">\(v&lt;1\)</span> , la función de densidad presenta colas más gruesas (leptocurtosis) que la distribución normal, mientras que para <span class="math inline">\(v&gt;2\)</span> tendrá colas más delgadas. 
 </div>
 </span>
 <h3>
@@ -832,7 +832,7 @@ El uso del GED para tener en cuenta las colas gruesas observadas comúnmente en 
 </h3>
 <span style="font-size: large;">
 <div style="text-align: justify;">
-Se utilizará el criterio de información para la selección del modelo en este ejercicio. El Criterio de información de Akaike (AIC) se define como las ecuación siguiente: <span class="math display">\[AIC= \ln\left (   \sigma^2 \right )+\frac{2k}{s}\]</span>
+Se utilizará el criterio de información para la selección del modelo en este ejercicio. El Criterio de Información de Akaike (AIC) se define mediante la siguiente ecuación: <span class="math display">\[AIC= \ln\left (   \sigma^2 \right )+\frac{2k}{s}\]</span>
 </div>
 <div style="text-align: justify;">
 <br />
@@ -1129,7 +1129,7 @@ El mejor modelo es el que tiene menor valor de AIC.
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>alpha 2:</b> El rendimiento se explica en un 11 % por la volatilidad del 2 día anterior. P-valor no significativo.&nbsp;</span>
+<span style="font-size: large;"><b>alpha 2:</b> El rendimiento se explica en un 11% por la volatilidad de dos días anteriores. P-valor no significativo.&nbsp;</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1141,7 +1141,7 @@ El mejor modelo es el que tiene menor valor de AIC.
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>gamma 1:</b> Son los parámetros de apalancamiento. El valor positivo indica que el los retornos del BTC tienen efecto de apalancamiento,&nbsp;</span>
+<span style="font-size: large;"><b>gamma 1:</b> Representa el parámetro de asimetría o efecto de apalancamiento. Su valor estadísticamente significativo confirma que los retornos del BTC responden de forma asimétrica ante shocks positivos y negativos.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1186,7 +1186,7 @@ El mejor modelo es el que tiene menor valor de AIC.
 <span style="font-weight: normal;"><span style="font-size: large;">Para validar el rendimiento del modelo eGARCH mejor ajustado, es útil realizar una prueba de respaldo histórica para comparar el Valor en riesgo estimado (VaR) con el rendimiento real durante el período de estudio. Si el retorno es menor que el VaR en la mayoría de los casos, tenemos un exceso de VaR. En este ejercicio, se establece una superación de VaR solo en el 1% de los casos, por lo tanto, las pruebas se evalúan en el nivel de significancia del 1%. El período de inicio de la prueba retrospectiva se establece 500 días después del comienzo de la serie (finales 2015). Además, los parámetros eGARCH se actualizan posteriormente en todo el conjunto de datos utilizando la estimación de la ventana móvil en lugar de mantenerse constante en el tiempo. Esto se hace para lograr flexibilidad en los parámetros.</span></span>
 </div>
 <h2>
-<span style="font-size: large;">Retornos del Bitcoins con límites del VaR al 1%</span>
+<span style="font-size: large;">Retornos del Bitcoin con límites del VaR al 1%</span>
 </h2>
 <span style="font-size: large;">
 <div style="text-align: justify;">
@@ -1202,7 +1202,7 @@ Las pruebas se evalúan en el nivel de significancia del 1%, por lo tanto, se re
 <br />
 </div>
 <div style="text-align: justify;">
-Los retornos de los datos alcanzan el 1% Var (Rojo) 9 veces en comparación con las 11 veces esperadas, no se rechaza la hipótesis nula de que las superaciones son correctas e independientes. Esto implica que se espera que una pérdida del 0,8% se supere solo el 1% del tiempo. 
+Los retornos observados exceden el umbral del VaR al 1% (línea roja) en 9 ocasiones frente a las 11 violaciones esperadas teóricamente, por lo que no se rechaza la hipótesis nula de cobertura correcta e independencia de las excedencias. Esto implica que se espera que una pérdida del 0,8% se supere solo el 1% del tiempo. 
 </div>
 <div style="text-align: justify;">
 <br />
@@ -1497,28 +1497,18 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
 </h3>
 </div>
 [1] Horacio Catalán Alonso (2011). Especificación y Estimación de los Modelos Arch. Recuperado de: <a href="https://www.cepal.org/sites/default/files/events/files/cc_11.2011.horario.catalan.modelosarch.esp_.pdf">https://www.cepal.org/sites/default/files/events/files/cc_11.2011.horario.catalan.modelosarch.esp_.pdf</a><br /> <br /> [2] Alejandro Vargas Sanchez (2017). Estimación de la Volatilidad de los Fondos de Inversión Abiertos en Bolivia. Centro de Investigación e Innovación en Finanzas (CIIFI). Recuperado de: <a href="http://www.scielo.org.bo/scielo.php?script=sci_arttext&amp;pid=S2518-44312017000200003">http://www.scielo.org.bo/scielo.php?script=sci_arttext&amp;pid=S2518-44312017000200003</a><br />
-<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
-</h1>
-<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
-</h1>
-<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
-Resultados de búsqueda
-</h1>
+
+
+
 <div id="rso" data-async-context="query:cepal" eid="5garXsvbLeOJggeh7qqADg" style="margin-top: 6px;">
 <div class="g" data-hveid="CBYQAA" style="line-height: 1.2; margin-bottom: 27px; margin-top: 0px; width: 600px;">
-<h2 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
-Resultado web con enlaces de partes del sit
-</h2>
+
 </div>
 </div>
-<h1 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; font-weight: normal; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
-Resultados de búsqueda
-</h1>
+
 <div id="rso" data-async-context="query:cepal" eid="5garXsvbLeOJggeh7qqADg" style="margin-top: 6px;">
 <div class="g" data-hveid="CBYQAA" style="line-height: 1.2; margin-bottom: 27px; margin-top: 0px; width: 600px;">
-<h2 class="bNg8Rb" style="background-color: white; clip: rect(1px, 1px, 1px, 1px); color: #222222; font-family: arial, sans-serif; font-size: 14px; height: 1px; margin: 0px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px; z-index: -1000;">
-Resultado web con enlaces de partes del sitio
-</h2>
+
 </div>
 </div>
 
