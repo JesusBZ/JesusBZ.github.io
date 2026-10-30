@@ -161,18 +161,50 @@ def kupiec_christoffersen_backtest(returns: pd.Series, var_series: pd.Series, al
     }
 
 
+# 6. Motor Operativo de Trading Cuantitativo, Position Sizing y Presupuesto de Riesgo
+def compute_trading_and_risk_execution_rules(
+    risk_df: pd.DataFrame,
+    portfolio_equity_usd: float = 1_000_000.0,
+    target_vol_annual_pct: float = 20.0,
+    max_daily_tail_loss_usd: float = 25_000.0,
+    maint_margin_rate: float = 0.005,
+    safety_buffer_kappa: float = 3.0,
+) -> pd.DataFrame:
+    """
+    Traduce las estimaciones del modelo AR(1)-EGARCH(2,1) Skewed-t en señales cuantitativas
+    ejecutables para mesas de trading, gestores de portafolio y comités de tesorería:
+      1. Volatility Targeting Weight: w_t = min(1.0, sigma_target / sigma_{anual, t})
+      2. Capital Asignado por Presupuesto de Cola (CVaR_99): E_max = L_max / |CVaR_{99, t}|
+      3. Stop-Loss Dinámico Condicional al 99%: SL_t = VaR_{99, t} (%)
+      4. Apalancamiento Máximo Institucional en Derivados: Lev_max = (1 - m_mant) / (kappa * |CVaR_{99, t}|)
+    """
+    exec_df = risk_df.copy()
+    cvar_dec = (exec_df["CVaR_99"].abs() / 100.0).clip(lower=1e-4)
+
+    exec_df["Vol_Target_Weight"] = (target_vol_annual_pct / exec_df["Sigma_Annualized"]).clip(upper=1.0)
+    exec_df["Vol_Target_Notional_USD"] = exec_df["Vol_Target_Weight"] * portfolio_equity_usd
+    exec_df["CVaR_Budget_Max_Notional_USD"] = max_daily_tail_loss_usd / cvar_dec
+    exec_df["Adaptive_StopLoss_99_Pct"] = exec_df["VaR_99"]
+    exec_df["Max_Institutional_Leverage_x"] = (1.0 - maint_margin_rate) / (safety_buffer_kappa * cvar_dec)
+    return exec_df
+
+
 if __name__ == "__main__":
     df = load_btc_series()
     tournament = fit_garch_tournament(df["Pct_Return"])
     best_fit = tournament["AR(1)-EGARCH(2,1)-Skewed-t"]["fit"]
     risk_df = compute_dynamic_var_cvar(df["Pct_Return"], best_fit, is_normal=False)
+    exec_df = compute_trading_and_risk_execution_rules(risk_df)
     eval_df = risk_df.loc["2020-01-31":]
     bt99 = kupiec_christoffersen_backtest(eval_df["Return_Pct"], eval_df["VaR_99"], alpha=0.01)
+    last_row = exec_df.iloc[-1]
 
-    print("=== RESUMEN DE AUDITORÍA ECONOMÉTRICA 2014-2026 ===")
+    print("=== RESUMEN DE AUDITORÍA ECONOMÉTRICA Y EJECUCIÓN CUANTITATIVA (2014-2026) ===")
     print(f"Observaciones auditadas : {len(df)} días ({df.index[0].date()} -> {df.index[-1].date()})")
     print(f"Modelo Óptimo (AIC/MLE) : AR(1)-EGARCH(2,1) con Distribución Skewed-t de Hansen")
     print(f"Log-Verosimilitud       : {best_fit.loglikelihood:.2f} | AIC: {best_fit.aic:.2f}")
     print(f"Violaciones VaR 99%     : {bt99['violations']} / {bt99['obs']} ({bt99['empirical_rate_pct']:.3f}%)")
     print(f"Test de Kupiec LR_uc    : {bt99['lr_uc']:.3f} (p-valor = {bt99['p_uc']:.4f})")
     print(f"Test Christoffersen CC  : {bt99['lr_cc']:.3f} (p-valor = {bt99['p_cc']:.4f})")
+    print(f"Peso Volatility Target  : {last_row['Vol_Target_Weight']*100:.2f}% (${last_row['Vol_Target_Notional_USD']:,.0f} USD)")
+    print(f"Stop-Loss Dinámico 99%  : {last_row['Adaptive_StopLoss_99_Pct']:.3f}% | Apalancamiento Máx: {last_row['Max_Institutional_Leverage_x']:.2f}x")

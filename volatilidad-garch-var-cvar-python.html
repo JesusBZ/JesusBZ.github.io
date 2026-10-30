@@ -7,8 +7,8 @@
 
   <title>Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python (2014–2026) | Jesús Benjamín Zerpa</title>
 <!-- SEO:START -->
-<meta name="description" content="Modelización econométrica de la volatilidad condicional asimétrica (sGARCH, EGARCH, GJR-GARCH con distribución Skewed Student-t de Hansen), Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python (2014–2026), con contrastes de Kupiec y Christoffersen. Por Jesús Benjamín Zerpa." />
-<meta name="keywords" content="volatilidad GARCH Python, EGARCH Python, GJR-GARCH, Valor en Riesgo VaR Python, Expected Shortfall CVaR, Skewed Student-t Hansen, backtesting Kupiec Christoffersen, Basilea III FRTB, volatilidad Bitcoin ETF, econometría financiera Python, arch library Python, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+<meta name="description" content="Modelización econométrica de la volatilidad condicional asimétrica (sGARCH, EGARCH, GJR-GARCH con distribución Skewed Student-t de Hansen), Valor en Riesgo (VaR), Expected Shortfall (CVaR), Volatility Targeting y Position Sizing del Bitcoin en Python (2014–2026), con contrastes de Kupiec y Christoffersen. Por Jesús Benjamín Zerpa." />
+<meta name="keywords" content="volatilidad GARCH Python, EGARCH Python, GJR-GARCH, Valor en Riesgo VaR Python, Expected Shortfall CVaR, Skewed Student-t Hansen, backtesting Kupiec Christoffersen, Basilea III FRTB, Volatility Targeting, Position Sizing cuantitativo, volatilidad Bitcoin ETF, econometría financiera Python, arch library Python, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
 <meta name="author" content="Jesús Benjamín Zerpa" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <link rel="canonical" href="https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html" />
@@ -16,21 +16,22 @@
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
 <meta property="og:title" content="Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python (2014–2026)" />
-<meta property="og:description" content="Evolución econométrica 2020–2026: torneo de especificaciones AR(1)-EGARCH(2,1) y GJR-GARCH con distribución Skewed-t de Hansen, Expected Shortfall al 99% y backtesting regulatorio sobre 4,425 sesiones de BTC-USD. Por Jesús Benjamín Zerpa." />
+<meta property="og:description" content="Evolución econométrica 2020–2026: torneo de especificaciones AR(1)-EGARCH(2,1) y GJR-GARCH con distribución Skewed-t de Hansen, Expected Shortfall al 99%, interpretación de parámetros MLE y reglas de trading cuantitativo sobre 4,425 sesiones de BTC-USD. Por Jesús Benjamín Zerpa." />
 <meta property="og:url" content="https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html" />
 <meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-i.webp" />
 <meta property="og:image:alt" content="Modelización de Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python por Jesús Benjamín Zerpa" />
 <meta property="article:published_time" content="2026-10-30T00:00:00Z" />
-<meta property="article:modified_time" content="2026-10-30T17:00:00Z" />
+<meta property="article:modified_time" content="2026-10-30T18:20:00Z" />
 <meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
-<meta property="article:section" content="Econometría Financiera y Gestión de Riesgo Cuantitativo" />
+<meta property="article:section" content="Econometría Financiera, Trading Cuantitativo y Gestión de Riesgo" />
 <meta property="article:tag" content="EGARCH Python" />
 <meta property="article:tag" content="GJR-GARCH" />
 <meta property="article:tag" content="Valor en Riesgo VaR" />
 <meta property="article:tag" content="Expected Shortfall CVaR" />
+<meta property="article:tag" content="Volatility Targeting" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python (2014–2026)" />
-<meta name="twitter:description" content="Torneo econométrico GARCH asimétrico con distribución Skewed-t de Hansen, Expected Shortfall (CVaR 99%) y backtesting de Kupiec y Christoffersen en Python (2014–2026). Por Jesús Benjamín Zerpa." />
+<meta name="twitter:description" content="Torneo econométrico GARCH asimétrico con distribución Skewed-t de Hansen, Expected Shortfall (CVaR 99%), backtesting de Kupiec/Christoffersen y reglas de Position Sizing en Python (2014–2026). Por Jesús Benjamín Zerpa." />
 <meta name="twitter:image" content="https://jesusbz.github.io/imagenes/imagen-i.webp" />
 <script type="application/ld+json">
 {
@@ -61,6 +62,7 @@
         "Presupuesto y control de gestión",
         "Modelos GARCH asimétricos (EGARCH, GJR-GARCH) y Valor en Riesgo (VaR)",
         "Expected Shortfall (CVaR) y normativa de riesgo de mercado Basilea III/IV",
+        "Trading cuantitativo, Volatility Targeting y Position Sizing dinámico",
         "Deep Portfolio Optimization con Redes Neuronales LSTM",
         "Teoría de portafolios de Markowitz",
         "Finanzas cuantitativas en Python y R",
@@ -78,8 +80,8 @@
       "@type": "TechArticle",
       "@id": "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html#article",
       "headline": "Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python (2014–2026)",
-      "alternativeHeadline": "Transición de Régimen hacia los ETFs Institucionales, Curva de Impacto de Noticias y Backtesting de Kupiec y Christoffersen",
-      "description": "Auditoría econométrica de 4,425 sesiones diarias de BTC-USD (2014–2026) en Python mediante modelos AR(1)-sGARCH, EGARCH(2,1) y GJR-GARCH con innovaciones Skewed Student-t de Hansen, estimación de VaR y Expected Shortfall al 99% y validación por contrastes de Kupiec y Christoffersen.",
+      "alternativeHeadline": "Transición de Régimen hacia los ETFs Institucionales, Interpretación Econométrica MLE, Reglas de Trading Cuantitativo y Backtesting de Kupiec y Christoffersen",
+      "description": "Auditoría econométrica de 4,425 sesiones diarias de BTC-USD (2014–2026) en Python mediante modelos AR(1)-sGARCH, EGARCH(2,1) y GJR-GARCH con innovaciones Skewed Student-t de Hansen, estimación de VaR y Expected Shortfall al 99%, validación por contrastes de Kupiec y Christoffersen y reglas operativas de Volatility Targeting y Position Sizing.",
       "image": [
         "https://jesusbz.github.io/imagenes/imagen-i.webp"
       ],
@@ -109,6 +111,8 @@
         "Valor en Riesgo VaR",
         "Expected Shortfall CVaR",
         "Distribución Skewed Student-t de Hansen",
+        "Volatility Targeting",
+        "Position Sizing",
         "Test de Kupiec",
         "Test de Christoffersen",
         "News Impact Curve",
@@ -123,8 +127,8 @@
     {
       "@type": "SoftwareSourceCode",
       "@id": "https://jesusbz.github.io/models/garch_var_cvar_2026.py#code",
-      "name": "garch_var_cvar_2026.py — Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python",
-      "description": "Script reproducible en Python (arch, scipy, statsmodels, pandas, numpy) para estimación por Máxima Verosimilitud de modelos sGARCH, EGARCH y GJR-GARCH con distribución Skewed-t, cálculo de VaR/CVaR y backtesting de Kupiec y Christoffersen.",
+      "name": "garch_var_cvar_2026.py — Volatilidad Asimétrica GARCH, VaR, CVaR y Position Sizing en Python",
+      "description": "Script reproducible en Python (arch, scipy, statsmodels, pandas, numpy) para estimación por Máxima Verosimilitud de modelos sGARCH, EGARCH y GJR-GARCH con distribución Skewed-t, cálculo de VaR/CVaR, backtesting de Kupiec y Christoffersen y reglas de ejecución cuantitativa.",
       "programmingLanguage": "Python",
       "runtimePlatform": "Python 3.11 / arch / SciPy",
       "codeRepository": "https://jesusbz.github.io/models/garch_var_cvar_2026.py",
@@ -185,22 +189,6 @@
 
   <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
-
-  <!-- MathJax for Quantitative Equations -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['\(', '\)']],
-        displayMath: [['\[', '\]'], ['$$', '$$']],
-        processEscapes: true
-      },
-      options: {
-        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-        ignoreHtmlClass: 'plotly-card-box|plotly-canvas|kpi-exec-grid|quant-table'
-      }
-    };
-  </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169665920-1"></script>
@@ -597,13 +585,153 @@
       margin-bottom: 0 !important;
       font-size: 0.96rem !important;
     }
+
+    /* Native Academic HTML5/CSS3 Mathematical Typography */
     .math-block-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #1e3a8a;
       border-radius: 10px;
-      padding: 1.1rem 1.4rem;
+      padding: 1.15rem 1.5rem;
       margin: 1.25rem 0;
       overflow-x: auto;
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    .eq-formula {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.38rem;
+      font-family: 'Cambria Math', 'STIX Two Math', 'Latin Modern Math', 'Times New Roman', Georgia, serif;
+      font-size: 1.12rem;
+      color: #0f172a;
+      line-height: 1.65;
+    }
+    .eq-formula var, .m-var {
+      font-family: 'Cambria Math', 'STIX Two Math', 'Times New Roman', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+    }
+    .m-inline {
+      font-family: 'Cambria Math', 'STIX Two Math', 'Times New Roman', Georgia, serif;
+      font-size: 1.02em;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+    .eq-frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 0.22rem;
+      font-size: 0.95em;
+    }
+    .eq-frac > .eq-num {
+      border-bottom: 1.4px solid #0f172a;
+      padding: 0 0.3rem 0.1rem 0.3rem;
+      line-height: 1.2;
+    }
+    .eq-frac > .eq-den {
+      padding: 0.1rem 0.3rem 0 0.3rem;
+      line-height: 1.2;
+    }
+    .eq-op-stack {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1;
+      margin: 0 0.15rem;
+    }
+    .eq-op-stack .op-lim {
+      font-size: 0.68em;
+      font-style: italic;
+    }
+    .eq-op-stack .op-sym {
+      font-size: 1.45em;
+      font-style: normal;
+      line-height: 1.05;
+    }
+    .eq-cases {
+      display: inline-flex;
+      align-items: stretch;
+      text-align: left;
+      margin-left: 0.25rem;
+    }
+    .eq-cases-brace {
+      border-left: 2.5px solid #0f172a;
+      border-top: 2.5px solid #0f172a;
+      border-bottom: 2.5px solid #0f172a;
+      width: 9px;
+      border-radius: 6px 0 0 6px;
+      margin-right: 0.55rem;
+    }
+    .eq-cases-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      justify-content: center;
+    }
+    .eq-cases-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .eq-tag-label {
+      display: inline-block;
+      margin-left: 0.9rem;
+      padding: 0.12rem 0.55rem;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #1e40af;
+      background: #dbeafe;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .exec-playbook-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin: 1.5rem 0 2rem 0;
+    }
+    @media (max-width: 860px) {
+      .exec-playbook-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .exec-playbook-card {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-top: 4px solid #1d4ed8;
+      border-radius: 12px;
+      padding: 1.35rem 1.45rem;
+      box-shadow: 0 6px 18px -6px rgba(15, 23, 42, 0.06);
+    }
+    .exec-playbook-card.emerald {
+      border-top-color: #059669;
+    }
+    .exec-playbook-card.amber {
+      border-top-color: #d97706;
+    }
+    .exec-playbook-card.purple {
+      border-top-color: #4f46e5;
+    }
+    .exec-playbook-card h4 {
+      margin: 0 0 0.55rem 0 !important;
+      color: #091e42 !important;
+      font-size: 1.03rem !important;
+      font-weight: 800 !important;
+    }
+    .exec-playbook-card p {
+      font-size: 0.93rem !important;
+      line-height: 1.62 !important;
+      margin-bottom: 0.65rem !important;
+      color: #334155 !important;
     }
   </style>
 </head>
@@ -643,10 +771,6 @@
           <a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="RPubs">
             <svg viewBox="0 0 581 512"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9H239.4v208.3c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5h26.6c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg>
           </a>
-          <!-- Telegram -->
-          <a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="Telegram">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-          </a>
           <!-- Email -->
           <a href="mailto:jesuszerpaeconomia@gmail.com" class="social-icon-btn" title="Correo Electrónico">
             <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -678,13 +802,13 @@
       <!-- HERO PANEL -->
       <div class="study-hero-panel">
         <div class="study-hero-badges">
-          <span class="study-badge primary">Trabajo #15 • Econometría Financiera &amp; Riesgo</span>
+          <span class="study-badge primary">Trabajo #15 • Econometría Financiera &amp; Riesgo Cuantitativo</span>
           <span class="study-badge emerald">Python • arch • SciPy • Statsmodels • Plotly</span>
-          <span class="study-badge amber">Evolución 2020 → 2026 (Era ETFs Spot)</span>
+          <span class="study-badge amber">Evolución 2020 → 2026 (Régimen ETFs Spot)</span>
         </div>
         <h1>Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python (2014–2026)</h1>
         <p>
-          Continuación y actualización econométrica al <strong>2026</strong> del estudio original publicado en <strong>mayo de 2020</strong> (<a href="Proyecto2.html" style="color: #93c5fd !important; text-decoration: underline;">Modelización de la Volatilidad y VaR del Bitcoin en RStudio</a>). Se auditan <strong>4,425 sesiones diarias</strong> de <code>BTC-USD</code> para cuantificar la compresión estructural de volatilidad tras la aprobación de los <strong>ETFs institucionales Spot (2024–2026)</strong>, compitiendo especificaciones <strong>sGARCH, EGARCH(2,1) y GJR-GARCH</strong> bajo la distribución <strong>Skewed Student-<em>t</em> de Hansen</strong>, e incorporando el estándar regulatorio de <strong>Expected Shortfall (\(	ext{CVaR}_{99\%}\))</strong> y contrastes de cobertura condicional de <strong>Kupiec y Christoffersen</strong>.
+          Actualización econométrica al <strong>2026</strong> de la investigación original publicada en <strong>mayo de 2020</strong> (<a href="Proyecto2.html" style="color: #93c5fd !important; text-decoration: underline;">Modelización de la Volatilidad y VaR del Bitcoin en RStudio</a>). Se auditan <strong>4,425 sesiones diarias</strong> de <code>BTC-USD</code> para cuantificar el cambio estructural de microestructura tras la aprobación de los <strong>ETFs institucionales Spot (2024–2026)</strong>, contrastando por Máxima Verosimilitud (MLE) las familias <strong>sGARCH, EGARCH(2,1) y GJR-GARCH</strong> bajo innovaciones <strong>Skewed Student-<em>t</em> de Hansen</strong>, e integrando el estándar regulatorio de <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong>, los contrastes de <strong>Kupiec y Christoffersen</strong> y reglas sistemáticas de <strong>Volatility Targeting, Position Sizing y Stop-Loss condicional</strong>.
         </p>
         <div class="study-meta-bar">
           <div>
@@ -725,13 +849,13 @@
         <div class="kpi-exec-box highlight-lstm">
           <span class="kpi-exec-tag">Modelo Óptimo MLE / AIC</span>
           <span class="kpi-exec-val">EGARCH(2,1)</span>
-          <span class="kpi-exec-sub pos">Hansen Skewed-t (η = 2.77)</span>
+          <span class="kpi-exec-sub pos">Hansen Skewed-t (<i>&eta;&#770;</i> = 2.770)</span>
           <span class="kpi-exec-meta">LogLik: -10,767.53 | AIC: 21,553.06 (-1,161 vs Norm)</span>
         </div>
         <div class="kpi-exec-box">
           <span class="kpi-exec-tag">Backtesting Basilea III/IV (99%)</span>
           <span class="kpi-exec-val">0.852% Viol.</span>
-          <span class="kpi-exec-sub blue">Kupiec p = 0.4496 (Zona Verde)</span>
+          <span class="kpi-exec-sub blue">Kupiec <i>p</i> = 0.4496 (Zona Verde)</span>
           <span class="kpi-exec-meta">VaR 99%: -4.60% | CVaR 99% (ES): -6.96% diario</span>
         </div>
       </div>
@@ -740,15 +864,17 @@
       <div class="toc-executive-box">
         <div class="toc-executive-title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0052cc" stroke-width="2.3"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          <span>Estructura del Estudio Econométrico</span>
+          <span>Estructura del Estudio Econométrico y Operativo</span>
         </div>
         <ul class="toc-grid-list">
           <li><a href="#sec-linea-base">1. Línea Base del Modelo Original en RStudio (Mayo 2020)</a></li>
-          <li><a href="#sec-regimenes">2. Auditoría de Transición de Régimen y Era ETFs Spot (2014–2026)</a></li>
-          <li><a href="#sec-teoria">3. Marco Matemático: EGARCH, GJR-GARCH, Skewed-t y CVaR</a></li>
+          <li><a href="#sec-regimenes">2. Auditoría de Transición de Régimen y Microestructura ETF (2014–2026)</a></li>
+          <li><a href="#sec-teoria">3. Especificación Econométrica: EGARCH, GJR-GARCH, Skewed-t y CVaR</a></li>
           <li><a href="#sec-python">4. Proceso Completo de Modelado e Implementación en Python</a></li>
-          <li><a href="#sec-visualizaciones">5. Laboratorio Visual Interactivo (5 Gráficos Plotly 2026)</a></li>
-          <li><a href="#sec-conclusiones">6. Torneo Econométrico, Backtesting de Kupiec y Síntesis</a></li>
+          <li><a href="#sec-visualizaciones">5. Laboratorio Visual Interactivo (5 Gráficos Dinámicos Plotly 2026)</a></li>
+          <li><a href="#sec-interpretacion">6. Interpretación Econométrica de Parámetros MLE y Microestructura</a></li>
+          <li><a href="#sec-aplicacion-inversor">7. Uso Operativo para el Inversor: Position Sizing, Stop-Loss y Opciones</a></li>
+          <li><a href="#sec-conclusiones">8. Torneo Econométrico, Backtesting de Kupiec/Christoffersen y Síntesis</a></li>
         </ul>
       </div>
 
@@ -756,67 +882,66 @@
            SECCIÓN 1: LÍNEA BASE DEL ESTUDIO ORIGINAL DE MAYO 2020
            ===================================================================== -->
       <section id="sec-linea-base">
-        <h2>1. Línea Base: Resultados de Referencia del Estudio Original en RStudio (Mayo 2020)</h2>
+        <h2>1. Línea Base: Parámetros de Referencia del Estudio Original en RStudio (Mayo 2020)</h2>
         <p>
-          En mayo de 2020 se publicó en este portafolio la investigación <a href="Proyecto2.html"><strong>Modelización de la Volatilidad Condicional y Valor en Riesgo (VaR) del Bitcoin</strong></a>, elaborada en <strong>RStudio</strong> mediante las librerías <code>rugarch</code>, <code>rmgarch</code> y <code>PerformanceAnalytics</code>. Aquel estudio auditó la ventana histórica comprendida entre <strong>enero de 2014 y el 30 de enero de 2020</strong> (\(N = 1,961\) observaciones diarias), contrastando especificaciones simétricas y asimétricas bajo tres distribuciones de probabilidad para las innovaciones estocásticas: <strong>Normal Gaussiana</strong>, <strong><em>t</em>-Student</strong> y <strong>Distribución de Errores Generalizados (GED)</strong>.
+          En mayo de 2020 se publicó en este portafolio la investigación <a href="Proyecto2.html"><strong>Modelización de la Volatilidad Condicional y Valor en Riesgo (VaR) del Bitcoin</strong></a>, desarrollada en <strong>RStudio</strong> mediante los paquetes econométricos <code>rugarch</code>, <code>rmgarch</code> y <code>PerformanceAnalytics</code>. Aquel trabajo auditó la ventana histórica comprendida entre <strong>enero de 2014 y el 30 de enero de 2020</strong> (<span class="m-inline"><i>N</i> = 1,961</span> sesiones diarias), estimando especificaciones simétricas y asimétricas bajo tres leyes distribucionales para las innovaciones estandarizadas: <strong>Normal Gaussiana</strong>, <strong><em>t</em>-Student</strong> y <strong>Distribución de Errores Generalizados (GED)</strong>.
         </p>
 
         <div class="quant-table-wrap">
           <table class="quant-table">
             <thead>
               <tr>
-                <th>Parámetro / Métrica (Corte Enero 2020)</th>
+                <th>Parámetro / Métrica (Corte 30-Ene-2020)</th>
                 <th>sGARCH(1,1) — Normal</th>
                 <th>eGARCH(2,1) — Student-t</th>
-                <th>Inferencia Econométrica en 2020</th>
+                <th>Inferencia Econométrica en la Muestra 2014–2020</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Media Condicional (\(\hat{\mu}\))</strong></td>
-                <td>0.002540 (\(p = 0.0210\))</td>
-                <td>0.001261 (\(p = 0.0132\))</td>
-                <td>Retorno diario esperado de largo plazo cercano a +0.13%</td>
+                <td><strong>Media Condicional (<span class="m-inline"><i>&mu;&#770;</i></span>)</strong></td>
+                <td>0.002540 (<span class="m-inline"><i>p</i> = 0.0210</span>)</td>
+                <td>0.001261 (<span class="m-inline"><i>p</i> = 0.0132</span>)</td>
+                <td>Drift diario esperado de largo plazo cercano a +0.126% por sesión</td>
               </tr>
               <tr>
-                <td><strong>Persistencia Autoregresiva (\(\hat{eta}_1\))</strong></td>
-                <td>0.825323 (\(t = 15.73\))</td>
-                <td><strong>0.983072 (\(t = 78.44\))</strong></td>
-                <td>Alta memoria en la varianza condicional ante choques de mercado</td>
+                <td><strong>Persistencia Autorregresiva (<span class="m-inline"><i>&beta;&#770;</i><sub>1</sub></span>)</strong></td>
+                <td>0.825323 (<span class="m-inline"><i>t</i> = 15.73</span>)</td>
+                <td><strong>0.983072 (<span class="m-inline"><i>t</i> = 78.44</span>)</strong></td>
+                <td>Elevada memoria hiperbólica en la varianza condicional ante choques exógenos</td>
               </tr>
               <tr>
-                <td><strong>Efecto Asimétrico (\(\hat{\gamma}_1\))</strong></td>
-                <td>No captura asimetría</td>
-                <td><strong>0.451433 (\(p &lt; 0.0001\))</strong></td>
-                <td>Respuesta diferencial significativa entre choques positivos y negativos</td>
+                <td><strong>Efecto Asimétrico (<span class="m-inline"><i>&gamma;&#770;</i><sub>1</sub></span>)</strong></td>
+                <td>Restringido a 0 (Simétrico)</td>
+                <td><strong>0.451433 (<span class="m-inline"><i>p</i> &lt; 0.0001</span>)</strong></td>
+                <td>Respuesta diferencial estadísticamente significativa según el signo de la innovación</td>
               </tr>
               <tr>
-                <td><strong>Grados de Libertad de Cola (\(\hat{
-u}\))</strong></td>
-                <td>\(\infty\) (Supuesto Gaussiano)</td>
-                <td><strong>2.550534 (\(t = 12.93\))</strong></td>
-                <td>Confirmación de leptocurtosis severa y colas pesadas en BTC-USD</td>
+                <td><strong>Grados de Libertad de Cola (<span class="m-inline"><i>&nu;&#770;</i></span>)</strong></td>
+                <td><span class="m-inline">&infin;</span> (Supuesto Gaussiano)</td>
+                <td><strong>2.550534 (<span class="m-inline"><i>t</i> = 12.93</span>)</strong></td>
+                <td>Evidencia empírica de leptocurtosis extrema y divergencia del cuarto momento</td>
               </tr>
               <tr>
                 <td><strong>Log-Verosimilitud / Criterio AIC</strong></td>
                 <td>2,788.19 / -3.4712</td>
                 <td><strong>3,036.89 / -3.7790</strong></td>
-                <td>Superioridad estadística de eGARCH(2,1) Student-t (+248.7 puntos LogLik)</td>
+                <td>Dominancia por razón de verosimilitud de eGARCH(2,1) Student-t (+248.7 puntos LogLik)</td>
               </tr>
               <tr class="row-tangente">
-                <td><strong>Error de Pronóstico (MSE / MAE — 1,103 días)</strong></td>
+                <td><strong>Error de Pronóstico Out-of-Sample (MSE / MAE — 1,103 días)</strong></td>
                 <td>0.002107 / 0.030420</td>
                 <td><strong>0.002090 / 0.030240</strong></td>
-                <td>Volatilidad diaria proyectada al 30-Ene-2020: \(\hat{\sigma}_{T+1} = 4.4608\%\)</td>
+                <td>Volatilidad condicional diaria proyectada al 30-Ene-2020: <span class="m-inline"><i>&sigma;&#770;</i><sub><i>T</i>+1</sub> = 4.4608%</span></td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="callout-quant">
-          <h4>Motivación de la Actualización Cuantitativa al 2026</h4>
+          <h4>Fundamento Econométrico de la Reestimación 2014–2026</h4>
           <p>
-            Apenas seis semanas después del cierre muestral del estudio original (30 de enero de 2020), el mercado financiero global experimentó el choque de liquidez de marzo de 2020 (donde <code>BTC-USD</code> registró una contracción diaria de <strong>-46.47%</strong> el 12 de marzo de 2020), seguido por el ciclo de restricción monetaria de la Reserva Federal en 2022 y, finalmente, un cambio estructural sin precedentes: la aprobación de los <strong>ETFs Spot Institucionales por la SEC en enero de 2024</strong>. Esta actualización en <strong>Python</strong> extiende la serie hasta el <strong>29 de octubre de 2026 (4,425 sesiones)</strong> e incorpora la distribución <strong>Skewed Student-<em>t</em> de Hansen</strong> junto con la métrica de <strong>Expected Shortfall (\(	ext{CVaR}\))</strong> exigida por el marco regulatorio de Basilea III/IV (FRTB).
+            Seis semanas después del cierre muestral del documento original (30 de enero de 2020), el mercado experimentó el choque sistémico de liquidez de marzo de 2020 (donde <code>BTC-USD</code> registró un retorno logarítmico continuo de <strong>-46.47%</strong> en la sesión del 12 de marzo de 2020), seguido por el ciclo de contracción monetaria de la Reserva Federal en 2022 y un cambio estructural en la microestructura del activo: la aprobación de los <strong>ETFs Spot Institucionales por la SEC el 11 de enero de 2024</strong>. Esta actualización en <strong>Python</strong> expande la muestra a <strong>4,425 observaciones diarias hasta el 29 de octubre de 2026</strong>, introduce la densidad <strong>Skewed Student-<em>t</em> de Hansen (1994)</strong>, implementa el <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong> bajo normativa de Basilea III/IV (FRTB) y formaliza las reglas cuantitativas de ejecución para gestión de carteras y mesas de trading.
           </p>
         </div>
       </section>
@@ -825,34 +950,34 @@ u}\))</strong></td>
            SECCIÓN 2: TRANSICIÓN DE RÉGIMEN ESTRUCTURAL (2014–2026)
            ===================================================================== -->
       <section id="sec-regimenes">
-        <h2>2. Auditoría Empírica de Transición de Régimen: Del Mercado Retail a la Era de los ETFs Institucionales (2014–2026)</h2>
+        <h2>2. Auditoría Empírica de Transición de Régimen: De la Microestructura Retail a los ETFs Institucionales (2014–2026)</h2>
         <p>
-          La serie de retornos continuos diarios \(r_t = 100 	imes \ln(P_t / P_{t-1})\) entre septiembre de 2014 y octubre de 2026 permite segmentar la historia microestructural de <code>BTC-USD</code> en <strong>tres regímenes macrofinancieros claramente diferenciados</strong>:
+          El análisis de la serie de retornos logarítmicos continuos en escala porcentual <span class="m-inline"><i>r<sub>t</sub></i> = 100 &times; ln(<i>P<sub>t</sub></i> / <i>P</i><sub><i>t</i>&minus;1</sub>)</span> entre septiembre de 2014 y octubre de 2026 permite identificar <strong>tres regímenes de volatilidad y liquidez</strong> gobernados por cambios en la composición de los participantes del mercado:
         </p>
         <ol>
-          <li><strong>Régimen I — Etapa Pre-Institucional / Microestructura Retail (2014–Enero 2020, \(N = 1,961\) días):</strong> Periodo caracterizado por fragmentación de liquidez entre casas de cambio no reguladas, alta dispersión intradiaria y una volatilidad anualizada de <strong>73.47%</strong> (\(\sigma_{	ext{diaria}} = 3.845\%\)).</li>
-          <li><strong>Régimen II — Choque Pandémico y Ciclo de Tasas de la Reserva Federal (Febrero 2020–Enero 2024, \(N = 1,441\) días):</strong> Etapa de integración correlacionada con activos de riesgo tecnológicos (Nasdaq-100), marcada por desapalancamientos abruptos en derivados perpetuos que elevaron la <strong>curtosis muestral hasta 25.55</strong> y la asimetría negativa a <strong>-1.595</strong>.</li>
-          <li><strong>Régimen III — Era Institucional de ETFs Spot (Enero 2024–Octubre 2026, \(N = 1,023\) días):</strong> Tras la entrada de vehículos institucionales (<em>BlackRock IBIT, Fidelity FBTC</em>) y creadores de mercado autorizados (<em>Authorized Participants</em>), el arbitraje continuo entre el mercado Spot y la cesta de ETFs comprimió la volatilidad anualizada hasta <strong>46.88%</strong> (\(\sigma_{	ext{diaria}} = 2.454\%\)), reduciendo el riesgo total en <strong>-26.59 puntos porcentuales</strong> respecto al Régimen I.</li>
+          <li><strong>Régimen I — Microestructura Retail y Fragmentación de Liquidez (Septiembre 2014 – Enero 2020, <span class="m-inline"><i>N</i> = 1,961</span> días):</strong> Etapa dominada por flujo minorista, ausencia de cámaras de compensación institucionales y amplios diferenciales <em>bid-ask</em>, registrando una volatilidad anualizada de <strong>73.47%</strong> (<span class="m-inline"><i>&sigma;</i><sub>diaria</sub> = 3.845%</span>) y un cuantil empírico al 1% de <strong>-10.58%</strong>.</li>
+          <li><strong>Régimen II — Integración Macrofinanciera, Choque Pandémico y Ciclo Restrictivo Fed (Febrero 2020 – Enero 2024, <span class="m-inline"><i>N</i> = 1,441</span> días):</strong> Fase de alta sensibilidad al factor de liquidez global y tasas reales de descuento, caracterizada por cascadas de liquidación en futuros perpetuos apalancados que elevaron la <strong>curtosis muestral hasta 25.55</strong> y profundizaron la asimetría negativa hasta <strong>-1.595</strong>.</li>
+          <li><strong>Régimen III — Institucionalización vía ETFs Spot y Arbitraje de Creadores de Mercado (Enero 2024 – Octubre 2026, <span class="m-inline"><i>N</i> = 1,023</span> días):</strong> La incorporación de vehículos institucionales (<em>BlackRock IBIT, Fidelity FBTC</em>) y la intervención sistemática de <em>Authorized Participants (APs)</em> mediante arbitraje continuo entre la cesta Spot y el mercado secundario de ETFs comprimieron la volatilidad anualizada hasta <strong>46.88%</strong> (<span class="m-inline"><i>&sigma;</i><sub>diaria</sub> = 2.454%</span>), lo que representa una contracción estructural de <strong>-26.59 puntos porcentuales</strong> frente al Régimen I y de <strong>-21.09 puntos porcentuales</strong> respecto al Régimen II.</li>
         </ol>
 
         <div class="quant-table-wrap">
           <table class="quant-table">
             <thead>
               <tr>
-                <th>Régimen Macrofinanciero</th>
-                <th>Observaciones (\(N\))</th>
-                <th>Media Diaria (\(ar{r}\))</th>
-                <th>Vol. Diaria (\(\sigma_d\))</th>
-                <th>Vol. Anualizada (\(\sigma_a\))</th>
+                <th>Régimen Microestructural</th>
+                <th>Observaciones (<span class="m-inline"><i>N</i></span>)</th>
+                <th>Media Diaria (<span class="m-inline"><i>r&#772;</i></span>)</th>
+                <th>Vol. Diaria (<span class="m-inline"><i>&sigma;<sub>d</sub></i></span>)</th>
+                <th>Vol. Anualizada (<span class="m-inline"><i>&sigma;<sub>a</sub></i></span>)</th>
                 <th>Asimetría (Skewness)</th>
-                <th>Curtosis Total</th>
-                <th>Mínimo / Máximo Diario</th>
+                <th>Curtosis Muestral</th>
+                <th>Rango Diario (Mín / Máx)</th>
                 <th>Cuantil Empírico 1%</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Régimen I: Pre-Institucional (2014–2020)</strong></td>
+                <td><strong>Régimen I: Microestructura Retail (2014–2020)</strong></td>
                 <td>1,961</td>
                 <td>+0.1547%</td>
                 <td>3.845%</td>
@@ -901,74 +1026,116 @@ u}\))</strong></td>
       </section>
 
       <!-- =====================================================================
-           SECCIÓN 3: MARCO MATEMÁTICO Y FORMULACIÓN ECONOMÉTRICA
+           SECCIÓN 3: ESPECIFICACIÓN ECONOMÉTRICA Y FORMULACIÓN MATEMÁTICA
            ===================================================================== -->
       <section id="sec-teoria">
-        <h2>3. Marco Matemático: De GARCH Simétrico a Especificaciones Asimétricas con Distribución Skewed Student-t de Hansen y Expected Shortfall (CVaR)</h2>
+        <h2>3. Especificación Econométrica: Modelos GARCH Asimétricos, Distribución Skewed Student-t de Hansen y Expected Shortfall (CVaR)</h2>
         <p>
-          Sea \(r_t = 100 	imes \ln(P_t / P_{t-1})\) el retorno continuamente compuesto en el día \(t\), descompuesto mediante una ecuación de media condicional autorregresiva \(	ext{AR}(1)\) para filtrar la autocorrelación de primer orden inducida por fricciones de microestructura:
+          Sea <span class="m-inline"><i>r<sub>t</sub></i> = 100 &times; ln(<i>P<sub>t</sub></i> / <i>P</i><sub><i>t</i>&minus;1</sub>)</span> el retorno logarítmico continuo en la sesión <span class="m-inline"><i>t</i></span>. Para filtrar la autocorrelación serial de primer orden inducida por fricciones de microestructura (rebote <em>bid-ask</em> y ejecución fraccionada de órdenes institucionales), el proceso generador de datos se descompone en una ecuación de media condicional autorregresiva <span class="m-inline">AR(1)</span> y una innovación heterocedástica multiplicativa:
         </p>
 
         <div class="math-block-card">
-          \[
-            r_t = \mu + \phi_1 r_{t-1} + arepsilon_t, \qquad arepsilon_t = \sigma_t z_t, \qquad z_t \stackrel{	ext{i.i.d.}}{\sim} f(0, 1; \eta, \lambda)
-          \]
+          <div class="eq-formula">
+            <span><var>r</var><sub><var>t</var></sub> = <var>&mu;</var> + <var>&phi;</var><sub>1</sub><var>r</var><sub><var>t</var>&minus;1</sub> + <var>&varepsilon;</var><sub><var>t</var></sub>,</span>
+            <span style="margin-left: 1.5rem;"><var>&varepsilon;</var><sub><var>t</var></sub> = <var>&sigma;</var><sub><var>t</var></sub><var>z</var><sub><var>t</var></sub>,</span>
+            <span style="margin-left: 1.5rem;"><var>z</var><sub><var>t</var></sub> &sim; <i>i.i.d.</i> <var>f</var>(0, 1; <var>&eta;</var>, <var>&lambda;</var>)</span>
+            <span class="eq-tag-label">Ec. (3.1)</span>
+          </div>
         </div>
 
         <p>
-          donde \(\sigma_t^2 = 	ext{Var}(r_t \mid \mathcal{F}_{t-1})\) representa la varianza condicional dado el conjunto de información \(\mathcal{F}_{t-1}\) y \(z_t\) es la innovación estandarizada. A continuación se formulan las tres familias de varianza condicional evaluadas en el torneo econométrico:
+          donde <span class="m-inline"><i>&sigma;</i><sub><i>t</i></sub><sup>2</sup> = Var(<i>r<sub>t</sub></i> &mid; &#8497;<sub><i>t</i>&minus;1</sub>)</span> denota la varianza condicional respecto al conjunto de información disponible hasta el cierre previo <span class="m-inline">&#8497;<sub><i>t</i>&minus;1</sub></span> y <span class="m-inline"><i>z<sub>t</sub></i> = <i>&varepsilon;<sub>t</sub></i> / <i>&sigma;<sub>t</sub></i></span> representa la innovación estandarizada con esperanza nula y varianza unitaria. A continuación se formulan las tres estructuras de varianza condicional que compiten en el torneo econométrico:
         </p>
 
-        <h3>3.1. Modelo GARCH Estándar Simétrico — sGARCH(1,1) (Bollerslev, 1986)</h3>
+        <h3>3.1. Especificación GARCH Simétrica Estándar — sGARCH(1,1) (Bollerslev, 1986)</h3>
         <p>
-          Asume que los choques positivos y negativos de igual magnitud ejercen exactamente el mismo impacto cuadrático sobre la varianza condicional futura:
+          Impone una respuesta cuadrática simétrica donde las perturbaciones positivas y negativas de igual magnitud generan idéntico incremento sobre la varianza condicional futura:
         </p>
         <div class="math-block-card">
-          \[
-            \sigma_t^2 = \omega + lpha_1 arepsilon_{t-1}^2 + eta_1 \sigma_{t-1}^2, \qquad \omega &gt; 0, \quad lpha_1 \ge 0, \quad eta_1 \ge 0, \quad lpha_1 + eta_1 &lt; 1
-          \]
+          <div class="eq-formula">
+            <span><var>&sigma;</var><sub><var>t</var></sub><sup>2</sup> = <var>&omega;</var> + <var>&alpha;</var><sub>1</sub><var>&varepsilon;</var><sub><var>t</var>&minus;1</sub><sup>2</sup> + <var>&beta;</var><sub>1</sub><var>&sigma;</var><sub><var>t</var>&minus;1</sub><sup>2</sup>,</span>
+            <span style="margin-left: 1.4rem; font-size: 0.96em; color: #334155;">con &nbsp; <var>&omega;</var> &gt; 0, &nbsp; <var>&alpha;</var><sub>1</sub> &ge; 0, &nbsp; <var>&beta;</var><sub>1</sub> &ge; 0, &nbsp; <var>&alpha;</var><sub>1</sub> + <var>&beta;</var><sub>1</sub> &lt; 1</span>
+            <span class="eq-tag-label">Ec. (3.2)</span>
+          </div>
         </div>
 
-        <h3>3.2. Modelo GARCH Exponencial — EGARCH(p,q) (Nelson, 1991)</h3>
+        <h3>3.2. Especificación GARCH Exponencial Asimétrica — EGARCH(p,q) (Nelson, 1991)</h3>
         <p>
-          Modela directamente el logaritmo natural de la varianza condicional \(\ln(\sigma_t^2)\), garantizando que \(\sigma_t^2 &gt; 0\) sin imponer restricciones de no negatividad sobre los parámetros y capturando la asimetría direccional mediante el coeficiente \(\gamma_1\):
+          Parametriza directamente el logaritmo natural de la varianza condicional <span class="m-inline">ln(<i>&sigma;</i><sub><i>t</i></sub><sup>2</sup>)</span>, garantizando positividad estricta (<span class="m-inline"><i>&sigma;</i><sub><i>t</i></sub><sup>2</sup> &gt; 0</span>) en todo el espacio paramétrico sin requerir restricciones de desigualdad sobre los coeficientes y capturando conjuntamente el efecto magnitud (<span class="m-inline"><i>&alpha;<sub>i</sub></i></span>) y el efecto asimétrico direccional (<span class="m-inline"><i>&gamma;</i><sub>1</sub></span>):
         </p>
         <div class="math-block-card">
-          \[
-            \ln(\sigma_t^2) = \omega + \sum_{i=1}^{p} lpha_i \left( |z_{t-i}| - \mathbb{E}[|z_{t-i}|] ight) + \gamma_1 z_{t-1} + \sum_{j=1}^{q} eta_j \ln(\sigma_{t-j}^2)
-          \]
+          <div class="eq-formula">
+            <span>ln(<var>&sigma;</var><sub><var>t</var></sub><sup>2</sup>) = <var>&omega;</var> +</span>
+            <span class="eq-op-stack">
+              <span class="op-lim"><var>p</var></span>
+              <span class="op-sym">&sum;</span>
+              <span class="op-lim"><var>i</var>=1</span>
+            </span>
+            <span><var>&alpha;</var><sub><var>i</var></sub> &Bigl( |<var>z</var><sub><var>t</var>&minus;<var>i</var></sub>| &minus; &#120124;[|<var>z</var><sub><var>t</var>&minus;<var>i</var></sub>|] &Bigr) + <var>&gamma;</var><sub>1</sub><var>z</var><sub><var>t</var>&minus;1</sub> +</span>
+            <span class="eq-op-stack">
+              <span class="op-lim"><var>q</var></span>
+              <span class="op-sym">&sum;</span>
+              <span class="op-lim"><var>j</var>=1</span>
+            </span>
+            <span><var>&beta;</var><sub><var>j</var></sub> ln(<var>&sigma;</var><sub><var>t</var>&minus;<var>j</var></sub><sup>2</sup>)</span>
+            <span class="eq-tag-label">Ec. (3.3)</span>
+          </div>
         </div>
 
-        <h3>3.3. Modelo GJR-GARCH con Umbral Asimétrico (Glosten, Jagannathan &amp; Runkle, 1993)</h3>
+        <h3>3.3. Especificación GJR-GARCH con Umbral Indicador (Glosten, Jagannathan &amp; Runkle, 1993)</h3>
         <p>
-          Introduce una variable indicadora \(\mathbb{I}_{t-1}(arepsilon_{t-1} &lt; 0)\) que toma valor \(1\) ante choques negativos (liquidaciones y caídas de mercado) y \(0\) ante choques positivos:
+          Incorpora una función indicadora de Heaviside <span class="m-inline">&#120128;<sub>{<i>&varepsilon;</i><sub><i>t</i>&minus;1</sub> &lt; 0}</sub></span> que toma valor unitario ante retornos inesperados negativos (cascadas de liquidación y ventas forzadas) y valor nulo ante sorpresas alcistas:
         </p>
         <div class="math-block-card">
-          \[
-            \sigma_t^2 = \omega + \left( lpha_1 + \gamma_1 \mathbb{I}_{\{arepsilon_{t-1} &lt; 0\}} ight) arepsilon_{t-1}^2 + eta_1 \sigma_{t-1}^2
-          \]
+          <div class="eq-formula">
+            <span><var>&sigma;</var><sub><var>t</var></sub><sup>2</sup> = <var>&omega;</var> + &Bigl( <var>&alpha;</var><sub>1</sub> + <var>&gamma;</var><sub>1</sub>&#120128;<sub>{<var>&varepsilon;</var><sub><var>t</var>&minus;1</sub> &lt; 0}</sub> &Bigr) <var>&varepsilon;</var><sub><var>t</var>&minus;1</sub><sup>2</sup> + <var>&beta;</var><sub>1</sub><var>&sigma;</var><sub><var>t</var>&minus;1</sub><sup>2</sup></span>
+            <span class="eq-tag-label">Ec. (3.4)</span>
+          </div>
         </div>
 
-        <h3>3.4. Distribución Skewed Student-t de Hansen (1994) y Expected Shortfall (CVaR)</h3>
+        <h3>3.4. Densidad Skewed Student-t de Hansen (1994) para Colas Pesadas Asimétricas</h3>
         <p>
-          Para capturar simultáneamente la <strong>leptocurtosis (colas pesadas)</strong> y la <strong>asimetría distribucional</strong> de los residuos estandarizados \(z_t\), se emplea la densidad Skewed Student-<em>t</em> parametrizada por los grados de libertad \(\eta \in (2, \infty)\) y el parámetro de asimetría \(\lambda \in (-1, 1)\):
+          Con el objetivo de modelar simultáneamente la <strong>leptocurtosis extrema</strong> y la <strong>asimetría distribucional</strong> de los residuos estandarizados <span class="m-inline"><i>z<sub>t</sub></i></span>, el estimador de Máxima Verosimilitud se maximiza bajo la densidad Skewed Student-<em>t</em> de Hansen, gobernada por el parámetro de grados de libertad de cola <span class="m-inline">2 &lt; <i>&eta;</i> &lt; &infin;</span> y el parámetro de asimetría <span class="m-inline">&minus;1 &lt; <i>&lambda;</i> &lt; 1</span>:
         </p>
         <div class="math-block-card">
-          \[
-            f(z_t \mid \eta, \lambda) = egin{cases}
-              b c \left( 1 + rac{1}{\eta - 2} \left( rac{b z_t + a}{1 - \lambda} ight)^2 ight)^{-rac{\eta+1}{2}} &amp; 	ext{si } z_t &lt; -rac{a}{b}, \[8pt]
-              b c \left( 1 + rac{1}{\eta - 2} \left( rac{b z_t + a}{1 + \lambda} ight)^2 ight)^{-rac{\eta+1}{2}} &amp; 	ext{si } z_t \ge -rac{a}{b}.
-            \end{cases}
-          \]
+          <div class="eq-formula">
+            <span><var>f</var>(<var>z</var><sub><var>t</var></sub> &mid; <var>&eta;</var>, <var>&lambda;</var>) =</span>
+            <div class="eq-cases">
+              <div class="eq-cases-brace"></div>
+              <div class="eq-cases-rows">
+                <div class="eq-cases-row">
+                  <span><var>b</var><var>c</var> &Biggl[ 1 + <span class="eq-frac"><span class="eq-num">1</span><span class="eq-den"><var>&eta;</var> &minus; 2</span></span> &Biggl( <span class="eq-frac"><span class="eq-num"><var>b</var><var>z</var><sub><var>t</var></sub> + <var>a</var></span><span class="eq-den">1 &minus; <var>&lambda;</var></span></span> &Biggr)<sup>2</sup> &Biggr]<sup>&minus;(<var>&eta;</var>+1)/2</sup></span>
+                  <span style="color: #334155; font-size: 0.94em;">si &nbsp; <var>z</var><sub><var>t</var></sub> &lt; &minus;<span class="eq-frac"><span class="eq-num"><var>a</var></span><span class="eq-den"><var>b</var></span></span>,</span>
+                </div>
+                <div class="eq-cases-row">
+                  <span><var>b</var><var>c</var> &Biggl[ 1 + <span class="eq-frac"><span class="eq-num">1</span><span class="eq-den"><var>&eta;</var> &minus; 2</span></span> &Biggl( <span class="eq-frac"><span class="eq-num"><var>b</var><var>z</var><sub><var>t</var></sub> + <var>a</var></span><span class="eq-den">1 + <var>&lambda;</var></span></span> &Biggr)<sup>2</sup> &Biggr]<sup>&minus;(<var>&eta;</var>+1)/2</sup></span>
+                  <span style="color: #334155; font-size: 0.94em;">si &nbsp; <var>z</var><sub><var>t</var></sub> &ge; &minus;<span class="eq-frac"><span class="eq-num"><var>a</var></span><span class="eq-den"><var>b</var></span></span>.</span>
+                </div>
+              </div>
+            </div>
+            <span class="eq-tag-label">Ec. (3.5)</span>
+          </div>
         </div>
+        <p style="font-size: 0.92rem; color: #475569;">
+          donde las constantes normalizadoras <span class="m-inline"><i>a</i>, <i>b</i>, <i>c</i></span> vienen definidas analíticamente por <span class="m-inline"><i>c</i> = &Gamma;((<i>&eta;</i>+1)/2) / [&radic;(&pi;(<i>&eta;</i>&minus;2)) &Gamma;(<i>&eta;</i>/2)]</span>, <span class="m-inline"><i>a</i> = 4<i>&lambda;c</i>((<i>&eta;</i>&minus;2)/(<i>&eta;</i>&minus;1))</span> y <span class="m-inline"><i>b</i><sup>2</sup> = 1 + 3<i>&lambda;</i><sup>2</sup> &minus; <i>a</i><sup>2</sup></span>.
+        </p>
+
+        <h3>3.5. Valor en Riesgo Condicional (VaR) y Expected Shortfall (CVaR / ES) bajo Basilea III/IV</h3>
         <p>
-          Bajo el marco regulatorio de <strong>Basilea III/IV (Fundamental Review of the Trading Book - FRTB)</strong>, el <strong>Valor en Riesgo (\(	ext{VaR}_{lpha, t}\))</strong> se complementa con el <strong>Expected Shortfall (\(	ext{CVaR}_{lpha, t}\))</strong>, medida coherente y subaditiva de riesgo que cuantifica la pérdida esperada condicional cuando el retorno perfora el umbral del \(	ext{VaR}_{lpha, t}\):
+          Conforme al estándar regulatorio <em>Fundamental Review of the Trading Book (FRTB — Basilea III/IV)</em>, el <strong>Valor en Riesgo (<span class="m-inline">VaR<sub><i>&alpha;</i>,<i>t</i></sub></span>)</strong> al nivel de significancia <span class="m-inline"><i>&alpha;</i> &in; {0.05, 0.01}</span> se complementa con el <strong>Expected Shortfall (<span class="m-inline">CVaR<sub><i>&alpha;</i>,<i>t</i></sub></span>)</strong>, medida de riesgo coherente y subaditiva (Artzner et al., 1999) que cuantifica la esperanza matemática condicional de la pérdida dado que el retorno ha perforado el umbral del <span class="m-inline">VaR<sub><i>&alpha;</i>,<i>t</i></sub></span>:
         </p>
         <div class="math-block-card">
-          \[
-            	ext{VaR}_{lpha, t} = \hat{\mu}_t + q_{lpha}(z) \, \hat{\sigma}_t, \qquad
-            	ext{CVaR}_{lpha, t} = \mathbb{E}\left[ r_t \;\middle|\; r_t \le 	ext{VaR}_{lpha, t} ight] = \hat{\mu}_t + \left( rac{1}{lpha} \int_{-\infty}^{q_{lpha}(z)} u \, f(u \mid \hat{\eta}, \hat{\lambda}) \, du ight) \hat{\sigma}_t
-          \]
+          <div class="eq-formula">
+            <span>VaR<sub><var>&alpha;</var>,<var>t</var></sub> = <var>&mu;&#770;</var><sub><var>t</var></sub> + <var>q</var><sub><var>&alpha;</var></sub>(<var>z</var> &mid; <var>&eta;&#770;</var>, <var>&lambda;&#770;</var>) &middot; <var>&sigma;&#770;</var><sub><var>t</var></sub>,</span>
+            <span style="margin-left: 1.5rem;">CVaR<sub><var>&alpha;</var>,<var>t</var></sub> = &#120124;&Bigl[ <var>r</var><sub><var>t</var></sub> &mid; <var>r</var><sub><var>t</var></sub> &le; VaR<sub><var>&alpha;</var>,<var>t</var></sub> &Bigr] = <var>&mu;&#770;</var><sub><var>t</var></sub> + &Biggl( <span class="eq-frac"><span class="eq-num">1</span><span class="eq-den"><var>&alpha;</var></span></span></span>
+            <span class="eq-op-stack">
+              <span class="op-lim"><var>q</var><sub><var>&alpha;</var></sub>(<var>z</var>)</span>
+              <span class="op-sym">&int;</span>
+              <span class="op-lim">&minus;&infin;</span>
+            </span>
+            <span><var>u</var> &middot; <var>f</var>(<var>u</var> &mid; <var>&eta;&#770;</var>, <var>&lambda;&#770;</var>) <i>d</i><var>u</var> &Biggr) <var>&sigma;&#770;</var><sub><var>t</var></sub></span>
+            <span class="eq-tag-label">Ec. (3.6)</span>
+          </div>
         </div>
       </section>
 
@@ -978,10 +1145,10 @@ u}\))</strong></td>
       <section id="sec-python">
         <h2>4. Proceso Completo de Modelado e Implementación Reproducible en Python</h2>
         <p>
-          El flujo de trabajo econométrico completo se estructuró en <strong>Python 3.11</strong> utilizando las librerías científicas <code>arch</code> (Kevin Sheppard, Oxford Financial Econometrics), <code>scipy.stats</code>, <code>statsmodels</code>, <code>pandas</code> y <code>numpy</code>. El código íntegro puede descargarse directamente desde <a href="models/garch_var_cvar_2026.py" download><code>models/garch_var_cvar_2026.py</code></a>.
+          La arquitectura econométrica y de ejecución cuantitativa se implementó en <strong>Python 3.11</strong> empleando las librerías <code>arch</code> (Kevin Sheppard, Oxford Financial Econometrics), <code>scipy.stats</code>, <code>statsmodels</code>, <code>pandas</code> y <code>numpy</code>. El script íntegro de producción se encuentra disponible para descarga directa en <a href="models/garch_var_cvar_2026.py" download><code>models/garch_var_cvar_2026.py</code></a>.
         </p>
 
-        <h3>Paso 4.1. Ingesta de Datos, Descomposición por Regímenes y Pruebas Preliminares</h3>
+        <h3>Paso 4.1. Ingesta de Datos, Escalado Porcentual para Estabilidad del Hessiano y Contrastes Preliminares</h3>
         <pre class="python"><code>import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -993,12 +1160,12 @@ from statsmodels.stats.diagnostic import acorr_ljungbox, het_arch
 raw = yf.download("BTC-USD", start="2014-09-17", end="2026-10-30", auto_adjust=True, progress=False)
 df = raw[["Open", "High", "Low", "Close", "Volume"]].dropna().copy()
 
-# Retornos logarítmicos continuos en escala porcentual para estabilidad numérica del Hessiano MLE
+# Retornos logarítmicos continuos en escala porcentual para condicionamiento óptimo del Hessiano MLE
 df["Log_Return"] = np.log(df["Close"] / df["Close"].shift(1))
 df["Pct_Return"] = df["Log_Return"] * 100.0
 df = df.dropna()
 
-# 2. Contrastes preliminares sobre la serie de retornos r_t (N = 4,425 días)
+# 2. Contrastes preliminares de raíz unitaria, normalidad y efecto ARCH sobre r_t (N = 4,425 días)
 r = df["Pct_Return"]
 adf_stat, adf_p, _, _, _, _ = adfuller(r, autolag="AIC")
 jb_stat, jb_p = stats.jarque_bera(r)
@@ -1009,10 +1176,10 @@ print(f"Test ADF Estacionariedad: Estadístico = {adf_stat:.4f} (p-valor = {adf_
 print(f"Test Jarque-Bera Normal : Estadístico = {jb_stat:.2f} (p-valor = {jb_p:.4e})")
 print(f"Test ARCH-LM(10) Engle  : Estadístico = {arch_stat:.2f} (p-valor = {arch_p:.4e})")</code></pre>
 
-        <h3>Paso 4.2. Torneo Econométrico MLE en Python (sGARCH, EGARCH y GJR-GARCH con Skewed-t)</h3>
+        <h3>Paso 4.2. Estimación por Máxima Verosimilitud (MLE) del Torneo GARCH Simétrico y Asimétrico</h3>
         <pre class="python"><code>from arch import arch_model
 
-# Especificación de los 5 modelos competidores con media condicional AR(1)
+# Especificación de las 5 familias competidoras con ecuación de media condicional AR(1)
 specs = {
     "AR(1)-sGARCH(1,1)-Normal":   arch_model(r, mean="AR", lags=1, vol="Garch",  p=1, o=0, q=1, dist="normal"),
     "AR(1)-sGARCH(1,1)-Student":  arch_model(r, mean="AR", lags=1, vol="Garch",  p=1, o=0, q=1, dist="t"),
@@ -1030,9 +1197,9 @@ for name, model in specs.items():
     lm_p = het_arch(z, nlags=5)[1]
     print(f"{name:28s} | LogLik: {res.loglikelihood:9.2f} | AIC: {res.aic:8.2f} | BIC: {res.bic:8.2f} | Q2(10) p: {lb_q2:.4f} | ARCH-LM p: {lm_p:.4f}")</code></pre>
 
-        <h3>Paso 4.3. Estimación de VaR / Expected Shortfall (CVaR) y Contrastes de Kupiec y Christoffersen</h3>
+        <h3>Paso 4.3. Cálculo Dinámico de VaR / Expected Shortfall (CVaR) y Contrastes de Kupiec y Christoffersen</h3>
         <pre class="python"><code>def compute_var_cvar_and_backtest(returns_pct: pd.Series, fit_res, alpha: float = 0.01, is_normal: bool = False):
-    # 1. Media y volatilidad condicional diaria
+    # 1. Media condicional AR(1) y volatilidad condicional diaria sigma_t
     mu_t = fit_res.params["Const"] + fit_res.params["Pct_Return[1]"] * returns_pct.shift(1)
     sigma_t = fit_res.conditional_volatility
     z = fit_res.std_resid.dropna()
@@ -1049,7 +1216,7 @@ for name, model in specs.items():
     cvar_t = (mu_t + es_z * sigma_t).loc["2020-01-31":]
     y_eval = returns_pct.loc["2020-01-31":]
 
-    # 3. Secuencia de violaciones I_t = 1(r_t &lt; VaR_t) en la ventana 2020-2026 (T = 2,464 días)
+    # 3. Secuencia de violaciones I_t = 1(r_t &lt; VaR_t) en la ventana 2020-2026 (T = 2,464 sesiones)
     hits = (y_eval &lt; var_t).astype(int).values
     T, N = len(hits), int(hits.sum())
     p_hat = N / T
@@ -1070,6 +1237,35 @@ for name, model in specs.items():
     p_cc = 1.0 - stats.chi2.cdf(lr_cc, df=2)
 
     return var_t, cvar_t, {"N": N, "T": T, "rate": p_hat * 100, "lr_uc": lr_uc, "p_uc": p_uc, "lr_cc": lr_cc, "p_cc": p_cc}</code></pre>
+
+        <h3>Paso 4.4. Motor de Ejecución Cuantitativa: Volatility Targeting, Position Sizing, Stop-Loss y Apalancamiento</h3>
+        <pre class="python"><code>def compute_trading_execution_signals(
+    sigma_daily_pct: pd.Series,
+    var_99_pct: pd.Series,
+    cvar_99_pct: pd.Series,
+    equity_usd: float = 1_000_000.0,
+    target_vol_ann_pct: float = 20.0,
+    max_tail_risk_budget_usd: float = 25_000.0,
+    maint_margin: float = 0.005,
+    safety_kappa: float = 3.0,
+) -> pd.DataFrame:
+    sigma_ann_pct = sigma_daily_pct * np.sqrt(365.0)
+    cvar_dec = (cvar_99_pct.abs() / 100.0).clip(lower=1e-4)
+
+    signals = pd.DataFrame(index=sigma_daily_pct.index)
+    # 1. Ponderación óptima por Volatility Targeting: w_t = min(1.0, sigma_target / sigma_anual_t)
+    signals["Weight_VolTarget"] = (target_vol_ann_pct / sigma_ann_pct).clip(upper=1.0)
+    signals["Notional_VolTarget_USD"] = signals["Weight_VolTarget"] * equity_usd
+
+    # 2. Exposición máxima permitida por Presupuesto de Riesgo de Cola (Expected Shortfall 99%)
+    signals["Max_Notional_CVaR_Budget_USD"] = max_tail_risk_budget_usd / cvar_dec
+
+    # 3. Stop-Loss dinámico condicional al 99% de confianza (filtrado de ruido estocástico)
+    signals["Adaptive_StopLoss_99_Pct"] = var_99_pct
+
+    # 4. Apalancamiento institucional máximo seguro en perpetuos/futuros sin riesgo de cascada
+    signals["Max_Safe_Leverage_x"] = (1.0 - maint_margin) / (safety_kappa * cvar_dec)
+    return signals</code></pre>
       </section>
 
       <!-- =====================================================================
@@ -1078,7 +1274,7 @@ for name, model in specs.items():
       <section id="sec-visualizaciones">
         <h2>5. Laboratorio Visual Interactivo: Gráficos Dinámicos de Última Generación (2014–2026)</h2>
         <p>
-          Los cinco gráficos interactivos que se presentan a continuación han sido generados directamente con las series estimadas sobre las <strong>4,425 observaciones diarias de BTC-USD (2014–2026)</strong>. Utilice los controles superiores de cada tarjeta y el cursor para inspeccionar valores puntuales, hacer zoom sobre episodios de estrés de liquidez o alternar escalas.
+          Las cinco visualizaciones interactivas que se presentan a continuación han sido compiladas directamente a partir de las series condicionales estimadas sobre las <strong>4,425 observaciones diarias de BTC-USD (2014–2026)</strong>. Utilice los selectores superiores de cada módulo y las herramientas de inspección de Plotly para evaluar regímenes de volatilidad, excedencias de Valor en Riesgo, asimetría en la curva de impacto de noticias y proyecciones estocásticas.
         </p>
 
         <!-- GRÁFICO #1: REGÍMENES DE VOLATILIDAD CONDICIONAL ANUALIZADA 2014-2026 -->
@@ -1086,11 +1282,11 @@ for name, model in specs.items():
           <div class="plotly-card-header">
             <div>
               <h3 class="plotly-card-title">Gráfico Dinámico 1. Evolución de la Volatilidad Condicional y Transición de Régimen hacia los ETFs Spot (2014–2026)</h3>
-              <p class="plotly-card-sub">Comparación entre AR(1)-EGARCH(2,1) Skewed-t, GJR-GARCH(1,1,1) y sGARCH(1,1) Normal con hitos estructurales marcados</p>
+              <p class="plotly-card-sub">Comparación entre AR(1)-EGARCH(2,1) Skewed-t, GJR-GARCH(1,1,1) y sGARCH(1,1) Normal con quiebres estructurales identificados</p>
             </div>
             <div class="chart-ctrl-group" role="group" aria-label="Selector de métrica en Gráfico 1">
               <button type="button" class="chart-ctrl-btn active" id="btnVolAnn">Volatilidad Anualizada (%)</button>
-              <button type="button" class="chart-ctrl-btn" id="btnVolDaily">Volatilidad Diaria σ_t (%)</button>
+              <button type="button" class="chart-ctrl-btn" id="btnVolDaily">Volatilidad Diaria &sigma;<sub>t</sub> (%)</button>
               <button type="button" class="chart-ctrl-btn" id="btnPriceLog">Precio BTC-USD (Log $)</button>
             </div>
           </div>
@@ -1113,7 +1309,7 @@ for name, model in specs.items():
           <div class="plotly-card-header">
             <div>
               <h3 class="plotly-card-title">Gráfico Dinámico 3. Curva de Impacto de Noticias (News Impact Curve — NIC)</h3>
-              <p class="plotly-card-sub">Respuesta asimétrica de la volatilidad condicional \(\sigma_t\) ante choques estandarizados negativos (\(z_{t-1} &lt; 0\)) frente a choques positivos (\(z_{t-1} &gt; 0\))</p>
+              <p class="plotly-card-sub">Respuesta diferencial de la volatilidad condicional <span class="m-inline"><i>&sigma;<sub>t</sub></i></span> ante choques estandarizados negativos (<span class="m-inline"><i>z</i><sub><i>t</i>&minus;1</sub> &lt; 0</span>) frente a choques positivos (<span class="m-inline"><i>z</i><sub><i>t</i>&minus;1</sub> &gt; 0</span>)</p>
             </div>
           </div>
           <div id="chartNewsImpact" class="plotly-canvas" style="height: 430px;"></div>
@@ -1123,12 +1319,12 @@ for name, model in specs.items():
         <div class="plotly-card-box">
           <div class="plotly-card-header">
             <div>
-              <h3 class="plotly-card-title">Gráfico Dinámico 4. Ajuste de Densidad Empírica y Leptocurtosis de los Residuos Estandarizados (\(z_t\))</h3>
-              <p class="plotly-card-sub">Contraste entre la campana Gaussiana \(\mathcal{N}(0,1)\) y la distribución Skewed Student-t de Hansen (\(\hat{\eta} = 2.77\)) en el centro y en las colas extremas</p>
+              <h3 class="plotly-card-title">Gráfico Dinámico 4. Ajuste de Densidad Empírica y Leptocurtosis de los Residuos Estandarizados (<span class="m-inline"><i>z<sub>t</sub></i></span>)</h3>
+              <p class="plotly-card-sub">Contraste entre la densidad Gaussiana <span class="m-inline"><i>N</i>(0,1)</span> y la distribución Skewed Student-t de Hansen (<span class="m-inline"><i>&eta;&#770;</i> = 2.770</span>) en la región central y en las colas extremas</p>
             </div>
             <div class="chart-ctrl-group" role="group" aria-label="Escala de densidad en Gráfico 4">
               <button type="button" class="chart-ctrl-btn active" id="btnDensLinear">Escala Lineal (Densidad)</button>
-              <button type="button" class="chart-ctrl-btn" id="btnDensLog">Escala Log (Zoom Colas ±5σ)</button>
+              <button type="button" class="chart-ctrl-btn" id="btnDensLog">Escala Log (Zoom Colas &plusmn;5&sigma;)</button>
             </div>
           </div>
           <div id="chartTailDensity" class="plotly-canvas" style="height: 430px;"></div>
@@ -1139,7 +1335,7 @@ for name, model in specs.items():
           <div class="plotly-card-header">
             <div>
               <h3 class="plotly-card-title">Gráfico Dinámico 5. Cono de Volatilidad Bootstrap Forward-Looking a 90 Días (Octubre 2026 – Enero 2027)</h3>
-              <p class="plotly-card-sub">5,000 trayectorias simuladas con recuestreo de innovaciones estandarizadas (Mediana, IC 50% e IC 90%) y reversión al equilibrio institucional</p>
+              <p class="plotly-card-sub">5,000 trayectorias simuladas mediante remuestreo de innovaciones estandarizadas (Mediana, IC 50% e IC 90%) y reversión al equilibrio estacionario</p>
             </div>
           </div>
           <div id="chartBootstrapCone" class="plotly-canvas" style="height: 410px;"></div>
@@ -1147,12 +1343,305 @@ for name, model in specs.items():
       </section>
 
       <!-- =====================================================================
-           SECCIÓN 6: TABLA MAESTRA DEL TORNEO ECONOMÉTRICO Y CONCLUSIONES
+           SECCIÓN 6: INTERPRETACIÓN ECONOMÉTRICA Y MICROESTRUCTURAL DEL MODELO
+           ===================================================================== -->
+      <section id="sec-interpretacion">
+        <h2>6. Interpretación Econométrica y Microestructural del Modelo Óptimo AR(1)-EGARCH(2,1) Skewed-t</h2>
+        <p>
+          La especificación que minimiza el Criterio de Información de Akaike (<strong>AIC = 21,553.06</strong>) y maximiza la función de Log-Verosimilitud (<strong><span class="m-inline">&#8467; = &minus;10,767.53</span></strong>) sobre las 4,425 sesiones de <code>BTC-USD</code> es el proceso <strong>AR(1)-EGARCH(2,1) con innovaciones Skewed Student-<em>t</em> de Hansen</strong>. En la <strong>Tabla 6.1</strong> se reportan los nueve parámetros estimados por Cuasi-Máxima Verosimilitud (QMLE), junto con sus errores estándar asintóticos, estadísticos <span class="m-inline"><i>t</i></span>, <span class="m-inline"><i>p</i></span>-valores y su interpretación económica dentro de la microestructura del mercado de criptoactivos:
+        </p>
+
+        <div class="quant-table-wrap">
+          <table class="quant-table">
+            <thead>
+              <tr>
+                <th>Parámetro</th>
+                <th>Símbolo</th>
+                <th>Estimador MLE</th>
+                <th>Error Estándar</th>
+                <th>Estadístico <span class="m-inline"><i>t</i></span></th>
+                <th><span class="m-inline"><i>p</i></span>-valor</th>
+                <th>Interpretación Econométrica y de Microestructura de Mercado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Intercepto Media</strong></td>
+                <td><span class="m-inline"><i>&mu;&#770;</i></span></td>
+                <td><strong>+0.099776</strong></td>
+                <td>0.006597</td>
+                <td>+15.1246</td>
+                <td>&lt; 0.0001</td>
+                <td>Drift diario condicional (+0.100% por sesión, equivalente a +36.4% anualizado continuo)</td>
+              </tr>
+              <tr>
+                <td><strong>Coeficiente AR(1)</strong></td>
+                <td><span class="m-inline"><i>&phi;&#770;</i><sub>1</sub></span></td>
+                <td><strong>&minus;0.052091</strong></td>
+                <td>0.001294</td>
+                <td>&minus;40.2462</td>
+                <td>&lt; 0.0001</td>
+                <td>Autocorrelación serial negativa (-5.21%): reversión a la media de corto plazo por rebote <em>bid-ask</em> y arbitraje de liquidez</td>
+              </tr>
+              <tr>
+                <td><strong>Constante Log-Varianza</strong></td>
+                <td><span class="m-inline"><i>&omega;&#770;</i></span></td>
+                <td><strong>+0.065020</strong></td>
+                <td>0.016404</td>
+                <td>+3.9637</td>
+                <td>0.0001</td>
+                <td>Intercepto de la ecuación exponencial que fija el nivel estacionario de varianza incondicional</td>
+              </tr>
+              <tr class="row-tangente">
+                <td><strong>Magnitud ARCH Rezago 1</strong></td>
+                <td><span class="m-inline"><i>&alpha;&#770;</i><sub>1</sub></span></td>
+                <td><strong>+0.369621</strong></td>
+                <td>0.043957</td>
+                <td>+8.4087</td>
+                <td>&lt; 0.0001</td>
+                <td>Elasticidad inmediata de impacto: expansión aguda de <span class="m-inline">ln(<i>&sigma;</i><sub><i>t</i></sub><sup>2</sup>)</span> en <span class="m-inline"><i>t</i>+1</span> ante sorpresas <span class="m-inline">|<i>z</i><sub><i>t</i>&minus;1</sub>| &gt; &#120124;[|<i>z</i>|]</span></td>
+              </tr>
+              <tr class="row-tangente">
+                <td><strong>Magnitud ARCH Rezago 2</strong></td>
+                <td><span class="m-inline"><i>&alpha;&#770;</i><sub>2</sub></span></td>
+                <td><strong>&minus;0.158027</strong></td>
+                <td>0.043672</td>
+                <td>&minus;3.6185</td>
+                <td>0.0003</td>
+                <td>Amortiguamiento oscilatorio en <span class="m-inline"><i>t</i>+2</span>: absorción institucional del libro de órdenes tras el choque inicial (efecto neto <span class="m-inline">+0.2116</span>)</td>
+              </tr>
+              <tr>
+                <td><strong>Asimetría Direccional</strong></td>
+                <td><span class="m-inline"><i>&gamma;&#770;</i><sub>1</sub></span></td>
+                <td><strong>+0.022411</strong></td>
+                <td>0.011107</td>
+                <td>+2.0177</td>
+                <td>0.0436</td>
+                <td>Componente direccional sobre el signo de <span class="m-inline"><i>z</i><sub><i>t</i>&minus;1</sub></span>; compresión estructural frente a 2020 por simetrización del flujo vía ETFs</td>
+              </tr>
+              <tr class="row-winner">
+                <td><strong>Persistencia Log-GARCH</strong></td>
+                <td><span class="m-inline"><i>&beta;&#770;</i><sub>1</sub></span></td>
+                <td><strong>+0.991357</strong></td>
+                <td>0.003956</td>
+                <td>+250.6024</td>
+                <td>&lt; 0.0001</td>
+                <td>Memoria autorregresiva estacionaria (<span class="m-inline"><i>&beta;&#770;</i><sub>1</sub> &lt; 1</span>) con <strong>Vida Media (Half-Life) de 79.9 sesiones</strong></td>
+              </tr>
+              <tr class="row-winner">
+                <td><strong>Grados de Libertad Cola</strong></td>
+                <td><span class="m-inline"><i>&eta;&#770;</i></span></td>
+                <td><strong>+2.769501</strong></td>
+                <td>0.130522</td>
+                <td>+21.2186</td>
+                <td>&lt; 0.0001</td>
+                <td>Leptocurtosis severa (<span class="m-inline">2 &lt; <i>&eta;&#770;</i> &lt; 4</span>): varianza finita con cuarto momento infinito y colas pesadas hiperbólicas</td>
+              </tr>
+              <tr>
+                <td><strong>Asimetría de Cola Hansen</strong></td>
+                <td><span class="m-inline"><i>&lambda;&#770;</i></span></td>
+                <td><strong>&minus;0.006980</strong></td>
+                <td>0.012627</td>
+                <td>&minus;0.5528</td>
+                <td>0.5804</td>
+                <td>Sesgo residual izquierdo leve en las innovaciones estandarizadas una vez filtrada la heterocedasticidad</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>6.1. Lectura Económica de la Ecuación Estimada y Vida Media del Choque (Half-Life)</h3>
+        <p>
+          Sustituyendo los estimadores puntuales de Máxima Verosimilitud en la formulación <span class="m-inline">AR(1)-EGARCH(2,1)</span> de las Ecuaciones (3.1) y (3.3), el sistema dinámico que gobierna el retorno y el riesgo diario del Bitcoin queda completamente determinado por:
+        </p>
+
+        <div class="math-block-card">
+          <div class="eq-formula">
+            <span><var>r&#770;</var><sub><var>t</var></sub> = 0.0998 &minus; 0.0521<var>r</var><sub><var>t</var>&minus;1</sub> + <var>&varepsilon;</var><sub><var>t</var></sub>, &emsp; ln(<var>&sigma;&#770;</var><sub><var>t</var></sub><sup>2</sup>) = 0.0650 + 0.3696 <var>g</var>(<var>z</var><sub><var>t</var>&minus;1</sub>) &minus; 0.1580 &Bigl(|<var>z</var><sub><var>t</var>&minus;2</sub>| &minus; &#120124;[|<var>z</var>|]&Bigr) + 0.0224<var>z</var><sub><var>t</var>&minus;1</sub> + 0.9914 ln(<var>&sigma;&#770;</var><sub><var>t</var>&minus;1</sub><sup>2</sup>)</span>
+          </div>
+        </div>
+
+        <p>
+          De esta parametrización se desprenden cuatro leyes empíricas fundamentales para la mesa de dinero y el gestor cuantitativo:
+        </p>
+        <ol>
+          <li>
+            <strong>Reversión a la Media de Corto Plazo en Retornos (<span class="m-inline"><i>&phi;&#770;</i><sub>1</sub> = &minus;0.0521, <i>t</i> = &minus;40.25</span>):</strong> El signo negativo y estadísticamente significativo del término autorregresivo indica que aproximadamente el <strong>5.21% de cualquier impulso direccional diario se corrige en la sesión inmediata siguiente</strong>. En la microestructura de libros de órdenes electrónicos (<em>Central Limit Order Books</em>), este fenómeno obedece a la reposición de liquidez por parte de creadores de mercado (<em>market makers</em>) y a la toma táctica de beneficios tras barridos agresivos de liquidez.
+          </li>
+          <li>
+            <strong>Estructura de Impacto de Dos Rezagos (<span class="m-inline"><i>&alpha;&#770;</i><sub>1</sub> = +0.3696</span> vs. <span class="m-inline"><i>&alpha;&#770;</i><sub>2</sub> = &minus;0.1580</span>):</strong> A diferencia de un modelo <span class="m-inline">EGARCH(1,1)</span> convencional, la inclusión del segundo rezago captura una dinámica de <strong>sobrerreacción y amortiguamiento</strong>. Cuando ocurre un choque de magnitud superior a lo normal en <span class="m-inline"><i>t</i>&minus;1</span>, la log-varianza se expande con una elasticidad de <span class="m-inline">+0.3696</span>; sin embargo, en la sesión <span class="m-inline"><i>t</i>&minus;2</span> opera un coeficiente corrector de <span class="m-inline">&minus;0.1580</span> que frena el crecimiento exponencial descontrolado de la volatilidad a medida que los participantes institucionales arbitran la dislocación inicial, dejando un efecto multiplicador neto de <span class="m-inline"><i>&alpha;&#770;</i><sub>1</sub> + <i>&alpha;&#770;</i><sub>2</sub> = +0.2116</span>.
+          </li>
+          <li>
+            <strong>Persistencia Autorregresiva (<span class="m-inline"><i>&beta;&#770;</i><sub>1</sub> = 0.991357</span>) y Cálculo de la Vida Media del Choque (<em>Volatility Half-Life</em>):</strong> Dado que <span class="m-inline">|<i>&beta;&#770;</i><sub>1</sub>| = 0.991357 &lt; 1</span>, el proceso log-varianza es estrictamente estacionario en covarianza y converge hacia una volatilidad incondicional de equilibrio. La velocidad de disipación de un choque de volatilidad se cuantifica mediante la <strong>Vida Media (<em>Half-Life</em>)</strong>, definida como el número de sesiones bursátiles necesarias para que el exceso de log-varianza se reduzca exactamente al 50%:
+            <div class="math-block-card">
+              <div class="eq-formula">
+                <span>Half-Life = <span class="eq-frac"><span class="eq-num">ln(0.5)</span><span class="eq-den">ln(<var>&beta;&#770;</var><sub>1</sub>)</span></span> = <span class="eq-frac"><span class="eq-num">&minus;0.693147</span><span class="eq-den">ln(0.991357)</span></span> = <span class="eq-frac"><span class="eq-num">&minus;0.693147</span><span class="eq-den">&minus;0.008681</span></span> = <strong>79.85 &asymp; 79.9 sesiones diarias</strong></span>
+                <span class="eq-tag-label">Ec. (6.1)</span>
+              </div>
+            </div>
+            En términos operativos, tras un evento de estrés macrofinanciero o desapalancamiento masivo en derivados, el mercado de Bitcoin requiere aproximadamente <strong>80 días calendario (~2.6 meses)</strong> para absorber la mitad de la perturbación de volatilidad.
+          </li>
+          <li>
+            <strong>Índice de Cola de Hansen (<span class="m-inline"><i>&eta;&#770;</i> = 2.7695</span>) y Validación Diagnóstica de Residuos:</strong> El parámetro de forma <span class="m-inline"><i>&eta;&#770;</i> = 2.770</span> (<span class="m-inline"><i>t</i> = 21.22</span>) demuestra estadísticamente el rechazo absoluto de la normalidad (<span class="m-inline"><i>&eta;</i> &rarr; &infin;</span>). Al situarse en el intervalo <span class="m-inline">(2, 4)</span>, la distribución condicional posee varianza finita pero curtosis teórica divergente, asignando la masa de probabilidad exacta a eventos extremos de <span class="m-inline">&plusmn;4<i>&sigma;</i></span> a <span class="m-inline">&plusmn;6<i>&sigma;</i></span>. Finalmente, los contrastes diagnósticos sobre los residuos estandarizados <span class="m-inline"><i>z&#770;<sub>t</sub></i> = <i>&varepsilon;&#770;<sub>t</sub></i> / <i>&sigma;&#770;<sub>t</sub></i></span> confirman que el filtro <span class="m-inline">EGARCH(2,1)</span> absorbe satisfactoriamente la dependencia de segundo orden: el estadístico de <strong>Ljung-Box sobre residuos al cuadrado <span class="m-inline"><i>Q</i><sup>2</sup>(10)</span> arroja un <span class="m-inline"><i>p</i></span>-valor de <span class="m-inline">0.6924</span></strong> y el contraste <strong>ARCH-LM(5) de Engle registra <span class="m-inline"><i>p</i> = 0.2960</span></strong>, no rechazándose la hipótesis nula de homocedasticidad e independencia condicional.
+          </li>
+        </ol>
+      </section>
+
+      <!-- =====================================================================
+           SECCIÓN 7: USO OPERATIVO PARA EL INVERSOR Y TRADING CUANTITATIVO
+           ===================================================================== -->
+      <section id="sec-aplicacion-inversor">
+        <h2>7. Aplicaciones Operativas para el Inversor Institucional, Trading Cuantitativo y Gestión de Riesgo de Tesorería</h2>
+        <p>
+          Un modelo econométrico de volatilidad condicional no constituye un ejercicio meramente descriptivo; en la gestión cuantitativa de carteras y en las mesas de ejecución (<em>Quantitative Trading Desks</em>), las series diarias pronosticadas <span class="m-inline"><i>&sigma;&#770;</i><sub><i>t</i>+1&mid;<i>t</i></sub></span>, <span class="m-inline">VaR<sub>99%,<i>t</i>+1</sub></span> y <span class="m-inline">CVaR<sub>99%,<i>t</i>+1</sub></span> funcionan como <strong>insumos directos de control de capital, dimensionamiento de órdenes, calibración de niveles de invalidación (<em>stop-loss</em>) y arbitraje de derivados</strong>. A continuación se formalizan las cinco aplicaciones operativas del modelo tomando como referencia empírica el cierre del <strong>29 de octubre de 2026</strong> (<span class="m-inline"><i>&sigma;&#770;</i><sub>diaria</sub> = 1.863%</span>, <span class="m-inline"><i>&sigma;&#770;</i><sub>anual</sub> = 35.59%</span>, <span class="m-inline">VaR<sub>99%</sub> = &minus;4.600%</span> y <span class="m-inline">CVaR<sub>99%</sub> = &minus;6.961%</span>):
+        </p>
+
+        <div class="exec-playbook-grid">
+          <!-- CASO DE USO 1 -->
+          <div class="exec-playbook-card">
+            <h4>7.1. Volatility Targeting y Position Sizing Dinámico</h4>
+            <p>
+              En lugar de mantener una asignación estática de capital que expone el portafolio a fluctuaciones abruptas de varianza, el inversor institucional ajusta diariamente el peso porcentual asignado al activo (<span class="m-inline"><i>w<sub>t</sub></i></span>) de forma inversamente proporcional a la volatilidad condicional pronosticada por el modelo <span class="m-inline">EGARCH(2,1)</span> para mantener constante una volatilidad objetivo anualizada (<span class="m-inline"><i>&sigma;</i><sub>target</sub></span>):
+            </p>
+            <div class="math-block-card" style="padding: 0.75rem 1rem; margin: 0.75rem 0;">
+              <div class="eq-formula" style="font-size: 1.02rem;">
+                <span><var>w</var><sub><var>t</var></sub> = min&Biggl( <var>w</var><sub>máx</sub>, &nbsp; <span class="eq-frac"><span class="eq-num"><var>&sigma;</var><sub>target</sub></span><span class="eq-den"><var>&sigma;&#770;</var><sub><var>t</var>&mid;<var>t</var>&minus;1</sub> &middot; &radic;365</span></span> &Biggr)</span>
+              </div>
+            </div>
+            <p>
+              <strong>Ejecución Numérica (29-Oct-2026):</strong> Para un mandato con volatilidad objetivo <span class="m-inline"><i>&sigma;</i><sub>target</sub> = 20.0%</span> anual sobre un capital de <strong>$1,000,000 USD</strong>, dado que el pronóstico actual es <span class="m-inline"><i>&sigma;&#770;</i><sub>anual</sub> = 35.59%</span>, la ponderación óptima es <span class="m-inline"><i>w<sub>t</sub></i> = 20.0% / 35.59% = <strong>56.20% ($561,961 USD)</strong></span>, manteniendo el 43.80% restante en activos libres de riesgo (<em>T-Bills</em>). Si un choque exógeno eleva <span class="m-inline"><i>&sigma;&#770;</i><sub>anual</sub></span> a <span class="m-inline">80.0%</span>, el algoritmo reduce automáticamente la exposición a <span class="m-inline">25.0% ($250,000 USD)</span>, estabilizando el ratio de Sharpe y conteniendo el <em>Maximum Drawdown</em>.
+            </p>
+          </div>
+
+          <!-- CASO DE USO 2 -->
+          <div class="exec-playbook-card emerald">
+            <h4>7.2. Presupuesto de Riesgo Diario (Risk Budgeting vía CVaR<sub>99%</sub>)</h4>
+            <p>
+              Los comités de riesgo de tesorería y fondos <em>multi-strategy</em> establecen un límite monetario máximo admisible de pérdida diaria en escenarios de cola (<span class="m-inline"><i>L</i><sub>máx</sub></span>). Empleando el <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%,<i>t</i></sub></span>)</strong> del modelo <span class="m-inline">EGARCH(2,1)-Skewed-t</span>, el nocional máximo autorizado en libros (<span class="m-inline"><i>E</i><sub>máx,<i>t</i></sub></span>) se determina por:
+            </p>
+            <div class="math-block-card" style="padding: 0.75rem 1rem; margin: 0.75rem 0;">
+              <div class="eq-formula" style="font-size: 1.02rem;">
+                <span><var>E</var><sub>máx,<var>t</var></sub> = <span class="eq-frac"><span class="eq-num"><var>L</var><sub>máx</sub></span><span class="eq-den">|CVaR<sub>99%,<var>t</var></sub>|</span></span> = <span class="eq-frac"><span class="eq-num">Patrimonio &times; &delta;<sub>riesgo</sub></span><span class="eq-den">|<var>&mu;&#770;</var><sub><var>t</var></sub> + &#120124;[<var>z</var> &mid; <var>z</var> &le; <var>q</var><sub>0.01</sub>]<var>&sigma;&#770;</var><sub><var>t</var></sub>|</span></span></span>
+              </div>
+            </div>
+            <p>
+              <strong>Ejecución Numérica (29-Oct-2026):</strong> Si una tesorería corporativa con patrimonio de $1,000,000 USD fija una tolerancia máxima de pérdida en evento extremo del 1% de <span class="m-inline"><i>L</i><sub>máx</sub> = $25,000 USD</span> diarios (<span class="m-inline">&delta;<sub>riesgo</sub> = 2.50%</span> del capital), con un <span class="m-inline">CVaR<sub>99%</sub> = &minus;6.961%</span>, el límite estricto de exposición nominal hoy es <span class="m-inline"><i>E</i><sub>máx</sub> = $25,000 / 0.06961 = <strong>$359,144 USD</strong></span>.
+            </p>
+          </div>
+
+          <!-- CASO DE USO 3 -->
+          <div class="exec-playbook-card amber">
+            <h4>7.3. Calibración de Stop-Loss Dinámicos y Filtrado de Ruido</h4>
+            <p>
+              En series financieras con heterocedasticidad condicional (<span class="m-inline">ARCH-LM <i>p</i> &lt; 0.0001</span>), los <em>stop-loss</em> porcentuales fijos (ej. -3%) resultan subóptimos: en regímenes de alta volatilidad son ejecutados prematuramente por ruido estocástico intradiario, mientras que en regímenes de compresión otorgan un margen excesivo antes de reconocer el quiebre de tendencia. El umbral óptimo de invalidación estadística al nivel <span class="m-inline">1 &minus; &alpha;</span> se calibra con el cuantil condicional Skewed-<em>t</em>:
+            </p>
+            <div class="math-block-card" style="padding: 0.75rem 1rem; margin: 0.75rem 0;">
+              <div class="eq-formula" style="font-size: 1.02rem;">
+                <span><var>P</var><sub>Stop,<var>t</var>+1</sub> = <var>P</var><sub><var>t</var></sub> &times; exp&Biggl( <span class="eq-frac"><span class="eq-num">VaR<sub><var>&alpha;</var>,<var>t</var>+1</sub></span><span class="eq-den">100</span></span> &Biggr) = <var>P</var><sub><var>t</var></sub> &times; exp&Biggl( <span class="eq-frac"><span class="eq-num"><var>&mu;&#770;</var><sub><var>t</var>+1</sub> + <var>q</var><sub><var>&alpha;</var></sub>(<var>z</var>)<var>&sigma;&#770;</var><sub><var>t</var>+1</sub></span><span class="eq-den">100</span></span> &Biggr)</span>
+              </div>
+            </div>
+            <p>
+              <strong>Ejecución Numérica (29-Oct-2026):</strong> Al 95% de confianza (<span class="m-inline">VaR<sub>95%</sub></span>), el <em>stop-loss</em> táctico para operaciones de <em>swing trading</em> se sitúa en <strong>-2.785%</strong> desde el cierre; al 99% de confianza institucional (<span class="m-inline">VaR<sub>99%</sub></span>), se ubica en <strong>-4.600%</strong>. Una perforación de este nivel confirma con 99% de probabilidad estadística que el movimiento no es ruido gaussiano sino un cambio de flujo direccional.
+            </p>
+          </div>
+
+          <!-- CASO DE USO 4 -->
+          <div class="exec-playbook-card purple">
+            <h4>7.4. Control de Apalancamiento en Futuros Perpetuos y Margen</h4>
+            <p>
+              En la operatoria con contratos futuros y perpetuos (CME, Deribit, Binance Institutional), el riesgo crítico es la liquidación forzosa ante un evento de cola. Definiendo <span class="m-inline"><i>m</i><sub>mant</sub></span> como la tasa de margen de mantenimiento (típicamente 0.50%) y <span class="m-inline">&kappa; &ge; 3</span> como el factor institucional de cobertura frente a pérdidas extremas consecutivas, el apalancamiento efectivo máximo (<span class="m-inline"><i>L</i><sub>máx,<i>t</i></sub></span>) se acota mediante:
+            </p>
+            <div class="math-block-card" style="padding: 0.75rem 1rem; margin: 0.75rem 0;">
+              <div class="eq-formula" style="font-size: 1.02rem;">
+                <span>Apalancamiento<sub>máx,<var>t</var></sub> = <span class="eq-frac"><span class="eq-num">1 &minus; <var>m</var><sub>mant</sub></span><span class="eq-den"><var>&kappa;</var> &middot; |CVaR<sub>99%,<var>t</var></sub>|</span></span></span>
+              </div>
+            </div>
+            <p>
+              <strong>Ejecución Numérica (29-Oct-2026):</strong> Con <span class="m-inline">|CVaR<sub>99%</sub>| = 0.06961</span> y <span class="m-inline"><i>m</i><sub>mant</sub> = 0.005</span>, el apalancamiento de liquidación teórica en una sola sesión extrema es <span class="m-inline">14.29&times;</span>; aplicando el factor prudencial institucional <span class="m-inline">&kappa; = 3</span>, el apalancamiento máximo seguro hoy es <strong>4.76&times;</strong>, debiendo reducirse por debajo de <strong>1.80&times;</strong> cuando la volatilidad anualizada supere el umbral del 80%.
+            </p>
+          </div>
+        </div>
+
+        <h3>7.5. Arbitraje de Volatilidad con Opciones Financieras (EGARCH Bootstrap Cone vs. Volatilidad Implícita DVOL / IBIT)</h3>
+        <p>
+          El quinto uso estratégico para mesas de derivados consiste en contrastar la estructura temporal de volatilidad proyectada por el <strong>Cono Bootstrap a 90 días del modelo AR(1)-EGARCH(2,1) (Gráfico Dinámico 5)</strong> frente a la <strong>Volatilidad Implícita (<span class="m-inline"><i>&sigma;</i><sub>IV</sub></span>)</strong> cotizada en las cadenas de opciones sobre ETFs Spot (<em>IBIT</em>) y en el índice de volatilidad implícita a 30 días (<em>Deribit DVOL</em>):
+        </p>
+        <ul>
+          <li>
+            <strong>Estrategia Long Volatility / Compra de Convexidad (<span class="m-inline"><i>&sigma;</i><sub>IV</sub> &lt; P<sub>25</sub>(<i>&sigma;&#770;</i><sub>EGARCH</sub>)</span>):</strong> Cuando el mercado atraviesa una fase de compresión extrema (como el cierre actual de <strong>35.59%</strong> anualizado, inferior al promedio del Régimen III de 46.88%) y la mediana del Cono Bootstrap proyecta una reversión gradual hacia <strong>49.79%</strong> en 90 días, si las opciones cotizan con volatilidad implícita deprimida, el operador estructura posiciones <strong>Long Vega y Long Gamma</strong> (<em>Long Straddles</em>, <em>Long Strangles</em> o <em>Calendar Spreads</em>), adquiriendo convexidad barata antes de la expansión hacia la media estacionaria.
+          </li>
+          <li>
+            <strong>Estrategia Short Volatility / Captura de Prima de Varianza (<span class="m-inline"><i>&sigma;</i><sub>IV</sub> &gt; P<sub>90</sub>(<i>&sigma;&#770;</i><sub>EGARCH</sub>)</span>):</strong> Inmediatamente después de un choque de liquidación donde la volatilidad condicional supera el percentil 90% del cono (&gt;75%–90% anualizado), la propiedad de estacionariedad (<span class="m-inline"><i>&beta;&#770;</i><sub>1</sub> = 0.9914</span>, <em>Half-Life</em> = 79.9 días) y el término amortiguador <span class="m-inline"><i>&alpha;&#770;</i><sub>2</sub> = &minus;0.1580</span> predicen una reversión sistemática de la varianza. En ese entorno, el gestor vende volatilidad sobrepreciada mediante estructuras de riesgo definido (<em>Iron Condors</em>, <em>Credit Put Spreads</em> o programas de <em>Covered Calls</em> sobre tenencias Spot), cosechando el <em>Variance Risk Premium (VRP)</em>.
+          </li>
+        </ul>
+
+        <h3>7.6. Matriz Operativa de Decisión Cuantitativa por Régimen de Volatilidad Condicional</h3>
+        <p>
+          En la <strong>Tabla 7.1</strong> se sintetiza el protocolo parametrizado de actuación para un portafolio institucional de <strong>$1,000,000 USD</strong> (con objetivo de volatilidad <span class="m-inline"><i>&sigma;</i><sub>target</sub> = 20%</span> anual y presupuesto diario de cola <span class="m-inline"><i>L</i><sub>máx</sub> = $25,000 USD</span>) en función del nivel de volatilidad condicional registrado por el filtro <span class="m-inline">AR(1)-EGARCH(2,1) Skewed-t</span>:
+        </p>
+
+        <div class="quant-table-wrap">
+          <table class="quant-table">
+            <thead>
+              <tr>
+                <th>Régimen Condicional EGARCH(2,1)</th>
+                <th>Umbral <span class="m-inline"><i>&sigma;&#770;</i><sub>anual</sub></span> (<span class="m-inline"><i>&sigma;&#770;</i><sub>diaria</sub></span>)</th>
+                <th>Peso Óptimo (<span class="m-inline"><i>w<sub>t</sub></i></span>)</th>
+                <th>Stop-Loss Condicional (<span class="m-inline">VaR<sub>99%</sub></span>)</th>
+                <th>CVaR<sub>99%</sub> Diario</th>
+                <th>Apalancamiento Máx (<span class="m-inline">&kappa;=3</span>)</th>
+                <th>Estrategia Óptima en Derivados y Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-winner">
+                <td><strong>1. Compresión Institucional [Estado Actual 29-Oct-2026]</strong></td>
+                <td><span class="badge-num emerald">&lt; 40% (Actual: 35.59% / 1.86% d)</span></td>
+                <td><strong>50.0% – 56.2% ($561,961)</strong></td>
+                <td><strong>&minus;4.60%</strong></td>
+                <td><strong>&minus;6.96% ($69.6k/M)</strong></td>
+                <td><strong>4.76&times;</strong></td>
+                <td>Sobreponderar Spot + Compra de convexidad (<em>Long Strangles / OTM Calls</em>) por reversión alcista de <span class="m-inline"><i>&sigma;<sub>t</sub></i></span></td>
+              </tr>
+              <tr class="row-tangente">
+                <td><strong>2. Equilibrio Era ETFs Spot</strong></td>
+                <td><span class="badge-num blue">40% – 60% (2.09% – 3.14% d)</span></td>
+                <td>33.3% – 50.0% ($426,000)</td>
+                <td>&minus;5.20% a &minus;7.80%</td>
+                <td>&minus;7.85% a &minus;11.75%</td>
+                <td>2.82&times; – 4.22&times;</td>
+                <td>Asignación neutral direccional + <em>Collar</em> sistemático o venta táctica de <em>Covered Calls</em> a 30–45 DTE</td>
+              </tr>
+              <tr>
+                <td><strong>3. Expansión / Turbulencia Macro</strong></td>
+                <td><span class="badge-num amber">60% – 85% (3.14% – 4.45% d)</span></td>
+                <td>23.5% – 33.3% ($275,000)</td>
+                <td>&minus;7.80% a &minus;11.10%</td>
+                <td>&minus;11.75% a &minus;16.65%</td>
+                <td>1.99&times; – 2.82&times;</td>
+                <td>Reducción automática de nocional + Cobertura Delta-Neutral en futuros CME y captura de <em>Funding Rate</em></td>
+              </tr>
+              <tr>
+                <td><strong>4. Estrés Extremo / Cascada de Liquidación</strong></td>
+                <td><span class="badge-num crimson">&gt; 85% (&gt; 4.45% d)</span></td>
+                <td><strong>&lt; 23.5% (&le; $200,000)</strong></td>
+                <td><strong>&lt; &minus;11.10%</strong></td>
+                <td><strong>&lt; &minus;16.65% (&gt;$166k/M)</strong></td>
+                <td><strong>&le; 1.00&times; (Sin Deuda)</strong></td>
+                <td>Desapalancamiento total a Spot puro + Venta de volatilidad implícita extrema (<em>Short Vega</em> con riesgo definido)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SECCIÓN 8: TABLA MAESTRA DEL TORNEO ECONOMÉTRICO Y CONCLUSIONES
            ===================================================================== -->
       <section id="sec-conclusiones">
-        <h2>6. Tabla Maestra del Torneo Econométrico, Backtesting de Basilea y Conclusiones</h2>
+        <h2>8. Torneo Econométrico MLE, Backtesting Regulatorio de Kupiec y Christoffersen y Síntesis</h2>
         <p>
-          En la <strong>Tabla 6.1</strong> se consolidan los estimadores de Máxima Verosimilitud (MLE), los criterios de selección de información y las pruebas diagnósticas de autocorrelación cuadrática y efecto ARCH remanente para los cinco modelos evaluados sobre las <strong>4,425 sesiones diarias (2014–2026)</strong>:
+          En la <strong>Tabla 8.1</strong> se consolidan los resultados del torneo econométrico por Máxima Verosimilitud (MLE), los criterios de selección de información (AIC y BIC) y los contrastes de especificación sobre los residuos estandarizados para las cinco estructuras competitivas evaluadas sobre las <strong>4,425 sesiones diarias (2014–2026)</strong>:
         </p>
 
         <div class="quant-table-wrap">
@@ -1164,86 +1653,85 @@ for name, model in specs.items():
                 <th>Log-Verosimilitud</th>
                 <th>Criterio AIC</th>
                 <th>Criterio BIC</th>
-                <th>Persistencia (\(\hat{eta}_1\))</th>
-                <th>Cola (\(\hat{
-u} / \hat{\eta}\))</th>
-                <th>Ljung-Box \(Q^2(10)\)</th>
-                <th>ARCH-LM(5) \(p\)-val</th>
+                <th>Persistencia (<span class="m-inline"><i>&beta;&#770;</i><sub>1</sub></span>)</th>
+                <th>Cola (<span class="m-inline"><i>&nu;&#770;</i> / <i>&eta;&#770;</i></span>)</th>
+                <th>Ljung-Box <span class="m-inline"><i>Q</i><sup>2</sup>(10)</span></th>
+                <th>ARCH-LM(5) <span class="m-inline"><i>p</i></span>-val</th>
               </tr>
             </thead>
             <tbody>
               <tr class="row-winner">
                 <td><strong>1. AR(1)-EGARCH(2,1) [Óptimo 2026]</strong></td>
                 <td><span class="badge-num blue">Hansen Skewed-t</span></td>
-                <td><strong>-10,767.53</strong></td>
+                <td><strong>&minus;10,767.53</strong></td>
                 <td><strong>21,553.06</strong></td>
                 <td>21,610.61</td>
                 <td><strong>0.9914</strong></td>
                 <td><strong>2.770</strong></td>
-                <td>\(p = 0.6924\)</td>
-                <td>\(p = 0.2960\)</td>
+                <td><span class="m-inline"><i>p</i> = 0.6924</span></td>
+                <td><span class="m-inline"><i>p</i> = 0.2960</span></td>
               </tr>
               <tr class="row-tangente">
                 <td><strong>2. AR(1)-EGARCH(1,1)</strong></td>
                 <td><span class="badge-num emerald">Student-t</span></td>
-                <td>-10,774.69</td>
+                <td>&minus;10,774.69</td>
                 <td>21,563.37</td>
                 <td><strong>21,608.14</strong></td>
                 <td>0.9874</td>
                 <td>2.744</td>
-                <td>\(p = 0.8092\)</td>
-                <td>\(p = 0.4124\)</td>
+                <td><span class="m-inline"><i>p</i> = 0.8092</span></td>
+                <td><span class="m-inline"><i>p</i> = 0.4124</span></td>
               </tr>
               <tr>
                 <td><strong>3. AR(1)-GJR-GARCH(1,1,1)</strong></td>
                 <td><span class="badge-num blue">Hansen Skewed-t</span></td>
-                <td>-10,800.40</td>
+                <td>&minus;10,800.40</td>
                 <td>21,616.80</td>
                 <td>21,667.96</td>
                 <td>0.8991</td>
                 <td>3.149</td>
-                <td>\(p = 0.8963\)</td>
-                <td>\(p = 0.6324\)</td>
+                <td><span class="m-inline"><i>p</i> = 0.8963</span></td>
+                <td><span class="m-inline"><i>p</i> = 0.6324</span></td>
               </tr>
               <tr>
                 <td><strong>4. AR(1)-sGARCH(1,1)</strong></td>
                 <td><span class="badge-num emerald">Student-t</span></td>
-                <td>-10,800.96</td>
+                <td>&minus;10,800.96</td>
                 <td>21,613.91</td>
                 <td>21,652.28</td>
                 <td>0.8958</td>
                 <td>3.141</td>
-                <td>\(p = 0.8962\)</td>
-                <td>\(p = 0.6323\)</td>
+                <td><span class="m-inline"><i>p</i> = 0.8962</span></td>
+                <td><span class="m-inline"><i>p</i> = 0.6323</span></td>
               </tr>
               <tr>
                 <td><strong>5. AR(1)-sGARCH(1,1) [Línea Base]</strong></td>
                 <td><span class="badge-num amber">Normal Gaussiana</span></td>
-                <td>-11,352.17</td>
+                <td>&minus;11,352.17</td>
                 <td>22,714.34</td>
                 <td>22,746.31</td>
                 <td>0.8433</td>
-                <td>\(\infty\)</td>
-                <td>\(p = 0.8904\)</td>
-                <td>\(p = 0.5978\)</td>
+                <td><span class="m-inline">&infin;</span></td>
+                <td><span class="m-inline"><i>p</i> = 0.8904</span></td>
+                <td><span class="m-inline"><i>p</i> = 0.5978</span></td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <p>
-          Asimismo, en la <strong>Tabla 6.2</strong> se reportan los resultados del <strong>Backtesting Regulatorio de Valor en Riesgo (\(	ext{VaR}_{99\%}\) y \(	ext{VaR}_{95\%}\))</strong> y el requerimiento diario de liquidez bajo <strong>Expected Shortfall (\(	ext{CVaR}_{99\%}\))</strong> para una posición institucional de <strong>$1,000,000.00 USD</strong> en la ventana posterior al estudio original (31 de enero de 2020 al 29 de octubre de 2026, \(T = 2,464\) días):
+          Asimismo, en la <strong>Tabla 8.2</strong> se detallan las pruebas de <strong>Backtesting Regulatorio de Valor en Riesgo (<span class="m-inline">VaR<sub>99%</sub></span>)</strong> y el requerimiento diario de reserva de liquidez bajo <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong> para una posición institucional de <strong>$1,000,000.00 USD</strong> en la ventana posterior al estudio original (31 de enero de 2020 al 29 de octubre de 2026, <span class="m-inline"><i>T</i> = 2,464</span> sesiones):
         </p>
 
         <div class="quant-table-wrap">
           <table class="quant-table">
             <thead>
               <tr>
-                <th>Modelo Evaluado (2020–2026)</th>
+                <th>Modelo Auditado (2020–2026)</th>
                 <th>Violaciones VaR 99% (Esp: 24.6)</th>
                 <th>Tasa Empírica 99%</th>
-                <th>Test Kupiec \(LR_{uc}\) (\(p\)-val)</th>
-                <th>Christoffersen \(LR_{cc}\) (\(p\)-val)</th>
+                <th>Test Kupiec <span class="m-inline"><i>LR</i><sub>uc</sub></span> (<span class="m-inline"><i>p</i></span>-val)</th>
+                <th>Christoffersen <span class="m-inline"><i>LR</i><sub>cc</sub></span> (<span class="m-inline"><i>p</i></span>-val)</th>
                 <th>VaR 99% (29-Oct-2026)</th>
                 <th>CVaR 99% / ES ($1M USD)</th>
                 <th>Dictamen Basilea III/IV</th>
@@ -1254,51 +1742,51 @@ u} / \hat{\eta}\))</th>
                 <td><strong>AR(1)-EGARCH(2,1) Skewed-t</strong></td>
                 <td><strong>21 / 2,464</strong></td>
                 <td><strong>0.852%</strong></td>
-                <td>0.572 (\(p = 0.4496\))</td>
-                <td>2.436 (\(p = 0.2958\))</td>
-                <td><strong>-4.600% ($46,000)</strong></td>
-                <td><strong>-6.961% ($69,610)</strong></td>
+                <td>0.572 (<span class="m-inline"><i>p</i> = 0.4496</span>)</td>
+                <td>2.436 (<span class="m-inline"><i>p</i> = 0.2958</span>)</td>
+                <td><strong>&minus;4.600% ($46,000)</strong></td>
+                <td><strong>&minus;6.961% ($69,610)</strong></td>
                 <td><span class="badge-num emerald">Aprobado • Zona Verde</span></td>
               </tr>
               <tr class="row-tangente">
                 <td><strong>AR(1)-GJR-GARCH(1,1,1) Skewed-t</strong></td>
                 <td>19 / 2,464</td>
                 <td>0.771%</td>
-                <td>1.416 (\(p = 0.2341\))</td>
-                <td>3.628 (\(p = 0.1630\))</td>
-                <td>-5.052% ($50,520)</td>
-                <td>-7.458% ($74,580)</td>
+                <td>1.416 (<span class="m-inline"><i>p</i> = 0.2341</span>)</td>
+                <td>3.628 (<span class="m-inline"><i>p</i> = 0.1630</span>)</td>
+                <td>&minus;5.052% ($50,520)</td>
+                <td>&minus;7.458% ($74,580)</td>
                 <td><span class="badge-num emerald">Aprobado • Zona Verde</span></td>
               </tr>
               <tr>
                 <td><strong>AR(1)-EGARCH(1,1) Student-t</strong></td>
                 <td>18 / 2,464</td>
                 <td>0.731%</td>
-                <td>1.994 (\(p = 0.1579\))</td>
-                <td>4.400 (\(p = 0.1108\))</td>
-                <td>-4.726% ($47,260)</td>
-                <td>-7.153% ($71,530)</td>
+                <td>1.994 (<span class="m-inline"><i>p</i> = 0.1579</span>)</td>
+                <td>4.400 (<span class="m-inline"><i>p</i> = 0.1108</span>)</td>
+                <td>&minus;4.726% ($47,260)</td>
+                <td>&minus;7.153% ($71,530)</td>
                 <td><span class="badge-num emerald">Aprobado • Zona Verde</span></td>
               </tr>
               <tr>
                 <td><strong>AR(1)-sGARCH(1,1) Student-t</strong></td>
                 <td>19 / 2,464</td>
                 <td>0.771%</td>
-                <td>1.416 (\(p = 0.2341\))</td>
-                <td>3.628 (\(p = 0.1630\))</td>
-                <td>-5.127% ($51,270)</td>
-                <td>-7.463% ($74,630)</td>
+                <td>1.416 (<span class="m-inline"><i>p</i> = 0.2341</span>)</td>
+                <td>3.628 (<span class="m-inline"><i>p</i> = 0.1630</span>)</td>
+                <td>&minus;5.127% ($51,270)</td>
+                <td>&minus;7.463% ($74,630)</td>
                 <td><span class="badge-num emerald">Aprobado • Zona Verde</span></td>
               </tr>
               <tr>
                 <td><strong>AR(1)-sGARCH(1,1) Normal</strong></td>
                 <td><strong>41 / 2,464</strong></td>
                 <td><span class="badge-num crimson">1.664%</span></td>
-                <td>9.144 (\(p = 0.0025\))</td>
-                <td>9.278 (\(p = 0.0097\))</td>
-                <td>-4.640% ($46,400)</td>
-                <td>-5.336% ($53,360)</td>
-                <td><span class="badge-num crimson">Rechazado (\(p &lt; 0.01\))</span></td>
+                <td>9.144 (<span class="m-inline"><i>p</i> = 0.0025</span>)</td>
+                <td>9.278 (<span class="m-inline"><i>p</i> = 0.0097</span>)</td>
+                <td>&minus;4.640% ($46,400)</td>
+                <td>&minus;5.336% ($53,360)</td>
+                <td><span class="badge-num crimson">Rechazado (<i>p</i> &lt; 0.01)</span></td>
               </tr>
             </tbody>
           </table>
@@ -1306,10 +1794,10 @@ u} / \hat{\eta}\))</th>
 
         <!-- EXEC-SYNTHESIS-START -->
         <div class="callout-quant emerald">
-          <h4>Síntesis Ejecutiva: Valor Estratégico para la Planificación Financiera Corporativa y Gestión de Riesgo de Tesorería</h4>
+          <h4>Síntesis Cuantitativa: Optimalidad Econométrica, Cobertura de Cola y Ejecución Sistemática</h4>
           <p>
-            <strong>1. Confirmación Empírica de la Especificación EGARCH(2,1) con Innovaciones de Cola Pesada (2020 → 2026):</strong> Al expandir la muestra desde las 1,961 sesiones originales de 2020 hasta las <strong>4,425 observaciones diarias de octubre de 2026</strong>, el modelo <strong>AR(1)-EGARCH(2,1) bajo distribución Skewed Student-<em>t</em> de Hansen (\(\hat{\eta} = 2.77\))</strong> ratifica su supremacía econométrica al alcanzar el menor Criterio de Información de Akaike (<strong>AIC = 21,553.06</strong>) y superar en <strong>+584.64 puntos de Log-Verosimilitud</strong> al modelo Gaussiano tradicional.<br /><br />
-            <strong>2. Insuficiencia del Supuesto Gaussiano y Superioridad del Expected Shortfall (\(	ext{CVaR}_{99\%}\)):</strong> El contraste de proporción de fallos de <strong>Kupiec (\(LR_{uc} = 9.144, p = 0.0025\))</strong> y el test de cobertura condicional de <strong>Christoffersen (\(LR_{cc} = 9.278, p = 0.0097\))</strong> rechazan al 1% de significancia el modelo <code>sGARCH-Normal</code> (41 violaciones frente a 24.6 esperadas). Por el contrario, el modelo <strong>EGARCH(2,1)-Skewed-t</strong> registra <strong>21 excedencias (0.852%, \(p = 0.4496\))</strong>, permitiendo a la planificación financiera corporativa y a los comités de riesgo de tesorería dimensionar reservas de liquidez sobre el <strong>Expected Shortfall diario de -6.961% ($69,610 USD por cada $1,000,000 USD de exposición)</strong> con plena validación estadística bajo estándares de Basilea III/IV.
+            <strong>1. Superioridad Estadística de la Estructura AR(1)-EGARCH(2,1) con Densidad Skewed Student-<em>t</em> (2020 &rarr; 2026):</strong> Al extender la ventana muestral desde las 1,961 observaciones originales de enero de 2020 hasta las <strong>4,425 sesiones diarias de octubre de 2026</strong>, la especificación <strong>AR(1)-EGARCH(2,1) bajo distribución Skewed Student-<em>t</em> de Hansen (<span class="m-inline"><i>&eta;&#770;</i> = 2.770, <i>&beta;&#770;</i><sub>1</sub> = 0.9914</span>)</strong> alcanza la optimalidad global con un <strong>AIC de 21,553.06</strong>, incrementando el soporte de Log-Verosimilitud en <strong>+584.64 puntos</strong> respecto al modelo Gaussiano tradicional y capturando tanto el amortiguamiento oscilatorio de segundo orden (<span class="m-inline"><i>&alpha;&#770;</i><sub>2</sub> = &minus;0.1580</span>) como la vida media de los choques de volatilidad (<strong>79.9 sesiones</strong>).<br /><br />
+            <strong>2. Rechazo del Supuesto Gaussiano y Operacionalización del Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>):</strong> El test de cobertura incondicional de <strong>Kupiec (<span class="m-inline"><i>LR</i><sub>uc</sub> = 9.144, <i>p</i> = 0.0025</span>)</strong> y el contraste conjunto de independencia y cobertura condicional de <strong>Christoffersen (<span class="m-inline"><i>LR</i><sub>cc</sub> = 9.278, <i>p</i> = 0.0097</span>)</strong> rechazan al 1% de significancia el modelo <code>sGARCH-Normal</code> (41 excedencias frente a 24.6 esperadas). Por el contrario, el modelo <strong>EGARCH(2,1)-Skewed-t</strong> registra <strong>21 violaciones (0.852%, <span class="m-inline"><i>p</i> = 0.4496</span>)</strong> en Zona Verde de Basilea, proporcionando a las mesas de trading cuantitativo y tesorería un motor riguroso para ejecutar <strong>Volatility Targeting (56.20% de asignación actual)</strong>, <strong>Stop-Loss condicionales (-4.600%)</strong>, límites de apalancamiento (<strong>4.76&times;</strong>) y reservas de liquidez sobre el <strong>Expected Shortfall diario de -6.961% ($69,610 USD por cada $1,000,000 USD de nocional)</strong>.
           </p>
         </div>
         <!-- EXEC-SYNTHESIS-END -->
@@ -1677,7 +2165,7 @@ u} / \hat{\eta}\))</th>
               hovermode: 'x unified',
               shapes: shapes,
               annotations: annotations,
-              xaxis: { title: ' Horizonte Histórico y Regímenes de Mercado (2014–2026)', gridcolor: '#e2e8f0' },
+              xaxis: { title: 'Horizonte Histórico y Regímenes de Mercado (2014–2026)', gridcolor: '#e2e8f0' },
               yaxis: { title: yTitle, type: yType, gridcolor: '#e2e8f0' },
               legend: { orientation: 'h', y: 1.13, x: 0 }
             }, plotConfig);
