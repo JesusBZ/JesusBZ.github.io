@@ -4,7 +4,7 @@
  * Features:
  *   1. Cinematographic Hero Showcase (Smooth Crossfade + Progress Pills + Touch Swipe)
  *   2. Instant Search & Category Filters for Blog Stream
- *   3. Portfolio Assistant answering only from a verified knowledge base (no external API, no API keys)
+ *   3. Portfolio Assistant powered by Gemini (original Vercel backend, API key server-side) grounded on a verified knowledge base, with local verified fallback
  *   4. Full Embedded Quantitative Knowledge Base for all 13 R Models & Author Dossier
  *   5. Automatic "Copiar Código" Buttons with Language Badges on all R Code Chunks
  *   6. Dynamic Collision-Free Scroll-to-Top Management
@@ -548,7 +548,7 @@
               <span class="copilot-name-label">Asistente del Portafolio</span>
               <span class="copilot-tech-badge">
                 <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10b981;"></span>
-                <span>Información verificada</span>
+                <span>Gemini · información verificada</span>
               </span>
             </div>
           </div>
@@ -713,6 +713,56 @@
     return null;
   }
 
+  // ---------- Gemini (original Vercel backend, API key stays server-side) ----------
+  const GEMINI_BACKEND_URL = 'https://gemini-backend-ecru.vercel.app/api/chat';
+
+  function buildVerifiedContext() {
+    const career = CAREER.map(c => `- ${c.company} | ${c.role}: ${c.detail}`).join('\n');
+    const projects = PROJECTS.map(p =>
+      `### Trabajo #${p.n}: ${p.title} (enlace: ${p.file})\n` +
+      `De qué trata: ${p.summary}\nMetodología: ${p.methods}\nResultados del post: ${p.results}\nHerramientas: ${p.tools}`
+    ).join('\n\n');
+    return `PERFIL: ${PROFILE.name}. ${PROFILE.title}. ${PROFILE.summary} Áreas de interés: ${PROFILE.interests} ${PROFILE.portfolio}\n` +
+      `EDUCACIÓN: el portafolio solo indica que es Economista; no publica institución, año ni otros estudios.\n\n` +
+      `TRAYECTORIA (orden cronológico; Credicard es el cargo más reciente indicado en su perfil):\n${career}\n\n` +
+      `TRABAJOS PUBLICADOS (${PROJECTS.length}):\n${projects}\n\n` +
+      `NOTA: existe una página sobre Vectores Autorregresivos (VAR) sin contenido descriptivo publicado; no la describas.\n\n` +
+      `CONTACTO: WhatsApp/teléfono ${CONTACT.phone} (${CONTACT.whatsapp}); correo ${CONTACT.email}; Telegram ${CONTACT.telegram}; ` +
+      `LinkedIn ${CONTACT.linkedin}; GitHub ${CONTACT.github}; RPubs ${CONTACT.rpubs}; formulario: ${CONTACT.form}`;
+  }
+
+  function buildGroundedPrompt(question) {
+    return `Eres el asistente del portafolio web de ${PROFILE.name}. REGLAS ESTRICTAS:\n` +
+      `1. Sobre Jesús, su trayectoria y sus trabajos responde ÚNICAMENTE con el CONTEXTO VERIFICADO de abajo.\n` +
+      `2. No inventes cifras, empresas, cargos, fechas, estudios, clientes, paquetes ni resultados. Si algo no está en el contexto, responde: "No tengo esa información verificada en el portafolio" y sugiere contactar a Jesús por WhatsApp o por el formulario.\n` +
+      `3. Al citar resultados o conclusiones de un trabajo, repítelos tal como aparecen en el contexto: no agregues interpretaciones, porcentajes de confianza ni conclusiones más favorables, y conserva las salvedades (por ejemplo, si un modelo no fue el mejor fuera de muestra, dilo).\n` +
+      `4. Sobre su empleo, di "su cargo más reciente indicado en el portafolio" en lugar de afirmar que trabaja ahí actualmente.\n` +
+      `5. Puedes explicar brevemente conceptos técnicos generales (por ejemplo, qué es un modelo GARCH), aclarando que es una explicación general, sin atribuirle a Jesús nada que no esté en el contexto.\n` +
+      `6. Responde en español, de forma concisa, con Markdown simple (negritas y viñetas con "- "), sin emojis.\n` +
+      `7. Cuando menciones un trabajo, incluye su enlace con formato [Ver trabajo](archivo.html).\n\n` +
+      `CONTEXTO VERIFICADO:\n${buildVerifiedContext()}\n\n` +
+      `PREGUNTA DEL VISITANTE: ${question}`;
+  }
+
+  async function askGemini(question, history) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 25000);
+    try {
+      const res = await fetch(GEMINI_BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: buildGroundedPrompt(question), history: history }),
+        signal: ctrl.signal
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (!data || !data.text) throw new Error('Respuesta vacía');
+      return data.text;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
   function initCopilotHUD() {
     ensureCopilotMounted();
 
@@ -813,18 +863,49 @@
       });
     });
 
-    function sendMessage() {
-      if (!chatInput) return;
+    function showTyping() {
+      const el = document.createElement('div');
+      el.id = 'copilotTypingIndicator';
+      el.className = 'chat-bubble bot';
+      el.innerHTML = '<div class="typing-wave-container"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
+      chatHistoryBox.appendChild(el);
+      scrollToBottom();
+    }
+    function hideTyping() { document.getElementById('copilotTypingIndicator')?.remove(); }
+
+    let busy = false;
+    async function sendMessage() {
+      if (!chatInput || busy) return;
       const message = chatInput.value.trim();
       if (!message) return;
       chatInput.value = '';
       appendMessage(message, 'user');
-      const answer = getVerifiedAnswer(message) || unknownAnswer();
-      setTimeout(() => {
-        appendMessage(answer, 'bot');
-        chatHistory.push({ role: 'user', text: message }, { role: 'bot', text: answer });
-        saveHistory();
-      }, 250);
+      busy = true;
+      if (chatSendBtn) chatSendBtn.disabled = true;
+      showTyping();
+
+      // History sent to Gemini contains the visitor's plain questions and the answers shown
+      const geminiHistory = chatHistory.slice(-8).map(h => ({
+        role: h.role === 'user' ? 'user' : 'model',
+        parts: [{ text: h.text }]
+      }));
+
+      let answer;
+      try {
+        answer = await askGemini(message, geminiHistory);
+      } catch (err) {
+        // Gemini unavailable (e.g. local preview or network): use verified local answers
+        console.warn('Gemini no disponible, usando base verificada local:', err);
+        answer = getVerifiedAnswer(message) || unknownAnswer();
+      }
+
+      hideTyping();
+      appendMessage(answer, 'bot');
+      chatHistory.push({ role: 'user', text: message }, { role: 'bot', text: answer });
+      saveHistory();
+      busy = false;
+      if (chatSendBtn) chatSendBtn.disabled = false;
+      chatInput.focus();
     }
 
     chatSendBtn?.addEventListener('click', sendMessage);
