@@ -235,14 +235,21 @@
   // =========================================================================
   // 4. Automatic "Copiar Código" Buttons with Language Detection
   // =========================================================================
-  function initCodeCopyButtons() {
-    const codeBlocks = document.querySelectorAll('pre, div.sourceCode');
+    function initCodeCopyButtons() {
+    // Purge ALL existing buttons across the document to prevent any duplicate on re-initialization
+    document.querySelectorAll('.btn-copy-code').forEach(btn => btn.remove());
+    document.querySelectorAll('[data-has-copy-btn]').forEach(el => el.removeAttribute('data-has-copy-btn'));
+
+    // Only target pre elements (the code block itself)
+    const codeBlocks = document.querySelectorAll('pre');
     codeBlocks.forEach(block => {
+      // Avoid attaching if already has button
       if (block.querySelector('.btn-copy-code')) return;
+      block.dataset.hasCopyBtn = 'true';
 
       // Detect language or tag
       let langTag = 'R CODE';
-      const className = block.className || '';
+      const className = (block.className || '') + ' ' + (block.parentElement?.className || '');
       const textSample = block.innerText || '';
       if (className.includes('python') || textSample.includes('def ') || textSample.includes('import pandas')) {
         langTag = 'PYTHON';
@@ -255,8 +262,9 @@
       const btn = document.createElement('button');
       btn.className = 'btn-copy-code';
       btn.type = 'button';
+      btn.setAttribute('aria-label', 'Copiar código al portapapeles');
       btn.innerHTML = `
-        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
         <span>Copiar</span>
       `;
 
@@ -268,13 +276,13 @@
         navigator.clipboard.writeText(textToCopy).then(() => {
           btn.classList.add('copied');
           btn.innerHTML = `
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             <span>¡Copiado!</span>
           `;
           setTimeout(() => {
             btn.classList.remove('copied');
             btn.innerHTML = `
-              <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               <span>Copiar</span>
             `;
           }, 2000);
@@ -283,6 +291,72 @@
 
       block.style.position = 'relative';
       block.appendChild(btn);
+    });
+  }
+
+  // =========================================================================
+  // Dynamic Moving Posts Carousel Controller
+  // =========================================================================
+  function initPostsCarousel() {
+    const viewport = document.getElementById('carouselViewport');
+    const track = document.getElementById('carouselTrack');
+    const prevBtn = document.getElementById('carouselScrollPrev');
+    const nextBtn = document.getElementById('carouselScrollNext');
+
+    if (!viewport || !track) return;
+
+    // Pause animation when hovering
+    viewport.addEventListener('mouseenter', () => {
+      track.classList.add('paused');
+    });
+
+    viewport.addEventListener('mouseleave', () => {
+      track.classList.remove('paused');
+    });
+
+    // Arrow navigation
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        track.classList.add('paused');
+        viewport.scrollBy({ left: -340, behavior: 'smooth' });
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        track.classList.add('paused');
+        viewport.scrollBy({ left: 340, behavior: 'smooth' });
+      });
+    }
+
+    // Touch swipe / drag support
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+
+    viewport.addEventListener('mousedown', (e) => {
+      isDown = true;
+      track.classList.add('paused');
+      startX = e.pageX - viewport.offsetLeft;
+      scrollLeft = viewport.scrollLeft;
+    });
+
+    viewport.addEventListener('mouseleave', () => {
+      isDown = false;
+    });
+
+    viewport.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    viewport.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - viewport.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      viewport.scrollLeft = scrollLeft - walk;
     });
   }
 
@@ -874,6 +948,7 @@ Responde siempre con rigor técnico y analítico, elegancia corporativa, usando 
   function initAll() {
     initNavigation();
     initHeroSlider();
+    initPostsCarousel();
     initSearchAndFilter();
     initCodeCopyButtons();
     initCopilotHUD();

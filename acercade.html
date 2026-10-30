@@ -2,118 +2,377 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Acerca de Jesús Benjamín Zerpa | Trayectoria & Perfil</title>
-  
-  <meta name="description" content="Trayectoria profesional de Jesús Benjamín Zerpa. Economista y Gerente de Planificación Financiera y Presupuesto. Especialista en Modelización Cuantitativa, Business Intelligence y Data Science." />
-  <meta name="keywords" content="Jesús Benjamín Zerpa, economista, finanzas, planificación financiera, presupuesto, business intelligence, credicard, banesco, data analytics" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+  <title>Acerca de Jesús B. Zerpa | Economist & Quantitative Data Scientist</title>
+  <meta name="description" content="Trayectoria profesional, credenciales corporativas y especialización cuantitativa de Jesús Benjamín Zerpa. Más de 14 años liderando planificación financiera, presupuestos y modelos econométricos." />
+  <meta name="keywords" content="Jesús Zerpa, economista, data scientist, finanzas corporativas, Credicard, RStudio, Power BI, presupuestos maestros" />
   <meta name="author" content="Jesús Benjamín Zerpa" />
-  <meta property="og:title" content="Acerca de Jesús Benjamín Zerpa | Perfil Profesional" />
-  <meta property="og:description" content="Más de 14 años de experiencia en planificación financiera, gestión presupuestaria y modelización avanzada de datos." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Acerca de Jesús B. Zerpa | Economist & Quantitative Data Scientist" />
+  <meta property="og:description" content="Trayectoria ejecutiva y especialización cuantitativa de Jesús Benjamín Zerpa en finanzas corporativas y analítica avanzada." />
   <meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-2.jpg" />
-  
+  <meta property="og:url" content="https://jesusbz.github.io/acercade.html" />
+  <meta property="og:type" content="profile" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="icon" href="favi.png" type="image/png" />
   <link rel="stylesheet" href="css/futuristic-corporate.css" />
-  
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NC4HGWB');</script>
+  <!-- End Google Tag Manager -->
+
   <style>
-    /* Specific styling for Biography and Career Timeline */
-    .profile-hero {
+    .bio-page-wrapper {
+      padding: 3rem 0 5rem 0;
+    }
+
+    /* Executive Hero Card */
+    .executive-hero-card {
       background: #ffffff;
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 3rem 2.5rem;
-      margin: 2rem 0;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      gap: 2.5rem;
+      border-radius: var(--radius-xl);
+      padding: 3.5rem 3rem;
+      box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.08);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 3.5rem;
       align-items: center;
-    }
-    
-    .profile-photo-wrapper {
+      margin-bottom: 3.5rem;
       position: relative;
+      overflow: hidden;
+    }
+
+    .executive-hero-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(0, 82, 204, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .avatar-wrapper-supreme {
+      position: relative;
+      width: 220px;
+      height: 220px;
       flex-shrink: 0;
     }
-    
-    .profile-large-img {
-      width: 140px;
-      height: 140px;
-      border-radius: var(--radius-full);
-      border: 3px solid var(--corporate-blue);
+
+    .avatar-supreme-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
       object-fit: cover;
-      box-shadow: var(--shadow-md);
+      border: 4px solid #ffffff;
+      box-shadow: 0 12px 30px rgba(0, 82, 204, 0.22);
+      display: block;
     }
-    
-    .profile-hero-content {
+
+    .avatar-status-pill {
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      background: #ffffff;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-full);
+      padding: 0.3rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #059669;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .status-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+    }
+
+    .executive-hero-body {
       display: flex;
       flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    .executive-badge-tag {
+      display: inline-flex;
+      align-items: center;
       gap: 0.5rem;
+      background: var(--corporate-blue-soft);
+      color: var(--corporate-blue);
+      border: 1px solid rgba(0, 82, 204, 0.2);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      width: fit-content;
     }
-    
-    .profile-name {
-      font-size: 2.2rem;
-      font-weight: 800;
+
+    .executive-name {
+      font-size: 2.6rem;
+      font-weight: 900;
       color: var(--corporate-navy);
-      letter-spacing: -0.02em;
-      line-height: 1.2;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 0;
     }
-    
-    .profile-subtitle {
-      font-size: 1.1rem;
+
+    .executive-title-role {
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--corporate-blue);
-      font-family: var(--font-mono);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      margin: 0;
     }
-    
-    .profile-summary-p {
+
+    .executive-summary-text {
       font-size: 1.05rem;
       color: var(--text-secondary);
       line-height: 1.75;
+      margin: 0;
+    }
+
+    .hero-action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
       margin-top: 0.5rem;
     }
-    
-    /* Career Timeline */
-    .timeline-section-title {
+
+    .btn-executive-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--corporate-blue);
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.75rem 1.65rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 20px -3px rgba(0, 82, 204, 0.35);
+      transition: all var(--transition-fast);
+      text-decoration: none !important;
+    }
+
+    .btn-executive-primary:hover {
+      background: var(--corporate-blue-hover);
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+
+    .btn-executive-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #ffffff;
+      color: var(--corporate-navy);
+      border: 1.5px solid var(--border-subtle);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.75rem 1.65rem;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+      text-decoration: none !important;
+    }
+
+    .btn-executive-secondary:hover {
+      border-color: var(--corporate-blue);
+      color: var(--corporate-blue);
+      background: var(--corporate-blue-soft);
+      transform: translateY(-2px);
+    }
+
+    /* Executive KPI Strip */
+    .executive-kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .kpi-stat-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 1.5rem;
+      box-shadow: var(--shadow-xs);
+      text-align: center;
+      transition: all var(--transition-fast);
+    }
+
+    .kpi-stat-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-accent);
+      transform: translateY(-3px);
+    }
+
+    .kpi-stat-number {
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: var(--corporate-navy);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.45rem;
+      font-family: var(--font-mono);
+    }
+
+    .kpi-stat-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Section Headings */
+    .section-super-heading {
       font-size: 1.75rem;
       font-weight: 800;
       color: var(--corporate-navy);
-      margin: 2.5rem 0 1.5rem 0;
       letter-spacing: -0.02em;
+      margin: 3.5rem 0 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
     }
-    
-    .timeline-container {
+
+    .section-super-heading svg {
+      width: 24px;
+      height: 24px;
+      color: var(--corporate-blue);
+    }
+
+    /* Four Pillars Grid */
+    .pillars-quad-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .pillar-card-enhanced {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-xs);
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pillar-card-enhanced:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--corporate-blue);
+      transform: translateY(-2px);
+    }
+
+    .pillar-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--corporate-blue-soft);
+      color: var(--corporate-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pillar-icon-box svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+    }
+
+    .pillar-heading {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--corporate-navy);
+      margin: 0;
+    }
+
+    .pillar-paragraph {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .pillar-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .pillar-tag {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.2rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    /* Career Timeline Enhanced */
+    .timeline-wrapper {
       position: relative;
-      padding-left: 2rem;
+      padding-left: 2.25rem;
       border-left: 2px solid var(--border-subtle);
       display: flex;
       flex-direction: column;
       gap: 2rem;
       margin-bottom: 3.5rem;
     }
-    
-    .timeline-item {
+
+    .timeline-card {
       position: relative;
       background: #ffffff;
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.75rem;
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.25rem;
       box-shadow: var(--shadow-xs);
       transition: all var(--transition-fast);
     }
-    
-    .timeline-item:hover {
+
+    .timeline-card:hover {
       box-shadow: var(--shadow-md);
-      border-color: var(--border-accent);
+      border-color: var(--corporate-blue);
       transform: translateY(-2px);
     }
-    
-    .timeline-item::before {
+
+    .timeline-card::before {
       content: "";
       position: absolute;
-      left: -2rem;
-      top: 1.75rem;
+      left: -2.25rem;
+      top: 2rem;
       transform: translateX(-50%);
       width: 14px;
       height: 14px;
@@ -122,108 +381,160 @@
       border: 3px solid #ffffff;
       box-shadow: 0 0 0 2px var(--border-subtle);
     }
-    
-    .timeline-item.current::before {
+
+    .timeline-card.active-role::before {
       background: #10b981;
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35);
     }
-    
-    .timeline-header {
+
+    .timeline-top-meta {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 0.65rem;
+      gap: 1rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      margin-bottom: 0.75rem;
     }
-    
-    .timeline-company {
-      font-size: 1.25rem;
+
+    .company-title {
+      font-size: 1.35rem;
       font-weight: 800;
       color: var(--corporate-navy);
+      margin: 0;
     }
-    
-    .timeline-role {
-      font-size: 1rem;
+
+    .role-subtitle {
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--corporate-blue);
-      margin-bottom: 0.5rem;
+      margin-top: 0.25rem;
     }
-    
-    .timeline-badge-current {
+
+    .badge-current-position {
       background: rgba(16, 185, 129, 0.12);
       color: #059669;
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      font-size: 0.75rem;
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      font-size: 0.78rem;
       font-weight: 700;
       font-family: var(--font-mono);
-      padding: 0.2rem 0.6rem;
+      padding: 0.25rem 0.75rem;
       border-radius: var(--radius-full);
       text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
-    
-    .timeline-desc {
+
+    .timeline-body-desc {
       font-size: 0.975rem;
       color: var(--text-secondary);
       line-height: 1.7;
+      margin: 0;
     }
 
-    /* Core Pillars Cards */
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0 3.5rem 0;
+    /* Strategic Vision Quote */
+    .executive-quote-card {
+      background: linear-gradient(135deg, #091e42 0%, #0052cc 100%);
+      color: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 3rem 2.5rem;
+      margin: 3.5rem 0;
+      box-shadow: 0 20px 40px -10px rgba(0, 82, 204, 0.25);
+      position: relative;
     }
 
-    .pillar-card {
+    .quote-icon {
+      font-size: 3rem;
+      line-height: 1;
+      opacity: 0.3;
+      margin-bottom: 1rem;
+      font-family: Georgia, serif;
+    }
+
+    .quote-text {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      max-width: 820px;
+    }
+
+    .quote-author {
+      font-size: 0.95rem;
+      font-family: var(--font-mono);
+      color: #93c5fd;
+      font-weight: 700;
+    }
+
+    /* Contact Strip */
+    .bio-contact-strip {
       background: #ffffff;
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.75rem;
-      box-shadow: var(--shadow-xs);
-    }
-
-    .pillar-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--corporate-navy);
-      margin-bottom: 0.5rem;
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-sm);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
     }
 
-    .pillar-title svg {
-      width: 20px;
-      height: 20px;
-      color: var(--corporate-blue);
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2.2;
+    .bio-contact-text h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--corporate-navy);
+      margin: 0 0 0.4rem 0;
     }
 
-    .pillar-desc {
+    .bio-contact-text p {
       font-size: 0.95rem;
       color: var(--text-secondary);
-      line-height: 1.65;
+      margin: 0;
     }
 
-    @media (max-width: 768px) {
-      .profile-hero {
-        flex-direction: column;
+    .bio-contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .executive-hero-card {
+        grid-template-columns: 1fr;
         text-align: center;
-        padding: 2rem 1.25rem;
+        padding: 2.5rem 1.5rem;
       }
-      .profile-name { font-size: 1.75rem; }
-      .timeline-container { padding-left: 1.5rem; }
-      .timeline-item::before { left: -1.5rem; }
+      .avatar-wrapper-supreme {
+        margin: 0 auto;
+      }
+      .executive-badge-tag {
+        margin: 0 auto;
+      }
+      .hero-action-buttons {
+        justify-content: center;
+      }
+      .executive-kpi-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .pillars-quad-grid {
+        grid-template-columns: 1fr;
+      }
+      .timeline-wrapper {
+        padding-left: 1.5rem;
+      }
+      .timeline-card::before {
+        left: -1.5rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NC4HGWB"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
-  <!-- Site Header / Navbar -->
+  <!-- Site Header / Navbar (Clean Corporate) -->
   <header class="site-header">
     <div class="site-container header-inner">
       <a href="index.html" class="brand-wrapper" title="Ir al Inicio">
@@ -234,6 +545,7 @@
         </div>
       </a>
 
+      <!-- Desktop Navigation -->
       <nav class="nav-desktop" aria-label="Navegación principal">
         <ul class="nav-links">
           <li class="nav-item"><a href="index.html">Inicio</a></li>
@@ -250,9 +562,6 @@
           <a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="GitHub">
             <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
           </a>
-          <a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="RPubs">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-5h2v5zm0-7h-2V7h2v2.5z"/></svg>
-          </a>
           <a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="Telegram">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
           </a>
@@ -262,159 +571,275 @@
         </div>
       </nav>
 
+      <!-- Mobile Nav Toggle -->
       <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
     </div>
 
+    <!-- Mobile Drawer -->
     <div id="mobileNavDrawer" class="mobile-nav-drawer">
       <ul class="mobile-nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="index.html#trabajos">Trabajos y Modelos</a></li>
         <li><a href="acercade.html">Acerca de Jesús Zerpa</a></li>
         <li><a href="formulario.html">Formulario de Contacto</a></li>
+        <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a></li>
       </ul>
       <div class="mobile-socials">
         <a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer" class="social-icon-btn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0-.02-3.28 1.64 1.64 0 0 0 .02 3.28m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg></a>
         <a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn"><svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg></a>
+        <a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer" class="social-icon-btn"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg></a>
       </div>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="site-container">
+  <main class="site-container bio-page-wrapper">
     
-    <!-- Profile Hero Card -->
-    <div class="profile-hero">
-      <div class="profile-photo-wrapper">
-        <img src="imagenes/imagen-2.jpg" alt="Jesús Benjamín Zerpa" class="profile-large-img" />
+    <!-- Executive Hero Card -->
+    <div class="executive-hero-card">
+      <div class="avatar-wrapper-supreme">
+        <img src="imagenes/imagen-2.jpg" alt="Jesús Benjamín Zerpa" class="avatar-supreme-img" />
+        <div class="avatar-status-pill">
+          <span class="status-pulse-dot"></span>
+          <span>Disponible para Consultoría</span>
+        </div>
       </div>
-      <div class="profile-hero-content">
-        <h1 class="profile-name">Jesús Benjamín Zerpa</h1>
-        <div class="profile-subtitle">Economist & Quantitative Data Scientist</div>
-        <p class="profile-summary-p">
-          Profesional de finanzas con más de 14 años de experiencia en las áreas de planificación financiera, formulación presupuestaria y control de gestión. Formado en instituciones bancarias y corporaciones de diversos sectores económicos, con una visión integral para la optimización de recursos, mitigación de riesgos y modelización estadística avanzada.
+      <div class="executive-hero-body">
+        <span class="executive-badge-tag">Dossier Profesional Ejecutivo</span>
+        <h1 class="executive-name">Jesús Benjamín Zerpa</h1>
+        <p class="executive-title-role">Economist & Quantitative Data Scientist</p>
+        <p class="executive-summary-text">
+          Profesional de finanzas con más de 14 años de sólida trayectoria liderando áreas de planificación financiera, formulación de presupuestos maestros y control de gestión. Especializado en transformar datos corporativos complejos en modelos predictivos y algoritmos cuantitativos reproducibles en R y Python para optimizar la toma de decisiones directivas y la rentabilidad del ROI.
         </p>
+        <div class="hero-action-buttons">
+          <a href="index.html#trabajos" class="btn-executive-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span>Explorar Modelos Cuantitativos</span>
+          </a>
+          <a href="https://wa.me/584241487870" target="_blank" rel="noopener noreferrer" class="btn-executive-secondary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8 2.53 1.08 2.53.72 2.99.68.45-.04 1.47-.6 1.68-1.18.2-.59.2-1.09.14-1.19-.06-.1-.23-.16-.48-.28z"/></svg>
+            <span>WhatsApp (+58 424 148 78 70)</span>
+          </a>
+        </div>
       </div>
     </div>
 
-    <!-- Core Value Pillars -->
-    <div class="pillars-grid">
-      <div class="pillar-card">
-        <h3 class="pillar-title">
+    <!-- Executive KPI Strip -->
+    <div class="executive-kpi-strip">
+      <div class="kpi-stat-card">
+        <div class="kpi-stat-number">+14</div>
+        <div class="kpi-stat-label">Años de Liderazgo en Finanzas Corporativas</div>
+      </div>
+      <div class="kpi-stat-card">
+        <div class="kpi-stat-number">13</div>
+        <div class="kpi-stat-label">Modelos Cuantitativos y Algoritmos en Producción</div>
+      </div>
+      <div class="kpi-stat-card">
+        <div class="kpi-stat-number">6+</div>
+        <div class="kpi-stat-label">Sectores Económicos: Banca, Pagos, Salud, Consumo</div>
+      </div>
+      <div class="kpi-stat-card">
+        <div class="kpi-stat-number">100%</div>
+        <div class="kpi-stat-label">Código Abierto Reproducible en RStudio & Python</div>
+      </div>
+    </div>
+
+    <!-- Core Technological & Analytical Pillars -->
+    <h2 class="section-super-heading">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+      Especialización Cuantitativa & Pilares Analíticos
+    </h2>
+
+    <div class="pillars-quad-grid">
+      <!-- Pillar 1 -->
+      <div class="pillar-card-enhanced">
+        <div class="pillar-icon-box">
           <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-          Modelización Estadística & Pronósticos
-        </h3>
-        <p class="pillar-desc">
-          Aplicación de modelos econométricos (ARIMA, VAR, GARCH, Prophet) para dotar a la información financiera de robustez cuantitativa, superando los métodos ortodoxos de estimación.
+        </div>
+        <h3 class="pillar-heading">Econometría & Modelos de Volatilidad</h3>
+        <p class="pillar-paragraph">
+          Modelado estadístico avanzado de series temporales mediante especificaciones GARCH simétricas y asimétricas con distribución t-Student (rugarch), cálculo de Valor en Riesgo (VaR 99%), algoritmos ARIMA (TSstudio) y Modelos Aditivos Generalizados con Prophet.
         </p>
+        <div class="pillar-tags-row">
+          <span class="pillar-tag">GARCH / eGARCH</span>
+          <span class="pillar-tag">VaR 99%</span>
+          <span class="pillar-tag">ARIMA</span>
+          <span class="pillar-tag">Prophet GAM</span>
+          <span class="pillar-tag">rugarch</span>
+        </div>
       </div>
 
-      <div class="pillar-card">
-        <h3 class="pillar-title">
+      <!-- Pillar 2 -->
+      <div class="pillar-card-enhanced">
+        <div class="pillar-icon-box">
           <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-          Business Intelligence & Dashboards
-        </h3>
-        <p class="pillar-desc">
-          Construcción de tableros directivos interactivos en Power BI, R Shiny y Excel/VBA que integran fuentes exógenas y operativas para el monitoreo dinámico del ROI.
+        </div>
+        <h3 class="pillar-heading">Business Intelligence & Dashboards Directivos</h3>
+        <p class="pillar-paragraph">
+          Arquitectura y diseño de tableros ejecutivos interactivos en Power BI (modelos en estrella, DAX avanzado, Power Query) y R Shiny. Integración dinámica de variables operativas internas con indicadores macroeconómicos exógenos para monitorear el ROI en tiempo real.
         </p>
+        <div class="pillar-tags-row">
+          <span class="pillar-tag">Power BI</span>
+          <span class="pillar-tag">DAX Avanzado</span>
+          <span class="pillar-tag">Power Query</span>
+          <span class="pillar-tag">R Shiny</span>
+          <span class="pillar-tag">VBA</span>
+        </div>
       </div>
 
-      <div class="pillar-card">
-        <h3 class="pillar-title">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          Planificación Financiera & Control
-        </h3>
-        <p class="pillar-desc">
-          Liderazgo y formulación del presupuesto maestro, proyecciones macroeconómicas, evaluación de proyectos de inversión y formulación de casos de negocio de alto impacto.
+      <!-- Pillar 3 -->
+      <div class="pillar-card-enhanced">
+        <div class="pillar-icon-box">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <h3 class="pillar-heading">Teoría de Portafolios & Stress Testing</h3>
+        <p class="pillar-paragraph">
+          Construcción y optimización de carteras bajo la Teoría Moderna de Markowitz (fronteras eficientes y maximización del ratio de Sharpe). Simulación estocástica Monte Carlo con más de 10,000 trayectorias brownianas y pruebas de estrés financiero para carteras corporativas.
         </p>
+        <div class="pillar-tags-row">
+          <span class="pillar-tag">Frontera Markowitz</span>
+          <span class="pillar-tag">Ratio Sharpe</span>
+          <span class="pillar-tag">Monte Carlo</span>
+          <span class="pillar-tag">Stress Testing</span>
+          <span class="pillar-tag">Portfolio R</span>
+        </div>
       </div>
+
+      <!-- Pillar 4 -->
+      <div class="pillar-card-enhanced">
+        <div class="pillar-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <h3 class="pillar-heading">Planificación Financiera & Control Presupuestario</h3>
+        <p class="pillar-paragraph">
+          Dirección del presupuesto maestro, formulación de planes operativos anuales, proyecciones macroeconómicas y formulación de casos de negocio de inversión mediante flujos de caja descontados (DCF), valor actual neto (VAN), tasa interna de retorno (TIR) y WACC.
+        </p>
+        <div class="pillar-tags-row">
+          <span class="pillar-tag">Presupuesto Maestro</span>
+          <span class="pillar-tag">Flujo de Caja DCF</span>
+          <span class="pillar-tag">VAN / TIR</span>
+          <span class="pillar-tag">Cálculo WACC</span>
+          <span class="pillar-tag">Casos de Negocio</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategic Vision Quote -->
+    <div class="executive-quote-card">
+      <div class="quote-icon">“</div>
+      <p class="quote-text">
+        La información financiera adquiere verdadera robustez estadística cuando los datos se estructuran, combinan y modelan en función del comportamiento futuro de su ROI. El pronóstico riguroso supera el análisis ortodoxo y se convierte en el activo estratégico central de cualquier organización moderna.
+      </p>
+      <div class="quote-author">— Jesús Benjamín Zerpa | Economist & Quantitative Data Scientist</div>
     </div>
 
     <!-- Career Timeline -->
-    <h2 class="timeline-section-title">Trayectoria Profesional Cronológica</h2>
+    <h2 class="section-super-heading">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+      Trayectoria Profesional y Experiencia Corporativa
+    </h2>
     
-    <div class="timeline-container">
+    <div class="timeline-wrapper">
       
       <!-- Credicard -->
-      <div class="timeline-item current">
-        <div class="timeline-header">
+      <div class="timeline-card active-role">
+        <div class="timeline-top-meta">
           <div>
-            <div class="timeline-company">Consorcio Credicard</div>
-            <div class="timeline-role">Gerente de Planificación Financiera y Presupuesto</div>
+            <h3 class="company-title">Consorcio Credicard</h3>
+            <div class="role-subtitle">Gerente de Planificación Financiera y Presupuesto</div>
           </div>
-          <span class="timeline-badge-current">Posición Actual</span>
+          <span class="badge-current-position">Posición Actual</span>
         </div>
-        <p class="timeline-desc">
-          Empresa líder en el mercado de servicios de medios de pago con más de 30 años de experiencia. Responsable de diseñar, dirigir, evaluar y controlar el proceso de planificación financiera y presupuesto de la empresa. Monitoreo financiero integral, definición de estrategias, proyecciones financieras, formulación de casos de negocio e implementación del modelo presupuestario corporativo.
+        <p class="timeline-body-desc">
+          Empresa líder en el mercado de medios de pago con más de 30 años de experiencia. Responsable de diseñar, dirigir, evaluar y controlar el proceso de planificación financiera y presupuesto corporativo. Monitoreo financiero integral, definición de estrategias, proyecciones financieras multiescenario, formulación de casos de negocio e implementación del modelo presupuestario institucional.
         </p>
       </div>
 
       <!-- Grupo Mistral -->
-      <div class="timeline-item">
-        <div class="timeline-header">
+      <div class="timeline-card">
+        <div class="timeline-top-meta">
           <div>
-            <div class="timeline-company">Grupo Mistral</div>
-            <div class="timeline-role">Planificador Corporativo de Finanzas</div>
+            <h3 class="company-title">Grupo Mistral</h3>
+            <div class="role-subtitle">Planificador Corporativo de Finanzas</div>
           </div>
         </div>
-        <p class="timeline-desc">
-          Grupo empresarial multisectorial (producción industrial de higiene personal, distribución logística nacional y cadena con más de 90 farmacias). Responsable del diseño y desarrollo de informes corporativos para la V.P. de Finanzas de las tres divisiones (Empaque, Consumo, Farma). Elaboración de informes financieros, operativos y presupuestarios, análisis de entorno macroeconómico, premisas presupuestarias y tableros de Business Intelligence.
+        <p class="timeline-body-desc">
+          Grupo multisectorial (producción industrial de empaques, distribución logística nacional y cadena con más de 90 farmacias). Responsable del diseño y desarrollo de informes corporativos para la V.P. de Finanzas de las tres divisiones (Empaque, Consumo, Farma). Elaboración de informes financieros, operativos y presupuestarios, análisis del entorno macroeconómico, premisas presupuestarias y tableros de Business Intelligence.
         </p>
       </div>
 
       <!-- Multimédica -->
-      <div class="timeline-item">
-        <div class="timeline-header">
+      <div class="timeline-card">
+        <div class="timeline-top-meta">
           <div>
-            <div class="timeline-company">Grupo de Empresas Multimédica</div>
-            <div class="timeline-role">Coordinador Corporativo de Presupuesto y Control</div>
+            <h3 class="company-title">Grupo de Empresas Multimédica</h3>
+            <div class="role-subtitle">Coordinador Corporativo de Presupuesto y Control</div>
           </div>
         </div>
-        <p class="timeline-desc">
+        <p class="timeline-body-desc">
           Sector salud: importación, distribución y comercialización de equipos médicos quirúrgicos de alta tecnología y descartables, con proyectos internacionales en España. Responsable de la formulación y control de presupuesto, reportes avanzados de gestión, supervisión del cierre contable, análisis financiero mensual y formulación y evaluación de proyectos de inversión.
         </p>
       </div>
 
       <!-- Segutronic -->
-      <div class="timeline-item">
-        <div class="timeline-header">
+      <div class="timeline-card">
+        <div class="timeline-top-meta">
           <div>
-            <div class="timeline-company">Segutronic (Filial de CG Security Group)</div>
-            <div class="timeline-role">Especialista Senior de Presupuesto</div>
+            <h3 class="company-title">Segutronic (Filial de CG Security Group)</h3>
+            <div class="role-subtitle">Especialista Senior de Presupuesto</div>
           </div>
         </div>
-        <p class="timeline-desc">
+        <p class="timeline-body-desc">
           Obras de seguridad tecnológica de última generación para la banca nacional. Encargado de la planificación, formulación y conducción del presupuesto financiero de más de 32 obras a nivel nacional, supervisión del presupuesto operativo, cierre administrativo y evaluación de rentabilidad por obra terminada.
         </p>
       </div>
 
       <!-- Grupo Admibien -->
-      <div class="timeline-item">
-        <div class="timeline-header">
+      <div class="timeline-card">
+        <div class="timeline-top-meta">
           <div>
-            <div class="timeline-company">Grupo Empresarial Admibien</div>
-            <div class="timeline-role">Subgerente de Finanzas</div>
+            <h3 class="company-title">Grupo Empresarial Admibien</h3>
+            <div class="role-subtitle">Subgerente de Finanzas</div>
           </div>
         </div>
-        <p class="timeline-desc">
+        <p class="timeline-body-desc">
           Gestión y financiamiento de recursos económicos corporativos. Responsable de la planeación y planificación financiera, supervisión de flujos de caja y apoyo estratégico al departamento legal en estructuración de financiamiento.
         </p>
       </div>
 
       <!-- Banesco -->
-      <div class="timeline-item">
-        <div class="timeline-header">
+      <div class="timeline-card">
+        <div class="timeline-top-meta">
           <div>
-            <div class="timeline-company">Banesco Banco Universal</div>
-            <div class="timeline-role">Ejecutivo de Negocios (Servicios Financieros)</div>
+            <h3 class="company-title">Banesco Banco Universal</h3>
+            <div class="role-subtitle">Ejecutivo de Negocios en Servicios Financieros</div>
           </div>
         </div>
-        <p class="timeline-desc">
+        <p class="timeline-body-desc">
           Inicio de la trayectoria en el Sistema Financiero Nacional. Gestión directa de cartera de clientes comerciales e individuales, estructuración y defensa de expedientes crediticios, asesoría de servicios financieros corporativos, benchmarking y colocación de productos bancarios.
         </p>
       </div>
 
+    </div>
+
+    <!-- Direct Contact Strip -->
+    <div class="bio-contact-strip">
+      <div class="bio-contact-text">
+        <h3>¿Requieres Asesoría Cuantitativa o Formulación de Modelos?</h3>
+        <p>Iniciemos una conversación directa para analizar los requerimientos analíticos o de planificación financiera de tu organización.</p>
+      </div>
+      <div class="bio-contact-actions">
+        <a href="formulario.html" class="btn-executive-primary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          <span>Enviar Mensaje</span>
+        </a>
+        <a href="https://wa.me/584241487870" target="_blank" rel="noopener noreferrer" class="btn-executive-secondary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8 2.53 1.08 2.53.72 2.99.68.45-.04 1.47-.6 1.68-1.18.2-.59.2-1.09.14-1.19-.06-.1-.23-.16-.48-.28z"/></svg>
+          <span>WhatsApp Directo</span>
+        </a>
+      </div>
     </div>
 
   </main>
@@ -443,6 +868,7 @@
             <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
             <li><a href="acercade.html">Trayectoria Profesional</a></li>
             <li><a href="formulario.html">Formulario de Contacto</a></li>
+            <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a></li>
           </ul>
         </div>
 
