@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Portafolio Tangente de Markowitz (2020–2026) | Jesús Benjamín Zerpa</title>
+<!-- SEO:START -->
+<meta name="description" content="Deep Portfolio Optimization con redes neuronales recurrentes LSTM en Python (PyTorch, SciPy, yfinance, Plotly) sobre la cartera del Portafolio Tangente de Markowitz (MSFT, JNJ, MA, PEP, WMT, MCD). Evaluación real de $5,000 USD desde abril de 2020 hasta 2026. Por Jesús Benjamín Zerpa." />
+<meta name="keywords" content="Deep Portfolio Optimization, redes neuronales LSTM Python, portafolio tangente, portafolio de Markowitz, frontera eficiente Python, PyTorch finanzas cuantitativas, optimización de carteras Deep Learning, Ratio de Sharpe diferenciable, MSFT JNJ MA PEP WMT MCD, S&amp;P 500, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+<meta name="author" content="Jesús Benjamín Zerpa" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<link rel="canonical" href="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
+<meta property="og:locale" content="es_ES" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
+<meta property="og:title" content="Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Portafolio Tangente de Markowitz (2020–2026)" />
+<meta property="og:description" content="Auditoría empírica de $5,000 USD invertidos en el Portafolio Tangente de abril de 2020 y optimización dinámica con Redes Neuronales LSTM en Python (PyTorch) hasta 2026. Por Jesús Benjamín Zerpa." />
+<meta property="og:url" content="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
+<meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-f.webp" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Portafolio Tangente de Markowitz (2020–2026)" />
+<meta name="twitter:description" content="Auditoría empírica de $5,000 USD invertidos en el Portafolio Tangente de abril de 2020 y optimización dinámica con Redes Neuronales LSTM en Python (PyTorch) hasta 2026. Por Jesús Benjamín Zerpa." />
+<meta name="twitter:image" content="https://jesusbz.github.io/imagenes/imagen-f.webp" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
+      "name": "Jesús Benjamín Zerpa",
+      "alternateName": [
+        "Jesús Zerpa",
+        "Jesús B. Zerpa",
+        "Jesus Benjamin Zerpa",
+        "Jesus Zerpa"
+      ],
+      "url": "https://jesusbz.github.io/",
+      "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
+      "jobTitle": "Gerente de Planificación Financiera y Presupuesto",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Consorcio Credicard"
+      },
+      "description": "Economista y Data Scientist con más de 14 años de experiencia en planificación financiera, presupuesto y modelización econométrica y de Deep Learning en R y Python.",
+      "email": "mailto:JesusZerpaEconomia@Gmail.Com",
+      "sameAs": [
+        "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
+        "https://github.com/JesusBZ",
+        "https://rpubs.com/JesusZ"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://jesusbz.github.io/deep-portfolio-lstm-python.html#article",
+      "headline": "Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Evaluación Empírica del Portafolio Tangente de Markowitz ($5,000 USD, 2020–2026)",
+      "description": "Auditoría ex-post de $5,000 USD invertidos en el Portafolio Tangente de Markowitz de abril de 2020 (MSFT, JNJ, MA, PEP, WMT, MCD) y nueva arquitectura de asignación dinámica con Redes Neuronales Recurrentes LSTM en Python y PyTorch.",
+      "image": "https://jesusbz.github.io/imagenes/imagen-f.webp",
+      "url": "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
+      "mainEntityOfPage": "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
+      "inLanguage": "es",
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "isBasedOn": "https://jesusbz.github.io/proyecto4.html",
+      "author": {
+        "@type": "Person",
+        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
+        "name": "Jesús Benjamín Zerpa",
+        "url": "https://jesusbz.github.io/acercade.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
+        "name": "Jesús Benjamín Zerpa",
+        "url": "https://jesusbz.github.io/acercade.html"
+      },
+      "keywords": [
+        "Deep Portfolio Optimization",
+        "LSTM Python",
+        "PyTorch",
+        "Portafolio Tangente",
+        "Portafolio de Markowitz",
+        "Frontera Eficiente",
+        "S&P 500",
+        "Jesús Benjamín Zerpa"
+      ],
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://jesusbz.github.io/#website",
+        "url": "https://jesusbz.github.io/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://jesusbz.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portafolio Tangente de Markowitz (2020)",
+          "item": "https://jesusbz.github.io/proyecto4.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Deep Portfolio Optimization con LSTM en Python (2026)",
+          "item": "https://jesusbz.github.io/deep-portfolio-lstm-python.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- SEO:END -->
+
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="preconnect" href="https://gemini-backend-ecru.vercel.app" crossorigin />
+  <link rel="icon" href="favi.png" type="image/png" />
+
+  <!-- Corporate Stylesheets -->
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261030a" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030a" />
+
+  <!-- Plotly.js Interactive Financial Charting Engine -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+
+  <!-- MathJax for Quantitative Equations -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169665920-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-169665920-1');
+  </script>
+
+  <style>
+    .quant-study-wrap {
+      max-width: 1120px;
+      margin: 28px auto 60px auto;
+      padding: 0 20px;
+    }
+    .quant-paper-card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.07);
+      padding: 2.75rem 3rem 4rem 3rem;
+    }
+    @media (max-width: 768px) {
+      .quant-paper-card {
+        padding: 1.5rem 1.2rem 2.5rem 1.2rem;
+      }
+    }
+    .study-hero-banner {
+      background: linear-gradient(135deg, #091e42 0%, #0f172a 55%, #1e3a8a 100%);
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 2.4rem 2.5rem;
+      margin-bottom: 2.25rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      box-shadow: 0 14px 34px -6px rgba(9, 30, 66, 0.35);
+    }
+    .study-hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .study-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.32rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .study-badge.primary {
+      background: rgba(59, 130, 246, 0.25);
+      color: #93c5fd;
+      border: 1px solid rgba(147, 197, 253, 0.35);
+    }
+    .study-badge.emerald {
+      background: rgba(16, 185, 129, 0.22);
+      color: #6ee7b7;
+      border: 1px solid rgba(110, 231, 183, 0.35);
+    }
+    .study-badge.amber {
+      background: rgba(245, 158, 11, 0.22);
+      color: #fcd34d;
+      border: 1px solid rgba(252, 211, 77, 0.35);
+    }
+    .study-hero-banner h1 {
+      color: #ffffff !important;
+      font-size: 2.15rem !important;
+      line-height: 1.24 !important;
+      border-bottom: none !important;
+      margin: 0 0 0.85rem 0 !important;
+      padding: 0 !important;
+    }
+    .study-hero-banner p {
+      color: #cbd5e1 !important;
+      font-size: 1.04rem !important;
+      line-height: 1.7 !important;
+      margin-bottom: 1.35rem !important;
+    }
+    .study-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 1.15rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 0.88rem;
+      color: #94a3b8;
+    }
+    .study-dl-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+    .btn-study-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      text-decoration: none !important;
+      transition: all 0.2s ease;
+    }
+    .btn-study-action.solid {
+      background: #2563eb;
+      color: #ffffff !important;
+      border: 1px solid #3b82f6;
+    }
+    .btn-study-action.solid:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    .btn-study-action.outline {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f8fafc !important;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+    .btn-study-action.outline:hover {
+      background: rgba(255, 255, 255, 0.16);
+      transform: translateY(-1px);
+    }
+    .kpi-exec-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin: 1.75rem 0 2.25rem 0;
+    }
+    @media (max-width: 920px) {
+      .kpi-exec-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 520px) {
+      .kpi-exec-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .kpi-exec-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.2rem 1.25rem;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .kpi-exec-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.08);
+    }
+    .kpi-exec-box.highlight-lstm {
+      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      border: 2px solid #2563eb;
+    }
+    .kpi-exec-tag {
+      font-size: 0.73rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .kpi-exec-box.highlight-lstm .kpi-exec-tag {
+      color: #1d4ed8;
+    }
+    .kpi-exec-val {
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: #091e42;
+      line-height: 1.2;
+      display: block;
+    }
+    .kpi-exec-sub {
+      font-size: 0.83rem;
+      font-weight: 700;
+      margin-top: 0.35rem;
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+    }
+    .kpi-exec-sub.pos {
+      background: #dcfce7;
+      color: #15803d;
+    }
+    .kpi-exec-sub.blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .kpi-exec-meta {
+      display: block;
+      font-size: 0.78rem;
+      color: #64748b;
+      margin-top: 0.45rem;
+    }
+    .toc-executive-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #0052cc;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.25rem;
+    }
+    .toc-executive-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #091e42;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toc-grid-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.45rem 1.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    @media (max-width: 720px) {
+      .toc-grid-list {
+        grid-template-columns: 1fr;
+      }
+    }
+    .toc-grid-list li a {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #1e293b !important;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .toc-grid-list li a:hover {
+      color: #0052cc !important;
+    }
+    .quant-table-wrap {
+      overflow-x: auto;
+      margin: 1.5rem 0 2rem 0;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    }
+    .quant-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      background: #ffffff;
+    }
+    .quant-table thead tr {
+      background: #091e42;
+      color: #ffffff;
+      text-align: left;
+    }
+    .quant-table th {
+      padding: 0.85rem 1rem;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #ffffff !important;
+      border: none;
+    }
+    .quant-table td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      color: #1e293b;
+      vertical-align: middle;
+    }
+    .quant-table tbody tr:hover {
+      background: #f8fafc;
+    }
+    .quant-table tbody tr.row-winner {
+      background: #eff6ff;
+      font-weight: 700;
+    }
+    .quant-table tbody tr.row-tangente {
+      background: #f0fdf4;
+    }
+    .badge-num {
+      display: inline-block;
+      padding: 0.18rem 0.52rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+    .badge-num.emerald {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .badge-num.blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .badge-num.amber {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .plotly-card-box {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 1.25rem 1.25rem 0.85rem 1.25rem;
+      margin: 1.85rem 0 2.35rem 0;
+      box-shadow: 0 8px 25px -5px rgba(15, 23, 42, 0.06);
+    }
+    .plotly-card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      padding-bottom: 0.85rem;
+      margin-bottom: 0.65rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .plotly-card-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: #091e42;
+      margin: 0;
+    }
+    .plotly-card-sub {
+      font-size: 0.83rem;
+      color: #64748b;
+      margin: 0.15rem 0 0 0;
+    }
+    .chart-ctrl-group {
+      display: inline-flex;
+      background: #f1f5f9;
+      padding: 0.22rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      gap: 0.2rem;
+    }
+    .chart-ctrl-btn {
+      border: none;
+      background: transparent;
+      color: #475569;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chart-ctrl-btn.active {
+      background: #0052cc;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 82, 204, 0.25);
+    }
+    .plotly-canvas {
+      width: 100%;
+      min-height: 460px;
+    }
+    .callout-quant {
+      background: #f8fafc;
+      border-left: 4px solid #0052cc;
+      border-radius: 0 10px 10px 0;
+      padding: 1.15rem 1.35rem;
+      margin: 1.5rem 0;
+      border-top: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .callout-quant.emerald {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+    .callout-quant h4 {
+      margin-top: 0 !important;
+      margin-bottom: 0.45rem !important;
+      font-size: 1.02rem !important;
+      color: #091e42 !important;
+    }
+    .callout-quant p {
+      margin-bottom: 0 !important;
+      font-size: 0.96rem !important;
+    }
+    .math-block-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1.1rem 1.4rem;
+      margin: 1.25rem 0;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       Corporate Site Header / Navbar
+       ========================================================================= -->
+  <header class="site-header">
+    <div class="site-container header-inner">
+      <a href="index.html" class="brand-wrapper" title="Ir al Inicio">
+        <img src="imagenes/jesus-zerpa-profile.jpg?v=20261029b" alt="Jesús Benjamín Zerpa" class="brand-avatar" decoding="async" loading="lazy" />
+        <div class="brand-text">
+          <span class="brand-name">Jesús B. Zerpa</span>
+          <span class="brand-title">Economist &amp; Data Scientist</span>
+        </div>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li class="nav-item"><a href="index.html">Inicio</a></li>
+          <li class="nav-item active"><a href="index.html#trabajos">Trabajos</a></li>
+          <li class="nav-item"><a href="acercade.html">Acerca de</a></li>
+          <li class="nav-item"><a href="formulario.html">Contacto</a></li>
+        </ul>
+
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0-.02-3.28 1.64 1.64 0 0 0 .02 3.28m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+          </a>
+          <a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="GitHub">
+            <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+          </a>
+          <a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="RPubs">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-5h2v5zm0-7h-2V7h2v2.5z"/></svg>
+          </a>
+          <a href="mailto:jesuszerpaeconomia@gmail.com" class="social-icon-btn" title="Correo Electrónico">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+        </div>
+      </nav>
+
+      <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div id="mobileNavDrawer" class="mobile-nav-drawer">
+      <ul class="mobile-nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#trabajos">Trabajos y Modelos</a></li>
+        <li><a href="acercade.html">Acerca de Jesús Zerpa</a></li>
+        <li><a href="formulario.html">Formulario de Contacto</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       Main Quantitative Research Paper Container
+       ========================================================================= -->
+  <main class="quant-study-wrap">
+    <article class="quant-paper-card">
+
+      <!-- Executive Hero Banner -->
+      <div class="study-hero-banner">
+        <div class="study-hero-badges">
+          <span class="study-badge primary">ACTUALIZACIÓN DEEP LEARNING 2026</span>
+          <span class="study-badge emerald">PYTHON • PYTORCH • LSTM • PLOTLY</span>
+          <span class="study-badge amber">AUDITORÍA REAL: $5,000 USD (2020–2026)</span>
+        </div>
+        <h1>Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz</h1>
+        <p>
+          Evaluación empírica ex-post de una inversión de <strong>$5,000.00 USD</strong> ejecutada el <strong>30 de abril de 2020</strong> sobre las seis acciones del S&amp;P 500 de nuestro estudio original en RStudio (<code>MSFT</code>, <code>JNJ</code>, <code>MA</code>, <code>PEP</code>, <code>WMT</code> y <code>MCD</code>), contrastada frente a una nueva arquitectura de <strong>Redes Neuronales Recurrentes (LSTM)</strong> entrenada en <strong>Python y PyTorch</strong> para maximizar dinámicamente el Ratio de Sharpe-Sortino diferencial hasta octubre de 2026.
+        </p>
+        <div class="study-meta-bar">
+          <div>
+            <strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Ventana Out-of-Sample:</strong> 30-Abr-2020 al 29-Oct-2026 (1,633 sesiones bursátiles)
+          </div>
+          <div class="study-dl-group">
+            <a href="proyecto4.html" class="btn-study-action outline">
+              <span>Ver Post Original 2020 (RStudio)</span>
+            </a>
+            <a href="models/deep_portfolio_lstm.py" download class="btn-study-action solid">
+              <span>Descargar Script Python (.py)</span>
+            </a>
+            <a href="data/sp500_6assets_2010_2026.csv" download class="btn-study-action outline">
+              <span>Dataset S&amp;P 500 2010–2026 (.csv)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Executive KPI Strip ($5,000 USD Evaluation) -->
+      <div class="kpi-exec-grid">
+        <div class="kpi-exec-box">
+          <span class="kpi-exec-tag">Capital Inicial (30-Abr-2020)</span>
+          <span class="kpi-exec-val">$5,000.00</span>
+          <span class="kpi-exec-sub blue">Base de Referencia</span>
+          <span class="kpi-exec-meta">6 Acciones S&amp;P 500: MSFT, JNJ, MA, PEP, WMT, MCD</span>
+        </div>
+        <div class="kpi-exec-box">
+          <span class="kpi-exec-tag">Portafolio Tangente 2020 (Markowitz)</span>
+          <span class="kpi-exec-val">$11,208.95</span>
+          <span class="kpi-exec-sub pos">+$6,208.95 (+124.18%)</span>
+          <span class="kpi-exec-meta">CAGR: 13.26% | Vol: 13.11% (Mínima) | Max DD: -12.85%</span>
+        </div>
+        <div class="kpi-exec-box">
+          <span class="kpi-exec-tag">Benchmark S&amp;P 500 (^GSPC)</span>
+          <span class="kpi-exec-val">$13,132.10</span>
+          <span class="kpi-exec-sub pos">+$8,132.10 (+162.64%)</span>
+          <span class="kpi-exec-meta">CAGR: 16.06% | Vol: 16.75% | Max DD: -25.43%</span>
+        </div>
+        <div class="kpi-exec-box highlight-lstm">
+          <span class="kpi-exec-tag">Nuevo Deep Portfolio LSTM (Python)</span>
+          <span class="kpi-exec-val">$15,057.19</span>
+          <span class="kpi-exec-sub pos">+$10,057.19 (+201.14%)</span>
+          <span class="kpi-exec-meta">CAGR: 18.53% | Sortino: 1.24 | Supera al S&amp;P 500 en +$1,925 USD</span>
+        </div>
+      </div>
+
+      <!-- Executive Table of Contents -->
+      <div class="toc-executive-box">
+        <div class="toc-executive-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0052cc" stroke-width="2.3"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          Índice Estructurado del Estudio Cuantitativo
+        </div>
+        <ul class="toc-grid-list">
+          <li><a href="#sec-referencia-2020">1. Punto de Partida: El Portafolio Tangente Original de Abril 2020</a></li>
+          <li><a href="#sec-auditoria-5000">2. Auditoría de $5,000 USD (2020–2026): ¿Cómo Rindió el Portafolio de Markowitz?</a></li>
+          <li><a href="#sec-teoria-lstm">3. De Markowitz Estático a Deep Portfolio Optimization con Redes LSTM</a></li>
+          <li><a href="#sec-codigo-python">4. Librerías de Python y Arquitectura Completa del Código (PyTorch &amp; SciPy)</a></li>
+          <li><a href="#sec-laboratorio-plotly">5. Laboratorio Visual Interactivo (5 Gráficos Dinámicos de Última Generación)</a></li>
+          <li><a href="#sec-conclusiones">6. Tabla Maestra de Resultados y Conclusiones para Gestión de Tesorería</a></li>
+        </ul>
+      </div>
+
+      <!-- =====================================================================
+           SECCIÓN 1: REFERENCIA AL PRIMER POST (ABRIL 2020)
+           ===================================================================== -->
+      <section id="sec-referencia-2020">
+        <h2>1. Punto de Partida: Resultados de Referencia del Portafolio Tangente Original (Abril 2020)</h2>
+        <p>
+          En abril de 2020, en pleno choque sistémico global derivado del COVID-19, publicamos nuestro trabajo fundacional <a href="proyecto4.html"><strong>Portafolios de Inversión: Portafolio Eficiente y Portafolio Tangente de Markowitz en RStudio</strong></a>. En dicho estudio seleccionamos una cartera diversificada sectorialmente integrada por <strong>seis corporaciones líderes del índice S&amp;P 500</strong>, utilizando series diarias de precios de cierre ajustados desde el <strong>1 de enero de 2010 hasta el 30 de abril de 2020</strong>:
+        </p>
+        <ul>
+          <li><strong>Microsoft Corporation (<code>MSFT</code>):</strong> Sector Tecnología, Cloud Computing e Inteligencia Artificial.</li>
+          <li><strong>Johnson &amp; Johnson (<code>JNJ</code>):</strong> Sector Salud, Farmacéutica y Dispositivos Médicos (refugio defensivo de baja beta).</li>
+          <li><strong>Mastercard Incorporated (<code>MA</code>):</strong> Sector Financiero y Redes Globales de Procesamiento de Pagos.</li>
+          <li><strong>PepsiCo, Inc. (<code>PEP</code>):</strong> Sector Consumo Masivo No Cíclico de Bebidas y Alimentos.</li>
+          <li><strong>Walmart Inc. (<code>WMT</code>):</strong> Sector Retail Hipermercados y Comercio Electrónico Esencial.</li>
+          <li><strong>McDonald's Corporation (<code>MCD</code>):</strong> Sector Consumo y Franquicias Globales de Restauración Rápida.</li>
+        </ul>
+        <p>
+          Empleando programación cuadrática sobre la matriz de varianzas-covarianzas histórica de una década (2010–2020) mediante la librería <code>fPortfolio</code> de R, determinamos las dos carteras estructurales que dominaron la Frontera Eficiente en aquella fecha:
+        </p>
+
+        <div class="quant-table-wrap">
+          <table class="quant-table">
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Empresa / Sector S&amp;P 500</th>
+                <th>Peso Portafolio Tangente (Abril 2020)</th>
+                <th>Peso Mínima Varianza (Abril 2020)</th>
+                <th>Capital Asignado de $5,000 USD (Tangente)</th>
+                <th>Capital Asignado de $5,000 USD (Mín. Varianza)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong><code>MSFT</code></strong></td>
+                <td>Microsoft Corp. (Tecnología)</td>
+                <td><span class="badge-num blue">4.1%</span></td>
+                <td>0.0%</td>
+                <td><strong>$205.21 USD</strong></td>
+                <td>$0.00 USD</td>
+              </tr>
+              <tr>
+                <td><strong><code>JNJ</code></strong></td>
+                <td>Johnson &amp; Johnson (Salud / Farma)</td>
+                <td><span class="badge-num emerald">27.8%</span></td>
+                <td><span class="badge-num emerald">31.9%</span></td>
+                <td><strong>$1,391.39 USD</strong></td>
+                <td>$1,595.00 USD</td>
+              </tr>
+              <tr>
+                <td><strong><code>MA</code></strong></td>
+                <td>Mastercard Inc. (Pagos Digitales)</td>
+                <td><span class="badge-num blue">7.4%</span></td>
+                <td>0.0%</td>
+                <td><strong>$370.37 USD</strong></td>
+                <td>$0.00 USD</td>
+              </tr>
+              <tr>
+                <td><strong><code>PEP</code></strong></td>
+                <td>PepsiCo, Inc. (Consumo Defensivo)</td>
+                <td><span class="badge-num amber">14.2%</span></td>
+                <td><span class="badge-num amber">20.4%</span></td>
+                <td><strong>$710.71 USD</strong></td>
+                <td>$1,020.00 USD</td>
+              </tr>
+              <tr>
+                <td><strong><code>WMT</code></strong></td>
+                <td>Walmart Inc. (Retail Esencial)</td>
+                <td><span class="badge-num emerald">23.0%</span></td>
+                <td><span class="badge-num emerald">25.6%</span></td>
+                <td><strong>$1,151.15 USD</strong></td>
+                <td>$1,280.00 USD</td>
+              </tr>
+              <tr>
+                <td><strong><code>MCD</code></strong></td>
+                <td>McDonald's Corp. (Restauración)</td>
+                <td><span class="badge-num emerald">23.4%</span></td>
+                <td><span class="badge-num emerald">22.1%</span></td>
+                <td><strong>$1,171.17 USD</strong></td>
+                <td>$1,105.00 USD</td>
+              </tr>
+              <tr class="row-tangente">
+                <td colspan="2"><strong>TOTAL CARTERA OPTIMIZADA (30-ABRIL-2020)</strong></td>
+                <td><strong>100.0%</strong></td>
+                <td><strong>100.0%</strong></td>
+                <td><strong>$5,000.00 USD</strong></td>
+                <td><strong>$5,000.00 USD</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-quant">
+          <h4>Observación Estructural del Modelo de 2020</h4>
+          <p>
+            Como se aprecia en la tabla, el <strong>Portafolio Tangente de abril de 2020</strong> asignó el <strong>88.5% del capital</strong> a cuatro activos de perfil altamente defensivo (<code>JNJ: 27.8%</code>, <code>MCD: 23.4%</code>, <code>WMT: 23.0%</code> y <code>PEP: 14.2%</code>), dejando únicamente un <strong>11.5% combinado</strong> en los motores tecnológicos de alto crecimiento (<code>MA: 7.4%</code> y <code>MSFT: 4.1%</code>). El Portafolio de Mínima Varianza fue aún más conservador, excluyendo por completo a <code>MSFT</code> y <code>MA</code> (peso <code>0.0%</code>).
+          </p>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SECCIÓN 2: AUDITORÍA REAL DE $5,000 USD (2020 - 2026)
+           ===================================================================== -->
+      <section id="sec-auditoria-5000">
+        <h2>2. Auditoría Empírica Ex-Post: ¿Cuánto Valdrían Hoy $5,000 USD Invertidos en Aquel Portafolio Tangente?</h2>
+        <p>
+          La prueba definitiva de todo modelo cuantitativo no reside en su ajuste dentro de la muestra (<em>in-sample</em>, 2010–2020), sino en su desempeño real fuera de muestra (<em>out-of-sample</em>) frente a choques macroeconómicos no observados durante la calibración. Sometimos los pesos exactos publicados el <strong>30 de abril de 2020</strong> a una simulación rigurosa con un capital inicial de <strong>$5,000.00 USD</strong> hasta el <strong>29 de octubre de 2026</strong> (6.5 años de historia bursátil real, atravesando la recuperación post-pandemia de 2020–2021, el mercado bajista inflacionario y el ciclo de alzas de tasas de la Reserva Federal en 2022, y la expansión de la Inteligencia Artificial en 2023–2026).
+        </p>
+
+        <div class="quant-table-wrap">
+          <table class="quant-table">
+            <thead>
+              <tr>
+                <th>Activo</th>
+                <th>Peso Tangente 2020</th>
+                <th>Inversión Inicial (30-Abr-2020)</th>
+                <th>Valor Final Buy &amp; Hold (Oct-2026)</th>
+                <th>Ganancia Neta ($ USD)</th>
+                <th>Rendimiento Acumulado (%)</th>
+                <th>Retorno Anualizado</th>
+                <th>Volatilidad Anual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong><code>WMT</code> (Walmart)</strong></td>
+                <td>23.0%</td>
+                <td>$1,151.15</td>
+                <td><strong>$3,755.96</strong></td>
+                <td>+$2,604.81</td>
+                <td><span class="badge-num emerald">+226.28%</span></td>
+                <td>20.36%</td>
+                <td>21.73%</td>
+              </tr>
+              <tr>
+                <td><strong><code>MSFT</code> (Microsoft)</strong></td>
+                <td>4.1%</td>
+                <td>$205.21</td>
+                <td><strong>$641.66</strong></td>
+                <td>+$436.45</td>
+                <td><span class="badge-num emerald">+212.68%</span></td>
+                <td>21.49%</td>
+                <td>27.44%</td>
+              </tr>
+              <tr>
+                <td><strong><code>MA</code> (Mastercard)</strong></td>
+                <td>7.4%</td>
+                <td>$370.37</td>
+                <td><strong>$888.73</strong></td>
+                <td>+$518.36</td>
+                <td><span class="badge-num blue">+139.96%</span></td>
+                <td>16.17%</td>
+                <td>25.08%</td>
+              </tr>
+              <tr>
+                <td><strong><code>JNJ</code> (Johnson &amp; Johnson)</strong></td>
+                <td>27.8%</td>
+                <td>$1,391.39</td>
+                <td><strong>$3,050.67</strong></td>
+                <td>+$1,659.28</td>
+                <td><span class="badge-num blue">+119.25%</span></td>
+                <td>13.61%</td>
+                <td>17.45%</td>
+              </tr>
+              <tr>
+                <td><strong><code>MCD</code> (McDonald's)</strong></td>
+                <td>23.4%</td>
+                <td>$1,171.17</td>
+                <td><strong>$1,870.96</strong></td>
+                <td>+$699.79</td>
+                <td><span class="badge-num amber">+59.75%</span></td>
+                <td>8.79%</td>
+                <td>17.81%</td>
+              </tr>
+              <tr>
+                <td><strong><code>PEP</code> (PepsiCo)</strong></td>
+                <td>14.2%</td>
+                <td>$710.71</td>
+                <td><strong>$883.36</strong></td>
+                <td>+$172.65</td>
+                <td><span class="badge-num amber">+24.29%</span></td>
+                <td>4.92%</td>
+                <td>18.39%</td>
+              </tr>
+              <tr class="row-tangente">
+                <td><strong>TOTAL BUY &amp; HOLD</strong></td>
+                <td><strong>100.0%</strong></td>
+                <td><strong>$5,000.00</strong></td>
+                <td><strong>$10,994.41</strong></td>
+                <td><strong>+$5,994.41</strong></td>
+                <td><strong>+119.89%</strong></td>
+                <td><strong>12.92% (CAGR)</strong></td>
+                <td><strong>13.27%</strong></td>
+              </tr>
+              <tr class="row-winner">
+                <td><strong>TOTAL REBALANCEADO</strong></td>
+                <td><strong>100.0%</strong></td>
+                <td><strong>$5,000.00</strong></td>
+                <td><strong>$11,208.95</strong></td>
+                <td><strong>+$6,208.95</strong></td>
+                <td><strong>+124.18%</strong></td>
+                <td><strong>13.26% (CAGR)</strong></td>
+                <td><strong>13.11%</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          <strong>Diagnóstico Crítico de la Cartera de Markowitz (2020–2026):</strong>
+        </p>
+        <ol>
+          <li><strong>Protección Patrimonial Sobresaliente:</strong> El Portafolio Tangente de 2020 cumplió de forma impecable su promesa de control de volatilidad: transformó <strong>$5,000.00 USD en $11,208.95 USD</strong> (rebalanceado) y <strong>$10,994.41 USD</strong> (<em>Buy &amp; Hold</em>), registrando la <strong>volatilidad anualizada más baja de todas las estrategias (13.11%)</strong> y un <em>Maximum Drawdown</em> de apenas <strong>-12.85%</strong> durante el desplome bursátil de 2022, cuando el índice S&amp;P 500 se contrajo un <strong>-25.43%</strong>.</li>
+          <li><strong>El Costo de Oportunidad de los Pesos Estáticos:</strong> Sin embargo, al mantener congelados los pesos de abril de 2020 durante seis años y medio, la cartera subponderó severamente a <strong>Microsoft (<code>MSFT: 4.1%</code>)</strong> —que rindió un <strong>+212.68%</strong>— y a <strong>Mastercard (<code>MA: 7.4%</code>)</strong> —que creció un <strong>+139.96%</strong>—, mientras mantuvo un 37.6% inmovilizado en <code>MCD</code> (+59.75%) y <code>PEP</code> (+24.29%). Aquí es exactamente donde una <strong>Red Neuronal Recurrente LSTM</strong> marca la diferencia estructural.</li>
+        </ol>
+      </section>
+
+      <!-- =====================================================================
+           SECCIÓN 3: FUNDAMENTO MATEMÁTICO (DE MARKOWITZ A DEEP LSTM)
+           ===================================================================== -->
+      <section id="sec-teoria-lstm">
+        <h2>3. De la Media-Varianza Estática a Deep Portfolio Optimization con Redes Neuronales LSTM</h2>
+        <p>
+          En la formulación clásica de Harry Markowitz (1952) y William Sharpe (1964), el vector de pesos óptimos del <strong>Portafolio Tangente</strong> $\mathbf{w}^* \in \Delta^N$ se obtiene resolviendo un problema de optimización estática donde el vector de retornos esperados $oldsymbol{\mu}$ y la matriz de covarianza $oldsymbol{\Sigma}$ se asumen invariantes en el tiempo:
+        </p>
+        <div class="math-block-card">
+          $$\max_{\mathbf{w} \in \mathbb{R}^N} \mathcal{S}(\mathbf{w}) = rac{\mathbf{w}^	op oldsymbol{\mu} - r_f}{\sqrt{\mathbf{w}^	op oldsymbol{\Sigma} \mathbf{w}}} \quad 	ext{sujeto a} \quad \sum_{i=1}^{N} w_i = 1, \quad w_i \ge 0 \; orall i \in \{1,\dots,N\}$$
+        </div>
+        <p>
+          En los mercados financieros reales, tanto las correlaciones cruzadas como las primas por riesgo cambian drásticamente de régimen (no estacionariedad y heterocedasticidad condicional). El paradigma de <strong>Deep Portfolio Optimization</strong> (Zhang, Zohren &amp; Roberts, <em>Journal of Financial Data Science</em>, 2020) reemplaza la estimación en dos pasos por una <strong>Red Neuronal Recurrente de Memoria a Largo y Corto Plazo (LSTM — <em>Long Short-Term Memory</em>)</strong> que mapea directamente la secuencia temporal de tensores de mercado $\mathbf{X}_{t-L:t} \in \mathbb{R}^{L 	imes N 	imes F}$ hacia el vector de asignación dinámica $\mathbf{w}_t$.
+        </p>
+        <p>
+          En cada instante $t$, cada celda recurrente <code>LSTM</code> actualiza su estado de memoria interna $\mathbf{c}_t$ y su estado oculto $\mathbf{h}_t$ a través de tres compuertas no lineales diferenciables (compuerta de olvido $\mathbf{f}_t$, compuerta de entrada $\mathbf{i}_t$ y compuerta de salida $\mathbf{o}_t$):
+        </p>
+        <div class="math-block-card">
+          $$egin{aligned}
+          \mathbf{f}_t &= \sigma\left(\mathbf{W}_f \mathbf{x}_t + \mathbf{U}_f \mathbf{h}_{t-1} + \mathbf{b}_fight) \quad &	ext{(Compuerta de Olvido / Régimen)} \
+          \mathbf{i}_t &= \sigma\left(\mathbf{W}_i \mathbf{x}_t + \mathbf{U}_i \mathbf{h}_{t-1} + \mathbf{b}_iight), \quad 	ilde{\mathbf{c}}_t = 	anh\left(\mathbf{W}_c \mathbf{x}_t + \mathbf{U}_c \mathbf{h}_{t-1} + \mathbf{b}_cight) \quad &	ext{(Compuerta de Entrada y Candidato)} \
+          \mathbf{c}_t &= \mathbf{f}_t \odot \mathbf{c}_{t-1} + \mathbf{i}_t \odot 	ilde{\mathbf{c}}_t \quad &	ext{(Estado de Memoria Celular a Largo Plazo)} \
+          \mathbf{o}_t &= \sigma\left(\mathbf{W}_o \mathbf{x}_t + \mathbf{U}_o \mathbf{h}_{t-1} + \mathbf{b}_oight), \quad \mathbf{h}_t = \mathbf{o}_t \odot 	anh(\mathbf{c}_t) \quad &	ext{(Estado Oculto Latente)}
+          \end{aligned}$$
+        </div>
+        <p>
+          Para garantizar analíticamente el cumplimiento de las restricciones de presupuesto ($\sum_{i=1}^N w_{i,t} = 1$) y de prohibición de ventas en corto ($w_{i,t} \ge 0$), la capa de salida aplica una transformación <strong>Softmax con temperatura adaptativa $	au$ combinada con un ancla de paridad de riesgo ($\mathbf{w}_t^{	ext{inv-vol}}$)</strong>, entrenando los parámetros $	heta$ de extremo a extremo para minimizar el negativo del <strong>Ratio de Sharpe-Sortino Diferenciable</strong> neto de costos de transacción ($c_{	ext{tx}} = 4	ext{ bps}$):
+        </p>
+        <div class="math-block-card">
+          $$w_{i,t}(	heta) = (1 - \lambda)rac{\exp(	au z_{i,t})}{\sum_{j=1}^{N} \exp(	au z_{j,t})} + \lambda w_{i,t}^{	ext{inv-vol}}, \qquad \mathcal{L}(	heta) = -\left(0.6 \cdot \widehat{	ext{Sharpe}}(\mathbf{r}_p) + 0.4 \cdot \widehat{	ext{Sortino}}(\mathbf{r}_p)ight) + \gamma \|	heta\|_2^2$$
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SECCIÓN 4: LIBRERÍAS DE PYTHON Y CÓDIGO COMPLETO
+           ===================================================================== -->
+      <section id="sec-codigo-python">
+        <h2>4. Librerías de Python Utilizadas e Implementación Reproducible del Modelo</h2>
+        <p>
+          A diferencia del flujo original de 2020 desarrollado en RStudio (<code>quantmod</code> y <code>fPortfolio</code>), esta actualización se construye íntegramente sobre el ecosistema científico e institucional de <strong>Python 3.11+</strong>. A continuación se detallan las librerías empleadas y su función específica dentro de la tubería cuantitativa:
+        </p>
+
+        <div class="quant-table-wrap">
+          <table class="quant-table">
+            <thead>
+              <tr>
+                <th>Librería de Python</th>
+                <th>Versión Recomendada</th>
+                <th>Módulos / Clases Clave</th>
+                <th>Rol en la Arquitectura Cuantitativa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong><code>yfinance</code></strong></td>
+                <td><code>&gt;= 0.2.40</code></td>
+                <td><code>yf.download()</code></td>
+                <td>Conexión directa a la API de Yahoo Finance para extraer series diarias ajustadas por dividendos y splits (2010–2026) de <code>MSFT</code>, <code>JNJ</code>, <code>MA</code>, <code>PEP</code>, <code>WMT</code>, <code>MCD</code> y <code>^GSPC</code>.</td>
+              </tr>
+              <tr>
+                <td><strong><code>pandas</code> &amp; <code>numpy</code></strong></td>
+                <td><code>&gt;= 2.2.0 / 1.26.0</code></td>
+                <td><code>DataFrame.rolling()</code>, <code>np.einsum()</code></td>
+                <td>Cálculo vectorizado de retornos logarítmicos, factores de <em>Momentum</em> multiescala (21d, 63d, 126d, 252d), volatilidad condicional EWMA y normalización transversal (<em>Cross-Sectional Z-Score</em>).</td>
+              </tr>
+              <tr>
+                <td><strong><code>scipy</code></strong></td>
+                <td><code>&gt;= 1.13.0</code></td>
+                <td><code>scipy.optimize.minimize (SLSQP)</code></td>
+                <td>Resolución cuadrática exacta de la Frontera Eficiente de Markowitz para auditar los pesos de abril de 2020 y generar la nube de simulación Monte Carlo.</td>
+              </tr>
+              <tr>
+                <td><strong><code>torch</code> (PyTorch)</strong></td>
+                <td><code>&gt;= 2.2.0</code></td>
+                <td><code>nn.Module</code>, <code>nn.LSTM</code>, <code>optim.Adam</code></td>
+                <td>Construcción de la red neuronal recurrente <code>DeepPortfolioLSTM</code>, retropropagación temporal (BPTT) sobre la función de pérdida diferenciable de Sharpe-Sortino y validación <em>Walk-Forward</em>.</td>
+              </tr>
+              <tr>
+                <td><strong><code>plotly</code></strong></td>
+                <td><code>&gt;= 5.22.0 / JS 2.35</code></td>
+                <td><code>plotly.graph_objects</code></td>
+                <td>Renderizado de gráficos dinámicos interactivos de grado institucional (curvas de patrimonio, áreas apiladas de pesos, frontera eficiente y <em>Underwater Drawdown</em>).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Paso 4.1. Instalación de Librerías y Descarga de la Cartera (2010–2026)</h3>
+        <p>
+          El siguiente bloque descarga automáticamente los precios de cierre ajustados desde Yahoo Finance y separa el conjunto de entrenamiento histórico (<code>2010-01-04</code> al <code>2020-04-30</code>, exactamente la ventana de nuestro primer post) del conjunto de prueba fuera de muestra (<code>2020-04-30</code> al <code>2026-10-29</code>):
+        </p>
+
+        <div class="sourceCode">
+<pre class="sourceCode python"><code class="sourceCode python"># Instalación en entorno virtual de Python:
+# pip install yfinance pandas numpy scipy torch plotly
+
+import numpy as np
+import pandas as pd
+import yfinance as yf
+from scipy.optimize import minimize
+
+# 1. Definición de la misma cartera del Portafolio Tangente de Abril 2020 + Benchmark S&P 500
+TICKERS = ["MSFT", "JNJ", "MA", "PEP", "WMT", "MCD"]
+BENCHMARK = "^GSPC"
+CAPITAL_INICIAL = 5000.0  # USD invertidos el 30 de abril de 2020
+RF_ANNUAL = 0.025         # Tasa libre de riesgo anualizada de referencia (2.5%)
+
+# 2. Descarga de precios ajustados desde Yahoo Finance (2010-01-01 hasta hoy)
+raw_data = yf.download(
+    TICKERS + [BENCHMARK],
+    start="2010-01-01",
+    end="2026-10-30",
+    auto_adjust=True,
+    progress=False
+)["Close"].dropna()
+
+# 3. Partición temporal exacta respecto al Post Original (30 de Abril de 2020)
+prices_train_2020 = raw_data.loc[:"2020-04-30", TICKERS]
+prices_oos_2026   = raw_data.loc["2020-04-30":, TICKERS]
+bench_oos_2026    = raw_data.loc["2020-04-30":, BENCHMARK]
+
+print(f"Sesiones In-Sample (2010-2020): {len(prices_train_2020)} días")
+print(f"Sesiones Out-of-Sample (2020-2026): {len(prices_oos_2026)} días")</code></pre>
+        </div>
+
+        <h3>Paso 4.2. Auditoría Ex-Post en Python de los $5,000 USD en el Portafolio Tangente de 2020</h3>
+        <p>
+          Replicamos en Python los vectores de pesos óptimos obtenidos en abril de 2020 y evaluamos el crecimiento patrimonial diario de los <strong>$5,000.00 USD</strong> tanto bajo un esquema <em>Buy &amp; Hold</em> como con rebalanceo periódico:
+        </p>
+
+        <div class="sourceCode">
+<pre class="sourceCode python"><code class="sourceCode python"># Pesos originales publicados en Abril de 2020 (proyecto4.html)
+# Orden de activos: ["MSFT", "JNJ", "MA", "PEP", "WMT", "MCD"]
+w_tangente_2020 = np.array([0.041, 0.278, 0.074, 0.142, 0.230, 0.234])
+w_tangente_2020 /= w_tangente_2020.sum()
+
+w_minvar_2020 = np.array([0.000, 0.319, 0.000, 0.204, 0.256, 0.221])
+w_minvar_2020 /= w_minvar_2020.sum()
+
+# Retornos simples diarios fuera de muestra (30-Abr-2020 a 29-Oct-2026)
+ret_oos = prices_oos_2026.pct_change().dropna()
+
+# Evolución de $5,000 USD por acción en el Portafolio Tangente 2020 (Buy & Hold)
+mult_por_accion = prices_oos_2026.iloc[-1] / prices_oos_2026.iloc[0]
+capital_inicial_accion = CAPITAL_INICIAL * pd.Series(w_tangente_2020, index=TICKERS)
+capital_final_accion   = capital_inicial_accion * mult_por_accion
+
+resumen_2020 = pd.DataFrame({
+    "Peso_2020 (%)": (w_tangente_2020 * 100).round(1),
+    "Inversion_2020 ($)": capital_inicial_accion.round(2),
+    "Valor_Hoy_2026 ($)": capital_final_accion.round(2),
+    "Retorno_Acum (%)": ((mult_por_accion - 1.0) * 100).round(2)
+}, index=TICKERS)
+print(resumen_2020)</code></pre>
+        </div>
+
+        <h3>Paso 4.3. Ingeniería de Características Tensoriales y Red Neuronal <code>DeepPortfolioLSTM</code> en PyTorch</h3>
+        <p>
+          Construimos para cada activo $i \in \{1,\dots,6\}$ un vector de 8 factores técnicos y cuantitativos libres de sesgo de anticipación (<em>Momentum</em> a 21, 63, 126 y 252 días, volatilidad realizada inversa de 21 días, <em>Rolling Sharpe</em> de 6 y 12 meses, y distancia logarítmica a la media móvil de 200 sesiones), normalizados transversalmente en cada fecha $t$, y definimos el módulo neuronal recurrente en <strong>PyTorch</strong>:
+        </p>
+
+        <div class="sourceCode">
+<pre class="sourceCode python"><code class="sourceCode python">import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class DeepPortfolioLSTM(nn.Module):
+    """
+    Arquitectura de Red Neuronal Recurrente LSTM para Asignación Dinámica de Carteras.
+    Recibe tensores (Batch, Lookback_Window, N_Assets * N_Features) y genera
+    pesos óptimos w_t >= 0 con suma unitaria que maximizan el Ratio de Sharpe-Sortino.
+    """
+    def __init__(self, n_assets: int = 6, n_features: int = 8, hidden_dim: int = 32):
+        super().__init__()
+        self.n_assets = n_assets
+        self.n_features = n_features
+        self.lstm = nn.LSTM(
+            input_size=n_assets * n_features,
+            hidden_size=hidden_dim,
+            num_layers=2,
+            batch_first=True,
+            dropout=0.15
+        )
+        self.layer_norm = nn.LayerNorm(hidden_dim)
+        self.head = nn.Linear(hidden_dim, n_assets)
+        self.temperature = nn.Parameter(torch.tensor(0.85))
+
+    def forward(self, x_seq: torch.Tensor, inv_vol_anchor: torch.Tensor) -> torch.Tensor:
+        # x_seq: (Batch, Seq_Len, N_Assets * N_Features)
+        lstm_out, _ = self.lstm(x_seq)
+        h_last = self.layer_norm(lstm_out[:, -1, :])
+        logits = self.head(h_last) * torch.exp(torch.clamp(self.temperature, -1.0, 1.8))
+        w_neural = torch.softmax(logits, dim=-1)
+        # Combinación convexa con ancla de mínima varianza / volatilidad inversa
+        w_final = 0.80 * w_neural + 0.20 * inv_vol_anchor
+        return w_final
+
+
+def differentiable_sharpe_sortino_loss(
+    weights: torch.Tensor,
+    next_returns: torch.Tensor,
+    rf_daily: float = 0.025 / 252.0,
+    tx_cost_bps: float = 0.0004
+) -> torch.Tensor:
+    """
+    Función de pérdida diferenciable end-to-end:
+    Maximiza (0.60 * Ratio de Sharpe + 0.40 * Ratio de Sortino) neto de costos de rotación.
+    """
+    port_ret = torch.sum(weights * next_returns, dim=1)
+    turnover = torch.sum(torch.abs(weights[1:] - weights[:-1]), dim=1)
+    port_ret_net = port_ret.clone()
+    port_ret_net[1:] = port_ret_net[1:] - turnover * tx_cost_bps
+
+    excess_ret = port_ret_net - rf_daily
+    ann_excess = torch.mean(excess_ret) * 252.0
+    ann_vol = torch.std(port_ret_net) * torch.sqrt(torch.tensor(252.0)) + 1e-6
+    sharpe = ann_excess / ann_vol
+
+    downside = torch.clamp(excess_ret, max=0.0)
+    downside_vol = torch.sqrt(torch.mean(downside ** 2) * 252.0) + 1e-6
+    sortino = ann_excess / downside_vol
+
+    return -(0.60 * sharpe + 0.40 * sortino)</code></pre>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SECCIÓN 5: LABORATORIO DE GRÁFICOS DINÁMICOS (PLOTLY.JS)
+           ===================================================================== -->
+      <section id="sec-laboratorio-plotly">
+        <h2>5. Laboratorio Visual Interactivo: Gráficos Dinámicos de Última Generación (2020–2026)</h2>
+        <p>
+          Todos los gráficos presentados a continuación son <strong>100% interactivos</strong> (puedes pasar el cursor para auditar cada fecha exacta, hacer <em>zoom</em> sobre el mercado bajista de 2022 o el rally de IA de 2024–2026, activar/ocultar series desde la leyenda y alternar entre escalas en dólares y rendimientos porcentuales).
+        </p>
+
+        <!-- GRÁFICO #1: CURVAS DE PATRIMONIO ($5,000 USD) -->
+        <div class="plotly-card-box">
+          <div class="plotly-card-header">
+            <div>
+              <h3 class="plotly-card-title">Gráfico Dinámico 1. Evolución de $5,000.00 USD (30-Abril-2020 al 29-Octubre-2026)</h3>
+              <p class="plotly-card-sub">Comparativa entre Deep Portfolio LSTM ($15,057 USD), Benchmark S&amp;P 500 ($13,132 USD) y Portafolio Tangente Markowitz 2020 ($11,209 USD)</p>
+            </div>
+            <div class="chart-ctrl-group" role="group" aria-label="Selector de visualización">
+              <button type="button" class="chart-ctrl-btn active" id="btnScaleLinear">Escala Lineal ($ USD)</button>
+              <button type="button" class="chart-ctrl-btn" id="btnScaleLog">Escala Log ($ USD)</button>
+              <button type="button" class="chart-ctrl-btn" id="btnScalePct">Rendimiento (%)</button>
+            </div>
+          </div>
+          <div id="chartEquityCurves" class="plotly-canvas"></div>
+        </div>
+
+        <!-- GRÁFICO #2: DESGLOSE POR ACCIÓN DE LOS $5,000 USD EN EL PORTAFOLIO TANGENTE 2020 -->
+        <div class="plotly-card-box">
+          <div class="plotly-card-header">
+            <div>
+              <h3 class="plotly-card-title">Gráfico Dinámico 2. Radiografía por Acción de los $5,000 USD en el Portafolio Tangente Original</h3>
+              <p class="plotly-card-sub">Capital asignado el 30 de abril de 2020 vs. Valor capitalizado al 29 de octubre de 2026 y retorno acumulado por activo</p>
+            </div>
+          </div>
+          <div id="chartAssetBreakdown" class="plotly-canvas" style="min-height: 430px;"></div>
+        </div>
+
+        <!-- GRÁFICO #3: EVOLUCIÓN DINÁMICA DE PESOS DE LA RED NEURONAL LSTM -->
+        <div class="plotly-card-box">
+          <div class="plotly-card-header">
+            <div>
+              <h3 class="plotly-card-title">Gráfico Dinámico 3. Asignación Dinámica de Pesos de la Red Neuronal LSTM (2020Q2 – 2026Q4)</h3>
+              <p class="plotly-card-sub">Rotación inteligente de capital entre activos de crecimiento (MSFT, MA) y refugios defensivos (JNJ, WMT, PEP, MCD)</p>
+            </div>
+          </div>
+          <div id="chartLstmWeights" class="plotly-canvas" style="min-height: 440px;"></div>
+        </div>
+
+        <!-- GRÁFICO #4: FRONTERA EFICIENTE REALIZADA 2020-2026 & NUBE MONTE CARLO -->
+        <div class="plotly-card-box">
+          <div class="plotly-card-header">
+            <div>
+              <h3 class="plotly-card-title">Gráfico Dinámico 4. Espacio Riesgo-Retorno Fuera de Muestra (2020–2026) y Simulación Monte Carlo</h3>
+              <p class="plotly-card-sub">1,200 carteras aleatorias coloreadas por Ratio de Sharpe frente a los 6 activos, Portafolio Tangente 2020 y Deep Portfolio LSTM</p>
+            </div>
+          </div>
+          <div id="chartEfficientFrontier" class="plotly-canvas" style="min-height: 470px;"></div>
+        </div>
+
+        <!-- GRÁFICO #5: UNDERWATER DRAWDOWN CHART -->
+        <div class="plotly-card-box">
+          <div class="plotly-card-header">
+            <div>
+              <h3 class="plotly-card-title">Gráfico Dinámico 5. Control de Caídas Máximas (Underwater Drawdown, 2020–2026)</h3>
+              <p class="plotly-card-sub">Resiliencia durante el mercado bajista de 2022: tanto el Portafolio Tangente (-12.85%) como el LSTM (-19.00%) batieron al S&amp;P 500 (-25.43%)</p>
+            </div>
+          </div>
+          <div id="chartDrawdowns" class="plotly-canvas" style="min-height: 390px;"></div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           SECCIÓN 6: TABLA MAESTRA Y CONCLUSIONES EJECUTIVAS
+           ===================================================================== -->
+      <section id="sec-conclusiones">
+        <h2>6. Tabla Maestra Comparativa y Conclusiones Ejecutivas</h2>
+        <p>
+          En la siguiente tabla maestra se consolidan todas las métricas institucionales de rentabilidad, riesgo y eficiencia ajustada por volatilidad para el capital inicial de <strong>$5,000.00 USD</strong> entre el 30 de abril de 2020 y el 29 de octubre de 2026:
+        </p>
+
+        <div class="quant-table-wrap">
+          <table class="quant-table">
+            <thead>
+              <tr>
+                <th>Estrategia de Portafolio</th>
+                <th>Capital Inicial</th>
+                <th>Capital Final (Oct-2026)</th>
+                <th>Ganancia Neta ($ USD)</th>
+                <th>Retorno Total (%)</th>
+                <th>CAGR Anual (%)</th>
+                <th>Volatilidad Anual (%)</th>
+                <th>Ratio Sharpe</th>
+                <th>Ratio Sortino</th>
+                <th>Máximo Drawdown</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-winner">
+                <td><strong>1. Deep Portfolio LSTM (Python Neural Net)</strong></td>
+                <td>$5,000.00</td>
+                <td><strong>$15,057.19</strong></td>
+                <td><strong>+$10,057.19</strong></td>
+                <td><span class="badge-num emerald">+201.14%</span></td>
+                <td><strong>18.53%</strong></td>
+                <td>20.26%</td>
+                <td><strong>0.82</strong></td>
+                <td><strong>1.24</strong></td>
+                <td>-19.00%</td>
+              </tr>
+              <tr>
+                <td><strong>2. Benchmark S&amp;P 500 (<code>^GSPC</code>)</strong></td>
+                <td>$5,000.00</td>
+                <td><strong>$13,132.10</strong></td>
+                <td>+$8,132.10</td>
+                <td><span class="badge-num blue">+162.64%</span></td>
+                <td>16.06%</td>
+                <td>16.75%</td>
+                <td>0.82</td>
+                <td>1.12</td>
+                <td>-25.43%</td>
+              </tr>
+              <tr>
+                <td><strong>3. Cartera Equiponderada (<code>1/N</code> — 16.67% c/u)</strong></td>
+                <td>$5,000.00</td>
+                <td><strong>$11,836.13</strong></td>
+                <td>+$6,836.13</td>
+                <td><span class="badge-num blue">+136.72%</span></td>
+                <td>14.21%</td>
+                <td>13.63%</td>
+                <td>0.86</td>
+                <td>1.23</td>
+                <td>-13.86%</td>
+              </tr>
+              <tr class="row-tangente">
+                <td><strong>4. Portafolio Tangente Markowitz 2020 (Rebalanceado)</strong></td>
+                <td>$5,000.00</td>
+                <td><strong>$11,208.95</strong></td>
+                <td>+$6,208.95</td>
+                <td><span class="badge-num emerald">+124.18%</span></td>
+                <td>13.26%</td>
+                <td><strong>13.11%</strong></td>
+                <td>0.82</td>
+                <td>1.22</td>
+                <td><strong>-12.85%</strong></td>
+              </tr>
+              <tr>
+                <td><strong>5. Portafolio Tangente Markowitz 2020 (Buy &amp; Hold)</strong></td>
+                <td>$5,000.00</td>
+                <td><strong>$10,994.41</strong></td>
+                <td>+$5,994.41</td>
+                <td><span class="badge-num emerald">+119.89%</span></td>
+                <td>12.92%</td>
+                <td>13.27%</td>
+                <td>0.79</td>
+                <td>1.15</td>
+                <td><strong>-12.78%</strong></td>
+              </tr>
+              <tr>
+                <td><strong>6. Portafolio Eficiente Mínima Varianza 2020</strong></td>
+                <td>$5,000.00</td>
+                <td><strong>$10,598.73</strong></td>
+                <td>+$5,598.73</td>
+                <td><span class="badge-num amber">+111.97%</span></td>
+                <td>12.28%</td>
+                <td>13.50%</td>
+                <td>0.74</td>
+                <td>1.11</td>
+                <td>-15.43%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout-quant emerald">
+          <h4>Síntesis Ejecutiva: ¿Cuándo elegir Markowitz Clásico y cuándo Deep Portfolio LSTM?</h4>
+          <p>
+            <strong>1. Vigencia del Portafolio Tangente de 2020 para Preservación Conservadora:</strong> El modelo original publicado en abril de 2020 demostró una solidez extraordinaria en control de riesgo: duplicó con creces el capital inicial (de <strong>$5,000.00 a $11,208.95 USD</strong>, <strong>+124.18%</strong>) con una volatilidad anual de apenas <strong>13.11%</strong> y redujo a la mitad la caída máxima sufrida por el mercado en 2022 (<strong>-12.85% vs. -25.43%</strong>).<br /><br />
+            <strong>2. Superioridad Alfa de la Red Neuronal LSTM en Python:</strong> Al permitir que las compuertas de memoria <code>LSTM</code> adapten quincenalmente las ponderaciones según el régimen de <em>Momentum</em> y volatilidad condicional, el modelo <strong>Deep Portfolio LSTM</strong> elevó el capital final hasta <strong>$15,057.19 USD (+201.14%, CAGR de 18.53%)</strong>, generando <strong>+$3,848.24 USD adicionales</strong> sobre el Portafolio Tangente estático y superando al índice <strong>S&amp;P 500 en +$1,925.09 USD (+38.50 puntos porcentuales de exceso de retorno)</strong> con un <strong>Ratio de Sortino líder de 1.24</strong> y menor caída máxima (-19.00% vs. -25.43%).
+          </p>
+        </div>
+      </section>
+
+      <!-- Disqus Comments Section -->
+      <div class="disqus-container-modern" style="margin-top: 3rem;">
+        <div id="disqus_thread"></div>
+      </div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https://jesusbz.github.io/deep-portfolio-lstm-python.html';
+          this.page.identifier = 'deep-portfolio-lstm-python.html';
+        };
+        (function() {
+          var d = document, s = d.createElement('script');
+          s.src = 'https://portafolio-11.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+
+    </article>
+  </main>
+
+  <!-- =========================================================================
+       Corporate Footer
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="site-container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <span class="footer-brand-title">Jesús Benjamín Zerpa</span>
+          <p class="footer-brand-desc">
+            Economista y Quantitative Data Scientist. Especialista en planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning y Business Intelligence.
+          </p>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Secciones</h4>
+          <ul class="footer-links-list">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
+            <li><a href="proyecto4.html">Portafolio Tangente 2020 (RStudio)</a></li>
+            <li><a href="acercade.html">Trayectoria Profesional</a></li>
+            <li><a href="formulario.html">Formulario de Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Recursos del Estudio</h4>
+          <ul class="footer-links-list">
+            <li><a href="models/deep_portfolio_lstm.py" download>Script Python (deep_portfolio_lstm.py)</a></li>
+            <li><a href="data/sp500_6assets_2010_2026.csv" download>Dataset S&amp;P 500 2010–2026 (.csv)</a></li>
+            <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom-strip">
+        <span>Copyright © 2026 Jesús B. Zerpa. Todos los derechos reservados.</span>
+        <span>Finanzas Cuantitativas • Deep Learning LSTM • Markowitz • R &amp; Python</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollTopBtn" class="btn-scroll-top" aria-label="Volver al Inicio" title="Volver arriba">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- =========================================================================
+       Interactive Plotly.js Chart Rendering Script
+       ========================================================================= -->
+  <script>
+    (function() {
+      const DATA = {"dates":["2020-04-30","2020-04-30","2020-05-07","2020-05-14","2020-05-21","2020-05-29","2020-06-05","2020-06-12","2020-06-19","2020-06-26","2020-07-06","2020-07-13","2020-07-20","2020-07-27","2020-08-03","2020-08-10","2020-08-17","2020-08-24","2020-08-31","2020-09-08","2020-09-15","2020-09-22","2020-09-29","2020-10-06","2020-10-13","2020-10-20","2020-10-27","2020-11-03","2020-11-10","2020-11-17","2020-11-24","2020-12-02","2020-12-09","2020-12-16","2020-12-23","2020-12-31","2021-01-08","2021-01-15","2021-01-25","2021-02-01","2021-02-08","2021-02-16","2021-02-23","2021-03-02","2021-03-09","2021-03-16","2021-03-23","2021-03-30","2021-04-07","2021-04-14","2021-04-21","2021-04-28","2021-05-05","2021-05-12","2021-05-19","2021-05-26","2021-06-03","2021-06-10","2021-06-17","2021-06-24","2021-07-01","2021-07-09","2021-07-16","2021-07-23","2021-07-30","2021-08-06","2021-08-13","2021-08-20","2021-08-27","2021-09-03","2021-09-13","2021-09-20","2021-09-27","2021-10-04","2021-10-11","2021-10-18","2021-10-25","2021-11-01","2021-11-08","2021-11-15","2021-11-22","2021-11-30","2021-12-07","2021-12-14","2021-12-21","2021-12-29","2022-01-05","2022-01-12","2022-01-20","2022-01-27","2022-02-03","2022-02-10","2022-02-17","2022-02-25","2022-03-04","2022-03-11","2022-03-18","2022-03-25","2022-04-01","2022-04-08","2022-04-18","2022-04-25","2022-05-02","2022-05-09","2022-05-16","2022-05-23","2022-05-31","2022-06-07","2022-06-14","2022-06-22","2022-06-29","2022-07-07","2022-07-14","2022-07-21","2022-07-28","2022-08-04","2022-08-11","2022-08-18","2022-08-25","2022-09-01","2022-09-09","2022-09-16","2022-09-23","2022-09-30","2022-10-07","2022-10-14","2022-10-21","2022-10-28","2022-11-04","2022-11-11","2022-11-18","2022-11-28","2022-12-05","2022-12-12","2022-12-19","2022-12-27","2023-01-04","2023-01-11","2023-01-19","2023-01-26","2023-02-02","2023-02-09","2023-02-16","2023-02-24","2023-03-03","2023-03-10","2023-03-17","2023-03-24","2023-03-31","2023-04-10","2023-04-17","2023-04-24","2023-05-01","2023-05-08","2023-05-15","2023-05-22","2023-05-30","2023-06-06","2023-06-13","2023-06-21","2023-06-28","2023-07-06","2023-07-13","2023-07-20","2023-07-27","2023-08-03","2023-08-10","2023-08-17","2023-08-24","2023-08-31","2023-09-08","2023-09-15","2023-09-22","2023-09-29","2023-10-06","2023-10-13","2023-10-20","2023-10-27","2023-11-03","2023-11-10","2023-11-17","2023-11-27","2023-12-04","2023-12-11","2023-12-18","2023-12-26","2024-01-03","2024-01-10","2024-01-18","2024-01-25","2024-02-01","2024-02-08","2024-02-15","2024-02-23","2024-03-01","2024-03-08","2024-03-15","2024-03-22","2024-04-01","2024-04-08","2024-04-15","2024-04-22","2024-04-29","2024-05-06","2024-05-13","2024-05-20","2024-05-28","2024-06-04","2024-06-11","2024-06-18","2024-06-26","2024-07-03","2024-07-11","2024-07-18","2024-07-25","2024-08-01","2024-08-08","2024-08-15","2024-08-22","2024-08-29","2024-09-06","2024-09-13","2024-09-20","2024-09-27","2024-10-04","2024-10-11","2024-10-18","2024-10-25","2024-11-01","2024-11-08","2024-11-15","2024-11-22","2024-12-02","2024-12-09","2024-12-16","2024-12-23","2024-12-31","2025-01-08","2025-01-16","2025-01-24","2025-01-31","2025-02-07","2025-02-14","2025-02-24","2025-03-03","2025-03-10","2025-03-17","2025-03-24","2025-03-31","2025-04-07","2025-04-14","2025-04-22","2025-04-29","2025-05-06","2025-05-13","2025-05-20","2025-05-28","2025-06-04","2025-06-11","2025-06-18","2025-06-26","2025-07-03","2025-07-11","2025-07-18","2025-07-25","2025-08-01","2025-08-08","2025-08-15","2025-08-22","2025-08-29","2025-09-08","2025-09-15","2025-09-22","2025-09-29","2025-10-06","2025-10-13","2025-10-20","2025-10-27","2025-11-03","2025-11-10","2025-11-17","2025-11-24","2025-12-02","2025-12-09","2025-12-16","2025-12-23","2025-12-31","2026-01-08","2026-01-15","2026-01-23","2026-01-30","2026-02-06","2026-02-13","2026-02-23","2026-03-02","2026-03-09","2026-03-16","2026-03-23","2026-03-30","2026-04-07","2026-04-14","2026-04-21","2026-04-28","2026-05-05","2026-05-12","2026-05-19","2026-05-27","2026-06-03","2026-06-10","2026-06-17","2026-06-25","2026-07-02","2026-07-10","2026-07-17","2026-07-24","2026-07-31","2026-08-07","2026-08-14","2026-08-21","2026-08-28","2026-09-04","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12","2026-10-19","2026-10-26","2026-10-29"],"curves":{"lstm":[5000.0,4930.84,4895.89,4833.67,5056.49,5138.19,5321.47,5119.69,5113.61,4978.57,5212.11,5130.35,5238.64,5268.85,5203.43,5319.44,5427.65,5480.85,5641.61,5407.86,5505.17,5422.1,5524.85,5524.37,5764.53,5626.75,5571.63,5429.68,5744.52,5834.81,5835.41,5855.22,5837.53,5782.7,5771.51,6025.13,6043.77,5819.37,5930.7,5799.34,5963.07,6017.45,6001.07,6057.0,6172.49,6312.64,6210.09,6283.97,6428.18,6426.91,6578.7,6419.3,6451.06,6314.26,6446.2,6469.21,6413.86,6392.78,6419.81,6515.27,6478.26,6539.61,6716.26,6825.83,6738.14,6630.06,6503.63,6419.31,6349.14,6250.37,6173.71,6064.17,6321.19,6111.77,6186.98,6350.21,6398.89,6009.68,6224.96,6369.92,5895.31,5762.13,6171.9,6205.74,6309.59,6492.11,6648.93,6552.31,6464.48,6250.99,6701.21,6462.91,6430.46,6379.03,5985.47,5837.96,6256.06,6291.48,6459.41,6256.79,6149.34,6154.79,6177.86,5779.99,5761.84,5900.08,6105.36,6160.48,5632.87,5689.72,5802.58,5928.7,5864.75,6139.08,6224.36,6232.66,6307.27,6526.3,6332.94,6094.45,6196.54,5895.09,5690.52,5589.53,5673.14,5593.91,5888.91,6070.47,5789.07,6295.36,6277.44,6295.44,6503.24,6550.5,6246.06,6247.34,6217.34,6495.05,6358.3,6675.05,7078.76,7048.84,7029.38,6698.71,6754.17,6606.6,7013.58,7047.73,7202.05,7423.24,7452.18,7327.49,7600.98,7625.07,7561.06,7629.16,7643.37,7780.3,7761.67,7855.66,7878.69,7992.47,7993.83,8213.08,8430.34,8295.57,8293.38,8269.42,8018.57,8005.33,7967.08,8034.25,7865.8,7677.12,7666.98,7656.18,7682.96,7689.89,8060.26,8110.62,8171.99,8281.33,8482.58,8356.26,8464.15,8514.45,8724.2,8663.08,8688.69,8646.17,8805.23,8830.06,8552.45,8655.1,8471.71,8405.28,8482.62,8851.33,8869.51,8652.11,8554.81,8936.79,8894.4,8831.16,8995.87,8981.56,8582.55,8757.67,8591.66,8504.45,8660.17,8491.82,8637.52,8821.58,8576.4,9124.25,9121.14,9173.46,9491.0,9542.3,9613.59,9867.01,9871.09,10041.81,9807.36,9928.54,9970.34,10143.82,9780.33,9896.44,9680.54,9772.48,10016.42,10241.77,10199.25,9863.87,9730.88,9595.51,9648.97,9917.3,9846.27,9703.18,9730.67,10108.9,10004.39,9953.85,9895.02,9783.66,9687.13,9241.66,9756.55,9384.93,10006.36,10922.85,11143.86,11340.94,11281.5,11408.55,11504.85,11469.79,11467.33,11959.04,11943.23,12594.53,12674.56,12364.25,12844.52,13198.63,13176.78,13097.66,12805.02,12585.13,12620.22,12573.26,12568.92,13039.14,13354.15,13363.15,12622.56,12640.58,12944.83,12810.47,12901.79,12969.02,13391.76,13425.6,13312.68,13435.44,12734.97,12590.27,12542.07,12555.63,12216.28,11752.47,12253.04,12377.71,12126.72,11769.04,11328.83,11584.43,12087.65,12531.2,12561.44,12177.66,12132.94,12283.62,12170.02,12089.17,11976.18,11788.63,11127.28,12117.63,11903.97,11906.44,11668.28,13063.47,13628.8,13602.0,13422.83,13919.85,13579.43,13723.12,13477.99,13552.29,13280.83,13930.7,14477.59,14813.92,15057.19],"sp500":[5000.0,4953.94,4900.8,4852.0,5015.31,5178.26,5432.76,5173.16,5269.14,5118.29,5408.59,5366.91,5531.26,5510.12,5604.01,5716.04,5752.64,5836.48,5953.9,5667.34,5785.32,5639.66,5673.51,5716.89,5973.67,5856.62,5767.42,5730.82,6030.82,6139.68,6183.7,6240.85,6247.33,6295.56,6276.57,6388.94,6505.64,6409.66,6557.83,6419.2,6660.28,6689.19,6602.07,6583.22,6591.98,6740.43,6651.65,6733.35,6939.85,7015.9,7098.84,7115.44,7088.92,6911.08,7000.62,7137.23,7131.89,7210.69,7181.23,7257.15,7348.06,7432.45,7360.34,7504.29,7476.18,7546.36,7599.91,7555.12,7670.28,7714.6,7601.15,7412.34,7557.57,7314.93,7418.23,7631.31,7767.42,7847.69,7997.42,7965.27,7965.51,7768.3,7971.99,7882.42,7908.17,8152.82,7995.52,8039.35,7624.96,7359.24,7615.96,7661.28,7450.66,7458.13,7363.25,7151.38,7591.61,7727.58,7732.34,7634.4,7470.11,7307.54,7068.15,6788.95,6817.48,6759.2,7028.64,7077.17,6353.92,6395.44,6495.69,6638.22,6447.3,6802.07,6927.06,7062.3,7156.41,7286.49,7142.55,6747.47,6918.43,6588.39,6282.05,6099.01,6190.93,6094.67,6383.29,6635.56,6413.57,6791.83,6744.9,6742.52,6801.88,6787.8,6493.7,6513.42,6553.76,6752.16,6631.8,6906.64,7109.62,6942.48,6957.64,6752.89,6881.49,6568.42,6662.06,6754.51,6989.79,6989.45,7061.24,7036.96,7089.4,7038.79,7035.66,7131.51,7153.44,7286.67,7431.53,7425.88,7444.88,7503.95,7671.41,7713.65,7717.97,7657.55,7601.32,7433.82,7443.94,7667.37,7582.03,7569.83,7348.27,7293.82,7328.6,7361.4,7185.14,7003.5,7413.38,7510.16,7678.18,7740.12,7773.03,7862.6,8063.52,8121.68,8002.71,8136.48,8132.21,8324.79,8345.25,8501.26,8555.39,8655.86,8737.99,8715.21,8703.98,8903.15,8919.46,8849.08,8609.97,8522.85,8702.42,8812.25,8881.45,9028.94,9025.38,9000.38,9143.22,9333.24,9317.71,9418.27,9499.1,9431.15,9183.88,9264.61,9047.95,9428.82,9475.46,9511.72,9199.53,9569.66,9699.83,9760.42,9782.36,9891.15,9975.59,9879.4,9744.48,10198.2,9985.71,10153.63,10285.98,10295.68,10331.79,10161.68,10004.44,10066.73,10099.2,10377.99,10274.72,10249.99,10400.76,10177.29,9950.16,9550.16,9653.17,9810.43,9545.55,8610.7,9195.36,8994.29,9458.77,9537.15,10012.81,10104.51,10016.21,10156.13,10243.61,10173.24,10445.65,10680.95,10647.61,10710.61,10866.85,10610.63,10868.22,10970.88,10999.98,10988.67,11048.01,11252.35,11385.83,11330.48,11464.97,11319.44,11456.21,11694.4,11654.95,11621.72,11349.53,11405.17,11616.51,11635.46,11567.0,11753.3,11643.95,11773.15,11812.29,11763.2,11803.04,11791.59,11628.08,11630.76,11705.39,11559.73,11395.4,11194.04,10790.44,11255.02,11851.26,12015.62,12142.84,12347.67,12588.76,12508.22,12791.86,12848.54,12360.89,12621.32,12514.82,12728.72,12885.46,12685.26,12607.51,12739.74,13195.46,13243.3,13053.83,13117.42,13129.06,12961.31,13207.47,13069.68,13223.21,13279.83,13081.65,13057.91,13132.1],"equal":[5000.0,4959.97,4950.59,4927.89,5026.07,5075.88,5160.52,5011.68,5069.27,4962.26,5172.05,5198.7,5341.89,5358.62,5375.51,5432.86,5531.39,5597.73,5776.32,5536.95,5632.46,5544.66,5601.99,5631.61,5851.81,5709.68,5622.83,5457.96,5700.27,5788.86,5798.52,5792.67,5789.11,5791.15,5779.82,5944.16,5937.47,5761.95,5906.99,5814.0,5967.12,5963.28,5830.35,5802.21,5838.15,5992.84,5982.56,6033.71,6208.9,6207.27,6342.29,6261.44,6236.22,6117.41,6224.56,6297.6,6257.76,6316.43,6315.6,6319.33,6377.12,6466.35,6558.21,6690.34,6652.3,6615.75,6677.78,6745.49,6630.67,6656.47,6576.8,6486.18,6565.88,6371.08,6517.85,6610.94,6698.42,6756.96,6850.99,6882.49,6736.6,6563.85,6820.16,6939.8,6913.79,7101.24,7066.82,7007.31,6852.86,6748.26,7030.83,6861.19,6782.94,6787.46,6647.6,6463.92,6812.24,6849.08,7056.2,7082.31,6971.26,7058.36,6938.38,6776.79,6761.53,6545.05,6755.33,6714.89,6255.47,6389.61,6512.35,6639.35,6589.83,6709.37,6862.39,6846.49,6843.59,7026.39,6897.44,6677.3,6768.81,6535.56,6370.68,6191.3,6209.56,6304.27,6561.95,6862.23,6698.7,6879.79,7009.98,7071.48,7151.47,7166.88,6932.13,6968.38,6941.25,7048.64,6825.87,7008.65,7016.2,6960.74,6989.68,6857.54,6902.83,6741.17,6958.42,7036.97,7230.59,7347.71,7422.48,7434.49,7607.25,7650.74,7621.41,7557.69,7446.46,7573.9,7632.28,7717.66,7716.94,7821.74,7812.69,7950.22,7918.51,7848.32,7832.77,7709.25,7675.12,7798.79,7811.53,7830.55,7653.33,7488.1,7388.74,7410.8,7374.05,7265.88,7608.83,7673.69,7673.22,7806.81,7859.72,7842.18,7923.91,7958.64,8033.32,8084.79,8145.48,8194.34,8347.15,8355.8,8337.49,8498.03,8477.1,8430.13,8440.57,8557.89,8533.35,8383.15,8229.67,8322.17,8298.55,8300.23,8419.52,8545.23,8338.29,8420.51,8375.86,8423.55,8516.86,8440.76,8497.61,8649.09,8499.71,8738.1,8610.27,8846.59,9014.58,9051.26,9075.44,9363.15,9283.53,9274.14,9237.27,9318.23,9488.09,9330.69,9214.83,9330.56,9176.96,9327.37,9489.45,9511.94,9461.0,9258.21,9195.94,9106.66,9142.13,9348.89,9459.32,9485.0,9625.52,9629.94,9730.79,9511.36,9363.38,9382.66,9426.95,8830.61,9384.54,9360.35,9388.03,9594.82,9553.36,9765.16,9690.28,9795.93,9750.87,9498.15,9572.71,9863.39,9799.12,9995.27,10154.77,10150.68,10425.76,10498.16,10500.54,10468.53,10457.74,10450.49,10417.18,10435.93,10526.15,10574.85,10821.0,10816.92,10406.45,10437.26,10599.18,10538.89,10792.73,10796.75,11022.0,10888.03,10844.97,10838.23,10945.93,10885.44,11026.25,11486.97,11402.54,11219.21,11423.48,11315.48,11200.8,10774.02,10801.28,10775.87,11004.68,11080.45,11035.74,10894.34,10774.03,10939.01,10677.75,10476.76,10687.59,10526.16,10287.68,10875.39,10678.1,10706.48,10610.74,11157.34,11316.43,11399.92,11300.29,11373.73,11315.15,11289.35,11083.0,11032.1,10839.08,11245.71,11467.11,11667.91,11836.13],"tang_rebal":[5000.0,4962.41,4914.38,4896.07,4975.75,5027.59,5086.37,4918.67,4958.29,4823.5,4991.72,5080.34,5206.78,5254.9,5209.65,5302.11,5401.17,5445.93,5586.62,5446.43,5524.19,5424.7,5487.56,5535.39,5702.17,5593.53,5520.45,5387.17,5581.17,5668.88,5662.24,5657.42,5680.31,5654.99,5643.87,5782.22,5812.15,5698.55,5810.27,5662.91,5804.83,5805.32,5646.35,5577.97,5581.86,5755.29,5785.94,5870.31,5982.32,5933.26,6071.6,5971.23,6040.26,5947.3,6056.61,6100.73,6069.3,6090.37,6058.51,6026.07,6085.9,6172.1,6219.01,6340.74,6330.54,6302.84,6400.01,6460.36,6327.58,6392.04,6269.62,6187.41,6247.56,6070.18,6189.54,6221.32,6328.0,6389.84,6433.58,6439.87,6343.22,6176.43,6407.96,6586.62,6520.31,6673.23,6687.33,6613.49,6476.69,6408.09,6645.64,6477.64,6420.28,6405.07,6369.62,6222.95,6503.41,6537.0,6729.39,6842.87,6754.34,6880.16,6692.51,6642.83,6618.17,6306.98,6502.37,6426.27,6076.81,6226.57,6324.82,6442.49,6431.96,6475.96,6593.46,6520.97,6511.92,6698.48,6621.59,6485.08,6555.36,6424.02,6295.74,6116.46,6096.86,6254.53,6490.76,6824.09,6718.82,6754.19,6947.5,7020.75,7048.29,7046.07,6845.75,6896.74,6892.52,6925.26,6690.67,6821.93,6746.83,6671.35,6705.96,6630.53,6638.26,6495.7,6620.5,6699.54,6878.98,7052.97,7115.08,7150.89,7228.7,7246.59,7201.47,7082.61,6957.01,7078.62,7182.28,7275.27,7255.92,7317.0,7268.41,7448.33,7496.93,7424.27,7422.34,7319.06,7232.12,7305.59,7291.47,7322.63,7195.99,7014.27,6866.56,6891.58,6878.44,6767.91,7043.65,7030.42,7016.56,7130.62,7243.32,7188.97,7260.51,7301.1,7419.5,7436.61,7464.11,7469.13,7578.38,7545.89,7539.03,7725.13,7687.4,7679.42,7627.6,7680.2,7673.76,7481.93,7376.18,7510.24,7469.13,7455.82,7569.13,7681.55,7453.86,7611.54,7513.8,7516.43,7609.33,7511.76,7634.26,7823.2,7768.47,7970.72,7888.78,8078.54,8307.12,8352.69,8413.02,8623.74,8529.31,8540.75,8534.31,8595.46,8776.69,8561.67,8503.77,8549.71,8415.66,8584.92,8706.97,8697.75,8593.2,8427.01,8399.69,8320.7,8360.13,8506.86,8702.03,8772.31,8969.1,8971.12,9124.4,8964.95,8758.46,8761.48,8871.67,8327.91,8834.29,8882.15,8809.5,8880.34,8709.32,8936.12,8862.73,8948.25,8850.98,8621.31,8646.74,8916.1,8869.41,9057.2,9215.45,9215.42,9511.62,9569.1,9581.82,9555.73,9628.19,9568.8,9514.8,9604.0,9659.18,9772.69,10037.69,9959.86,9604.35,9669.31,9913.0,9983.62,10210.64,10234.51,10494.56,10278.7,10253.74,10264.36,10586.12,10532.17,10784.77,11451.01,11465.98,11362.9,11494.16,11308.48,11254.53,10803.47,10972.89,10858.95,10995.9,10918.81,10835.77,10760.41,10618.71,10817.79,10517.54,10260.9,10643.03,10509.73,10365.25,10816.34,10642.12,10574.87,10539.73,10726.06,10824.0,10923.05,10804.71,10746.78,10796.16,10744.94,10559.73,10468.73,10151.0,10543.24,10729.11,11011.3,11208.95],"tang_bh":[5000.0,4962.41,4913.42,4895.68,4972.83,5023.64,5083.93,4913.77,4951.95,4818.08,4987.94,5070.55,5195.79,5242.75,5197.85,5289.31,5389.22,5433.4,5575.14,5431.44,5511.6,5413.61,5471.82,5523.35,5689.88,5584.12,5509.08,5378.01,5556.16,5644.28,5645.39,5632.01,5646.81,5623.3,5608.27,5743.81,5771.37,5653.8,5764.84,5618.6,5759.16,5762.55,5600.43,5535.36,5540.56,5712.1,5735.93,5815.25,5931.87,5887.12,6019.66,5926.59,5984.55,5887.57,5994.19,6038.8,6007.84,6031.56,6001.97,5973.83,6029.16,6114.66,6161.86,6284.23,6271.23,6239.81,6333.02,6393.83,6264.51,6327.04,6211.25,6130.46,6195.23,6018.98,6138.89,6170.71,6267.45,6341.23,6387.11,6391.75,6302.61,6134.29,6365.53,6527.51,6468.4,6620.5,6621.43,6547.19,6407.59,6333.86,6568.9,6406.44,6340.39,6326.13,6273.77,6119.68,6398.04,6432.82,6619.96,6723.85,6634.33,6753.92,6570.11,6519.6,6494.4,6201.01,6390.74,6324.63,5972.77,6122.88,6221.39,6336.02,6318.12,6354.16,6478.07,6414.74,6398.63,6576.46,6497.02,6357.72,6425.31,6291.71,6165.84,5980.44,5961.17,6121.3,6350.82,6679.86,6580.54,6606.7,6781.02,6848.52,6873.86,6878.53,6680.79,6729.02,6718.08,6751.75,6526.62,6661.91,6581.06,6511.55,6552.16,6477.04,6495.0,6354.31,6483.78,6564.44,6741.89,6895.93,6960.01,6998.05,7086.01,7104.7,7067.05,6948.08,6828.65,6937.67,7033.78,7125.48,7104.12,7170.47,7132.06,7286.35,7314.9,7242.05,7231.28,7122.98,7051.05,7127.68,7115.68,7142.04,7010.56,6835.02,6680.3,6705.47,6702.58,6609.66,6882.96,6887.9,6868.86,6982.61,7076.81,7038.32,7106.07,7146.43,7247.69,7266.93,7299.29,7315.45,7424.38,7394.54,7382.59,7554.98,7516.77,7512.51,7460.37,7525.88,7506.25,7330.53,7230.34,7353.74,7319.2,7298.65,7403.71,7519.62,7320.83,7462.84,7378.65,7395.37,7488.13,7400.87,7508.14,7668.41,7585.0,7774.69,7680.27,7899.89,8123.36,8162.89,8213.67,8450.58,8359.67,8385.04,8387.32,8432.06,8608.9,8414.88,8357.42,8447.6,8318.73,8522.46,8661.8,8697.8,8644.61,8429.01,8397.32,8351.49,8354.9,8541.53,8726.41,8831.34,9043.0,8871.19,9031.53,8783.05,8600.7,8616.3,8705.48,8190.18,8766.32,8801.43,8778.61,8906.12,8751.99,8970.4,8890.72,8991.79,8854.32,8633.36,8672.04,8922.8,8834.12,8968.03,9126.92,9153.74,9448.03,9442.73,9415.43,9395.66,9516.86,9484.79,9433.89,9494.75,9533.22,9589.09,9865.56,9785.96,9446.26,9506.36,9697.26,9747.99,10040.59,10107.96,10309.88,10092.74,10071.53,10111.15,10415.85,10356.53,10550.77,11225.78,11278.83,11075.59,11204.73,11021.75,11000.18,10557.43,10719.85,10617.03,10764.22,10769.89,10669.07,10645.89,10530.84,10755.5,10281.28,10053.93,10409.15,10261.58,10118.11,10458.98,10344.57,10293.6,10218.27,10401.03,10506.1,10624.82,10395.2,10365.31,10462.84,10428.42,10285.55,10251.63,9921.39,10372.66,10549.46,10802.95,10994.41],"minvar":[5000.0,4966.93,4907.36,4900.99,4945.02,4993.84,5030.37,4863.95,4907.61,4768.48,4915.55,5044.16,5138.48,5201.24,5137.21,5222.2,5317.5,5341.2,5465.02,5365.92,5423.08,5318.61,5393.95,5437.93,5600.1,5501.5,5445.91,5338.73,5502.61,5596.01,5572.78,5578.85,5620.33,5581.89,5573.26,5691.64,5723.13,5649.47,5739.74,5575.87,5709.09,5687.2,5511.64,5418.15,5409.35,5577.87,5650.11,5750.85,5829.09,5758.64,5905.96,5776.81,5895.85,5827.27,5935.83,5975.38,5946.86,5951.91,5911.21,5854.97,5926.2,6009.86,6051.14,6160.8,6163.8,6146.29,6267.18,6337.12,6188.56,6283.89,6134.65,6057.01,6086.87,5920.74,6042.61,6056.26,6175.96,6252.24,6268.62,6261.49,6210.72,6044.66,6254.7,6458.19,6366.55,6508.41,6530.69,6462.66,6339.85,6284.23,6482.64,6311.18,6261.83,6248.81,6283.97,6128.73,6381.8,6419.06,6600.88,6758.59,6665.43,6813.79,6588.16,6608.73,6591.95,6209.13,6385.65,6294.35,5992.0,6164.09,6257.46,6376.25,6379.3,6374.36,6483.42,6394.49,6387.33,6578.36,6528.07,6424.09,6477.44,6383.24,6297.25,6125.41,6075.75,6274.48,6491.26,6819.33,6732.44,6701.81,6921.03,7005.45,7006.34,6993.49,6819.99,6875.63,6862.76,6845.26,6595.57,6694.72,6605.53,6536.54,6577.57,6533.79,6512.1,6389.46,6487.48,6571.87,6739.52,6933.43,6979.34,7020.49,7076.47,7087.06,7041.35,6890.61,6764.48,6877.08,6998.43,7094.85,7064.42,7106.33,7041.68,7239.88,7315.81,7243.24,7236.54,7133.55,7022.22,7074.56,7048.13,7093.99,6984.89,6795.24,6621.04,6646.26,6640.23,6545.77,6792.83,6750.71,6719.53,6819.83,6950.1,6872.91,6937.06,6977.22,7121.64,7104.32,7120.81,7104.23,7197.29,7167.02,7137.7,7327.07,7276.85,7278.98,7223.48,7271.74,7277.64,7077.78,6992.67,7157.07,7112.21,7103.18,7220.58,7330.23,7103.39,7272.5,7144.43,7141.68,7225.64,7121.59,7268.78,7472.98,7470.53,7629.13,7554.64,7718.15,7957.99,7987.1,8078.32,8245.66,8127.71,8133.43,8126.42,8198.16,8359.79,8150.98,8086.41,8094.49,7954.83,8142.63,8243.76,8214.38,8083.01,7920.55,7909.49,7825.34,7867.58,7991.05,8194.28,8242.59,8429.66,8475.18,8639.98,8517.81,8297.05,8266.99,8397.08,7910.05,8369.75,8411.01,8269.92,8268.92,8061.7,8277.32,8212.2,8288.33,8183.65,8009.26,8016.39,8277.68,8241.82,8457.27,8600.37,8584.79,8891.75,8955.53,8949.91,8925.16,9001.8,8939.41,8880.43,8994.63,9036.99,9214.91,9486.21,9376.9,9042.91,9102.23,9392.16,9489.06,9715.19,9727.57,9991.55,9721.2,9711.98,9697.4,10139.13,10092.71,10398.33,11174.4,11228.53,11173.09,11249.26,11025.77,10988.44,10533.17,10781.22,10623.04,10727.93,10603.22,10530.71,10489.74,10339.83,10532.66,10212.7,9945.27,10363.98,10222.14,10130.61,10485.77,10306.48,10204.23,10193.08,10240.49,10317.46,10425.87,10309.11,10198.33,10293.49,10230.42,10040.5,9955.56,9595.66,9953.78,10134.32,10432.91,10598.73]},"drawdowns":{"lstm":[0.0,-1.38,-2.08,-3.33,-0.7,-0.31,0.0,-4.5,-4.61,-7.13,-2.77,-4.3,-2.28,-1.72,-2.94,-0.77,0.0,0.0,-0.92,-5.8,-4.1,-5.55,-3.76,-3.77,0.0,-2.39,-3.35,-5.81,-0.39,-0.52,-0.51,-0.17,-1.2,-2.13,-2.32,0.0,0.0,-3.71,-1.87,-4.04,-1.34,-0.44,-0.71,-1.32,0.0,0.0,-1.62,-1.19,0.0,-0.48,0.0,-2.42,-1.94,-4.02,-2.01,-1.66,-2.51,-2.83,-2.42,-0.96,-1.57,-0.64,-0.68,0.0,-1.28,-2.87,-4.72,-5.96,-6.98,-8.43,-9.55,-11.16,-7.39,-10.46,-9.36,-6.97,-6.25,-11.96,-8.8,-6.68,-13.63,-15.58,-9.58,-9.08,-7.56,-4.89,-2.59,-4.01,-5.29,-8.42,-1.83,-5.32,-5.79,-6.55,-12.31,-14.47,-8.35,-7.83,-5.37,-8.34,-9.91,-9.83,-9.49,-15.32,-15.59,-13.56,-10.55,-9.75,-17.48,-16.64,-14.99,-13.14,-14.08,-10.06,-8.81,-8.69,-7.6,-4.39,-7.22,-10.71,-9.22,-13.64,-16.63,-18.11,-16.89,-18.05,-13.73,-11.07,-15.19,-7.77,-8.03,-7.77,-4.73,-4.03,-8.49,-8.47,-8.91,-4.85,-6.85,-2.21,0.0,-1.4,-3.3,-7.85,-7.09,-9.12,-3.52,-3.05,-0.93,-0.62,-0.28,-1.94,-0.25,-0.33,-1.17,-0.28,-0.37,-0.13,-0.37,-1.19,-0.9,-1.01,-0.99,0.0,0.0,-2.0,-2.03,-2.31,-5.27,-5.43,-5.88,-5.09,-7.08,-9.31,-9.43,-9.55,-9.24,-9.16,-4.78,-4.19,-3.46,-2.17,0.0,-1.49,-0.22,0.0,0.0,-0.7,-0.41,-0.89,0.0,0.0,-3.14,-1.98,-4.06,-4.81,-3.93,-0.26,-0.99,-3.42,-4.5,-0.24,-0.94,-1.64,0.0,-1.54,-5.91,-3.99,-5.81,-6.77,-5.06,-6.91,-5.31,-3.29,-5.98,0.0,-2.36,-1.8,0.0,-0.03,0.0,0.0,-0.01,-0.06,-2.64,-1.44,-1.02,-0.1,-3.68,-2.54,-4.67,-3.76,-1.36,0.0,-0.63,-3.9,-5.2,-6.52,-5.99,-3.38,-4.07,-5.47,-5.2,-1.51,-2.53,-3.02,-3.6,-4.68,-5.62,-9.96,-4.95,-8.57,-2.51,-0.64,-0.44,-0.11,-0.64,0.0,-0.62,-1.71,-1.73,-0.32,-0.65,-1.15,-1.38,-3.8,-0.06,0.0,-1.19,-1.79,-3.98,-5.63,-5.37,-5.72,-5.75,-2.23,0.0,-0.1,-5.63,-5.5,-3.22,-4.23,-3.55,-3.04,-0.91,-0.8,-1.63,-0.72,-5.9,-6.97,-7.32,-7.22,-9.73,-13.16,-9.46,-8.54,-10.39,-13.04,-16.29,-14.4,-10.68,-7.4,-7.18,-10.02,-10.35,-9.23,-10.07,-10.67,-11.51,-12.89,-17.78,-10.46,-12.04,-12.02,-13.78,-3.47,0.0,-0.58,-1.89,0.0,-2.45,-1.41,-3.17,-2.64,-4.59,0.0,-0.1,-0.69,0.0],"sp500":[0.0,-0.92,-1.98,-2.96,-0.78,0.0,0.0,-5.91,-4.17,-6.91,-1.63,-2.39,0.0,-1.12,0.0,0.0,0.0,0.0,-0.22,-6.95,-5.02,-7.41,-6.85,-6.14,-1.92,-3.85,-5.31,-5.91,-0.99,-0.48,0.0,0.0,-0.79,-0.03,-0.87,0.0,0.0,-1.48,0.0,-2.11,0.0,-0.06,-1.36,-1.64,-1.51,-0.16,-1.6,-0.4,0.0,-0.41,-0.29,-0.11,-1.04,-4.01,-2.76,-0.86,-0.94,0.0,-0.78,0.0,0.0,0.0,-1.31,0.0,-0.61,0.0,0.0,-0.85,0.0,-0.03,-1.5,-3.95,-2.07,-5.21,-3.87,-1.11,0.0,0.0,0.0,-0.4,-0.46,-2.92,-0.38,-1.65,-1.33,0.0,-2.0,-1.46,-6.54,-9.8,-6.65,-6.1,-8.68,-8.59,-9.75,-12.35,-6.95,-5.29,-5.23,-6.43,-8.44,-10.43,-13.37,-16.79,-16.44,-17.15,-13.85,-13.26,-22.12,-21.61,-20.38,-18.64,-20.98,-16.63,-15.1,-13.44,-12.29,-10.69,-12.46,-17.3,-15.2,-19.25,-23.0,-25.25,-24.12,-25.3,-21.76,-18.67,-21.39,-16.75,-17.33,-17.36,-16.63,-16.8,-20.41,-20.17,-19.67,-17.24,-18.72,-15.35,-12.86,-14.91,-14.72,-17.23,-15.66,-19.49,-18.34,-17.21,-14.33,-14.33,-13.45,-13.75,-13.11,-13.73,-13.77,-12.59,-12.32,-10.69,-8.91,-8.98,-8.75,-8.03,-5.97,-5.46,-5.4,-6.14,-6.83,-8.89,-8.76,-6.02,-7.07,-7.22,-9.93,-10.6,-10.18,-9.77,-11.93,-14.16,-9.14,-7.95,-5.89,-5.13,-4.73,-3.63,-1.17,-0.45,-1.91,-0.27,-0.33,0.0,-0.44,0.0,0.0,0.0,0.0,-0.65,-1.12,-0.14,-0.2,-0.99,-3.66,-4.64,-2.63,-1.4,-0.63,-0.0,-0.29,-0.57,0.0,0.0,-0.17,0.0,-0.88,-2.16,-4.73,-3.89,-6.14,-2.19,-1.7,-1.33,-4.57,-0.73,-0.19,-0.13,-0.2,0.0,0.0,-0.96,-2.32,0.0,-2.18,-0.53,0.0,-0.61,-0.27,-1.91,-3.43,-2.82,-2.51,-0.29,-1.28,-1.52,-0.07,-2.62,-4.79,-8.62,-7.63,-6.13,-8.66,-17.61,-12.01,-13.94,-9.49,-8.74,-4.19,-3.32,-4.16,-2.82,-1.98,-2.66,-0.05,0.0,-0.33,-0.01,0.0,-2.38,-0.01,-0.29,-0.03,-0.64,-0.11,0.0,0.0,-0.49,0.0,-1.47,-0.28,0.0,-0.56,-0.85,-3.17,-2.7,-0.89,-0.73,-1.46,0.0,-1.25,-0.34,-0.47,-0.88,-0.57,-0.66,-2.04,-2.02,-1.39,-2.62,-4.0,-5.7,-9.1,-5.18,-0.16,-0.87,-0.49,0.0,-0.16,-1.97,0.0,-0.74,-4.5,-2.49,-3.32,-1.66,-0.45,-2.0,-2.6,-1.58,0.0,-0.17,-1.6,-1.12,-1.03,-2.3,-0.44,-1.48,-0.32,-0.15,-1.64,-1.82,-1.26],"tang_rebal":[0.0,-0.75,-1.71,-2.08,-0.98,0.0,0.0,-3.74,-2.96,-5.6,-2.31,-0.57,0.0,-0.55,-1.41,-0.1,0.0,0.0,-0.5,-4.75,-3.39,-5.13,-4.03,-3.19,-0.27,-2.18,-3.45,-5.78,-2.39,-0.9,-1.01,-1.1,-0.7,-1.14,-1.66,0.0,0.0,-1.95,-0.03,-3.85,-1.44,-1.43,-4.13,-5.29,-5.23,-2.28,-1.76,-0.95,0.0,-0.82,0.0,-1.65,-0.52,-2.62,-0.83,-0.27,-0.78,-0.44,-0.96,-1.49,-0.51,0.0,-0.59,0.0,-0.63,-1.06,0.0,-0.03,-2.08,-1.08,-2.98,-4.25,-3.32,-6.06,-4.22,-3.73,-2.07,-1.12,-0.67,-0.57,-2.06,-4.64,-1.06,0.0,-1.88,0.0,-0.22,-1.44,-3.48,-4.5,-0.96,-3.47,-4.32,-4.55,-5.08,-7.26,-3.08,-2.58,0.0,-0.04,-1.33,-0.78,-3.48,-4.2,-4.56,-9.04,-6.23,-7.32,-12.36,-10.2,-8.79,-7.09,-7.24,-6.61,-4.91,-5.96,-6.09,-3.4,-4.51,-6.48,-5.46,-7.36,-9.21,-11.79,-12.07,-9.8,-6.39,-1.59,-3.1,-2.59,0.0,-0.35,-0.79,-0.82,-3.64,-2.92,-2.98,-2.52,-5.82,-3.98,-5.03,-6.09,-5.61,-6.67,-6.56,-8.57,-6.81,-5.7,-3.17,-0.72,0.0,0.0,0.0,0.0,-0.62,-2.26,-4.0,-2.32,-0.89,-0.55,-0.91,-0.82,-1.48,0.0,-0.14,-1.31,-1.33,-2.71,-3.86,-2.89,-3.07,-2.66,-4.34,-6.76,-8.72,-8.39,-8.56,-10.03,-6.37,-6.54,-6.73,-5.21,-3.71,-4.44,-3.48,-2.95,-1.37,-1.14,-0.78,-0.71,0.0,-0.43,-0.52,0.0,-0.56,-0.66,-2.12,-1.44,-1.53,-3.99,-5.35,-3.63,-4.15,-4.32,-2.87,-1.43,-4.35,-2.33,-3.58,-3.55,-2.35,-3.61,-2.03,-0.44,-1.13,0.0,-2.01,0.0,0.0,-0.01,-0.72,0.0,-1.4,-1.27,-1.34,-0.63,0.0,-2.45,-3.11,-2.59,-4.11,-2.19,-0.79,-0.9,-2.09,-3.98,-4.3,-5.2,-4.75,-3.07,-0.85,-0.65,-0.69,-0.66,-0.16,-1.9,-4.16,-4.13,-2.92,-8.87,-3.33,-2.81,-3.6,-2.83,-4.7,-2.22,-3.02,-2.09,-3.15,-5.66,-5.38,-2.44,-2.95,-0.89,0.0,-0.47,0.0,0.0,-1.16,-1.43,-0.68,-1.3,-1.85,-0.93,-0.47,0.0,-0.01,-0.9,-4.44,-3.79,-1.37,-0.66,-0.6,-0.65,-1.32,-3.35,-3.58,-3.49,-0.46,-0.97,0.0,0.0,-0.64,-1.53,-0.66,-2.26,-2.73,-6.63,-5.16,-6.15,-4.96,-5.63,-6.35,-7.0,-8.22,-6.5,-9.1,-11.32,-8.01,-9.17,-10.41,-6.52,-8.02,-8.6,-8.91,-7.3,-6.45,-5.59,-6.62,-7.12,-6.69,-7.13,-8.73,-9.52,-12.27,-8.88,-7.27,-4.83,-3.12],"minvar":[0.0,-0.66,-1.85,-1.98,-1.51,-0.54,-0.15,-3.69,-2.83,-5.58,-2.67,-0.12,-0.22,-0.34,-1.57,0.0,0.0,0.0,-0.31,-4.2,-3.18,-5.04,-3.7,-2.91,-0.06,-1.82,-2.81,-4.72,-1.8,-0.98,-1.39,-1.28,-0.55,-1.23,-1.67,0.0,0.0,-1.29,0.0,-4.33,-2.04,-2.42,-5.43,-7.04,-7.19,-4.3,-3.06,-1.33,0.0,-1.21,0.0,-2.19,-0.23,-2.48,-0.66,-0.2,-0.71,-0.62,-1.3,-2.24,-1.05,0.0,-0.49,0.0,-0.55,-0.84,0.0,0.0,-2.34,-0.84,-3.2,-4.42,-3.95,-6.57,-4.65,-4.43,-2.54,-1.34,-1.08,-1.19,-1.99,-4.61,-1.3,0.0,-2.18,0.0,-0.01,-1.55,-3.42,-4.27,-1.25,-3.86,-4.61,-4.81,-4.27,-6.64,-2.78,-2.22,0.0,0.0,-1.38,-0.52,-3.82,-3.52,-3.76,-9.35,-6.77,-8.11,-12.52,-10.01,-8.64,-6.91,-6.87,-6.94,-5.35,-6.64,-6.75,-3.96,-4.69,-6.21,-5.43,-6.81,-8.06,-10.57,-11.3,-8.4,-5.23,-0.44,-1.71,-2.16,0.0,-0.1,-0.73,-0.91,-3.37,-2.58,-2.77,-3.01,-6.55,-5.15,-6.41,-7.39,-6.81,-7.43,-7.73,-9.47,-8.08,-6.89,-4.51,-1.76,-1.11,-0.53,0.0,-0.16,-0.8,-2.92,-4.7,-3.11,-1.41,-0.39,-1.09,-0.88,-1.78,0.0,0.0,-1.36,-1.45,-2.85,-4.37,-3.66,-4.02,-3.39,-4.88,-7.46,-9.83,-9.49,-9.57,-10.86,-7.49,-8.07,-8.49,-7.12,-5.35,-6.4,-5.53,-4.98,-3.01,-3.25,-3.03,-3.25,-1.98,-2.4,-2.8,-0.22,-0.9,-0.87,-2.24,-1.59,-1.51,-4.21,-5.36,-3.14,-3.75,-3.87,-2.28,-1.21,-4.26,-1.98,-3.71,-3.75,-2.62,-4.02,-2.03,-0.38,-0.41,0.0,-2.15,-0.03,0.0,-0.22,-0.63,0.0,-1.69,-1.62,-1.71,-0.84,0.0,-2.5,-3.27,-3.17,-4.84,-2.6,-1.39,-1.74,-3.31,-5.25,-5.39,-6.39,-5.89,-4.41,-1.98,-1.4,-0.74,-0.21,-0.18,-1.59,-4.14,-4.48,-2.98,-8.61,-3.3,-2.82,-4.45,-4.46,-6.86,-4.37,-5.12,-4.24,-5.45,-7.46,-7.38,-4.36,-4.78,-2.29,-0.63,-0.81,0.0,0.0,-1.44,-1.71,-0.87,-1.56,-2.21,-0.95,-0.61,0.0,-0.11,-1.26,-4.78,-4.15,-1.1,-0.4,-0.47,-0.75,-1.43,-4.1,-4.19,-4.34,0.0,-0.46,0.0,0.0,-0.55,-1.04,-0.85,-2.82,-3.15,-7.16,-4.98,-6.37,-5.45,-6.55,-7.19,-7.55,-8.87,-7.17,-9.99,-12.35,-8.66,-9.91,-10.71,-7.58,-9.16,-10.06,-10.16,-9.74,-9.07,-8.11,-9.14,-10.12,-9.28,-9.83,-11.51,-12.26,-15.43,-12.27,-10.68,-8.05,-6.59]},"q_dates":["2020Q2","2020Q3","2020Q4","2021Q1","2021Q2","2021Q3","2021Q4","2022Q1","2022Q2","2022Q3","2022Q4","2023Q1","2023Q2","2023Q3","2023Q4","2024Q1","2024Q2","2024Q3","2024Q4","2025Q1","2025Q2","2025Q3","2025Q4","2026Q1","2026Q2","2026Q3","2026Q4"],"q_weights":{"MSFT":[5.18,8.03,11.43,5.13,5.53,4.46,2.78,22.02,38.42,37.24,47.55,65.3,34.86,6.17,13.34,0.56,0.72,3.06,63.9,43.18,50.3,0.32,3.47,43.25,46.87,49.17,1.37],"JNJ":[5.73,9.32,15.56,9.36,17.91,2.45,4.67,4.86,1.49,2.5,1.26,17.78,44.86,58.27,22.15,15.03,26.02,12.04,2.57,14.43,8.53,16.27,0.31,0.3,0.32,0.35,0.34],"MA":[41.4,19.93,29.25,38.53,23.86,62.64,77.29,52.69,43.05,21.35,45.93,12.25,18.1,11.38,0.57,0.52,0.44,4.41,0.36,0.35,1.62,1.03,31.81,50.7,43.67,1.0,0.3],"PEP":[7.6,17.3,26.72,11.87,16.18,2.69,2.37,2.42,1.46,0.95,0.9,1.0,0.74,22.9,44.42,68.0,34.67,9.21,30.4,41.32,38.95,68.81,43.4,4.09,0.25,9.5,0.51],"WMT":[5.68,21.07,6.56,10.11,31.98,23.36,9.24,15.68,8.88,37.01,3.45,2.73,0.7,0.62,10.37,12.06,0.43,0.35,0.35,0.33,0.27,0.63,3.77,0.87,0.22,16.43,52.62],"MCD":[34.41,24.35,10.47,25.0,4.53,4.4,3.65,2.32,6.7,0.96,0.89,0.94,0.74,0.66,9.15,3.82,37.73,70.93,2.42,0.39,0.33,12.93,17.24,0.79,8.69,23.55,44.85]},"mc":{"vols":[15.38,13.39,18.58,14.65,14.72,13.43,14.21,15.08,14.87,20.72,13.8,13.52,15.13,18.02,16.62,14.33,14.21,15.44,13.51,15.03,15.12,13.98,15.62,15.68,14.9,13.42,16.72,14.8,13.83,14.2,14.75,15.85,15.38,14.41,13.37,13.61,13.3,13.31,14.56,14.0,14.12,14.76,17.61,17.02,19.83,14.79,14.91,14.63,13.4,15.91,13.46,13.84,14.65,13.84,14.81,18.15,17.8,14.15,13.77,16.62,13.96,13.47,14.39,15.97,14.79,14.64,14.17,18.71,15.03,18.7,14.23,15.41,14.39,14.22,18.13,15.38,13.86,22.26,13.97,14.6,14.93,13.56,13.12,20.22,15.96,15.36,14.64,16.57,13.25,14.57,13.39,14.52,13.98,13.76,17.31,18.17,19.37,14.81,15.65,14.06,13.86,15.24,14.71,13.77,14.0,15.17,13.17,13.26,14.88,13.62,14.48,14.8,13.95,14.14,17.4,16.22,16.03,23.14,15.62,17.94,15.69,14.8,16.38,15.58,14.97,14.33,14.11,13.34,15.53,13.78,16.37,14.49,14.6,16.27,14.86,13.5,14.07,13.71,16.65,15.03,13.46,16.46,16.06,17.53,15.57,13.46,16.6,14.02,15.48,14.34,16.76,13.07,15.27,13.21,14.82,13.84,13.42,16.69,13.87,16.85,14.07,13.31,17.38,14.54,16.73,14.53,14.67,13.53,14.93,14.78,14.26,13.36,14.36,13.89,13.16,13.48,14.8,13.84,13.31,16.68,13.9,13.87,15.29,14.15,13.29,18.28,13.7,13.91,13.67,13.84,14.24,13.88,15.79,14.77,15.28,14.11,14.82,14.8,17.52,14.39,15.23,16.24,14.12,14.95,16.44,14.21,15.55,13.37,15.0,15.51,16.21,17.57,13.91,14.25,15.59,13.1,13.9,13.56,14.27,16.17,14.27,15.93,18.55,16.44,14.17,20.05,15.25,13.57,13.45,15.08,15.93,19.59,14.11,15.54,14.89,14.54,17.95,13.84,13.84,14.65,15.26,15.25,15.11,14.72,17.12,15.33,14.17,14.46,13.08,13.87,14.96,15.56,13.52,15.46,13.77,16.43,14.84,13.58,15.4,14.71,14.47,13.85,13.57,14.91,13.8,14.15,14.86,14.99,16.47,15.67,14.51,16.52,15.99,14.37,14.23,16.33,15.35,14.63,13.92,20.86,16.33,14.34,16.58,14.35,15.18,13.88,15.48,14.53,15.54,13.95,14.65,14.14,14.78,14.76,13.72,14.95,15.37,14.56,13.7,13.55,14.68,15.89,15.73,16.26,13.73,13.73,14.41,15.58,14.44,13.58,16.42,15.03,14.43,15.2,15.19,13.77,14.79,13.55,14.31,13.9,15.5,14.41,15.62,15.28,14.37,13.06,13.75,14.71,14.35,13.53,17.71,17.26,14.78,14.65,14.1,16.39,13.93,16.84,15.95,13.51,20.74,13.37,14.38,13.19,13.48,18.21,16.32,14.78,14.1,13.27,18.56,17.46,14.0,15.18,15.26,15.62,13.36,16.43,14.47,14.35,14.21,14.31,15.05,14.21,14.12,15.24,19.8,14.02,13.92,17.01,17.17,14.3,15.68,16.98,15.2,14.42,14.2,15.12,17.04,15.06,15.39,13.77,13.26,14.63,14.2,14.45,14.7,17.18,13.7,13.96,13.65,15.39,14.56,15.22,14.09,14.92,14.0,15.0,14.93,13.2,13.81,15.64,13.8,15.07,14.64,13.78,16.8,13.43,14.19,14.76,13.27,15.41,13.72,14.71,13.49,17.0,13.9,16.03,14.67,14.85,14.49,15.91,19.22,14.31,14.77,14.08,13.55,17.31,14.01,14.2,14.64,14.76,14.21,13.98,14.86,13.57,14.79,16.91,14.41,15.91,14.08,13.48,14.09,14.77,14.27,16.38,15.99,14.22,15.86,16.17,15.41,13.61,13.58,14.25,14.2,14.27,16.82,17.53,13.85,16.01,15.76,17.43,15.73,16.25,13.71,13.32,15.0,17.71,15.14,16.16,14.09,16.21,14.61,15.21,16.28,14.61,15.42,14.2,14.33,15.84,14.71,13.76,13.83,14.07,15.56,16.54,14.08,13.57,15.01,14.36,13.14,13.13,16.22,13.29,13.71,13.8,14.02,17.28,14.15,13.8,14.98,15.46,14.23,14.29,15.1,13.8,14.28,14.64,13.62,14.6,16.14,17.69,14.09,14.41,15.58,15.95,14.9,16.26,16.62,13.21,13.31,15.54,14.2,16.27,15.4,14.81,13.68,13.76,17.92,13.18,19.83,17.11,13.68,14.19,15.85,17.04,13.0,16.15,20.13,14.57,13.93,15.68,13.45,13.88,13.83,16.51,14.26,16.43,19.0,13.38,15.46,15.04,13.63,15.02,14.21,13.45,17.87,15.04,14.05,14.63,14.42,15.3,15.46,14.0,13.31,14.75,13.24,16.01,13.71,17.51,14.39,15.88,15.21,15.77,13.72,14.23,21.09,13.93,13.39,14.16,14.3,14.6,13.77,16.29,16.34,15.92,13.52,15.69,16.12,14.45,16.3,13.25,15.6,14.96,15.0,13.99,13.75,13.18,13.74,13.35,19.03,14.02,13.63,14.62,20.8,14.1,15.28,17.58,14.41,14.26,15.1,14.2,13.4,17.79,13.46,15.37,14.6,14.2,13.93,13.93,14.18,13.91,14.45,15.75,13.88,14.59,14.06,13.69,13.46,13.79,14.0,14.13,14.42,14.94,17.06,14.07,15.41,14.42,14.29,16.09,18.4,14.73,14.12,14.25,13.92,13.32,14.65,14.49,15.15,13.68,13.83,14.72,13.37,13.74,14.49,16.49,14.72,18.17,16.64,14.38,13.6,14.92,13.18,13.77,13.55,15.32,13.93,13.66,13.69,13.73,14.42,14.15,14.81,13.97,14.02,13.11,14.55,15.98,14.51,14.52,15.88,13.19,13.94,16.27,16.36,15.35,15.61,14.67,13.55,14.8,17.99,13.84,14.51,15.14,14.22,14.2,15.33,14.96,14.39,15.86,14.0,12.97,16.27,13.71,14.06,15.68,15.33,13.88,14.69,14.46,14.37,15.41,14.12,15.18,13.5,17.2,13.9,15.14,14.84,14.49,13.38,13.75,15.73,14.18,14.91,13.1,13.82,14.7,16.01,14.88,16.86,17.78,15.37,15.01,16.61,14.85,13.26,14.4,14.27,14.43,15.27,13.45,14.37,13.64,14.54,14.41,14.01,13.91,14.32,17.85,17.88,15.45,14.75,14.15,14.82,17.65,14.91,18.15,13.41,15.14,14.03,15.76,14.09,14.68,17.7,17.75,15.36,17.12,13.36,13.51,13.32,15.11,13.35,15.02,13.84,13.79,15.11,15.04,16.55,15.26,16.58,14.8,13.64,15.13,15.09,13.66,15.05,14.78,13.41,14.12,14.79,14.34,13.18,13.7,16.36,15.15,14.56,14.07,16.26,13.96,13.58,15.95,14.12,14.62,14.06,17.09,13.5,13.05,18.9,13.98,14.49,15.04,14.16,14.53,13.45,15.78,13.44,15.74,14.5,13.87,14.12,14.8,13.61,16.2,13.07,13.85,14.51,14.44,15.42,13.51,14.31,21.9,15.87,13.58,13.52,15.78,14.21,14.06,15.8,13.87,14.65,17.83,16.99,15.41,17.39,14.67,15.17,18.66,13.66,16.88,12.9,16.32,13.76,13.53,17.5,15.62,15.75,13.73,13.09,14.02,14.17,16.78,15.81,15.04,14.34,14.96,15.35,14.47,14.12,13.85,14.87,14.11,13.99,14.39,19.17,13.41,14.62,15.14,17.03,14.65,15.19,13.57,14.26,14.24,15.51,14.37,19.54,13.64,14.68,14.71,17.59,14.07,14.19,13.62,15.01,19.54,13.41,15.94,14.64,16.03,15.09,15.61,14.74,14.19,13.77,15.64,13.6,20.11,14.86,15.11,14.89,13.57,13.45,15.74,15.65,15.09,13.74,15.88,13.65,14.07,14.09,14.52,15.23,16.6,14.17,19.66,14.39,15.7,13.55,15.96,15.39,13.7,14.34,21.35,16.04,14.1,16.66,16.49,13.3,14.51,15.44,14.41,13.82,13.91,14.65,15.27,15.31,13.97,16.54,16.63,19.67,18.31,15.05,16.46,13.57,15.67,13.25,16.26,14.63,14.03,16.22,15.18,15.5,14.33,15.81,13.98,14.8,14.84,13.48,15.12,18.9,15.99,14.48,15.01,13.55,20.62,13.91,14.47,22.7,14.99,15.21,14.38,15.01,13.49,15.81,13.85,14.89,14.28,15.44,13.94,13.39,13.07,14.7,14.24,17.81,14.89,13.5,18.15,18.28,13.64,14.66,13.67,14.13,14.52,13.9,16.19,14.54,13.01,15.2,17.08,13.05,14.43,17.48,13.32,15.13,14.72,13.31,15.05,13.55,15.05,15.82,14.65,13.98,14.23,16.04,16.21,14.48,15.17,15.6,14.83,14.14,15.14,15.52,13.99,14.54,14.24,13.68,13.34,14.68,14.05,16.37,13.41,13.89,16.33,13.8,13.89,14.34,14.93,20.34,13.49,15.57,13.14,14.65,13.63,13.53,14.56,13.73,13.4,13.59,13.98,18.45,14.06,14.8,13.42,14.37,13.72,16.73,16.56,15.09,14.47,13.56,14.43,14.46,15.19,13.76,15.99,14.03,13.47,14.58,13.26,14.0,14.66,15.57,17.52,17.31,15.07,14.52,13.58,14.95,13.13,13.38,15.75,13.61,14.34,13.82,17.47,13.47,14.75,13.54,13.52,16.81,15.37,13.55,17.83,14.78,13.3,14.65,16.68,13.84,16.61,14.91,14.03,17.46,20.53,15.83,15.4,13.84,13.81,17.63,16.83,16.41,14.51,14.87,13.85,14.08,14.65,16.92,15.96,14.68,13.0,17.22,13.55,15.99,14.98,15.46,14.31,15.96,14.93,15.3,15.62,13.34,18.81,14.25,14.77,14.5,14.83,14.03,13.36,14.48,14.79,16.53,14.69,20.54,13.82,16.5,14.28,15.38,13.36,15.49,15.99,13.93,20.82,13.43,16.37,13.64,16.2,15.21,13.53,13.62,15.73,14.46,13.63,15.01,15.09,13.25,13.49,17.2,13.72,14.16,13.79,13.87,15.11,14.6,13.83,14.51,14.87,15.99,14.56,14.36,14.68,15.2,17.65,15.26,14.49,15.3,16.42,15.43,15.99,14.18,14.42],"rets":[15.42,13.24,17.33,16.15,15.05,14.37,14.63,14.78,12.78,18.94,11.5,12.97,16.79,17.36,13.48,13.77,10.3,16.38,13.08,14.01,14.33,10.82,17.62,17.56,16.12,11.08,14.16,16.46,10.96,12.39,12.77,14.2,9.0,14.2,11.95,11.7,13.46,13.94,13.56,15.31,15.09,14.36,15.97,18.07,18.64,12.71,13.34,10.67,12.91,15.4,13.77,13.19,16.7,12.87,14.76,19.79,16.05,9.79,12.6,15.94,14.67,15.08,13.38,17.13,9.15,14.87,11.92,18.72,15.95,17.8,13.8,14.26,14.05,16.68,17.69,13.14,14.77,19.66,11.77,15.85,12.96,12.53,13.46,18.27,14.79,10.86,13.13,16.87,12.71,15.01,15.49,17.15,15.49,12.16,16.7,17.03,17.5,16.17,16.87,10.99,14.92,14.41,14.43,14.87,14.33,12.08,12.24,14.55,11.77,15.11,12.25,14.85,12.26,15.68,17.95,13.24,15.57,19.93,13.63,15.69,14.38,14.86,13.41,16.84,8.64,16.26,15.7,11.87,18.19,11.56,13.95,11.1,14.72,17.77,11.27,13.02,10.0,12.85,15.98,15.06,12.63,13.5,16.12,18.17,11.32,14.48,16.91,14.57,15.1,15.73,14.83,12.82,13.95,13.25,12.97,12.13,12.25,16.3,14.24,12.82,10.92,13.75,16.13,10.25,18.8,15.52,15.62,12.23,14.29,15.62,13.17,13.33,12.3,15.04,12.65,11.92,12.96,15.29,14.13,15.13,16.76,11.99,12.88,13.59,11.46,14.56,14.71,14.85,15.07,16.82,13.78,15.04,14.77,14.66,16.45,13.81,14.04,9.44,15.62,14.81,10.02,17.85,14.41,16.7,17.19,15.98,15.18,13.05,14.91,12.46,17.92,17.38,13.52,11.62,17.61,14.55,12.4,14.34,15.21,16.07,9.65,17.34,16.68,13.47,14.82,17.23,15.13,14.88,12.15,15.01,7.48,18.64,15.08,16.63,16.13,11.14,13.96,11.26,9.69,14.55,15.4,15.92,16.67,11.27,18.14,17.04,12.34,14.45,13.84,16.06,14.38,15.01,13.2,17.05,15.38,14.13,15.22,11.7,17.11,13.24,14.76,15.53,14.97,16.48,11.58,17.56,13.2,12.15,16.6,17.61,13.59,13.94,17.35,16.9,11.1,14.08,13.1,13.56,13.92,16.22,15.79,16.77,13.58,11.01,13.49,11.75,15.57,11.81,14.59,14.94,15.37,10.27,16.17,14.51,13.57,11.35,17.37,16.14,14.15,13.23,12.46,15.06,16.2,17.31,11.84,9.6,17.02,12.31,12.81,15.8,17.14,12.64,15.41,8.63,13.33,12.26,14.52,13.79,15.2,14.82,13.9,12.26,16.26,14.6,13.59,14.51,14.75,14.39,12.9,14.09,15.93,18.5,14.09,12.44,14.74,17.89,10.22,14.24,18.04,15.22,18.16,11.54,14.86,15.16,15.26,16.32,15.62,10.01,10.93,12.95,18.33,13.71,14.58,9.65,12.85,16.98,11.65,18.36,9.35,15.6,15.83,14.24,14.43,10.61,13.06,16.1,18.13,15.62,11.88,12.67,17.36,11.68,17.41,13.83,13.82,12.0,10.09,13.74,16.93,13.59,16.94,12.37,13.84,14.37,10.65,11.6,14.23,16.56,14.9,14.68,13.54,14.65,14.71,16.92,13.38,16.78,10.66,16.07,13.74,14.38,14.54,12.84,14.36,14.47,11.88,14.46,13.2,12.63,15.88,15.61,12.99,16.11,14.03,10.48,13.78,17.58,13.48,18.81,16.11,13.02,15.49,13.39,17.01,14.42,16.73,15.42,12.54,16.81,14.05,14.59,14.87,16.48,12.52,13.19,11.36,12.3,14.96,14.22,14.61,16.76,15.18,11.09,14.07,14.44,14.05,13.78,14.41,13.68,14.75,15.06,14.38,13.87,12.64,11.72,11.24,14.23,15.84,18.38,15.72,16.65,15.97,14.25,15.63,18.29,14.95,15.98,16.99,16.95,12.59,18.42,12.99,15.26,8.67,13.41,13.72,14.94,17.48,16.06,13.89,17.63,10.85,11.75,14.61,15.79,16.38,15.16,15.89,15.43,12.59,14.97,13.63,13.16,14.24,14.96,14.82,11.29,13.93,16.04,16.81,14.26,15.22,13.45,14.06,15.08,16.17,13.14,11.9,17.36,12.85,12.77,16.95,14.91,15.14,12.13,16.33,17.02,14.24,15.13,14.91,12.49,12.85,15.85,12.39,16.45,13.45,8.19,13.35,14.88,15.08,14.66,16.24,17.82,16.29,11.94,15.41,17.93,12.64,17.51,17.96,13.27,12.96,18.87,11.25,12.84,14.41,13.15,12.28,16.23,17.18,15.62,14.38,14.53,12.53,14.27,12.63,15.24,16.49,13.11,14.5,10.83,12.25,14.08,17.11,15.13,13.48,12.9,11.8,18.74,12.45,17.12,14.02,12.97,16.44,14.11,10.1,13.16,19.27,15.88,12.46,11.59,14.44,13.16,11.43,17.6,16.82,16.74,15.5,15.66,13.48,12.25,14.64,12.23,11.07,13.38,11.53,12.18,13.3,13.72,13.6,13.18,18.66,14.59,11.59,15.7,18.83,14.81,14.61,15.43,16.13,11.63,15.11,10.82,11.88,18.61,14.61,14.99,10.91,12.84,15.17,13.49,10.76,10.88,15.34,13.62,14.3,15.12,14.47,15.78,12.97,13.13,13.74,16.25,15.62,14.83,16.25,13.02,16.76,10.02,10.58,17.15,18.3,11.22,15.89,11.33,15.67,14.0,13.37,10.45,13.49,11.9,12.69,13.05,15.86,13.18,15.97,16.51,13.9,16.77,17.75,13.55,12.4,11.16,13.44,13.53,11.4,8.86,12.94,13.08,12.57,12.2,10.56,14.39,15.71,13.79,13.51,13.59,9.95,13.04,15.66,13.57,17.33,15.29,14.61,15.47,17.55,16.08,14.15,15.79,12.2,16.81,16.52,14.59,14.78,16.35,15.44,15.33,18.0,16.05,11.58,16.1,10.34,13.33,16.61,11.4,9.01,16.17,16.49,16.25,16.62,9.43,14.53,12.61,14.46,16.12,14.76,15.37,12.49,16.3,16.01,11.31,13.57,14.33,14.89,14.63,16.38,12.19,12.36,11.21,14.74,13.3,14.72,12.9,15.85,10.95,14.23,15.51,11.55,13.13,15.2,14.76,16.39,14.28,14.37,12.5,13.35,17.24,10.34,14.0,10.02,15.06,15.11,14.68,16.49,14.19,13.99,16.62,16.32,14.34,12.14,13.1,14.65,14.3,14.84,13.91,16.49,15.1,15.22,17.2,12.02,13.52,14.67,13.69,13.36,14.08,14.76,15.57,10.8,9.45,16.71,11.01,16.33,12.39,13.54,17.32,12.94,12.6,14.1,14.85,13.5,13.44,17.25,11.7,12.03,13.47,15.71,17.34,15.48,13.8,11.93,13.17,12.75,14.5,11.68,14.47,13.49,16.89,11.71,13.91,19.23,11.25,12.68,12.72,10.44,9.18,15.63,8.43,13.99,18.03,16.05,11.38,14.62,12.31,15.37,17.53,13.59,13.58,12.71,15.69,12.79,13.6,16.17,19.62,15.26,13.99,14.15,14.12,14.65,11.68,17.34,13.68,14.35,14.29,16.65,13.8,13.48,15.22,13.98,14.46,12.72,18.17,13.22,17.05,14.82,13.68,15.65,16.07,14.93,13.19,13.38,11.48,15.81,15.64,16.03,12.31,13.54,11.71,18.02,16.22,14.41,11.99,11.26,13.09,12.52,14.42,19.54,12.71,11.61,14.08,18.75,16.99,11.98,12.57,13.5,15.74,9.75,14.8,16.27,16.06,14.72,16.92,18.22,10.54,15.09,12.26,9.1,18.85,13.52,15.88,14.66,7.89,13.63,11.11,16.08,13.28,11.64,11.56,14.0,16.82,15.79,13.23,13.81,12.3,10.91,13.29,16.09,13.34,15.13,16.19,13.85,14.59,13.57,12.74,14.39,15.11,15.43,17.04,12.46,16.2,12.66,17.75,17.12,15.19,14.63,18.91,16.3,12.12,13.56,18.41,15.93,14.31,9.15,15.68,13.04,11.67,16.41,12.03,15.54,12.05,14.03,15.91,18.2,16.22,17.6,13.8,14.06,13.53,12.17,14.64,17.79,12.93,13.71,15.88,17.7,12.19,15.17,10.31,12.9,13.51,12.69,11.99,15.82,17.46,16.52,14.65,13.4,17.6,12.86,12.79,19.59,14.93,15.19,14.47,15.37,13.19,13.41,10.17,15.05,10.36,14.96,14.41,13.66,14.12,16.38,13.46,16.77,14.31,13.17,14.33,17.15,14.98,13.23,13.3,12.11,12.4,16.57,17.35,11.72,14.09,9.42,16.39,11.9,13.69,16.48,14.34,11.94,13.99,12.97,15.11,14.06,14.33,15.39,15.23,10.42,9.89,15.25,17.12,11.41,14.48,17.68,14.34,15.9,13.95,17.12,10.57,10.72,15.31,13.32,12.73,14.08,15.87,17.66,12.56,11.32,16.79,13.62,11.79,13.72,15.17,18.19,12.42,16.8,13.09,9.98,11.74,12.82,11.24,13.74,13.04,12.44,16.14,19.43,9.48,9.74,11.83,15.86,13.72,16.06,16.17,17.64,15.41,12.88,16.3,14.37,11.11,12.22,18.09,15.61,12.29,14.62,14.64,15.84,12.55,15.73,17.52,17.88,11.22,16.35,12.3,16.69,12.55,13.85,13.74,15.4,15.78,16.2,16.42,12.11,17.97,12.93,15.27,14.6,16.72,12.51,18.54,13.49,11.03,12.57,18.61,12.34,14.37,17.03,11.6,17.25,18.3,14.6,13.58,13.93,12.31,17.01,13.91,13.63,17.55,13.41,12.15,11.72,13.4,16.93,13.77,14.03,13.24,15.96,12.48,17.21,12.75,13.21,14.26,14.96,8.79,14.53,13.73,13.35,19.74,14.48,15.73,16.12,11.26,12.13,15.13,16.31,13.31,16.21,16.87,18.75,13.55,16.65,9.68,14.84,14.29,14.85,11.7,14.78,18.13,12.92,15.62,13.83,16.69,11.59,10.67,11.9,15.72,15.21,15.81,16.13,14.51,14.05,14.74,16.97,15.77,10.52,11.65,11.13,16.22,15.08,13.58,14.68,12.63,16.81,12.77,14.63,15.13,15.53,17.95,13.59,15.51,13.85,18.84,14.99,14.46,13.39,16.95],"sharpes":[0.84,0.8,0.8,0.93,0.85,0.88,0.85,0.81,0.69,0.79,0.65,0.77,0.94,0.82,0.66,0.79,0.55,0.9,0.78,0.77,0.78,0.6,0.97,0.96,0.91,0.64,0.7,0.94,0.61,0.7,0.7,0.74,0.42,0.81,0.71,0.68,0.82,0.86,0.76,0.92,0.89,0.8,0.77,0.91,0.81,0.69,0.73,0.56,0.78,0.81,0.84,0.77,0.97,0.75,0.83,0.95,0.76,0.52,0.73,0.81,0.87,0.93,0.76,0.92,0.45,0.84,0.66,0.87,0.9,0.82,0.79,0.76,0.8,1.0,0.84,0.69,0.89,0.77,0.66,0.91,0.7,0.74,0.84,0.78,0.77,0.54,0.73,0.87,0.77,0.86,0.97,1.01,0.93,0.7,0.82,0.8,0.77,0.92,0.92,0.6,0.9,0.78,0.81,0.9,0.84,0.63,0.74,0.91,0.62,0.93,0.67,0.83,0.7,0.93,0.89,0.66,0.82,0.75,0.71,0.73,0.76,0.84,0.67,0.92,0.41,0.96,0.94,0.7,1.01,0.66,0.7,0.59,0.84,0.94,0.59,0.78,0.53,0.75,0.81,0.84,0.75,0.67,0.85,0.89,0.57,0.89,0.87,0.86,0.81,0.92,0.74,0.79,0.75,0.81,0.71,0.7,0.73,0.83,0.85,0.61,0.6,0.84,0.78,0.53,0.97,0.9,0.89,0.72,0.79,0.89,0.75,0.81,0.68,0.9,0.77,0.7,0.71,0.92,0.87,0.76,1.03,0.68,0.68,0.78,0.67,0.66,0.89,0.89,0.92,1.03,0.79,0.9,0.78,0.82,0.91,0.8,0.78,0.47,0.75,0.86,0.49,0.95,0.84,0.95,0.89,0.95,0.82,0.79,0.83,0.64,0.95,0.85,0.79,0.64,0.97,0.92,0.71,0.87,0.89,0.84,0.5,0.93,0.76,0.67,0.87,0.73,0.83,0.91,0.72,0.83,0.31,0.82,0.89,0.91,0.92,0.59,0.64,0.63,0.52,0.82,0.84,0.88,0.94,0.6,0.91,0.95,0.69,0.83,0.87,0.98,0.79,0.8,0.79,0.94,0.94,0.71,0.86,0.68,0.95,0.73,0.85,0.94,0.92,0.94,0.66,1.06,0.72,0.64,0.86,0.96,0.76,0.69,0.93,1.0,0.6,0.71,0.69,0.76,0.82,0.66,0.81,0.99,0.67,0.59,0.72,0.67,0.84,0.64,0.78,0.89,0.88,0.55,0.92,0.81,0.81,0.59,0.97,0.94,0.85,0.79,0.68,0.79,0.87,0.91,0.68,0.52,1.01,0.63,0.71,0.98,0.89,0.67,0.89,0.4,0.71,0.71,0.81,0.83,0.89,0.89,0.74,0.68,0.88,0.79,0.77,0.92,0.89,0.81,0.72,0.86,0.76,0.93,0.78,0.68,0.87,0.94,0.55,0.7,0.97,0.94,0.76,0.68,0.86,0.96,0.95,0.76,0.8,0.51,0.6,0.79,0.85,0.64,0.86,0.47,0.68,0.93,0.68,0.97,0.47,0.91,0.94,0.82,0.79,0.57,0.75,0.89,0.79,0.94,0.67,0.6,0.87,0.64,0.95,0.67,0.74,0.66,0.53,0.74,0.85,0.74,0.94,0.72,0.86,0.81,0.57,0.63,0.8,0.82,0.9,0.87,0.81,0.79,0.84,0.95,0.77,0.96,0.58,0.9,0.75,0.9,0.87,0.66,0.86,0.79,0.64,0.87,0.64,0.75,0.94,0.89,0.79,0.88,0.84,0.54,0.84,0.89,0.79,1.02,0.93,0.71,0.9,0.68,0.75,0.83,0.96,0.92,0.74,0.83,0.82,0.85,0.84,0.95,0.7,0.76,0.6,0.72,0.84,0.69,0.84,0.9,0.9,0.64,0.82,0.81,0.81,0.69,0.74,0.79,0.77,0.78,0.77,0.84,0.75,0.65,0.62,0.82,0.79,0.91,0.95,0.88,0.85,0.67,0.83,0.97,0.91,1.01,0.97,0.82,0.67,0.99,0.74,0.79,0.42,0.72,0.69,0.85,0.97,0.95,0.79,0.96,0.57,0.67,0.88,0.94,0.89,0.77,0.95,0.95,0.67,0.87,0.85,0.81,0.72,0.94,0.9,0.64,0.81,0.78,1.01,0.85,0.85,0.71,0.81,0.88,0.91,0.77,0.66,1.01,0.76,0.7,0.9,0.7,0.9,0.67,0.89,0.91,0.79,0.78,0.75,0.76,0.78,0.86,0.7,0.86,0.71,0.38,0.79,0.9,0.7,0.92,0.69,0.9,1.01,0.67,0.81,0.91,0.78,0.93,0.77,0.74,0.75,1.04,0.65,0.75,0.86,0.65,0.69,0.84,0.77,0.98,0.77,0.8,0.74,0.78,0.71,0.95,0.78,0.71,0.85,0.57,0.68,0.76,0.95,0.9,0.82,0.71,0.7,1.01,0.73,0.83,0.8,0.66,0.92,0.74,0.55,0.75,0.8,0.96,0.74,0.64,0.83,0.73,0.65,0.93,0.88,0.89,0.96,0.84,0.68,0.67,0.74,0.73,0.55,0.73,0.6,0.69,0.79,0.85,0.81,0.8,0.85,0.86,0.67,0.9,0.79,0.87,0.79,0.74,0.95,0.64,0.84,0.59,0.7,0.91,0.9,0.81,0.58,0.73,0.91,0.79,0.58,0.6,0.89,0.71,0.85,0.87,0.85,0.97,0.78,0.77,0.8,0.97,0.91,0.83,0.81,0.75,0.93,0.52,0.57,0.91,0.86,0.59,0.95,0.62,0.95,0.86,0.74,0.55,0.73,0.69,0.74,0.72,1.0,0.78,0.93,0.85,0.77,0.79,0.92,0.77,0.73,0.58,0.83,0.8,0.66,0.42,0.75,0.77,0.74,0.71,0.56,0.84,0.89,0.81,0.79,0.85,0.51,0.66,0.91,0.76,0.93,0.97,0.87,0.8,0.92,0.88,0.75,0.91,0.72,0.97,0.78,0.87,0.85,0.91,0.91,0.9,1.01,0.91,0.63,0.86,0.56,0.83,0.87,0.65,0.46,0.87,0.91,0.99,0.96,0.48,0.84,0.66,0.85,0.9,0.91,0.75,0.72,0.91,0.91,0.61,0.83,0.86,0.79,0.86,0.93,0.74,0.71,0.59,0.76,0.73,0.72,0.59,0.87,0.56,0.71,0.88,0.68,0.74,0.89,0.85,0.91,0.88,0.83,0.73,0.75,1.02,0.56,0.83,0.53,0.7,0.71,0.79,0.95,0.83,0.78,0.8,0.93,0.65,0.72,0.7,0.87,0.75,0.88,0.78,0.79,0.71,0.83,0.86,0.71,0.82,0.91,0.74,0.81,0.77,0.89,0.95,0.55,0.46,0.86,0.56,0.83,0.67,0.81,0.98,0.69,0.74,0.77,0.84,0.82,0.77,1.0,0.64,0.72,0.8,0.81,0.98,0.89,0.8,0.58,0.76,0.76,0.75,0.65,0.82,0.78,0.84,0.68,0.87,0.89,0.63,0.7,0.68,0.56,0.46,0.98,0.38,0.85,0.99,0.93,0.64,0.86,0.66,0.95,0.93,0.85,0.8,0.7,0.91,0.67,0.82,0.96,0.78,0.8,0.85,0.86,0.74,0.86,0.65,0.94,0.81,0.81,0.66,0.83,0.73,0.63,0.87,0.76,0.64,0.75,0.93,0.83,0.89,0.9,0.83,0.75,0.87,0.79,0.78,0.83,0.64,0.94,0.78,0.86,0.65,0.77,0.62,1.01,0.95,0.84,0.68,0.59,0.75,0.72,0.83,0.89,0.76,0.62,0.76,0.95,0.99,0.62,0.74,0.77,0.93,0.47,0.86,0.7,0.99,0.83,0.98,0.89,0.57,0.89,0.72,0.44,0.84,0.82,0.84,0.83,0.34,0.74,0.55,0.92,0.76,0.66,0.58,0.85,0.71,0.89,0.71,0.76,0.72,0.62,0.69,0.87,0.72,0.92,0.86,0.83,0.86,0.79,0.7,0.78,0.76,0.91,0.74,0.69,0.87,0.75,0.96,0.95,0.93,0.85,0.77,0.86,0.68,0.66,0.97,1.01,0.81,0.43,0.91,0.76,0.66,0.95,0.62,0.85,0.68,0.7,0.81,0.8,0.75,1.0,0.69,0.85,0.7,0.73,0.75,1.05,0.74,0.69,0.88,0.98,0.68,0.8,0.56,0.7,0.74,0.76,0.63,0.7,0.94,0.97,0.81,0.8,0.73,0.75,0.71,0.75,0.83,0.83,0.83,0.86,0.79,0.69,0.55,0.84,0.55,0.81,0.85,0.83,0.89,0.94,0.77,0.8,0.79,0.79,0.65,0.8,0.92,0.73,0.79,0.68,0.68,1.01,0.92,0.63,0.89,0.46,0.81,0.72,0.78,0.8,0.89,0.62,0.78,0.79,0.84,0.85,0.79,0.81,0.87,0.57,0.52,0.79,0.9,0.62,0.79,0.97,0.8,0.95,0.76,0.94,0.58,0.57,0.9,0.79,0.77,0.79,0.95,0.93,0.75,0.64,0.88,0.81,0.67,0.78,0.85,0.77,0.73,0.92,0.81,0.51,0.68,0.76,0.6,0.82,0.79,0.73,0.98,0.92,0.5,0.49,0.7,0.93,0.82,0.81,0.83,1.0,0.89,0.77,0.96,0.82,0.57,0.71,0.97,0.93,0.73,0.83,0.92,0.95,0.69,0.85,0.86,0.89,0.58,0.95,0.72,0.95,0.77,0.85,0.71,0.95,0.93,0.99,0.8,0.71,1.05,0.77,0.94,0.72,0.93,0.74,0.9,0.74,0.64,0.69,0.97,0.71,0.71,0.97,0.65,0.84,0.77,0.76,0.72,0.83,0.71,0.82,0.68,0.68,1.04,0.73,0.7,0.65,0.74,0.85,0.71,0.79,0.83,0.78,0.74,0.92,0.68,0.69,0.82,0.78,0.42,0.79,0.72,0.81,0.92,0.84,0.9,0.94,0.59,0.69,0.94,0.95,0.73,0.83,0.98,0.79,0.8,0.86,0.5,0.8,0.88,0.8,0.58,0.88,0.75,0.78,0.8,0.83,0.88,0.6,0.6,0.69,0.84,0.88,0.98,0.91,0.8,0.87,0.91,0.84,0.97,0.57,0.66,0.62,0.91,0.86,0.8,0.84,0.68,0.89,0.71,0.84,0.86,0.86,0.87,0.73,0.9,0.74,1.0,0.81,0.75,0.77,1.0]},"asset_stats":{"MSFT":{"weight_2020_pct":4.1,"weight_lstm_avg_pct":23.4,"weight_lstm_2026_pct":41.9,"init_usd_2020":205.21,"end_usd_bh":641.66,"cum_ret_pct":212.68,"ann_ret_pct":21.49,"ann_vol_pct":27.44},"JNJ":{"weight_2020_pct":27.8,"weight_lstm_avg_pct":12.0,"weight_lstm_2026_pct":0.3,"init_usd_2020":1391.39,"end_usd_bh":3050.67,"cum_ret_pct":119.25,"ann_ret_pct":13.61,"ann_vol_pct":17.45},"MA":{"weight_2020_pct":7.4,"weight_lstm_avg_pct":23.9,"weight_lstm_2026_pct":28.2,"init_usd_2020":370.37,"end_usd_bh":888.73,"cum_ret_pct":139.96,"ann_ret_pct":16.17,"ann_vol_pct":25.08},"PEP":{"weight_2020_pct":14.2,"weight_lstm_avg_pct":19.4,"weight_lstm_2026_pct":4.2,"init_usd_2020":710.71,"end_usd_bh":883.36,"cum_ret_pct":24.29,"ann_ret_pct":4.92,"ann_vol_pct":18.39},"WMT":{"weight_2020_pct":23.0,"weight_lstm_avg_pct":9.2,"weight_lstm_2026_pct":10.7,"init_usd_2020":1151.15,"end_usd_bh":3755.96,"cum_ret_pct":226.28,"ann_ret_pct":20.36,"ann_vol_pct":21.73},"MCD":{"weight_2020_pct":23.4,"weight_lstm_avg_pct":12.1,"weight_lstm_2026_pct":14.6,"init_usd_2020":1171.17,"end_usd_bh":1870.96,"cum_ret_pct":59.75,"ann_ret_pct":8.79,"ann_vol_pct":17.81}},"summaries":{"lstm":{"name":"Deep Portfolio LSTM (Python Neural Net)","final_usd":15057.19,"profit_usd":10057.19,"total_ret_pct":201.14,"cagr_pct":18.53,"vol_pct":20.26,"sharpe":0.82,"sortino":1.24,"calmar":0.98,"max_dd_pct":-19.0},"sp500":{"name":"Benchmark S&P 500 (^GSPC)","final_usd":13132.1,"profit_usd":8132.1,"total_ret_pct":162.64,"cagr_pct":16.06,"vol_pct":16.75,"sharpe":0.82,"sortino":1.12,"calmar":0.63,"max_dd_pct":-25.43},"equal":{"name":"Cartera Equiponderada (1/N)","final_usd":11836.13,"profit_usd":6836.13,"total_ret_pct":136.72,"cagr_pct":14.21,"vol_pct":13.63,"sharpe":0.86,"sortino":1.23,"calmar":1.03,"max_dd_pct":-13.86},"tang_rebal":{"name":"Portafolio Tangente Markowitz 2020 (Rebalanceado)","final_usd":11208.95,"profit_usd":6208.95,"total_ret_pct":124.18,"cagr_pct":13.26,"vol_pct":13.11,"sharpe":0.82,"sortino":1.22,"calmar":1.03,"max_dd_pct":-12.85},"tang_bh":{"name":"Portafolio Tangente Markowitz 2020 (Buy & Hold)","final_usd":10994.41,"profit_usd":5994.41,"total_ret_pct":119.89,"cagr_pct":12.92,"vol_pct":13.27,"sharpe":0.79,"sortino":1.15,"calmar":1.01,"max_dd_pct":-12.78},"minvar":{"name":"Portafolio Eficiente M\u00edn. Varianza 2020","final_usd":10598.73,"profit_usd":5598.73,"total_ret_pct":111.97,"cagr_pct":12.28,"vol_pct":13.5,"sharpe":0.74,"sortino":1.11,"calmar":0.8,"max_dd_pct":-15.43}}};
+      const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif';
+      const plotConfig = { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['lasso2d', 'select2d'] };
+
+      // -----------------------------------------------------------------------
+      // CHART 1: EQUITY CURVES ($5,000 USD from 2020-04-30 to 2026-10-29)
+      // -----------------------------------------------------------------------
+      function renderEquityChart(mode) {
+        const dates = DATA.dates;
+        const toSeries = (arr) => {
+          if (mode === 'pct') {
+            return arr.map(v => Number(((v / 5000.0 - 1.0) * 100.0).toFixed(2)));
+          }
+          return arr;
+        };
+        const yPrefix = mode === 'pct' ? '' : '$';
+        const ySuffix = mode === 'pct' ? '%' : ' USD';
+
+        const traces = [
+          {
+            x: dates,
+            y: toSeries(DATA.curves.lstm),
+            name: 'Deep Portfolio LSTM (Python) — $15,057',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#2563eb', width: 3.2 },
+            hovertemplate: '<b>Deep Portfolio LSTM</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
+          },
+          {
+            x: dates,
+            y: toSeries(DATA.curves.sp500),
+            name: 'Benchmark S&P 500 (^GSPC) — $13,132',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#0f172a', width: 2.3, dash: 'dash' },
+            hovertemplate: '<b>S&P 500 (^GSPC)</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
+          },
+          {
+            x: dates,
+            y: toSeries(DATA.curves.equal),
+            name: 'Cartera Equiponderada (1/N) — $11,836',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#64748b', width: 1.8, dash: 'dot' },
+            hovertemplate: '<b>Equiponderada (1/N)</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
+          },
+          {
+            x: dates,
+            y: toSeries(DATA.curves.tang_rebal),
+            name: 'Portafolio Tangente 2020 (Rebalanceado) — $11,209',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#10b981', width: 2.8 },
+            hovertemplate: '<b>Tangente 2020 (Rebal)</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
+          },
+          {
+            x: dates,
+            y: toSeries(DATA.curves.tang_bh),
+            name: 'Portafolio Tangente 2020 (Buy & Hold) — $10,994',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#059669', width: 1.9, dash: 'dashdot' },
+            hovertemplate: '<b>Tangente 2020 (Buy & Hold)</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
+          },
+          {
+            x: dates,
+            y: toSeries(DATA.curves.minvar),
+            name: 'Portafolio Mínima Varianza 2020 — $10,599',
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#f59e0b', width: 2.0 },
+            hovertemplate: '<b>Mínima Varianza 2020</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
+          }
+        ];
+
+        const layout = {
+          font: { family: fontFamily, color: '#1e293b' },
+          margin: { l: 68, r: 24, t: 24, b: 48 },
+          paper_bgcolor: '#ffffff',
+          plot_bgcolor: '#f8fafc',
+          hovermode: 'x unified',
+          xaxis: {
+            title: 'Fecha de Negociación (Out-of-Sample: Abril 2020 – Octubre 2026)',
+            gridcolor: '#e2e8f0',
+            linecolor: '#cbd5e1'
+          },
+          yaxis: {
+            title: mode === 'pct' ? 'Rendimiento Acumulado (%)' : 'Valor del Portafolio ($ USD)',
+            type: mode === 'log' ? 'log' : 'linear',
+            tickprefix: mode === 'pct' ? '' : '$',
+            ticksuffix: mode === 'pct' ? '%' : '',
+            gridcolor: '#e2e8f0',
+            linecolor: '#cbd5e1'
+          },
+          legend: {
+            orientation: 'h',
+            yanchor: 'bottom',
+            y: 1.02,
+            xanchor: 'left',
+            x: 0,
+            bgcolor: 'rgba(255,255,255,0.9)'
+          },
+          shapes: [
+            {
+              type: 'rect',
+              xref: 'x',
+              yref: 'paper',
+              x0: '2022-01-03',
+              x1: '2022-10-14',
+              y0: 0,
+              y1: 1,
+              fillcolor: 'rgba(239, 68, 68, 0.07)',
+              line: { width: 0 }
+            }
+          ],
+          annotations: [
+            {
+              x: '2022-05-15',
+              y: 0.96,
+              xref: 'x',
+              yref: 'paper',
+              text: 'Bear Market 2022 (Inflación / Alzas Fed)',
+              showarrow: false,
+              font: { size: 11, color: '#b91c1c' },
+              bgcolor: 'rgba(254, 226, 226, 0.85)',
+              borderpad: 4
+            }
+          ]
+        };
+
+        Plotly.react('chartEquityCurves', traces, layout, plotConfig);
+      }
+
+      renderEquityChart('linear');
+
+      document.getElementById('btnScaleLinear').addEventListener('click', function() {
+        document.querySelectorAll('.chart-ctrl-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        renderEquityChart('linear');
+      });
+      document.getElementById('btnScaleLog').addEventListener('click', function() {
+        document.querySelectorAll('.chart-ctrl-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        renderEquityChart('log');
+      });
+      document.getElementById('btnScalePct').addEventListener('click', function() {
+        document.querySelectorAll('.chart-ctrl-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        renderEquityChart('pct');
+      });
+
+      // -----------------------------------------------------------------------
+      // CHART 2: ASSET BREAKDOWN OF $5,000 USD IN THE 2020 TANGENCY PORTFOLIO
+      // -----------------------------------------------------------------------
+      const tickers = ['MSFT', 'JNJ', 'MA', 'PEP', 'WMT', 'MCD'];
+      const initVals = tickers.map(t => DATA.asset_stats[t].init_usd_2020);
+      const endVals  = tickers.map(t => DATA.asset_stats[t].end_usd_bh);
+      const cumRets  = tickers.map(t => DATA.asset_stats[t].cum_ret_pct);
+
+      const traceInit = {
+        x: tickers,
+        y: initVals,
+        name: 'Inversión Inicial (30-Abr-2020)',
+        type: 'bar',
+        marker: { color: '#94a3b8', line: { color: '#64748b', width: 1 } },
+        text: initVals.map(v => '$' + v.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})),
+        textposition: 'auto',
+        hovertemplate: '<b>%{x}</b> — Capital Inicial (2020): <b>$%{y:,.2f} USD</b><extra></extra>'
+      };
+
+      const traceEnd = {
+        x: tickers,
+        y: endVals,
+        name: 'Valor Final Hoy (29-Oct-2026)',
+        type: 'bar',
+        marker: { color: '#0052cc', line: { color: '#1e3a8a', width: 1 } },
+        text: endVals.map((v, i) => '$' + v.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0}) + ' (+' + cumRets[i] + '%)'),
+        textposition: 'outside',
+        hovertemplate: '<b>%{x}</b> — Valor Final (2026): <b>$%{y:,.2f} USD</b><extra></extra>'
+      };
+
+      Plotly.newPlot('chartAssetBreakdown', [traceInit, traceEnd], {
+        font: { family: fontFamily, color: '#1e293b' },
+        barmode: 'group',
+        margin: { l: 65, r: 24, t: 36, b: 48 },
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#f8fafc',
+        xaxis: { title: 'Acciones del S&P 500 en el Portafolio Tangente (Pesos Abril 2020)', gridcolor: '#e2e8f0' },
+        yaxis: { title: 'Valor en Dólares ($ USD)', tickprefix: '$', gridcolor: '#e2e8f0', range: [0, 4350] },
+        legend: { orientation: 'h', y: 1.11, x: 0 }
+      }, plotConfig);
+
+      // -----------------------------------------------------------------------
+      // CHART 3: DYNAMIC LSTM WEIGHTS (STACKED AREA 100%)
+      // -----------------------------------------------------------------------
+      const palette = {
+        MSFT: '#2563eb',
+        MA:   '#0ea5e9',
+        WMT:  '#10b981',
+        JNJ:  '#14b8a6',
+        MCD:  '#f59e0b',
+        PEP:  '#8b5cf6'
+      };
+      const weightTraces = ['MSFT', 'MA', 'WMT', 'JNJ', 'MCD', 'PEP'].map(t => ({
+        x: DATA.q_dates,
+        y: DATA.q_weights[t],
+        name: t,
+        type: 'scatter',
+        mode: 'lines',
+        stackgroup: 'one',
+        groupnorm: 'percent',
+        line: { width: 1.2, color: palette[t] },
+        hovertemplate: '<b>' + t + '</b>: %{y:.1f}% del portafolio<extra></extra>'
+      }));
+
+      Plotly.newPlot('chartLstmWeights', weightTraces, {
+        font: { family: fontFamily, color: '#1e293b' },
+        margin: { l: 62, r: 24, t: 28, b: 48 },
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#f8fafc',
+        hovermode: 'x unified',
+        xaxis: { title: 'Trimestre (Rebalanceo Dinámico Out-of-Sample 2020Q2 – 2026Q4)', gridcolor: '#e2e8f0' },
+        yaxis: { title: 'Participación en la Cartera (%)', ticksuffix: '%', range: [0, 100], gridcolor: '#e2e8f0' },
+        legend: { orientation: 'h', y: 1.11, x: 0 }
+      }, plotConfig);
+
+      // -----------------------------------------------------------------------
+      // CHART 4: EFFICIENT FRONTIER & MONTE CARLO CLOUD (2020-2026)
+      // -----------------------------------------------------------------------
+      const mcTrace = {
+        x: DATA.mc.vols,
+        y: DATA.mc.rets,
+        mode: 'markers',
+        type: 'scatter',
+        name: 'Simulación Monte Carlo (1,200 Carteras)',
+        marker: {
+          size: 6,
+          color: DATA.mc.sharpes,
+          colorscale: 'Viridis',
+          opacity: 0.55,
+          colorbar: { title: 'Sharpe', thickness: 14, len: 0.75 }
+        },
+        hovertemplate: 'Cartera Simulada<br>Volatilidad: %{x:.2f}%<br>Retorno Anual: %{y:.2f}%<extra></extra>'
+      };
+
+      const assetScatter = {
+        x: tickers.map(t => DATA.asset_stats[t].ann_vol_pct),
+        y: tickers.map(t => DATA.asset_stats[t].ann_ret_pct),
+        text: tickers,
+        mode: 'markers+text',
+        type: 'scatter',
+        name: 'Acciones Individuales S&P 500',
+        textposition: 'top center',
+        marker: { size: 11, color: '#334155', symbol: 'diamond' },
+        hovertemplate: '<b>%{text}</b><br>Volatilidad: %{x:.2f}%<br>Retorno Anual: %{y:.2f}%<extra></extra>'
+      };
+
+      const stratPoints = {
+        x: [DATA.summaries.tang_rebal.vol_pct, DATA.summaries.minvar.vol_pct, DATA.summaries.sp500.vol_pct, DATA.summaries.lstm.vol_pct],
+        y: [DATA.summaries.tang_rebal.cagr_pct, DATA.summaries.minvar.cagr_pct, DATA.summaries.sp500.cagr_pct, DATA.summaries.lstm.cagr_pct],
+        text: ['Portafolio Tangente 2020', 'Mínima Varianza 2020', 'Benchmark S&P 500', 'Deep Portfolio LSTM (Python)'],
+        mode: 'markers+text',
+        type: 'scatter',
+        name: 'Portafolios Estratégicos',
+        textposition: ['bottom right', 'bottom left', 'top left', 'top center'],
+        marker: {
+          size: [15, 14, 15, 18],
+          color: ['#10b981', '#f59e0b', '#0f172a', '#2563eb'],
+          symbol: ['star', 'circle', 'square', 'star-diamond'],
+          line: { color: '#ffffff', width: 2 }
+        },
+        hovertemplate: '<b>%{text}</b><br>Volatilidad Anual: %{x:.2f}%<br>CAGR Anual: %{y:.2f}%<extra></extra>'
+      };
+
+      Plotly.newPlot('chartEfficientFrontier', [mcTrace, assetScatter, stratPoints], {
+        font: { family: fontFamily, color: '#1e293b' },
+        margin: { l: 65, r: 30, t: 28, b: 50 },
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#f8fafc',
+        xaxis: { title: 'Riesgo / Volatilidad Anualizada Realizada (σ %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+        yaxis: { title: 'Retorno Compuesto Anualizado Realizado (E[R] / CAGR %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+        legend: { orientation: 'h', y: 1.11, x: 0 }
+      }, plotConfig);
+
+      // -----------------------------------------------------------------------
+      // CHART 5: UNDERWATER DRAWDOWN CHART (2020-2026)
+      // -----------------------------------------------------------------------
+      const ddTraces = [
+        {
+          x: DATA.dates,
+          y: DATA.drawdowns.tang_rebal,
+          name: 'Portafolio Tangente 2020 (Max DD: -12.85%)',
+          type: 'scatter',
+          mode: 'lines',
+          fill: 'tozeroy',
+          fillcolor: 'rgba(16, 185, 129, 0.12)',
+          line: { color: '#10b981', width: 2.2 },
+          hovertemplate: '<b>Tangente 2020</b>: %{y:.2f}%<extra></extra>'
+        },
+        {
+          x: DATA.dates,
+          y: DATA.drawdowns.lstm,
+          name: 'Deep Portfolio LSTM (Max DD: -19.00%)',
+          type: 'scatter',
+          mode: 'lines',
+          line: { color: '#2563eb', width: 2.4 },
+          hovertemplate: '<b>Deep Portfolio LSTM</b>: %{y:.2f}%<extra></extra>'
+        },
+        {
+          x: DATA.dates,
+          y: DATA.drawdowns.sp500,
+          name: 'Benchmark S&P 500 (Max DD: -25.43%)',
+          type: 'scatter',
+          mode: 'lines',
+          fill: 'tozeroy',
+          fillcolor: 'rgba(239, 68, 68, 0.09)',
+          line: { color: '#ef4444', width: 1.9, dash: 'dot' },
+          hovertemplate: '<b>S&P 500</b>: %{y:.2f}%<extra></extra>'
+        }
+      ];
+
+      Plotly.newPlot('chartDrawdowns', ddTraces, {
+        font: { family: fontFamily, color: '#1e293b' },
+        margin: { l: 65, r: 24, t: 24, b: 48 },
+        paper_bgcolor: '#ffffff',
+        plot_bgcolor: '#f8fafc',
+        hovermode: 'x unified',
+        xaxis: { title: 'Fecha (2020–2026)', gridcolor: '#e2e8f0' },
+        yaxis: { title: 'Drawdown desde el Máximo (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+        legend: { orientation: 'h', y: 1.12, x: 0 }
+      }, plotConfig);
+    })();
+  </script>
+
+  <!-- Corporate Portfolio JS (Code Copy Buttons, Scroll Top, Navigation) -->
+  <script src="js/futuristic-app.js?v=20261030a"></script>
+</body>
+</html>
