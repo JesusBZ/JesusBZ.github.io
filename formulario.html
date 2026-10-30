@@ -714,24 +714,6 @@
             </div>
           </div>
 
-          <!-- Project Area Dropdown -->
-          <div class="form-group-field">
-            <label class="field-label" for="contact_subject">
-              <span>Área de Interés Técnico</span>
-            </label>
-            <div class="input-with-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-              <select id="contact_subject" name="subject" class="supreme-select">
-                <option value="Modelación Econométrica & Series de Tiempo">Modelación Econométrica & Series Temporales (ARIMA, VAR, GARCH, Prophet)</option>
-                <option value="Business Intelligence & Dashboards">Business Intelligence & Dashboards (Power BI, R Shiny, KPI Corporativos)</option>
-                <option value="Planificación Financiera & Presupuesto">Planificación Financiera, Presupuestos Maestros & Control de Gestión</option>
-                <option value="Evaluación de Proyectos de Inversión">Evaluación de Proyectos de Inversión & Valor en Riesgo (VaR)</option>
-                <option value="Machine Learning para Finanzas">Machine Learning para Finanzas & Automatización Analítica</option>
-                <option value="Otro Requerimiento">Otro Requerimiento Corporativo Especializado</option>
-              </select>
-            </div>
-          </div>
-
           <!-- Message Textarea -->
           <div class="form-group-field">
             <label class="field-label" for="contact_message">
@@ -838,18 +820,18 @@
         var nameVal = (document.getElementById('contact_name').value || '').trim();
         var emailVal = (document.getElementById('contact_email').value || '').trim();
         var phoneVal = (document.getElementById('contact_phone').value || '').trim();
-        var subjectEl = document.getElementById('contact_subject');
-        var subjectVal = subjectEl ? (subjectEl.value || '').trim() : '';
         var msgVal = (document.getElementById('contact_message').value || '').trim();
         var honeypotEl = form.querySelector('input[name="bluetooth_magenta_argyle_rhino"]');
-
-        var combinedText = subjectVal ? ('[Área: ' + subjectVal + ']\n' + msgVal) : msgVal;
 
         var params = new URLSearchParams();
         params.append('name', nameVal);
         params.append('email', emailVal);
-        params.append('phone', phoneVal);
-        params.append('text', combinedText);
+        params.append('phone', phoneVal ? (phoneVal + ' | Mensaje: ' + msgVal) : msgVal);
+        params.append('text', msgVal);
+        params.append('message', msgVal);
+        params.append('mensaje', msgVal);
+        params.append('comments', msgVal);
+        params.append('buttom', 'ENVIAR');
         if (honeypotEl && honeypotEl.checked) {
           params.append('bluetooth_magenta_argyle_rhino', '1');
         }
@@ -860,7 +842,7 @@
         fetch(form.action, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'Accept': 'application/json'
           },
           body: params.toString()
