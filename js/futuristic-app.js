@@ -796,8 +796,11 @@
       let h = escapeHtml(text || '');
       h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       h = h.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, label, url) => {
-        const ext = /^https?:/i.test(url);
-        return `<a href="${url}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${label}</a>`;
+        const cleanUrl = String(url || '').trim();
+        const isSafe = /^(https?:\/\/|mailto:|tel:|[a-zA-Z0-9_\-\/\.]+\.html(#[a-zA-Z0-9_\-]+)?$)/i.test(cleanUrl);
+        if (!isSafe) return label;
+        const ext = /^https?:/i.test(cleanUrl);
+        return `<a href="${cleanUrl}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${label}</a>`;
       });
       const lines = h.split('\n');
       let out = '', inList = false;
