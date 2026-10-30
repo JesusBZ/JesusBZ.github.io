@@ -851,3 +851,16 @@ hr {
 @media (prefers-reduced-motion: reduce) {
   .pc-track { animation: none; }
 }
+
+/* ==========================================================================
+   Hide Disqus "Recommendations" widget (TAMBIEN EN PORTAFOLIO) - static strip
+   Comments iframe (disqus.com/embed/comments) stays visible.
+   ========================================================================== */
+#disqus_thread iframe[src*="disqus.com/recommendations"],
+#disqus_thread iframe[src*="/recommendations/"],
+#disqus_recommendations,
+iframe[src*="disqus.com/recommendations"] {
+  display: none !important;
+  height: 0 !important;
+  visibility: hidden !important;
+}

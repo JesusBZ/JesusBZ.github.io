@@ -945,6 +945,23 @@ Responde siempre con rigor técnico y analítico, elegancia corporativa, usando 
   // =========================================================================
   // Initialize Everything on DOM Ready
   // =========================================================================
+
+  // =========================================================================
+  // Remove Disqus "Recommendations" strip (keeps the comments thread intact)
+  // =========================================================================
+  function initDisqusRecommendationsBlocker() {
+    const thread = document.getElementById('disqus_thread');
+    if (!thread) return;
+    const purge = () => {
+      thread.querySelectorAll('iframe').forEach(f => {
+        const src = f.getAttribute('src') || '';
+        if (src.indexOf('/recommendations') !== -1) f.remove();
+      });
+    };
+    purge();
+    new MutationObserver(purge).observe(thread, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+  }
+
   function initAll() {
     initNavigation();
     initHeroSlider();
@@ -952,6 +969,7 @@ Responde siempre con rigor técnico y analítico, elegancia corporativa, usando 
     initSearchAndFilter();
     initCodeCopyButtons();
     initCopilotHUD();
+    initDisqusRecommendationsBlocker();
   }
 
   if (document.readyState === 'loading') {
