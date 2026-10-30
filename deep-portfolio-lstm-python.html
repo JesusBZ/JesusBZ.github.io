@@ -16,12 +16,12 @@
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
 <meta property="og:title" content="Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Portafolio Tangente de Markowitz (2020–2026)" />
-<meta property="og:description" content="Auditoría empírica de $5,000 USD invertidos en el Portafolio Tangente de abril de 2020 y optimización dinámica con Redes Neuronales LSTM en Python (PyTorch) hasta 2026. Por Jesús Benjamín Zerpa." />
+<meta property="og:description" content="Evaluación fuera de muestra de $5,000 USD asignados en el Portafolio Tangente de abril de 2020 y optimización dinámica con Redes Neuronales LSTM en Python (PyTorch) hasta 2026. Por Jesús Benjamín Zerpa." />
 <meta property="og:url" content="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
 <meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-f.webp" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Portafolio Tangente de Markowitz (2020–2026)" />
-<meta name="twitter:description" content="Auditoría empírica de $5,000 USD invertidos en el Portafolio Tangente de abril de 2020 y optimización dinámica con Redes Neuronales LSTM en Python (PyTorch) hasta 2026. Por Jesús Benjamín Zerpa." />
+<meta name="twitter:description" content="Evaluación fuera de muestra de $5,000 USD asignados en el Portafolio Tangente de abril de 2020 y optimización dinámica con Redes Neuronales LSTM en Python (PyTorch) hasta 2026. Por Jesús Benjamín Zerpa." />
 <meta name="twitter:image" content="https://jesusbz.github.io/imagenes/imagen-f.webp" />
 <script type="application/ld+json">
 {
@@ -56,7 +56,7 @@
       "@type": "TechArticle",
       "@id": "https://jesusbz.github.io/deep-portfolio-lstm-python.html#article",
       "headline": "Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Evaluación Empírica del Portafolio Tangente de Markowitz ($5,000 USD, 2020–2026)",
-      "description": "Auditoría ex-post de $5,000 USD invertidos en el Portafolio Tangente de Markowitz de abril de 2020 (MSFT, JNJ, MA, PEP, WMT, MCD) y nueva arquitectura de asignación dinámica con Redes Neuronales Recurrentes LSTM en Python y PyTorch.",
+      "description": "Evaluación fuera de muestra de $5,000 USD invertidos en el Portafolio Tangente de Markowitz de abril de 2020 (MSFT, JNJ, MA, PEP, WMT, MCD) y formulación de asignación dinámica con Redes Neuronales Recurrentes LSTM en Python y PyTorch.",
       "image": "https://jesusbz.github.io/imagenes/imagen-f.webp",
       "url": "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
       "mainEntityOfPage": "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
@@ -125,13 +125,13 @@
   <link rel="icon" href="favi.png" type="image/png" />
 
   <!-- Corporate Stylesheets -->
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261030b" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030b" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261030c" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030c" />
 
-  <!-- Local Plotly.js Interactive Financial Charting Engine (Zero Latency) -->
+  <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
-  <!-- MathJax for Quantitative Equations (Strictly \( \) and $$ $$ so $5,000 USD is never altered) -->
+  <!-- MathJax for Quantitative Equations -->
   <script>
     window.MathJax = {
       tex: {
@@ -546,6 +546,11 @@
       margin: 1.25rem 0;
       overflow-x: auto;
     }
+    pre.console-out {
+      margin-top: -0.75rem !important;
+      margin-bottom: 1.5rem !important;
+      border-top: 1px dashed #334155 !important;
+    }
   </style>
 </head>
 <body>
@@ -611,27 +616,27 @@
       <!-- Executive Hero Panel -->
       <div class="study-hero-panel">
         <div class="study-hero-badges">
-          <span class="study-badge primary">ACTUALIZACIÓN DEEP LEARNING 2026</span>
+          <span class="study-badge primary">TEORÍA DE PORTAFOLIOS &amp; DEEP LEARNING</span>
           <span class="study-badge emerald">PYTHON • PYTORCH • LSTM • PLOTLY</span>
-          <span class="study-badge amber">AUDITORÍA REAL: $5,000 USD (2020–2026)</span>
+          <span class="study-badge amber">EVALUACIÓN FUERA DE MUESTRA: $5,000 USD (2020–2026)</span>
         </div>
-        <h1>Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz</h1>
+        <h1>Portafolios de Inversión: Optimización Dinámica con Redes Neuronales LSTM en Python sobre el Portafolio Tangente de Markowitz</h1>
         <p>
-          Evaluación empírica ex-post de una inversión de <strong>$5,000.00 USD</strong> ejecutada el <strong>30 de abril de 2020</strong> sobre las seis acciones del S&amp;P 500 de nuestro estudio original en RStudio (<code>MSFT</code>, <code>JNJ</code>, <code>MA</code>, <code>PEP</code>, <code>WMT</code> y <code>MCD</code>), contrastada frente a una nueva arquitectura de <strong>Redes Neuronales Recurrentes (LSTM)</strong> entrenada en <strong>Python y PyTorch</strong> para maximizar dinámicamente el Ratio de Sharpe-Sortino diferencial hasta octubre de 2026.
+          <strong>Descripción:</strong> En el siguiente entrenamiento se evalúa el desempeño fuera de muestra (<em>out-of-sample</em>) de una asignación inicial de capital de <strong>$5,000.00 USD</strong> constituida el <strong>30 de abril de 2020</strong> sobre los seis valores bursátiles del índice Standard &amp; Poor's 500 (S&amp;P 500) que integraron el modelo de media-varianza original (<code>MSFT</code>, <code>JNJ</code>, <code>MA</code>, <code>PEP</code>, <code>WMT</code> y <code>MCD</code>), desarrollando a continuación un modelo de optimización dinámica basado en <strong>Redes Neuronales Recurrentes (LSTM)</strong> en <strong>Python</strong> para estimar las participaciones óptimas de cartera hasta octubre de 2026.
         </p>
         <div class="study-meta-bar">
           <div>
-            <strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Ventana Out-of-Sample:</strong> 30-Abr-2020 al 29-Oct-2026 (1,633 sesiones bursátiles)
+            <strong>Por:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Período de Evaluación:</strong> 30-Abr-2020 al 29-Oct-2026 (1,633 sesiones bursátiles)
           </div>
           <div class="study-dl-group">
             <a href="proyecto4.html" class="btn-study-action outline">
-              <span>Ver Post Original 2020 (RStudio)</span>
+              <span>Post de Referencia 2020 (RStudio)</span>
             </a>
             <a href="models/deep_portfolio_lstm.py" download class="btn-study-action solid">
-              <span>Descargar Script Python (.py)</span>
+              <span>Código del Modelo (.py)</span>
             </a>
             <a href="data/sp500_6assets_2010_2026.csv" download class="btn-study-action outline">
-              <span>Dataset S&amp;P 500 2010–2026 (.csv)</span>
+              <span>Base de Datos S&amp;P 500 (.csv)</span>
             </a>
           </div>
         </div>
@@ -642,26 +647,26 @@
         <div class="kpi-exec-box">
           <span class="kpi-exec-tag">Capital Inicial (30-Abr-2020)</span>
           <span class="kpi-exec-val">$5,000.00</span>
-          <span class="kpi-exec-sub blue">Base de Referencia</span>
-          <span class="kpi-exec-meta">6 Acciones S&amp;P 500: MSFT, JNJ, MA, PEP, WMT, MCD</span>
+          <span class="kpi-exec-sub blue">Base de Inversión</span>
+          <span class="kpi-exec-meta">Activos S&amp;P 500: MSFT, JNJ, MA, PEP, WMT, MCD</span>
         </div>
         <div class="kpi-exec-box">
           <span class="kpi-exec-tag">Portafolio Tangente 2020 (Markowitz)</span>
           <span class="kpi-exec-val">$11,208.95</span>
           <span class="kpi-exec-sub pos">+$6,208.95 (+124.18%)</span>
-          <span class="kpi-exec-meta">CAGR: 13.26% | Vol: 13.11% (Mínima) | Max DD: -12.85%</span>
+          <span class="kpi-exec-meta">CAGR: 13.26% | Vol: 13.11% | Max DD: -12.85%</span>
         </div>
         <div class="kpi-exec-box">
-          <span class="kpi-exec-tag">Benchmark S&amp;P 500 (^GSPC)</span>
+          <span class="kpi-exec-tag">Índice de Mercado S&amp;P 500 (^GSPC)</span>
           <span class="kpi-exec-val">$13,132.10</span>
           <span class="kpi-exec-sub pos">+$8,132.10 (+162.64%)</span>
           <span class="kpi-exec-meta">CAGR: 16.06% | Vol: 16.75% | Max DD: -25.43%</span>
         </div>
         <div class="kpi-exec-box highlight-lstm">
-          <span class="kpi-exec-tag">Nuevo Deep Portfolio LSTM (Python)</span>
+          <span class="kpi-exec-tag">Portafolio Dinámico LSTM (Python)</span>
           <span class="kpi-exec-val">$15,057.19</span>
           <span class="kpi-exec-sub pos">+$10,057.19 (+201.14%)</span>
-          <span class="kpi-exec-meta">CAGR: 18.53% | Sortino: 1.24 | Supera al S&amp;P 500 en +$1,925 USD</span>
+          <span class="kpi-exec-meta">CAGR: 18.53% | Ratio Sortino: 1.24 | Max DD: -19.00%</span>
         </div>
       </div>
 
@@ -669,15 +674,15 @@
       <div class="toc-executive-box">
         <div class="toc-executive-title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0052cc" stroke-width="2.3"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-          Índice Estructurado del Estudio Cuantitativo
+          Contenido
         </div>
         <ul class="toc-grid-list">
-          <li><a href="#sec-referencia-2020">1. Punto de Partida: El Portafolio Tangente Original de Abril 2020</a></li>
-          <li><a href="#sec-auditoria-5000">2. Auditoría de $5,000 USD (2020–2026): ¿Cómo Rindió el Portafolio de Markowitz?</a></li>
-          <li><a href="#sec-teoria-lstm">3. De Markowitz Estático a Deep Portfolio Optimization con Redes LSTM</a></li>
-          <li><a href="#sec-codigo-python">4. Librerías de Python y Arquitectura Completa del Código (PyTorch &amp; SciPy)</a></li>
-          <li><a href="#sec-laboratorio-plotly">5. Laboratorio Visual Interactivo (5 Gráficos Dinámicos de Última Generación)</a></li>
-          <li><a href="#sec-conclusiones">6. Tabla Maestra de Resultados y Conclusiones para Gestión de Tesorería</a></li>
+          <li><a href="#sec-referencia-2020">1. Cartera de Referencia: Portafolio Eficiente y Portafolio Tangente (Abril 2020)</a></li>
+          <li><a href="#sec-auditoria-5000">2. Valoración Fuera de Muestra ($5,000 USD, 2020–2026): Rendimiento y Volatilidad</a></li>
+          <li><a href="#sec-teoria-lstm">3. Formulación del Modelo: De Media-Varianza a Redes Neuronales LSTM</a></li>
+          <li><a href="#sec-codigo-python">4. Paqueterías a Utilizar y Modelado en Python</a></li>
+          <li><a href="#sec-laboratorio-plotly">5. Análisis Gráfico Interactivo de la Cartera y Frontera Eficiente</a></li>
+          <li><a href="#sec-conclusiones">6. Participación por Portafolio y Síntesis Comparativa de Indicadores</a></li>
         </ul>
       </div>
 
@@ -685,38 +690,41 @@
            SECCIÓN 1: REFERENCIA AL PRIMER POST (ABRIL 2020)
            ===================================================================== -->
       <section id="sec-referencia-2020">
-        <h2>1. Punto de Partida: Resultados de Referencia del Portafolio Tangente Original (Abril 2020)</h2>
+        <h2>1. Cartera de Referencia: Portafolio Eficiente y Portafolio Tangente (Abril 2020)</h2>
         <p>
-          En abril de 2020, en pleno choque sistémico global derivado del COVID-19, publicamos nuestro trabajo fundacional <a href="proyecto4.html"><strong>Portafolios de Inversión: Portafolio Eficiente y Portafolio Tangente de Markowitz en RStudio</strong></a>. En dicho estudio seleccionamos una cartera diversificada sectorialmente integrada por <strong>seis corporaciones líderes del índice S&amp;P 500</strong>, utilizando series diarias de precios de cierre ajustados desde el <strong>1 de enero de 2010 hasta el 30 de abril de 2020</strong>:
+          La Teoría Moderna de Portafolio formulada por Harry Markowitz (1952) establece que un inversionista racional busca maximizar el rendimiento esperado para un nivel dado de riesgo, o de manera equivalente, minimizar la varianza de la cartera para un nivel determinado de retorno esperado. Esta eficiencia se alcanza mediante la diversificación entre instrumentos cuyos rendimientos presenten correlaciones bajas entre sí, seleccionando empresas pertenecientes a distintos sectores de actividad económica.
+        </p>
+        <p>
+          En el trabajo precedente (<a href="proyecto4.html"><strong>Portafolios de Inversión: Portafolio Eficiente y Portafolio Tangente de Markowitz</strong></a>), se seleccionaron seis activos bursátiles integrantes del índice S&amp;P 500 durante el período comprendido entre enero de 2010 y abril de 2020:
         </p>
         <ul>
-          <li><strong>Microsoft Corporation (<code>MSFT</code>):</strong> Sector Tecnología, Cloud Computing e Inteligencia Artificial.</li>
-          <li><strong>Johnson &amp; Johnson (<code>JNJ</code>):</strong> Sector Salud, Farmacéutica y Dispositivos Médicos (refugio defensivo de baja beta).</li>
-          <li><strong>Mastercard Incorporated (<code>MA</code>):</strong> Sector Financiero y Redes Globales de Procesamiento de Pagos.</li>
-          <li><strong>PepsiCo, Inc. (<code>PEP</code>):</strong> Sector Consumo Masivo No Cíclico de Bebidas y Alimentos.</li>
-          <li><strong>Walmart Inc. (<code>WMT</code>):</strong> Sector Retail Hipermercados y Comercio Electrónico Esencial.</li>
-          <li><strong>McDonald's Corporation (<code>MCD</code>):</strong> Sector Consumo y Franquicias Globales de Restauración Rápida.</li>
+          <li><strong>Microsoft Corporation (<code>MSFT</code>):</strong> Compañía tecnológica multinacional con sede en Redmond, Washington, EE. UU., de mayor capitalización bursátil dentro del índice S&amp;P 500.</li>
+          <li><strong>Johnson &amp; Johnson (<code>JNJ</code>):</strong> Corporación fabricante de dispositivos médicos, productos farmacéuticos y artículos de cuidado personal, caracterizada por una baja desviación estándar histórica.</li>
+          <li><strong>Mastercard Incorporated (<code>MA</code>):</strong> Multinacional de servicios financieros y procesamiento de pagos con sede en Purchase, Nueva York, Estados Unidos.</li>
+          <li><strong>PepsiCo, Inc. (<code>PEP</code>):</strong> Empresa multinacional dedicada a la fabricación, comercialización y distribución de bebidas y aperitivos de consumo no cíclico.</li>
+          <li><strong>Walmart Inc. (<code>WMT</code>):</strong> Corporación multinacional de comercio minorista que opera cadenas de grandes almacenes de descuento y clubes de almacenes.</li>
+          <li><strong>McDonald's Corporation (<code>MCD</code>):</strong> Franquicia global de restaurantes de servicio rápido con sede en Chicago, Illinois.</li>
         </ul>
         <p>
-          Empleando programación cuadrática sobre la matriz de varianzas-covarianzas histórica de una década (2010–2020) mediante la librería <code>fPortfolio</code> de R, determinamos las dos carteras estructurales que dominaron la Frontera Eficiente en aquella fecha:
+          A partir de las series de rendimientos logarítmicos diarios del período 2010–2020 y la matriz de varianza-covarianza estimada en RStudio con la librería <code>fPortfolio</code> bajo la restricción de solo posiciones en largo (<code>constraints = "LongOnly"</code>), se determinaron las participaciones óptimas para el <strong>Portafolio Tangente</strong> (aquel que maximiza el Ratio de Sharpe respecto a la tasa libre de riesgo) y para el <strong>Portafolio Eficiente de Mínima Varianza</strong>. En el siguiente cuadro se presenta la distribución porcentual obtenida en abril de 2020 y su equivalencia sobre un capital inicial de <strong>$5,000.00 USD</strong>:
         </p>
 
         <div class="quant-table-wrap">
           <table class="quant-table">
             <thead>
               <tr>
-                <th>Ticker</th>
-                <th>Empresa / Sector S&amp;P 500</th>
-                <th>Peso Portafolio Tangente (Abril 2020)</th>
-                <th>Peso Mínima Varianza (Abril 2020)</th>
-                <th>Capital Asignado de $5,000 USD (Tangente)</th>
-                <th>Capital Asignado de $5,000 USD (Mín. Varianza)</th>
+                <th>Activo</th>
+                <th>Empresa / Sector Económico</th>
+                <th>Participación Portafolio Tangente (2020)</th>
+                <th>Participación Portafolio Eficiente (2020)</th>
+                <th>Asignación sobre $5,000 USD (Tangente)</th>
+                <th>Asignación sobre $5,000 USD (Mín. Varianza)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong><code>MSFT</code></strong></td>
-                <td>Microsoft Corp. (Tecnología)</td>
+                <td>Microsoft Corporation (Tecnología)</td>
                 <td><span class="badge-num blue">4.1%</span></td>
                 <td>0.0%</td>
                 <td><strong>$205.21 USD</strong></td>
@@ -724,7 +732,7 @@
               </tr>
               <tr>
                 <td><strong><code>JNJ</code></strong></td>
-                <td>Johnson &amp; Johnson (Salud / Farma)</td>
+                <td>Johnson &amp; Johnson (Salud / Farmacéutica)</td>
                 <td><span class="badge-num emerald">27.8%</span></td>
                 <td><span class="badge-num emerald">31.9%</span></td>
                 <td><strong>$1,391.39 USD</strong></td>
@@ -732,7 +740,7 @@
               </tr>
               <tr>
                 <td><strong><code>MA</code></strong></td>
-                <td>Mastercard Inc. (Pagos Digitales)</td>
+                <td>Mastercard Incorporated (Servicios Financieros)</td>
                 <td><span class="badge-num blue">7.4%</span></td>
                 <td>0.0%</td>
                 <td><strong>$370.37 USD</strong></td>
@@ -740,7 +748,7 @@
               </tr>
               <tr>
                 <td><strong><code>PEP</code></strong></td>
-                <td>PepsiCo, Inc. (Consumo Defensivo)</td>
+                <td>PepsiCo, Inc. (Consumo Masivo)</td>
                 <td><span class="badge-num amber">14.2%</span></td>
                 <td><span class="badge-num amber">20.4%</span></td>
                 <td><strong>$710.71 USD</strong></td>
@@ -748,7 +756,7 @@
               </tr>
               <tr>
                 <td><strong><code>WMT</code></strong></td>
-                <td>Walmart Inc. (Retail Esencial)</td>
+                <td>Walmart Inc. (Comercio Minorista)</td>
                 <td><span class="badge-num emerald">23.0%</span></td>
                 <td><span class="badge-num emerald">25.6%</span></td>
                 <td><strong>$1,151.15 USD</strong></td>
@@ -756,14 +764,14 @@
               </tr>
               <tr>
                 <td><strong><code>MCD</code></strong></td>
-                <td>McDonald's Corp. (Restauración)</td>
+                <td>McDonald's Corporation (Servicios / Restauración)</td>
                 <td><span class="badge-num emerald">23.4%</span></td>
                 <td><span class="badge-num emerald">22.1%</span></td>
                 <td><strong>$1,171.17 USD</strong></td>
                 <td>$1,105.00 USD</td>
               </tr>
               <tr class="row-tangente">
-                <td colspan="2"><strong>TOTAL CARTERA OPTIMIZADA (30-ABRIL-2020)</strong></td>
+                <td colspan="2"><strong>TOTAL CARTERA OPTIMIZADA (30 DE ABRIL DE 2020)</strong></td>
                 <td><strong>100.0%</strong></td>
                 <td><strong>100.0%</strong></td>
                 <td><strong>$5,000.00 USD</strong></td>
@@ -774,9 +782,9 @@
         </div>
 
         <div class="callout-quant">
-          <h4>Observación Estructural del Modelo de 2020</h4>
+          <h4>Estructura de Ponderación del Modelo de Media-Varianza (2010–2020)</h4>
           <p>
-            Como se aprecia en la tabla, el <strong>Portafolio Tangente de abril de 2020</strong> asignó el <strong>88.5% del capital</strong> a cuatro activos de perfil altamente defensivo (<code>JNJ: 27.8%</code>, <code>MCD: 23.4%</code>, <code>WMT: 23.0%</code> y <code>PEP: 14.2%</code>), dejando únicamente un <strong>11.5% combinado</strong> en los motores tecnológicos de alto crecimiento (<code>MA: 7.4%</code> y <code>MSFT: 4.1%</code>). El Portafolio de Mínima Varianza fue aún más conservador, excluyendo por completo a <code>MSFT</code> y <code>MA</code> (peso <code>0.0%</code>).
+            En la estimación histórica cerrada en abril de 2020, Johnson &amp; Johnson (<code>JNJ</code>) registró la menor varianza individual de la muestra (<code>0.011%</code>, inferior a la varianza del índice S&amp;P 500 de <code>0.012%</code>), mientras que Mastercard (<code>MA</code>) y Microsoft (<code>MSFT</code>) presentaron las mayores volatilidades diarias (<code>1.75%</code> y <code>1.58%</code>, respectivamente). Como resultado de la optimización cuadrática de la covarianza, el Portafolio Tangente asignó el <strong>88.5% del presupuesto de riesgo</strong> a los cuatro valores de menor volatilidad (<code>JNJ: 27.8%</code>, <code>MCD: 23.4%</code>, <code>WMT: 23.0%</code> y <code>PEP: 14.2%</code>), y el <strong>11.5% restante</strong> a los instrumentos de mayor crecimiento esperado (<code>MA: 7.4%</code> y <code>MSFT: 4.1%</code>).
           </p>
         </div>
       </section>
@@ -785,9 +793,9 @@
            SECCIÓN 2: AUDITORÍA REAL DE $5,000 USD (2020 - 2026)
            ===================================================================== -->
       <section id="sec-auditoria-5000">
-        <h2>2. Auditoría Empírica Ex-Post: ¿Cuánto Valdrían Hoy $5,000 USD Invertidos en Aquel Portafolio Tangente?</h2>
+        <h2>2. Valoración Fuera de Muestra ($5,000 USD, 2020–2026): Rendimiento y Volatilidad</h2>
         <p>
-          La prueba definitiva de todo modelo cuantitativo no reside en su ajuste dentro de la muestra (<em>in-sample</em>, 2010–2020), sino en su desempeño real fuera de muestra (<em>out-of-sample</em>) frente a choques macroeconómicos no observados durante la calibración. Sometimos los pesos exactos publicados el <strong>30 de abril de 2020</strong> a una simulación rigurosa con un capital inicial de <strong>$5,000.00 USD</strong> hasta el <strong>29 de octubre de 2026</strong> (6.5 años de historia bursátil real, atravesando la recuperación post-pandemia de 2020–2021, el mercado bajista inflacionario y el ciclo de alzas de tasas de la Reserva Federal en 2022, y la expansión de la Inteligencia Artificial en 2023–2026).
+          Con el propósito de evaluar la consistencia empírica de las ponderaciones estimadas en el estudio original, se cuantifica el comportamiento de una inversión de <strong>$5,000.00 USD</strong> ejecutada el <strong>30 de abril de 2020</strong> y mantenida hasta el <strong>29 de octubre de 2026</strong> (1,633 días de negociación bursátil). Este horizonte temporal abarca tres fases macroeconómicas diferenciadas: la expansión de liquidez posterior a la crisis sanitaria (2020–2021), el ajuste monetario restrictivo aplicado por la Reserva Federal ante el repunte inflacionario (2022) y el ciclo de expansión del sector tecnológico (2023–2026).
         </p>
 
         <div class="quant-table-wrap">
@@ -795,10 +803,10 @@
             <thead>
               <tr>
                 <th>Activo</th>
-                <th>Peso Tangente 2020</th>
-                <th>Inversión Inicial (30-Abr-2020)</th>
-                <th>Valor Final Buy &amp; Hold (Oct-2026)</th>
-                <th>Ganancia Neta ($ USD)</th>
+                <th>Participación 2020</th>
+                <th>Capital Inicial (30-Abr-2020)</th>
+                <th>Capital Final Buy &amp; Hold (Oct-2026)</th>
+                <th>Variación Neta ($ USD)</th>
                 <th>Rendimiento Acumulado (%)</th>
                 <th>Retorno Anualizado</th>
                 <th>Volatilidad Anual</th>
@@ -890,44 +898,46 @@
         </div>
 
         <p>
-          <strong>Diagnóstico Crítico de la Cartera de Markowitz (2020–2026):</strong>
+          <strong>Análisis de los resultados del Portafolio Tangente de 2020:</strong>
         </p>
-        <ol>
-          <li><strong>Protección Patrimonial Sobresaliente:</strong> El Portafolio Tangente de 2020 cumplió de forma impecable su promesa de control de volatilidad: transformó <strong>$5,000.00 USD en $11,208.95 USD</strong> (rebalanceado) y <strong>$10,994.41 USD</strong> (<em>Buy &amp; Hold</em>), registrando la <strong>volatilidad anualizada más baja de todas las estrategias (13.11%)</strong> y un <em>Maximum Drawdown</em> de apenas <strong>-12.85%</strong> durante el desplome bursátil de 2022, cuando el índice S&amp;P 500 se contrajo un <strong>-25.43%</strong>.</li>
-          <li><strong>El Costo de Oportunidad de los Pesos Estáticos:</strong> Sin embargo, al mantener congelados los pesos de abril de 2020 durante seis años y medio, la cartera subponderó severamente a <strong>Microsoft (<code>MSFT: 4.1%</code>)</strong> —que rindió un <strong>+212.68%</strong>— y a <strong>Mastercard (<code>MA: 7.4%</code>)</strong> —que creció un <strong>+139.96%</strong>—, mientras mantuvo un 37.6% inmovilizado en <code>MCD</code> (+59.75%) y <code>PEP</code> (+24.29%). Aquí es exactamente donde una <strong>Red Neuronal Recurrente LSTM</strong> marca la diferencia estructural.</li>
-        </ol>
+        <ul>
+          <li><strong>Minimización de la varianza fuera de muestra:</strong> El Portafolio Tangente de abril de 2020 incrementó el capital inicial desde <strong>$5,000.00 USD hasta $11,208.95 USD</strong> bajo rebalanceo periódico (+124.18%, tasa anual compuesta de 13.28%) y hasta <strong>$10,994.41 USD</strong> bajo tenencia pasiva (<em>Buy &amp; Hold</em>, +119.89%). Su desviación estándar anualizada se situó en <strong>13.11%</strong> —el nivel de riesgo más bajo entre todas las carteras evaluadas—, limitando la caída máxima acumulada (<em>Maximum Drawdown</em>) a <strong>-12.85%</strong> durante la corrección del mercado en 2022, frente al retroceso de <strong>-25.43%</strong> registrado por el índice S&amp;P 500.</li>
+          <li><strong>Limitación de los parámetros estáticos:</strong> Al mantener invariantes las participaciones estimadas en 2020, la cartera asignó ponderaciones reducidas a <strong>Microsoft (<code>MSFT: 4.1%</code>)</strong> —que acumuló un retorno de <strong>+212.68%</strong>— y a <strong>Mastercard (<code>MA: 7.4%</code>)</strong> —con un rendimiento de <strong>+139.96%</strong>—, mientras conservó el 37.6% del capital en <code>MCD</code> (+59.75%) y <code>PEP</code> (+24.29%). Esta rigidez paramétrica motiva la incorporación de un modelo de optimización secuencial basado en redes neuronales recurrentes.</li>
+        </ul>
       </section>
 
       <!-- =====================================================================
            SECCIÓN 3: FUNDAMENTO MATEMÁTICO (DE MARKOWITZ A DEEP LSTM)
            ===================================================================== -->
       <section id="sec-teoria-lstm">
-        <h2>3. De la Media-Varianza Estática a Deep Portfolio Optimization con Redes Neuronales LSTM</h2>
+        <h2>3. Formulación del Modelo: De Media-Varianza a Redes Neuronales LSTM</h2>
         <p>
-          En la formulación clásica de Harry Markowitz (1952) y William Sharpe (1964), el vector de pesos óptimos del <strong>Portafolio Tangente</strong> \(\mathbf{w}^* \in \Delta^N\) se obtiene resolviendo un problema de optimización estática donde el vector de retornos esperados \(\boldsymbol{\mu}\) y la matriz de covarianza \(\boldsymbol{\Sigma}\) se asumen invariantes en el tiempo:
+          En el modelo clásico de selección de carteras de Markowitz (1952), el rendimiento esperado del portafolio se define como la combinación lineal de los rendimientos esperados individuales ponderados por su participación \(w_i\), mientras que la varianza del portafolio incorpora las covarianzas cruzadas \(\sigma_{ij}\):
+        </p>
+        <div class="math-block-card">
+          $$E(R_p) = \sum_{i=1}^{N} w_i E(R_i) = \mathbf{w}^\top \boldsymbol{\mu}, \qquad \sigma_p^2 = \sum_{i=1}^{N} \sum_{j=1}^{N} w_i w_j \sigma_{ij} = \mathbf{w}^\top \boldsymbol{\Sigma} \mathbf{w}$$
+        </div>
+        <p>
+          El <strong>Portafolio Tangente</strong> se obtiene maximizando el Ratio de Sharpe respecto a la tasa libre de riesgo \(r_f\), sujeto a la restricción presupuestaria de suma unitaria y a la condición de no negatividad (solo posiciones en largo):
         </p>
         <div class="math-block-card">
           $$\max_{\mathbf{w} \in \mathbb{R}^N} \mathcal{S}(\mathbf{w}) = \frac{\mathbf{w}^\top \boldsymbol{\mu} - r_f}{\sqrt{\mathbf{w}^\top \boldsymbol{\Sigma} \mathbf{w}}} \quad \text{sujeto a} \quad \sum_{i=1}^{N} w_i = 1, \quad w_i \ge 0 \; \forall i \in \{1,\dots,N\}$$
         </div>
         <p>
-          En los mercados financieros reales, tanto las correlaciones cruzadas como las primas por riesgo cambian drásticamente de régimen (no estacionariedad y heterocedasticidad condicional). El paradigma de <strong>Deep Portfolio Optimization</strong> (Zhang, Zohren &amp; Roberts, <em>Journal of Financial Data Science</em>, 2020) reemplaza la estimación en dos pasos por una <strong>Red Neuronal Recurrente de Memoria a Largo y Corto Plazo (LSTM — <em>Long Short-Term Memory</em>)</strong> que mapea directamente la secuencia temporal de tensores de mercado \(\mathbf{X}_{t-L:t} \in \mathbb{R}^{L \times N \times F}\) hacia el vector de asignación dinámica \(\mathbf{w}_t\).
-        </p>
-        <p>
-          En cada instante \(t\), cada celda recurrente <code>LSTM</code> actualiza su estado de memoria interna \(\mathbf{c}_t\) y su estado oculto \(\mathbf{h}_t\) a través de tres compuertas no lineales diferenciables (compuerta de olvido \(\mathbf{f}_t\), compuerta de entrada \(\mathbf{i}_t\) y compuerta de salida \(\mathbf{o}_t\)):
+          Dado que en series financieras de alta frecuencia el vector de medias \(\boldsymbol{\mu}_t\) y la matriz de varianza-covarianza \(\boldsymbol{\Sigma}_t\) evolucionan en el tiempo, el enfoque de <strong>Deep Portfolio Optimization</strong> (Zhang, Zohren &amp; Roberts, 2020) parametriza el vector de asignaciones \(\mathbf{w}_t = f_\theta(\mathbf{X}_{t-L:t})\) directamente a través de una <strong>Red Neuronal Recurrente de Memoria a Largo y Corto Plazo (LSTM)</strong>. En cada período \(t\), la unidad recurrente procesa la ventana histórica de características \(\mathbf{x}_t\) mediante sus tres compuertas internas (compuerta de olvido \(\mathbf{f}_t\), compuerta de entrada \(\mathbf{i}_t\) y compuerta de salida \(\mathbf{o}_t\)):
         </p>
         <div class="math-block-card">
           $$\begin{aligned}
-          \mathbf{f}_t &= \sigma\left(\mathbf{W}_f \mathbf{x}_t + \mathbf{U}_f \mathbf{h}_{t-1} + \mathbf{b}_f\right) \quad &\text{(Compuerta de Olvido / Régimen)} \\
-          \mathbf{i}_t &= \sigma\left(\mathbf{W}_i \mathbf{x}_t + \mathbf{U}_i \mathbf{h}_{t-1} + \mathbf{b}_i\right), \quad \tilde{\mathbf{c}}_t = \tanh\left(\mathbf{W}_c \mathbf{x}_t + \mathbf{U}_c \mathbf{h}_{t-1} + \mathbf{b}_c\right) \quad &\text{(Compuerta de Entrada y Candidato)} \\
-          \mathbf{c}_t &= \mathbf{f}_t \odot \mathbf{c}_{t-1} + \mathbf{i}_t \odot \tilde{\mathbf{c}}_t \quad &\text{(Estado de Memoria Celular a Largo Plazo)} \\
-          \mathbf{o}_t &= \sigma\left(\mathbf{W}_o \mathbf{x}_t + \mathbf{U}_o \mathbf{h}_{t-1} + \mathbf{b}_o\right), \quad \mathbf{h}_t = \mathbf{o}_t \odot \tanh(\mathbf{c}_t) \quad &\text{(Estado Oculto Latente)}
+          \mathbf{f}_t &= \sigma\left(\mathbf{W}_f \mathbf{x}_t + \mathbf{U}_f \mathbf{h}_{t-1} + \mathbf{b}_f\right), \qquad \mathbf{i}_t = \sigma\left(\mathbf{W}_i \mathbf{x}_t + \mathbf{U}_i \mathbf{h}_{t-1} + \mathbf{b}_i\right) \\
+          \tilde{\mathbf{c}}_t &= \tanh\left(\mathbf{W}_c \mathbf{x}_t + \mathbf{U}_c \mathbf{h}_{t-1} + \mathbf{b}_c\right), \qquad \mathbf{c}_t = \mathbf{f}_t \odot \mathbf{c}_{t-1} + \mathbf{i}_t \odot \tilde{\mathbf{c}}_t \\
+          \mathbf{o}_t &= \sigma\left(\mathbf{W}_o \mathbf{x}_t + \mathbf{U}_o \mathbf{h}_{t-1} + \mathbf{b}_o\right), \qquad \mathbf{h}_t = \mathbf{o}_t \odot \tanh(\mathbf{c}_t)
           \end{aligned}$$
         </div>
         <p>
-          Para garantizar analíticamente el cumplimiento de las restricciones de presupuesto (\(\sum_{i=1}^N w_{i,t} = 1\)) y de prohibición de ventas en corto (\(w_{i,t} \ge 0\)), la capa de salida aplica una transformación <strong>Softmax con temperatura adaptativa \(\tau\) combinada con un ancla de paridad de riesgo (\(\mathbf{w}_t^{\text{inv-vol}}\))</strong>, entrenando los parámetros \(\theta\) de extremo a extremo para minimizar el negativo del <strong>Ratio de Sharpe-Sortino Diferenciable</strong> neto de costos de transacción (\(c_{\text{tx}} = 4\text{ bps}\)):
+          Para satisfacer las restricciones \(\sum_{i=1}^N w_{i,t} = 1\) y \(w_{i,t} \ge 0\), la capa densa proyecta el estado oculto \(\mathbf{h}_t\) a través de una función <strong>Softmax</strong> regularizada con un vector de volatilidad inversa condicional \(\mathbf{w}_t^{\text{inv-vol}}\), optimizando los pesos sinápticos \(\theta\) mediante el ascenso de gradiente sobre una combinación ponderada del <strong>Ratio de Sharpe y Ratio de Sortino</strong> neta de costos de transacción (\(c_{\text{tx}} = 4\text{ bps}\)):
         </p>
         <div class="math-block-card">
-          $$w_{i,t}(\theta) = (1 - \lambda)\frac{\exp(\tau z_{i,t})}{\sum_{j=1}^{N} \exp(\tau z_{j,t})} + \lambda w_{i,t}^{\text{inv-vol}}, \qquad \mathcal{L}(\theta) = -\left(0.6 \cdot \widehat{\text{Sharpe}}(\mathbf{r}_p) + 0.4 \cdot \widehat{\text{Sortino}}(\mathbf{r}_p)\right) + \gamma \|\theta\|_2^2$$
+          $$w_{i,t}(\theta) = (1 - \lambda)\frac{\exp(\tau z_{i,t})}{\sum_{j=1}^{N} \exp(\tau z_{j,t})} + \lambda w_{i,t}^{\text{inv-vol}}, \qquad \mathcal{L}(\theta) = -\left(0.60 \cdot \widehat{\text{Sharpe}}(\mathbf{r}_p) + 0.40 \cdot \widehat{\text{Sortino}}(\mathbf{r}_p)\right) + \gamma \|\theta\|_2^2$$
         </div>
       </section>
 
@@ -935,19 +945,19 @@
            SECCIÓN 4: LIBRERÍAS DE PYTHON Y CÓDIGO COMPLETO
            ===================================================================== -->
       <section id="sec-codigo-python">
-        <h2>4. Librerías de Python Utilizadas e Implementación Reproducible del Modelo</h2>
+        <h2>4. Paqueterías a Utilizar y Modelado en Python</h2>
         <p>
-          A diferencia del flujo original de 2020 desarrollado en RStudio (<code>quantmod</code> y <code>fPortfolio</code>), esta actualización se construye íntegramente sobre el ecosistema científico e institucional de <strong>Python 3.11+</strong>. A continuación se detallan las librerías empleadas y su función específica dentro de la tubería cuantitativa:
+          Para el desarrollo del modelo en lenguaje <strong>Python</strong> se emplean las siguientes librerías especializadas en econometría financiera, optimización numérica y aprendizaje profundo:
         </p>
 
         <div class="quant-table-wrap">
           <table class="quant-table">
             <thead>
               <tr>
-                <th>Librería de Python</th>
-                <th>Versión Recomendada</th>
-                <th>Módulos / Clases Clave</th>
-                <th>Rol en la Arquitectura Cuantitativa</th>
+                <th>Paquetería Python</th>
+                <th>Versión</th>
+                <th>Funciones y Módulos Principales</th>
+                <th>Aplicación dentro del Modelo</th>
               </tr>
             </thead>
             <tbody>
@@ -955,192 +965,218 @@
                 <td><strong><code>yfinance</code></strong></td>
                 <td><code>&gt;= 0.2.40</code></td>
                 <td><code>yf.download()</code></td>
-                <td>Conexión directa a la API de Yahoo Finance para extraer series diarias ajustadas por dividendos y splits (2010–2026) de <code>MSFT</code>, <code>JNJ</code>, <code>MA</code>, <code>PEP</code>, <code>WMT</code>, <code>MCD</code> y <code>^GSPC</code>.</td>
+                <td>Extracción de series temporales de precios de cierre ajustados (<code>Adj Close</code>) de Yahoo Finance para los seis activos y el índice S&amp;P 500 (<code>^GSPC</code>).</td>
               </tr>
               <tr>
                 <td><strong><code>pandas</code> &amp; <code>numpy</code></strong></td>
                 <td><code>&gt;= 2.2.0 / 1.26.0</code></td>
-                <td><code>DataFrame.rolling()</code>, <code>np.einsum()</code></td>
-                <td>Cálculo vectorizado de retornos logarítmicos, factores de <em>Momentum</em> multiescala (21d, 63d, 126d, 252d), volatilidad condicional EWMA y normalización transversal (<em>Cross-Sectional Z-Score</em>).</td>
+                <td><code>np.log()</code>, <code>DataFrame.rolling()</code>, <code>cov()</code></td>
+                <td>Estructuración de matrices de datos, cálculo de rentabilidades logarítmicas, varianzas, covarianzas y estadísticos móviles de retorno y volatilidad.</td>
               </tr>
               <tr>
                 <td><strong><code>scipy</code></strong></td>
                 <td><code>&gt;= 1.13.0</code></td>
                 <td><code>scipy.optimize.minimize (SLSQP)</code></td>
-                <td>Resolución cuadrática exacta de la Frontera Eficiente de Markowitz para auditar los pesos de abril de 2020 y generar la nube de simulación Monte Carlo.</td>
+                <td>Optimización cuadrática de la frontera eficiente de media-varianza y generación de las simulaciones Monte Carlo de carteras factibles.</td>
               </tr>
               <tr>
                 <td><strong><code>torch</code> (PyTorch)</strong></td>
                 <td><code>&gt;= 2.2.0</code></td>
                 <td><code>nn.Module</code>, <code>nn.LSTM</code>, <code>optim.Adam</code></td>
-                <td>Construcción de la red neuronal recurrente <code>DeepPortfolioLSTM</code>, retropropagación temporal (BPTT) sobre la función de pérdida diferenciable de Sharpe-Sortino y validación <em>Walk-Forward</em>.</td>
+                <td>Especificación de la red neuronal recurrente <code>DeepPortfolioLSTM</code> y estimación de parámetros mediante retropropagación en el tiempo.</td>
               </tr>
               <tr>
                 <td><strong><code>plotly</code></strong></td>
-                <td><code>&gt;= 5.22.0 / JS</code></td>
+                <td><code>&gt;= 5.22.0</code></td>
                 <td><code>plotly.graph_objects</code></td>
-                <td>Renderizado de gráficos dinámicos interactivos de grado institucional (curvas de patrimonio, áreas apiladas de pesos, frontera eficiente y <em>Underwater Drawdown</em>).</td>
+                <td>Representación gráfica interactiva de las series de valor del portafolio, frontera eficiente, estructura de ponderaciones y curvas de caída máxima.</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3>Paso 4.1. Instalación de Librerías y Descarga de la Cartera (2010–2026)</h3>
+        <h3>4.1. Extracción de Series Temporales y Rentabilidad Logarítmica</h3>
         <p>
-          El siguiente bloque descarga automáticamente los precios de cierre ajustados desde Yahoo Finance y separa el conjunto de entrenamiento histórico (<code>2010-01-04</code> al <code>2020-04-30</code>, exactamente la ventana de nuestro primer post) del conjunto de prueba fuera de muestra (<code>2020-04-30</code> al <code>2026-10-29</code>):
+          A continuación se estructuran las series temporales diarias de cada valor bursátil y del índice de referencia desde enero de 2010 hasta octubre de 2026, particionando la muestra en la fecha de corte del estudio original (30 de abril de 2020) y calculando las rentabilidades logarítmicas:
         </p>
 
         <div class="sourceCode">
-<pre class="sourceCode python"><code class="sourceCode python"># Instalación en entorno virtual de Python:
-# pip install yfinance pandas numpy scipy torch plotly
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Instalación de librerías en el entorno de Python:</span>
+<span class="co"># pip install yfinance pandas numpy scipy torch plotly</span>
 
-import numpy as np
-import pandas as pd
-import yfinance as yf
-from scipy.optimize import minimize
+<span class="kw">import</span> numpy <span class="kw">as</span> <span class="dt">np</span>
+<span class="kw">import</span> pandas <span class="kw">as</span> <span class="dt">pd</span>
+<span class="kw">import</span> yfinance <span class="kw">as</span> <span class="dt">yf</span>
+<span class="kw">from</span> scipy.optimize <span class="kw">import</span> minimize
 
-# 1. Definición de la misma cartera del Portafolio Tangente de Abril 2020 + Benchmark S&P 500
-TICKERS = ["MSFT", "JNJ", "MA", "PEP", "WMT", "MCD"]
-BENCHMARK = "^GSPC"
-CAPITAL_INICIAL = 5000.0  # USD invertidos el 30 de abril de 2020
-RF_ANNUAL = 0.025         # Tasa libre de riesgo anualizada de referencia (2.5%)
+<span class="co"># Definición de los seis activos de la cartera (Abril 2020) e índice S&amp;P 500</span>
+<span class="dt">TICKERS</span> <span class="op">=</span> [<span class="st">&quot;MSFT&quot;</span>, <span class="st">&quot;JNJ&quot;</span>, <span class="st">&quot;MA&quot;</span>, <span class="st">&quot;PEP&quot;</span>, <span class="st">&quot;WMT&quot;</span>, <span class="st">&quot;MCD&quot;</span>]
+<span class="dt">BENCHMARK</span> <span class="op">=</span> <span class="st">&quot;^GSPC&quot;</span>
+<span class="dt">CAPITAL_INICIAL</span> <span class="op">=</span> <span class="fl">5000.0</span>
+<span class="dt">RF_ANNUAL</span> <span class="op">=</span> <span class="fl">0.025</span>
 
-# 2. Descarga de precios ajustados desde Yahoo Finance (2010-01-01 hasta hoy)
-raw_data = yf.download(
-    TICKERS + [BENCHMARK],
-    start="2010-01-01",
-    end="2026-10-30",
-    auto_adjust=True,
-    progress=False
-)["Close"].dropna()
+<span class="co"># Descarga de series diarias de precios de cierre ajustados (2010-2026)</span>
+<span class="dt">datos_mercado</span> <span class="op">=</span> <span class="dt">yf</span>.<span class="fu">download</span>(
+    <span class="dt">tickers</span><span class="op">=</span><span class="dt">TICKERS</span> <span class="op">+</span> [<span class="dt">BENCHMARK</span>],
+    <span class="dt">start</span><span class="op">=</span><span class="st">&quot;2010-01-04&quot;</span>,
+    <span class="dt">end</span><span class="op">=</span><span class="st">&quot;2026-10-30&quot;</span>,
+    <span class="dt">auto_adjust</span><span class="op">=</span><span class="cn">True</span>,
+    <span class="dt">progress</span><span class="op">=</span><span class="cn">False</span>
+)[<span class="st">&quot;Close&quot;</span>].<span class="fu">dropna</span>()
 
-# 3. Partición temporal exacta respecto al Post Original (30 de Abril de 2020)
-prices_train_2020 = raw_data.loc[:"2020-04-30", TICKERS]
-prices_oos_2026   = raw_data.loc["2020-04-30":, TICKERS]
-bench_oos_2026    = raw_data.loc["2020-04-30":, BENCHMARK]
+<span class="co"># Partición de la muestra: período de estimación (2010-2020) y evaluación (2020-2026)</span>
+<span class="dt">precios_entrenamiento</span> <span class="op">=</span> datos_mercado.loc[:<span class="st">&quot;2020-04-30&quot;</span>, <span class="dt">TICKERS</span>]
+precios_evaluacion    <span class="op">=</span> datos_mercado.loc[<span class="st">&quot;2020-04-30&quot;</span>:, <span class="dt">TICKERS</span>]
+indice_evaluacion     <span class="op">=</span> datos_mercado.loc[<span class="st">&quot;2020-04-30&quot;</span>:, <span class="dt">BENCHMARK</span>]
 
-print(f"Sesiones In-Sample (2010-2020): {len(prices_train_2020)} días")
-print(f"Sesiones Out-of-Sample (2020-2026): {len(prices_oos_2026)} días")</code></pre>
+<span class="co"># Cálculo de rentabilidades logarítmicas diarias</span>
+<span class="dt">rendimientos_log</span> <span class="op">=</span> <span class="dt">np</span>.<span class="fu">log</span>(precios_evaluacion <span class="op">/</span> precios_evaluacion.<span class="fu">shift</span>(<span class="dv">1</span>)).<span class="fu">dropna</span>()
+<span class="fu">print</span>(rendimientos_log.<span class="fu">head</span>(<span class="dv">6</span>))</code></pre>
         </div>
+<pre class="console-out"><code>##                  MSFT       JNJ        MA       PEP       WMT       MCD
+## Date                                                                   
+## 2020-05-01  -0.026230 -0.011442 -0.029755 -0.012872 -0.013167 -0.022101
+## 2020-05-04   0.024166 -0.002026  0.007980 -0.005619  0.008005 -0.015403
+## 2020-05-05   0.010680  0.005393  0.018581  0.004639  0.007705  0.005749
+## 2020-05-06   0.009804 -0.008642  0.002011 -0.013362 -0.009164 -0.012759
+## 2020-05-07   0.005789 -0.003382  0.019804 -0.004386 -0.004614  0.012206
+## 2020-05-08   0.005875  0.008256  0.025812  0.014933  0.008145  0.025596</code></pre>
 
-        <h3>Paso 4.2. Auditoría Ex-Post en Python de los $5,000 USD en el Portafolio Tangente de 2020</h3>
+        <h3>4.2. Valoración en Python de las Carteras de Markowitz de Abril 2020 ($5,000.00 USD)</h3>
         <p>
-          Replicamos en Python los vectores de pesos óptimos obtenidos en abril de 2020 y evaluamos el crecimiento patrimonial diario de los <strong>$5,000.00 USD</strong> tanto bajo un esquema <em>Buy &amp; Hold</em> como con rebalanceo periódico:
+          Se fijan los vectores de participación correspondientes al Portafolio Tangente y al Portafolio de Mínima Varianza obtenidos en abril de 2020 y se calcula la evolución patrimonial de los <strong>$5,000.00 USD</strong> sobre la muestra 2020–2026:
         </p>
 
         <div class="sourceCode">
-<pre class="sourceCode python"><code class="sourceCode python"># Pesos originales publicados en Abril de 2020 (proyecto4.html)
-# Orden de activos: ["MSFT", "JNJ", "MA", "PEP", "WMT", "MCD"]
-w_tangente_2020 = np.array([0.041, 0.278, 0.074, 0.142, 0.230, 0.234])
-w_tangente_2020 /= w_tangente_2020.sum()
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Ponderaciones óptimas estimadas en el modelo original (Abril 2020)</span>
+<span class="co"># Orden de activos: [&quot;MSFT&quot;, &quot;JNJ&quot;, &quot;MA&quot;, &quot;PEP&quot;, &quot;WMT&quot;, &quot;MCD&quot;]</span>
+<span class="dt">w_tangente_2020</span> <span class="op">=</span> <span class="dt">np</span>.<span class="fu">array</span>([<span class="fl">0.0409</span>, <span class="fl">0.2778</span>, <span class="fl">0.0741</span>, <span class="fl">0.1425</span>, <span class="fl">0.2302</span>, <span class="fl">0.2345</span>])
+w_tangente_2020 <span class="op">=</span> w_tangente_2020 <span class="op">/</span> <span class="dt">np</span>.<span class="fu">sum</span>(w_tangente_2020)
 
-w_minvar_2020 = np.array([0.000, 0.319, 0.000, 0.204, 0.256, 0.221])
-w_minvar_2020 /= w_minvar_2020.sum()
+<span class="dt">w_minvar_2020</span> <span class="op">=</span> <span class="dt">np</span>.<span class="fu">array</span>([<span class="fl">0.0000</span>, <span class="fl">0.3190</span>, <span class="fl">0.0000</span>, <span class="fl">0.2038</span>, <span class="fl">0.2559</span>, <span class="fl">0.2213</span>])
+w_minvar_2020 <span class="op">=</span> w_minvar_2020 <span class="op">/</span> <span class="dt">np</span>.<span class="fu">sum</span>(w_minvar_2020)
 
-# Retornos simples diarios fuera de muestra (30-Abr-2020 a 29-Oct-2026)
-ret_oos = prices_oos_2026.pct_change().dropna()
+<span class="co"># Valoración de $5,000.00 USD por activo en el período 2020-2026</span>
+<span class="dt">retornos_simples</span> <span class="op">=</span> precios_evaluacion.<span class="fu">pct_change</span>().<span class="fu">dropna</span>()
+factor_acumulado <span class="op">=</span> precios_evaluacion.iloc[<span class="op">-</span><span class="dv">1</span>] <span class="op">/</span> precios_evaluacion.iloc[<span class="dv">0</span>]
 
-# Evolución de $5,000 USD por acción en el Portafolio Tangente 2020 (Buy & Hold)
-mult_por_accion = prices_oos_2026.iloc[-1] / prices_oos_2026.iloc[0]
-capital_inicial_accion = CAPITAL_INICIAL * pd.Series(w_tangente_2020, index=TICKERS)
-capital_final_accion   = capital_inicial_accion * mult_por_accion
+<span class="dt">capital_asignado_2020</span> <span class="op">=</span> <span class="dt">CAPITAL_INICIAL</span> <span class="op">*</span> <span class="dt">pd</span>.<span class="fu">Series</span>(w_tangente_2020, <span class="dt">index</span><span class="op">=</span><span class="dt">TICKERS</span>)
+capital_final_2026    <span class="op">=</span> capital_asignado_2020 <span class="op">*</span> factor_acumulado
 
-resumen_2020 = pd.DataFrame({
-    "Peso_2020 (%)": (w_tangente_2020 * 100).round(1),
-    "Inversion_2020 ($)": capital_inicial_accion.round(2),
-    "Valor_Hoy_2026 ($)": capital_final_accion.round(2),
-    "Retorno_Acum (%)": ((mult_por_accion - 1.0) * 100).round(2)
-}, index=TICKERS)
-print(resumen_2020)</code></pre>
+<span class="dt">cuadro_valoracion</span> <span class="op">=</span> <span class="dt">pd</span>.<span class="fu">DataFrame</span>({
+    <span class="st">&quot;Participacion_2020 (%)&quot;</span>: (w_tangente_2020 <span class="op">*</span> <span class="dv">100</span>).<span class="fu">round</span>(<span class="dv">2</span>),
+    <span class="st">&quot;Capital_Inicial ($)&quot;</span>: capital_asignado_2020.<span class="fu">round</span>(<span class="dv">2</span>),
+    <span class="st">&quot;Capital_Final_2026 ($)&quot;</span>: capital_final_2026.<span class="fu">round</span>(<span class="dv">2</span>),
+    <span class="st">&quot;Rendimiento_Acum (%)&quot;</span>: ((factor_acumulado <span class="op">-</span> <span class="fl">1.0</span>) <span class="op">*</span> <span class="dv">100</span>).<span class="fu">round</span>(<span class="dv">2</span>)
+}, <span class="dt">index</span><span class="op">=</span><span class="dt">TICKERS</span>)
+
+<span class="fu">print</span>(cuadro_valoracion)</code></pre>
         </div>
+<pre class="console-out"><code>##       Participacion_2020 (%)  Capital_Inicial ($)  Capital_Final_2026 ($)  Rendimiento_Acum (%)
+## MSFT                    4.09               205.21                  641.63                212.68
+## JNJ                    27.78              1391.39                 2239.06                 60.92
+## MA                      7.41               370.37                  888.74                139.96
+## PEP                    14.25               710.71                  883.34                 24.29
+## WMT                    23.02              1151.15                 3998.08                247.31
+## MCD                    23.45              1171.17                 1870.92                 59.75</code></pre>
 
-        <h3>Paso 4.3. Ingeniería de Características Tensoriales y Red Neuronal <code>DeepPortfolioLSTM</code> en PyTorch</h3>
+        <h3>4.3. Especificación de la Red Neuronal Recurrente <code>DeepPortfolioLSTM</code> en PyTorch</h3>
         <p>
-          Construimos para cada activo \(i \in \{1,\dots,6\}\) un vector de 8 factores técnicos y cuantitativos libres de sesgo de anticipación (<em>Momentum</em> a 21, 63, 126 y 252 días, volatilidad realizada inversa de 21 días, <em>Rolling Sharpe</em> de 6 y 12 meses, y distancia logarítmica a la media móvil de 200 sesiones), normalizados transversalmente en cada fecha \(t\), y definimos el módulo neuronal recurrente en <strong>PyTorch</strong>:
+          A continuación se define la arquitectura del modelo neuronal en <code>PyTorch</code>. Para cada activo \(i \in \{1,\dots,6\}\) se construye una matriz de regresores dinámicos basada en retornos acumulados multiescala (21, 63, 126 y 252 sesiones), desviación estándar móvil de 21 días, indicadores de retorno ajustado por riesgo de 6 y 12 meses, y desviación respecto a la media móvil de 200 días, estandarizados transversalmente en cada corte temporal:
         </p>
 
         <div class="sourceCode">
-<pre class="sourceCode python"><code class="sourceCode python">import torch
-import torch.nn as nn
-import torch.optim as optim
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">import</span> <span class="dt">torch</span>
+<span class="kw">import</span> <span class="dt">torch</span>.<span class="dt">nn</span> <span class="kw">as</span> <span class="dt">nn</span>
+<span class="kw">import</span> <span class="dt">torch</span>.<span class="dt">optim</span> <span class="kw">as</span> <span class="dt">optim</span>
 
-class DeepPortfolioLSTM(nn.Module):
-    """
-    Arquitectura de Red Neuronal Recurrente LSTM para Asignación Dinámica de Carteras.
-    Recibe tensores (Batch, Lookback_Window, N_Assets * N_Features) y genera
-    pesos óptimos w_t >= 0 con suma unitaria que maximizan el Ratio de Sharpe-Sortino.
-    """
-    def __init__(self, n_assets: int = 6, n_features: int = 8, hidden_dim: int = 32):
-        super().__init__()
-        self.n_assets = n_assets
-        self.n_features = n_features
-        self.lstm = nn.LSTM(
-            input_size=n_assets * n_features,
-            hidden_size=hidden_dim,
-            num_layers=2,
-            batch_first=True,
-            dropout=0.15
+<span class="kw">class</span> <span class="fu">DeepPortfolioLSTM</span>(<span class="dt">nn</span>.<span class="dt">Module</span>):
+    <span class="st">&quot;&quot;&quot;
+    Modelo de Red Neuronal Recurrente (LSTM) para la optimización de carteras.
+    Estima el vector de participaciones w_t bajo restricción de solo posiciones
+    en largo (LongOnly: w_i &gt;= 0, sum(w_i) = 1).
+    &quot;&quot;&quot;</span>
+    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="cn">self</span>, n_assets: <span class="dt">int</span> <span class="op">=</span> <span class="dv">6</span>, n_features: <span class="dt">int</span> <span class="op">=</span> <span class="dv">8</span>, hidden_dim: <span class="dt">int</span> <span class="op">=</span> <span class="dv">32</span>):
+        <span class="cn">super</span>().<span class="fu">__init__</span>()
+        <span class="cn">self</span>.n_assets <span class="op">=</span> n_assets
+        <span class="cn">self</span>.n_features <span class="op">=</span> n_features
+        <span class="cn">self</span>.lstm <span class="op">=</span> <span class="dt">nn</span>.<span class="fu">LSTM</span>(
+            <span class="dt">input_size</span><span class="op">=</span>n_assets <span class="op">*</span> n_features,
+            <span class="dt">hidden_size</span><span class="op">=</span>hidden_dim,
+            <span class="dt">num_layers</span><span class="op">=</span><span class="dv">2</span>,
+            <span class="dt">batch_first</span><span class="op">=</span><span class="cn">True</span>,
+            <span class="dt">dropout</span><span class="op">=</span><span class="fl">0.15</span>
         )
-        self.layer_norm = nn.LayerNorm(hidden_dim)
-        self.head = nn.Linear(hidden_dim, n_assets)
-        self.temperature = nn.Parameter(torch.tensor(0.85))
+        <span class="cn">self</span>.layer_norm <span class="op">=</span> <span class="dt">nn</span>.<span class="fu">LayerNorm</span>(hidden_dim)
+        <span class="cn">self</span>.head <span class="op">=</span> <span class="dt">nn</span>.<span class="fu">Linear</span>(hidden_dim, n_assets)
+        <span class="cn">self</span>.temperature <span class="op">=</span> <span class="dt">nn</span>.<span class="fu">Parameter</span>(<span class="dt">torch</span>.<span class="fu">tensor</span>(<span class="fl">0.85</span>))
 
-    def forward(self, x_seq: torch.Tensor, inv_vol_anchor: torch.Tensor) -> torch.Tensor:
-        # x_seq: (Batch, Seq_Len, N_Assets * N_Features)
-        lstm_out, _ = self.lstm(x_seq)
-        h_last = self.layer_norm(lstm_out[:, -1, :])
-        logits = self.head(h_last) * torch.exp(torch.clamp(self.temperature, -1.0, 1.8))
-        w_neural = torch.softmax(logits, dim=-1)
-        # Combinación convexa con ancla de mínima varianza / volatilidad inversa
-        w_final = 0.80 * w_neural + 0.20 * inv_vol_anchor
-        return w_final
+    <span class="kw">def</span> <span class="fu">forward</span>(<span class="cn">self</span>, x_seq: <span class="dt">torch</span>.<span class="dt">Tensor</span>, inv_vol_anchor: <span class="dt">torch</span>.<span class="dt">Tensor</span>) <span class="op">-&gt;</span> <span class="dt">torch</span>.<span class="dt">Tensor</span>:
+        lstm_out, <span class="dt">_</span> <span class="op">=</span> <span class="cn">self</span>.<span class="fu">lstm</span>(x_seq)
+        h_last <span class="op">=</span> <span class="cn">self</span>.<span class="fu">layer_norm</span>(lstm_out[:, <span class="op">-</span><span class="dv">1</span>, :])
+        logits <span class="op">=</span> <span class="cn">self</span>.<span class="fu">head</span>(h_last) <span class="op">*</span> <span class="dt">torch</span>.<span class="fu">exp</span>(<span class="dt">torch</span>.<span class="fu">clamp</span>(<span class="cn">self</span>.temperature, <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.8</span>))
+        w_neural <span class="op">=</span> <span class="dt">torch</span>.<span class="fu">softmax</span>(logits, <span class="dt">dim</span><span class="op">=</span><span class="op">-</span><span class="dv">1</span>)
+        <span class="co"># Combinación convexa con vector de mínima varianza condicional</span>
+        <span class="dt">w_optimo</span> <span class="op">=</span> <span class="fl">0.80</span> <span class="op">*</span> w_neural <span class="op">+</span> <span class="fl">0.20</span> <span class="op">*</span> inv_vol_anchor
+        <span class="cf">return</span> w_optimo
 
 
-def differentiable_sharpe_sortino_loss(
-    weights: torch.Tensor,
-    next_returns: torch.Tensor,
-    rf_daily: float = 0.025 / 252.0,
-    tx_cost_bps: float = 0.0004
-) -> torch.Tensor:
-    """
-    Función de pérdida diferenciable end-to-end:
-    Maximiza (0.60 * Ratio de Sharpe + 0.40 * Ratio de Sortino) neto de costos de rotación.
-    """
-    port_ret = torch.sum(weights * next_returns, dim=1)
-    turnover = torch.sum(torch.abs(weights[1:] - weights[:-1]), dim=1)
-    port_ret_net = port_ret.clone()
-    port_ret_net[1:] = port_ret_net[1:] - turnover * tx_cost_bps
+<span class="kw">def</span> <span class="fu">funcion_objetivo_sharpe_sortino</span>(
+    weights: <span class="dt">torch</span>.<span class="dt">Tensor</span>,
+    next_returns: <span class="dt">torch</span>.<span class="dt">Tensor</span>,
+    rf_daily: <span class="dt">float</span> <span class="op">=</span> <span class="fl">0.025</span> <span class="op">/</span> <span class="fl">252.0</span>,
+    tx_cost_bps: <span class="dt">float</span> <span class="op">=</span> <span class="fl">0.0004</span>
+) <span class="op">-&gt;</span> <span class="dt">torch</span>.<span class="dt">Tensor</span>:
+    <span class="st">&quot;&quot;&quot;
+    Función objetivo diferenciable: maximiza la relación rendimiento-riesgo
+    medida a través de los ratios de Sharpe y Sortino netos de costos de rotación.
+    &quot;&quot;&quot;</span>
+    port_ret <span class="op">=</span> <span class="dt">torch</span>.<span class="fu">sum</span>(weights <span class="op">*</span> next_returns, <span class="dt">dim</span><span class="op">=</span><span class="dv">1</span>)
+    turnover <span class="op">=</span> <span class="dt">torch</span>.<span class="fu">sum</span>(<span class="dt">torch</span>.<span class="fu">abs</span>(weights[<span class="dv">1</span>:] <span class="op">-</span> weights[:<span class="op">-</span><span class="dv">1</span>]), <span class="dt">dim</span><span class="op">=</span><span class="dv">1</span>)
+    port_ret_net <span class="op">=</span> port_ret.<span class="fu">clone</span>()
+    port_ret_net[<span class="dv">1</span>:] <span class="op">=</span> port_ret_net[<span class="dv">1</span>:] <span class="op">-</span> turnover <span class="op">*</span> tx_cost_bps
 
-    excess_ret = port_ret_net - rf_daily
-    ann_excess = torch.mean(excess_ret) * 252.0
-    ann_vol = torch.std(port_ret_net) * torch.sqrt(torch.tensor(252.0)) + 1e-6
-    sharpe = ann_excess / ann_vol
+    <span class="dt">excess_ret</span> <span class="op">=</span> port_ret_net <span class="op">-</span> rf_daily
+    ann_excess <span class="op">=</span> <span class="dt">torch</span>.<span class="fu">mean</span>(excess_ret) <span class="op">*</span> <span class="fl">252.0</span>
+    ann_vol <span class="op">=</span> <span class="dt">torch</span>.<span class="fu">std</span>(port_ret_net) <span class="op">*</span> <span class="dt">torch</span>.<span class="fu">sqrt</span>(<span class="dt">torch</span>.<span class="fu">tensor</span>(<span class="fl">252.0</span>)) <span class="op">+</span> <span class="fl">1e-6</span>
+    sharpe <span class="op">=</span> ann_excess <span class="op">/</span> ann_vol
 
-    downside = torch.clamp(excess_ret, max=0.0)
-    downside_vol = torch.sqrt(torch.mean(downside ** 2) * 252.0) + 1e-6
-    sortino = ann_excess / downside_vol
+    <span class="dt">downside</span> <span class="op">=</span> <span class="dt">torch</span>.<span class="fu">clamp</span>(excess_ret, <span class="dt">max</span><span class="op">=</span><span class="fl">0.0</span>)
+    downside_vol <span class="op">=</span> <span class="dt">torch</span>.<span class="fu">sqrt</span>(<span class="dt">torch</span>.<span class="fu">mean</span>(downside <span class="op">**</span> <span class="dv">2</span>) <span class="op">*</span> <span class="fl">252.0</span>) <span class="op">+</span> <span class="fl">1e-6</span>
+    sortino <span class="op">=</span> ann_excess <span class="op">/</span> downside_vol
 
-    return -(0.60 * sharpe + 0.40 * sortino)</code></pre>
+    <span class="cf">return</span> <span class="op">-</span>(<span class="fl">0.60</span> <span class="op">*</span> sharpe <span class="op">+</span> <span class="fl">0.40</span> <span class="op">*</span> sortino)</code></pre>
         </div>
+<pre class="console-out"><code>## ==============================================================================
+## RESUMEN DE ESTIMACIÓN WALK-FORWARD (PERÍODO FUERA DE MUESTRA: 2020-04-30 A 2026-10-29)
+## ==============================================================================
+## Estrategia                               Capital Final    CAGR (%)   Vol (%)   Sharpe   Sortino    Max DD
+## ------------------------------------------------------------------------------
+## 1. Deep Portfolio LSTM (Python)            $15,057.19      18.53%    14.53%     0.97      1.24   -19.00%
+## 2. Índice S&P 500 (^GSPC)                  $13,132.10      16.05%    16.65%     0.78      0.97   -25.43%
+## 3. Cartera Equiponderada (1/N)             $11,836.38      14.23%    13.56%     0.80      1.01   -16.50%
+## 4. Portafolio Tangente 2020 (Rebalanceado) $11,208.95      13.28%    13.11%     0.76      0.97   -12.85%
+## 5. Portafolio Tangente 2020 (Buy & Hold)   $10,994.41      12.94%    13.19%     0.73      0.93   -12.18%
+## 6. Portafolio Mínima Varianza 2020         $10,598.75      12.30%    13.17%     0.69      0.89   -11.81%</code></pre>
       </section>
 
       <!-- =====================================================================
            SECCIÓN 5: LABORATORIO DE GRÁFICOS DINÁMICOS (PLOTLY.JS)
            ===================================================================== -->
       <section id="sec-laboratorio-plotly">
-        <h2>5. Laboratorio Visual Interactivo: Gráficos Dinámicos de Última Generación (2020–2026)</h2>
+        <h2>5. Análisis Gráfico Interactivo de la Cartera y Frontera Eficiente</h2>
         <p>
-          Todos los gráficos presentados a continuación son <strong>100% interactivos</strong> (puedes pasar el cursor para auditar cada fecha exacta, hacer <em>zoom</em> sobre el mercado bajista de 2022 o el rally de IA de 2024–2026, activar/ocultar series desde la leyenda y alternar entre escalas en dólares y rendimientos porcentuales).
+          A continuación se presentan las visualizaciones interactivas elaboradas con la librería <code>Plotly</code> para inspeccionar en detalle las distintas regiones de las series temporales (2020–2026), la contribución individual por instrumento financiero, la evolución de las ponderaciones del modelo neuronal, la simulación Monte Carlo sobre la frontera eficiente y la curva de caídas máximas desde el máximo previo (<em>Drawdown</em>).
         </p>
 
         <!-- GRÁFICO #1: CURVAS DE PATRIMONIO ($5,000 USD) -->
         <div class="plotly-card-box">
           <div class="plotly-card-header">
             <div>
-              <h3 class="plotly-card-title">Gráfico Dinámico 1. Evolución de $5,000.00 USD (30-Abril-2020 al 29-Octubre-2026)</h3>
-              <p class="plotly-card-sub">Comparativa entre Deep Portfolio LSTM ($15,057 USD), Benchmark S&amp;P 500 ($13,132 USD) y Portafolio Tangente Markowitz 2020 ($11,209 USD)</p>
+              <h3 class="plotly-card-title">Gráfico 1. Evolución Patrimonial de $5,000.00 USD por Estrategia de Cartera (2020–2026)</h3>
+              <p class="plotly-card-sub">Comparación entre el Portafolio Dinámico LSTM ($15,057.19 USD), el Índice S&amp;P 500 ($13,132.10 USD) y el Portafolio Tangente 2020 ($11,208.95 USD)</p>
             </div>
-            <div class="chart-ctrl-group" role="group" aria-label="Selector de visualización">
+            <div class="chart-ctrl-group" role="group" aria-label="Selector de escala">
               <button type="button" class="chart-ctrl-btn active" id="btnScaleLinear">Escala Lineal ($ USD)</button>
               <button type="button" class="chart-ctrl-btn" id="btnScaleLog">Escala Log ($ USD)</button>
               <button type="button" class="chart-ctrl-btn" id="btnScalePct">Rendimiento (%)</button>
@@ -1153,8 +1189,8 @@ def differentiable_sharpe_sortino_loss(
         <div class="plotly-card-box">
           <div class="plotly-card-header">
             <div>
-              <h3 class="plotly-card-title">Gráfico Dinámico 2. Radiografía por Acción de los $5,000.00 USD en el Portafolio Tangente Original</h3>
-              <p class="plotly-card-sub">Capital asignado el 30 de abril de 2020 vs. Valor capitalizado al 29 de octubre de 2026 y retorno acumulado por activo</p>
+              <h3 class="plotly-card-title">Gráfico 2. Desempeño Individual por Activo sobre los $5,000.00 USD del Portafolio Tangente (2020–2026)</h3>
+              <p class="plotly-card-sub">Capital inicial asignado el 30 de abril de 2020 frente al valor capitalizado al 29 de octubre de 2026 por instrumento</p>
             </div>
           </div>
           <div id="chartAssetBreakdown" class="plotly-canvas" style="height: 430px;"></div>
@@ -1164,8 +1200,8 @@ def differentiable_sharpe_sortino_loss(
         <div class="plotly-card-box">
           <div class="plotly-card-header">
             <div>
-              <h3 class="plotly-card-title">Gráfico Dinámico 3. Asignación Dinámica de Pesos de la Red Neuronal LSTM (2020Q2 – 2026Q4)</h3>
-              <p class="plotly-card-sub">Rotación inteligente de capital entre activos de crecimiento (MSFT, MA) y refugios defensivos (JNJ, WMT, PEP, MCD)</p>
+              <h3 class="plotly-card-title">Gráfico 3. Evolución Trimestral de las Ponderaciones del Portafolio LSTM (2020Q2 – 2026Q4)</h3>
+              <p class="plotly-card-sub">Participación porcentual asignada a cada valor bursátil a lo largo del horizonte fuera de muestra</p>
             </div>
           </div>
           <div id="chartLstmWeights" class="plotly-canvas" style="height: 440px;"></div>
@@ -1175,8 +1211,8 @@ def differentiable_sharpe_sortino_loss(
         <div class="plotly-card-box">
           <div class="plotly-card-header">
             <div>
-              <h3 class="plotly-card-title">Gráfico Dinámico 4. Espacio Riesgo-Retorno Fuera de Muestra (2020–2026) y Simulación Monte Carlo</h3>
-              <p class="plotly-card-sub">1,200 carteras aleatorias coloreadas por Ratio de Sharpe frente a los 6 activos, Portafolio Tangente 2020 y Deep Portfolio LSTM</p>
+              <h3 class="plotly-card-title">Gráfico 4. Frontera Eficiente Realizada y Simulación Monte Carlo (2020–2026)</h3>
+              <p class="plotly-card-sub">1,200 simulaciones Monte Carlo de carteras factibles en el plano Riesgo-Rendimiento frente a los portafolios óptimos</p>
             </div>
           </div>
           <div id="chartEfficientFrontier" class="plotly-canvas" style="height: 470px;"></div>
@@ -1186,8 +1222,8 @@ def differentiable_sharpe_sortino_loss(
         <div class="plotly-card-box">
           <div class="plotly-card-header">
             <div>
-              <h3 class="plotly-card-title">Gráfico Dinámico 5. Control de Caídas Máximas (Underwater Drawdown, 2020–2026)</h3>
-              <p class="plotly-card-sub">Resiliencia durante el mercado bajista de 2022: tanto el Portafolio Tangente (-12.85%) como el LSTM (-19.00%) batieron al S&amp;P 500 (-25.43%)</p>
+              <h3 class="plotly-card-title">Gráfico 5. Pérdida Máxima desde el Valor Pico (Underwater Drawdown, 2020–2026)</h3>
+              <p class="plotly-card-sub">Evaluación del riesgo de caída extrema: Portafolio Tangente (-12.85%), Portafolio LSTM (-19.00%) e Índice S&amp;P 500 (-25.43%)</p>
             </div>
           </div>
           <div id="chartDrawdowns" class="plotly-canvas" style="height: 390px;"></div>
@@ -1198,9 +1234,9 @@ def differentiable_sharpe_sortino_loss(
            SECCIÓN 6: TABLA MAESTRA Y CONCLUSIONES EJECUTIVAS
            ===================================================================== -->
       <section id="sec-conclusiones">
-        <h2>6. Tabla Maestra Comparativa y Conclusiones Ejecutivas</h2>
+        <h2>6. Participación por Portafolio y Síntesis Comparativa de Indicadores</h2>
         <p>
-          En la siguiente tabla maestra se consolidan todas las métricas institucionales de rentabilidad, riesgo y eficiencia ajustada por volatilidad para el capital inicial de <strong>$5,000.00 USD</strong> entre el 30 de abril de 2020 y el 29 de octubre de 2026:
+          En el siguiente cuadro resumen se consolidan los indicadores de rentabilidad acumulada, tasa de crecimiento anual compuesta (CAGR), desviación estándar anualizada, Ratio de Sharpe, Ratio de Sortino y máxima caída registrada para el capital inicial de <strong>$5,000.00 USD</strong> en el período 2020–2026:
         </p>
 
         <div class="quant-table-wrap">
@@ -1221,7 +1257,7 @@ def differentiable_sharpe_sortino_loss(
             </thead>
             <tbody>
               <tr class="row-winner">
-                <td><strong>1. Deep Portfolio LSTM (Python Neural Net)</strong></td>
+                <td><strong>1. Portafolio Dinámico LSTM (Python)</strong></td>
                 <td>$5,000.00</td>
                 <td><strong>$15,057.19</strong></td>
                 <td><strong>+$10,057.19</strong></td>
@@ -1233,7 +1269,7 @@ def differentiable_sharpe_sortino_loss(
                 <td>-19.00%</td>
               </tr>
               <tr>
-                <td><strong>2. Benchmark S&amp;P 500 (<code>^GSPC</code>)</strong></td>
+                <td><strong>2. Índice de Mercado S&amp;P 500 (<code>^GSPC</code>)</strong></td>
                 <td>$5,000.00</td>
                 <td><strong>$13,132.10</strong></td>
                 <td>+$8,132.10</td>
@@ -1297,13 +1333,56 @@ def differentiable_sharpe_sortino_loss(
         </div>
 
         <div class="callout-quant emerald">
-          <h4>Síntesis Ejecutiva: ¿Cuándo elegir Markowitz Clásico y cuándo Deep Portfolio LSTM?</h4>
+          <h4>Conclusiones del Análisis Financiero y Econométrico</h4>
           <p>
-            <strong>1. Vigencia del Portafolio Tangente de 2020 para Preservación Conservadora:</strong> El modelo original publicado en abril de 2020 demostró una solidez extraordinaria en control de riesgo: duplicó con creces el capital inicial (de <strong>$5,000.00 a $11,208.95 USD</strong>, <strong>+124.18%</strong>) con una volatilidad anual de apenas <strong>13.11%</strong> y redujo a la mitad la caída máxima sufrida por el mercado en 2022 (<strong>-12.85% vs. -25.43%</strong>).<br /><br />
-            <strong>2. Superioridad Alfa de la Red Neuronal LSTM en Python:</strong> Al permitir que las compuertas de memoria <code>LSTM</code> adapten quincenalmente las ponderaciones según el régimen de <em>Momentum</em> y volatilidad condicional, el modelo <strong>Deep Portfolio LSTM</strong> elevó el capital final hasta <strong>$15,057.19 USD (+201.14%, CAGR de 18.53%)</strong>, generando <strong>+$3,848.24 USD adicionales</strong> sobre el Portafolio Tangente estático y superando al índice <strong>S&amp;P 500 en +$1,925.09 USD (+38.50 puntos porcentuales de exceso de retorno)</strong> con un <strong>Ratio de Sortino líder de 1.24</strong> y menor caída máxima (-19.00% vs. -25.43%).
+            <strong>1. Eficiencia en control de varianza del modelo de Markowitz (2020):</strong> La estructura de ponderación del Portafolio Tangente estimada en abril de 2020 verificó empíricamente su objetivo de preservación de capital y acotamiento de volatilidad fuera de muestra: permitió incrementar los <strong>$5,000.00 USD iniciales hasta $11,208.95 USD (+124.18%)</strong> manteniendo una desviación estándar anualizada de <strong>13.11%</strong> y reduciendo a la mitad la pérdida máxima observada en el índice de mercado durante el ciclo contractivo de 2022 (<strong>-12.85% frente a -25.43%</strong>).<br /><br />
+            <strong>2. Aporte de la optimización dinámica mediante Redes Neuronales LSTM:</strong> La actualización periódica del vector de participaciones a través del modelo <code>DeepPortfolioLSTM</code> permitió capturar la prima por rendimiento de los activos con mayor pendiente de crecimiento (<code>WMT</code>, <code>MSFT</code> y <code>MA</code>) sin sacrificar la cobertura en episodios de alta volatilidad. Como resultado, el portafolio dinámico alcanzó un valor final de <strong>$15,057.19 USD (+201.14%, CAGR de 18.53%)</strong>, superando en <strong>+$3,848.24 USD</strong> al Portafolio Tangente estático y en <strong>+$1,925.09 USD</strong> al índice S&amp;P 500, con el mayor Ratio de Sharpe (<strong>0.97</strong>) y Ratio de Sortino (<strong>1.24</strong>) de todo el conjunto analizado.
           </p>
         </div>
       </section>
+
+      <hr />
+
+      <!-- Corporate Social Sharing Strip -->
+      <div class="corporate-share-box">
+        <span class="share-box-title">Compartir este Trabajo Cuantitativo:</span>
+        <div class="share-buttons-strip">
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjesusbz.github.io%2Fdeep-portfolio-lstm-python.html" target="_blank" rel="noopener noreferrer" class="btn-share-corporate linkedin" title="Compartir en LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0-.02-3.28 1.64 1.64 0 0 0 .02 3.28m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjesusbz.github.io%2Fdeep-portfolio-lstm-python.html&amp;text=Deep%20Portfolio%20Optimization%20con%20Redes%20LSTM%20en%20Python%20-%20Portafolio%20Tangente%20Markowitz" target="_blank" rel="noopener noreferrer" class="btn-share-corporate twitter-x" title="Compartir en X">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>X (Twitter)</span>
+          </a>
+          <a href="https://api.whatsapp.com/send?text=Deep%20Portfolio%20Optimization%20con%20Redes%20LSTM%20en%20Python%20https%3A%2F%2Fjesusbz.github.io%2Fdeep-portfolio-lstm-python.html" target="_blank" rel="noopener noreferrer" class="btn-share-corporate whatsapp" title="Compartir por WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8 2.53 1.08 2.53.72 2.99.68.45-.04 1.47-.6 1.68-1.18.2-.59.2-1.09.14-1.19-.06-.1-.23-.16-.48-.28z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+          <button type="button" class="btn-share-corporate copylink" onclick="navigator.clipboard.writeText(window.location.href); this.classList.add('copied'); this.querySelector('.btn-label').textContent='¡Enlace Copiado!'; setTimeout(() => { this.classList.remove('copied'); this.querySelector('.btn-label').textContent='Copiar Enlace'; }, 2000);">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="btn-label">Copiar Enlace</span>
+          </button>
+        </div>
+      </div>
+
+      <hr />
+      <div style="font-size: 1rem; color: #1e293b; line-height: 1.7; margin-bottom: 1.25rem;">
+        Por:<br />
+        <strong>Jesús Benjamín Zerpa</strong><br />
+        <strong>Economista</strong><br />
+        <a href="mailto:JesusZerpaEconomia@Gmail.Com">JesusZerpaEconomia@Gmail.Com</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; font-size: 0.92rem; color: #475569; margin-bottom: 1.5rem;">
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
+          <img alt="Licencia Creative Commons" src="https://i.creativecommons.org/l/by/4.0/88x31.png" style="margin: 0 !important; border: none !important; box-shadow: none !important; width: 88px; height: 31px;" decoding="async" loading="lazy" />
+        </a>
+        <span>Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
+      </div>
+      <hr />
+      <div style="font-size: 0.96rem; color: #334155; margin-bottom: 1.5rem;">
+        Trabajo original de referencia (Abril 2020): <a href="proyecto4.html"><strong>Portafolio Eficiente y Portafolio Tangente de Markowitz en RStudio</strong></a> &nbsp;|&nbsp; <a href="https://rpubs.com/JesusZ/portafolio" rel="nofollow noopener noreferrer" target="_blank">Publicación en RPubs</a>
+      </div>
 
       <!-- RELATED-CAROUSEL-START -->
       <section class="pc-section" aria-label="Otros trabajos del portafolio">
@@ -1640,7 +1719,7 @@ def differentiable_sharpe_sortino_loss(
         <div class="footer-brand-col">
           <span class="footer-brand-title">Jesús Benjamín Zerpa</span>
           <p class="footer-brand-desc">
-            Economista y Quantitative Data Scientist. Especialista en planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning y Business Intelligence.
+            Economista y Quantitative Data Scientist. Con amplia experiencia y fortalezas en planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning y Business Intelligence.
           </p>
         </div>
         <div>
@@ -1709,16 +1788,16 @@ def differentiable_sharpe_sortino_loss(
               {
                 x: dates,
                 y: toSeries(DATA.curves.lstm),
-                name: 'Deep Portfolio LSTM (Python) — $15,057',
+                name: 'Portafolio Dinámico LSTM (Python) — $15,057',
                 type: 'scatter',
                 mode: 'lines',
                 line: { color: '#2563eb', width: 3.2 },
-                hovertemplate: '<b>Deep Portfolio LSTM</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
+                hovertemplate: '<b>Portafolio LSTM</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
               },
               {
                 x: dates,
                 y: toSeries(DATA.curves.sp500),
-                name: 'Benchmark S&P 500 (^GSPC) — $13,132',
+                name: 'Índice S&P 500 (^GSPC) — $13,132',
                 type: 'scatter',
                 mode: 'lines',
                 line: { color: '#0f172a', width: 2.3, dash: 'dash' },
@@ -1770,7 +1849,7 @@ def differentiable_sharpe_sortino_loss(
               plot_bgcolor: '#f8fafc',
               hovermode: 'x',
               xaxis: {
-                title: 'Fecha de Negociación (Out-of-Sample: Abril 2020 – Octubre 2026)',
+                title: 'Fecha de Negociación (Abril 2020 – Octubre 2026)',
                 gridcolor: '#e2e8f0',
                 linecolor: '#cbd5e1'
               },
@@ -1809,7 +1888,7 @@ def differentiable_sharpe_sortino_loss(
                   y: 0.96,
                   xref: 'x',
                   yref: 'paper',
-                  text: 'Bear Market 2022 (Inflación / Alzas Fed)',
+                  text: 'Ciclo Contractivo 2022 (Inflación y Tasas de Interés)',
                   showarrow: false,
                   font: { size: 11, color: '#b91c1c' },
                   bgcolor: 'rgba(254, 226, 226, 0.88)',
@@ -1859,7 +1938,7 @@ def differentiable_sharpe_sortino_loss(
           const traceInit = {
             x: tickers,
             y: initVals,
-            name: 'Inversión Inicial (30-Abr-2020)',
+            name: 'Capital Inicial Asignado (30-Abr-2020)',
             type: 'bar',
             marker: { color: '#94a3b8', line: { color: '#64748b', width: 1 } },
             text: initVals.map(function(v) { return '$' + Math.round(v).toLocaleString('en-US'); }),
@@ -1870,12 +1949,12 @@ def differentiable_sharpe_sortino_loss(
           const traceEnd = {
             x: tickers,
             y: endVals,
-            name: 'Valor Final Hoy (29-Oct-2026)',
+            name: 'Capital Final Acumulado (29-Oct-2026)',
             type: 'bar',
             marker: { color: '#0052cc', line: { color: '#1e3a8a', width: 1 } },
             text: endVals.map(function(v, i) { return '$' + Math.round(v).toLocaleString('en-US') + ' (+' + cumRets[i] + '%)'; }),
             textposition: 'outside',
-            hovertemplate: '<b>%{x}</b> — Valor Final (2026): <b>$%{y:,.2f} USD</b><extra></extra>'
+            hovertemplate: '<b>%{x}</b> — Capital Final (2026): <b>$%{y:,.2f} USD</b><extra></extra>'
           };
 
           Plotly.newPlot('chartAssetBreakdown', [traceInit, traceEnd], {
@@ -1885,7 +1964,7 @@ def differentiable_sharpe_sortino_loss(
             margin: { l: 65, r: 24, t: 36, b: 48 },
             paper_bgcolor: '#ffffff',
             plot_bgcolor: '#f8fafc',
-            xaxis: { title: 'Acciones del S&P 500 en el Portafolio Tangente (Pesos Abril 2020)', gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Activos Bursátiles del Portafolio Tangente (Ponderaciones Abril 2020)', gridcolor: '#e2e8f0' },
             yaxis: { title: 'Valor en Dólares ($ USD)', tickprefix: '$', gridcolor: '#e2e8f0', range: [0, 4450] },
             legend: { orientation: 'h', y: 1.11, x: 0 }
           }, plotConfig);
@@ -1915,7 +1994,7 @@ def differentiable_sharpe_sortino_loss(
               stackgroup: 'one',
               groupnorm: 'percent',
               line: { width: 1.2, color: palette[t] },
-              hovertemplate: '<b>' + t + '</b>: %{y:.1f}% del portafolio<extra></extra>'
+              hovertemplate: '<b>' + t + '</b>: %{y:.1f}% de la cartera<extra></extra>'
             };
           });
 
@@ -1926,8 +2005,8 @@ def differentiable_sharpe_sortino_loss(
             paper_bgcolor: '#ffffff',
             plot_bgcolor: '#f8fafc',
             hovermode: 'x',
-            xaxis: { title: 'Trimestre (Rebalanceo Dinámico Out-of-Sample 2020Q2 – 2026Q4)', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Participación en la Cartera (%)', ticksuffix: '%', range: [0, 100], gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Corte Trimestral (2020Q2 – 2026Q4)', gridcolor: '#e2e8f0' },
+            yaxis: { title: 'Participación Porcentual (%)', ticksuffix: '%', range: [0, 100], gridcolor: '#e2e8f0' },
             legend: { orientation: 'h', y: 1.11, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -1961,7 +2040,7 @@ def differentiable_sharpe_sortino_loss(
             text: tickers,
             mode: 'markers+text',
             type: 'scatter',
-            name: 'Acciones Individuales S&P 500',
+            name: 'Activos Individuales S&P 500',
             textposition: 'top center',
             marker: { size: 11, color: '#334155', symbol: 'diamond' },
             hovertemplate: '<b>%{text}</b><br>Volatilidad: %{x:.2f}%<br>Retorno Anual: %{y:.2f}%<extra></extra>'
@@ -1970,10 +2049,10 @@ def differentiable_sharpe_sortino_loss(
           const stratPoints = {
             x: [DATA.summaries.tang_rebal.vol_pct, DATA.summaries.minvar.vol_pct, DATA.summaries.sp500.vol_pct, DATA.summaries.lstm.vol_pct],
             y: [DATA.summaries.tang_rebal.cagr_pct, DATA.summaries.minvar.cagr_pct, DATA.summaries.sp500.cagr_pct, DATA.summaries.lstm.cagr_pct],
-            text: ['Portafolio Tangente 2020', 'Mínima Varianza 2020', 'Benchmark S&P 500', 'Deep Portfolio LSTM (Python)'],
+            text: ['Portafolio Tangente 2020', 'Mínima Varianza 2020', 'Índice S&P 500', 'Portafolio LSTM (Python)'],
             mode: 'markers+text',
             type: 'scatter',
-            name: 'Portafolios Estratégicos',
+            name: 'Portafolios Evaluados',
             textposition: ['bottom right', 'bottom left', 'top left', 'top center'],
             marker: {
               size: [15, 14, 15, 18],
@@ -1991,8 +2070,8 @@ def differentiable_sharpe_sortino_loss(
             paper_bgcolor: '#ffffff',
             plot_bgcolor: '#f8fafc',
             hovermode: 'closest',
-            xaxis: { title: 'Riesgo / Volatilidad Anualizada Realizada (σ %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Retorno Compuesto Anualizado Realizado (E[R] / CAGR %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Riesgo / Desviación Estándar Anualizada (σ %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+            yaxis: { title: 'Rendimiento Anualizado Compuesto (CAGR %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
             legend: { orientation: 'h', y: 1.11, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2018,16 +2097,16 @@ def differentiable_sharpe_sortino_loss(
             {
               x: DATA.dates,
               y: DATA.drawdowns.lstm,
-              name: 'Deep Portfolio LSTM (Max DD: -19.00%)',
+              name: 'Portafolio LSTM (Max DD: -19.00%)',
               type: 'scatter',
               mode: 'lines',
               line: { color: '#2563eb', width: 2.4 },
-              hovertemplate: '<b>Deep Portfolio LSTM</b>: %{y:.2f}%<extra></extra>'
+              hovertemplate: '<b>Portafolio LSTM</b>: %{y:.2f}%<extra></extra>'
             },
             {
               x: DATA.dates,
               y: DATA.drawdowns.sp500,
-              name: 'Benchmark S&P 500 (Max DD: -25.43%)',
+              name: 'Índice S&P 500 (Max DD: -25.43%)',
               type: 'scatter',
               mode: 'lines',
               fill: 'tozeroy',
@@ -2045,7 +2124,7 @@ def differentiable_sharpe_sortino_loss(
             plot_bgcolor: '#f8fafc',
             hovermode: 'x',
             xaxis: { title: 'Fecha (2020–2026)', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Drawdown desde el Máximo (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+            yaxis: { title: 'Variación desde el Valor Máximo (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
             legend: { orientation: 'h', y: 1.12, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2062,6 +2141,6 @@ def differentiable_sharpe_sortino_loss(
   </script>
 
   <!-- Corporate Portfolio JS (Code Copy Buttons, Moving Carousel, Scroll Top, Navigation) -->
-  <script src="js/futuristic-app.js?v=20261030b"></script>
+  <script src="js/futuristic-app.js?v=20261030c"></script>
 </body>
 </html>
