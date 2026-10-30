@@ -766,13 +766,15 @@
   function initCopilotHUD() {
     ensureCopilotMounted();
 
-    // Conversation lives only in memory: every page load / reload starts clean.
-    // Also purge anything persisted by previous versions (API key and old histories).
+    // Conversation persists while navigating between pages/posts (sessionStorage),
+    // and is cleared when the page is reloaded (F5 / Ctrl+F5) or the tab is closed.
+    // Also purge anything persisted permanently by previous versions (API key, old histories).
+    const SESSION_KEY = 'jesus_copilot_session_v1';
     try {
-      ['gemini_user_api_key', 'jesus_copilot_history_v2', 'jesus_copilot_history_v3'].forEach(k => {
-        localStorage.removeItem(k);
-        sessionStorage.removeItem(k);
-      });
+      ['gemini_user_api_key', 'jesus_copilot_history_v2', 'jesus_copilot_history_v3'].forEach(k => localStorage.removeItem(k));
+      const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+      const isReload = nav ? nav.type === 'reload' : (performance.navigation && performance.navigation.type === 1);
+      if (isReload) sessionStorage.removeItem(SESSION_KEY);
     } catch (e) { /* ignore */ }
 
     const chatToggleBtn = document.getElementById('copilotToggleBtn');
@@ -784,7 +786,7 @@
     const chatHistoryBox = document.getElementById('copilotHistoryBox');
     const quickChips = document.querySelectorAll('.quick-chip-btn');
     const WELCOME = `Hola. Soy el asistente del portafolio de **${PROFILE.name}**. Respondo solo con información publicada en este sitio: sus ${PROJECTS.length} trabajos, su trayectoria profesional y sus datos de contacto. ¿Qué te gustaría saber?`;
-    let chatHistory = []; // in-memory only
+    let chatHistory = []; // restored from sessionStorage (same tab only)
 
     function escapeHtml(str) {
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -826,12 +828,23 @@
       scrollToBottom();
     }
 
+    function saveSession() {
+      try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(chatHistory.slice(-30))); } catch (e) { /* ignore */ }
+    }
+
     function resetChat() {
       chatHistoryBox.innerHTML = '';
       appendMessage(WELCOME, 'bot');
     }
 
     resetChat();
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]');
+      if (Array.isArray(saved) && saved.length) {
+        chatHistory = saved;
+        saved.forEach(item => appendMessage(item.text, item.role));
+      }
+    } catch (e) { chatHistory = []; }
 
     if (chatToggleBtn && chatWindow) {
       chatToggleBtn.addEventListener('click', () => {
@@ -841,6 +854,7 @@
       chatCloseBtn?.addEventListener('click', () => chatWindow.classList.remove('open'));
       chatClearBtn?.addEventListener('click', () => {
         chatHistory = [];
+        try { sessionStorage.removeItem(SESSION_KEY); } catch (e) { /* ignore */ }
         resetChat();
       });
     }
@@ -892,6 +906,7 @@
       hideTyping();
       appendMessage(answer, 'bot');
       chatHistory.push({ role: 'user', text: message }, { role: 'bot', text: answer });
+      saveSession();
       busy = false;
       if (chatSendBtn) chatSendBtn.disabled = false;
       chatInput.focus();
