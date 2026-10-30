@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Local Backups
 *.backup.html
+
+# Local work files (never publish)
+scratch/

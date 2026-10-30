@@ -1,117 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
-<url>
-  <loc>https://jesusbz.github.io/</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/index.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/acercade.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/formulario.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/cursos.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/modelo-ventas.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/Proyecto2.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/proyecto3.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/proyecto4.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/EvaluacionProyecto.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/Dashboard.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/proyecto7.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/powermap.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/bitcoin-ether-pronosticos-con-prophet.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/modelizacion-monte-carlo-portafolios.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/power-bi.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/analisis-de-procesos-comerciales-data-mining.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/trading-medias-moviles-rstudio.html</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/FinancialDashboard.htm</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/FinancialDashboard_archivos/sheet001.htm</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-<url>
-  <loc>https://jesusbz.github.io/FinancialDashboard_archivos/tabstrip.htm</loc>
-  <lastmod>2020-11-06T02:33:04+00:00</lastmod>
-  <priority>0.51</priority>
-</url>
-
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://jesusbz.github.io/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>1.0</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/acercade.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/proyecto4.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/imagen-f.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/modelo-ventas.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/imagen-a.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/Proyecto2.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/imagen-i.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/proyecto3.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/imagen-c.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/EvaluacionProyecto.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/imagen-g.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/Dashboard.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/imagen-h.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/proyecto7.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/imagen-j.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/powermap.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/ima-x.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/bitcoin-ether-pronosticos-con-prophet.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/miniatura/prophet.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/modelizacion-monte-carlo-portafolios.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/ima-x1.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/power-bi.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/ima-x2.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/analisis-de-procesos-comerciales-data-mining.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/data-mining-blog.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/trading-medias-moviles-rstudio.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/ima-x3.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://jesusbz.github.io/formulario.html</loc>
+    <lastmod>2026-10-29</lastmod>
+    <priority>0.6</priority>
+    <image:image><image:loc>https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg</image:loc></image:image>
+  </url>
 </urlset>

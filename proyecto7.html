@@ -1,22 +1,137 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="es">
 
 <head>
 
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-<title>Exploración de Datos</title>
-<meta name="description" content="Contenido del paquete Gapminder, en especial los datos globales de la esperanza de vida al nacer y el Producto Interno Bruto per Cápita. Igualmente se elaborarán gráficos interactivos, de tendencia y dispersión. Por último, algunas pruebas lineales para determinar correlación y comentarios de las principales observaciones."/>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title"  content= "Exploración Macroeconómica"/>
-<meta property="og:image" content= "https://jesusbz.github.io/imagenes/miniatura/exploracion-macroeconomica.jpg"/>
-<meta property="og:description"  content="Exploración de Datos con Rstudio."/>
+<title>Exploración de Datos Macroeconómicos en R: Gapminder, PIB y Curva de Preston | Jesús Zerpa</title>
+<!-- SEO:START -->
+<meta name="description" content="Exploración de datos macroeconómicos en RStudio: esperanza de vida y PIB per cápita con Gapminder, Curva de Preston, indicadores del Banco Mundial con Quandl y mapa interactivo con leaflet. Por Jesús Benjamín Zerpa." />
+<meta name="keywords" content="datos macroeconómicos en R, Gapminder, PIB per cápita, esperanza de vida, Curva de Preston, Quandl, Banco Mundial, leaflet, estadística espacial, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+<meta name="author" content="Jesús Benjamín Zerpa" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<link rel="canonical" href="https://jesusbz.github.io/proyecto7.html" />
+<meta property="og:locale" content="es_ES" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://jesusbz.github.io/proyecto7.html"/>
-<meta property="og:author" content="Jesús Benjamín Zerpa"/>
-<meta name="twitter:card" content="summary_large_image" /> 
+<meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
+<meta property="og:title" content="Exploración de Datos Macroeconómicos en R: Gapminder, PIB y Curva de Preston | Jesús Zerpa" />
+<meta property="og:description" content="Exploración de datos macroeconómicos en RStudio: esperanza de vida y PIB per cápita con Gapminder, Curva de Preston, indicadores del Banco Mundial con Quandl y mapa interactivo con leaflet. Por Jesús Benjamín Zerpa." />
+<meta property="og:url" content="https://jesusbz.github.io/proyecto7.html" />
+<meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-j.webp" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Exploración de Datos Macroeconómicos en R: Gapminder, PIB y Curva de Preston | Jesús Zerpa" />
+<meta name="twitter:description" content="Exploración de datos macroeconómicos en RStudio: esperanza de vida y PIB per cápita con Gapminder, Curva de Preston, indicadores del Banco Mundial con Quandl y mapa interactivo con leaflet. Por Jesús Benjamín Zerpa." />
+<meta name="twitter:image" content="https://jesusbz.github.io/imagenes/imagen-j.webp" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
+      "name": "Jesús Benjamín Zerpa",
+      "alternateName": [
+        "Jesús Zerpa",
+        "Jesús B. Zerpa",
+        "Jesus Benjamin Zerpa",
+        "Jesus Zerpa"
+      ],
+      "url": "https://jesusbz.github.io/",
+      "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
+      "jobTitle": "Gerente de Planificación Financiera y Presupuesto",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Consorcio Credicard"
+      },
+      "description": "Economista y Data Scientist con más de 14 años de experiencia en planificación, presupuesto y control. Trayectoria: Gerente de Planificación Financiera y Presupuesto en Consorcio Credicard; Planificador Corporativo de Finanzas en Grupo Mistral; Coordinador Corporativo de Presupuesto y Control en Multimédica; Especialista Senior de Presupuesto en Segutronic (CG Security Group); Subgerente de Finanzas en Grupo Empresarial Admibien; Ejecutivo de Negocios en Banesco Banco Universal.",
+      "email": "mailto:JesusZerpaEconomia@Gmail.Com",
+      "telephone": "+58 424 148 78 70",
+      "knowsAbout": [
+        "Planificación financiera",
+        "Presupuesto y control de gestión",
+        "Pronósticos y series temporales",
+        "Modelos GARCH y Valor en Riesgo (VaR)",
+        "Teoría de portafolios de Markowitz",
+        "Portafolio tangente",
+        "Simulación Monte Carlo",
+        "Machine Learning en R",
+        "Business Intelligence",
+        "Power BI",
+        "RStudio",
+        "Evaluación y formulación de proyectos de inversión"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
+        "https://github.com/JesusBZ",
+        "https://rpubs.com/JesusZ"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://jesusbz.github.io/proyecto7.html#article",
+      "headline": "Exploración de Datos Macroeconómicos con RStudio",
+      "description": "Exploración de datos macroeconómicos en RStudio: esperanza de vida y PIB per cápita con Gapminder, Curva de Preston, indicadores del Banco Mundial con Quandl y mapa interactivo con leaflet. Por Jesús Benjamín Zerpa.",
+      "image": "https://jesusbz.github.io/imagenes/imagen-j.webp",
+      "url": "https://jesusbz.github.io/proyecto7.html",
+      "mainEntityOfPage": "https://jesusbz.github.io/proyecto7.html",
+      "inLanguage": "es",
+      "author": {
+        "@type": "Person",
+        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
+        "name": "Jesús Benjamín Zerpa",
+        "url": "https://jesusbz.github.io/acercade.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
+        "name": "Jesús Benjamín Zerpa",
+        "url": "https://jesusbz.github.io/acercade.html"
+      },
+      "dateModified": "2026-10-29",
+      "keywords": [
+        "datos macroeconómicos en R",
+        "Gapminder",
+        "PIB per cápita",
+        "esperanza de vida",
+        "Curva de Preston",
+        "Quandl",
+        "Banco Mundial",
+        "leaflet",
+        "estadística espacial",
+        "Jesús Benjamín Zerpa"
+      ],
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://jesusbz.github.io/#website",
+        "url": "https://jesusbz.github.io/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://jesusbz.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Exploración de Datos Macroeconómicos con RStudio",
+          "item": "https://jesusbz.github.io/proyecto7.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- SEO:END -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -387,35 +502,6 @@ font-weight: 300;
   <link rel="stylesheet" href="css/post-enhancement.css?v=20261029g" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Exploración de Datos Macroeconómicos con Rstudio",
-    "description": "Estadística espacial, Gapminder y descarga de indicadores Banco Mundial Quandl.",
-    "image": "https://jesusbz.github.io/imagenes/miniatura/principal.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "Jesús Benjamín Zerpa",
-      "jobTitle": "Economist & Quantitative Data Scientist",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Consorcio Credicard"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/jesús-zerpa-807646129/",
-        "https://github.com/JesusBZ",
-        "https://rpubs.com/JesusZ"
-      ]
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "Jesús Benjamín Zerpa"
-    },
-    "url": "https://jesusbz.github.io/proyecto7.html",
-    "keywords": ["Quantitative Finance", "RStudio", "Python", "Econometrics", "Machine Learning", "Time Series", "Value at Risk", "GARCH"]
-  }
-  </script>
 
 </head>
 
@@ -513,7 +599,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: x-large;">Exploración de Datos Macroeconómicos  con RStudio</span>
 </h2>
 <div class="separator" style="clear: both; text-align: center;">
-<a href=" " imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="740" data-original-width="1040" src="imagenes/imagen-j.webp" /></a>
+<a href=" " imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 1" border="0" data-original-height="740" data-original-width="1040" src="imagenes/imagen-j.webp" /></a>
 </div>
 <div class="separator" style="clear: both; text-align: center;">
 
@@ -756,7 +842,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">theme_classic</span>()</a>
 <a class="sourceLine" id="cb2-8" title="8">g</a></code></pre></div>
-<img src="proyecto7_files/figure-html/unnamed-chunk-2-1.png" width="100%" />
+<img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 2" src="proyecto7_files/figure-html/unnamed-chunk-2-1.png" width="100%" />
 <h3>
 <span style="font-size: large;"><a name="grafico2">6. Gráfico dinámico</a></span>
 </h3>
@@ -1116,11 +1202,11 @@ Oceania
 ## Multiple R-squared:  0.7102, Adjusted R-squared:  0.7092 
 ## F-statistic: 693.3 on 6 and 1697 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">plot</span>(out, <span class="dt">which =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">ask =</span> <span class="ot">FALSE</span>) </a></code></pre></div>
-<p><img src="proyecto7_files/figure-html/unnamed-chunk-12-1.png" width="672" /><img src="proyecto7_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 3" src="proyecto7_files/figure-html/unnamed-chunk-12-1.png" width="672" /><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 4" src="proyecto7_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">out &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(gdpPercap) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(pop) <span class="op">+</span><span class="st"> </span>continent, <span class="dt">data =</span> gapminder)</a>
 <a class="sourceLine" id="cb15-2" title="2"></a>
 <a class="sourceLine" id="cb15-3" title="3"><span class="kw">coefplot</span>(out, <span class="dt">sort =</span> <span class="st">&quot;magnitude&quot;</span>, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<img src="proyecto7_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 5" src="proyecto7_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 <h3 style="text-align: justify;">
 <span style="font-size: large;"><a name="macro">11. Exploración de datos Macroeconómicos</a></span>
 </h3>
@@ -1385,7 +1471,7 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
 <br />
 <div style="text-align: center;">
 <div style="text-align: left;">
-<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 6" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="http://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
 </div>
 <div style="text-align: center;">
 <div style="text-align: left;">

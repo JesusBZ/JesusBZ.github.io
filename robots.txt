@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /scratch/
+Disallow: /_header.html
+Disallow: /_footer.html
+
+Sitemap: https://jesusbz.github.io/sitemap.xml
