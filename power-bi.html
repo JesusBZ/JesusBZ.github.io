@@ -1050,45 +1050,109 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 <!-- RELATED-CAROUSEL-END -->
 <div class="disqus-container-modern">
-<div id="disqus_thread"></div>
+  <div class="disqus-header-card">
+    <div class="disqus-header-title">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <span>Comentarios y Discusión Técnica</span>
+    </div>
+    <span class="disqus-sub-badge">Comunidad Cuantitativa</span>
+  </div>
+  <div id="disqus_thread">
+    <div id="disqus_loader" class="disqus-loader-msg">
+      <span class="disqus-spinner"></span>
+      <span>Cargando comentarios de la comunidad...</span>
+    </div>
+  </div>
+  <div id="disqus_fallback" class="disqus-fallback-card" style="display: none;">
+    <p><strong>¿No se visualiza el módulo de comentarios?</strong> Es posible que tu navegador o red tenga activo un bloqueador de anuncios o restricciones de privacidad para el servicio de Disqus.</p>
+    <p>Para consultas directas sobre este modelo o asesoría corporativa, puedes contactar a Jesús Benjamín Zerpa a través del <a href="formulario.html">Formulario de Contacto</a> o por <a href="https://wa.me/584241487870" target="_blank" rel="noopener noreferrer">WhatsApp (+58 424 148 78 70)</a>.</p>
+    <button type="button" class="btn-retry-disqus" onclick="reloadDisqusThread()">Reintentar carga de Disqus</button>
+  </div>
 </div>
 <script>
-var disqus_config = function () {
-this.page.url = 'https://jesusbz.github.io/power-bi.html';
-this.page.identifier = 'power-bi.html';
-};
-(function() {
-var d = document, s = d.createElement('script');
-s.src = 'https://portafolio-11.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
+  var disqus_config = function () {
+    this.page.url = 'https://jesusbz.github.io/power-bi.html';
+    this.page.identifier = 'power-bi.html';
+  };
+  function loadDisqus() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://portafolio-11.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    s.onload = function() {
+      var loader = document.getElementById('disqus_loader');
+      if (loader) loader.style.display = 'none';
+      var fb = document.getElementById('disqus_fallback');
+      if (fb) fb.style.display = 'none';
+    };
+    s.onerror = function() {
+      var loader = document.getElementById('disqus_loader');
+      if (loader) loader.style.display = 'none';
+      var fb = document.getElementById('disqus_fallback');
+      if (fb) fb.style.display = 'block';
+    };
+    (d.head || d.body).appendChild(s);
+  }
+  function reloadDisqusThread() {
+    var fb = document.getElementById('disqus_fallback');
+    if (fb) fb.style.display = 'none';
+    var loader = document.getElementById('disqus_loader');
+    if (loader) loader.style.display = 'flex';
+    loadDisqus();
+  }
+  loadDisqus();
+  setTimeout(function() {
+    var thread = document.getElementById('disqus_thread');
+    var iframe = thread ? thread.querySelector('iframe') : null;
+    if (!iframe) {
+      var loader = document.getElementById('disqus_loader');
+      if (loader) loader.style.display = 'none';
+      var fb = document.getElementById('disqus_fallback');
+      if (fb) fb.style.display = 'block';
+    } else {
+      var loader = document.getElementById('disqus_loader');
+      if (loader) loader.style.display = 'none';
+    }
+  }, 6000);
 </script>
 <noscript>Por favor activa JavaScript para ver los comentarios soportados por <a href="https://disqus.com/?ref_noscript">Disqus</a>.</noscript>
 
-<hr />
-<h5>
-<div>
-<div style="text-align: center;">
-<span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;"><span style="color: #444444;">Copyright&nbsp;</span></span><span style="font-size: small;">©&nbsp;</span></span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">2020&nbsp;</span></span><span style="font-size: small;"><a href="https://github.com/JesusBZ">Jesús B. Zerpa</a> </span><span style="color: #444444;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">| Economist &amp; Data Scientist |&nbsp;Site created with</span></span><span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: small;">&nbsp;<a href="https://rstudio.com/" rel="nofollow noopener noreferrer" target="_blank">RStudio</a><a href="https://www.blogger.com/blogger.g?blogID=3272883731674348977"></a>&nbsp;</span></div>
-<div style="text-align: center;">
-<span style="color: blue; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: xx-small;"><br /></span></div>
-<div style="text-align: center;">
-<span style="color: #0b5394; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: x-small;">| FINANCE | INTELLIGENCE BUSSINES | FORECASTING | TIME SERIES | FINANCIAL DASHBOARD | FINANCIAL BUDGET | SPATIAL ECONOMETRICS |&nbsp;</span></div>
-<!-- Add icon library -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"></link>
-<!-- Add font awesome icons -->
-<br />
-<div style="text-align: center;">
-<a class="fa fa-skype" href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow noopener noreferrer" target="_blank"></a>
-    <a class="fa fa-telegram" href="https://t.me/jesusbz21" rel="nofollow noopener noreferrer" target="_blank"></a>
-    <a class="fab fa-r-project" href="https://rpubs.com/JesusZ" rel="nofollow noopener noreferrer" target="_blank"></a>
-    <a class="fa fa-linkedin" href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" rel="nofollow noopener noreferrer" target="_blank"></a>
-     <a class="fa fa-scribd" href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow noopener noreferrer" target="_blank"></a>
-    <a class="fa fa-github" href="https://github.com/JesusBZ" rel="nofollow noopener noreferrer" target="_blank"></a>
-</div>
-</div>
-</h5>
+<!-- Unified Modern Site Footer -->
+<footer class="site-footer">
+  <div class="site-container">
+    <div class="footer-top-grid">
+      <div class="footer-brand-col">
+        <span class="footer-brand-title">Jesús Benjamín Zerpa</span>
+        <p class="footer-brand-desc">
+          Economista y Quantitative Data Scientist. Planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning y Business Intelligence.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Secciones</h4>
+        <ul class="footer-links-list">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
+          <li><a href="proyecto4.html">Portafolio Tangente 2020 (RStudio)</a></li>
+          <li><a href="deep-portfolio-lstm-python.html">Deep Portfolio LSTM 2026 (Python)</a></li>
+          <li><a href="acercade.html">Trayectoria Profesional</a></li>
+          <li><a href="formulario.html">Formulario de Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Recursos del Estudio</h4>
+        <ul class="footer-links-list">
+          <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
+          <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">Publicaciones RPubs</a></li>
+          <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
+          <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Canal Telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom-strip">
+      <span>Copyright © 2026 Jesús B. Zerpa. Todos los derechos reservados.</span>
+      <span>Finanzas Cuantitativas • Deep Learning LSTM • Markowitz • R &amp; Python</span>
+    </div>
+  </div>
+</footer>
 
 
 

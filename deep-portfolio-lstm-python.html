@@ -1715,21 +1715,71 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
 
       <!-- Disqus Comments Section -->
       <div class="disqus-container-modern">
-        <div id="disqus_thread"></div>
-      </div>
-      <script>
-        var disqus_config = function () {
-          this.page.url = 'https://jesusbz.github.io/deep-portfolio-lstm-python.html';
-          this.page.identifier = 'deep-portfolio-lstm-python.html';
-        };
-        (function() {
-          var d = document, s = d.createElement('script');
-          s.src = 'https://portafolio-11.disqus.com/embed.js';
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-        })();
-      </script>
-      <noscript>Por favor activa JavaScript para ver los comentarios soportados por <a href="https://disqus.com/?ref_noscript">Disqus</a>.</noscript>
+  <div class="disqus-header-card">
+    <div class="disqus-header-title">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <span>Comentarios y Discusión Técnica</span>
+    </div>
+    <span class="disqus-sub-badge">Comunidad Cuantitativa</span>
+  </div>
+  <div id="disqus_thread">
+    <div id="disqus_loader" class="disqus-loader-msg">
+      <span class="disqus-spinner"></span>
+      <span>Cargando comentarios de la comunidad...</span>
+    </div>
+  </div>
+  <div id="disqus_fallback" class="disqus-fallback-card" style="display: none;">
+    <p><strong>¿No se visualiza el módulo de comentarios?</strong> Es posible que tu navegador o red tenga activo un bloqueador de anuncios o restricciones de privacidad para el servicio de Disqus.</p>
+    <p>Para consultas directas sobre este modelo o asesoría corporativa, puedes contactar a Jesús Benjamín Zerpa a través del <a href="formulario.html">Formulario de Contacto</a> o por <a href="https://wa.me/584241487870" target="_blank" rel="noopener noreferrer">WhatsApp (+58 424 148 78 70)</a>.</p>
+    <button type="button" class="btn-retry-disqus" onclick="reloadDisqusThread()">Reintentar carga de Disqus</button>
+  </div>
+</div>
+<script>
+  var disqus_config = function () {
+    this.page.url = 'https://jesusbz.github.io/deep-portfolio-lstm-python.html';
+    this.page.identifier = 'deep-portfolio-lstm-python.html';
+  };
+  function loadDisqus() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://portafolio-11.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    s.onload = function() {
+      var loader = document.getElementById('disqus_loader');
+      if (loader) loader.style.display = 'none';
+      var fb = document.getElementById('disqus_fallback');
+      if (fb) fb.style.display = 'none';
+    };
+    s.onerror = function() {
+      var loader = document.getElementById('disqus_loader');
+      if (loader) loader.style.display = 'none';
+      var fb = document.getElementById('disqus_fallback');
+      if (fb) fb.style.display = 'block';
+    };
+    (d.head || d.body).appendChild(s);
+  }
+  function reloadDisqusThread() {
+    var fb = document.getElementById('disqus_fallback');
+    if (fb) fb.style.display = 'none';
+    var loader = document.getElementById('disqus_loader');
+    if (loader) loader.style.display = 'flex';
+    loadDisqus();
+  }
+  loadDisqus();
+  setTimeout(function() {
+    var thread = document.getElementById('disqus_thread');
+    var iframe = thread ? thread.querySelector('iframe') : null;
+    if (!iframe) {
+      var loader = document.getElementById('disqus_loader');
+      if (loader) loader.style.display = 'none';
+      var fb = document.getElementById('disqus_fallback');
+      if (fb) fb.style.display = 'block';
+    } else {
+      var loader = document.getElementById('disqus_loader');
+      if (loader) loader.style.display = 'none';
+    }
+  }, 6000);
+</script>
+<noscript>Por favor activa JavaScript para ver los comentarios soportados por <a href="https://disqus.com/?ref_noscript">Disqus</a>.</noscript>
 
     </article>
   </main>
