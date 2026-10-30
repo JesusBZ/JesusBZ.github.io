@@ -459,6 +459,51 @@
         padding: 2rem 1.5rem;
       }
     }
+
+    .form-dual-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-feedback-alert {
+      display: none;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.55;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .form-feedback-alert.visible {
+      display: flex;
+    }
+
+    .form-feedback-alert.success {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    .form-feedback-alert.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    .btn-supreme-submit:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+    }
+
+    @media (max-width: 640px) {
+      .form-dual-row {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -628,7 +673,7 @@
           Completa el formulario para estructurar los requerimientos iniciales de tu organización o proyecto.
         </p>
 
-        <form class="supreme-form" name="contactform" method="post" action="https://app.99inbound.com/api/e/hB5ewb94" target="_blank" rel="noopener noreferrer">
+        <form id="supremeContactForm" class="supreme-form" name="contactform" method="post" action="https://app.99inbound.com/api/e/hB5ewb94">
           
           <!-- Name Field -->
           <div class="form-group-field">
@@ -643,7 +688,7 @@
           </div>
 
           <!-- Email & Phone Dual Row -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-dual-row">
             <!-- Email -->
             <div class="form-group-field">
               <label class="field-label" for="contact_email">
@@ -701,8 +746,11 @@
             <input type="checkbox" name="bluetooth_magenta_argyle_rhino" value="1" tabindex="-1" autocomplete="off" />
           </div>
 
+          <!-- Feedback Banner -->
+          <div id="formFeedbackBanner" class="form-feedback-alert" role="status" aria-live="polite"></div>
+
           <!-- Submit Button -->
-          <button type="submit" class="btn-supreme-submit">
+          <button id="contactSubmitBtn" type="submit" class="btn-supreme-submit">
             <span>Enviar Mensaje</span>
             <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </button>
@@ -772,5 +820,80 @@
 
   <!-- Futuristic App JS & AI Copilot Integration -->
   <script src="js/futuristic-app.js?v=20261029g"></script>
+
+  <script>
+    (function () {
+      var form = document.getElementById('supremeContactForm');
+      var btn = document.getElementById('contactSubmitBtn');
+      var banner = document.getElementById('formFeedbackBanner');
+      if (!form || !btn || !banner) return;
+
+      var defaultBtnHtml = btn.innerHTML;
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        banner.className = 'form-feedback-alert';
+        banner.textContent = '';
+
+        var nameVal = (document.getElementById('contact_name').value || '').trim();
+        var emailVal = (document.getElementById('contact_email').value || '').trim();
+        var phoneVal = (document.getElementById('contact_phone').value || '').trim();
+        var subjectEl = document.getElementById('contact_subject');
+        var subjectVal = subjectEl ? (subjectEl.value || '').trim() : '';
+        var msgVal = (document.getElementById('contact_message').value || '').trim();
+        var honeypotEl = form.querySelector('input[name="bluetooth_magenta_argyle_rhino"]');
+
+        var combinedText = subjectVal ? ('[Área: ' + subjectVal + ']\n' + msgVal) : msgVal;
+
+        var params = new URLSearchParams();
+        params.append('name', nameVal);
+        params.append('email', emailVal);
+        params.append('phone', phoneVal);
+        params.append('text', combinedText);
+        if (honeypotEl && honeypotEl.checked) {
+          params.append('bluetooth_magenta_argyle_rhino', '1');
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span>Enviando mensaje...</span>';
+
+        fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          body: params.toString()
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
+          .then(function (data) {
+            var replyText = (data && data.submission_text)
+              ? String(data.submission_text)
+              : 'Gracias por contactarme, pronto le responderé.';
+            banner.className = 'form-feedback-alert visible success';
+            banner.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            var textDiv = document.createElement('div');
+            var strongEl = document.createElement('strong');
+            strongEl.textContent = 'Mensaje enviado con éxito: ';
+            textDiv.appendChild(strongEl);
+            textDiv.appendChild(document.createTextNode(replyText));
+            banner.appendChild(textDiv);
+            form.reset();
+          })
+          .catch(function () {
+            banner.className = 'form-feedback-alert visible error';
+            banner.innerHTML =
+              '<div>No se pudo conectar en este instante con el servidor de formularios. Puedes enviar tu consulta directamente por <a href="https://wa.me/584241487870" target="_blank" rel="noopener noreferrer" style="color:#991b1b;text-decoration:underline;">WhatsApp (+58 424 148 78 70)</a> o a <a href="mailto:jesuszerpaeconomia@gmail.com" style="color:#991b1b;text-decoration:underline;">jesuszerpaeconomia@gmail.com</a>.</div>';
+          })
+          .finally(function () {
+            btn.disabled = false;
+            btn.innerHTML = defaultBtnHtml;
+          });
+      });
+    })();
+  </script>
 </body>
 </html>
