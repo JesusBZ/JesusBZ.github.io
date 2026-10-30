@@ -766,10 +766,13 @@
   function initCopilotHUD() {
     ensureCopilotMounted();
 
-    // Purge any API key or unverified chat history stored by previous versions
+    // Conversation lives only in memory: every page load / reload starts clean.
+    // Also purge anything persisted by previous versions (API key and old histories).
     try {
-      localStorage.removeItem('gemini_user_api_key');
-      localStorage.removeItem('jesus_copilot_history_v2');
+      ['gemini_user_api_key', 'jesus_copilot_history_v2', 'jesus_copilot_history_v3'].forEach(k => {
+        localStorage.removeItem(k);
+        sessionStorage.removeItem(k);
+      });
     } catch (e) { /* ignore */ }
 
     const chatToggleBtn = document.getElementById('copilotToggleBtn');
@@ -780,9 +783,8 @@
     const chatInput = document.getElementById('copilotInput');
     const chatHistoryBox = document.getElementById('copilotHistoryBox');
     const quickChips = document.querySelectorAll('.quick-chip-btn');
-    const STORAGE_KEY = 'jesus_copilot_history_v3';
     const WELCOME = `Hola. Soy el asistente del portafolio de **${PROFILE.name}**. Respondo solo con información publicada en este sitio: sus ${PROJECTS.length} trabajos, su trayectoria profesional y sus datos de contacto. ¿Qué te gustaría saber?`;
-    let chatHistory = [];
+    let chatHistory = []; // in-memory only
 
     function escapeHtml(str) {
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -824,23 +826,12 @@
       scrollToBottom();
     }
 
-    function saveHistory() {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(chatHistory.slice(-20))); } catch (e) { /* ignore */ }
-    }
-
     function resetChat() {
       chatHistoryBox.innerHTML = '';
       appendMessage(WELCOME, 'bot');
     }
 
     resetChat();
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      if (Array.isArray(saved)) {
-        chatHistory = saved;
-        saved.forEach(item => appendMessage(item.text, item.role));
-      }
-    } catch (e) { chatHistory = []; }
 
     if (chatToggleBtn && chatWindow) {
       chatToggleBtn.addEventListener('click', () => {
@@ -850,7 +841,6 @@
       chatCloseBtn?.addEventListener('click', () => chatWindow.classList.remove('open'));
       chatClearBtn?.addEventListener('click', () => {
         chatHistory = [];
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
         resetChat();
       });
     }
@@ -902,7 +892,6 @@
       hideTyping();
       appendMessage(answer, 'bot');
       chatHistory.push({ role: 'user', text: message }, { role: 'bot', text: answer });
-      saveHistory();
       busy = false;
       if (chatSendBtn) chatSendBtn.disabled = false;
       chatInput.focus();
