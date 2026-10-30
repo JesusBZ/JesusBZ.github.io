@@ -826,11 +826,8 @@
         var params = new URLSearchParams();
         params.append('name', nameVal);
         params.append('email', emailVal);
-        params.append('phone', phoneVal ? (phoneVal + ' | Mensaje: ' + msgVal) : msgVal);
+        params.append('phone', phoneVal);
         params.append('text', msgVal);
-        params.append('message', msgVal);
-        params.append('mensaje', msgVal);
-        params.append('comments', msgVal);
         params.append('buttom', 'ENVIAR');
         if (honeypotEl && honeypotEl.checked) {
           params.append('bluetooth_magenta_argyle_rhino', '1');
