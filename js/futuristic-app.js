@@ -618,22 +618,16 @@
   }
 
   function answerProjectList(list, intro) {
-    return (intro || `El portafolio cuenta con **${PROJECTS.length} estudios publicados** (entre mayo de 2020 y octubre de 2026):`) + '
-
-' +
-      list.map(p => `- **#${p.n} (${p.pubDate}) — ${p.title}**: [ver estudio](${p.file})`).join('
-') +
-      '
-
-Pregúntame por cualquiera de ellos (por ejemplo, el nuevo estudio #14 con Redes Neuronales LSTM en Python o el Portafolio Tangente #4) para conocer su metodología y resultados exactos.';
+    return (intro || `El portafolio cuenta con **${PROJECTS.length} estudios publicados** (entre mayo de 2020 y octubre de 2026):`) + '\n\n' +
+      list.map(p => `- **#${p.n} (${p.pubDate}) — ${p.title}**: [ver estudio](${p.file})`).join('\n') +
+      '\n\nPregúntame por cualquiera de ellos (por ejemplo, el nuevo estudio #14 con Redes Neuronales LSTM en Python o el Portafolio Tangente #4) para conocer su metodología y resultados exactos.';
   }
 
   function answerCareer() {
     return `**Trayectoria profesional de ${PROFILE.name}** (en orden cronológico):
 
 ` +
-      CAREER.map(c => `- **${c.company}**: ${c.role}`).join('
-') +
+      CAREER.map(c => `- **${c.company}**: ${c.role}`).join('\n') +
       `
 
 ${PROFILE.summary}
@@ -775,8 +769,7 @@ ${PROFILE.portfolio}`;
     : 'https://gemini-backend-ecru.vercel.app/api/chat';
 
   function buildVerifiedContext() {
-    const career = CAREER.map(c => `- ${c.company} | ${c.role}: ${c.detail}`).join('
-');
+    const career = CAREER.map(c => `- ${c.company} | ${c.role}: ${c.detail}`).join('\n');
     const projects = PROJECTS.map(p =>
       `### Trabajo #${p.n} (${p.pubDate}): ${p.title} (enlace: ${p.file})
 ` +
@@ -784,9 +777,7 @@ ${PROFILE.portfolio}`;
 Metodología: ${p.methods}
 Resultados verificados: ${p.results}
 Herramientas: ${p.tools}`
-    ).join('
-
-');
+    ).join('\n\n');
     return `PERFIL: ${PROFILE.name}. ${PROFILE.title}. ${PROFILE.summary} Áreas de fortaleza: ${PROFILE.interests} ${PROFILE.portfolio}
 ` +
       `REGLA DE ESTILO DEL AUTOR: Utiliza siempre las expresiones "con amplia experiencia" y "con sólidas fortalezas" para describir las competencias del autor.
