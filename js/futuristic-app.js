@@ -368,7 +368,7 @@
     title: 'Economista y Quantitative Data Scientist',
     summary: 'Profesional de finanzas con más de 14 años de experiencia en planificación financiera corporativa, presupuestos maestros y control de gestión en empresas de diversos sectores económicos. Cuenta con amplias fortalezas en modelización econométrica avanzada, Deep Learning, Business Intelligence y ciencia de datos reproducible en R y Python.',
     interests: 'Planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning (Redes Neuronales LSTM en PyTorch) y Business Intelligence.',
-    portfolio: 'El portafolio reúne 14 estudios técnicos y modelos cuantitativos publicados entre mayo de 2020 y octubre de 2026 en RStudio, Python (PyTorch / Redes Neuronales LSTM), Excel/VBA y Microsoft Power BI.'
+    portfolio: 'El portafolio reúne 15 estudios técnicos y modelos cuantitativos publicados entre mayo de 2020 y octubre de 2026 en RStudio, Python (PyTorch / Redes Neuronales LSTM), Excel/VBA y Microsoft Power BI.'
   };
 
   const CONTACT = {
@@ -417,6 +417,14 @@
   ];
 
   const PROJECTS = [
+    {
+      n: 15, title: 'Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python (2014–2026)', file: 'volatilidad-garch-var-cvar-python.html', pubDate: 'Octubre de 2026',
+      keys: ['garch python', 'egarch python', 'gjr-garch', 'cvar', 'expected shortfall', 'kupiec', 'christoffersen', 'hansen', 'skewed-t', 'skewt', 'basilea', 'frtb', 'etf bitcoin', 'news impact curve', 'curva de impacto', 'trabajo 15', 'proyecto 15', 'volatilidad 2026'],
+      summary: 'Actualización econométrica en Python (Octubre de 2026) del estudio original de Mayo 2020 (Proyecto2.html) sobre 4,425 sesiones diarias de BTC-USD (septiembre de 2014 a octubre de 2026). Cuantifica la transición estructural de tres regímenes de mercado, incluyendo la era de los ETFs Spot institucionales aprobados en enero de 2024, y evalúa modelos sGARCH, EGARCH(2,1) y GJR-GARCH bajo distribución Skewed Student-t de Hansen junto con Expected Shortfall (CVaR al 99%) y backtesting regulatorio.',
+      methods: 'Estimación por Máxima Verosimilitud (MLE) en Python (librería arch, SciPy, statsmodels) de cinco especificaciones AR(1)-GARCH; análisis de transición de régimen; Curva de Impacto de Noticias (News Impact Curve - NIC); ajuste de colas pesadas con distribución Skewed Student-t de Hansen; cono de volatilidad Bootstrap a 90 días (5,000 trayectorias); y contrastes de cobertura incondicional de Kupiec (POF) y cobertura condicional de Christoffersen sobre 2,464 sesiones fuera de la muestra original (2020–2026).',
+      results: 'Transición de régimen: la volatilidad anualizada se comprimió desde 73.47% en la etapa Pre-Institucional (2014–2020) y 67.97% en el ciclo 2020–2024 (curtosis 25.55) hasta 46.88% en la Era de ETFs Spot (2024–2026, -26.59 pp de reducción estructural), situándose en 35.59% anual (1.863% diaria) al 29 de octubre de 2026. Ganador del torneo MLE: AR(1)-EGARCH(2,1) con distribución Skewed Student-t de Hansen (grados de libertad eta = 2.77, persistencia beta_1 = 0.9914, Log-Verosimilitud = -10,767.53, AIC = 21,553.06, superando por +584.64 puntos de LogLik al modelo sGARCH-Normal). En el Backtesting regulatorio 2020–2026 (2,464 días), sGARCH-Normal fue rechazado al 1% (41 violaciones, 1.664%, Kupiec p = 0.0025), mientras que AR(1)-EGARCH(2,1) Skewed-t fue aprobado en Zona Verde de Basilea con 21 violaciones (0.852%, Kupiec LR_uc = 0.572 con p = 0.4496; Christoffersen LR_cc = 2.436 con p = 0.2958), estimando al cierre un VaR 99% diario de -4.600% ($46,000 USD por cada $1M USD) y un Expected Shortfall (CVaR 99%) diario de -6.961% ($69,610 USD por cada $1M USD).',
+      tools: 'Python 3.11+, arch (Oxford Financial Econometrics), SciPy (scipy.stats), Statsmodels, NumPy, Pandas, yfinance y Plotly.js.'
+    },
     {
       n: 14, title: 'Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz (2020–2026)', file: 'deep-portfolio-lstm-python.html', pubDate: 'Octubre de 2026',
       keys: ['lstm', 'deep learning', 'redes neuronales', 'red neuronal', 'pytorch', 'python', 'deep portfolio', '5000', '5,000', 'actualizacion', '2026', 'sortino', 'sharpe', 'sp500', 's&p 500', 'trabajo 14', 'proyecto 14'],
@@ -569,16 +577,16 @@
 
         <div class="copilot-chips-strip">
           <button class="quick-chip-btn" data-prompt="¿Cuánto rindieron $5,000 USD en el Portafolio Tangente de 2020 y cuánto logró el nuevo modelo con Redes Neuronales LSTM en Python (2026)?">Portafolio LSTM 2026 ($5,000 USD)</button>
-          <button class="quick-chip-btn" data-prompt="¿Qué proyectos tiene el portafolio de Jesús Zerpa?">Los 14 Estudios</button>
+          <button class="quick-chip-btn" data-prompt="¿Qué proyectos tiene el portafolio de Jesús Zerpa?">Los 15 Estudios</button>
           <button class="quick-chip-btn" data-prompt="¿Cuál es la trayectoria profesional de Jesús Zerpa?">Trayectoria</button>
-          <button class="quick-chip-btn" data-prompt="Explícame el modelo de volatilidad y VaR del Bitcoin">VaR Bitcoin</button>
+          <button class="quick-chip-btn" data-prompt="Explícame la actualización 2026 en Python de Volatilidad GARCH, VaR y Expected Shortfall (CVaR) del Bitcoin">GARCH &amp; CVaR Python 2026</button>
           <button class="quick-chip-btn" data-prompt="¿Cómo contacto a Jesús?">Contacto</button>
         </div>
 
         <div id="copilotHistoryBox" class="copilot-history-box"></div>
 
         <div class="copilot-input-area">
-          <input type="text" id="copilotInput" class="copilot-input-field" placeholder="Pregunta sobre los 14 estudios, Python LSTM, R o trayectoria..." autocomplete="off" />
+          <input type="text" id="copilotInput" class="copilot-input-field" placeholder="Pregunta sobre los 15 estudios, Python LSTM, R o trayectoria..." autocomplete="off" />
           <button id="copilotSendBtn" class="copilot-send-btn" aria-label="Enviar mensaje" title="Enviar mensaje">
             <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </button>
@@ -669,7 +677,7 @@ ${PROFILE.portfolio}`;
   }
 
   function answerTools() {
-    return `**Stack tecnológico y librerías utilizadas en los 14 estudios del portafolio:**
+    return `**Stack tecnológico y librerías utilizadas en los 15 estudios del portafolio:**
 
 ` +
       `- **Python & Deep Learning (Estudio #14 — 2026):** Python 3.11+, PyTorch (\`torch.nn.LSTM\`), NumPy, Pandas, SciPy (\`scipy.optimize\` SLSQP), Scikit-Learn, yfinance y Plotly.js.
@@ -741,7 +749,7 @@ ${PROFILE.portfolio}`;
 
     // Generic "bitcoin / cripto" question
     if (hasAny(q, ['bitcoin', 'btc', 'cripto', 'criptomoneda', 'criptomonedas'])) {
-      return answerProjectList(PROJECTS.filter(p => [2, 9, 13].includes(p.n)), 'El portafolio incluye tres estudios cuantitativos sobre Bitcoin y criptoactivos:');
+      return answerProjectList(PROJECTS.filter(p => [15, 2, 9, 13].includes(p.n)), 'El portafolio incluye cuatro estudios cuantitativos sobre Bitcoin y criptoactivos (incluyendo la edición 2026 en Python con EGARCH Skewed-t y Expected Shortfall):');
     }
 
     if (hasAny(q, ['trayectoria', 'experiencia', 'empresas', 'cargos', 'carrera', 'curriculum', 'cv', 'trabajado', 'laboral', 'donde ha trabajado'])) {
@@ -798,9 +806,9 @@ ${projects}
   function buildGroundedPrompt(question) {
     return `Eres el asistente técnico cuantitativo del portafolio web de ${PROFILE.name}. REGLAS ESTRICTAS:
 ` +
-      `1. Sobre Jesús Benjamín Zerpa, su trayectoria y sus 14 trabajos responde ÚNICAMENTE con el CONTEXTO VERIFICADO de abajo.
+      `1. Sobre Jesús Benjamín Zerpa, su trayectoria y sus 15 trabajos responde ÚNICAMENTE con el CONTEXTO VERIFICADO de abajo.
 ` +
-      `2. El portafolio tiene ahora 14 estudios publicados (los 13 originales de 2020 en RStudio/BI/Excel y el nuevo Trabajo #14 de Octubre de 2026: "Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz", archivo deep-portfolio-lstm-python.html).
+      `2. El portafolio tiene ahora 15 estudios publicados (los 13 originales de 2020 en RStudio/BI/Excel y el nuevo Trabajo #14 de Octubre de 2026: "Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz", archivo deep-portfolio-lstm-python.html).
 ` +
       `3. Emplea siempre los términos "fortalezas" y "experiencia" para referirte al perfil de Jesús Zerpa.
 ` +

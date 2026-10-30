@@ -102,4 +102,10 @@
     <priority>0.6</priority>
     <image:image><image:loc>https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg</image:loc></image:image>
   </url>
+  <url>
+    <loc>https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
 </urlset>
