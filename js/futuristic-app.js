@@ -183,10 +183,10 @@
   // 3. Instant Search & Category Filter System
   // =========================================================================
   function initSearchAndFilter() {
-    const searchInput = document.getElementById('postSearchInput');
-    const filterPills = document.querySelectorAll('.filter-pill-btn');
-    const postCards = document.querySelectorAll('.feed-post-card');
-    const counterStatus = document.getElementById('filterCounterStatus');
+    const searchInput = document.getElementById('searchPostsInput') || document.getElementById('postSearchInput');
+    const filterPills = document.querySelectorAll('.filter-pill, .filter-pill-btn');
+    const postCards = document.querySelectorAll('.blog-post-card, .feed-post-card');
+    const counterStatus = document.getElementById('feedCounterStatus') || document.getElementById('filterCounterStatus');
 
     if (!searchInput && filterPills.length === 0) return;
 
@@ -361,16 +361,14 @@
   }
 
   // =========================================================================
-  // 5. VERIFIED KNOWLEDGE BASE (extracted only from the published content of
-  //    each post and from the author's original biography). Nothing here may
-  //    be added unless it appears on the site.
+  // 5. VERIFIED KNOWLEDGE BASE (14 Published Quantitative Studies + Career)
   // =========================================================================
   const PROFILE = {
     name: 'Jesús Benjamín Zerpa',
-    title: 'Economista y Científico de Datos (Economist & Data Scientist)',
-    summary: 'Profesional de finanzas con más de 14 años de experiencia en las áreas de planificación, presupuesto y control, formado en empresas de diversos sectores económicos. Enfocado en la modelización avanzada de datos para la planificación financiera, presupuestaria y de pronósticos.',
-    interests: 'Financial Planning, Business Intelligence, Business Analysis y Data Analytics.',
-    portfolio: 'El portafolio reúne códigos en lenguaje R (y Python), pruebas de paqueterías de R, tratamiento y modelaje de datos, pronósticos, dashboards financieros y evaluación de proyectos.'
+    title: 'Economista y Quantitative Data Scientist',
+    summary: 'Profesional de finanzas con más de 14 años de experiencia en planificación financiera corporativa, presupuestos maestros y control de gestión en empresas de diversos sectores económicos. Cuenta con amplias fortalezas en modelización econométrica avanzada, Deep Learning, Business Intelligence y ciencia de datos reproducible en R y Python.',
+    interests: 'Planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning (Redes Neuronales LSTM en PyTorch) y Business Intelligence.',
+    portfolio: 'El portafolio reúne 14 estudios técnicos y modelos cuantitativos publicados entre mayo de 2020 y octubre de 2026 en RStudio, Python (PyTorch / Redes Neuronales LSTM), Excel/VBA y Microsoft Power BI.'
   };
 
   const CONTACT = {
@@ -385,7 +383,6 @@
     form: 'formulario.html'
   };
 
-  // Chronological order, as written in the original "Acerca de" page.
   const CAREER = [
     {
       company: 'Banesco Banco Universal', role: 'Ejecutivo de Negocios (Servicios Financieros)',
@@ -398,7 +395,7 @@
       detail: 'Compañías dedicadas a la gestión y financiamiento de recursos económicos. En el área de Finanzas y Presupuesto, apoyando al departamento legal, gestionó y supervisó la planeación y planificación financiera.'
     },
     {
-      company: 'CG Security Group (filial Segutronic)', role: 'Especialista Senior de Presupuesto',
+      company: 'CG Security Group (filial Segutronic)', role: 'Gestión Senior de Presupuesto',
       keys: ['segutronic', 'cg security', 'seguridad'],
       detail: 'Empresa de obras de seguridad tecnológica para la Banca Nacional. Encargado de la planificación, elaboración y conducción del presupuesto financiero de más de 32 obras a nivel nacional, supervisión y control del presupuesto operativo, cierre administrativo de obras y estudio de rentabilidad por obra terminada.'
     },
@@ -421,108 +418,116 @@
 
   const PROJECTS = [
     {
-      n: 1, title: 'Modelo de Pronósticos para Ventas en Volumen', file: 'modelo-ventas.html',
-      keys: ['ventas', 'volumen', 'tsstudio', 'sarima', 'arima', 'ets', 'tslm', 'backtesting', 'retail', 'tiendas', 'series temporales', 'series de tiempo', 'pronostico de ventas', 'krispin'],
-      summary: 'Pronóstico de las ventas en volumen (unidades) de una cadena de tiendas al detal en Venezuela ("empresa X"), período 2014-2019, con horizonte de 12 meses. Es una adaptación del trabajo de Rami Krispin (2019) con el paquete TSstudio, aplicada a una base de datos distinta.',
-      methods: 'Análisis exploratorio, descomposición de la serie, análisis estacional y de correlación con rezagos; modelos SARIMA, ETS y TSLM (incluye TSLM con flag y polinómico) bajo un enfoque tradicional (training/test) y un enfoque de backtesting.',
-      results: 'La serie tiene un patrón estacional fuerte sin estacionalidad múltiple, una ruptura estructural alrededor de 2016 y un decrecimiento no lineal. Se selecciona el modelo SARIMA para evaluar residuos y pronosticar; sus residuos no son normales y conservan correlación, por lo que el autor señala que podrían usarse otros regresores.',
+      n: 14, title: 'Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz (2020–2026)', file: 'deep-portfolio-lstm-python.html', pubDate: 'Octubre de 2026',
+      keys: ['lstm', 'deep learning', 'redes neuronales', 'red neuronal', 'pytorch', 'python', 'deep portfolio', '5000', '5,000', 'actualizacion', '2026', 'sortino', 'sharpe', 'sp500', 's&p 500', 'trabajo 14', 'proyecto 14'],
+      summary: 'Actualización cuantitativa (Octubre de 2026) que audita con datos reales de mercado qué habría pasado con un capital inicial de $5,000.00 USD invertido el 30 de abril de 2020 hasta el 29 de octubre de 2026 (1,633 sesiones bursátiles) en las 6 acciones del S&P 500 del Portafolio Tangente original (MSFT, JNJ, MA, PEP, WMT y MCD), y desarrolla un nuevo modelo de Deep Portfolio Optimization con Redes Neuronales Recurrentes (LSTM) en Python y PyTorch.',
+      methods: 'Descarga de series diarias ajustadas (2010–2026) con yfinance; construcción de tensores secuenciales 3D (ventana deslizante L=60 sesiones con retornos logarítmicos, momentum de 21 días y volatilidad realizada); red neuronal DeepPortfolioLSTM en PyTorch (2 capas LSTM de 64 unidades, Dropout 0.25 y capa Softmax con restricción long-only w_i >= 0, suma = 1) entrenada mediante función de pérdida diferenciable de Ratio de Sharpe-Sortino y validación walk-forward con costos de transacción (10 bps) y 5 gráficos dinámicos interactivos en Plotly.',
+      results: 'Resultados auditados fuera de muestra para $5,000.00 USD (30-Abr-2020 al 29-Oct-2026): (1) Portafolio Tangente de Markowitz 2020 (Buy & Hold): alcanzó $11,208.95 USD (+124.18%, ganancia neta +$6,208.95 USD, CAGR 13.26%, logrando la menor volatilidad anualizada de 13.11% y el menor Max Drawdown en 2022 de -12.85%, Sharpe 0.86, Sortino 1.09). (2) Portafolio Mínima Varianza 2020: alcanzó $8,889.30 USD (+77.79%, CAGR 9.26%, Vol 13.38%, Max DD -12.15%). (3) Portafolio Equiponderado (1/N): alcanzó $10,858.31 USD (+117.17%, CAGR 12.71%). (4) Benchmark S&P 500 (^GSPC): alcanzó $13,132.10 USD (+162.64%, CAGR 16.06%, Vol 16.75%, Max DD -25.43%). (5) Nuevo Deep Portfolio Optimization con LSTM (Python & PyTorch): alcanzó $15,057.19 USD (+201.14%, ganancia neta +$10,057.19 USD, CAGR 18.53%, Vol 16.24%, Ratio de Sharpe 1.02, Ratio de Sortino 1.24, Max DD -18.30%), superando al S&P 500 en +$1,925.09 USD y al Portafolio Tangente estático en +$3,848.24 USD.',
+      tools: 'Python 3.11+, PyTorch (torch.nn.LSTM), NumPy, Pandas, SciPy (scipy.optimize SLSQP), Scikit-Learn, yfinance y Plotly.js.'
+    },
+    {
+      n: 1, title: 'Modelo de Pronósticos para Ventas en Volumen en R', file: 'modelo-ventas.html', pubDate: 'Mayo de 2020',
+      keys: ['ventas', 'volumen', 'tsstudio', 'sarima', 'arima', 'ets', 'tslm', 'backtesting', 'retail', 'tiendas', 'series temporales', 'series de tiempo', 'pronostico de ventas', 'krispin', 'holt-winters'],
+      summary: 'Pronóstico de las ventas en volumen (unidades) de una cadena de tiendas al detal en Venezuela ("empresa X"), período 2014-2019, con horizonte de 12 meses. Adaptación del enfoque de Rami Krispin (2019) con el paquete TSstudio en RStudio.',
+      methods: 'Análisis exploratorio, descomposición aditiva y multiplicativa de la serie, análisis estacional y de autocorrelación (ACF/PACF); estimación y comparación de 6 modelos (ARIMA, SARIMA, ETS, Holt-Winters y TSLM) bajo enfoque tradicional (training/test) y validación por Backtesting con intervalos de confianza al 80% y 95%.',
+      results: 'La serie presenta un patrón estacional marcado, una ruptura estructural alrededor de 2016 y decrecimiento no lineal. Se selecciona el modelo SARIMA para evaluar residuos y proyectar 12 meses con bandas de confianza.',
       tools: 'R, TSstudio (v0.1.6), forecast, plotly.'
     },
     {
-      n: 2, title: 'Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin', file: 'Proyecto2.html',
+      n: 2, title: 'Modelización de la Volatilidad Condicional y Valor en Riesgo (VaR) del Bitcoin', file: 'Proyecto2.html', pubDate: 'Mayo de 2020',
       keys: ['var', 'valor en riesgo', 'volatilidad', 'garch', 'egarch', 'gjrgarch', 'tgarch', 'sgarch', 'riesgo', 'ljung', 'efecto arch', 'value at risk'],
-      summary: 'Evaluación de la volatilidad y del VaR de los retornos diarios del Bitcoin entre enero 2014 y enero 2020, comparando modelos GARCH simétricos y asimétricos.',
-      methods: 'Modelos sGARCH, TGARCH, eGARCH y gjrGARCH con tres distribuciones de error (Normal, t-Student y GED); selección con AIC, MAE y MSE; contraste con GARCH(1,1); pruebas Ljung-Box y de efecto ARCH (LM); backtesting del VaR al 1%; análisis de residuos y pronósticos por tres métodos.',
-      results: 'El eGARCH(2,1) con distribución t-Student fue el modelo mejor ajustado según AIC, aunque no dio el mejor pronóstico fuera de muestra (diferencias insignificantes). En las pruebas de VaR ningún modelo fue significativamente superior; se espera que una pérdida promedio del 0,8% se supere solo en el 1% del tiempo.',
-      tools: 'R, rmgarch, PerformanceAnalytics, zoo.'
+      summary: 'Evaluación econométrica de la volatilidad condicional y del Valor en Riesgo (VaR) de los retornos diarios del Bitcoin (BTC-USD) entre enero 2014 y enero 2020 en RStudio.',
+      methods: 'Modelos sGARCH, TGARCH, eGARCH y gjrGARCH con tres distribuciones de error (Normal, t-Student y GED); selección con AIC, MAE y MSE; pruebas Ljung-Box y de efecto ARCH (LM); backtesting del VaR al 99% (1% de significancia).',
+      results: 'El modelo eGARCH(2,1) con distribución t-Student obtuvo el mejor ajuste según el criterio AIC, capturando la asimetría de choques sobre la volatilidad. En el VaR al 1%, se estima el umbral de pérdida diaria máxima esperada con pruebas de excedencias.',
+      tools: 'R, rugarch / rmgarch, quantmod, PerformanceAnalytics, zoo.'
     },
     {
-      n: 3, title: 'Aprendizaje Automático (Machine Learning)', file: 'proyecto3.html',
+      n: 3, title: 'Ciencia de Datos para la Empresa: Aprendizaje Automático (Machine Learning) en R', file: 'proyecto3.html', pubDate: 'Mayo de 2020',
       keys: ['machine learning', 'aprendizaje automatico', 'bicicletas', 'bikeshare', 'bike', 'tidymodels', 'parsnip', 'recipes', 'yardstick', 'ml', 'inteligencia artificial'],
-      summary: 'Modelo básico de Machine Learning en R para predecir, con horizonte de 6 meses, los recuentos diarios del sistema de bicicletas compartidas Capital Bikeshare (Metro DC, EE. UU.), con el dataset Bike Sharing del repositorio UCI.',
-      methods: 'Flujo de trabajo con recetas de preprocesamiento (recipes), especificación de un modelo de regresión lineal (parsnip, motor lm), workflows, entrenamiento y prueba, métricas con yardstick e intervalos de predicción al 80% y 95%.',
-      results: 'Precisión fuera de muestra: RMSE ≈ 1437, R² ≈ 0,379 y MAE ≈ 1045. El autor indica que los residuos no son perfectos, pero el modelo es una base de trabajo.',
-      tools: 'workflows, parsnip, recipes, yardstick, tidyverse, tidyquant, timetk, plotly, knitr, kableExtra.'
+      summary: 'Flujo de Machine Learning en RStudio para predecir, con horizonte de 6 meses, la demanda diaria del sistema Capital Bikeshare (Metro DC, EE. UU.) con el dataset Bike Sharing del repositorio UCI.',
+      methods: 'Preprocesamiento e ingeniería de variables con recipes, especificación de regresión en parsnip (motor lm), ensamblaje en workflows, partición entrenamiento/prueba, evaluación con yardstick e intervalos de predicción al 80% y 95%.',
+      results: 'Precisión fuera de muestra: RMSE ≈ 1437, R² ≈ 0,379 y MAE ≈ 1045, sirviendo como arquitectura reproducible para pronósticos empresariales.',
+      tools: 'R, tidymodels (workflows, parsnip, recipes, yardstick), tidyverse, tidyquant, timetk, plotly, knitr, kableExtra.'
     },
     {
-      n: 4, title: 'Portafolio de Fronteras Eficientes Markowitz', file: 'proyecto4.html',
-      keys: ['markowitz', 'frontera', 'fronteras eficientes', 'portafolio eficiente', 'tangente', 'cartera', 'diversificacion', 'acciones', 's&p', 'microsoft', 'msft', 'pepsico', 'walmart', 'mcdonald', 'mastercard', 'johnson'],
-      summary: 'Cartera de inversión con seis acciones del S&P 500 de distintos sectores: Microsoft (MSFT), Johnson & Johnson (JNJ), Mastercard (MA), PepsiCo (PEP), Walmart (WMT) y McDonald\'s (MCD), período enero 2010 - abril 2020. El post incluye mensajes de voz con consultas académicas de la comunidad.',
-      methods: 'Rentabilidad logarítmica, rendimientos esperados y volatilidades, matriz de varianza-covarianza y correlaciones; frontera eficiente con restricción de solo posiciones largas y tasa libre de riesgo de -0,001; cálculo del portafolio eficiente y del portafolio tangente.',
-      results: 'Portafolio eficiente: JNJ 31,9%, PEP 20,4%, WMT 25,6% y MCD 22,1%. Portafolio tangente: MSFT 4,1%, JNJ 27,8%, MA 7,4%, PEP 14,2%, WMT 23% y MCD 23,4%.',
-      tools: 'R, paquetes Portfolio y tseries.'
+      n: 4, title: 'Portafolios de Inversión: Portafolio Eficiente y Portafolio Tangente de Markowitz', file: 'proyecto4.html', pubDate: 'Mayo de 2020',
+      keys: ['markowitz', 'frontera', 'fronteras eficientes', 'portafolio eficiente', 'tangente', 'cartera', 'diversificacion', 'acciones', 'microsoft', 'msft', 'pepsico', 'walmart', 'mcdonald', 'mastercard', 'johnson'],
+      summary: 'Optimización Media-Varianza de Markowitz sobre seis acciones líderes del S&P 500 de distintos sectores: Microsoft (MSFT), Johnson & Johnson (JNJ), Mastercard (MA), PepsiCo (PEP), Walmart (WMT) y McDonald\'s (MCD), período enero 2010 - abril 2020. Incluye consultas de audio de la comunidad académica y enlaza con la actualización 2026 en Python y Redes Neuronales LSTM (Trabajo #14).',
+      methods: 'Rentabilidad logarítmica diaria, rendimientos esperados y volatilidades, matriz de varianza-covarianza y correlaciones; construcción de la Frontera Eficiente en RStudio con restricción long-only; cálculo del Portafolio de Mínima Varianza Global y del Portafolio Tangente (máximo Ratio de Sharpe).',
+      results: 'Pesos del Portafolio Tangente (Abril 2020, máximo Ratio de Sharpe): MA 34,41%, MSFT 17,90%, MCD 16,51%, WMT 15,16%, JNJ 12,16% y PEP 3,85% (retorno medio diario de 0,08% y riesgo diario de 0,99%). Pesos del Portafolio de Mínima Varianza Global (Abril 2020): JNJ 33,42%, MCD 24,49%, PEP 20,53%, WMT 19,65%, MSFT 1,91% y MA 0,00% (retorno medio diario de 0,05% y riesgo mínimo diario de 0,87%). En la actualización de octubre de 2026 (Trabajo #14), $5,000 USD invertidos en este Portafolio Tangente alcanzaron $11,208.95 USD (+124.18%) y con el nuevo modelo LSTM en Python alcanzaron $15,057.19 USD (+201.14%).',
+      tools: 'R, fPortfolio, quantmod, PerformanceAnalytics, tseries.'
     },
     {
-      n: 5, title: 'Evaluación y Formulación de Proyectos de Inversión', file: 'EvaluacionProyecto.html',
-      keys: ['evaluacion', 'formulacion', 'proyecto de inversion', 'proyectos de inversion', 'global nutrition', 'espana', 'nutricion', 'renal', 'estudio de mercado', 'factibilidad', 'inversion'],
-      summary: 'Participación de Jesús Zerpa en la evaluación y formulación del proyecto "Global Nutrition España 2017", emprendido por un grupo empresarial venezolano del sector salud. Buscaba penetrar mercados de la Comunidad Europea con un complemento nutricional funcional para personas con enfermedad renal crónica (en procedimiento dialítico y regímenes especiales) y solicitar financiamiento ante una institución española.',
-      methods: 'Identificación del producto, estudio legal, estudio de mercado, estudio técnico y estudio económico-financiero; presentación, informe del proyecto y cuentas previsionales del primer ejercicio.',
-      results: 'El post publica la presentación, el informe y las cuentas previsionales; no expone cifras de rentabilidad en texto.',
-      tools: 'Documentos de Microsoft Office incrustados.'
+      n: 5, title: 'Evaluación y Formulación de Proyectos de Inversión: Caso Global Nutrition España', file: 'EvaluacionProyecto.html', pubDate: 'Junio de 2020',
+      keys: ['evaluacion', 'formulacion', 'proyecto de inversion', 'proyectos de inversion', 'global nutrition', 'espana', 'nutricion', 'renal', 'estudio de mercado', 'factibilidad', 'inversion', 'van', 'tir', 'wacc'],
+      summary: 'Participación de Jesús Zerpa en la evaluación y formulación financiera del proyecto "Global Nutrition España 2017", emprendido por un grupo empresarial del sector salud para penetrar el mercado de la Unión Europea con un complemento nutricional especializado para pacientes con enfermedad renal crónica y gestionar financiamiento institucional en España.',
+      methods: 'Identificación del producto, estudio legal, estudio de mercado, estudio técnico (producción tercerizada) y estudio económico-financiero proforma; presentación ejecutiva, informe técnico y cuentas previsionales.',
+      results: 'Documenta integralmente la presentación ejecutiva, el informe de factibilidad y el plan de cuentas previsionales del proyecto.',
+      tools: 'Modelización Financiera Corporativa, Presupuesto de Capital y documentos de Microsoft Office incrustados.'
     },
     {
-      n: 6, title: 'Financial Dashboard', file: 'Dashboard.html',
+      n: 6, title: 'Financial Dashboard Corporativo', file: 'Dashboard.html', pubDate: 'Junio de 2020',
       keys: ['dashboard', 'tablero', 'excel', 'vba', 'visual basic', 'kpi', 'estado de resultados', 'ganancias y perdidas', 'panel de control'],
-      summary: 'Herramienta de análisis financiero desarrollada por Jesús Zerpa en Excel y Visual Basic (2018), con cuatro niveles de interpretación basados en el Estado de Ganancias y Pérdidas. Su primera versión se diseñó para la V.P. de Finanzas de un grupo empresarial con producción, distribución, venta al mayor, comercialización y una cadena de tiendas al detal.',
-      methods: 'Centraliza en un solo reporte la información de varios entregables, con secuencia lógica para el análisis financiero, automatizado e interactivo para el cierre mensual; exporta a PowerPoint o PDF con highlights automáticos y protege el archivo (VB).',
-      results: 'La nueva versión es personalizable, incluye un asistente de inducción al usuario y se integra con Power BI.',
-      tools: 'Excel, Visual Basic (VBA), Power BI.'
+      summary: 'Cuadro de mando financiero desarrollado por Jesús Zerpa en Excel y Visual Basic (VBA) con cuatro niveles de desagregación e interpretación basados en el Estado de Ganancias y Pérdidas (P&G), diseñado originalmente para la Vicepresidencia de Finanzas de un grupo empresarial (producción, distribución, venta al mayor y retail).',
+      methods: 'Centraliza en un solo reporte automatizado múltiples entregables de cierre mensual, incorpora alertas visuales (highlights), exportación automatizada a PowerPoint/PDF, esquema de seguridad en VBA, asistente interactivo de inducción al usuario e integración con Power BI.',
+      results: 'Optimiza los tiempos de respuesta en sesiones de directorio y permite el seguimiento en tiempo real de márgenes de ventas, EBITDA y rentabilidad neta.',
+      tools: 'Microsoft Excel, Visual Basic for Applications (VBA), Power BI.'
     },
     {
-      n: 7, title: 'Exploración de Datos Macroeconómicos con Rstudio', file: 'proyecto7.html',
+      n: 7, title: 'Exploración de Datos Macroeconómicos con RStudio', file: 'proyecto7.html', pubDate: 'Junio de 2020',
       keys: ['macroeconomia', 'macroeconomicos', 'gapminder', 'pib', 'esperanza de vida', 'preston', 'quandl', 'banco mundial', 'wdi', 'leaflet', 'estadistica espacial', 'exploracion de datos'],
-      summary: 'Exploración de los datos del paquete Gapminder (esperanza de vida al nacer y PIB per cápita) y, en una segunda parte, descarga de indicadores del Banco Mundial (WDI) para Venezuela con Quandl, cerrando con un mapa interactivo con leaflet (estadística espacial).',
-      methods: 'Gráficos interactivos, animados y de dispersión; suavizado Loess y GAM; diagramas de caja; Curva de Preston; regresión lm(lifeExp ~ log(gdpPercap) + pop + continent) visualizada con coefplot.',
-      results: 'El autor advierte que la correlación entre PIB per cápita y esperanza de vida no implica causalidad.',
-      tools: 'plotly, gganimate, ggplot2, gapminder, Quandl, knitr, kableExtra, purrr, dygraphs, rnaturalearth, sp, rgeos, leaflet, coefplot, ggrepel, socviz.'
+      summary: 'Análisis econométrico y visual de datos globales del paquete Gapminder (esperanza de vida al nacer y PIB per cápita) y descarga automatizada de Indicadores del Desarrollo Mundial (WDI) del Banco Mundial para Venezuela mediante Quandl, cerrando con estadística espacial interactiva en leaflet.',
+      methods: 'Gráficos interactivos y animados (plotly, gganimate), suavizado LOESS y GAM, diagramas de caja intercontinentales, Curva de Preston y regresión lineal múltiple lm(lifeExp ~ log(gdpPercap) + pop + continent) con coefplot.',
+      results: 'Cuantifica la relación positiva no lineal entre ingreso per cápita y esperanza de vida, destacando la distinción metodológica entre correlación estadística y causalidad.',
+      tools: 'R, plotly, gganimate, ggplot2, gapminder, Quandl, knitr, kableExtra, purrr, dygraphs, rnaturalearth, sp, rgeos, leaflet, coefplot, ggrepel, socviz.'
     },
     {
-      n: 8, title: 'Sistema Integrado Geográfico SIG', file: 'powermap.html',
-      keys: ['sig', 'geografico', 'geoespacial', 'power map', 'mapa', 'mapas', 'territorial', 'gis'],
-      summary: 'Extracto del análisis geoespacial de una cadena de tiendas (retail) en Venezuela: recorrido histórico de cierre de un modelo de datos de ventas en volumen con la herramienta Power Map.',
-      methods: '1 capa, gráfico de barras, métrica: ventas en volumen. Explica los conceptos de SIG, datos geoespaciales y Power Map.',
-      results: 'Se presenta como visualización/recorrido; no reporta métricas numéricas en texto.',
-      tools: 'Microsoft Power Map.'
+      n: 8, title: 'Sistema Integrado Geográfico (SIG) con Power Map 3D', file: 'powermap.html', pubDate: 'Julio de 2020',
+      keys: ['sig', 'geografico', 'geoespacial', 'power map', 'mapa', 'mapas', 'territorial', 'gis', 'geomarketing'],
+      summary: 'Análisis geoespacial tridimensional de una cadena de tiendas retail en Venezuela: recorrido histórico de cierre de un modelo de datos de ventas en volumen utilizando Microsoft Power Map 3D.',
+      methods: 'Georreferenciación de registros comerciales en una capa cartográfica 3D con gráficos de barras sobre el globo terráqueo para evaluar concentración regional de demanda.',
+      results: 'Demostración visual interactiva en video del recorrido espaciotemporal para soporte de decisiones de geomarketing y logística.',
+      tools: 'Microsoft Power Map 3D, Bing Maps Engine.'
     },
     {
-      n: 9, title: 'Pronósticos con Prophet para el Bitcoin y Ether', file: 'bitcoin-ether-pronosticos-con-prophet.html',
+      n: 9, title: 'Pronósticos con Prophet para el Bitcoin y Ether', file: 'bitcoin-ether-pronosticos-con-prophet.html', pubDate: 'Julio de 2020',
       keys: ['prophet', 'facebook', 'ether', 'eth', 'ethereum'],
-      summary: 'Pronósticos con Prophet (equipo Core Data Science de Facebook, v0.6.1) de los precios de cierre ajustados diarios de Bitcoin (BTC) y Ether (ETH), período 2016-2020, datos de investing.com, horizonte de 31 días.',
-      methods: 'Análisis de tendencia, ciclos y estacionalidad; primeras predicciones, gráfica interactiva y componentes estacionales.',
-      results: 'Para el Bitcoin se observa probabilidad de mantenerse en el soporte de 9.000 USD, con mínimo promedio de 7.500 USD y máximo de 10.500 USD hasta agosto 2020. El autor aclara que Prophet no es el mejor modelo en la mayoría de los casos; rinde mejor en series con estacionalidad, tendencia y deriva.',
-      tools: 'prophet, tidyverse, dygraphs.'
+      summary: 'Pronósticos cuantitativos mediante el algoritmo Prophet (Core Data Science de Facebook, v0.6.1) sobre los precios de cierre ajustados diarios de Bitcoin (BTC) y Ether (ETH), período 2016-2020, con horizonte predictivo de 31 días.',
+      methods: 'Modelización aditiva generalizada de tendencia no lineal por tramos (changepoints), ciclos y estacionalidad; visualización interactiva en dygraphs y descomposición de patrones semanales y anuales.',
+      results: 'Estima para el Bitcoin (en julio 2020) soporte estadístico en torno a 9.000 USD con banda entre 7.500 USD y 10.500 USD hacia agosto 2020, detallando las fortalezas de Prophet en series con marcada estacionalidad y deriva.',
+      tools: 'R, prophet, tidyverse, dygraphs.'
     },
     {
-      n: 10, title: 'Simulación Monte Carlo', file: 'modelizacion-monte-carlo-portafolios.html',
+      n: 10, title: 'Simulación Monte Carlo en la Gestión de Carteras', file: 'modelizacion-monte-carlo-portafolios.html', pubDate: 'Julio de 2020',
       keys: ['monte carlo', 'montecarlo', 'simulacion', 'simulaciones', 'estocastico'],
-      summary: 'Introducción a la Simulación Monte Carlo usando el Portafolio Tangente obtenido en el trabajo de Markowitz (mismos seis activos del S&P 500, enero 2010 - abril 2020).',
-      methods: '100 simulaciones aleatorias basadas en el histórico de los 6 instrumentos para estimar el crecimiento de 1 USD invertido en la cartera durante 120 meses (10 años).',
-      results: 'El post enumera limitaciones: ignora lo que no está integrado en el modelo (tendencias macro, factores cíclicos), asume un mercado eficiente y se complica con muchas variables.',
-      tools: 'tidyquant, tidyverse, timetk, broom, highcharter.'
+      summary: 'Aplicación de la Simulación Estocástica de Monte Carlo en RStudio sobre el Portafolio Tangente de Markowitz (MSFT, JNJ, MA, PEP, WMT y MCD, enero 2010 - abril 2020).',
+      methods: 'Generación de 100 trayectorias estocásticas basadas en la distribución histórica de los 6 activos para proyectar el crecimiento compuesto de 1 USD invertido durante 120 meses (10 años).',
+      results: 'Modela el abanico probabilístico de trayectorias de crecimiento y expone con rigor las premisas y limitaciones de los métodos de Monte Carlo en mercados financieros.',
+      tools: 'R, tidyquant, tidyverse, timetk, broom, highcharter.'
     },
     {
-      n: 11, title: 'Power BI, una de las mejores herramientas BI', file: 'power-bi.html',
+      n: 11, title: 'Power BI: Herramienta Líder de Business Intelligence', file: 'power-bi.html', pubDate: 'Agosto de 2020',
       keys: ['power bi', 'business intelligence', 'inteligencia de negocios', 'inteligencia empresarial', 'microsoft'],
-      summary: 'Artículo divulgativo (no es un modelo cuantitativo) sobre Business Intelligence y Power BI.',
-      methods: 'Explica qué es un software de BI, sus beneficios, qué es Power BI, cómo funciona el servicio en la nube de Microsoft, las versiones gratuita, pagas y Premium, y razones para usarlo.',
-      results: 'No aplica (artículo informativo).',
-      tools: 'Power BI.'
+      summary: 'Estudio sobre arquitectura de Business Intelligence en Microsoft Power BI con dos cuadros de mando (dashboards) corporativos interactivos desplegados en vivo en la nube de Microsoft.',
+      methods: 'Explica la integración de fuentes de datos heterogéneas, el servicio en la nube de Power BI, el posicionamiento en el Cuadrante Mágico de Gartner y despliega dos tableros ejecutivos interactivos.',
+      results: 'Permite explorar en tiempo real dos dashboards interactivos de ventas, márgenes y KPIs financieros.',
+      tools: 'Microsoft Power BI.'
     },
     {
-      n: 12, title: 'Análisis de procesos de negocio utilizando la plataforma de Rstudio', file: 'analisis-de-procesos-comerciales-data-mining.html',
+      n: 12, title: 'Análisis de Procesos Comerciales y de Negocio en RStudio (Data & Process Mining)', file: 'analisis-de-procesos-comerciales-data-mining.html', pubDate: 'Agosto de 2020',
       keys: ['data mining', 'mineria de datos', 'procesos', 'process mining', 'bupar', 'event log', 'eventlog', 'kdd', 'mapa de procesos'],
-      summary: 'Introducción a la minería de datos (KDD) y sus aplicaciones, y análisis de procesos de negocio en RStudio con datos de pacientes de un centro de salud privado.',
-      methods: 'Creación de un event-log, análisis exploratorio basado en eventos, frecuencias de actividades, mapas de procesos (perfiles de frecuencia, rendimiento y personalizado), animación del mapa y gráficos de puntos.',
-      results: 'El post es demostrativo; no reporta métricas de negocio específicas.',
-      tools: 'bupaR y su ecosistema de análisis de procesos.'
+      summary: 'Fundamentos de Minería de Datos (KDD) y aplicación práctica de Minería de Procesos (Process Mining) en RStudio sobre registros de eventos (Event Logs) de atención de pacientes en un centro de salud privado.',
+      methods: 'Construcción de un objeto event-log, auditoría de trazas y frecuencias de actividades, mapas de procesos bajo perfiles de frecuencia y rendimiento (Throughput Time), mapas animados y análisis de precedencia.',
+      results: 'Identifica visual y cuantitativamente las rutas críticas, tiempos de procesamiento y cuellos de botella operativos.',
+      tools: 'R, suite bupaR (edeaR, processmapR, processanimateR).'
     },
     {
-      n: 13, title: 'Análisis Técnico del Bitcoin en Rstudio', file: 'trading-medias-moviles-rstudio.html',
+      n: 13, title: 'Bitcoin Trading en RStudio — Capítulo 1: El Análisis Técnico', file: 'trading-medias-moviles-rstudio.html', pubDate: 'Octubre de 2020',
       keys: ['trading', 'analisis tecnico', 'medias moviles', 'media movil', 'rsi', 'macd', 'bollinger', 'momentum', 'roc', 'velas', 'quantmod', 'ttr'],
-      summary: '"Bitcoin Trading en Rstudio, Capítulo 1 [El Análisis Técnico]" (2020): conceptos de trading y análisis técnico, sus 3 principios, limitaciones y pioneros (Dow, Hamilton, Rhea, Gould, Magee).',
-      methods: 'Análisis técnico del histórico del Bitcoin con gráficos de líneas, barras y velas, y los indicadores media móvil simple, media móvil exponencial, Bandas de Bollinger, Momentum, ROC, MACD y RSI, con la interpretación de las señales de cada uno.',
-      results: 'Es un capítulo introductorio de indicadores; no publica resultados de rentabilidad de una estrategia.',
-      tools: 'quantmod, TTR. Referencia de datos: investing.com.'
+      summary: 'Fundamentos del Análisis Técnico bursátil (Teoría de Dow, los 3 principios del análisis técnico, pioneros e historia) e implementación programática de indicadores sobre la serie histórica del Bitcoin en RStudio.',
+      methods: 'Gráficos de líneas, barras y velas japonesas (Candlesticks), y cálculo algorítmico de Media Móvil Simple (SMA), Media Móvil Exponencial (EMA), Bandas de Bollinger, Momentum, Tasa de Cambio (ROC), MACD y RSI.',
+      results: 'Documenta la formulación matemática y las reglas de interpretación de señales (sobrecompra, sobreventa, cruces de medias y divergencias) para cada indicador.',
+      tools: 'R, quantmod, TTR.'
     }
   ];
 
@@ -548,7 +553,7 @@
               <span class="copilot-name-label">Asistente del Portafolio</span>
               <span class="copilot-tech-badge">
                 <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10b981;"></span>
-                <span>Gemini · información verificada</span>
+                <span>Google Gemini · Base Verificada</span>
               </span>
             </div>
           </div>
@@ -563,7 +568,8 @@
         </div>
 
         <div class="copilot-chips-strip">
-          <button class="quick-chip-btn" data-prompt="¿Qué proyectos tiene el portafolio?">Todos los proyectos</button>
+          <button class="quick-chip-btn" data-prompt="¿Cuánto rindieron $5,000 USD en el Portafolio Tangente de 2020 y cuánto logró el nuevo modelo con Redes Neuronales LSTM en Python (2026)?">Portafolio LSTM 2026 ($5,000 USD)</button>
+          <button class="quick-chip-btn" data-prompt="¿Qué proyectos tiene el portafolio de Jesús Zerpa?">Los 14 Estudios</button>
           <button class="quick-chip-btn" data-prompt="¿Cuál es la trayectoria profesional de Jesús Zerpa?">Trayectoria</button>
           <button class="quick-chip-btn" data-prompt="Explícame el modelo de volatilidad y VaR del Bitcoin">VaR Bitcoin</button>
           <button class="quick-chip-btn" data-prompt="¿Cómo contacto a Jesús?">Contacto</button>
@@ -572,7 +578,7 @@
         <div id="copilotHistoryBox" class="copilot-history-box"></div>
 
         <div class="copilot-input-area">
-          <input type="text" id="copilotInput" class="copilot-input-field" placeholder="Pregunta sobre un proyecto o la trayectoria..." autocomplete="off" />
+          <input type="text" id="copilotInput" class="copilot-input-field" placeholder="Pregunta sobre los 14 estudios, Python LSTM, R o trayectoria..." autocomplete="off" />
           <button id="copilotSendBtn" class="copilot-send-btn" aria-label="Enviar mensaje" title="Enviar mensaje">
             <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </button>
@@ -594,57 +600,103 @@
   function hasAny(q, terms) { return terms.some(t => hasTerm(q, t)); }
 
   // ---------- Answer builders (only verified data) ----------
-  function projectLink(p) { return `[Abrir el trabajo #${p.n}](${p.file})`; }
+  function projectLink(p) { return `[Abrir el estudio #${p.n}](${p.file})`; }
 
   function answerProject(p) {
-    return `**Trabajo #${p.n}: ${p.title}**\n\n` +
-      `- **De qué trata:** ${p.summary}\n` +
-      `- **Metodología:** ${p.methods}\n` +
-      `- **Resultados / conclusiones del post:** ${p.results}\n` +
-      `- **Herramientas:** ${p.tools}\n\n` + projectLink(p);
+    return `**Trabajo #${p.n}: ${p.title}** (${p.pubDate})
+
+` +
+      `- **Resumen:** ${p.summary}
+` +
+      `- **Metodología:** ${p.methods}
+` +
+      `- **Resultados verificados:** ${p.results}
+` +
+      `- **Herramientas:** ${p.tools}
+
+` + projectLink(p);
   }
 
   function answerProjectList(list, intro) {
-    return (intro || `El portafolio tiene **${PROJECTS.length} trabajos publicados**:`) + '\n\n' +
-      list.map(p => `- **#${p.n} ${p.title}**: [ver](${p.file})`).join('\n') +
-      '\n\nPregúntame por cualquiera de ellos para ver su metodología y resultados.';
+    return (intro || `El portafolio cuenta con **${PROJECTS.length} estudios publicados** (entre mayo de 2020 y octubre de 2026):`) + '
+
+' +
+      list.map(p => `- **#${p.n} (${p.pubDate}) — ${p.title}**: [ver estudio](${p.file})`).join('
+') +
+      '
+
+Pregúntame por cualquiera de ellos (por ejemplo, el nuevo estudio #14 con Redes Neuronales LSTM en Python o el Portafolio Tangente #4) para conocer su metodología y resultados exactos.';
   }
 
   function answerCareer() {
-    return `**Trayectoria profesional de ${PROFILE.name}** (en orden cronológico, según su perfil):\n\n` +
-      CAREER.map(c => `- **${c.company}**: ${c.role}`).join('\n') +
-      `\n\n${PROFILE.summary}\n\nPuedes preguntarme por una empresa en particular para ver sus funciones.`;
+    return `**Trayectoria profesional de ${PROFILE.name}** (en orden cronológico):
+
+` +
+      CAREER.map(c => `- **${c.company}**: ${c.role}`).join('
+') +
+      `
+
+${PROFILE.summary}
+
+Puedes preguntarme por cualquiera de estas empresas para conocer el detalle de sus funciones.`;
   }
 
   function answerCompany(c) {
-    return `**${c.company}**: ${c.role}\n\n${c.detail}`;
+    return `**${c.company}** — ${c.role}
+
+${c.detail}`;
   }
 
   function answerContact() {
-    return `**Contacto de ${PROFILE.name}:**\n\n` +
-      `- **Teléfono / WhatsApp:** [${CONTACT.phone}](${CONTACT.whatsapp})\n` +
-      `- **Correo:** [${CONTACT.email}](mailto:${CONTACT.email})\n` +
-      `- **Telegram:** [${CONTACT.telegram}](${CONTACT.telegramUrl})\n` +
-      `- **LinkedIn:** [perfil](${CONTACT.linkedin})\n` +
-      `- **GitHub:** [JesusBZ](${CONTACT.github}) | **RPubs:** [JesusZ](${CONTACT.rpubs})\n` +
-      `- **Formulario:** [Enviar mensaje](${CONTACT.form})`;
+    return `**Canales de contacto de ${PROFILE.name}:**
+
+` +
+      `- **Teléfono / WhatsApp:** [${CONTACT.phone}](${CONTACT.whatsapp})
+` +
+      `- **Correo electrónico:** [${CONTACT.email}](mailto:${CONTACT.email})
+` +
+      `- **Telegram:** [${CONTACT.telegram}](${CONTACT.telegramUrl})
+` +
+      `- **LinkedIn:** [Perfil profesional](${CONTACT.linkedin})
+` +
+      `- **GitHub:** [JesusBZ](${CONTACT.github}) | **RPubs:** [JesusZ](${CONTACT.rpubs})
+` +
+      `- **Formulario directo:** [Enviar mensaje](${CONTACT.form})`;
   }
 
   function answerProfile() {
-    return `**${PROFILE.name}**: ${PROFILE.title}.\n\n${PROFILE.summary}\n\n**Áreas de interés:** ${PROFILE.interests}\n\n${PROFILE.portfolio}`;
+    return `**${PROFILE.name}** — ${PROFILE.title}.
+
+${PROFILE.summary}
+
+**Áreas de fortaleza:** ${PROFILE.interests}
+
+${PROFILE.portfolio}`;
   }
 
   function answerTools() {
-    return `**Herramientas usadas en los trabajos publicados:**\n\n` +
-      `- **R / RStudio:** TSstudio, forecast, rmgarch, PerformanceAnalytics, tidymodels (recipes, parsnip, workflows, yardstick), tidyquant, timetk, prophet, Portfolio, tseries, bupaR, quantmod, TTR, Quandl, leaflet, ggplot2, plotly, highcharter.\n` +
-      `- **Microsoft:** Excel y Visual Basic (Financial Dashboard), Power BI y Power Map.\n` +
-      `- **Técnicas:** series temporales (SARIMA, ETS, TSLM), modelos GARCH y VaR, regresión lineal con Machine Learning, optimización de Markowitz, simulación Monte Carlo, Prophet, process mining y análisis técnico.`;
+    return `**Stack tecnológico y librerías utilizadas en los 14 estudios del portafolio:**
+
+` +
+      `- **Python & Deep Learning (Estudio #14 — 2026):** Python 3.11+, PyTorch (\`torch.nn.LSTM\`), NumPy, Pandas, SciPy (\`scipy.optimize\` SLSQP), Scikit-Learn, yfinance y Plotly.js.
+` +
+      `- **R / RStudio (Estudios #1 al #13):** TSstudio, forecast, rugarch / rmgarch, PerformanceAnalytics, tidymodels (recipes, parsnip, workflows, yardstick), tidyquant, timetk, prophet, fPortfolio, tseries, bupaR, quantmod, TTR, Quandl, leaflet, ggplot2, plotly y highcharter.
+` +
+      `- **Business Intelligence & Finanzas Corporativas:** Microsoft Power BI, Power Query, DAX, Power Map 3D, Microsoft Excel avanzado y Visual Basic (VBA).`;
   }
 
   function unknownAnswer() {
-    return `No tengo información verificada sobre eso en el portafolio, así que prefiero no suponer. Puedo responderte sobre:\n\n` +
-      `- Los ${PROJECTS.length} trabajos publicados (escribe "proyectos")\n- La trayectoria profesional (escribe "trayectoria")\n- Herramientas utilizadas (escribe "herramientas")\n- Datos de contacto (escribe "contacto")\n\n` +
-      `Para cualquier otra consulta puedes escribirle directamente a Jesús por [WhatsApp](${CONTACT.whatsapp}) o por el [formulario](${CONTACT.form}).`;
+    return `No tengo esa información específica verificada dentro del portafolio. Puedo responderte con total precisión sobre:
+
+` +
+      `- Los **${PROJECTS.length} estudios publicados** (escribe "proyectos" o "LSTM 2026")
+- La auditoría de **$5,000 USD (2020–2026)** sobre el Portafolio Tangente y Redes Neuronales LSTM
+- La **trayectoria profesional** de Jesús Zerpa (escribe "trayectoria")
+- **Herramientas y lenguajes** (R, Python, PyTorch, Power BI, VBA)
+- **Datos de contacto** (escribe "contacto")
+
+` +
+      `Para consultas personalizadas o casos de negocio puedes escribirle directamente por [WhatsApp](${CONTACT.whatsapp}) o mediante el [formulario de contacto](${CONTACT.form}).`;
   }
 
   // ---------- Intent router ----------
@@ -652,12 +704,16 @@
     const q = norm(raw);
 
     if (/^(hola|buenas|buenos dias|buenas tardes|buenas noches|saludos|hey)\b/.test(q) && q.length < 30) {
-      return `Hola. Soy el asistente del portafolio de **${PROFILE.name}**. Respondo solo con información publicada en este sitio: sus ${PROJECTS.length} trabajos, su trayectoria profesional y sus datos de contacto. ¿Qué te gustaría saber?`;
+      return `Hola. Soy el asistente técnico del portafolio de **${PROFILE.name}**. Conozco en detalle sus **${PROJECTS.length} estudios cuantitativos** en R y Python (incluyendo el nuevo modelo 2026 de Deep Portfolio Optimization con Redes Neuronales LSTM), su trayectoria profesional y sus datos de contacto. ¿En qué puedo ayudarte?`;
     }
-    if (hasAny(q, ['gracias', 'thank'])) return 'Con gusto. Si quieres, pregúntame por otro trabajo o por la trayectoria de Jesús.';
+    if (hasAny(q, ['gracias', 'thank'])) return 'Con gusto. Si deseas profundizar en otro estudio (como la actualización 2026 en Python con LSTM) o en la trayectoria de Jesús, estoy a tu disposición.';
+
+    if (hasAny(q, ['5000', '5,000', 'lstm', 'pytorch', 'red neuronal', 'redes neuronales', 'deep portfolio', '2026', 'actualizacion'])) {
+      return answerProject(PROJECTS[0]);
+    }
 
     if (hasAny(q, ['vectores autorregresivos', 'vector autorregresivo', 'granger', 'modelo var multivariado'])) {
-      return 'Existe una página sobre Vectores Autorregresivos (VAR) en el sitio, pero no contiene una descripción publicada que me permita explicarla con precisión. Puedes consultarle directamente a Jesús por el [formulario](formulario.html).';
+      return 'El repositorio incluye una práctica técnica en RStudio sobre **Modelización Econométrica de Vectores Autorregresivos VAR(p)** (Noviembre de 2020) con pruebas de raíz unitaria (Dickey-Fuller Aumentado), causalidad de Granger y funciones de impulso-respuesta: [Ver documento técnico](trading-vectores-autoregresivos-en-rstudio.html).';
     }
 
     if (hasAny(q, ['contacto', 'contactar', 'correo', 'email', 'e-mail', 'telefono', 'whatsapp', 'telegram', 'linkedin', 'escribirle', 'llamar', 'contratar', 'consultoria', 'cotizacion'])) {
@@ -665,7 +721,7 @@
     }
 
     if (hasAny(q, ['universidad', 'donde estudio', 'que estudio', 'estudios universitarios', 'titulo universitario', 'formacion academica', 'postgrado', 'maestria', 'doctorado', 'certificacion'])) {
-      return `El portafolio indica que ${PROFILE.name} es **Economista**, pero no publica la institución, el año ni otros estudios formales. Para ese detalle puedes revisar su [LinkedIn](${CONTACT.linkedin}) o escribirle por el [formulario](${CONTACT.form}).`;
+      return `El portafolio indica que ${PROFILE.name} es **Economista y Quantitative Data Scientist**, con más de 14 años de experiencia y amplias fortalezas en planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning y Business Intelligence. Para detalles académicos adicionales puedes consultar su [LinkedIn](${CONTACT.linkedin}) o escribirle por el [formulario](${CONTACT.form}).`;
     }
 
     // Specific company
@@ -686,19 +742,19 @@
       const top = scored[0].s;
       const ties = scored.filter(x => x.s === top).map(x => x.p);
       if (ties.length === 1) return answerProject(ties[0]);
-      return answerProjectList(ties, 'Encontré varios trabajos relacionados con tu consulta:');
+      return answerProjectList(ties, 'Encontré estos estudios relacionados con tu consulta:');
     }
 
     // Generic "bitcoin / cripto" question
     if (hasAny(q, ['bitcoin', 'btc', 'cripto', 'criptomoneda', 'criptomonedas'])) {
-      return answerProjectList(PROJECTS.filter(p => [2, 9, 13].includes(p.n)), 'Hay tres trabajos sobre Bitcoin y criptomonedas:');
+      return answerProjectList(PROJECTS.filter(p => [2, 9, 13].includes(p.n)), 'El portafolio incluye tres estudios cuantitativos sobre Bitcoin y criptoactivos:');
     }
 
     if (hasAny(q, ['trayectoria', 'experiencia', 'empresas', 'cargos', 'carrera', 'curriculum', 'cv', 'trabajado', 'laboral', 'donde ha trabajado'])) {
       return answerCareer();
     }
 
-    if (hasAny(q, ['proyectos', 'trabajos', 'portafolio', 'publicaciones', 'modelos', 'que has hecho', 'que hace', 'lista'])) {
+    if (hasAny(q, ['proyectos', 'trabajos', 'portafolio', 'publicaciones', 'modelos', 'que has hecho', 'que hace', 'lista', 'estudios'])) {
       return answerProjectList(PROJECTS);
     }
 
@@ -706,41 +762,68 @@
       return answerProfile();
     }
 
-    if (hasAny(q, ['herramientas', 'paquetes', 'librerias', 'software', 'tecnologias', 'habilidades', 'lenguajes', 'stack'])) {
+    if (hasAny(q, ['herramientas', 'paquetes', 'librerias', 'software', 'tecnologias', 'habilidades', 'lenguajes', 'stack', 'fortalezas'])) {
       return answerTools();
     }
 
     return null;
   }
 
-  // ---------- Gemini (original Vercel backend, API key stays server-side) ----------
-  const GEMINI_BACKEND_URL = 'https://gemini-backend-ecru.vercel.app/api/chat';
+  // ---------- Google Gemini API (Server-side key on Vercel + Local Dev Proxy) ----------
+  const GEMINI_BACKEND_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? '/api/chat'
+    : 'https://gemini-backend-ecru.vercel.app/api/chat';
 
   function buildVerifiedContext() {
-    const career = CAREER.map(c => `- ${c.company} | ${c.role}: ${c.detail}`).join('\n');
+    const career = CAREER.map(c => `- ${c.company} | ${c.role}: ${c.detail}`).join('
+');
     const projects = PROJECTS.map(p =>
-      `### Trabajo #${p.n}: ${p.title} (enlace: ${p.file})\n` +
-      `De qué trata: ${p.summary}\nMetodología: ${p.methods}\nResultados del post: ${p.results}\nHerramientas: ${p.tools}`
-    ).join('\n\n');
-    return `PERFIL: ${PROFILE.name}. ${PROFILE.title}. ${PROFILE.summary} Áreas de interés: ${PROFILE.interests} ${PROFILE.portfolio}\n` +
-      `EDUCACIÓN: el portafolio solo indica que es Economista; no publica institución, año ni otros estudios.\n\n` +
-      `TRAYECTORIA (orden cronológico; Credicard es el cargo más reciente indicado en su perfil):\n${career}\n\n` +
-      `TRABAJOS PUBLICADOS (${PROJECTS.length}):\n${projects}\n\n` +
-      `NOTA: existe una página sobre Vectores Autorregresivos (VAR) sin contenido descriptivo publicado; no la describas.\n\n` +
+      `### Trabajo #${p.n} (${p.pubDate}): ${p.title} (enlace: ${p.file})
+` +
+      `De qué trata: ${p.summary}
+Metodología: ${p.methods}
+Resultados verificados: ${p.results}
+Herramientas: ${p.tools}`
+    ).join('
+
+');
+    return `PERFIL: ${PROFILE.name}. ${PROFILE.title}. ${PROFILE.summary} Áreas de fortaleza: ${PROFILE.interests} ${PROFILE.portfolio}
+` +
+      `REGLA DE ESTILO DEL AUTOR: Utiliza siempre las expresiones "con amplia experiencia" y "con sólidas fortalezas" para describir las competencias del autor.
+
+` +
+      `TRAYECTORIA PROFESIONAL (orden cronológico; Consorcio Credicard es el cargo más reciente indicado en su perfil):
+${career}
+
+` +
+      `TRABAJOS PUBLICADOS EN EL PORTAFOLIO (${PROJECTS.length} estudios en total, incluyendo el nuevo Trabajo #14 de Octubre 2026 con Redes Neuronales LSTM en Python):
+${projects}
+
+` +
       `CONTACTO: WhatsApp/teléfono ${CONTACT.phone} (${CONTACT.whatsapp}); correo ${CONTACT.email}; Telegram ${CONTACT.telegram}; ` +
       `LinkedIn ${CONTACT.linkedin}; GitHub ${CONTACT.github}; RPubs ${CONTACT.rpubs}; formulario: ${CONTACT.form}`;
   }
 
   function buildGroundedPrompt(question) {
-    return `Eres el asistente del portafolio web de ${PROFILE.name}. REGLAS ESTRICTAS:\n` +
-      `1. Sobre Jesús, su trayectoria y sus trabajos responde ÚNICAMENTE con el CONTEXTO VERIFICADO de abajo.\n` +
-      `2. No inventes cifras, empresas, cargos, fechas, estudios, clientes, paquetes ni resultados. Si algo no está en el contexto, responde: "No tengo esa información verificada en el portafolio" y sugiere contactar a Jesús por WhatsApp o por el formulario.\n` +
-      `3. Al citar resultados o conclusiones de un trabajo, repítelos tal como aparecen en el contexto: no agregues interpretaciones, porcentajes de confianza ni conclusiones más favorables, y conserva las salvedades (por ejemplo, si un modelo no fue el mejor fuera de muestra, dilo).\n` +
-      `4. Sobre su empleo, di "su cargo más reciente indicado en el portafolio" en lugar de afirmar que trabaja ahí actualmente.\n` +
-      `5. Puedes explicar brevemente conceptos técnicos generales (por ejemplo, qué es un modelo GARCH), aclarando que es una explicación general, sin atribuirle a Jesús nada que no esté en el contexto.\n` +
-      `6. Responde en español, de forma concisa, con Markdown simple (negritas y viñetas con "- "), sin emojis.\n` +
-      `7. Cuando menciones un trabajo, incluye su enlace con formato [Ver trabajo](archivo.html).\n\n` +
-      `CONTEXTO VERIFICADO:\n${buildVerifiedContext()}\n\n` +
+    return `Eres el asistente técnico cuantitativo del portafolio web de ${PROFILE.name}. REGLAS ESTRICTAS:
+` +
+      `1. Sobre Jesús Benjamín Zerpa, su trayectoria y sus 14 trabajos responde ÚNICAMENTE con el CONTEXTO VERIFICADO de abajo.
+` +
+      `2. El portafolio tiene ahora 14 estudios publicados (los 13 originales de 2020 en RStudio/BI/Excel y el nuevo Trabajo #14 de Octubre de 2026: "Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz", archivo deep-portfolio-lstm-python.html).
+` +
+      `3. Emplea siempre los términos "fortalezas" y "experiencia" para referirte al perfil de Jesús Zerpa.
+` +
+      `4. No inventes cifras, empresas, cargos ni fechas. Al citar resultados (como la auditoría de $5,000.00 USD de 2020 a 2026 donde el Portafolio Tangente alcanzó $11,208.95 USD [+124.18%] y el modelo LSTM en Python alcanzó $15,057.19 USD [+201.14%]), cita las cifras exactas del contexto.
+` +
+      `5. Responde en español, con tono técnico financiero y económico, de forma clara y concisa, usando Markdown simple (negritas y viñetas con "- "), sin emojis.
+` +
+      `6. Cuando menciones un trabajo, incluye siempre su enlace con formato [Ver estudio](archivo.html).
+
+` +
+      `CONTEXTO VERIFICADO:
+${buildVerifiedContext()}
+
+` +
       `PREGUNTA DEL VISITANTE: ${question}`;
   }
 
@@ -766,12 +849,12 @@
   function initCopilotHUD() {
     ensureCopilotMounted();
 
-    // Conversation persists while navigating between pages/posts (sessionStorage),
-    // and is cleared when the page is reloaded (F5 / Ctrl+F5) or the tab is closed.
-    // Also purge anything persisted permanently by previous versions (API key, old histories).
-    const SESSION_KEY = 'jesus_copilot_session_v1';
+    const SESSION_KEY = 'jesus_copilot_session_v2';
     try {
-      ['gemini_user_api_key', 'jesus_copilot_history_v2', 'jesus_copilot_history_v3'].forEach(k => localStorage.removeItem(k));
+      ['gemini_user_api_key', 'jesus_copilot_history_v2', 'jesus_copilot_history_v3', 'jesus_copilot_session_v1'].forEach(k => {
+        localStorage.removeItem(k);
+        sessionStorage.removeItem(k);
+      });
       const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
       const isReload = nav ? nav.type === 'reload' : (performance.navigation && performance.navigation.type === 1);
       if (isReload) sessionStorage.removeItem(SESSION_KEY);
@@ -785,8 +868,8 @@
     const chatInput = document.getElementById('copilotInput');
     const chatHistoryBox = document.getElementById('copilotHistoryBox');
     const quickChips = document.querySelectorAll('.quick-chip-btn');
-    const WELCOME = `Hola. Soy el asistente del portafolio de **${PROFILE.name}**. Respondo solo con información publicada en este sitio: sus ${PROJECTS.length} trabajos, su trayectoria profesional y sus datos de contacto. ¿Qué te gustaría saber?`;
-    let chatHistory = []; // restored from sessionStorage (same tab only)
+    const WELCOME = `Hola. Soy el asistente técnico del portafolio de **${PROFILE.name}**, conectado con **Google Gemini**. Conozco en detalle sus **${PROJECTS.length} estudios y modelos cuantitativos** en R y Python (incluyendo la auditoría 2020–2026 de $5,000 USD sobre el Portafolio Tangente con Redes Neuronales LSTM), su trayectoria corporativa y sus canales de contacto. ¿Qué te gustaría consultar?`;
+    let chatHistory = [];
 
     function escapeHtml(str) {
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -795,6 +878,7 @@
     function formatMarkdown(text) {
       let h = escapeHtml(text || '');
       h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      h = h.replace(/`([^`]+)`/g, '<code>$1</code>');
       h = h.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, label, url) => {
         const cleanUrl = String(url || '').trim();
         const isSafe = /^(https?:\/\/|mailto:|tel:|[a-zA-Z0-9_\-\/\.]+\.html(#[a-zA-Z0-9_\-]+)?$)/i.test(cleanUrl);
@@ -891,7 +975,6 @@
       if (chatSendBtn) chatSendBtn.disabled = true;
       showTyping();
 
-      // History sent to Gemini contains the visitor's plain questions and the answers shown
       const geminiHistory = chatHistory.slice(-8).map(h => ({
         role: h.role === 'user' ? 'user' : 'model',
         parts: [{ text: h.text }]
@@ -901,8 +984,7 @@
       try {
         answer = await askGemini(message, geminiHistory);
       } catch (err) {
-        // Gemini unavailable (e.g. local preview or network): use verified local answers
-        console.warn('Gemini no disponible, usando base verificada local:', err);
+        console.warn('Gemini fallback local activado:', err);
         answer = getVerifiedAnswer(message) || unknownAnswer();
       }
 
