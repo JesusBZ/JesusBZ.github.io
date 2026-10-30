@@ -390,7 +390,7 @@
       detail: 'Inicio de su formación en finanzas dentro del Sistema Financiero Nacional. Gestionó una cartera de clientes naturales y jurídicos: apertura de cuentas, elaboración de expedientes crediticios, asesoría de servicios, ventas y benchmarking.'
     },
     {
-      company: 'Grupo Empresarial Admibien', role: 'Subgerente de Finanzas',
+      company: 'Grupo Empresarial Admibien', role: 'Gestión Financiera Corporativa',
       keys: ['admibien'],
       detail: 'Compañías dedicadas a la gestión y financiamiento de recursos económicos. En el área de Finanzas y Presupuesto, apoyando al departamento legal, gestionó y supervisó la planeación y planificación financiera.'
     },
@@ -410,7 +410,7 @@
       detail: 'Grupo con producción industrial de productos de cuidado e higiene personal, distribución y logística nacional, y una cadena de más de 90 farmacias. Responsable del diseño y desarrollo de informes corporativos para la V.P. de Finanzas de las tres divisiones (Empaque, Consumo y Farma): informes financieros, operativos y presupuestarios, análisis del entorno económico, proyección de variables macroeconómicas, premisas presupuestarias e informes avanzados de Business Intelligence.'
     },
     {
-      company: 'Consorcio Credicard', role: 'Gerente de Planificación Financiera y Presupuesto',
+      company: 'Consorcio Credicard', role: 'Planificación Financiera Corporativa y Presupuestos',
       keys: ['credicard', 'medios de pago', 'actual', 'actualmente', 'hoy'],
       detail: 'Empresa pionera y líder en servicios de medios de pago, con más de 30 años en el sector (cargo más reciente indicado en su perfil). Diseña, dirige, evalúa y controla el proceso de planificación financiera, el seguimiento financiero y la gestión del presupuesto; proyecciones financieras, formulación de casos de negocio y generación e implementación del modelo presupuestario.'
     }
