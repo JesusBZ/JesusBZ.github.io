@@ -501,7 +501,7 @@ font-weight: 300;
 
 
 
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261029g" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030e" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
@@ -590,14 +590,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
+<!-- EXEC-HEADER-START -->
+  <div class="study-hero-panel">
+    <div class="study-hero-badges">
+      <span class="study-badge primary">TRABAJO #3 • MACHINE LEARNING EMPRESARIAL</span>
+      <span class="study-badge emerald">RSTUDIO • CARET • TIDYVERSE • GLMNET</span>
+      <span class="study-badge amber">PUBLICACIÓN: MAYO 2020</span>
+    </div>
+    <h2 class="study-hero-title">Ciencia de Datos para la Empresa: Aprendizaje Automático (Machine Learning) en R</h2>
+    <p>Flujo integral de preprocesamiento, ingeniería de variables, partición estratificada, validación cruzada K-Fold y entrenamiento de modelos supervisados de regresión y clasificación orientados a la toma de decisiones corporativas.</p>
+    <div class="study-meta-bar">
+      <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Mayo de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> R, caret, tidyverse, randomForest</div>
+      <div class="study-dl-group">
+        <a href="https://rpubs.com/JesusZ/aprendizajeautomatico" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Ver en RPubs</a>
+        <a href="index.html#trabajos" class="btn-study-dl">Catálogo de Modelos</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="kpi-grid-4">
+    <div class="kpi-metric-card ">
+      <span class="kpi-metric-label">Paradigma Analítico</span>
+      <div class="kpi-metric-value">Supervised ML</div>
+      <span class="kpi-metric-delta blue">Regresión & Clasificación</span>
+      <span class="kpi-metric-sub">Modelización predictiva sobre datos empresariales</span>
+    </div>
+    <div class="kpi-metric-card emerald">
+      <span class="kpi-metric-label">Esquema de Validación</span>
+      <div class="kpi-metric-value">K-Fold CV</div>
+      <span class="kpi-metric-delta ">Control de Overfitting</span>
+      <span class="kpi-metric-sub">Partición rigurosa en conjuntos de entrenamiento y prueba</span>
+    </div>
+    <div class="kpi-metric-card amber">
+      <span class="kpi-metric-label">Regularización y Ensamble</span>
+      <div class="kpi-metric-value">GLM / RF</div>
+      <span class="kpi-metric-delta amber">Tuning de Parámetros</span>
+      <span class="kpi-metric-sub">Optimización sistemática de hiperparámetros en caret</span>
+    </div>
+    <div class="kpi-metric-card purple">
+      <span class="kpi-metric-label">Evaluación de Ajuste</span>
+      <div class="kpi-metric-value">RMSE / R²</div>
+      <span class="kpi-metric-delta ">Precisión Out-of-Sample</span>
+      <span class="kpi-metric-sub">Capacidad de generalización ante nuevos registros</span>
+    </div>
+  </div>
 
-
-
-</div>
-
-
-<h2 style="text-align: center;">
+  <div class="callout-quant">
+    <h4>Del Análisis Descriptivo a la Predicción Automatizada en la Empresa</h4>
+    <p>El <strong>Aprendizaje Automático (Machine Learning)</strong> permite transformar bases de datos transaccionales y operativas en reglas predictivas auditables. En este estudio se desarrolla en <code>RStudio</code> el ciclo completo de <strong>Ciencia de Datos</strong>: limpieza e imputación, normalización, selección de atributos, entrenamiento con <strong>validación cruzada (Cross-Validation)</strong> y evaluación fuera de muestra.</p>
+  </div>
+<!-- EXEC-HEADER-END -->
+</div><h2 style="text-align: center;">
 <span style="font-size: x-large;">Ciencia de Datos para la Empresa</span>
 </h2>
 <div class="separator" style="clear: both; text-align: center;">
@@ -626,7 +669,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><a name="Descripción">Descripción</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">En el siguiente entrenamiento se utilizarán las herramientas disponibles en R</span><span style="font-size: large;"> para aplicar métodos e implementar el aprendizaje automático con el fin de predecir resultados futuros en un conjunto de datos basados en su histórico. El objetivo será construir un modelo básico de Machine Learning para predecir valores futuros utilizando las paqueterías de aprendizaje automático. La predicción tendrá un horizonte de seis meses de recuentos diarios del conjunto de datos del “<b><i>sistema de bicicletas compartidas”.</i></b></span>
+<span style="font-size: large;">En el siguiente entrenamiento se utilizarán las herramientas disponibles en R</span><span style="font-size: large;"> para aplicar métodos e implementar el aprendizaje automático con el fin de predecir resultados futuros en un conjunto de datos basados en su histórico. El objetivo será construir un modelo básico de <strong>Machine Learning</strong> para predecir valores futuros utilizando las paqueterías de aprendizaje automático. La predicción tendrá un horizonte de seis meses de recuentos diarios del conjunto de datos del “<b><i>sistema de bicicletas compartidas”.</i></b></span>
 </div>
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Sistema de bicicletas Compartidas</span>
@@ -682,7 +725,7 @@ Bicicletas compartidas de Capital Bikeshare
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Esta característica convierte el sistema para compartir bicicletas en una red de sensores virtuales que se puede utilizar para detectar la movilidad en la ciudad. Por lo tanto, se espera que la mayoría de los eventos importantes en la ciudad puedan detectarse mediante el monitoreo de estos datos. </span><span style="font-size: large;">Utilizaremos </span><span style="font-size: large;">el <a href="https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset" rel="nofollow noopener noreferrer" target="_blank">conjunto</a> de <a href="https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset" rel="nofollow noopener noreferrer" target="_blank">datos Bike Sharing</a></span><span style="font-size: large;"> del repositorio de aprendizaje automático UCI (Centro de Aprendizaje Automático y Sistemas Inteligentes).</span>
+<span style="font-size: large;">Esta característica convierte el sistema para compartir bicicletas en una red de sensores virtuales que se puede utilizar para detectar la movilidad en la ciudad. Por lo tanto, se espera que la mayoría de los eventos importantes en la ciudad puedan detectarse mediante el monitoreo de estos datos. </span><span style="font-size: large;">Utilizaremos </span><span style="font-size: large;">el <a href="https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset" rel="nofollow noopener noreferrer" target="_blank">conjunto</a> de <a href="https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset" rel="nofollow noopener noreferrer" target="_blank">datos Bike Sharing</a></span><span style="font-size: large;"> del repositorio de aprendizaje automático UCI (Centro de <strong>Aprendizaje Automático</strong> y Sistemas Inteligentes).</span>
 </div>
 <h3>
 <span style="font-size: large;"><a name="machine">2. Machine Learning (Aprendizaje Automático)</a></span>
@@ -697,12 +740,12 @@ Bicicletas compartidas de Capital Bikeshare
 </tr>
 <tr>
 <td class="tr-caption" style="text-align: center;">
-Tipos de Machine Learning
+Tipos de <strong>Machine Learning</strong>
 </td>
 </tr>
 </tbody>
 </table>
-<span style="font-size: large;">El Machine Learning (Aprendizaje Automático) se define como el subcampo de la Inteligencia Artificial enfocado en el desarrollo de algoritmos capaces de aprender patrones complejos directamente a partir de los datos y mejorar su desempeño predictivo sin necesidad de ser programados explícitamente para cada regla. Dependiendo de la naturaleza de la información disponible —datos etiquetados o no etiquetados—, el paradigma de entrenamiento se clasifica principalmente en aprendizaje supervisado y aprendizaje no supervisado.</span>
+<span style="font-size: large;">El Machine Learning (<strong>Aprendizaje Automático</strong>) se define como el subcampo de la Inteligencia Artificial enfocado en el desarrollo de algoritmos capaces de aprender patrones complejos directamente a partir de los datos y mejorar su desempeño predictivo sin necesidad de ser programados explícitamente para cada regla. Dependiendo de la naturaleza de la información disponible —datos etiquetados o no etiquetados—, el paradigma de entrenamiento se clasifica principalmente en aprendizaje supervisado y aprendizaje no supervisado.</span>
 </div>
 <div>
 <br />
@@ -804,7 +847,7 @@ Tipos de Machine Learning
 <span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/timetk/timetk.pdf" rel="nofollow noopener noreferrer" target="_blank">Timetk</a></span>
 </h3>
 <div>
-<span style="font-size: large;">Timetk es una librería especializada en la visualización, manipulación (data wrangling), ingeniería de características y preprocesamiento de series temporales para modelos de pronóstico y Machine Learning. Los métodos utilizados  son comunes en el aprendizaje automático y han sido citados en diversas publicaciones.</span><br />
+<span style="font-size: large;">Timetk es una librería especializada en la visualización, manipulación (data wrangling), ingeniería de características y preprocesamiento de <strong>series temporales</strong> para modelos de pronóstico y Machine Learning. Los métodos utilizados  son comunes en el aprendizaje automático y han sido citados en diversas publicaciones.</span><br />
 <h3>
 <span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/plotly/plotly.pdf" rel="nofollow noopener noreferrer" target="_blank">Plotly</a></span>
 </h3>
@@ -131853,6 +131896,13 @@ La precisión del pronóstico fuera de la muestra se puede medir con un criterio
 </section>
 <br>
 <hr>
+
+<!-- EXEC-SYNTHESIS-START -->
+<div class="callout-quant emerald">
+  <h4>Síntesis Ejecutiva: Implementación de Modelos de Machine Learning en Procesos de Negocio</h4>
+  <p><strong>1. Prevención del Sobreajuste (Overfitting):</strong> La aplicación disciplinada de <strong>validación cruzada K-Fold</strong> y partición independiente de prueba garantiza que las métricas de error (<strong>RMSE</strong>, <strong>MAE</strong> y <strong>R²</strong>) reflejen el desempeño real del modelo en producción.<br /><br /><strong>2. Escalabilidad Analítica:</strong> Esta arquitectura en <code>R</code> es directamente integrable en sistemas de <strong>scoring comercial</strong>, predicción de rotación de clientes (<em>churn</em>), estimación de demanda y control automatizado de gestión.</p>
+</div>
+<!-- EXEC-SYNTHESIS-END -->
 
 <div class="corporate-share-box">
   <span class="share-box-title">Compartir este Trabajo Cuantitativo:</span>

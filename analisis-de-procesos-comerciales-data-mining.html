@@ -6869,7 +6869,7 @@ font-weight: 300;
 
 
 
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261029g" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030e" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
@@ -6958,14 +6958,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
+<!-- EXEC-HEADER-START -->
+  <div class="study-hero-panel">
+    <div class="study-hero-badges">
+      <span class="study-badge primary">TRABAJO #12 • PROCESS MINING & DATA MINING</span>
+      <span class="study-badge emerald">RSTUDIO • BUPAR • EDEAR • PROCESSMAPR</span>
+      <span class="study-badge amber">PUBLICACIÓN: AGOSTO 2020</span>
+    </div>
+    <h2 class="study-hero-title">Análisis de Procesos Comerciales y Operativos con RStudio (Process & Data Mining)</h2>
+    <p>Aplicación reproducible del ecosistema bupaR en RStudio para auditar registros de eventos (Event Logs), reconstruir flujos reales de procesos de negocio, medir tiempos de procesamiento (Throughput Time), detectar cuellos de botella y cuantificar retrabajos.</p>
+    <div class="study-meta-bar">
+      <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Agosto de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> R, bupaR, edeaR, processmapR, eventhough</div>
+      <div class="study-dl-group">
+        <a href="https://rpubs.com/JesusZ/mineria-de-datos" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Ver en RPubs</a>
+        <a href="index.html#trabajos" class="btn-study-dl">Catálogo de Modelos</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="kpi-grid-4">
+    <div class="kpi-metric-card ">
+      <span class="kpi-metric-label">Disciplina Analítica</span>
+      <div class="kpi-metric-value">Process Mining</div>
+      <span class="kpi-metric-delta blue">Auditoría de Event Logs</span>
+      <span class="kpi-metric-sub">Descubrimiento empírico del flujo real de operaciones</span>
+    </div>
+    <div class="kpi-metric-card emerald">
+      <span class="kpi-metric-label">Ecosistema en R</span>
+      <div class="kpi-metric-value">Suite bupaR</div>
+      <span class="kpi-metric-delta ">edeaR • processmapR</span>
+      <span class="kpi-metric-sub">Análisis de casos, trazas, actividades y recursos</span>
+    </div>
+    <div class="kpi-metric-card amber">
+      <span class="kpi-metric-label">Métricas de Tiempo</span>
+      <div class="kpi-metric-value">Throughput</div>
+      <span class="kpi-metric-delta amber">Idle & Processing Time</span>
+      <span class="kpi-metric-sub">Cuantificación exacta de tiempos muertos y de ejecución</span>
+    </div>
+    <div class="kpi-metric-card purple">
+      <span class="kpi-metric-label">Optimización</span>
+      <div class="kpi-metric-value">Cuellos de Botella</div>
+      <span class="kpi-metric-delta ">Matrices de Precedencia</span>
+      <span class="kpi-metric-sub">Detección de bucles de retrabajo e ineficiencias operativas</span>
+    </div>
+  </div>
 
-
-
-</div>
-
-
-<h2 style="clear: both; text-align: center;">
+  <div class="callout-quant">
+    <h4>De los Manuales Teóricos a la Radiografía Empírica de Procesos (Process Mining)</h4>
+    <p>Las organizaciones suelen documentar cómo <em>deberían</em> funcionar sus procesos comerciales y financieros, pero desconocen cómo se ejecutan realmente en sus sistemas ERP/CRM. Mediante la librería <code>bupaR</code> en <code>RStudio</code>, la <strong>Minería de Procesos (Process Mining)</strong> reconstruye a partir de las huellas digitales (<em>Event Logs</em>) cada variante, duración y cuello de botella del negocio.</p>
+  </div>
+<!-- EXEC-HEADER-END -->
+</div><h2 style="clear: both; text-align: center;">
 <span style="font-size: x-large;">Análisis de procesos comerciales con Rstudio -Data Mining-</span>
 </h2>
 <div class="separator" style="clear: both; text-align: center;">
@@ -6996,13 +7039,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><a name="1">1. ¿Qué es la minería de datos?</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">La minería de datos, también conocida como Knowledge Discovery in Data (KDD), es una herramienta prometedora que ayuda a descubrir conocimiento valioso oculto, encontrar patrones, correlaciones dentro de grandes conjuntos de datos y relaciones dentro de sus datos. </span>
+<span style="font-size: large;">La <strong>minería de datos</strong>, también conocida como Knowledge Discovery in Data (KDD), es una herramienta prometedora que ayuda a descubrir conocimiento valioso oculto, encontrar patrones, correlaciones dentro de grandes conjuntos de datos y relaciones dentro de sus datos. </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">La Ciencia de Datos es multidisciplinaria. Es como un paraguas y la minería de datos es uno de sus componentes. Se pueden reconocer y calificar Patrones con Data Mining, que no se pudieron determinar antes. La minería de datos es una tecnología relativamente nueva que analiza grandes cantidades de datos y tendencias almacenadas en bases de datos o depósitos de datos , con lo que anteriormente no se podía ir más allá del simple análisis.</span>
+<span style="font-size: large;">La Ciencia de Datos es multidisciplinaria. Es como un paraguas y la minería de datos es uno de sus componentes. Se pueden reconocer y calificar Patrones con <strong>Data Mining</strong>, que no se pudieron determinar antes. La minería de datos es una tecnología relativamente nueva que analiza grandes cantidades de datos y tendencias almacenadas en bases de datos o depósitos de datos , con lo que anteriormente no se podía ir más allá del simple análisis.</span>
 </div>
 <h3>
 </h3>
@@ -7084,7 +7127,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Hoy en día las organizaciones almacenan o manejan grandes cantidades de datos provenientes de distintas áreas del negocio, dichos datos están relacionados con diversos procesos comerciales. La minería de procesos permite auditar y optimizar dichos flujos operativos mediante técnicas cuantitativas, otorgando a las organizaciones que la implementan una sólida ventaja competitiva. La minería de procesos se inició con el descubrimiento de modelos de flujo de trabajo a partir de datos de eventos. Sin embargo, durante los últimos 20 años, el campo de la minería de datos se ha convertido en una disciplina de investigación amplia y diversa.</span>
+<span style="font-size: large;">Hoy en día las organizaciones almacenan o manejan grandes cantidades de datos provenientes de distintas áreas del negocio, dichos datos están relacionados con diversos procesos comerciales. La <strong>minería de procesos</strong> permite auditar y optimizar dichos flujos operativos mediante técnicas cuantitativas, otorgando a las organizaciones que la implementan una sólida ventaja competitiva. La minería de procesos se inició con el descubrimiento de modelos de flujo de trabajo a partir de datos de eventos. Sin embargo, durante los últimos 20 años, el campo de la minería de datos se ha convertido en una disciplina de investigación amplia y diversa.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -7102,7 +7145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>Descripción: </b>En el siguiente estudio se implementan las principales funciones del ecosistema bupaR para demostrar su alcance práctico en Business Analysis, Data Analytics y Process Mining, integrando librerías complementarias de visualización dinámica sobre un registro transaccional de pacientes de un centro de salud privado. </span>
+<span style="font-size: large;"><b>Descripción: </b>En el siguiente estudio se implementan las principales funciones del ecosistema bupaR para demostrar su alcance práctico en Business Analysis, Data Analytics y <strong>Process Mining</strong>, integrando librerías complementarias de visualización dinámica sobre un registro transaccional de pacientes de un centro de salud privado. </span>
 </div>
 <h3 style="text-align: justify;">
 <span style="font-size: large;"><a name="4">4. Paqueterías</a></span>
@@ -7374,7 +7417,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><a name="12">12. Perfil de rendimiento</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">En lugar de un perfil de frecuencia, también se puede utilizar un perfil de desempeño, centrándose en el tiempo de procesamiento de las actividades. El perfil de rendimiento tiene dos argumentos: el argumento FUN para especificar la función que se aplicará en el tiempo de procesamiento (p. Ej., Mínimo, máximo, media aritmética, mediana, etc.) y el argumento de las unidades para especificar la unidad de tiempo que se utilizará.</span>
+<span style="font-size: large;">En lugar de un perfil de frecuencia, también se puede utilizar un perfil de desempeño, centrándose en el <strong>tiempo de procesamiento</strong> de las actividades. El perfil de rendimiento tiene dos argumentos: el argumento FUN para especificar la función que se aplicará en el tiempo de procesamiento (p. Ej., Mínimo, máximo, media aritmética, mediana, etc.) y el argumento de las unidades para especificar la unidad de tiempo que se utilizará.</span>
 </div>
 <p><br></p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">patients <span class="op">%&gt;%</span></a>
@@ -7473,6 +7516,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </button>
 </section>
 <hr>
+
+<!-- EXEC-SYNTHESIS-START -->
+<div class="callout-quant emerald">
+  <h4>Síntesis Ejecutiva: Eficiencia Operativa y Reducción de Costos mediante bupaR</h4>
+  <p><strong>1. Visibilidad Total sobre Trazas y Retrabajos:</strong> Los mapas de procesos y matrices de precedencia identifican qué porcentaje de los casos sigue la ruta crítica ideal y qué actividades generan demoras o reprocesos.<br /><br /><strong>2. Impacto Financiero Directo:</strong> Reducir el <strong>tiempo de inactividad (idle time)</strong> y balancear la carga entre recursos operativos se traduce inmediatamente en menor costo unitario por transacción y mayor velocidad de facturación y cobranza.</p>
+</div>
+<!-- EXEC-SYNTHESIS-END -->
 
 <div class="corporate-share-box">
   <span class="share-box-title">Compartir este Trabajo Cuantitativo:</span>

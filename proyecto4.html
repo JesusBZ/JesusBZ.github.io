@@ -507,7 +507,7 @@ font-weight: 300;
 
 
 
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261029g" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030e" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
@@ -596,13 +596,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
+<!-- EXEC-HEADER-START -->
+  <div class="study-hero-panel">
+    <div class="study-hero-badges">
+      <span class="study-badge primary">TRABAJO #4 • TEORÍA MODERNA DE PORTAFOLIOS</span>
+      <span class="study-badge emerald">RSTUDIO • FPORTFOLIO • QUANTMOD • S&P 500</span>
+      <span class="study-badge amber">PUBLICACIÓN: MAYO 2020</span>
+    </div>
+    <h2 class="study-hero-title">Portafolios de Inversión: Portafolio Eficiente y Portafolio Tangente de Markowitz</h2>
+    <p>Construcción empírica de la Frontera Eficiente de Media-Varianza, el Portafolio de Mínima Varianza Global y el Portafolio Tangente (máximo Ratio de Sharpe) sobre seis acciones líderes del índice S&P 500 (MSFT, JNJ, MA, PEP, WMT y MCD).</p>
+    <div class="study-meta-bar">
+      <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Mayo de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> R, fPortfolio, quantmod, PerformanceAnalytics</div>
+      <div class="study-dl-group">
+        <a href="deep-portfolio-lstm-python.html" class="btn-study-dl">Ver Actualización 2026 en Python & LSTM</a>
+        <a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/Markowitz" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Código R Original</a>
+        <a href="https://rpubs.com/JesusZ/portafolio" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Artículo en RPubs</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="kpi-grid-4">
+    <div class="kpi-metric-card ">
+      <span class="kpi-metric-label">Universo S&P 500</span>
+      <div class="kpi-metric-value">6 Acciones</div>
+      <span class="kpi-metric-delta blue">MSFT • JNJ • MA • PEP • WMT • MCD</span>
+      <span class="kpi-metric-sub">Serie histórica diaria 2010–2020 desde Yahoo Finance</span>
+    </div>
+    <div class="kpi-metric-card emerald">
+      <span class="kpi-metric-label">Portafolio Tangente</span>
+      <div class="kpi-metric-value">Máx. Sharpe</div>
+      <span class="kpi-metric-delta ">MA 34.4% • MSFT 17.9%</span>
+      <span class="kpi-metric-sub">Retorno medio diario de 0.08% con riesgo de 0.99%</span>
+    </div>
+    <div class="kpi-metric-card amber">
+      <span class="kpi-metric-label">Mínima Varianza</span>
+      <div class="kpi-metric-value">Riesgo 0.87%</div>
+      <span class="kpi-metric-delta amber">JNJ 33.4% • MCD 24.5%</span>
+      <span class="kpi-metric-sub">Cartera defensiva de mínima volatilidad global</span>
+    </div>
+    <div class="kpi-metric-card purple">
+      <span class="kpi-metric-label">Continuación 2026</span>
+      <div class="kpi-metric-value">Python + LSTM</div>
+      <span class="kpi-metric-delta ">$5,000 → $15,057 USD</span>
+      <span class="kpi-metric-sub">Auditoría real 2020–2026 con Redes Neuronales en PyTorch</span>
+    </div>
+  </div>
 
-
-</div>
-
-
-<div>
+  <div class="callout-quant">
+    <h4>Fundamento Cuantitativo: Optimización Media-Varianza de Harry Markowitz (1952)</h4>
+    <p>La <strong>Teoría Moderna de Portafolios</strong> demuestra que el riesgo de una cartera no depende únicamente de la desviación estándar individual de cada título, sino de su <strong>estructura de covarianzas y correlaciones cruzadas</strong>. En este estudio se estima en <code>RStudio</code> la <strong>Frontera Eficiente</strong> sobre seis valores del <strong>S&amp;P 500</strong>, determinando analíticamente tanto el <strong>Portafolio de Mínima Varianza</strong> como el <strong>Portafolio Tangente</strong> que maximiza la pendiente de la Línea del Mercado de Capitales (<strong>Ratio de Sharpe</strong>).</p>
+  </div>
+<!-- EXEC-HEADER-END -->
+</div><div>
 <ul>
 </ul>
 </div>
@@ -620,14 +665,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a href="" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img alt="Portafolio Eficiente y Portafolio Tangente: Optimización de la cartera de Markowitz - imagen 1" border="0" data-original-height="532" data-original-width="800" src="imagenes/imagen-f.webp" decoding="async" loading="lazy" /></a>
 </div>
 </div>
-<div style="background: linear-gradient(135deg, #091e42 0%, #1e3a8a 100%); color: #ffffff; border-radius: 12px; padding: 1.4rem 1.75rem; margin: 1.75rem 0; border: 1px solid rgba(59,130,246,0.4); box-shadow: 0 10px 25px -5px rgba(9,30,66,0.25);">
-  <div style="font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: #6ee7b7; margin-bottom: 0.4rem;">ACTUALIZACIÓN CUANTITATIVA 2026 • PYTHON, PYTORCH &amp; REDES NEURONALES LSTM</div>
-  <div style="font-size: 1.2rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">Evaluación Fuera de Muestra ($5,000 USD, 2020–2026) y Optimización Dinámica con Redes Neuronales LSTM en Python</div>
-  <p style="color: #e2e8f0 !important; font-size: 0.96rem !important; line-height: 1.65 !important; margin-bottom: 1rem !important;">
-    Se evalúa con series históricas reales (2020–2026) el desempeño de una asignación inicial de <strong>$5,000.00 USD</strong> sobre esta misma cartera (<code>MSFT</code>, <code>JNJ</code>, <code>MA</code>, <code>PEP</code>, <code>WMT</code> y <code>MCD</code>) —la cual alcanza <strong>$11,208.95 USD (+124.18%)</strong> con la menor volatilidad anualizada (13.11%)— y se desarrolla un modelo de <strong>Deep Portfolio Optimization con Redes Neuronales LSTM en Python</strong> que sitúa el valor de la cartera en <strong>$15,057.19 USD (+201.14%)</strong> mediante visualización interactiva en Plotly.
-  </p>
-  <a href="deep-portfolio-lstm-python.html" style="display: inline-block; background: #2563eb; color: #ffffff !important; font-weight: 700; font-size: 0.9rem; padding: 0.55rem 1.2rem; border-radius: 8px; border: 1px solid #60a5fa; text-decoration: none !important;">Consultar Estudio 2026 en Python &amp; LSTM →</a>
-</div>
+
 <br>
 <span style="font-size: 24px;"><b>Contenido</b></span>
 <div class="code-box">
@@ -658,16 +696,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><a name="introduccion">1. Introducción a la teoría de Markowitz</a> </span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">En 1952, un economista llamado Harry Markowitz escribió un artículo titulado “<a href="https://www.math.ust.hk/~maykwok/courses/ma362/07F/markowitz_JF.pdf" rel="nofollow noopener noreferrer" target="_blank">Portfolio Selection</a>”, un documento que contenía teorías que transformaron el panorama de la gestión de cartera, páginas que le otorgarían el Premio Nobel de Economía casi cuatro décadas después.</span>
+<span style="font-size: large;">En 1952, un economista llamado <strong>Harry Markowitz</strong> escribió un artículo titulado “<a href="https://www.math.ust.hk/~maykwok/courses/ma362/07F/markowitz_JF.pdf" rel="nofollow noopener noreferrer" target="_blank">Portfolio Selection</a>”, un documento que contenía teorías que transformaron el panorama de la gestión de cartera, páginas que le otorgarían el Premio Nobel de Economía casi cuatro décadas después.</span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><br />Antagónica a las estrategias clásicas de inversión, su Teoría de Portafolio Moderna continúa siendo una estrategia de inversión utilizada por traders profesionales. Esta herramienta de gestión de cartera, si se usa correctamente, puede dar como resultado una cartera de inversión diversa y rentable.</span>
+<span style="font-size: large;"><br />Antagónica a las estrategias clásicas de inversión, su <strong>Teoría de Portafolio Moderna</strong> continúa siendo una estrategia de inversión utilizada por traders profesionales. Esta herramienta de gestión de cartera, si se usa correctamente, puede dar como resultado una cartera de inversión diversa y rentable.</span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><br />La idea central de su teoría plantea que el inversor racional, buscará maximizar sus beneficios (retornos) asumiendo el menor riesgo (volatilidad) posible, esto se puede lograr con la diversificación de la cartera, eligiendo en principio, acciones que tengan una correlación baja o negativa. Por ejemplo, combinando acciones de empresas con distinta actividad económica. </span>
+<span style="font-size: large;"><br />La idea central de su teoría plantea que el inversor racional, buscará maximizar sus beneficios (retornos) asumiendo el menor riesgo (volatilidad) posible, esto se puede lograr con la <strong>diversificación de la cartera</strong>, eligiendo en principio, acciones que tengan una correlación baja o negativa. Por ejemplo, combinando acciones de empresas con distinta actividad económica. </span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><br />La teoría de Markowitz también es conocida como análisis de varianza media, que se resume en: encontrar el mayor rendimiento en un determinado nivel de riesgo o el menor riesgo en un determinado nivel de rendimiento. </span>
+<span style="font-size: large;"><br />La teoría de Markowitz también es conocida como análisis de <strong>varianza media</strong>, que se resume en: encontrar el mayor rendimiento en un determinado nivel de riesgo o el menor riesgo en un determinado nivel de rendimiento. </span>
 </div>
 <div style="text-align: justify;">
 
@@ -691,7 +729,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;">Los inversores son reacios al riesgo y tratan de minimizar el riesgo y maximizar el rendimiento. </span>
 </li>
 <li>
-<span style="font-size: large;">Los inversores basan sus decisiones en los rendimientos esperados y la varianza o desviación estándar de estos rendimientos de la media. </span>
+<span style="font-size: large;">Los inversores basan sus decisiones en los <strong>rendimientos esperados</strong> y la varianza o <strong>desviación estándar</strong> de estos rendimientos de la media. </span>
 </li>
 <li>
 <span style="font-size: large;">Los inversores eligen rendimientos más altos a rendimientos más bajos para un determinado nivel de riesgo. </span>
@@ -706,7 +744,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <ul>
 <span style="font-size: large;">
 <li>
-<span style="font-size: large;">Los retornos siguen una distribución normal. </span>
+<span style="font-size: large;">Los retornos siguen una <strong>distribución normal</strong>. </span>
 </li>
 <li>
 <span style="font-size: large;">Una función de utilidad cuadrática representa las decisiones de los inversores. </span>
@@ -724,7 +762,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><a name="fronteras">4. Frontera eficiente:</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">La frontera eficiente es el conjunto de carteras óptimas que ofrecen el rendimiento esperado más alto para un nivel de riesgo definido o el riesgo más bajo para un nivel dado de rendimiento esperado.</span>
+<span style="font-size: large;">La <strong>frontera eficiente</strong> es el conjunto de carteras óptimas que ofrecen el rendimiento esperado más alto para un nivel de riesgo definido o el riesgo más bajo para un nivel dado de rendimiento esperado.</span>
 </div>
 <h3>
 <span style="font-size: large;"><a name="data">5. Data</a></span>
@@ -797,7 +835,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3>
 <span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/tseries/tseries.pdf" rel="nofollow noopener noreferrer" target="_blank">Tseries</a></span>
 </h3>
-<span style="font-size: large;">Herramientas para análisis de series temporales y finanzas computacionales.</span><br />
+<span style="font-size: large;">Herramientas para análisis de <strong>series temporales</strong> y finanzas computacionales.</span><br />
 <div>
 <div>
 <span style="font-size: large;"> </span>
@@ -875,12 +913,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="sourceLine" id="cb27-3" title="3"><span class="kw">title</span>(<span class="dt">main=</span><span class="st">&quot;Histórico de Cartera&quot;</span>)</a></code></pre></div>
 <img alt="Portafolio Eficiente y Portafolio Tangente: Optimización de la cartera de Markowitz - imagen 9" src="proyecto4_files/figure-html/unnamed-chunk-9-1.png" width="672" decoding="async" loading="lazy" />
 <div style="text-align: justify;">
-<span style="font-size: large;"><br /></span> <span style="font-size: large;">Se observan en conjunto los históricos de las series temporales y se aprecia el comportamiento creciente en cada uno de ellos con algunos períodos de desaceleración. Por último, se evidencia la fuerte perturbación bursátil al cierre del primer trimestre de 2020, impulsada por el impacto global de la pandemia de COVID-19.</span><br />
+<span style="font-size: large;"><br /></span> <span style="font-size: large;">Se observan en conjunto los históricos de las <strong>series temporales</strong> y se aprecia el comportamiento creciente en cada uno de ellos con algunos períodos de desaceleración. Por último, se evidencia la fuerte perturbación bursátil al cierre del primer trimestre de 2020, impulsada por el impacto global de la pandemia de COVID-19.</span><br />
 <h3>
 <span style="font-size: large;"><a name="rentabilidad">9. Rentabilidad logarítmica</a></span>
 </h3>
 <div>
-<span style="font-size: large;">Uno de los supuestos del modelo es que los retornos (rentabilidades) tienen el comportamiento de una distribución normal. La rentabilidad logarítmica permite su uso en probabilidades que se basan en este tipo de distribución con la restricción de que los valores no pueden ser inferiores a (-1). </span>
+<span style="font-size: large;">Uno de los supuestos del modelo es que los retornos (rentabilidades) tienen el comportamiento de una distribución normal. La <strong>rentabilidad logarítmica</strong> permite su uso en probabilidades que se basan en este tipo de distribución con la restricción de que los valores no pueden ser inferiores a (-1). </span>
 </div>
 </div>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">RetornoIndice&lt;-<span class="kw">diff</span>(<span class="kw">log</span>(Indice))</a>
@@ -1211,7 +1249,7 @@ Para finalizar, se agregará un mapa de calor de correlaciones “HeatMap”, el
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">En la frontera se encuentran veinte (20) círculos pequeños de color blanco, los que tienen el borde de color negro son los portafolios eficientes. El círculo rojo es el portafolio tangente y el círculo azul el portafolio con la mínima varianza global. </span>
+<span style="font-size: large;">En la frontera se encuentran veinte (20) círculos pequeños de color blanco, los que tienen el borde de color negro son los portafolios eficientes. El círculo rojo es el <strong>portafolio tangente</strong> y el círculo azul el portafolio con la mínima varianza global. </span>
 </div>
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Pesos de los portafolios</span>
@@ -1344,6 +1382,13 @@ Para finalizar, se agregará un mapa de calor de correlaciones “HeatMap”, el
 </button>
 </section>
 <hr>
+
+<!-- EXEC-SYNTHESIS-START -->
+<div class="callout-quant emerald">
+  <h4>Síntesis Ejecutiva y Enlace a la Auditoría Empírica 2020–2026 con Redes Neuronales LSTM</h4>
+  <p><strong>1. Diversificación Óptima Comprobada:</strong> El <strong>Portafolio Tangente</strong> asignó estratégicamente el capital entre motores de crecimiento tecnológico y medios de pago (<strong>MA 34.41%</strong>, <strong>MSFT 17.90%</strong>) y pilares defensivos de consumo y salud (<strong>MCD 16.51%</strong>, <strong>WMT 15.16%</strong>, <strong>JNJ 12.16%</strong>, <strong>PEP 3.85%</strong>), logrando la máxima eficiencia riesgo-retorno.<br /><br /><strong>2. ¿Cuánto valdrían hoy $5,000 USD invertidos en este Portafolio Tangente en abril de 2020?</strong> En nuestra actualización de 2026 auditamos con datos reales de mercado el desempeño de esta misma cartera hasta octubre de 2026 (que alcanzó <strong>$11,208.95 USD, +124.18%</strong> con la menor caída en 2022) y la evolucionamos con <strong>Redes Neuronales LSTM en Python y PyTorch</strong> hasta alcanzar <strong>$15,057.19 USD (+201.14%)</strong>: <a href="deep-portfolio-lstm-python.html"><strong>Explorar Estudio Actualizado 2026: Deep Portfolio Optimization con LSTM en Python →</strong></a></p>
+</div>
+<!-- EXEC-SYNTHESIS-END -->
 
 <div class="corporate-share-box">
   <span class="share-box-title">Compartir este Trabajo Cuantitativo:</span>

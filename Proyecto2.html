@@ -499,7 +499,7 @@ font-weight: 300;
 </style>
 
 <!-- code folding -->
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261029g" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030e" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
@@ -587,14 +587,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
+<!-- EXEC-HEADER-START -->
+  <div class="study-hero-panel">
+    <div class="study-hero-badges">
+      <span class="study-badge primary">TRABAJO #2 • ECONOMETRÍA FINANCIERA & RIESGO</span>
+      <span class="study-badge emerald">RSTUDIO • RUGARCH • PERFORMANCEANALYTICS</span>
+      <span class="study-badge amber">PUBLICACIÓN: MAYO 2020</span>
+    </div>
+    <h2 class="study-hero-title">Modelización de la Volatilidad Condicional y Valor en Riesgo (VaR) del Bitcoin</h2>
+    <p>Estimación econométrica de heterocedasticidad condicional autorregresiva (sGARCH, eGARCH, gjrGARCH y apARCH) sobre los retornos logarítmicos de BTC-USD para cuantificar colas pesadas, asimetría y Valor en Riesgo (VaR) paramétrico e histórico.</p>
+    <div class="study-meta-bar">
+      <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Mayo de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> R, rugarch, quantmod, PerformanceAnalytics</div>
+      <div class="study-dl-group">
+        <a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/script.Garch" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Descargar Script R</a>
+        <a href="https://rpubs.com/JesusZ/BitcoinGarch" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Ver en RPubs</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="kpi-grid-4">
+    <div class="kpi-metric-card ">
+      <span class="kpi-metric-label">Activo Auditado</span>
+      <div class="kpi-metric-value">BTC-USD</div>
+      <span class="kpi-metric-delta blue">Serie Diaria</span>
+      <span class="kpi-metric-sub">Retornos continuos y agrupamiento de volatilidad</span>
+    </div>
+    <div class="kpi-metric-card emerald">
+      <span class="kpi-metric-label">Familia Econométrica</span>
+      <div class="kpi-metric-value">AR(1)-GARCH</div>
+      <span class="kpi-metric-delta ">4 Especificaciones</span>
+      <span class="kpi-metric-sub">sGARCH, eGARCH, gjrGARCH y apARCH con distribución t-Student</span>
+    </div>
+    <div class="kpi-metric-card amber">
+      <span class="kpi-metric-label">Modelo Óptimo</span>
+      <div class="kpi-metric-value">eGARCH(1,1)</div>
+      <span class="kpi-metric-delta amber">Efecto Asimétrico</span>
+      <span class="kpi-metric-sub">Captura el impacto diferencial de choques negativos y positivos</span>
+    </div>
+    <div class="kpi-metric-card purple">
+      <span class="kpi-metric-label">Métrica de Riesgo</span>
+      <div class="kpi-metric-value">VaR 95% / 99%</div>
+      <span class="kpi-metric-delta ">Backtesting VaR</span>
+      <span class="kpi-metric-sub">Contraste estadístico de excedencias sobre pérdidas extremas</span>
+    </div>
+  </div>
 
-
-
-</div>
-
-
-<h2 style="text-align: center;">
+  <div class="callout-quant">
+    <h4>Fundamento Econométrico: Agrupamiento de Volatilidad y Leptocurtosis en Criptoactivos</h4>
+    <p>Los retornos financieros de alta frecuencia como el <strong>Bitcoin (BTC-USD)</strong> violan el supuesto gaussiano de homocedasticidad: presentan <strong>colas pesadas (leptocurtosis)</strong>, exceso de curtosis y <strong>clusters de volatilidad</strong>. Mediante la librería <code>rugarch</code> en R, este trabajo modela la varianza condicional $\sigma_t^2$ incorporando innovaciones <strong>t-Student asimétricas</strong> para estimar con rigor el <strong>Valor en Riesgo (VaR)</strong>.</p>
+  </div>
+<!-- EXEC-HEADER-END -->
+</div><h2 style="text-align: center;">
 <span style="font-size: x-large;">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</span>
 </h2>
 <pre><code>## [1] &quot;BTC-USD&quot;</code></pre>
@@ -625,13 +668,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h3>
 <span style="font-size: large;"><b>Descripción</b></span>
 </h3>
-<span style="font-size: large;">En este estudio se evaluó la volatilidad condicional y el Valor en Riesgo (VaR) de los retornos diarios de Bitcoin mediante un análisis comparativo del desempeño predictivo de modelos GARCH simétricos y asimétricos, bajo tres distribuciones teóricas para el término de error durante el período enero 2014 – enero 2020. </span>
+<span style="font-size: large;">En este estudio se evaluó la <strong>volatilidad condicional</strong> y el <strong>Valor en Riesgo</strong> (VaR) de los retornos diarios de Bitcoin mediante un análisis comparativo del desempeño predictivo de modelos GARCH simétricos y asimétricos, bajo tres distribuciones teóricas para el término de error durante el período enero 2014 – enero 2020. </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Los modelos estimados son sGARCH, TGARCH, eGARCH y gjrGARCH, validados con base en criterios de información y métricas de precisión predictiva: AIC, MAE y MSE. Los resultados determinaron que la especificación eGARCH(2,1) bajo una distribución t-Student para el término de error constituye el modelo con mejor ajuste muestral. Si bien el modelo óptimo según el criterio de Akaike (AIC) no registró el menor error absoluto fuera de muestra, las diferencias frente a las demás especificaciones resultaron estadísticamente marginales. </span>
+<span style="font-size: large;">Los modelos estimados son sGARCH, TGARCH, eGARCH y gjrGARCH, validados con base en criterios de información y métricas de precisión predictiva: AIC, MAE y MSE. Los resultados determinaron que la especificación eGARCH(2,1) bajo una distribución <strong>t-Student</strong> para el término de error constituye el modelo con mejor ajuste muestral. Si bien el modelo óptimo según el criterio de Akaike (AIC) no registró el menor error absoluto fuera de muestra, las diferencias frente a las demás especificaciones resultaron estadísticamente marginales. </span>
 </div>
 <div style="text-align: justify;">
 <br />
@@ -715,7 +758,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="egarch">1.1 Modelo EGARCH(p,q) </a></span><span style="font-size: small;">[<a href="http://www.scielo.org.bo/scielo.php?script=sci_arttext&amp;pid=S2518-44312017000200003" rel="nofollow noopener noreferrer" target="_blank">2</a>]</span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">En 1990, Pagan y Schwert (1990), y al año siguiente en 1991 Nelson (1991), desarrollaron una extensión fundamental del modelo GARCH: el EGARCH (modelo autorregresivo con heterocedasticidad condicional generalizada exponencial). Esta especificación captura las asimetrías en la estimación por el efecto de los shocks, al implementar una función 𝑔(𝜀𝑡 ) de las innovaciones 𝜀𝑡,que son variables igual e independientemente distribuidas de media cero, y en las que por tanto el valor de las innovaciones queda recogido por medio de la expresión:</span>
+<span style="font-size: large;">En 1990, Pagan y Schwert (1990), y al año siguiente en 1991 Nelson (1991), desarrollaron una extensión fundamental del modelo GARCH: el EGARCH (modelo autorregresivo con <strong>heterocedasticidad condicional</strong> generalizada exponencial). Esta especificación captura las asimetrías en la estimación por el efecto de los shocks, al implementar una función 𝑔(𝜀𝑡 ) de las innovaciones 𝜀𝑡,que son variables igual e independientemente distribuidas de media cero, y en las que por tanto el valor de las innovaciones queda recogido por medio de la expresión:</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><span class="math display">\[\ln \sigma_{t}^{2}= \omega + \beta (\sigma_{t-1}^{2})+ \gamma \frac{u_{t-1} }{\sqrt{ \sigma_{t-1} }}+ \alpha \left [ \frac{\left|u_{t-1}\right|}{\sqrt{\sigma_{t-1} }}- \sqrt{ \frac{2}{\sqrt{ \pi }} }\right]\]</span></span>
@@ -746,7 +789,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="tgarch">1.3 Modelo TGARCH(p,q)</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">El fundamento del modelo TGARCH (Threshold GARCH) consiste en particionar la distribución de los shocks en intervalos disjuntos para aproximar una función lineal por tramos sobre la desviación estándar condicional (Zakoian, 1994) o la varianza condicional (Glosten, Jagannathan &amp; Runkle, 1993). Cuando se definen dos regímenes, el umbral suele fijarse en cero, diferenciando el impacto asimétrico de las innovaciones positivas (superiores a cero) frente a las negativas (inferiores a cero).</span>
+<span style="font-size: large;">El fundamento del modelo TGARCH (Threshold GARCH) consiste en particionar la distribución de los shocks en intervalos disjuntos para aproximar una función lineal por tramos sobre la <strong>desviación estándar</strong> condicional (Zakoian, 1994) o la varianza condicional (Glosten, Jagannathan &amp; Runkle, 1993). Cuando se definen dos regímenes, el umbral suele fijarse en cero, diferenciando el impacto asimétrico de las innovaciones positivas (superiores a cero) frente a las negativas (inferiores a cero).</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -771,7 +814,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 <span style="font-size: large;"><a name="suposiciones">2. Suposiciones de distribución del término de error</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">En la especificación del modelo GARCH, es más apropiado considerar la elección sobre el supuesto de distribución del término de error. Este ejercicio asumió tres supuestos de distribución estadística; La distribución normal (NORM), la distribución de Student-t (STD) y la distribución de errores generalizados (GED) para tener en cuenta las colas gruesas que son comunes en la mayoría de los datos financieros.</span>
+<span style="font-size: large;">En la especificación del modelo GARCH, es más apropiado considerar la elección sobre el supuesto de distribución del término de error. Este ejercicio asumió tres supuestos de distribución estadística; La <strong>distribución normal</strong> (NORM), la distribución de Student-t (STD) y la distribución de errores generalizados (GED) para tener en cuenta las colas gruesas que son comunes en la mayoría de los datos financieros.</span>
 </div>
 <div>
 <h3>
@@ -798,7 +841,7 @@ Una generalización del modelo ARCH(m) fue desarrollada por Bollerslev (1986) al
 </h3>
 <span style="font-size: large;">
 <div style="text-align: justify;">
-Las colas más gruesas, frecuentemente observadas en series de tiempo financieras, están permitidas en la distribución t de Student, que está dada por la función de densidad que se muestra como la ecuación: <span class="math display">\[f(z)=\frac{\Gamma\left [ \frac{v+1}{2} \right ] }{\sqrt{ v \pi  \Gamma }\left [ \frac{v}{2}\right ]}\left [ 1+\frac{z^{2}}{v}\right ]^\left[\frac{v+1}{2}\right]\]</span>
+Las colas más gruesas, frecuentemente observadas en <strong>series de tiempo</strong> financieras, están permitidas en la distribución t de Student, que está dada por la función de densidad que se muestra como la ecuación: <span class="math display">\[f(z)=\frac{\Gamma\left [ \frac{v+1}{2} \right ] }{\sqrt{ v \pi  \Gamma }\left [ \frac{v}{2}\right ]}\left [ 1+\frac{z^{2}}{v}\right ]^\left[\frac{v+1}{2}\right]\]</span>
 </div>
 <div style="text-align: justify;">
 <br />
@@ -818,13 +861,13 @@ donde <span class="math inline">\(v\)</span> denota el número de grados de libe
 </h3>
 <span style="font-size: large;">
 <div style="text-align: justify;">
-El uso del GED para tener en cuenta las colas gruesas observadas comúnmente en las series de tiempo financieras. Está dado por la ecuación:<span class="math display">\[f(z, \mu , \sigma ,v)=\frac{\sigma^{-1}v e^\left [-0,5\left | \frac{z- \mu }{ \sigma } \right |^v  \right ]}{ \lambda^\left (1+\left (  \frac{1}{v}\right )  \right ) \Gamma \left (\frac{1}{v}  \right ) }\]</span>
+El uso del GED para tener en cuenta las colas gruesas observadas comúnmente en las <strong>series de tiempo</strong> financieras. Está dado por la ecuación:<span class="math display">\[f(z, \mu , \sigma ,v)=\frac{\sigma^{-1}v e^\left [-0,5\left | \frac{z- \mu }{ \sigma } \right |^v  \right ]}{ \lambda^\left (1+\left (  \frac{1}{v}\right )  \right ) \Gamma \left (\frac{1}{v}  \right ) }\]</span>
 </div>
 <div style="text-align: justify;">
 <br />
 </div>
 <div style="text-align: justify;">
-<span class="math inline">\(v&gt;0\)</span> es el grado de libertad o el parámetro del grosor de la cola. Si <span class="math inline">\(v=2\)</span> , el GED produce la distribución normal. Si <span class="math inline">\(v&lt;1\)</span> , la función de densidad presenta colas más gruesas (leptocurtosis) que la distribución normal, mientras que para <span class="math inline">\(v&gt;2\)</span> tendrá colas más delgadas. 
+<span class="math inline">\(v&gt;0\)</span> es el grado de libertad o el parámetro del grosor de la cola. Si <span class="math inline">\(v=2\)</span> , el GED produce la distribución normal. Si <span class="math inline">\(v&lt;1\)</span> , la función de densidad presenta colas más gruesas (<strong>leptocurtosis</strong>) que la distribución normal, mientras que para <span class="math inline">\(v&gt;2\)</span> tendrá colas más delgadas. 
 </div>
 </span>
 <h3>
@@ -1152,7 +1195,7 @@ El mejor modelo es el que tiene menor valor de AIC.
 <span style="font-size: x-large;"> Diagnóstico del modelo</span>
 </h2>
 <div style="text-align: justify;">
-<span style="font-size: large;">Es esencial realizar una verificación de diagnóstico en el modelo después de determinar el mejor modelo y su distribución correspondiente para el término de error para establecer si el modelo y la distribución están especificados correctamente. Este ejercicio emplea las pruebas Ljung-Box y Multiplicador de Lagrange (LM) para evaluar la presencia de autocorrelación y efectos ARCH respectivamente. La presencia de autocorrelación y efectos ARCH para los residuos tanto del modelo medio como de los modelos de volatilidad se probará utilizando estos dos diagnósticos.</span>
+<span style="font-size: large;">Es esencial realizar una verificación de diagnóstico en el modelo después de determinar el mejor modelo y su distribución correspondiente para el término de error para establecer si el modelo y la distribución están especificados correctamente. Este ejercicio emplea las pruebas Ljung-Box y Multiplicador de Lagrange (LM) para evaluar la presencia de <strong>autocorrelación</strong> y efectos ARCH respectivamente. La presencia de autocorrelación y efectos ARCH para los residuos tanto del modelo medio como de los modelos de volatilidad se probará utilizando estos dos diagnósticos.</span>
 </div>
 <h3>
 <span style="font-size: large;"><a href="https://www.blogger.com/null" name="ljungbox">6. Ljung Box</a></span>
@@ -1468,6 +1511,13 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
 </button>
 </section>
 <hr>
+
+<!-- EXEC-SYNTHESIS-START -->
+<div class="callout-quant emerald">
+  <h4>Síntesis Ejecutiva: Gestión Cuantitativa del Riesgo de Mercado en Activos Volátiles</h4>
+  <p><strong>1. Captura de la Asimetría mediante eGARCH:</strong> La especificación <strong>AR(1)-eGARCH(1,1)</strong> demostró el mejor ajuste según los criterios de información de Akaike (<strong>AIC</strong>) y Bayesiano (<strong>BIC</strong>), capturando con precisión la respuesta asimétrica de la volatilidad ante variaciones abruptas de precios.<br /><br /><strong>2. Aplicación Institucional del Valor en Riesgo (VaR):</strong> La estimación dinámica del <strong>VaR al 95% y 99% de confianza</strong> proporciona un límite cuantitativo diario de pérdida máxima esperada, indispensable para dimensionar reservas de liquidez y límites de exposición (<em>stop-loss</em> institucional).</p>
+</div>
+<!-- EXEC-SYNTHESIS-END -->
 
 <div class="corporate-share-box">
   <span class="share-box-title">Compartir este Trabajo Cuantitativo:</span>

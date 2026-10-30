@@ -502,7 +502,7 @@ font-weight: 300;
 
 
 
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261029g" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030e" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
@@ -591,14 +591,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
+<!-- EXEC-HEADER-START -->
+  <div class="study-hero-panel">
+    <div class="study-hero-badges">
+      <span class="study-badge primary">TRABAJO #7 • MACROECONOMÍA CUANTITATIVA</span>
+      <span class="study-badge emerald">RSTUDIO • FRED • GAPMINDER • PLOTLY</span>
+      <span class="study-badge amber">PUBLICACIÓN: JUNIO 2020</span>
+    </div>
+    <h2 class="study-hero-title">Exploración de Datos Macroeconómicos Globales y de la Reserva Federal con RStudio</h2>
+    <p>Análisis econométrico y visualización interactiva de indicadores de desarrollo económico global (PIB per cápita, esperanza de vida, convergencia intercontinental) y series monetarias y laborales oficiales de la Reserva Federal de los Estados Unidos (FRED).</p>
+    <div class="study-meta-bar">
+      <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Junio de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> R, quantmod, gapminder, ggplot2, plotly</div>
+      <div class="study-dl-group">
+        <a href="https://rpubs.com/JesusZ/Macroeconomia" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Ver en RPubs</a>
+        <a href="index.html#trabajos" class="btn-study-dl">Catálogo de Modelos</a>
+      </div>
+    </div>
+  </div>
 
+  <div class="kpi-grid-4">
+    <div class="kpi-metric-card ">
+      <span class="kpi-metric-label">Fuentes de Datos</span>
+      <div class="kpi-metric-value">FRED & BM</div>
+      <span class="kpi-metric-delta blue">Series Oficiales</span>
+      <span class="kpi-metric-sub">Reserva Federal de St. Louis y panel global Gapminder</span>
+    </div>
+    <div class="kpi-metric-card emerald">
+      <span class="kpi-metric-label">Variables Clave</span>
+      <div class="kpi-metric-value">PIB & Empleo</div>
+      <span class="kpi-metric-delta ">Ciclos Económicos</span>
+      <span class="kpi-metric-sub">Producto Interno Bruto per cápita, desempleo y desigualdad</span>
+    </div>
+    <div class="kpi-metric-card amber">
+      <span class="kpi-metric-label">Cobertura Temporal</span>
+      <div class="kpi-metric-value">1952 – 2020</div>
+      <span class="kpi-metric-delta amber">Panel Multipaís</span>
+      <span class="kpi-metric-sub">Evolución estructural por continente y nivel de ingreso</span>
+    </div>
+    <div class="kpi-metric-card purple">
+      <span class="kpi-metric-label">Visualización</span>
+      <div class="kpi-metric-value">Plotly + ggplot2</div>
+      <span class="kpi-metric-delta ">Gráficos Dinámicos</span>
+      <span class="kpi-metric-sub">Exploración multidimensional interactiva en RStudio</span>
+    </div>
+  </div>
 
-
-
-</div>
-
-
-<h2 style="text-align: center;">
+  <div class="callout-quant">
+    <h4>Entorno Macroeconómico como Base de la Planificación Corporativa</h4>
+    <p>Ninguna proyección financiera o presupuestaria opera aislada del ciclo macroeconómico. Este estudio demuestra cómo conectar <code>RStudio</code> directamente a los repositorios de la <strong>Reserva Federal (FRED)</strong> y paneles internacionales para auditar el crecimiento del <strong>PIB per cápita</strong>, la dinámica del mercado laboral y la distribución global del ingreso.</p>
+  </div>
+<!-- EXEC-HEADER-END -->
+</div><h2 style="text-align: center;">
 <span style="font-size: x-large;">Exploración de Datos Macroeconómicos  con RStudio</span>
 </h2>
 <div class="separator" style="clear: both; text-align: center;">
@@ -633,7 +676,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </h3>
 <div>
 <div style="text-align: justify;">
-<span style="font-size: large;">En el entrenamiento se visualizará el contenido del paquete <a href="https://www.rdocumentation.org/packages/gapminder/versions/0.3.0" rel="nofollow noopener noreferrer" target="_blank">Gapminder</a>, en especial los datos globales de la esperanza de vida al nacer y del Producto Interno Bruto per Cápita. Igualmente se elaborarán gráficos interactivos, de tendencia y dispersión. Por último, algunas pruebas lineales para determinar correlación y comentarios de las principales observaciones.</span>
+<span style="font-size: large;">En el entrenamiento se visualizará el contenido del paquete <a href="https://www.rdocumentation.org/packages/gapminder/versions/0.3.0" rel="nofollow noopener noreferrer" target="_blank">Gapminder</a>, en especial los datos globales de la <strong>esperanza de vida</strong> al nacer y del <strong>Producto Interno Bruto</strong> per Cápita. Igualmente se elaborarán gráficos interactivos, de tendencia y dispersión. Por último, algunas pruebas lineales para determinar correlación y comentarios de las principales observaciones.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -657,7 +700,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">La medida más común de la esperanza de vida es la <i>esperanza de vida al nacer</i>. Es una medida hipotética. Se supone que las tasas de mortalidad específicas por edad para el año en cuestión se aplicarán durante toda la vida de las personas nacidas en ese año. </span>
+<span style="font-size: large;">La medida más común de la <strong>esperanza de vida</strong> es la <i>esperanza de vida al nacer</i>. Es una medida hipotética. Se supone que las tasas de mortalidad específicas por edad para el año en cuestión se aplicarán durante toda la vida de las personas nacidas en ese año. </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -739,7 +782,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a href="https://cran.r-project.org/web/packages/dygraphs/dygraphs.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Dygraphs</span></a>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Una interfaz R para la biblioteca de gráficos JavaScript ‘dygraphs’ (una copia la cual está incluida en el paquete). Ofrece funcionalidades avanzadas y altamente configurables para graficar series temporales en R, incluyendo visualización multicapa, ajuste dinámico de ejes y controles interactivos.</span>
+<span style="font-size: large;">Una interfaz R para la biblioteca de gráficos JavaScript ‘dygraphs’ (una copia la cual está incluida en el paquete). Ofrece funcionalidades avanzadas y altamente configurables para graficar <strong>series temporales</strong> en R, incluyendo visualización multicapa, ajuste dinámico de ejes y controles interactivos.</span>
 </div>
 <h3 style="text-align: justify;">
 <a href="https://cran.r-project.org/web/packages/rnaturalearth/rnaturalearth.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Rnaturalearth</span></a>
@@ -787,7 +830,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="font-size: x-large;"><a name="crecimiento">4. Esperanza de vida y crecimiento económico</a></span>
 </h2>
 <div style="text-align: justify;">
-<span style="font-size: large;">El Producto Interno Bruto (PIB) es el valor de mercado de los bienes y servicios finales producidos en un país durante un período determinado. El PIB se usa comúnmente para indicar el bienestar económico de un país. El crecimiento a largo plazo del PIB de un país a menudo se asocia con un mejor nivel de vida. El país con mayor PIB tiene acceso a abundantes recursos y puede asignar gastos adicionales en el sector de la salud. Por lo tanto, a menudo se percibe que el PIB de un país debería tener un impacto directo en la esperanza de vida de sus ciudadanos.</span><br /> <span style="font-size: large;"><br /></span>
+<span style="font-size: large;">El <strong>Producto Interno Bruto</strong> (PIB) es el valor de mercado de los bienes y servicios finales producidos en un país durante un período determinado. El PIB se usa comúnmente para indicar el bienestar económico de un país. El crecimiento a largo plazo del PIB de un país a menudo se asocia con un mejor nivel de vida. El país con mayor PIB tiene acceso a abundantes recursos y puede asignar gastos adicionales en el sector de la salud. Por lo tanto, a menudo se percibe que el PIB de un país debería tener un impacto directo en la esperanza de vida de sus ciudadanos.</span><br /> <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;">El crecimiento económico a veces se estima dividiendo el PIB por el tamaño de la población. De esta manera, intenta capturar el crecimiento y el bienestar de una vez.</span>
@@ -1323,7 +1366,7 @@ Oceania
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Tras validar la estructura de los datos, se empleará la función dygraph() para visualizar las series temporales y asegurarse de que estén completas y correctamente escaladas. En la página del Banco Mundial se pueden conocer las rutas de cada variable para luego cargarlas desde R.</span>
+<span style="font-size: large;">Tras validar la estructura de los datos, se empleará la función dygraph() para visualizar las <strong>series temporales</strong> y asegurarse de que estén completas y correctamente escaladas. En la página del Banco Mundial se pueden conocer las rutas de cada variable para luego cargarlas desde R.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1444,6 +1487,13 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
 </button>
 </section>
 <hr>
+
+<!-- EXEC-SYNTHESIS-START -->
+<div class="callout-quant emerald">
+  <h4>Síntesis Ejecutiva: Inteligencia Macroeconómica Aplicada a la Empresa</h4>
+  <p><strong>1. Automatización de Consultas a Bancos Centrales:</strong> El uso de <code>quantmod</code> y APIs públicas en R permite actualizar indicadores de inflación, tasas de interés, tipo de cambio y desempleo sin intervención manual.<br /><br /><strong>2. Soporte para Escenarios Presupuestarios:</strong> La cuantificación rigurosa del ciclo macroeconómico fortalece las premisas con las que la Gerencia de Planificación Financiera construye sus escenarios de ingresos y costos.</p>
+</div>
+<!-- EXEC-SYNTHESIS-END -->
 
 <div class="corporate-share-box">
   <span class="share-box-title">Compartir este Trabajo Cuantitativo:</span>
