@@ -5,9 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python (2014–2026) | Jesús Benjamín Zerpa</title>
+  <title>Volatilidad GARCH, VaR y Expected Shortfall (CVaR) en Python | Jesús Zerpa</title>
 <!-- SEO:START -->
-<meta name="description" content="Modelización econométrica de la volatilidad condicional asimétrica (sGARCH, EGARCH, GJR-GARCH con distribución Skewed Student-t de Hansen), Valor en Riesgo (VaR), Expected Shortfall (CVaR), Volatility Targeting y Position Sizing del Bitcoin en Python (2014–2026), con contrastes de Kupiec y Christoffersen. Por Jesús Benjamín Zerpa." />
+<meta name="description" content="Modelización de volatilidad asimétrica (EGARCH, GJR-GARCH Skewed-t), Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python. Por Jesús Zerpa." />
 <meta name="keywords" content="volatilidad GARCH Python, EGARCH Python, GJR-GARCH, Valor en Riesgo VaR Python, Expected Shortfall CVaR, Skewed Student-t Hansen, backtesting Kupiec Christoffersen, Basilea III FRTB, Volatility Targeting, Position Sizing cuantitativo, volatilidad Bitcoin ETF, econometría financiera Python, arch library Python, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
 <meta name="author" content="Jesús Benjamín Zerpa" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -180,12 +180,11 @@
 <!-- SEO:END -->
 
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="preconnect" href="https://gemini-backend-ecru.vercel.app" crossorigin />
   <link rel="icon" href="favi.png" type="image/png" />
 
   <!-- Corporate Stylesheets -->
   <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261030h" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030h" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261108a" />
 
   <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
@@ -259,6 +258,12 @@
       background: rgba(245, 158, 11, 0.22);
       color: #fcd34d;
       border: 1px solid rgba(252, 211, 77, 0.35);
+    }
+    .study-badge.ai-argon {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.34), rgba(59, 130, 246, 0.34));
+      color: #f3e8ff;
+      border: 1px solid rgba(196, 181, 253, 0.65);
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.3);
     }
     .study-hero-panel h1 {
       color: #ffffff !important;
@@ -805,6 +810,7 @@
           <span class="study-badge primary">Trabajo #15 • Econometría Financiera &amp; Riesgo Cuantitativo</span>
           <span class="study-badge emerald">Python • arch • SciPy • Statsmodels • Plotly</span>
           <span class="study-badge amber">Evolución 2020 → 2026 (Régimen ETFs Spot)</span>
+          <span class="study-badge ai-argon">✦ Optimizado con Gemini 4 Argon</span>
         </div>
         <h1>Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python (2014–2026)</h1>
         <p>
@@ -1149,123 +1155,123 @@
         </p>
 
         <h3>Paso 4.1. Ingesta de Datos, Escalado Porcentual para Estabilidad del Hessiano y Contrastes Preliminares</h3>
-        <pre class="python"><code>import numpy as np
-import pandas as pd
-import yfinance as yf
-from scipy import stats
-from statsmodels.tsa.stattools import adfuller
-from statsmodels.stats.diagnostic import acorr_ljungbox, het_arch
+        <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">import</span> numpy <span class="kw">as</span> <span class="dt">np</span>
+<span class="kw">import</span> pandas <span class="kw">as</span> <span class="dt">pd</span>
+<span class="kw">import</span> yfinance <span class="kw">as</span> <span class="dt">yf</span>
+<span class="kw">from</span> scipy <span class="kw">import</span> <span class="dt">stats</span>
+<span class="kw">from</span> statsmodels.tsa.stattools <span class="kw">import</span> <span class="dt">adfuller</span>
+<span class="kw">from</span> statsmodels.<span class="dt">stats</span>.diagnostic <span class="kw">import</span> <span class="dt">acorr_ljungbox</span>, het_arch
 
-# 1. Descarga de serie diaria BTC-USD (Septiembre 2014 - Octubre 2026)
-raw = yf.download("BTC-USD", start="2014-09-17", end="2026-10-30", auto_adjust=True, progress=False)
-df = raw[["Open", "High", "Low", "Close", "Volume"]].dropna().copy()
+<span class="co"># 1. Descarga de serie diaria BTC-USD (Septiembre 2014 - Octubre 2026)</span>
+raw <span class="op">=</span> <span class="dt">yf</span>.<span class="fu">download</span>(<span class="st">&quot;BTC-USD&quot;</span>, start<span class="op">=</span><span class="st">&quot;2014-09-17&quot;</span>, end<span class="op">=</span><span class="st">&quot;2026-10-30&quot;</span>, auto_adjust<span class="op">=</span><span class="cn">True</span>, progress<span class="op">=</span><span class="cn">False</span>)
+df <span class="op">=</span> raw[[<span class="st">&quot;Open&quot;</span>, <span class="st">&quot;High&quot;</span>, <span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Close&quot;</span>, <span class="st">&quot;Volume&quot;</span>]].<span class="fu">dropna</span>().<span class="fu">copy</span>()
 
-# Retornos logarítmicos continuos en escala porcentual para condicionamiento óptimo del Hessiano MLE
-df["Log_Return"] = np.log(df["Close"] / df["Close"].shift(1))
-df["Pct_Return"] = df["Log_Return"] * 100.0
-df = df.dropna()
+<span class="co"># Retornos logarítmicos continuos en escala porcentual para condicionamiento óptimo del Hessiano MLE</span>
+df[<span class="st">&quot;Log_Return&quot;</span>] <span class="op">=</span> <span class="dt">np</span>.<span class="fu">log</span>(df[<span class="st">&quot;Close&quot;</span>] <span class="op">/</span> df[<span class="st">&quot;Close&quot;</span>].<span class="fu">shift</span>(<span class="dv">1</span>))
+df[<span class="st">&quot;Pct_Return&quot;</span>] <span class="op">=</span> df[<span class="st">&quot;Log_Return&quot;</span>] <span class="op">*</span> <span class="fl">100.0</span>
+df <span class="op">=</span> df.<span class="fu">dropna</span>()
 
-# 2. Contrastes preliminares de raíz unitaria, normalidad y efecto ARCH sobre r_t (N = 4,425 días)
-r = df["Pct_Return"]
-adf_stat, adf_p, _, _, _, _ = adfuller(r, autolag="AIC")
-jb_stat, jb_p = stats.jarque_bera(r)
-arch_stat, arch_p, _, _ = het_arch(r, nlags=10)
+<span class="co"># 2. Contrastes preliminares de raíz unitaria, normalidad y efecto ARCH sobre r_t (N = 4,425 días)</span>
+r <span class="op">=</span> df[<span class="st">&quot;Pct_Return&quot;</span>]
+adf_stat, adf_p, _, _, _, _ <span class="op">=</span> <span class="dt">adfuller</span>(r, autolag<span class="op">=</span><span class="st">&quot;AIC&quot;</span>)
+jb_stat, jb_p <span class="op">=</span> <span class="dt">stats</span>.<span class="dt">jarque_bera</span>(r)
+arch_stat, arch_p, _, _ <span class="op">=</span> <span class="fu">het_arch</span>(r, nlags<span class="op">=</span><span class="dv">10</span>)
 
-print(f"Observaciones auditadas : {len(r)} sesiones diarias")
-print(f"Test ADF Estacionariedad: Estadístico = {adf_stat:.4f} (p-valor = {adf_p:.4e})")
-print(f"Test Jarque-Bera Normal : Estadístico = {jb_stat:.2f} (p-valor = {jb_p:.4e})")
-print(f"Test ARCH-LM(10) Engle  : Estadístico = {arch_stat:.2f} (p-valor = {arch_p:.4e})")</code></pre>
+<span class="fu">print</span>(<span class="st">f&quot;Observaciones auditadas : {len(r)} sesiones diarias&quot;</span>)
+<span class="fu">print</span>(<span class="st">f&quot;Test ADF Estacionariedad: Estadístico = {adf_stat:.4f} (p-valor = {adf_p:.4e})&quot;</span>)
+<span class="fu">print</span>(<span class="st">f&quot;Test Jarque-Bera Normal : Estadístico = {jb_stat:.2f} (p-valor = {jb_p:.4e})&quot;</span>)
+<span class="fu">print</span>(<span class="st">f&quot;Test ARCH-LM(10) Engle  : Estadístico = {arch_stat:.2f} (p-valor = {arch_p:.4e})&quot;</span>)</code></pre></div>
 
         <h3>Paso 4.2. Estimación por Máxima Verosimilitud (MLE) del Torneo GARCH Simétrico y Asimétrico</h3>
-        <pre class="python"><code>from arch import arch_model
+        <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">from</span> arch <span class="kw">import</span> <span class="dt">arch_model</span>
 
-# Especificación de las 5 familias competidoras con ecuación de media condicional AR(1)
-specs = {
-    "AR(1)-sGARCH(1,1)-Normal":   arch_model(r, mean="AR", lags=1, vol="Garch",  p=1, o=0, q=1, dist="normal"),
-    "AR(1)-sGARCH(1,1)-Student":  arch_model(r, mean="AR", lags=1, vol="Garch",  p=1, o=0, q=1, dist="t"),
-    "AR(1)-EGARCH(1,1)-Student":  arch_model(r, mean="AR", lags=1, vol="EGARCH", p=1, o=1, q=1, dist="t"),
-    "AR(1)-EGARCH(2,1)-Skewed-t": arch_model(r, mean="AR", lags=1, vol="EGARCH", p=2, o=1, q=1, dist="skewt"),
-    "AR(1)-GJR-GARCH-Skewed-t":   arch_model(r, mean="AR", lags=1, vol="Garch",  p=1, o=1, q=1, dist="skewt"),
+<span class="co"># Especificación de las 5 familias competidoras con ecuación de media condicional AR(1)</span>
+specs <span class="op">=</span> {
+    <span class="st">&quot;AR(1)-sGARCH(1,1)-Normal&quot;</span><span class="op">:</span>   <span class="dt">arch_model</span>(r, mean<span class="op">=</span><span class="st">&quot;AR&quot;</span>, lags<span class="op">=</span><span class="dv">1</span>, vol<span class="op">=</span><span class="st">&quot;Garch&quot;</span>,  p<span class="op">=</span><span class="dv">1</span>, o<span class="op">=</span><span class="dv">0</span>, q<span class="op">=</span><span class="dv">1</span>, dist<span class="op">=</span><span class="st">&quot;normal&quot;</span>),
+    <span class="st">&quot;AR(1)-sGARCH(1,1)-Student&quot;</span><span class="op">:</span>  <span class="dt">arch_model</span>(r, mean<span class="op">=</span><span class="st">&quot;AR&quot;</span>, lags<span class="op">=</span><span class="dv">1</span>, vol<span class="op">=</span><span class="st">&quot;Garch&quot;</span>,  p<span class="op">=</span><span class="dv">1</span>, o<span class="op">=</span><span class="dv">0</span>, q<span class="op">=</span><span class="dv">1</span>, dist<span class="op">=</span><span class="st">&quot;t&quot;</span>),
+    <span class="st">&quot;AR(1)-EGARCH(1,1)-Student&quot;</span><span class="op">:</span>  <span class="dt">arch_model</span>(r, mean<span class="op">=</span><span class="st">&quot;AR&quot;</span>, lags<span class="op">=</span><span class="dv">1</span>, vol<span class="op">=</span><span class="st">&quot;EGARCH&quot;</span>, p<span class="op">=</span><span class="dv">1</span>, o<span class="op">=</span><span class="dv">1</span>, q<span class="op">=</span><span class="dv">1</span>, dist<span class="op">=</span><span class="st">&quot;t&quot;</span>),
+    <span class="st">&quot;AR(1)-EGARCH(2,1)-Skewed-t&quot;</span><span class="op">:</span> <span class="dt">arch_model</span>(r, mean<span class="op">=</span><span class="st">&quot;AR&quot;</span>, lags<span class="op">=</span><span class="dv">1</span>, vol<span class="op">=</span><span class="st">&quot;EGARCH&quot;</span>, p<span class="op">=</span><span class="dv">2</span>, o<span class="op">=</span><span class="dv">1</span>, q<span class="op">=</span><span class="dv">1</span>, dist<span class="op">=</span><span class="st">&quot;skewt&quot;</span>),
+    <span class="st">&quot;AR(1)-GJR-GARCH-Skewed-t&quot;</span><span class="op">:</span>   <span class="dt">arch_model</span>(r, mean<span class="op">=</span><span class="st">&quot;AR&quot;</span>, lags<span class="op">=</span><span class="dv">1</span>, vol<span class="op">=</span><span class="st">&quot;Garch&quot;</span>,  p<span class="op">=</span><span class="dv">1</span>, o<span class="op">=</span><span class="dv">1</span>, q<span class="op">=</span><span class="dv">1</span>, dist<span class="op">=</span><span class="st">&quot;skewt&quot;</span>),
 }
 
-fits = {}
-for name, model in specs.items():
-    res = model.fit(disp="off")
-    fits[name] = res
-    z = res.std_resid.dropna()
-    lb_q2 = acorr_ljungbox(z ** 2, lags=[10], return_df=True)["lb_pvalue"].iloc[0]
-    lm_p = het_arch(z, nlags=5)[1]
-    print(f"{name:28s} | LogLik: {res.loglikelihood:9.2f} | AIC: {res.aic:8.2f} | BIC: {res.bic:8.2f} | Q2(10) p: {lb_q2:.4f} | ARCH-LM p: {lm_p:.4f}")</code></pre>
+fits <span class="op">=</span> {}
+<span class="cf">for</span> name, model <span class="kw">in</span> specs.<span class="fu">items</span>()<span class="op">:</span>
+    res <span class="op">=</span> model.<span class="fu">fit</span>(disp<span class="op">=</span><span class="st">&quot;off&quot;</span>)
+    fits[name] <span class="op">=</span> res
+    z <span class="op">=</span> res.std_resid.<span class="fu">dropna</span>()
+    lb_q2 <span class="op">=</span> <span class="dt">acorr_ljungbox</span>(z <span class="op">**</span> <span class="dv">2</span>, lags<span class="op">=</span>[<span class="dv">10</span>], return_df<span class="op">=</span><span class="cn">True</span>)[<span class="st">&quot;lb_pvalue&quot;</span>].iloc[<span class="dv">0</span>]
+    lm_p <span class="op">=</span> <span class="fu">het_arch</span>(z, nlags<span class="op">=</span><span class="dv">5</span>)[<span class="dv">1</span>]
+    <span class="fu">print</span>(<span class="st">f&quot;{name:28s} | LogLik: {res.loglikelihood:9.2f} | AIC: {res.aic:8.2f} | BIC: {res.bic:8.2f} | Q2(10) p: {lb_q2:.4f} | ARCH-LM p: {lm_p:.4f}&quot;</span>)</code></pre></div>
 
         <h3>Paso 4.3. Cálculo Dinámico de VaR / Expected Shortfall (CVaR) y Contrastes de Kupiec y Christoffersen</h3>
-        <pre class="python"><code>def compute_var_cvar_and_backtest(returns_pct: pd.Series, fit_res, alpha: float = 0.01, is_normal: bool = False):
-    # 1. Media condicional AR(1) y volatilidad condicional diaria sigma_t
-    mu_t = fit_res.params["Const"] + fit_res.params["Pct_Return[1]"] * returns_pct.shift(1)
-    sigma_t = fit_res.conditional_volatility
-    z = fit_res.std_resid.dropna()
+        <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> <span class="fu">compute_var_cvar_and_backtest</span>(returns_pct<span class="op">:</span> <span class="dt">pd</span>.<span class="dt">Series</span>, fit_res, alpha<span class="op">:</span> <span class="dt">float</span> <span class="op">=</span> <span class="fl">0.01</span>, is_normal<span class="op">:</span> <span class="dt">bool</span> <span class="op">=</span> <span class="cn">False</span>)<span class="op">:</span>
+    <span class="co"># 1. Media condicional AR(1) y volatilidad condicional diaria sigma_t</span>
+    mu_t <span class="op">=</span> fit_res.params[<span class="st">&quot;Const&quot;</span>] <span class="op">+</span> fit_res.params[<span class="st">&quot;Pct_Return[1]&quot;</span>] <span class="op">*</span> returns_pct.<span class="fu">shift</span>(<span class="dv">1</span>)
+    sigma_t <span class="op">=</span> fit_res.conditional_volatility
+    z <span class="op">=</span> fit_res.std_resid.<span class="fu">dropna</span>()
 
-    # 2. Cuantil condicional (VaR) y esperanza condicional de cola (Expected Shortfall / CVaR)
-    if is_normal:
-        q_alpha = stats.norm.ppf(alpha)
-        es_z = -stats.norm.pdf(q_alpha) / alpha
-    else:
-        q_alpha = float(np.percentile(z, alpha * 100.0))
-        es_z = float(z[z &lt;= q_alpha].mean())
+    <span class="co"># 2. Cuantil condicional (VaR) y esperanza condicional de cola (Expected Shortfall / CVaR)</span>
+    <span class="cf">if</span> is_normal<span class="op">:</span>
+        q_alpha <span class="op">=</span> <span class="dt">stats</span>.norm.<span class="fu">ppf</span>(alpha)
+        es_z <span class="op">=</span> <span class="op">-</span><span class="dt">stats</span>.norm.<span class="fu">pdf</span>(q_alpha) <span class="op">/</span> alpha
+    <span class="cf">else</span><span class="op">:</span>
+        q_alpha <span class="op">=</span> <span class="dt">float</span>(<span class="dt">np</span>.<span class="fu">percentile</span>(z, alpha <span class="op">*</span> <span class="fl">100.0</span>))
+        es_z <span class="op">=</span> <span class="dt">float</span>(z[z <span class="op">&lt;=</span> q_alpha].<span class="fu">mean</span>())
 
-    var_t = (mu_t + q_alpha * sigma_t).loc["2020-01-31":]
-    cvar_t = (mu_t + es_z * sigma_t).loc["2020-01-31":]
-    y_eval = returns_pct.loc["2020-01-31":]
+    var_t <span class="op">=</span> (mu_t <span class="op">+</span> q_alpha <span class="op">*</span> sigma_t).loc[<span class="st">&quot;2020-01-31&quot;</span><span class="op">:</span>]
+    cvar_t <span class="op">=</span> (mu_t <span class="op">+</span> es_z <span class="op">*</span> sigma_t).loc[<span class="st">&quot;2020-01-31&quot;</span><span class="op">:</span>]
+    y_eval <span class="op">=</span> returns_pct.loc[<span class="st">&quot;2020-01-31&quot;</span><span class="op">:</span>]
 
-    # 3. Secuencia de violaciones I_t = 1(r_t &lt; VaR_t) en la ventana 2020-2026 (T = 2,464 sesiones)
-    hits = (y_eval &lt; var_t).astype(int).values
-    T, N = len(hits), int(hits.sum())
-    p_hat = N / T
+    <span class="co"># 3. Secuencia de violaciones I_t = 1(r_t &lt; VaR_t) en la ventana 2020-2026 (T = 2,464 sesiones)</span>
+    hits <span class="op">=</span> (y_eval <span class="op">&lt;</span> var_t).<span class="fu">astype</span>(<span class="dt">int</span>).values
+    T, N <span class="op">=</span> <span class="fu">len</span>(hits), <span class="dt">int</span>(hits.<span class="fu">sum</span>())
+    p_hat <span class="op">=</span> N <span class="op">/</span> T
 
-    # Estadístico LR_uc de Kupiec (1995) ~ Chi2(1)
-    lr_uc = -2.0 * ((T - N) * np.log(1 - alpha) + N * np.log(alpha) - ((T - N) * np.log(1 - p_hat) + N * np.log(p_hat)))
-    p_uc = 1.0 - stats.chi2.cdf(lr_uc, df=1)
+    <span class="co"># Estadístico LR_uc de Kupiec (1995) ~ Chi2(1)</span>
+    lr_uc <span class="op">=</span> <span class="op">-</span><span class="fl">2.0</span> <span class="op">*</span> ((T <span class="op">-</span> N) <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(<span class="dv">1</span> <span class="op">-</span> alpha) <span class="op">+</span> N <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(alpha) <span class="op">-</span> ((T <span class="op">-</span> N) <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(<span class="dv">1</span> <span class="op">-</span> p_hat) <span class="op">+</span> N <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(p_hat)))
+    p_uc <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> <span class="dt">stats</span>.chi2.<span class="fu">cdf</span>(lr_uc, df<span class="op">=</span><span class="dv">1</span>)
 
-    # Estadístico LR_ind y LR_cc de Christoffersen (1998) ~ Chi2(2)
-    h0, h1 = hits[:-1], hits[1:]
-    n00, n01 = np.sum((h0 == 0) &amp; (h1 == 0)), np.sum((h0 == 0) &amp; (h1 == 1))
-    n10, n11 = np.sum((h0 == 1) &amp; (h1 == 0)), np.sum((h0 == 1) &amp; (h1 == 1))
-    pi0, pi1, pi = n01 / (n00 + n01), n11 / max(n10 + n11, 1), (n01 + n11) / (T - 1)
-    ll_null = (n00 + n10) * np.log(1 - pi) + (n01 + n11) * np.log(pi)
-    ll_alt = n00 * np.log(1 - pi0) + n01 * np.log(pi0) + n10 * np.log(max(1 - pi1, 1e-12)) + n11 * np.log(max(pi1, 1e-12))
-    lr_ind = max(0.0, -2.0 * (ll_null - ll_alt))
-    lr_cc = lr_uc + lr_ind
-    p_cc = 1.0 - stats.chi2.cdf(lr_cc, df=2)
+    <span class="co"># Estadístico LR_ind y LR_cc de Christoffersen (1998) ~ Chi2(2)</span>
+    h0, h1 <span class="op">=</span> hits[<span class="op">:</span><span class="op">-</span><span class="dv">1</span>], hits[<span class="dv">1</span><span class="op">:</span>]
+    n00, n01 <span class="op">=</span> <span class="dt">np</span>.<span class="fu">sum</span>((h0 <span class="op">==</span> <span class="dv">0</span>) &amp; (h1 <span class="op">==</span> <span class="dv">0</span>)), <span class="dt">np</span>.<span class="fu">sum</span>((h0 <span class="op">==</span> <span class="dv">0</span>) &amp; (h1 <span class="op">==</span> <span class="dv">1</span>))
+    n10, n11 <span class="op">=</span> <span class="dt">np</span>.<span class="fu">sum</span>((h0 <span class="op">==</span> <span class="dv">1</span>) &amp; (h1 <span class="op">==</span> <span class="dv">0</span>)), <span class="dt">np</span>.<span class="fu">sum</span>((h0 <span class="op">==</span> <span class="dv">1</span>) &amp; (h1 <span class="op">==</span> <span class="dv">1</span>))
+    pi0, pi1, pi <span class="op">=</span> n01 <span class="op">/</span> (n00 <span class="op">+</span> n01), n11 <span class="op">/</span> <span class="fu">max</span>(n10 <span class="op">+</span> n11, <span class="dv">1</span>), (n01 <span class="op">+</span> n11) <span class="op">/</span> (T <span class="op">-</span> <span class="dv">1</span>)
+    ll_null <span class="op">=</span> (n00 <span class="op">+</span> n10) <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(<span class="dv">1</span> <span class="op">-</span> pi) <span class="op">+</span> (n01 <span class="op">+</span> n11) <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(pi)
+    ll_alt <span class="op">=</span> n00 <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(<span class="dv">1</span> <span class="op">-</span> pi0) <span class="op">+</span> n01 <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(pi0) <span class="op">+</span> n10 <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(<span class="fu">max</span>(<span class="dv">1</span> <span class="op">-</span> pi1, <span class="fl">1e-12</span>)) <span class="op">+</span> n11 <span class="op">*</span> <span class="dt">np</span>.<span class="fu">log</span>(<span class="fu">max</span>(pi1, <span class="fl">1e-12</span>))
+    lr_ind <span class="op">=</span> <span class="fu">max</span>(<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">2.0</span> <span class="op">*</span> (ll_null <span class="op">-</span> ll_alt))
+    lr_cc <span class="op">=</span> lr_uc <span class="op">+</span> lr_ind
+    p_cc <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> <span class="dt">stats</span>.chi2.<span class="fu">cdf</span>(lr_cc, df<span class="op">=</span><span class="dv">2</span>)
 
-    return var_t, cvar_t, {"N": N, "T": T, "rate": p_hat * 100, "lr_uc": lr_uc, "p_uc": p_uc, "lr_cc": lr_cc, "p_cc": p_cc}</code></pre>
+    <span class="cf">return</span> var_t, cvar_t, {<span class="st">&quot;N&quot;</span><span class="op">:</span> N, <span class="st">&quot;T&quot;</span><span class="op">:</span> T, <span class="st">&quot;rate&quot;</span><span class="op">:</span> p_hat <span class="op">*</span> <span class="dv">100</span>, <span class="st">&quot;lr_uc&quot;</span><span class="op">:</span> lr_uc, <span class="st">&quot;p_uc&quot;</span><span class="op">:</span> p_uc, <span class="st">&quot;lr_cc&quot;</span><span class="op">:</span> lr_cc, <span class="st">&quot;p_cc&quot;</span><span class="op">:</span> p_cc}</code></pre></div>
 
         <h3>Paso 4.4. Motor de Ejecución Cuantitativa: Volatility Targeting, Position Sizing, Stop-Loss y Apalancamiento</h3>
-        <pre class="python"><code>def compute_trading_execution_signals(
-    sigma_daily_pct: pd.Series,
-    var_99_pct: pd.Series,
-    cvar_99_pct: pd.Series,
-    equity_usd: float = 1_000_000.0,
-    target_vol_ann_pct: float = 20.0,
-    max_tail_risk_budget_usd: float = 25_000.0,
-    maint_margin: float = 0.005,
-    safety_kappa: float = 3.0,
-) -> pd.DataFrame:
-    sigma_ann_pct = sigma_daily_pct * np.sqrt(365.0)
-    cvar_dec = (cvar_99_pct.abs() / 100.0).clip(lower=1e-4)
+        <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> <span class="fu">compute_trading_execution_signals</span>(
+    sigma_daily_pct<span class="op">:</span> <span class="dt">pd</span>.<span class="dt">Series</span>,
+    var_99_pct<span class="op">:</span> <span class="dt">pd</span>.<span class="dt">Series</span>,
+    cvar_99_pct<span class="op">:</span> <span class="dt">pd</span>.<span class="dt">Series</span>,
+    equity_usd<span class="op">:</span> <span class="dt">float</span> <span class="op">=</span> <span class="fl">1_000_000.0</span>,
+    target_vol_ann_pct<span class="op">:</span> <span class="dt">float</span> <span class="op">=</span> <span class="fl">20.0</span>,
+    max_tail_risk_budget_usd<span class="op">:</span> <span class="dt">float</span> <span class="op">=</span> <span class="fl">25_000.0</span>,
+    maint_margin<span class="op">:</span> <span class="dt">float</span> <span class="op">=</span> <span class="fl">0.005</span>,
+    safety_kappa<span class="op">:</span> <span class="dt">float</span> <span class="op">=</span> <span class="fl">3.0</span>,
+) <span class="op">-&gt;</span> <span class="dt">pd</span>.<span class="dt">DataFrame</span><span class="op">:</span>
+    sigma_ann_pct <span class="op">=</span> sigma_daily_pct <span class="op">*</span> <span class="dt">np</span>.<span class="fu">sqrt</span>(<span class="fl">365.0</span>)
+    cvar_dec <span class="op">=</span> (cvar_99_pct.<span class="fu">abs</span>() <span class="op">/</span> <span class="fl">100.0</span>).<span class="fu">clip</span>(lower<span class="op">=</span><span class="fl">1e-4</span>)
 
-    signals = pd.DataFrame(index=sigma_daily_pct.index)
-    # 1. Ponderación óptima por Volatility Targeting: w_t = min(1.0, sigma_target / sigma_anual_t)
-    signals["Weight_VolTarget"] = (target_vol_ann_pct / sigma_ann_pct).clip(upper=1.0)
-    signals["Notional_VolTarget_USD"] = signals["Weight_VolTarget"] * equity_usd
+    signals <span class="op">=</span> <span class="dt">pd</span>.<span class="dt">DataFrame</span>(index<span class="op">=</span>sigma_daily_pct.index)
+    <span class="co"># 1. Ponderación óptima por Volatility Targeting: w_t = min(1.0, sigma_target / sigma_anual_t)</span>
+    signals[<span class="st">&quot;Weight_VolTarget&quot;</span>] <span class="op">=</span> (target_vol_ann_pct <span class="op">/</span> sigma_ann_pct).<span class="fu">clip</span>(upper<span class="op">=</span><span class="fl">1.0</span>)
+    signals[<span class="st">&quot;Notional_VolTarget_USD&quot;</span>] <span class="op">=</span> signals[<span class="st">&quot;Weight_VolTarget&quot;</span>] <span class="op">*</span> equity_usd
 
-    # 2. Exposición máxima permitida por Presupuesto de Riesgo de Cola (Expected Shortfall 99%)
-    signals["Max_Notional_CVaR_Budget_USD"] = max_tail_risk_budget_usd / cvar_dec
+    <span class="co"># 2. Exposición máxima permitida por Presupuesto de Riesgo de Cola (Expected Shortfall 99%)</span>
+    signals[<span class="st">&quot;Max_Notional_CVaR_Budget_USD&quot;</span>] <span class="op">=</span> max_tail_risk_budget_usd <span class="op">/</span> cvar_dec
 
-    # 3. Stop-Loss dinámico condicional al 99% de confianza (filtrado de ruido estocástico)
-    signals["Adaptive_StopLoss_99_Pct"] = var_99_pct
+    <span class="co"># 3. Stop-Loss dinámico condicional al 99% de confianza (filtrado de ruido estocástico)</span>
+    signals[<span class="st">&quot;Adaptive_StopLoss_99_Pct&quot;</span>] <span class="op">=</span> var_99_pct
 
-    # 4. Apalancamiento institucional máximo seguro en perpetuos/futuros sin riesgo de cascada
-    signals["Max_Safe_Leverage_x"] = (1.0 - maint_margin) / (safety_kappa * cvar_dec)
-    return signals</code></pre>
+    <span class="co"># 4. Apalancamiento institucional máximo seguro en perpetuos/futuros sin riesgo de cascada</span>
+    signals[<span class="st">&quot;Max_Safe_Leverage_x&quot;</span>] <span class="op">=</span> (<span class="fl">1.0</span> <span class="op">-</span> maint_margin) <span class="op">/</span> (safety_kappa <span class="op">*</span> cvar_dec)
+    <span class="cf">return</span> signals</code></pre></div>
       </section>
 
       <!-- =====================================================================
@@ -1794,7 +1800,7 @@ for name, model in specs.items():
 
         <!-- EXEC-SYNTHESIS-START -->
         <div class="callout-quant emerald">
-          <h4>Síntesis Cuantitativa: Optimalidad Econométrica, Cobertura de Cola y Ejecución Sistemática</h4>
+          <h4>Síntesis: Optimalidad Econométrica, Cobertura de Cola y Ejecución Sistemática</h4>
           <p>
             <strong>1. Superioridad Estadística de la Estructura AR(1)-EGARCH(2,1) con Densidad Skewed Student-<em>t</em> (2020 &rarr; 2026):</strong> Al extender la ventana muestral desde las 1,961 observaciones originales de enero de 2020 hasta las <strong>4,425 sesiones diarias de octubre de 2026</strong>, la especificación <strong>AR(1)-EGARCH(2,1) bajo distribución Skewed Student-<em>t</em> de Hansen (<span class="m-inline"><i>&eta;&#770;</i> = 2.770, <i>&beta;&#770;</i><sub>1</sub> = 0.9914</span>)</strong> alcanza la optimalidad global con un <strong>AIC de 21,553.06</strong>, incrementando el soporte de Log-Verosimilitud en <strong>+584.64 puntos</strong> respecto al modelo Gaussiano tradicional y capturando tanto el amortiguamiento oscilatorio de segundo orden (<span class="m-inline"><i>&alpha;&#770;</i><sub>2</sub> = &minus;0.1580</span>) como la vida media de los choques de volatilidad (<strong>79.9 sesiones</strong>).<br /><br />
             <strong>2. Rechazo del Supuesto Gaussiano y Operacionalización del Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>):</strong> El test de cobertura incondicional de <strong>Kupiec (<span class="m-inline"><i>LR</i><sub>uc</sub> = 9.144, <i>p</i> = 0.0025</span>)</strong> y el contraste conjunto de independencia y cobertura condicional de <strong>Christoffersen (<span class="m-inline"><i>LR</i><sub>cc</sub> = 9.278, <i>p</i> = 0.0097</span>)</strong> rechazan al 1% de significancia el modelo <code>sGARCH-Normal</code> (41 excedencias frente a 24.6 esperadas). Por el contrario, el modelo <strong>EGARCH(2,1)-Skewed-t</strong> registra <strong>21 violaciones (0.852%, <span class="m-inline"><i>p</i> = 0.4496</span>)</strong> en Zona Verde de Basilea, proporcionando a las mesas de trading cuantitativo y tesorería un motor riguroso para ejecutar <strong>Volatility Targeting (56.20% de asignación actual)</strong>, <strong>Stop-Loss condicionales (-4.600%)</strong>, límites de apalancamiento (<strong>4.76&times;</strong>) y reservas de liquidez sobre el <strong>Expected Shortfall diario de -6.961% ($69,610 USD por cada $1,000,000 USD de nocional)</strong>.
@@ -2017,32 +2023,39 @@ for name, model in specs.items():
           <p class="footer-brand-desc">
             Economista y Quantitative Data Scientist. Planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning y Business Intelligence.
           </p>
+          <div class="footer-license-box">
+            <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
+              <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
+            </a>
+            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
+          </div>
         </div>
+
         <div>
-          <h4 class="footer-col-title">Secciones</h4>
+          <h4 class="footer-col-title">Navegación</h4>
           <ul class="footer-links-list">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
-            <li><a href="Proyecto2.html">Volatilidad GARCH &amp; VaR 2020 (RStudio)</a></li>
-            <li><a href="deep-portfolio-lstm-python.html">Deep Portfolio LSTM 2026 (Python)</a></li>
             <li><a href="acercade.html">Trayectoria Profesional</a></li>
             <li><a href="formulario.html">Formulario de Contacto</a></li>
+            <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a></li>
           </ul>
         </div>
+
         <div>
-          <h4 class="footer-col-title">Recursos del Estudio</h4>
+          <h4 class="footer-col-title">Contacto</h4>
           <ul class="footer-links-list">
-            <li><a href="models/garch_var_cvar_2026.py" download>Script Python (garch_var_cvar_2026.py)</a></li>
-            <li><a href="data/btc_usd_2014_2026.csv" download>Dataset BTC-USD 2014–2026 (.csv)</a></li>
-            <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
-            <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">Publicaciones RPubs</a></li>
             <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
+            <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
+            <li><a href="mailto:jesuszerpaeconomia@gmail.com">jesuszerpaeconomia@gmail.com</a></li>
+            <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Telegram @jesusbz21</a></li>
           </ul>
         </div>
       </div>
+
       <div class="footer-bottom-strip">
         <span>Copyright © 2026 Jesús B. Zerpa. Todos los derechos reservados.</span>
-        <span>Econometría Financiera • GARCH Asimétrico • VaR &amp; Expected Shortfall (CVaR) • R &amp; Python</span>
+        <span>Finanzas Cuantitativas • Machine Learning • Business Intelligence</span>
       </div>
     </div>
   </footer>
@@ -2455,6 +2468,6 @@ for name, model in specs.items():
   </script>
 
   <!-- Corporate Portfolio JS (Code Copy Buttons, Moving Carousel, Scroll Top, Navigation, Copilot Assistant) -->
-  <script src="js/futuristic-app.js?v=20261030h"></script>
+  <script src="js/futuristic-app.js?v=20261108b"></script>
 </body>
 </html>

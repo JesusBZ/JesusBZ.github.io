@@ -1,7 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /scratch/
+Disallow: /_site/
 Disallow: /_header.html
 Disallow: /_footer.html
+Disallow: /FinancialDashboard.htm
 
 Sitemap: https://jesusbz.github.io/sitemap.xml

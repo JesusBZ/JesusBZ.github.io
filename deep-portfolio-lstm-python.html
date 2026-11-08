@@ -5,9 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Portafolio Tangente de Markowitz (2020–2026) | Jesús Benjamín Zerpa</title>
+  <title>Deep Portfolio Optimization con Redes LSTM en Python (PyTorch) | Jesús Zerpa</title>
 <!-- SEO:START -->
-<meta name="description" content="Deep Portfolio Optimization con redes neuronales recurrentes LSTM en Python (PyTorch, SciPy, yfinance, Plotly) sobre la cartera del Portafolio Tangente de Markowitz (MSFT, JNJ, MA, PEP, WMT, MCD). Evaluación empírica de $5,000 USD desde abril de 2020 hasta 2026. Por Jesús Benjamín Zerpa." />
+<meta name="description" content="Optimización dinámica de carteras con redes neuronales LSTM en Python (PyTorch) y auditoría real de $5,000 USD sobre el S&amp;P 500 (2020–2026). Por Jesús Zerpa." />
 <meta name="keywords" content="Deep Portfolio Optimization, redes neuronales LSTM Python, portafolio tangente, portafolio de Markowitz, frontera eficiente Python, PyTorch finanzas cuantitativas, optimización de carteras Deep Learning, Ratio de Sharpe diferenciable, Ratio de Sortino, MSFT, JNJ, MA, PEP, WMT, MCD, S&amp;P 500, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
 <meta name="author" content="Jesús Benjamín Zerpa" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -184,12 +184,11 @@
 <!-- SEO:END -->
 
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="preconnect" href="https://gemini-backend-ecru.vercel.app" crossorigin />
   <link rel="icon" href="favi.png" type="image/png" />
 
   <!-- Corporate Stylesheets -->
   <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261030h" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261030h" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261108a" />
 
   <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
@@ -279,6 +278,12 @@
       background: rgba(245, 158, 11, 0.22);
       color: #fcd34d;
       border: 1px solid rgba(252, 211, 77, 0.35);
+    }
+    .study-badge.ai-argon {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.34), rgba(59, 130, 246, 0.34));
+      color: #f3e8ff;
+      border: 1px solid rgba(196, 181, 253, 0.65);
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.3);
     }
     .study-hero-panel h1 {
       color: #ffffff !important;
@@ -685,6 +690,7 @@
           <span class="study-badge primary">ACTUALIZACIÓN DEEP LEARNING 2026</span>
           <span class="study-badge emerald">PYTHON • PYTORCH • LSTM • PLOTLY</span>
           <span class="study-badge amber">AUDITORÍA EMPÍRICA: $5,000 USD (2020–2026)</span>
+          <span class="study-badge ai-argon">✦ Optimizado con Gemini 4 Argon</span>
         </div>
         <h1>Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz</h1>
         <p>
@@ -1368,7 +1374,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </div>
 
         <div class="callout-quant emerald">
-          <h4>Síntesis Ejecutiva: Criterios de Elección entre Markowitz Clásico y Deep Portfolio LSTM</h4>
+          <h4>Síntesis: Criterios de Elección entre Markowitz Clásico y Deep Portfolio LSTM</h4>
           <p>
             <strong>1. Vigencia del Portafolio Tangente de 2020 para Preservación Conservadora:</strong> El modelo original publicado en abril de 2020 demostró una alta consistencia en el control de riesgo: duplicó con creces el capital inicial (de <strong>$5,000.00 a $11,208.95 USD</strong>, <strong>+124.18%</strong>) con una volatilidad anual de apenas <strong>13.11%</strong> y redujo a la mitad la contracción máxima sufrida por el mercado en 2022 (<strong>-12.85% frente a -25.43%</strong>).<br /><br />
             <strong>2. Generación de Alfa mediante la Red Neuronal LSTM en Python:</strong> Al permitir que las compuertas de memoria <code>LSTM</code> adapten periódicamente las ponderaciones según el régimen de <em>Momentum</em> y volatilidad condicional, el modelo <strong>Deep Portfolio LSTM</strong> elevó el capital final hasta <strong>$15,057.19 USD (+201.14%, CAGR de 18.53%)</strong>, generando <strong>+$3,848.24 USD adicionales</strong> sobre el Portafolio Tangente estático y superando al índice <strong>S&amp;P 500 en +$1,925.09 USD (+38.50 puntos porcentuales de exceso de retorno)</strong> con un <strong>Ratio de Sortino de 1.24</strong> y menor caída máxima (-19.00% frente a -25.43%).
@@ -1803,30 +1809,39 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
           <p class="footer-brand-desc">
             Economista y Quantitative Data Scientist. Planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, Deep Learning y Business Intelligence.
           </p>
+          <div class="footer-license-box">
+            <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
+              <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
+            </a>
+            <span>Contenido bajo <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
+          </div>
         </div>
+
         <div>
-          <h4 class="footer-col-title">Secciones</h4>
+          <h4 class="footer-col-title">Navegación</h4>
           <ul class="footer-links-list">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
-            <li><a href="proyecto4.html">Portafolio Tangente 2020 (RStudio)</a></li>
             <li><a href="acercade.html">Trayectoria Profesional</a></li>
             <li><a href="formulario.html">Formulario de Contacto</a></li>
+            <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a></li>
           </ul>
         </div>
+
         <div>
-          <h4 class="footer-col-title">Recursos del Estudio</h4>
+          <h4 class="footer-col-title">Contacto</h4>
           <ul class="footer-links-list">
-            <li><a href="models/deep_portfolio_lstm.py" download>Script Python (deep_portfolio_lstm.py)</a></li>
-            <li><a href="data/sp500_6assets_2010_2026.csv" download>Dataset S&amp;P 500 2010–2026 (.csv)</a></li>
-            <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
             <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
+            <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
+            <li><a href="mailto:jesuszerpaeconomia@gmail.com">jesuszerpaeconomia@gmail.com</a></li>
+            <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Telegram @jesusbz21</a></li>
           </ul>
         </div>
       </div>
+
       <div class="footer-bottom-strip">
         <span>Copyright © 2026 Jesús B. Zerpa. Todos los derechos reservados.</span>
-        <span>Finanzas Cuantitativas • Deep Learning LSTM • Markowitz • R &amp; Python</span>
+        <span>Finanzas Cuantitativas • Machine Learning • Business Intelligence</span>
       </div>
     </div>
   </footer>
@@ -2223,6 +2238,6 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
   </script>
 
   <!-- Corporate Portfolio JS (Code Copy Buttons, Moving Carousel, Scroll Top, Navigation) -->
-  <script src="js/futuristic-app.js?v=20261030h"></script>
+  <script src="js/futuristic-app.js?v=20261108b"></script>
 </body>
 </html>

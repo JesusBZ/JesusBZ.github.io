@@ -1162,3 +1162,160 @@ iframe[src*="disqus.com/recommendations"] {
   line-height: 1.9 !important;
 }
 
+/* ==========================================================================
+   Ensure RStudio <a class="sourceLine"> never inherits link blue (#0052cc)
+   ========================================================================== */
+pre a.sourceLine,
+code a.sourceLine,
+pre a.sourceLine:hover,
+code a.sourceLine:hover {
+  color: #e2e8f0 !important;
+  text-decoration: none !important;
+  font-weight: 400 !important;
+  pointer-events: none !important;
+}
+
+/* ==========================================================================
+   UNIFIED SITE FOOTER OVERRIDES (Identical across all pages & posts)
+   ========================================================================== */
+.site-footer {
+  background: #ffffff !important;
+  border-top: 1px solid #e2e8f0 !important;
+  padding: 3.5rem 0 2rem 0 !important;
+  margin-top: 3rem !important;
+  width: 100% !important;
+}
+
+.site-footer .site-container {
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+  padding: 0 1.5rem !important;
+}
+
+.site-footer .footer-brand-title {
+  font-size: 1.2rem !important;
+  font-weight: 800 !important;
+  color: #091e42 !important;
+}
+
+.site-footer p.footer-brand-desc {
+  font-size: 0.9rem !important;
+  color: #64748b !important;
+  line-height: 1.6 !important;
+  max-width: 440px !important;
+  margin-bottom: 0 !important;
+}
+
+.site-footer .footer-license-box {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.75rem !important;
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 6px !important;
+  padding: 0.85rem !important;
+  font-size: 0.8rem !important;
+  color: #334155 !important;
+  line-height: 1.5 !important;
+  margin-top: 0.5rem !important;
+  max-width: 440px !important;
+}
+
+.site-footer .footer-license-box img {
+  width: 88px !important;
+  height: 31px !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+  transform: none !important;
+}
+
+.site-footer .footer-license-box a {
+  color: #0052cc !important;
+  font-weight: 500 !important;
+  font-size: 0.8rem !important;
+}
+
+.site-footer h4.footer-col-title {
+  font-size: 0.925rem !important;
+  font-weight: 700 !important;
+  color: #091e42 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  font-family: "JetBrains Mono", "Fira Code", Consolas, monospace !important;
+  margin-top: 0 !important;
+  margin-bottom: 1rem !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.site-footer .footer-links-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.65rem !important;
+}
+
+.site-footer .footer-links-list li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.site-footer .footer-links-list a {
+  font-size: 0.9rem !important;
+  color: #334155 !important;
+  font-weight: 400 !important;
+  text-decoration: none !important;
+}
+
+.site-footer .footer-links-list a:hover {
+  color: #0052cc !important;
+  text-decoration: none !important;
+}
+
+.site-footer .footer-bottom-strip {
+  border-top: 1px solid #e2e8f0 !important;
+  padding-top: 1.75rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+  font-size: 0.825rem !important;
+  color: #64748b !important;
+}
+
+
+/* ==========================================================================
+   processanimateR Interactive Process Maps (Playback Controls & Legend)
+   ========================================================================== */
+.processanimateR.html-widget {
+  position: relative !important;
+  box-sizing: content-box !important;
+  line-height: 0 !important;
+}
+
+.processanimateR.html-widget > svg:not(.processanimater-legend-svg) {
+  display: block !important;
+  line-height: normal !important;
+}
+
+.processanimateR.html-widget svg.processanimater-control {
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  overflow: visible !important;
+}
+
+.processanimateR.html-widget .pa-play-pause-btn:hover .pa-btn-bg {
+  filter: brightness(1.1);
+}
+
+.processanimateR.html-widget .pa-restart-btn:hover .pa-restart-bg {
+  fill: #e2e8f0 !important;
+  stroke: #94a3b8 !important;
+}
