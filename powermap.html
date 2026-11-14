@@ -173,7 +173,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
-  <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem) -->
+  <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem + Clean URL Bar) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -182,6 +182,35 @@
     gtag('config', 'G-9M6MYPFL3M', {
       'linker': { 'domains': ['jesusbzerpa.github.io', 'jesusbezerpa.github.io', 'jesusbz.github.io'] }
     });
+    (function() {
+      var cleaned = false;
+      function cleanGaLinkerUrl() {
+        if (cleaned || !window.history || !window.history.replaceState) return;
+        try {
+          var url = new URL(window.location.href);
+          var dirty = false;
+          if (url.searchParams.has('_gl')) { url.searchParams.delete('_gl'); dirty = true; }
+          if (url.searchParams.has('_ga')) { url.searchParams.delete('_ga'); dirty = true; }
+          if (url.hash && /(?:^|[&#])_gl=/.test(url.hash)) {
+            var cleanHash = url.hash.replace(/^#_gl=[^&]*&?/, '#').replace(/[&]_gl=[^&]*/g, '');
+            url.hash = (cleanHash === '#') ? '' : cleanHash;
+            dirty = true;
+          }
+          if (dirty) {
+            cleaned = true;
+            var nextUrl = url.pathname + url.search + url.hash;
+            window.history.replaceState(window.history.state, document.title, nextUrl);
+          } else {
+            cleaned = true;
+          }
+        } catch (e) {}
+      }
+      if (/[?&#]_(?:gl|ga)=/.test(window.location.href)) {
+        gtag('get', 'G-9M6MYPFL3M', 'client_id', cleanGaLinkerUrl);
+        window.addEventListener('load', function() { setTimeout(cleanGaLinkerUrl, 300); }, { once: true });
+        setTimeout(cleanGaLinkerUrl, 2000);
+      }
+    })();
   </script>
 
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
