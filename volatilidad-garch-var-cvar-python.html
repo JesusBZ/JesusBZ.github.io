@@ -4,198 +4,227 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
 
-  <title>Volatilidad GARCH, VaR y Expected Shortfall (CVaR) en Python | Jesús Zerpa</title>
-<!-- SEO:START -->
-<meta name="description" content="Modelización de volatilidad asimétrica (EGARCH, GJR-GARCH Skewed-t), Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python. Por Jesús Zerpa." />
-<meta name="keywords" content="volatilidad GARCH Python, EGARCH Python, GJR-GARCH, Valor en Riesgo VaR Python, Expected Shortfall CVaR, Skewed Student-t Hansen, backtesting Kupiec Christoffersen, Basilea III FRTB, Volatility Targeting, Position Sizing cuantitativo, volatilidad Bitcoin ETF, econometría financiera Python, arch library Python, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
-<meta name="author" content="Jesús Benjamín Zerpa" />
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<link rel="canonical" href="https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html" />
-<meta property="og:locale" content="es_ES" />
-<meta property="og:type" content="article" />
-<meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
-<meta property="og:title" content="Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python (2014–2026)" />
-<meta property="og:description" content="Evolución econométrica 2020–2026: torneo de especificaciones AR(1)-EGARCH(2,1) y GJR-GARCH con distribución Skewed-t de Hansen, Expected Shortfall al 99%, interpretación de parámetros MLE y reglas de trading cuantitativo sobre 4,425 sesiones de BTC-USD. Por Jesús Benjamín Zerpa." />
-<meta property="og:url" content="https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html" />
-<meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-i.webp" />
-<meta property="og:image:alt" content="Modelización de Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python por Jesús Benjamín Zerpa" />
-<meta property="article:published_time" content="2026-10-30T00:00:00Z" />
-<meta property="article:modified_time" content="2026-10-30T18:20:00Z" />
-<meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
-<meta property="article:section" content="Econometría Financiera, Trading Cuantitativo y Gestión de Riesgo" />
-<meta property="article:tag" content="EGARCH Python" />
-<meta property="article:tag" content="GJR-GARCH" />
-<meta property="article:tag" content="Valor en Riesgo VaR" />
-<meta property="article:tag" content="Expected Shortfall CVaR" />
-<meta property="article:tag" content="Volatility Targeting" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python (2014–2026)" />
-<meta name="twitter:description" content="Torneo econométrico GARCH asimétrico con distribución Skewed-t de Hansen, Expected Shortfall (CVaR 99%), backtesting de Kupiec/Christoffersen y reglas de Position Sizing en Python (2014–2026). Por Jesús Benjamín Zerpa." />
-<meta name="twitter:image" content="https://jesusbz.github.io/imagenes/imagen-i.webp" />
-<script type="application/ld+json">
+  <title>Volatilidad EGARCH, VaR y CVaR Bitcoin en Python | Jesús Benjamín Zerpa</title>
+  <!-- SEO:START -->
+  <meta name="description" content="Modelización de volatilidad asimétrica EGARCH y GJR-GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="keywords" content="volatilidad GARCH Python, EGARCH Python, GJR-GARCH, Valor en Riesgo VaR Python, Expected Shortfall CVaR, Skewed Student-t Hansen, backtesting Kupiec Christoffersen, Basilea III FRTB, Volatility Targeting Bitcoin, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+  <meta name="author" content="Jesús Benjamín Zerpa (Jesús Zerpa)" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html" />
+  <link rel="alternate" hreflang="es" href="https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html" />
+  <link rel="alternate" hreflang="x-default" href="https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:type" content="" />
+  <meta property="og:site_name" content="Portafolio Cuantitativo de Jesús Benjamín Zerpa" />
+  <meta property="og:title" content="Volatilidad EGARCH, VaR y CVaR Bitcoin en Python | Jesús Benjamín Zerpa" />
+  <meta property="og:description" content="Modelización de volatilidad asimétrica EGARCH y GJR-GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta property="og:url" content="https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html" />
+  <meta property="og:image" content="https://jesusbz.github.io/imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp" />
+  <meta property="og:image:alt" content="Modelización EGARCH, VaR y Expected Shortfall (CVaR) del Bitcoin en Python por Jesús Benjamín Zerpa" />
+  <meta property="article:published_time" content="2026-10-30T00:00:00Z" />
+  <meta property="article:modified_time" content="2026-11-14T18:00:00Z" />
+  <meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
+  <meta property="article:section" content="Econometría Financiera, Trading Cuantitativo y Gestión de Riesgo" />
+  <meta property="article:tag" content="EGARCH Python" />
+  <meta property="article:tag" content="GJR-GARCH" />
+  <meta property="article:tag" content="Valor en Riesgo VaR" />
+  <meta property="article:tag" content="Expected Shortfall CVaR" />
+  <meta property="article:tag" content="Volatility Targeting" />  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Volatilidad EGARCH, VaR y CVaR Bitcoin en Python | Jesús Benjamín Zerpa" />
+  <meta name="twitter:description" content="Modelización de volatilidad asimétrica EGARCH y GJR-GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="twitter:image" content="https://jesusbz.github.io/imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp" />
+  <meta name="twitter:image:alt" content="Modelización EGARCH, VaR y Expected Shortfall (CVaR) del Bitcoin en Python por Jesús Benjamín Zerpa" />
+  <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-      "name": "Jesús Benjamín Zerpa",
-      "alternateName": [
-        "Jesús Zerpa",
-        "Jesús B. Zerpa",
-        "Jesus Benjamin Zerpa",
-        "Jesus Zerpa"
-      ],
-      "url": "https://jesusbz.github.io/",
-      "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-      "jobTitle": "Gerente de Planificación Financiera y Presupuesto",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Consorcio Credicard"
-      },
-      "description": "Economista y Data Scientist con más de 14 años de experiencia en planificación, presupuesto y control. Trayectoria: Gerente de Planificación Financiera y Presupuesto en Consorcio Credicard; Planificador Corporativo de Finanzas en Grupo Mistral; Coordinador Corporativo de Presupuesto y Control en Multimédica; Gestión Senior de Presupuesto en Segutronic (CG Security Group); Subgerente de Finanzas en Grupo Empresarial Admibien; Ejecutivo de Negocios en Banesco Banco Universal.",
-      "email": "mailto:JesusZerpaEconomia@Gmail.Com",
-      "telephone": "+58 424 148 78 70",
-      "knowsAbout": [
-        "Planificación financiera corporativa",
-        "Presupuesto y control de gestión",
-        "Modelos GARCH asimétricos (EGARCH, GJR-GARCH) y Valor en Riesgo (VaR)",
-        "Expected Shortfall (CVaR) y normativa de riesgo de mercado Basilea III/IV",
-        "Trading cuantitativo, Volatility Targeting y Position Sizing dinámico",
-        "Deep Portfolio Optimization con Redes Neuronales LSTM",
-        "Teoría de portafolios de Markowitz",
-        "Finanzas cuantitativas en Python y R",
-        "Simulación Monte Carlo",
-        "Business Intelligence y Power BI",
-        "Evaluación y formulación de proyectos de inversión"
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
-        "https://github.com/JesusBZ",
-        "https://rpubs.com/JesusZ"
-      ]
-    },
-    {
-      "@type": "TechArticle",
-      "@id": "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html#article",
-      "headline": "Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python (2014–2026)",
-      "alternativeHeadline": "Transición de Régimen hacia los ETFs Institucionales, Interpretación Econométrica MLE, Reglas de Trading Cuantitativo y Backtesting de Kupiec y Christoffersen",
-      "description": "Auditoría econométrica de 4,425 sesiones diarias de BTC-USD (2014–2026) en Python mediante modelos AR(1)-sGARCH, EGARCH(2,1) y GJR-GARCH con innovaciones Skewed Student-t de Hansen, estimación de VaR y Expected Shortfall al 99%, validación por contrastes de Kupiec y Christoffersen y reglas operativas de Volatility Targeting y Position Sizing.",
-      "image": [
-        "https://jesusbz.github.io/imagenes/imagen-i.webp"
-      ],
-      "url": "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html",
-      "mainEntityOfPage": "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html",
-      "inLanguage": "es",
-      "proficiencyLevel": "Expert",
-      "datePublished": "2026-10-30",
-      "dateModified": "2026-10-30",
-      "isBasedOn": "https://jesusbz.github.io/Proyecto2.html",
-      "author": {
-        "@type": "Person",
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-        "name": "Jesús Benjamín Zerpa",
-        "url": "https://jesusbz.github.io/acercade.html"
-      },
-      "publisher": {
-        "@type": "Person",
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-        "name": "Jesús Benjamín Zerpa",
-        "url": "https://jesusbz.github.io/acercade.html"
-      },
-      "keywords": [
-        "Volatilidad GARCH Python",
-        "EGARCH",
-        "GJR-GARCH",
-        "Valor en Riesgo VaR",
-        "Expected Shortfall CVaR",
-        "Distribución Skewed Student-t de Hansen",
-        "Volatility Targeting",
-        "Position Sizing",
-        "Test de Kupiec",
-        "Test de Christoffersen",
-        "News Impact Curve",
-        "Jesús Benjamín Zerpa"
-      ],
-      "isPartOf": {
-        "@type": "WebSite",
-        "@id": "https://jesusbz.github.io/#website",
-        "url": "https://jesusbz.github.io/"
-      }
-    },
-    {
-      "@type": "SoftwareSourceCode",
-      "@id": "https://jesusbz.github.io/models/garch_var_cvar_2026.py#code",
-      "name": "garch_var_cvar_2026.py — Volatilidad Asimétrica GARCH, VaR, CVaR y Position Sizing en Python",
-      "description": "Script reproducible en Python (arch, scipy, statsmodels, pandas, numpy) para estimación por Máxima Verosimilitud de modelos sGARCH, EGARCH y GJR-GARCH con distribución Skewed-t, cálculo de VaR/CVaR, backtesting de Kupiec y Christoffersen y reglas de ejecución cuantitativa.",
-      "programmingLanguage": "Python",
-      "runtimePlatform": "Python 3.11 / arch / SciPy",
-      "codeRepository": "https://jesusbz.github.io/models/garch_var_cvar_2026.py",
-      "author": {
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa"
-      }
-    },
-    {
-      "@type": "Dataset",
-      "@id": "https://jesusbz.github.io/data/btc_usd_2014_2026.csv#dataset",
-      "name": "Serie Histórica Diaria BTC-USD y Retornos Logarítmicos Continuos (2014–2026)",
-      "description": "Serie temporal diaria de cotizaciones OHLCV y retornos continuos de BTC-USD (4,425 observaciones entre septiembre de 2014 y octubre de 2026) empleada en el torneo econométrico GARCH y pruebas de Valor en Riesgo.",
-      "url": "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html",
-      "distribution": {
-        "@type": "DataDownload",
-        "encodingFormat": "text/csv",
-        "contentUrl": "https://jesusbz.github.io/data/btc_usd_2014_2026.csv"
-      },
-      "creator": {
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Inicio",
-          "item": "https://jesusbz.github.io/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Volatilidad y VaR en RStudio (2020)",
-          "item": "https://jesusbz.github.io/Proyecto2.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Volatilidad GARCH, VaR y CVaR en Python (2026)",
-          "item": "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html"
-        }
-      ]
-    }
-  ]
+    "@context":  "https://schema.org",
+    "@graph":  [
+                   {
+                       "@type":  "Person",
+                       "@id":  "https://jesusbzerpa.github.io/#person",
+                       "name":  "Jesús Benjamín Zerpa",
+                       "givenName":  "Jesús Benjamín",
+                       "familyName":  "Zerpa",
+                       "alternateName":  [
+                                             "Jesús Zerpa",
+                                             "Jesus Zerpa",
+                                             "Jesús Benjamín Zerpa",
+                                             "Jesus Benjamin Zerpa",
+                                             "Jesús B. Zerpa",
+                                             "Jesus B. Zerpa",
+                                             "Jesús Benjamín",
+                                             "Economista Jesús Zerpa",
+                                             "Economista Jesús Benjamín Zerpa"
+                                         ],
+                       "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
+                       "url":  "https://jesusbzerpa.github.io/",
+                       "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
+                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
+                       "telephone":  "+58 424 148 78 70",
+                       "worksFor":  {
+                                        "@type":  "Organization",
+                                        "name":  "Consorcio Credicard"
+                                    },
+                       "alumniOf":  [
+                                        {
+                                            "@type":  "CollegeOrUniversity",
+                                            "name":  "Universidad Alejandro de Humboldt"
+                                        },
+                                        {
+                                            "@type":  "EducationalOrganization",
+                                            "name":  "Instituto Universitario de Profesiones Gerenciales (I.U.P.G.)"
+                                        }
+                                    ],
+                       "knowsAbout":  [
+                                          "Planificación Financiera Corporativa (FP\u0026A)",
+                                          "Presupuesto Maestro",
+                                          "Control de Gestión",
+                                          "Inteligencia Financiera",
+                                          "Evaluación de Proyectos de Inversión (CAPEX)",
+                                          "Business Intelligence",
+                                          "Microsoft Power BI",
+                                          "Ciencia de Datos",
+                                          "Econometría Financiera",
+                                          "Series Temporales (SARIMA, Prophet, VAR, GARCH, EGARCH)",
+                                          "Simulación Estocástica de Monte Carlo",
+                                          "Deep Learning LSTM en PyTorch",
+                                          "Optimización de Portafolios de Markowitz",
+                                          "Python",
+                                          "RStudio"
+                                      ],
+                       "sameAs":  [
+                                      "https://jesusbzerpa.github.io/",
+                                      "https://jesusbezerpa.github.io/",
+                                      "https://jesusbz.github.io/",
+                                      "https://jesusbz.github.io/acercade.html",
+                                      "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
+                                      "https://github.com/JesusBZ",
+                                      "https://rpubs.com/JesusZ",
+                                      "https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa"
+                                  ]
+                   },
+                   {
+                       "@type":  "TechArticle",
+                       "@id":  "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html#article",
+                       "headline":  "Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python (2014–2026)",
+                       "description":  "Modelización de volatilidad asimétrica EGARCH y GJR-GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) en Python. Por Jesús Benjamín Zerpa (Jesús Zerpa).",
+                       "image":  [
+                                     "https://jesusbz.github.io/imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp",
+                                     "https://jesusbz.github.io/imagenes/imagen-i.webp"
+                                 ],
+                       "url":  "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html",
+                       "mainEntityOfPage":  "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html",
+                       "inLanguage":  "es",
+                       "proficiencyLevel":  "Expert",
+                       "dependencies":  "Python 3.11, arch, SciPy, Statsmodels, Pandas, Plotly",
+                       "datePublished":  "2026-10-30",
+                       "dateModified":  "2026-11-14",
+                       "alternativeHeadline":  "Transición de Régimen hacia los ETFs Institucionales, Interpretación Econométrica MLE, Reglas de Trading Cuantitativo y Backtesting de Kupiec y Christoffersen",
+                       "isBasedOn":  "https://jesusbz.github.io/Proyecto2.html",
+                       "author":  {
+                                      "@id":  "https://jesusbzerpa.github.io/#person"
+                                  },
+                       "publisher":  {
+                                         "@id":  "https://jesusbzerpa.github.io/#person"
+                                     },
+                       "about":  [
+                                     "Modelos EGARCH",
+                                     "Valor en Riesgo (VaR)",
+                                     "Expected Shortfall (CVaR)",
+                                     "Bitcoin"
+                                 ],
+                       "keywords":  [
+                                        "EGARCH Python",
+                                        "GJR-GARCH",
+                                        "Valor en Riesgo VaR",
+                                        "Expected Shortfall CVaR",
+                                        "Volatility Targeting",
+                                        "Jesús Benjamín Zerpa",
+                                        "Jesús Zerpa",
+                                        "Jesus Zerpa",
+                                        "Jesus Benjamin Zerpa"
+                                    ],
+                       "isPartOf":  {
+                                        "@type":  "WebSite",
+                                        "@id":  "https://jesusbz.github.io/#website",
+                                        "url":  "https://jesusbz.github.io/"
+                                    }
+                   },
+                   {
+                       "@type":  "SoftwareSourceCode",
+                       "@id":  "https://jesusbz.github.io/models/garch_var_cvar_2026.py#code",
+                       "name":  "garch_var_cvar_2026.py — Volatilidad Asimétrica GARCH, VaR, CVaR y Position Sizing en Python",
+                       "description":  "Script reproducible en Python (arch, scipy, statsmodels, pandas, numpy) para estimación por Máxima Verosimilitud de modelos sGARCH, EGARCH y GJR-GARCH con distribución Skewed-t, cálculo de VaR/CVaR, backtesting de Kupiec y Christoffersen y reglas de ejecución cuantitativa.",
+                       "programmingLanguage":  "Python",
+                       "runtimePlatform":  "Python 3.11 / arch / SciPy",
+                       "codeRepository":  "https://jesusbz.github.io/models/garch_var_cvar_2026.py",
+                       "author":  {
+                                      "@id":  "https://jesusbzerpa.github.io/#person"
+                                  }
+                   },
+                   {
+                       "@type":  "Dataset",
+                       "@id":  "https://jesusbz.github.io/data/btc_usd_2014_2026.csv#dataset",
+                       "name":  "Serie Histórica Diaria BTC-USD y Retornos Logarítmicos Continuos (2014–2026)",
+                       "description":  "Serie temporal diaria de cotizaciones OHLCV y retornos continuos de BTC-USD (4,425 observaciones entre septiembre de 2014 y octubre de 2026) empleada en el torneo econométrico GARCH y pruebas de Valor en Riesgo.",
+                       "url":  "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html",
+                       "distribution":  {
+                                            "@type":  "DataDownload",
+                                            "encodingFormat":  "text/csv",
+                                            "contentUrl":  "https://jesusbz.github.io/data/btc_usd_2014_2026.csv"
+                                        },
+                       "creator":  {
+                                       "@id":  "https://jesusbzerpa.github.io/#person"
+                                   }
+                   },
+                   {
+                       "@type":  "BreadcrumbList",
+                       "itemListElement":  [
+                                               {
+                                                   "@type":  "ListItem",
+                                                   "position":  1,
+                                                   "name":  "Inicio",
+                                                   "item":  "https://jesusbz.github.io/"
+                                               },
+                                               {
+                                                   "@type":  "ListItem",
+                                                   "position":  2,
+                                                   "name":  "Volatilidad y VaR en RStudio (2020)",
+                                                   "item":  "https://jesusbz.github.io/Proyecto2.html"
+                                               },
+                                               {
+                                                   "@type":  "ListItem",
+                                                   "position":  3,
+                                                   "name":  "Volatilidad GARCH, VaR y CVaR en Python (2026)",
+                                                   "item":  "https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html"
+                                               }
+                                           ]
+                   }
+               ]
 }
-</script>
-<!-- SEO:END -->
+  </script>
+  <!-- SEO:END -->
 
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="icon" href="favi.png" type="image/png" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
 
   <!-- Corporate Stylesheets -->
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261030h" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261108a" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114c" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
 
   <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169665920-1"></script>
+    <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'UA-169665920-1');
+    gtag('config', 'G-9M6MYPFL3M', {
+      'linker': { 'domains': ['jesusbzerpa.github.io', 'jesusbezerpa.github.io', 'jesusbz.github.io'] }
+    });
   </script>
 
   <style>
@@ -739,7 +768,10 @@
       color: #334155 !important;
     }
   </style>
-</head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" /></head>
 <body>
 
   <!-- =========================================================================
@@ -750,7 +782,7 @@
       <a href="index.html" class="brand-wrapper" title="Ir al Inicio">
         <img src="imagenes/jesus-zerpa-profile.jpg?v=20261029b" alt="Jesús Benjamín Zerpa" class="brand-avatar" decoding="async" loading="lazy" />
         <div class="brand-text">
-          <span class="brand-name">Jesús B. Zerpa</span>
+          <span class="brand-name">Jesús Benjamín Zerpa</span>
           <span class="brand-title">Economist &amp; Data Scientist</span>
         </div>
       </a>
@@ -760,6 +792,8 @@
           <li class="nav-item"><a href="index.html">Inicio</a></li>
           <li class="nav-item active"><a href="index.html#trabajos">Trabajos</a></li>
           <li class="nav-item"><a href="acercade.html">Acerca de</a></li>
+          <li class="nav-item"><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Consultoría</a></li>
+          <li class="nav-item"><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo</a></li>
           <li class="nav-item"><a href="formulario.html">Contacto</a></li>
         </ul>
 
@@ -786,13 +820,18 @@
       <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
+      <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa">
+        <img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" />
+      </a>
     </div>
 
     <div id="mobileNavDrawer" class="mobile-nav-drawer">
       <ul class="mobile-nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="index.html#trabajos">Trabajos y Modelos</a></li>
-        <li><a href="acercade.html">Acerca de Jesús Zerpa</a></li>
+        <li><a href="acercade.html">Acerca de</a></li>
+        <li><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Servicios de Consultoría</a></li>
+        <li><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo Web</a></li>
         <li><a href="formulario.html">Formulario de Contacto</a></li>
       </ul>
     </div>
@@ -1861,7 +1900,7 @@ fits <span class="op">=</span> {}
           <div class="pc-track" id="carouselTrack">
         <a href="Proyecto2.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-i.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #2</span>
             <span class="pc-cat">Volatilidad &amp; VaR (2020)</span>
           </div>
@@ -1872,7 +1911,7 @@ fits <span class="op">=</span> {}
         </a>
         <a href="deep-portfolio-lstm-python.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-lstm-portafolio.webp" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #14</span>
             <span class="pc-cat">Deep Learning LSTM</span>
           </div>
@@ -1883,7 +1922,7 @@ fits <span class="op">=</span> {}
         </a>
         <a href="proyecto4.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-f.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #4</span>
             <span class="pc-cat">Teoría de Portafolios</span>
           </div>
@@ -1894,7 +1933,7 @@ fits <span class="op">=</span> {}
         </a>
         <a href="modelo-ventas.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-a.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #1</span>
             <span class="pc-cat">Series Temporales</span>
           </div>
@@ -1905,7 +1944,7 @@ fits <span class="op">=</span> {}
         </a>
         <a href="proyecto3.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-c.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #3</span>
             <span class="pc-cat">Machine Learning</span>
           </div>
@@ -1916,7 +1955,7 @@ fits <span class="op">=</span> {}
         </a>
         <a href="EvaluacionProyecto.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-g.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #5</span>
             <span class="pc-cat">Evaluación de Proyectos</span>
           </div>
@@ -1927,7 +1966,7 @@ fits <span class="op">=</span> {}
         </a>
         <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x1.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #10</span>
             <span class="pc-cat">Simulación Monte Carlo</span>
           </div>
@@ -2015,7 +2054,31 @@ fits <span class="op">=</span> {}
   <!-- =========================================================================
        Corporate Site Footer
        ========================================================================= -->
-  <footer class="site-footer">
+  <!-- EXEC-CTA-BRIDGE-START -->
+<section class="site-container" aria-label="Consultoría Financiera y CV Ejecutivo">
+  <div class="exec-cta-bridge">
+    <div>
+      <span class="exec-cta-eyebrow">Ecosistema Profesional · Jesús Benjamín Zerpa</span>
+      <h3 class="exec-cta-title">¿Deseas implementar modelos cuantitativos o planificación financiera en tu empresa?</h3>
+      <p class="exec-cta-desc">
+        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, cuadros de mando en Power BI y modelos predictivos en Python y R.
+      </p>
+    </div>
+    <div class="exec-cta-actions">
+      <a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer" class="exec-cta-btn-gold">
+        <span>Servicios de Consultoría</span>
+      </a>
+      <a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer" class="exec-cta-btn-outline">
+        <span>CV Ejecutivo Web</span>
+      </a>
+      <a href="formulario.html" class="exec-cta-btn-outline">
+        <span>Contacto Directo</span>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- EXEC-CTA-BRIDGE-END -->
+<footer class="site-footer">
     <div class="site-container">
       <div class="footer-top-grid">
         <div class="footer-brand-col">
@@ -2037,6 +2100,8 @@ fits <span class="op">=</span> {}
             <li><a href="index.html">Inicio</a></li>
             <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
             <li><a href="acercade.html">Trayectoria Profesional</a></li>
+            <li><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Consultoría &amp; Servicios</a></li>
+            <li><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo Web</a></li>
             <li><a href="formulario.html">Formulario de Contacto</a></li>
             <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a></li>
           </ul>
@@ -2054,7 +2119,7 @@ fits <span class="op">=</span> {}
       </div>
 
       <div class="footer-bottom-strip">
-        <span>Copyright © 2026 Jesús B. Zerpa. Todos los derechos reservados.</span>
+        <span>Copyright © 2026 Jesús Benjamín Zerpa. Todos los derechos reservados.</span>
         <span>Finanzas Cuantitativas • Machine Learning • Business Intelligence</span>
       </div>
     </div>
@@ -2468,6 +2533,6 @@ fits <span class="op">=</span> {}
   </script>
 
   <!-- Corporate Portfolio JS (Code Copy Buttons, Moving Carousel, Scroll Top, Navigation, Copilot Assistant) -->
-  <script src="js/futuristic-app.js?v=20261108b"></script>
+  <script src="js/futuristic-app.js?v=20261114c"></script>
 </body>
 </html>

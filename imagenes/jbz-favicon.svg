@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="JBZ">
+  <defs>
+    <linearGradient id="jbzFavNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1B33"/>
+      <stop offset="100%" stop-color="#163259"/>
+    </linearGradient>
+    <linearGradient id="jbzFavGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B8955A"/>
+      <stop offset="50%" stop-color="#D9C29A"/>
+      <stop offset="100%" stop-color="#B8955A"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#jbzFavNavy)" stroke="url(#jbzFavGold)" stroke-width="2.5"/>
+  <rect x="7" y="7" width="50" height="50" rx="10" fill="none" stroke="url(#jbzFavGold)" stroke-width="0.9" opacity="0.45"/>
+  <text x="32" y="39" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="800" letter-spacing="1">
+    <tspan fill="#FFFFFF">J</tspan><tspan fill="#D9C29A">B</tspan><tspan fill="#FFFFFF">Z</tspan>
+  </text>
+  <rect x="14" y="46" width="36" height="3" rx="1.5" fill="url(#jbzFavGold)"/>
+</svg>

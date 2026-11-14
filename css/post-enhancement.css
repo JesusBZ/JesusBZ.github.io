@@ -5,13 +5,13 @@
    Hard Overrides against Bootstrap 3 Cerulean Gradients & Dated Styles
    ========================================================================== */
 
-@import url("futuristic-corporate.css");
+/* Direct link in <head> replaces render-blocking @import */
 
 /* Page Background & Typography */
 html, body {
   background-color: #f8fafc !important;
   color: #0f172a !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
   line-height: 1.75 !important;
   font-size: 16px !important;
   -webkit-font-smoothing: antialiased;
@@ -796,33 +796,31 @@ hr {
   border-color: rgba(0, 82, 204, 0.4);
   box-shadow: 0 14px 28px rgba(0, 82, 204, 0.12);
 }
-.pc-media { position: relative; height: 140px; overflow: hidden; background: #0b0f19; }
-.pc-media::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, rgba(9, 30, 66, 0.05) 30%, rgba(11, 15, 25, 0.6) 100%);
-}
+.pc-media { position: relative; height: auto; padding-top: 28px; overflow: hidden; background: #061020; }
+.pc-media::after { display: none; }
 /* Override global post img rules */
 .pc-card img.pc-img {
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 10 !important;
   max-width: none !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   margin: 0 !important;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   display: block !important;
-  transition: transform 0.5s ease !important;
+  transition: transform 0.4s ease !important;
 }
-.pc-card:hover img.pc-img { transform: scale(1.07) !important; }
+.pc-card:hover img.pc-img { transform: scale(1.03) !important; }
 .pc-num, .pc-cat {
   position: absolute; z-index: 2;
   font-family: "JetBrains Mono", Consolas, monospace;
-  font-size: 0.66rem; font-weight: 700; letter-spacing: 0.04em;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.03em;
   color: #ffffff;
 }
-.pc-num { top: 9px; left: 9px; background: rgba(9, 30, 66, 0.85); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 0.15rem 0.45rem; }
-.pc-cat { bottom: 9px; left: 9px; background: #0052cc; border-radius: 999px; padding: 0.15rem 0.55rem; text-transform: uppercase; }
+.pc-num { top: 5px; left: 7px; background: rgba(9, 24, 48, 0.92); border: 1px solid rgba(197,160,89,0.45); border-radius: 4px; padding: 0.12rem 0.42rem; }
+.pc-cat { top: 5px; right: 7px; left: auto; bottom: auto; background: #0052cc; border-radius: 999px; padding: 0.12rem 0.48rem; text-transform: uppercase; }
 .pc-body { padding: 0.9rem 1rem 1rem; display: flex; flex-direction: column; justify-content: space-between; gap: 0.7rem; flex-grow: 1; }
 .pc-title {
   margin: 0 !important;
@@ -845,8 +843,8 @@ hr {
 
 @media (max-width: 640px) {
   .pc-heading { font-size: 1.2rem !important; }
-  .pc-card { width: 220px; }
-  .pc-media { height: 120px; }
+  .pc-card { width: 240px; }
+  .pc-media { height: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pc-track { animation: none; }
@@ -885,7 +883,7 @@ iframe[src*="disqus.com/recommendations"] {
   font-size: 1.025rem !important;
   line-height: 1.82 !important;
   color: #334155 !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", Arial, sans-serif !important;
+  font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
 
 .main-container strong,
@@ -1318,4 +1316,311 @@ code a.sourceLine:hover {
 .processanimateR.html-widget .pa-restart-btn:hover .pa-restart-bg {
   fill: #e2e8f0 !important;
   stroke: #94a3b8 !important;
+}
+
+/* ==========================================================================
+   UNIFIED SITE HEADER & PROFILE AVATAR OVERRIDES (Identical to index.html)
+   Prevents global post img / a rules from altering .brand-avatar or navbar
+   ========================================================================== */
+.site-header img.brand-avatar,
+.brand-wrapper img.brand-avatar,
+img.brand-avatar {
+  width: 44px !important;
+  height: 44px !important;
+  max-width: 44px !important;
+  min-width: 44px !important;
+  border-radius: 50% !important;
+  border: 2px solid #0052cc !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.06) !important;
+  transform: none !important;
+}
+
+.site-header img.brand-avatar:hover,
+.brand-wrapper img.brand-avatar:hover,
+img.brand-avatar:hover {
+  border-radius: 50% !important;
+  border: 2px solid #0052cc !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.1) !important;
+  transform: none !important;
+}
+
+.site-header a.brand-wrapper,
+.site-header a.brand-wrapper:hover {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.site-header .brand-name {
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
+  color: #091e42 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+}
+
+.site-header .brand-title {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  font-family: "JetBrains Mono", "Fira Code", Consolas, monospace !important;
+}
+
+.site-header .nav-links {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.site-header .nav-item a {
+  font-size: 0.925rem !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  text-decoration: none !important;
+}
+
+.site-header .nav-item a:hover,
+.site-header .nav-item.active a {
+  color: #0052cc !important;
+  text-decoration: none !important;
+}
+
+.site-header .social-icon-btn,
+.site-header .social-icon-btn:hover {
+  color: #64748b !important;
+  text-decoration: none !important;
+}
+
+.site-header .mobile-nav-links a {
+  color: #091e42 !important;
+  text-decoration: none !important;
+}
+
+/* ==========================================================================
+   EXECUTIVE CONSULTING & CV BRIDGE CARD OVERRIDES (High-Contrast Navy & Gold)
+   ========================================================================== */
+.exec-cta-bridge {
+  max-width: 1060px !important;
+  margin: 0.5rem auto 2.5rem auto !important;
+  padding: 2rem 2.4rem !important;
+  background: linear-gradient(135deg, #091e42 0%, #102a56 58%, #16376b 100%) !important;
+  border: 1.5px solid rgba(184, 149, 90, 0.78) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 18px 40px -10px rgba(9, 30, 66, 0.32) !important;
+  color: #ffffff !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 240px !important;
+  align-items: center !important;
+  gap: 2rem !important;
+}
+
+.exec-cta-bridge .exec-cta-eyebrow,
+.exec-cta-bridge .exec-cta-kicker {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-family: "JetBrains Mono", Consolas, monospace !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #fde68a !important;
+  background: rgba(184, 149, 90, 0.22) !important;
+  border: 1px solid rgba(217, 194, 154, 0.48) !important;
+  padding: 0.28rem 0.78rem !important;
+  border-radius: 999px !important;
+  margin: 0 0 0.75rem 0 !important;
+  line-height: 1.3 !important;
+}
+
+.exec-cta-bridge h3,
+.exec-cta-bridge h3.exec-cta-title {
+  color: #ffffff !important;
+  font-size: 1.34rem !important;
+  font-weight: 800 !important;
+  line-height: 1.32 !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 0 0.65rem 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  text-shadow: none !important;
+}
+
+.exec-cta-bridge p,
+.exec-cta-bridge p.exec-cta-desc {
+  color: #e2e8f0 !important;
+  font-size: 0.95rem !important;
+  line-height: 1.68 !important;
+  margin: 0 !important;
+}
+
+.exec-cta-bridge p strong,
+.exec-cta-bridge strong {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.exec-cta-bridge .exec-cta-actions,
+.exec-cta-bridge .exec-cta-bridge-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.6rem !important;
+  width: 100% !important;
+}
+
+.exec-cta-bridge a.exec-cta-btn-gold,
+.exec-cta-bridge a.exec-cta-btn-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.45rem !important;
+  width: 100% !important;
+  padding: 0.72rem 1.15rem !important;
+  border-radius: 9px !important;
+  background: linear-gradient(135deg, #d9c29a 0%, #b8955a 100%) !important;
+  color: #091e42 !important;
+  font-weight: 800 !important;
+  font-size: 0.86rem !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+  border: 1px solid #ebd7b2 !important;
+  box-shadow: 0 6px 16px rgba(184, 149, 90, 0.28) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
+  text-align: center !important;
+}
+
+.exec-cta-bridge a.exec-cta-btn-gold span,
+.exec-cta-bridge a.exec-cta-btn-primary span {
+  color: #091e42 !important;
+  font-weight: 800 !important;
+}
+
+.exec-cta-bridge a.exec-cta-btn-gold:hover,
+.exec-cta-bridge a.exec-cta-btn-primary:hover {
+  filter: brightness(1.06) !important;
+  color: #091e42 !important;
+  text-decoration: none !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 22px rgba(184, 149, 90, 0.38) !important;
+}
+
+.exec-cta-bridge a.exec-cta-btn-outline,
+.exec-cta-bridge a.exec-cta-btn-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.45rem !important;
+  width: 100% !important;
+  padding: 0.68rem 1.15rem !important;
+  border-radius: 9px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+  border: 1px solid rgba(226, 232, 240, 0.38) !important;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
+  text-align: center !important;
+}
+
+.exec-cta-bridge a.exec-cta-btn-outline span,
+.exec-cta-bridge a.exec-cta-btn-secondary span {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.exec-cta-bridge a.exec-cta-btn-outline:hover,
+.exec-cta-bridge a.exec-cta-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: #d9c29a !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transform: translateY(-2px) !important;
+}
+
+@media (max-width: 860px) {
+  .exec-cta-bridge {
+    grid-template-columns: 1fr !important;
+    padding: 1.6rem 1.4rem !important;
+    gap: 1.25rem !important;
+  }
+  .exec-cta-bridge .exec-cta-actions,
+  .exec-cta-bridge .exec-cta-bridge-actions {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+  }
+  .exec-cta-bridge a.exec-cta-btn-gold,
+  .exec-cta-bridge a.exec-cta-btn-primary,
+  .exec-cta-bridge a.exec-cta-btn-outline,
+  .exec-cta-bridge a.exec-cta-btn-secondary {
+    width: auto !important;
+    flex: 1 1 180px !important;
+  }
+}
+
+/* Protect Copilot Appointment Card Header on Post Pages */
+.copilot-scheduler-card h4.scheduler-card-title {
+  color: #ffffff !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* === JBZ CORPORATE EXECUTIVE LOGO ON BOOTSTRAP 3 POST NAVBARS === */
+.navbar-fixed-top > .container {
+  position: relative !important;
+  max-width: 1320px !important;
+  width: 100% !important;
+}
+
+.navbar-fixed-top .jbz-nav-logo {
+  position: absolute !important;
+  right: 15px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0 !important;
+  z-index: 30 !important;
+  border-radius: 9px !important;
+  text-decoration: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.navbar-fixed-top .jbz-nav-logo:hover {
+  transform: translateY(calc(-50% - 1px)) !important;
+  box-shadow: 0 6px 16px rgba(11, 27, 51, 0.22) !important;
+  text-decoration: none !important;
+}
+
+.navbar-fixed-top .jbz-nav-logo img {
+  display: block !important;
+  height: 35px !important;
+  width: auto !important;
+  border-radius: 8px !important;
+  margin: 0 !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-fixed-top > .container {
+    padding-right: 235px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-fixed-top .jbz-nav-logo {
+    right: 68px !important;
+    top: 50% !important;
+  }
+  .navbar-fixed-top .jbz-nav-logo img {
+    height: 31px !important;
+  }
 }

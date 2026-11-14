@@ -1,427 +1,801 @@
-<html xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:x="urn:schemas-microsoft-com:office:excel"
-xmlns="http://www.w3.org/TR/REC-html40">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<meta name="Excel Workbook Frameset">
-<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
-<meta name=ProgId content=Excel.Sheet>
-<meta name=Generator content="Microsoft Excel 15">
-<link rel=File-List href="FinancialDashboard_archivos/filelist.xml">
-<link  rel="icon"   href="favi.png" type="image/png" />
-<![if !supportTabStrip]>
-<link id="shLink" href="FinancialDashboard_archivos/sheet001.htm">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
 
-<link id="shLink">
+  <title>Simulador Financiero FP&amp;A y Financial Dashboard | Jesús Benjamín Zerpa</title>
+  <!-- SEO:START -->
+  <meta name="description" content="Simulador financiero corporativo interactivo FP&amp;A: elasticidad Q × Tarifa, Nowcast Bayesiano P10-P50-P90 y control Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="keywords" content="simulador financiero interactivo, financial dashboard corporativo, planificación financiera FP&amp;A, Nowcast Bayesiano P10 P50 P90, elasticidad precio volumen, presupuesto maestro interactivo, control de gestión KPIs, detector anomalías Z-MAD, inteligencia financiera, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+  <meta name="author" content="Jesús Benjamín Zerpa (Jesús Zerpa)" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://jesusbz.github.io/FinancialDashboard.htm" />
+  <link rel="alternate" hreflang="es" href="https://jesusbz.github.io/FinancialDashboard.htm" />
+  <link rel="alternate" hreflang="x-default" href="https://jesusbz.github.io/FinancialDashboard.htm" />
 
-<script language="JavaScript">
-<!--
- var c_lTabs=1;
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
+  <meta property="og:title" content="Simulador Financiero FP&amp;A y Financial Dashboard | Jesús Benjamín Zerpa" />
+  <meta property="og:description" content="Simulador financiero corporativo interactivo FP&amp;A: elasticidad Q × Tarifa, Nowcast Bayesiano P10-P50-P90 y control Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta property="og:url" content="https://jesusbz.github.io/FinancialDashboard.htm" />
+  <meta property="og:image" content="https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" />
+  <meta property="og:image:alt" content="Nexus Quant FP&amp;A Simulador Financiero Corporativo y Financial Dashboard por Jesús Benjamín Zerpa" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Simulador Financiero FP&amp;A y Financial Dashboard | Jesús Benjamín Zerpa" />
+  <meta name="twitter:description" content="Simulador financiero corporativo interactivo FP&amp;A: elasticidad Q × Tarifa, Nowcast Bayesiano P10-P50-P90 y control Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="twitter:image" content="https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" />
+  <meta name="twitter:image:alt" content="Nexus Quant FP&amp;A Simulador Financiero Corporativo por Jesús Benjamín Zerpa" />
 
- var c_rgszSh=new Array(c_lTabs);
- c_rgszSh[0] = "Dashboard";
-
-
-
- var c_rgszClr=new Array(8);
- c_rgszClr[0]="window";
- c_rgszClr[1]="buttonface";
- c_rgszClr[2]="windowframe";
- c_rgszClr[3]="windowtext";
- c_rgszClr[4]="threedlightshadow";
- c_rgszClr[5]="threedhighlight";
- c_rgszClr[6]="threeddarkshadow";
- c_rgszClr[7]="threedshadow";
-
- var g_iShCur;
- var g_rglTabX=new Array(c_lTabs);
-
-function fnGetIEVer()
-{
- var ua=window.navigator.userAgent
- var msie=ua.indexOf("MSIE")
- if (msie>0 && window.navigator.platform=="Win32")
-  return parseInt(ua.substring(msie+5,ua.indexOf(".", msie)));
- else
-  return 0;
-}
-
-function fnBuildFrameset()
-{
- var szHTML="<frameset rows=\"*,18\" border=0 width=0 frameborder=no framespacing=0>"+
-  "<frame src=\""+document.all.item("shLink")[0].href+"\" name=\"frSheet\" noresize>"+
-  "<frameset cols=\"54,*\" border=0 width=0 frameborder=no framespacing=0>"+
-  "<frame src=\"\" name=\"frScroll\" marginwidth=0 marginheight=0 scrolling=no>"+
-  "<frame src=\"\" name=\"frTabs\" marginwidth=0 marginheight=0 scrolling=no>"+
-  "</frameset></frameset><plaintext>";
-
- with (document) {
-  open("text/html","replace");
-  write(szHTML);
-  close();
- }
-
- fnBuildTabStrip();
-}
-
-function fnBuildTabStrip()
-{
- var szHTML=
-  "<html><head><style>.clScroll {font:8pt Courier New;color:"+c_rgszClr[6]+";cursor:default;line-height:10pt;}"+
-  ".clScroll2 {font:10pt Arial;color:"+c_rgszClr[6]+";cursor:default;line-height:11pt;}</style>  <link rel="stylesheet" href="css/post-enhancement.css" />
-
-  <!-- Advanced Quantitative SEO & Author Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Financial Dashboard en Excel y Visual Basic",
-    "description": "Cuadro de mando financiero automatizado con macros VBA y reporting ejecutivo.",
-    "image": "https://jesusbz.github.io/imagenes/miniatura/principal.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "Jesús Benjamín Zerpa",
-      "jobTitle": "Economist & Quantitative Data Scientist",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Consorcio Credicard"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://jesusbzerpa.github.io/#person",
+        "name": "Jesús Benjamín Zerpa",
+        "givenName": "Jesús Benjamín",
+        "familyName": "Zerpa",
+        "alternateName": [
+          "Jesús Zerpa",
+          "Jesus Zerpa",
+          "Jesús Benjamín Zerpa",
+          "Jesus Benjamin Zerpa",
+          "Jesús B. Zerpa",
+          "Jesus B. Zerpa",
+          "Jesús Benjamín",
+          "Economista Jesús Zerpa",
+          "Economista Jesús Benjamín Zerpa"
+        ],
+        "jobTitle": "Economista Senior, Gerente de Planificación Financiera (FP&A) & Científico de Datos",
+        "url": "https://jesusbzerpa.github.io/",
+        "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
+        "email": "mailto:JesusZerpaEconomia@Gmail.Com",
+        "telephone": "+58 424 148 78 70",
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Universidad Alejandro de Humboldt"
+          },
+          {
+            "@type": "EducationalOrganization",
+            "name": "Instituto Universitario de Profesiones Gerenciales (I.U.P.G.)"
+          }
+        ],
+        "knowsAbout": [
+          "Planificación Financiera Corporativa (FP&A)",
+          "Presupuesto Maestro",
+          "Control de Gestión",
+          "Inteligencia Financiera",
+          "Evaluación de Proyectos de Inversión (CAPEX)",
+          "Business Intelligence",
+          "Microsoft Power BI",
+          "Ciencia de Datos",
+          "Econometría Financiera",
+          "Series Temporales (SARIMA, Prophet, VAR, GARCH, EGARCH)",
+          "Simulación Estocástica de Monte Carlo",
+          "Deep Learning LSTM en PyTorch",
+          "Optimización de Portafolios de Markowitz",
+          "Python",
+          "RStudio"
+        ],
+        "sameAs": [
+          "https://jesusbzerpa.github.io/",
+          "https://jesusbezerpa.github.io/",
+          "https://jesusbz.github.io/",
+          "https://jesusbz.github.io/acercade.html",
+          "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
+          "https://github.com/JesusBZ",
+          "https://rpubs.com/JesusZ",
+          "https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa"
+        ]
       },
-      "sameAs": [
-        "https://www.linkedin.com/in/jesús-zerpa-807646129/",
-        "https://github.com/JesusBZ",
-        "https://rpubs.com/JesusZ"
-      ]
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "Jesús Benjamín Zerpa"
-    },
-    "url": "https://jesusbz.github.io/FinancialDashboard.htm",
-    "keywords": ["Quantitative Finance", "RStudio", "Python", "Econometrics", "Machine Learning", "Time Series", "Value at Risk", "GARCH"]
+      {
+        "@type": "WebApplication",
+        "@id": "https://jesusbz.github.io/FinancialDashboard.htm#webapp",
+        "name": "Nexus Quant FP&A — Simulador Financiero Corporativo Interactivo",
+        "url": "https://jesusbz.github.io/FinancialDashboard.htm",
+        "image": "https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "inLanguage": "es",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Plataforma interactiva de planificación financiera (FP&A), simulación de sensibilidad Q × Tarifa + Fijo, Nowcast Bayesiano P10–P90, Pareto 80/20, HHI y detección de anomalías Z-MAD sobre 6 líneas de negocio corporativas sintéticas.",
+        "author": { "@id": "https://jesusbzerpa.github.io/#person" },
+        "creator": { "@id": "https://jesusbzerpa.github.io/#person" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://jesusbz.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Financial Dashboard",
+            "item": "https://jesusbz.github.io/Dashboard.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Simulador FP&A Interactivo",
+            "item": "https://jesusbz.github.io/FinancialDashboard.htm"
+          }
+        ]
+      }
+    ]
   }
   </script>
+  <!-- SEO:END -->
 
-</head>"+
-  "<body onclick=\"event.returnValue=false;\" ondragstart=\"event.returnValue=false;\" onselectstart=\"event.returnValue=false;\" bgcolor="+c_rgszClr[4]+" topmargin=0 leftmargin=0><table cellpadding=0 cellspacing=0 width=100%>"+
-  "<tr><td colspan=6 height=1 bgcolor="+c_rgszClr[2]+"></td></tr>"+
-  "<tr><td style=\"font:1pt\">&nbsp;<td>"+
-  "<td valign=top id=tdScroll class=\"clScroll\" onclick=\"parent.fnFastScrollTabs(0);\" onmouseover=\"parent.fnMouseOverScroll(0);\" onmouseout=\"parent.fnMouseOutScroll(0);\"><a>&#171;</a></td>"+
-  "<td valign=top id=tdScroll class=\"clScroll2\" onclick=\"parent.fnScrollTabs(0);\" ondblclick=\"parent.fnScrollTabs(0);\" onmouseover=\"parent.fnMouseOverScroll(1);\" onmouseout=\"parent.fnMouseOutScroll(1);\"><a>&lt</a></td>"+
-  "<td valign=top id=tdScroll class=\"clScroll2\" onclick=\"parent.fnScrollTabs(1);\" ondblclick=\"parent.fnScrollTabs(1);\" onmouseover=\"parent.fnMouseOverScroll(2);\" onmouseout=\"parent.fnMouseOutScroll(2);\"><a>&gt</a></td>"+
-  "<td valign=top id=tdScroll class=\"clScroll\" onclick=\"parent.fnFastScrollTabs(1);\" onmouseover=\"parent.fnMouseOverScroll(3);\" onmouseout=\"parent.fnMouseOutScroll(3);\"><a>&#187;</a></td>"+
-  "<td style=\"font:1pt\">&nbsp;<td></tr></table>  <script src="js/futuristic-app.js"></script>
-</body></html>";
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
- with (frames['frScroll'].document) {
-  open("text/html","replace");
-  write(szHTML);
-  close();
- }
+  <link rel="stylesheet" href="css/nexus-fpa-simulator.css?v=20261114d" />
 
- szHTML =
-  "<html><head>"+
-  "<style>A:link,A:visited,A:active {text-decoration:none;"+"color:"+c_rgszClr[3]+";}"+
-  ".clTab {cursor:hand;background:"+c_rgszClr[1]+";font:9pt Arial;padding-left:3px;padding-right:3px;text-align:center;}"+
-  ".clBorder {background:"+c_rgszClr[2]+";font:1pt;}"+
-  "</style>  <link rel="stylesheet" href="css/post-enhancement.css" />
+  <!-- Motores de Visualización y Exportación UHD -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-  <!-- Advanced Quantitative SEO & Author Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Financial Dashboard en Excel y Visual Basic",
-    "description": "Cuadro de mando financiero automatizado con macros VBA y reporting ejecutivo.",
-    "image": "https://jesusbz.github.io/imagenes/miniatura/principal.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "Jesús Benjamín Zerpa",
-      "jobTitle": "Economist & Quantitative Data Scientist",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Consorcio Credicard"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/jesús-zerpa-807646129/",
-        "https://github.com/JesusBZ",
-        "https://rpubs.com/JesusZ"
-      ]
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "Jesús Benjamín Zerpa"
-    },
-    "url": "https://jesusbz.github.io/FinancialDashboard.htm",
-    "keywords": ["Quantitative Finance", "RStudio", "Python", "Econometrics", "Machine Learning", "Time Series", "Value at Risk", "GARCH"]
-  }
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9M6MYPFL3M', {
+      'linker': { 'domains': ['jesusbzerpa.github.io', 'jesusbezerpa.github.io', 'jesusbz.github.io'] }
+    });
   </script>
-
-</head><body onload=\"parent.fnInit();\" onselectstart=\"event.returnValue=false;\" ondragstart=\"event.returnValue=false;\" bgcolor="+c_rgszClr[4]+
-  " topmargin=0 leftmargin=0><table id=tbTabs cellpadding=0 cellspacing=0>";
-
- var iCellCount=(c_lTabs+1)*2;
-
- var i;
- for (i=0;i<iCellCount;i+=2)
-  szHTML+="<col width=1><col>";
-
- var iRow;
- for (iRow=0;iRow<6;iRow++) {
-
-  szHTML+="<tr>";
-
-  if (iRow==5)
-   szHTML+="<td colspan="+iCellCount+"></td>";
-  else {
-   if (iRow==0) {
-    for(i=0;i<iCellCount;i++)
-     szHTML+="<td height=1 class=\"clBorder\"></td>";
-   } else if (iRow==1) {
-    for(i=0;i<c_lTabs;i++) {
-     szHTML+="<td height=1 nowrap class=\"clBorder\">&nbsp;</td>";
-     szHTML+=
-      "<td id=tdTab height=1 nowrap class=\"clTab\" onmouseover=\"parent.fnMouseOverTab("+i+");\" onmouseout=\"parent.fnMouseOutTab("+i+");\">"+
-      "<a href=\""+document.all.item("shLink")[i].href+"\" target=\"frSheet\" id=aTab>&nbsp;"+c_rgszSh[i]+"&nbsp;</a></td>";
-    }
-    szHTML+="<td id=tdTab height=1 nowrap class=\"clBorder\"><a id=aTab>&nbsp;</a></td><td width=100%></td>";
-   } else if (iRow==2) {
-    for (i=0;i<c_lTabs;i++)
-     szHTML+="<td height=1></td><td height=1 class=\"clBorder\"></td>";
-    szHTML+="<td height=1></td><td height=1></td>";
-   } else if (iRow==3) {
-    for (i=0;i<iCellCount;i++)
-     szHTML+="<td height=1></td>";
-   } else if (iRow==4) {
-    for (i=0;i<c_lTabs;i++)
-     szHTML+="<td height=1 width=1></td><td height=1></td>";
-    szHTML+="<td height=1 width=1></td><td></td>";
-   }
-  }
-  szHTML+="</tr>";
- }
-
- szHTML+="</table>  <script src="js/futuristic-app.js"></script>
-</body></html>";
- with (frames['frTabs'].document) {
-  open("text/html","replace");
-  charset=document.charset;
-  write(szHTML);
-  close();
- }
-}
-
-function fnInit()
-{
- g_rglTabX[0]=0;
- var i;
- for (i=1;i<=c_lTabs;i++)
-  with (frames['frTabs'].document.all.tbTabs.rows[1].cells[fnTabToCol(i-1)])
-   g_rglTabX[i]=offsetLeft+offsetWidth-6;
-}
-
-function fnTabToCol(iTab)
-{
- return 2*iTab+1;
-}
-
-function fnNextTab(fDir)
-{
- var iNextTab=-1;
- var i;
-
- with (frames['frTabs'].document.body) {
-  if (fDir==0) {
-   if (scrollLeft>0) {
-    for (i=0;i<c_lTabs&&g_rglTabX[i]<scrollLeft;i++);
-    if (i<c_lTabs)
-     iNextTab=i-1;
-   }
-  } else {
-   if (g_rglTabX[c_lTabs]+6>offsetWidth+scrollLeft) {
-    for (i=0;i<c_lTabs&&g_rglTabX[i]<=scrollLeft;i++);
-    if (i<c_lTabs)
-     iNextTab=i;
-   }
-  }
- }
- return iNextTab;
-}
-
-function fnScrollTabs(fDir)
-{
- var iNextTab=fnNextTab(fDir);
-
- if (iNextTab>=0) {
-  frames['frTabs'].scroll(g_rglTabX[iNextTab],0);
-  return true;
- } else
-  return false;
-}
-
-function fnFastScrollTabs(fDir)
-{
- if (c_lTabs>16)
-  frames['frTabs'].scroll(g_rglTabX[fDir?c_lTabs-1:0],0);
- else
-  if (fnScrollTabs(fDir)>0) window.setTimeout("fnFastScrollTabs("+fDir+");",5);
-}
-
-function fnSetTabProps(iTab,fActive)
-{
- var iCol=fnTabToCol(iTab);
- var i;
-
- if (iTab>=0) {
-  with (frames['frTabs'].document.all) {
-   with (tbTabs) {
-    for (i=0;i<=4;i++) {
-     with (rows[i]) {
-      if (i==0)
-       cells[iCol].style.background=c_rgszClr[fActive?0:2];
-      else if (i>0 && i<4) {
-       if (fActive) {
-        cells[iCol-1].style.background=c_rgszClr[2];
-        cells[iCol].style.background=c_rgszClr[0];
-        cells[iCol+1].style.background=c_rgszClr[2];
-       } else {
-        if (i==1) {
-         cells[iCol-1].style.background=c_rgszClr[2];
-         cells[iCol].style.background=c_rgszClr[1];
-         cells[iCol+1].style.background=c_rgszClr[2];
-        } else {
-         cells[iCol-1].style.background=c_rgszClr[4];
-         cells[iCol].style.background=c_rgszClr[(i==2)?2:4];
-         cells[iCol+1].style.background=c_rgszClr[4];
-        }
-       }
-      } else
-       cells[iCol].style.background=c_rgszClr[fActive?2:4];
-     }
-    }
-   }
-   with (aTab[iTab].style) {
-    cursor=(fActive?"default":"hand");
-    color=c_rgszClr[3];
-   }
-  }
- }
-}
-
-function fnMouseOverScroll(iCtl)
-{
- frames['frScroll'].document.all.tdScroll[iCtl].style.color=c_rgszClr[7];
-}
-
-function fnMouseOutScroll(iCtl)
-{
- frames['frScroll'].document.all.tdScroll[iCtl].style.color=c_rgszClr[6];
-}
-
-function fnMouseOverTab(iTab)
-{
- if (iTab!=g_iShCur) {
-  var iCol=fnTabToCol(iTab);
-  with (frames['frTabs'].document.all) {
-   tdTab[iTab].style.background=c_rgszClr[5];
-  }
- }
-}
-
-function fnMouseOutTab(iTab)
-{
- if (iTab>=0) {
-  var elFrom=frames['frTabs'].event.srcElement;
-  var elTo=frames['frTabs'].event.toElement;
-
-  if ((!elTo) ||
-   (elFrom.tagName==elTo.tagName) ||
-   (elTo.tagName=="A" && elTo.parentElement!=elFrom) ||
-   (elFrom.tagName=="A" && elFrom.parentElement!=elTo)) {
-
-   if (iTab!=g_iShCur) {
-    with (frames['frTabs'].document.all) {
-     tdTab[iTab].style.background=c_rgszClr[1];
-    }
-   }
-  }
- }
-}
-
-function fnSetActiveSheet(iSh)
-{
- if (iSh!=g_iShCur) {
-  fnSetTabProps(g_iShCur,false);
-  fnSetTabProps(iSh,true);
-  g_iShCur=iSh;
- }
-}
-
- window.g_iIEVer=fnGetIEVer();
- if (window.g_iIEVer>=4)
-  fnBuildFrameset();
-//-->
-</script>
-<![endif]><!--[if gte mso 9]><xml>
- <x:ExcelWorkbook>
-  <x:ExcelWorksheets>
-   <x:ExcelWorksheet>
-    <x:Name>Dashboard</x:Name>
-    <x:WorksheetSource HRef="FinancialDashboard_archivos/sheet001.htm"/>
-   </x:ExcelWorksheet>
-  </x:ExcelWorksheets>
-  <x:Stylesheet HRef="FinancialDashboard_archivos/stylesheet.css"/>
-  <x:WindowHeight>7650</x:WindowHeight>
-  <x:WindowWidth>15360</x:WindowWidth>
-  <x:WindowTopX>0</x:WindowTopX>
-  <x:WindowTopY>0</x:WindowTopY>
-  <x:ProtectStructure>False</x:ProtectStructure>
-  <x:ProtectWindows>False</x:ProtectWindows>
- </x:ExcelWorkbook>
-</xml><![endif]-->
-  <link rel="stylesheet" href="css/post-enhancement.css" />
-
-  <!-- Advanced Quantitative SEO & Author Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Financial Dashboard en Excel y Visual Basic",
-    "description": "Cuadro de mando financiero automatizado con macros VBA y reporting ejecutivo.",
-    "image": "https://jesusbz.github.io/imagenes/miniatura/principal.jpg",
-    "author": {
-      "@type": "Person",
-      "name": "Jesús Benjamín Zerpa",
-      "jobTitle": "Economist & Quantitative Data Scientist",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Consorcio Credicard"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/jesús-zerpa-807646129/",
-        "https://github.com/JesusBZ",
-        "https://rpubs.com/JesusZ"
-      ]
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "Jesús Benjamín Zerpa"
-    },
-    "url": "https://jesusbz.github.io/FinancialDashboard.htm",
-    "keywords": ["Quantitative Finance", "RStudio", "Python", "Econometrics", "Machine Learning", "Time Series", "Value at Risk", "GARCH"]
-  }
-  </script>
-
 </head>
+<body>
+  <h1 class="sr-only">Nexus Quant FP&amp;A: Simulador Financiero Corporativo y Financial Dashboard Interactivo — Jesús Benjamín Zerpa</h1>
 
-<frameset rows="*,39" border=0 width=0 frameborder=no framespacing=0>
- <frame src="FinancialDashboard_archivos/sheet001.htm" name="frSheet">
- <frame src="FinancialDashboard_archivos/tabstrip.htm" name="frTabs" marginwidth=0 marginheight=0>
- <noframes>
-  <body>
-   <p>Esta pgina utiliza marcos que su explorador no admite.</p>
-    <script src="js/futuristic-app.js"></script>
+  <!-- ═══════════════════════════════════════════════════════════════
+       BARRA SUPERIOR EJECUTIVA (CERO LOGIN · CERO ASISTENTE)
+       ═══════════════════════════════════════════════════════════════ -->
+  <header id="top-bar" class="no-print">
+    <div class="tb-brand">
+      <div class="tb-logo-box" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" stroke="#D9C29A" stroke-width="1.8" fill="rgba(184,149,90,0.16)"/>
+          <polyline points="7,14 10.5,10 13.5,13 17,8.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="tb-title">NEXUS QUANT FP&amp;A // REVENUE INTELLIGENCE</div>
+        <div class="tb-sub">
+          <span class="tb-pulse-dot"></span>
+          <span id="sync-status-txt">Motor Sintético Estocástico</span>
+          <span>· por Jesús Benjamín Zerpa</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tb-nav" aria-label="Vistas del Dashboard">
+      <button type="button" class="tb-tab active" data-view="view-ingresos" onclick="window.switchView('view-ingresos')">
+        <span data-icon="bar-chart" data-size="14"></span>
+        <span>1. Ingresos y Ejecución</span>
+      </button>
+      <button type="button" class="tb-tab" data-view="view-analitica" onclick="window.switchView('view-analitica')">
+        <span data-icon="pie-chart" data-size="14"></span>
+        <span>2. Analítica &amp; Sub-Líneas</span>
+      </button>
+      <button type="button" class="tb-tab" data-view="view-semaforo" onclick="window.switchView('view-semaforo')">
+        <span data-icon="traffic" data-size="14"></span>
+        <span>3. Semáforo Comercial</span>
+      </button>
+    </nav>
+
+    <div class="tb-actions">
+      <button type="button" id="btn-open-simulator" class="tb-btn tb-btn-sim" onclick="window.openChartModal('comp','CLOUD_SAAS','predictive')">
+        <span data-icon="sliders" data-size="14"></span>
+        <span>Simulador Q × Tarifa</span>
+      </button>
+      <button type="button" id="btn-random-scenario" class="tb-btn tb-btn-random" onclick="window.regenerateRandomScenario()" title="Genera nuevas cifras estocásticas coherentes para 2025–2026">
+        <span data-icon="shuffle" data-size="14"></span>
+        <span>Nueva Simulación Aleatoria</span>
+      </button>
+      <button type="button" id="db-health-badge" class="db-health-pill" onclick="window.openAuditModal()">
+        <span data-icon="shield-check" data-size="13"></span>
+        <span>Auditoría BD</span>
+      </button>
+
+      <div class="export-wrap" id="export-menu-wrap">
+        <button type="button" class="tb-btn" onclick="window.toggleExportMenu(event)">
+          <span data-icon="download" data-size="14"></span>
+          <span>Exportar</span>
+        </button>
+        <div id="export-dropdown" class="export-dropdown">
+          <button type="button" class="export-item" onclick="window.print()">
+            <span data-icon="printer" data-size="14"></span> <span>Imprimir / Guardar PDF</span>
+          </button>
+          <button type="button" class="export-item" onclick="window.exportPNG(2)">
+            <span data-icon="image" data-size="14"></span> <span>Captura PNG 4K (UHD)</span>
+          </button>
+          <button type="button" class="export-item" onclick="window.exportPNG(4)">
+            <span data-icon="image" data-size="14"></span> <span>Captura PNG 8K (Poster)</span>
+          </button>
+          <button type="button" class="export-item" onclick="window.exportCSV()">
+            <span data-icon="file-spreadsheet" data-size="14"></span> <span>Exportar Datos CSV</span>
+          </button>
+          <button type="button" class="export-item" onclick="window.exportHTML()">
+            <span data-icon="code" data-size="14"></span> <span>Descargar Instantánea HTML</span>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="tb-btn" onclick="window.openWelcomeModal()">
+        <span data-icon="compass" data-size="14"></span>
+        <span>Guía</span>
+      </button>
+      <a href="Dashboard.html" class="tb-btn hide-in-embed" title="Volver al estudio metodológico del portafolio">
+        <span data-icon="arrow-left" data-size="14"></span>
+        <span>Volver al Post</span>
+      </a>
+    </div>
+
+    <a href="index.html" class="tb-jbz-logo" title="Jesús Benjamín Zerpa — Inicio del Portafolio">
+      <img src="imagenes/jbz-logo.svg" alt="JBZ — Jesús Benjamín Zerpa" width="210" height="36" />
+    </a>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       CONTENEDOR PRINCIPAL DEL ECOSISTEMA
+       ═══════════════════════════════════════════════════════════════ -->
+  <main id="shell">
+
+    <!-- BARRA DE FILTROS DE CORTE Y ESCENARIO -->
+    <section class="filter-bar no-print" aria-label="Filtros temporales y escenario">
+      <div class="filter-controls">
+        <div class="f-group">
+          <label class="f-label" for="selAnio">Año Fiscal</label>
+          <select id="selAnio" class="f-select" onchange="window.onYearOrMonthChange('anio')"></select>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="selMes">Mes de Corte</label>
+          <select id="selMes" class="f-select" onchange="window.onYearOrMonthChange('mes')"></select>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="selSemana">Semana Acumulada</label>
+          <select id="selSemana" class="f-select" onchange="window.renderCurrentView()"></select>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="selCmp">Referencia Principal</label>
+          <select id="selCmp" class="f-select" onchange="window.renderCurrentView()">
+            <option value="PRESUPUESTO">Descomposición vs Presupuesto</option>
+            <option value="ANIO_ANT">Variación Interanual (YoY)</option>
+            <option value="MES_ANT">Variación Intermensual (MoM)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-meta">
+        <span id="scenario-badge" class="scenario-chip">
+          <span data-icon="cpu" data-size="13"></span>
+          <span>Universo Sintético LIVE</span>
+        </span>
+        <button type="button" class="btn-preload-bar" onclick="window.openPreloadModal()">
+          <span data-icon="zap" data-size="13"></span>
+          <span>Pre-Carga HBW-Nowcast (24 Sub-Líneas)</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VISTA 1: INGRESOS, EJECUCIÓN Y SIMULADOR BAYESIANO
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="view-ingresos" style="display:flex;flex-direction:column;gap:14px;">
+      <div id="v1-ribbon" class="exec-ribbon"></div>
+
+      <section class="kpi-grid" aria-label="Indicadores ejecutivos">
+        <article class="kpi-card">
+          <div class="kpi-top">
+            <span class="kpi-lbl">Ingreso Real Corte (S)</span>
+            <span data-icon="dollar" data-size="15"></span>
+          </div>
+          <div id="kpi-v1-real" class="kpi-val tabular">—</div>
+          <div id="kpi-v1-real-sub" class="kpi-sub"></div>
+        </article>
+
+        <article class="kpi-card kpi-accent-emerald">
+          <div class="kpi-top">
+            <span class="kpi-lbl">Cumplimiento vs Presupuesto</span>
+            <span data-icon="target" data-size="15"></span>
+          </div>
+          <div id="kpi-v1-ppto" class="kpi-val tabular">—</div>
+          <div id="kpi-v1-ppto-sub" class="kpi-sub"></div>
+        </article>
+
+        <article class="kpi-card kpi-accent-violet clickable" onclick="window.openChartModal('comp','CLOUD_SAAS','predictive')" title="Clic para abrir el Simulador Interactivo Q × Tarifa">
+          <div class="kpi-top">
+            <span class="kpi-lbl">Proyección Bayesiana Cierre S4</span>
+            <span data-icon="sliders" data-size="15"></span>
+          </div>
+          <div id="kpi-v1-pred" class="kpi-val tabular" style="color:#1D4ED8;">—</div>
+          <div id="kpi-v1-pred-sub" class="kpi-sub"></div>
+        </article>
+
+        <article class="kpi-card kpi-accent-amber">
+          <div class="kpi-top">
+            <span id="kpi-v1-var-lbl" class="kpi-lbl">Crecimiento Interanual (YoY)</span>
+            <span data-icon="trending-up" data-size="15"></span>
+          </div>
+          <div id="kpi-v1-var" class="kpi-val tabular">—</div>
+          <div id="kpi-v1-var-sub" class="kpi-sub"></div>
+        </article>
+      </section>
+
+      <section class="grid-main-side">
+        <article class="card-panel">
+          <div class="panel-hdr">
+            <div>
+              <div class="panel-title">
+                <span data-icon="activity" data-size="15"></span>
+                <span>Evolución Histórica Anual vs Presupuesto y Año Anterior</span>
+              </div>
+              <div class="panel-sub">Serie mensual consolidada de las 6 unidades de negocio sintéticas</div>
+            </div>
+            <div class="panel-actions">
+              <button type="button" class="ch-expand-btn ch-expand-accent" onclick="window.openChartModal('comp','CLOUD_SAAS','predictive')">
+                <span data-icon="sliders" data-size="12"></span> <span>Simulador P10–P90</span>
+              </button>
+              <button type="button" class="ch-expand-btn" onclick="window.openChartModal('lines')">
+                <span data-icon="maximize" data-size="12"></span> <span>Efecto ΔQ / ΔP</span>
+              </button>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="cHist"></canvas></div>
+        </article>
+
+        <article class="card-panel">
+          <div class="panel-hdr">
+            <div>
+              <div class="panel-title">
+                <span data-icon="gauge" data-size="15"></span>
+                <span>Ritmo Intra-Mensual (S1 → S4)</span>
+              </div>
+              <div class="panel-sub">Avance semanal sobre Meta Mensual S4</div>
+            </div>
+            <button type="button" class="ch-expand-btn" onclick="window.openChartModal('gauges')">
+              <span data-icon="maximize" data-size="12"></span> <span>Ver Regímenes</span>
+            </button>
+          </div>
+          <div class="gauge-grid">
+            <div id="g1-card" class="gauge-card">
+              <div style="font-size:10.5px;font-weight:800;color:#0B1B33;">Semana 1</div>
+              <div class="gauge-wrap">
+                <canvas id="g1"></canvas>
+                <div class="gauge-center"><span id="g1-pct" class="gauge-pct">—</span></div>
+              </div>
+              <div id="g1-sub" class="gauge-sub"></div>
+            </div>
+            <div id="g2-card" class="gauge-card">
+              <div style="font-size:10.5px;font-weight:800;color:#0B1B33;">Semana 2</div>
+              <div class="gauge-wrap">
+                <canvas id="g2"></canvas>
+                <div class="gauge-center"><span id="g2-pct" class="gauge-pct">—</span></div>
+              </div>
+              <div id="g2-sub" class="gauge-sub"></div>
+            </div>
+            <div id="g3-card" class="gauge-card">
+              <div style="font-size:10.5px;font-weight:800;color:#0B1B33;">Semana 3</div>
+              <div class="gauge-wrap">
+                <canvas id="g3"></canvas>
+                <div class="gauge-center"><span id="g3-pct" class="gauge-pct">—</span></div>
+              </div>
+              <div id="g3-sub" class="gauge-sub"></div>
+            </div>
+            <div id="g4-card" class="gauge-card">
+              <div style="font-size:10.5px;font-weight:800;color:#9A7438;">Semana 4</div>
+              <div class="gauge-wrap">
+                <canvas id="g4"></canvas>
+                <div class="gauge-center"><span id="g4-pct" class="gauge-pct">—</span></div>
+              </div>
+              <div id="g4-sub" class="gauge-sub"></div>
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <div class="panel-sub" style="margin-bottom:6px;font-weight:700;color:#334155;">Comparativa Real vs Presupuesto por Unidad (clic en barra para detalle)</div>
+            <div style="position:relative;height:142px;"><canvas id="cLines"></canvas></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="card-panel">
+        <div class="panel-hdr">
+          <div>
+            <div class="panel-title">
+              <span data-icon="table" data-size="15"></span>
+              <span>Matriz Ejecutiva de Ingresos, Descomposición Precio-Volumen y Proyección Bayesiana</span>
+            </div>
+            <div class="panel-sub">Haz clic en cualquier fila para abrir el Drawer de sub-líneas o en "Simular" para ajustar Q y Tarifa $/Q en vivo</div>
+          </div>
+        </div>
+        <div class="tbl-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Línea de Negocio</th>
+                <th>Volumen Q</th>
+                <th>Tarifa Eff. $/Q</th>
+                <th>Real Corte ($)</th>
+                <th>Presupuesto ($)</th>
+                <th>Brecha ($)</th>
+                <th>% Cumpl.</th>
+                <th>Efecto Vol (ΔQ)</th>
+                <th>Efecto Tarifa (ΔP)</th>
+                <th>YoY (%)</th>
+                <th>Bayes P50 S4</th>
+                <th>Mix (%)</th>
+                <th>Simulador</th>
+              </tr>
+            </thead>
+            <tbody id="tb-exec"></tbody>
+            <tfoot id="tf-exec"></tfoot>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VISTA 2: ANALÍTICA ESTRUCTURAL, PARETO, HHI & HEATMAP
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="view-analitica" style="display:none;flex-direction:column;gap:14px;">
+      <section class="kpi-grid">
+        <article class="kpi-card">
+          <div class="kpi-top"><span class="kpi-lbl">Índice Concentración HHI</span><span data-icon="pie-chart" data-size="15"></span></div>
+          <div id="ana-hhi-val" class="kpi-val tabular">—</div>
+          <div id="ana-hhi-sub" class="kpi-sub"></div>
+        </article>
+        <article class="kpi-card kpi-accent-emerald">
+          <div class="kpi-top"><span class="kpi-lbl">Concentración Pareto 80/20</span><span data-icon="git-branch" data-size="15"></span></div>
+          <div id="ana-pareto-val" class="kpi-val tabular" style="color:#0B1B33;">—</div>
+          <div id="ana-pareto-sub" class="kpi-sub"></div>
+        </article>
+        <article class="kpi-card kpi-accent-violet">
+          <div class="kpi-top"><span class="kpi-lbl">Mayor Impulsor Positivo</span><span data-icon="trending-up" data-size="15"></span></div>
+          <div id="ana-top-pos-val" class="kpi-val" style="font-size:15px;">—</div>
+          <div id="ana-top-pos-sub" class="kpi-sub"></div>
+        </article>
+        <article class="kpi-card kpi-accent-amber">
+          <div class="kpi-top"><span class="kpi-lbl">Principal Foco de Brecha</span><span data-icon="trending-down" data-size="15"></span></div>
+          <div id="ana-top-neg-val" class="kpi-val" style="font-size:15px;">—</div>
+          <div id="ana-top-neg-sub" class="kpi-sub"></div>
+        </article>
+      </section>
+
+      <section class="grid-2">
+        <article class="card-panel">
+          <div class="panel-hdr">
+            <div>
+              <div class="panel-title"><span data-icon="git-branch" data-size="15"></span><span>Puente Waterfall: Presupuesto → Real Corte</span></div>
+              <div class="panel-sub">Contribución neta de cada unidad de negocio a la variación total</div>
+            </div>
+            <button type="button" class="ch-expand-btn" onclick="window.openChartModal('waterfall')">
+              <span data-icon="maximize" data-size="12"></span> <span>Pareto 24 Sub-Líneas</span>
+            </button>
+          </div>
+          <div class="chart-box"><canvas id="cWf"></canvas></div>
+        </article>
+
+        <article class="card-panel">
+          <div class="panel-hdr">
+            <div>
+              <div class="panel-title"><span data-icon="pie-chart" data-size="15"></span><span>Mix de Portafolio por Unidad de Negocio (%)</span></div>
+              <div class="panel-sub">Distribución porcentual del ingreso acumulado en el corte</div>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="cMix"></canvas></div>
+        </article>
+      </section>
+
+      <section class="card-panel">
+        <div class="panel-hdr">
+          <div>
+            <div class="panel-title"><span data-icon="layers" data-size="15"></span><span>Explorador Granular de las 24 Sub-Líneas (Drivers Q × Tarifa y Fijos)</span></div>
+            <div class="panel-sub">Haz clic en cualquier sub-línea para simular directamente su línea en el Motor Predictivo</div>
+          </div>
+        </div>
+        <div class="ana-toolbar">
+          <div id="ana-line-pills" class="pill-group"></div>
+          <input id="ana-sub-search" class="nx-input" type="search" placeholder="Filtrar sub-línea o unidad..." oninput="window.renderAnaSublinesTable()" style="min-width:230px;" />
+        </div>
+        <div class="tbl-scroll" style="max-height:360px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Sub-Línea / Unidad</th>
+                <th>Modelo</th>
+                <th>Volumen Q</th>
+                <th>Tarifa Eff. $/Q</th>
+                <th>Real Corte ($)</th>
+                <th>Ppto Corte ($)</th>
+                <th>Brecha ($)</th>
+                <th>% Cumpl.</th>
+                <th>Peso Mix</th>
+              </tr>
+            </thead>
+            <tbody id="tb-ana-sublines"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card-panel">
+        <div class="panel-hdr">
+          <div>
+            <div class="panel-title"><span data-icon="grid" data-size="15"></span><span>Mapa de Calor Anual de Cumplimiento Presupuestario (%)</span></div>
+            <div class="panel-sub">Desempeño mensual Enero–Diciembre para las 6 unidades y el consolidado</div>
+          </div>
+        </div>
+        <div class="tbl-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Unidad</th>
+                <th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th>
+                <th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th>
+              </tr>
+            </thead>
+            <tbody id="tb-heatmap"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VISTA 3: SEMÁFORO COMERCIAL, DRIVERS & OKRS ESTRATÉGICOS
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="view-semaforo" style="display:none;flex-direction:column;gap:14px;">
+      <section class="sf-top-grid">
+        <article class="card-panel">
+          <div class="panel-title"><span data-icon="award" data-size="15"></span><span>Salud Global del Portafolio OKR</span></div>
+          <div style="position:relative;height:130px;margin-top:6px;">
+            <canvas id="gSalud"></canvas>
+            <div class="gauge-center" style="padding-top:26px;">
+              <span id="sf-salud-val" style="font-size:26px;font-weight:900;">—</span>
+              <span style="font-size:10px;color:#64748B;text-transform:uppercase;">Cumplimiento Medio</span>
+            </div>
+          </div>
+          <div id="sf-salud-desc" style="margin-top:8px;"></div>
+        </article>
+
+        <article class="card-panel">
+          <div class="panel-hdr" style="margin-bottom:10px;">
+            <div class="panel-title"><span data-icon="traffic" data-size="15"></span><span>Distribución Semáforo por Rango de Cumplimiento (Clic para filtrar tablas)</span></div>
+            <button type="button" class="btn-ghost-sm" onclick="window.setSfFilter('ALL')">Ver Todos</button>
+          </div>
+          <div class="sf-filter-grid">
+            <div class="sf-filter-card" data-sf-filter="azul" onclick="window.setSfFilter('azul')">
+              <div style="font-size:10.5px;font-weight:800;color:#1D4ED8;">SOBRESALIENTE (&gt;105%)</div>
+              <div id="sf-cnt-azul" style="font-size:26px;font-weight:900;margin:2px 0;color:#0B1B33;">0</div>
+              <div id="sf-pct-azul" style="font-size:10.5px;color:#64748B;"></div>
+              <div id="sf-list-azul" style="margin-top:6px;"></div>
+            </div>
+            <div class="sf-filter-card" data-sf-filter="verde" onclick="window.setSfFilter('verde')">
+              <div style="font-size:10.5px;font-weight:800;color:#059669;">EN META (95–105%)</div>
+              <div id="sf-cnt-verde" style="font-size:26px;font-weight:900;margin:2px 0;color:#0B1B33;">0</div>
+              <div id="sf-pct-verde" style="font-size:10.5px;color:#64748B;"></div>
+              <div id="sf-list-verde" style="margin-top:6px;"></div>
+            </div>
+            <div class="sf-filter-card" data-sf-filter="amarillo" onclick="window.setSfFilter('amarillo')">
+              <div style="font-size:10.5px;font-weight:800;color:#B45309;">PRECAUCIÓN (90–94%)</div>
+              <div id="sf-cnt-alerta" style="font-size:26px;font-weight:900;margin:2px 0;color:#0B1B33;">0</div>
+              <div id="sf-pct-alerta" style="font-size:10.5px;color:#64748B;"></div>
+              <div id="sf-list-alerta" style="margin-top:6px;"></div>
+            </div>
+            <div class="sf-filter-card" data-sf-filter="rojo" onclick="window.setSfFilter('rojo')">
+              <div style="font-size:10.5px;font-weight:800;color:#BE123C;">CRÍTICO (&lt;90%)</div>
+              <div id="sf-cnt-rojo" style="font-size:26px;font-weight:900;margin:2px 0;color:#0B1B33;">0</div>
+              <div id="sf-pct-rojo" style="font-size:10.5px;color:#64748B;"></div>
+              <div id="sf-list-rojo" style="margin-top:6px;"></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="sf-drivers-grid" aria-label="Drivers Operativos Clave">
+        <div id="sf-driver-1" class="sf-driver-card">
+          <div id="sf-driver-1-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 1</div>
+          <div id="sf-driver-1-val" class="tabular" style="font-size:19px;font-weight:900;color:#0B1B33;margin:5px 0;">—</div>
+          <div id="sf-driver-1-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
+        </div>
+        <div id="sf-driver-2" class="sf-driver-card">
+          <div id="sf-driver-2-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 2</div>
+          <div id="sf-driver-2-val" class="tabular" style="font-size:19px;font-weight:900;color:#9A7438;margin:5px 0;">—</div>
+          <div id="sf-driver-2-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
+        </div>
+        <div id="sf-driver-3" class="sf-driver-card">
+          <div id="sf-driver-3-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 3</div>
+          <div id="sf-driver-3-val" class="tabular" style="font-size:19px;font-weight:900;color:#1D4ED8;margin:5px 0;">—</div>
+          <div id="sf-driver-3-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
+        </div>
+        <div id="sf-driver-4" class="sf-driver-card">
+          <div id="sf-driver-4-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 4</div>
+          <div id="sf-driver-4-val" class="tabular" style="font-size:19px;font-weight:900;color:#0F766E;margin:5px 0;">—</div>
+          <div id="sf-driver-4-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
+        </div>
+        <div id="sf-driver-5" class="sf-driver-card">
+          <div id="sf-driver-5-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 5</div>
+          <div id="sf-driver-5-val" class="tabular" style="font-size:19px;font-weight:900;color:#334155;margin:5px 0;">—</div>
+          <div id="sf-driver-5-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
+        </div>
+        <div id="sf-driver-6" class="sf-driver-card">
+          <div id="sf-driver-6-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 6</div>
+          <div id="sf-driver-6-val" class="tabular" style="font-size:19px;font-weight:900;color:#854D0E;margin:5px 0;">—</div>
+          <div id="sf-driver-6-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
+        </div>
+      </section>
+
+      <section class="card-panel">
+        <div class="panel-hdr">
+          <div class="panel-title"><span data-icon="search" data-size="15"></span><span>Tablero Detallado de Productos, KPIs e Iniciativas Estratégicas (Clic en fila para serie histórica)</span></div>
+          <input id="sf-search" class="sf-search-input" type="search" placeholder="Buscar indicador OKR..." oninput="window.renderSemaforo()" style="min-width:220px;" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="tbl-scroll">
+            <table>
+              <thead><tr><th>Productos Comerciales</th><th>Meta Mes</th><th>Meta Corte</th><th>Ejecución Real</th><th>vs Meta</th><th>vs Mes Ant.</th><th>Cumpl. %</th></tr></thead>
+              <tbody id="sf-tb-productos"></tbody>
+            </table>
+          </div>
+          <div class="tbl-scroll">
+            <table>
+              <thead><tr><th>KPIs Operativos</th><th>Meta Mes</th><th>Meta Corte</th><th>Ejecución Real</th><th>vs Meta</th><th>vs Mes Ant.</th><th>Cumpl. %</th></tr></thead>
+              <tbody id="sf-tb-kpis"></tbody>
+            </table>
+          </div>
+          <div class="tbl-scroll">
+            <table>
+              <thead><tr><th>Proyectos Estratégicos</th><th>Meta Mes</th><th>Meta Corte</th><th>Avance Real</th><th>vs Meta</th><th>vs Mes Ant.</th><th>Cumpl. %</th></tr></thead>
+              <tbody id="sf-tb-proyectos"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODALES, DRAWER & TOOLTIPS
+       ═══════════════════════════════════════════════════════════════ -->
+  <div id="modal-backdrop" class="modal-backdrop" onclick="window.closeChartModal();window.closeAuditModal();window.closePreloadModal();window.closeDrawer();"></div>
+
+  <!-- MODAL PRINCIPAL DE SIMULACIÓN & GRÁFICOS -->
+  <div id="chart-modal" class="nx-modal" role="dialog" aria-modal="true">
+    <div class="cm-hdr">
+      <div>
+        <div id="cm-title" class="cm-hdr-title">Simulador</div>
+        <div id="cm-sub" class="cm-hdr-sub"></div>
+      </div>
+      <button type="button" class="cm-close" onclick="window.closeChartModal()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
+    </div>
+    <div id="cm-tabs" class="cm-tabs"></div>
+    <div id="cm-kpis" class="cm-kpis"></div>
+    <div id="cm-body" class="cm-body"></div>
+  </div>
+
+  <!-- MODAL AUDITORÍA & ANOMALÍAS Z-MAD -->
+  <div id="audit-modal" class="nx-modal" role="dialog" aria-modal="true">
+    <div class="cm-hdr">
+      <div>
+        <div class="cm-hdr-title"><span data-icon="shield-check" data-size="17"></span> <span>Monitor de Integridad, Anomalías Z-MAD y Reconciliación</span></div>
+        <div id="aud-sub" class="cm-hdr-sub"></div>
+      </div>
+      <button type="button" class="cm-close" onclick="window.closeAuditModal()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
+    </div>
+    <div id="aud-kpis" class="cm-kpis"></div>
+    <div class="cm-body">
+      <div class="ana-toolbar" id="aud-filters">
+        <div class="pill-group">
+          <button type="button" class="pill-btn active" data-sev="ALL" onclick="window.setAuditFilter('ALL')">Todos</button>
+          <button type="button" class="pill-btn" data-sev="critical" onclick="window.setAuditFilter('critical')">Críticos</button>
+          <button type="button" class="pill-btn" data-sev="anomaly" onclick="window.setAuditFilter('anomaly')">Anomalías Z-MAD</button>
+          <button type="button" class="pill-btn" data-sev="warning" onclick="window.setAuditFilter('warning')">Advertencias</button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input id="aud-search" class="nx-input" type="search" placeholder="Filtrar hallazgo..." oninput="window.renderAuditTable()" />
+          <button type="button" class="btn-ghost-sm" onclick="window.exportAuditCSV()"><span data-icon="download" data-size="12"></span> CSV</button>
+        </div>
+      </div>
+      <div class="tbl-scroll" style="max-height:48vh;">
+        <table>
+          <thead><tr><th>Severidad</th><th>Categoría</th><th>Ubicación</th><th>Corte / Línea</th><th>Diagnóstico</th><th>Valor vs Referencia</th></tr></thead>
+          <tbody id="aud-tb"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PRE-CARGA HBW-NOWCAST (24 SUB-LÍNEAS) -->
+  <div id="preload-modal" class="nx-modal nx-modal-narrow" role="dialog" aria-modal="true">
+    <div class="cm-hdr">
+      <div>
+        <div class="cm-hdr-title"><span data-icon="zap" data-size="17"></span> <span>Pre-Carga Predictiva Multi-Sublínea (HBW-Nowcast Holt Amortiguado)</span></div>
+        <div id="pl-subtitle" class="cm-hdr-sub"></div>
+      </div>
+      <button type="button" class="cm-close" onclick="window.closePreloadModal()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
+    </div>
+    <div id="pl-body" class="cm-body"></div>
+    <div id="pl-footer" style="padding:12px 18px;border-top:1px solid var(--border-subtle);display:flex;justify-content:flex-end;gap:10px;background:#F1F5F9;">
+      <button type="button" class="btn-ghost-sm" onclick="window.closePreloadModal()">Cancelar</button>
+      <button type="button" class="btn-neon-primary" onclick="window.applyPreloadToSimulator()">
+        <span data-icon="sliders" data-size="14"></span> <span>Aplicar Pre-Carga al Simulador</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- DRAWER LATERAL POR LÍNEA DE NEGOCIO -->
+  <aside id="line-drawer" class="line-drawer" aria-label="Detalle de línea de negocio">
+    <div class="cm-hdr">
+      <div>
+        <div id="dr-title" class="cm-hdr-title">Unidad de Negocio</div>
+        <div id="dr-sub" class="cm-hdr-sub"></div>
+      </div>
+      <button type="button" class="cm-close" onclick="window.closeDrawer()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
+    </div>
+    <div id="dr-body" class="drawer-body"></div>
+  </aside>
+
+  <!-- MODAL GUÍA RÁPIDA (SOLO BAJO DEMANDA, SIN TARJETA DE ASISTENTE VIRTUAL) -->
+  <div id="welcome-modal-backdrop" class="modal-backdrop" onclick="window.closeWelcomeModal()"></div>
+  <div id="welcome-modal" class="nx-modal nx-modal-narrow" role="dialog" aria-modal="true">
+    <div class="cm-hdr">
+      <div>
+        <div class="cm-hdr-title"><span data-icon="compass" data-size="17"></span> <span>Guía Ejecutiva — Nexus Quant FP&amp;A Simulator</span></div>
+        <div id="wm-subtitle" class="cm-hdr-sub"></div>
+      </div>
+      <button type="button" class="cm-close" onclick="window.closeWelcomeModal()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
+    </div>
+    <div class="cm-body">
+      <div id="wm-live-strip" class="wm-live-strip"></div>
+      <div class="wm-grid">
+        <div class="wm-card" onclick="window.closeWelcomeModal('predictivo')">
+          <div style="font-weight:800;color:#0B1B33;margin-bottom:4px;">1. Simulador Interactivo Q × Tarifa</div>
+          <div style="font-size:11.5px;color:#334155;">Modifica cantidades (Q), tarifas unitarias ($/Q), ingresos fijos, sub-líneas o aplica escenarios de estrés (-10% / +15%) con actualización instantánea del Fan Chart P10–P90.</div>
+        </div>
+        <div class="wm-card" onclick="window.closeWelcomeModal('ingresos')">
+          <div style="font-weight:800;color:#059669;margin-bottom:4px;">2. Descomposición Precio-Volumen (ΔQ / ΔP)</div>
+          <div style="font-size:11.5px;color:#334155;">Audita cuánto de la brecha contra presupuesto proviene de expansión comercial en volumen (Q) y cuánto de variaciones de tarifa o mix.</div>
+        </div>
+        <div class="wm-card" onclick="window.closeWelcomeModal('analitica')">
+          <div style="font-weight:800;color:#1D4ED8;margin-bottom:4px;">3. Pareto 80/20, Índice HHI &amp; 24 Sub-Líneas</div>
+          <div style="font-size:11.5px;color:#334155;">Explora la contribución de las 24 sub-líneas, puente Waterfall presupuestario y mapa de calor anual de cumplimiento.</div>
+        </div>
+        <div class="wm-card" onclick="window.closeWelcomeModal('audit')">
+          <div style="font-weight:800;color:#9A7438;margin-bottom:4px;">4. Escenarios Aleatorios &amp; Detector Z-MAD</div>
+          <div style="font-size:11.5px;color:#334155;">Pulsa «Nueva Simulación Aleatoria» en la barra superior en cualquier momento para generar un universo nuevo de datos sintéticos y probar alertas Z-MAD.</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <button type="button" class="btn-neon-primary" onclick="window.closeWelcomeModal()">Comenzar Exploración</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="nx-chart-tooltip"></div>
+  <div id="nx-toast"></div>
+
+  <script src="js/nexus-fpa-icons.js?v=20261114c"></script>
+  <script src="js/nexus-fpa-data.js?v=20261114c"></script>
+  <script src="js/nexus-fpa-simulator.js?v=20261114c"></script>
+  <script src="js/nexus-fpa-app.js?v=20261114c"></script>
 </body>
- </noframes>
-</frameset>
 </html>

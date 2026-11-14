@@ -1,1043 +1,905 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-
-
-
-<title>Financial Dashboard en Excel y VBA: KPI financieros | Jesús Benjamín Zerpa</title>
-<!-- SEO:START -->
-<meta name="description" content="Financial Dashboard desarrollado por Jesús Benjamín Zerpa en Excel y Visual Basic: cuatro niveles de interpretación del Estado de Resultados, exportación a PowerPoint o PDF e integración con Power BI." />
-<meta name="keywords" content="financial dashboard, dashboard financiero, Excel, VBA, Visual Basic, KPI financieros, estado de resultados, Power BI, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
-<meta name="author" content="Jesús Benjamín Zerpa" />
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-<link rel="canonical" href="https://jesusbz.github.io/Dashboard.html" />
-<meta property="og:locale" content="es_ES" />
-<meta property="og:type" content="article" />
-<meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
-<meta property="og:title" content="Financial Dashboard en Excel y VBA: KPI financieros | Jesús Benjamín Zerpa" />
-<meta property="og:description" content="Financial Dashboard desarrollado por Jesús Benjamín Zerpa en Excel y Visual Basic: cuatro niveles de interpretación del Estado de Resultados, exportación a PowerPoint o PDF e integración con Power BI." />
-<meta property="og:url" content="https://jesusbz.github.io/Dashboard.html" />
-<meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-h.webp" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Financial Dashboard en Excel y VBA: KPI financieros | Jesús Benjamín Zerpa" />
-<meta name="twitter:description" content="Financial Dashboard desarrollado por Jesús Benjamín Zerpa en Excel y Visual Basic: cuatro niveles de interpretación del Estado de Resultados, exportación a PowerPoint o PDF e integración con Power BI." />
-<meta name="twitter:image" content="https://jesusbz.github.io/imagenes/imagen-h.webp" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-      "name": "Jesús Benjamín Zerpa",
-      "alternateName": [
-        "Jesús Zerpa",
-        "Jesús B. Zerpa",
-        "Jesus Benjamin Zerpa",
-        "Jesus Zerpa"
-      ],
-      "url": "https://jesusbz.github.io/",
-      "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-      "jobTitle": "Gerente de Planificación Financiera y Presupuesto",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Consorcio Credicard"
-      },
-      "description": "Economista y Data Scientist con más de 14 años de experiencia en planificación, presupuesto y control. Trayectoria: Gerente de Planificación Financiera y Presupuesto en Consorcio Credicard; Planificador Corporativo de Finanzas en Grupo Mistral; Coordinador Corporativo de Presupuesto y Control en Multimédica; Gestión Senior de Presupuesto en Segutronic (CG Security Group); Subgerente de Finanzas en Grupo Empresarial Admibien; Ejecutivo de Negocios en Banesco Banco Universal.",
-      "email": "mailto:JesusZerpaEconomia@Gmail.Com",
-      "telephone": "+58 424 148 78 70",
-      "knowsAbout": [
-        "Planificación financiera",
-        "Presupuesto y control de gestión",
-        "Pronósticos y series temporales",
-        "Modelos GARCH y Valor en Riesgo (VaR)",
-        "Teoría de portafolios de Markowitz",
-        "Portafolio tangente",
-        "Simulación Monte Carlo",
-        "Machine Learning en R",
-        "Business Intelligence",
-        "Power BI",
-        "RStudio",
-        "Evaluación y formulación de proyectos de inversión"
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
-        "https://github.com/JesusBZ",
-        "https://rpubs.com/JesusZ"
-      ]
-    },
-    {
-      "@type": "TechArticle",
-      "@id": "https://jesusbz.github.io/Dashboard.html#article",
-      "headline": "Financial Dashboard desarrollado en Excel y Visual Basic",
-      "description": "Financial Dashboard desarrollado por Jesús Benjamín Zerpa en Excel y Visual Basic: cuatro niveles de interpretación del Estado de Resultados, exportación a PowerPoint o PDF e integración con Power BI.",
-      "image": "https://jesusbz.github.io/imagenes/imagen-h.webp",
-      "url": "https://jesusbz.github.io/Dashboard.html",
-      "mainEntityOfPage": "https://jesusbz.github.io/Dashboard.html",
-      "inLanguage": "es",
-      "author": {
+  <title>Financial Dashboard y Simulador FP&amp;A Interactivo | Jesús Benjamín Zerpa</title>
+  <!-- SEO:START -->
+  <meta name="description" content="Financial Dashboard y simulador FP&amp;A en tiempo real: modelo Q × Tarifa, Nowcast Bayesiano P10-P90 y alertas Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="keywords" content="financial dashboard interactivo, simulador financiero corporativo, planificación financiera FP&amp;A, Nowcast Bayesiano P10 P50 P90, elasticidad precio volumen, Q por tarifa, HBW-Nowcast Holt amortiguado, detector anomalias Z-MAD, Pareto 80/20, indice Herfindahl HHI, inteligencia financiera, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+  <meta name="author" content="Jesús Benjamín Zerpa (Jesús Zerpa)" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://jesusbz.github.io/Dashboard.html" />
+  <link rel="alternate" hreflang="es" href="https://jesusbz.github.io/Dashboard.html" />
+  <link rel="alternate" hreflang="x-default" href="https://jesusbz.github.io/Dashboard.html" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
+  <meta property="og:title" content="Financial Dashboard y Simulador FP&amp;A Interactivo | Jesús Benjamín Zerpa" />
+  <meta property="og:description" content="Financial Dashboard y simulador FP&amp;A en tiempo real: modelo Q × Tarifa, Nowcast Bayesiano P10-P90 y alertas Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta property="og:url" content="https://jesusbz.github.io/Dashboard.html" />
+  <meta property="og:image" content="https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" />
+  <meta property="og:image:alt" content="Financial Dashboard y Simulador FP&amp;A Interactivo por Jesús Benjamín Zerpa" />
+  <meta property="article:published_time" content="2020-06-20T08:00:00-04:00" />
+  <meta property="article:modified_time" content="2026-11-14T18:00:00-04:00" />
+  <meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Financial Dashboard y Simulador FP&amp;A Interactivo | Jesús Benjamín Zerpa" />
+  <meta name="twitter:description" content="Financial Dashboard y simulador FP&amp;A en tiempo real: modelo Q × Tarifa, Nowcast Bayesiano P10-P90 y alertas Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="twitter:image" content="https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" />
+  <meta name="twitter:image:alt" content="Financial Dashboard y Simulador FP&amp;A Interactivo por Jesús Benjamín Zerpa" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
         "@type": "Person",
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
+        "@id": "https://jesusbzerpa.github.io/#person",
         "name": "Jesús Benjamín Zerpa",
-        "url": "https://jesusbz.github.io/acercade.html"
+        "givenName": "Jesús Benjamín",
+        "familyName": "Zerpa",
+        "alternateName": [
+          "Jesús Zerpa",
+          "Jesus Zerpa",
+          "Jesús Benjamín Zerpa",
+          "Jesus Benjamin Zerpa",
+          "Jesús B. Zerpa",
+          "Jesus B. Zerpa",
+          "Jesús Benjamín",
+          "Economista Jesús Zerpa",
+          "Economista Jesús Benjamín Zerpa"
+        ],
+        "jobTitle": "Economista Senior, Gerente de Planificación Financiera (FP&A) & Científico de Datos",
+        "url": "https://jesusbzerpa.github.io/",
+        "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
+        "email": "mailto:JesusZerpaEconomia@Gmail.Com",
+        "telephone": "+58 424 148 78 70",
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Universidad Alejandro de Humboldt"
+          },
+          {
+            "@type": "EducationalOrganization",
+            "name": "Instituto Universitario de Profesiones Gerenciales (I.U.P.G.)"
+          }
+        ],
+        "knowsAbout": [
+          "Planificación Financiera Corporativa (FP&A)",
+          "Presupuesto Maestro",
+          "Control de Gestión",
+          "Inteligencia Financiera",
+          "Evaluación de Proyectos de Inversión (CAPEX)",
+          "Business Intelligence",
+          "Microsoft Power BI",
+          "Ciencia de Datos",
+          "Econometría Financiera",
+          "Series Temporales (SARIMA, Prophet, VAR, GARCH, EGARCH)",
+          "Simulación Estocástica de Monte Carlo",
+          "Deep Learning LSTM en PyTorch",
+          "Optimización de Portafolios de Markowitz",
+          "Python",
+          "RStudio"
+        ],
+        "sameAs": [
+          "https://jesusbzerpa.github.io/",
+          "https://jesusbezerpa.github.io/",
+          "https://jesusbz.github.io/",
+          "https://jesusbz.github.io/acercade.html",
+          "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
+          "https://github.com/JesusBZ",
+          "https://rpubs.com/JesusZ",
+          "https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa"
+        ]
       },
-      "publisher": {
-        "@type": "Person",
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-        "name": "Jesús Benjamín Zerpa",
-        "url": "https://jesusbz.github.io/acercade.html"
+      {
+        "@type": "TechArticle",
+        "@id": "https://jesusbz.github.io/Dashboard.html#article",
+        "headline": "Nexus Quant FP&A: Financial Intelligence Suite & Simulador Corporativo Interactivo",
+        "description": "Plataforma web interactiva de planificación financiera (FP&A), simulación Precio-Volumen (Q × Tarifa + Fijo), Nowcast Bayesiano P10–P90, pre-carga Holt Amortiguado (HBW-Nowcast) y auditoría robusta Z-MAD sobre 6 unidades de negocio sintéticas.",
+        "image": "https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp",
+        "url": "https://jesusbz.github.io/Dashboard.html",
+        "mainEntityOfPage": "https://jesusbz.github.io/Dashboard.html",
+        "datePublished": "2020-06-20",
+        "dateModified": "2026-11-14",
+        "inLanguage": "es",
+        "proficiencyLevel": "Expert",
+        "dependencies": "HTML5, JavaScript ES6, Chart.js 4, Inteligencia Financiera",
+        "author": { "@id": "https://jesusbzerpa.github.io/#person" },
+        "publisher": { "@id": "https://jesusbzerpa.github.io/#person" },
+        "about": ["Planificación Financiera (FP&A)", "Nowcast Bayesiano", "Control Presupuestario", "Inteligencia Financiera"],
+        "keywords": ["Financial Dashboard", "Simulador Financiero", "Nowcast Bayesiano", "Q x Tarifa", "Z-MAD", "FP&A Interactivo", "Inteligencia Financiera", "Jesús Benjamín Zerpa", "Jesús Zerpa"]
       },
-      "dateModified": "2026-10-29",
-      "keywords": [
-        "financial dashboard",
-        "dashboard financiero",
-        "Excel",
-        "VBA",
-        "Visual Basic",
-        "KPI financieros",
-        "estado de resultados",
-        "Power BI",
-        "Jesús Benjamín Zerpa",
-        "Jesús Zerpa"
-      ],
-      "isPartOf": {
-        "@type": "WebSite",
-        "@id": "https://jesusbz.github.io/#website",
-        "url": "https://jesusbz.github.io/"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Inicio",
-          "item": "https://jesusbz.github.io/"
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://jesusbz.github.io/Dashboard.html#software",
+        "name": "Nexus Quant FP&A — Simulador Financiero Corporativo",
+        "url": "https://jesusbz.github.io/FinancialDashboard.htm",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
         },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Financial Dashboard desarrollado en Excel y Visual Basic",
-          "item": "https://jesusbz.github.io/Dashboard.html"
-        }
-      ]
-    }
-  ]
-}
-</script>
-<!-- SEO:END -->
+        "author": { "@id": "https://jesusbzerpa.github.io/#person" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://jesusbz.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Financial Dashboard y Simulador FP&A",
+            "item": "https://jesusbz.github.io/Dashboard.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- SEO:END -->
+
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="dns-prefetch" href="https://portafolio-2.disqus.com" />
+  <link rel="dns-prefetch" href="https://portafolio-11.disqus.com" />
+  <link rel="dns-prefetch" href="https://disqus.com" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NC4HGWB');</script>
-<!-- End Google Tag Manager -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114c" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
 
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9M6MYPFL3M', {
+      'linker': { 'domains': ['jesusbzerpa.github.io', 'jesusbezerpa.github.io', 'jesusbz.github.io'] }
+    });
+  </script>
 
-<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-<link  rel="icon"   href="favi.png" type="image/png" />
-
-
-
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-#share {
-	width: 100%;
-  	margin: 100px auto;
-  	text-align: center;
-}
-
-/* buttons */
-
-#share a {
-	width: 50px;
-  	height: 50px;
-  	display: inline-block;
-  	margin: 8px;
-  	border-radius: 50%;
-  	font-size: 24px;
-  	color: #fff;
-	opacity: 0.75;
-	transition: opacity 0.15s linear;
-}
-
-#share a:hover {
-	opacity: 1;
-}
-
-/* icons */
-
-#share i {
-  	position: relative;
-  	top: 50%;
-  	transform: translateY(-50%);
-}
-
-/* colors */
-
-.facebook {
- 	background: #3b5998;
-}
-
-.twitter {
-  	background: #55acee;
-}
-
-.googleplus {
-  	background: #000000;
-}
-
-.linkedin {
-  	background: #0077b5;
-}
-
-.pinterest {
-  	background: #cb2027;
-}
-</style>
-
-<link rel="stylesheet" href="styles.css" type="text/css" />
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-</style>
-
-
-<style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script>
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.parent().addClass('active');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-.btn-3d {
-  padding: .6rem 1rem;
-  border: 1px solid #995309;
-  border-radius: 4px;
-  background-color: #d9750b;
-  color: #fff;
-
-  font-size: 1.5rem;
-  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-  box-shadow: 0 1px 0 rgba(255,255,255,.5) inset,
-    0 1px 3px rgba(0,0,0,.2);
-  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f90),to(#e76a00));
-  background-image: linear-gradient(#f90 10%,#e76a00 100%);
-}
-
-.btn-3d:hover, .btn-3d:focus {
-  background-color: #e0811b;
-  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
-  background-image: linear-gradient(#f0a100 10%,#f70 100%);
-}
-
-.btn-3d:active {
-  background-color: #cf6a00;
-  box-shadow: 0 2px 3px 0 rgba(0,0,0,.2) inset;
-  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#f0a100),to(#f70));
-  background-image: linear-gradient(#f0a100 10%,#f70 100%);
-}
-
-</style>
-
-<!-- code folding -->
-
-
-
-
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261108a" />
-</head>
-
-<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NC4HGWB"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<div class="container-fluid main-container">
-
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">Portafolio</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">
-    <span class="fa fa-home"></span>
-     
-    Inicio
-  </a>
-</li>
-<li>
-  <a href="index.html#trabajos">Trabajos</a>
-</li>
-<li>
-  <a href="acercade.html">Acerca de</a>
-</li>
-<li>
-  <a href="formulario.html">Contacto</a>
-</li>
-<li>
-  <a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a>
-</li>
-    </ul>      
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://join.skype.com/invite/vfcMypZd0Ucf" rel="nofollow noopener noreferrer" target="_blank">
-    <span class="fa fa fa fa-skype"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="https://t.me/jesusbz21" rel="nofollow noopener noreferrer" target="_blank">
-    <span class="fa fa fa fa-telegram"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" rel="nofollow noopener noreferrer" target="_blank">
-    <span class="fab fa fab fa-linkedin"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa" rel="nofollow noopener noreferrer" target="_blank">
-    <span class="fa fa fa fa-scribd"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="https://github.com/JesusBZ" rel="nofollow noopener noreferrer" target="_blank">
-    <span class="fa fa fa fa-github"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="mailto:jesuszerpaeconomia@gmail.com">
-    <span class="far fa far fa-envelope"></span>
-     
-  </a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
-
-<div class="fluid-row" id="header">
-<!-- EXEC-HEADER-START -->
-  <div class="study-hero-panel">
-    <div class="study-hero-badges">
-      <span class="study-badge primary">TRABAJO #6 • CONTROL DE GESTIÓN & KPIS</span>
-      <span class="study-badge emerald">EXCEL AVANZADO • VISUAL BASIC (VBA) • BI</span>
-      <span class="study-badge amber">PUBLICACIÓN: JUNIO 2020</span>
-    </div>
-    <h1 class="study-hero-title">Financial Dashboard Corporativo: Control Presupuestario e Indicadores Financieros</h1>
-    <p>Diseño y programación de un cuadro de mando financiero interactivo en Excel y Visual Basic for Applications (VBA) para el monitoreo ejecutivo del Estado de Resultados (P&G), Balance General, liquidez, solvencia, rentabilidad (ROE, ROA, EBITDA) y ejecución presupuestaria.</p>
-    <div class="study-meta-bar">
-      <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Junio de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> Microsoft Excel, VBA, Modelización Financiera</div>
-      <div class="study-dl-group">
-        <a href="https://jesusbz.github.io/FinancialDashboard.htm" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Abrir Financial Dashboard Interactivo</a>
-        <a href="index.html#trabajos" class="btn-study-dl">Catálogo de Modelos</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="kpi-grid-4">
-    <div class="kpi-metric-card ">
-      <span class="kpi-metric-label">Cobertura Contable</span>
-      <div class="kpi-metric-value">P&G + Balance</div>
-      <span class="kpi-metric-delta blue">Visión Integral</span>
-      <span class="kpi-metric-sub">Integración de resultados, estructura patrimonial y caja</span>
-    </div>
-    <div class="kpi-metric-card emerald">
-      <span class="kpi-metric-label">Rentabilidad & Margen</span>
-      <div class="kpi-metric-value">EBITDA / ROE</div>
-      <span class="kpi-metric-delta ">Márgenes Operativos</span>
-      <span class="kpi-metric-sub">Seguimiento dinámico de utilidad bruta, operativa y neta</span>
-    </div>
-    <div class="kpi-metric-card amber">
-      <span class="kpi-metric-label">Control Presupuestario</span>
-      <div class="kpi-metric-value">Real vs. Ppto</div>
-      <span class="kpi-metric-delta amber">Análisis de Variación</span>
-      <span class="kpi-metric-sub">Detección temprana de desviaciones por partida y centro</span>
-    </div>
-    <div class="kpi-metric-card purple">
-      <span class="kpi-metric-label">Automatización</span>
-      <div class="kpi-metric-value">VBA Macros</div>
-      <span class="kpi-metric-delta ">Navegación Ejecutiva</span>
-      <span class="kpi-metric-sub">Actualización instantánea de gráficos y tablas dinámicas</span>
-    </div>
-  </div>
-
-  <div class="callout-quant">
-    <h4>Arquitectura de un Cuadro de Mando Financiero para la Dirección Corporativa</h4>
-    <p>Un <strong>Financial Dashboard</strong> efectivo sintetiza miles de registros contables y presupuestarios en <strong>indicadores clave de desempeño (KPIs)</strong> accionables. Esta herramienta combina modelización financiera estructurada con automatización en <strong>Visual Basic (VBA)</strong> para facilitar el seguimiento mensual de liquidez, endeudamiento y rentabilidad.</p>
-  </div>
-<!-- EXEC-HEADER-END -->
-</div>
-
-
-
-<div style="text-align: right">
-<a role="button" id="btn5" class="btn btn-3d" type="button" href="https://jesusbz.github.io/FinancialDashboard.htm" target="_blank" rel="noopener noreferrer">Ir al Dashboard</a>
-</div>
-<h3>
-<span style="font-size: large;">Descripción:</span>
-</h3>
-<div style="text-align: justify;">
-<span style="font-size: large;">Potente herramienta de análisis ejecutivo con cuatro (4) niveles de desagregación e interpretación para la presentación de resultados basados en el Estado de Ganancias y Pérdidas (Estado de Resultados). Incorpora la exportación automatizada de reportes a PowerPoint o PDF con indicadores y alertas visuales (highlights) personalizables. </span><br /> <span style="font-size: large;"><br /></span>
-</div>
-<span style="font-size: large;">
-<div style="text-align: justify;">
-Un panel de control financiero (Financial Dashboard) es una herramienta de “inteligencia empresarial” que ayuda a rastrear todos los KPI financieros relevantes, permite una visión amplia y eficiente del negocio y facilita el seguimiento de los márgenes de ventas y ganancias en detalle para cumplir y superar los objetivos financieros proyectados de un área, línea de negocio, departamento, empresa o grupo de ellas.
-</div>
-</span>
-<div>
-<span style="font-size: large;"><br /></span>
-<div style="text-align: justify;">
-<span style="font-size: large;">La herramienta fue desarrollada por Jesús B. Zerpa. En su primera versión, fue diseñada para la presentación ejecutiva de resultados de la Vicepresidencia de Finanzas de un importante Grupo Empresarial cuyas operaciones abarcan producción, distribución, venta al mayor, comercialización y una cadena de tiendas al detal.</span>
-</div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span>
-</div>
-<div style="text-align: justify;">
-<span style="font-size: large;">El objetivo planteado al finalizar el diseño de esta herramienta era centralizar y actualizar en un solo reporte información que contenían varios entregables, engranarlos con una secuencia lógica óptima para el análisis financiero cualitativo y cuantitativo, automatizarlo y darle una imagen de presentación para el cierre mensual. </span>
-</div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span>
-</div>
-<div style="text-align: justify;">
-<span style="font-size: large;">Asimismo, se dotó al sistema de interactividad dinámica para consultar series históricas en tiempo real durante las sesiones de directorio, optimizando los tiempos de respuesta ejecutiva. Destacan su arquitectura liviana y su esquema de seguridad programado en Visual Basic (VBA), que protege la integridad del modelo e impide el acceso por parte de terceros no autorizados. </span>
-</div>
-<div style="text-align: justify;">
-<span style="font-size: large;"><br /></span>
-</div>
-<div style="text-align: justify;">
-<span style="font-size: large;">Esta nueva versión tiene una serie de optimizaciones para hacerlo personalizable y el anexo del asistente que permite hacer la inducción al usuario de manera interactiva sin necesidad de intermediarios. Así como la integración a <a href="https://powerbi.microsoft.com/es-es/" rel="nofollow noopener noreferrer" target="_blank">Power BI</a> y pasar una extensión del diseño de la hoja a la plataforma BI convirtiendo a la herramienta en un modelo integral de inteligencia financiera más allá de una hoja de cálculo tradicional en Excel.</span><br /> <span style="font-size: large;"><br /></span> <span style="font-size: large;"><span style="color: #0000ee; text-decoration-line: underline;"><a href="https://jesusbz.github.io/FinancialDashboard.htm" rel="nofollow noopener noreferrer" target="_blank"></a></span></span>
-</div>
-<br><br>
-<div class="separator" style="clear: both; text-align: center;">
-<a role="button" id="btn5" class="btn btn-3d" type="button" href="https://jesusbz.github.io/FinancialDashboard.htm" target="_blank" rel="noopener noreferrer">Ir al Dashboard</a>
-
-<div style="text-align: justify;">
-<br />
-</div>
-<div style="text-align: justify;">
-
-</div>
-<div style="text-align: justify;">
-<span style="font-size: large;"></span>
-</div>
-</div>
-<hr>
-<!-- EXEC-SYNTHESIS-START -->
-<div class="callout-quant emerald">
-  <h4>Síntesis: Agilidad en el Control de Gestión y Reporte Directivo</h4>
-  <p><strong>1. Visibilidad en Tiempo Real de Márgenes y Liquidez:</strong> La consolidación visual del <strong>EBITDA</strong>, <strong>margen neto</strong>, <strong>capital de trabajo</strong>, <strong>ROE</strong> y <strong>ROA</strong> reduce drásticamente los tiempos de cierre y análisis económico-financiero.<br /><br /><strong>2. Disciplina Presupuestaria:</strong> El contraste automatizado entre ejecución real y presupuesto maestro permite aplicar correctivos oportunos sobre costos operativos y gastos financieros.</p>
-</div>
-<!-- EXEC-SYNTHESIS-END -->
-
-<div class="corporate-share-box">
-<span class="share-box-title">Compartir este Trabajo Cuantitativo:</span>
-<div class="share-buttons-strip">
-<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjesusbz.github.io%2FDashboard.html" target="_blank" rel="noopener noreferrer" class="btn-share-corporate linkedin" title="Compartir en LinkedIn">
-<svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0-.02-3.28 1.64 1.64 0 0 0 .02 3.28m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
-<span>LinkedIn</span>
-</a>
-<a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjesusbz.github.io%2FDashboard.html&text=Dashboard%20Financiero%20Ejecutivo%20-%20Jes%C3%BAs%20Zerpa" target="_blank" rel="noopener noreferrer" class="btn-share-corporate twitter-x" title="Compartir en X">
-<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-<span>X (Twitter)</span>
-</a>
-<a href="https://api.whatsapp.com/send?text=Dashboard%20Financiero%20Ejecutivo%20https%3A%2F%2Fjesusbz.github.io%2FDashboard.html" target="_blank" rel="noopener noreferrer" class="btn-share-corporate whatsapp" title="Compartir por WhatsApp">
-<svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8 2.53 1.08 2.53.72 2.99.68.45-.04 1.47-.6 1.68-1.18.2-.59.2-1.09.14-1.19-.06-.1-.23-.16-.48-.28z"/></svg>
-<span>WhatsApp</span>
-</a>
-<button type="button" class="btn-share-corporate copylink" onclick="navigator.clipboard.writeText(window.location.href); this.classList.add('copied'); this.querySelector('.btn-label').textContent='¡Enlace Copiado!'; setTimeout(() => { this.classList.remove('copied'); this.querySelector('.btn-label').textContent='Copiar Enlace'; }, 2000);">
-<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-<span class="btn-label">Copiar Enlace</span>
-</button>
-</div>
-</div>
-<hr>
-
-<div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
-</div>
-<span style="font-size: medium;"><br /></span>
-<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<br /><span style="color: #475569; font-size: 0.92em;">Publicado: Junio de 2020</span><span style="font-size: medium;"><span style="color: black;">
-</span></span></span><br />
-<br />
-<div style="text-align: center;">
-<div style="text-align: left;">
-<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img alt="Financial Dashboard desarrollado en Excel y Visual Basic - imagen 2" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
-</div>
-<div style="text-align: center;">
-<div style="text-align: left;">
-<br /></div>
-</div>
-<!-- RELATED-CAROUSEL-START -->
-<section class="pc-section" aria-label="Otros trabajos del portafolio">
-  <div class="pc-header">
-    <div>
-      <span class="pc-kicker">Sigue explorando</span>
-      <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
-    </div>
-    <div class="pc-controls">
-      <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-      <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-    </div>
-  </div>
-  <div class="pc-viewport" id="carouselViewport">
-    <div class="pc-track" id="carouselTrack">
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-a.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">Rstudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-i.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad & VaR</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-c.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · Rstudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-f.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="EvaluacionProyecto.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-g.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #5</span>
-            <span class="pc-cat">Evaluación de Proyectos</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión</h4>
-            <div class="pc-meta"><span class="pc-tags">Evaluación de Proyectos · Proyecto de Inversión</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto7.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-j.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #7</span>
-            <span class="pc-cat">Macroeconomía</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Exploración de Datos Macroeconómicos con Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Macroeconomía · Exploración de datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="powermap.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/ima-x.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #8</span>
-            <span class="pc-cat">Inteligencia Geoespacial</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Sistema Integrado Geográfico SIG</h4>
-            <div class="pc-meta"><span class="pc-tags">Power Map · Modelo de Datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/miniatura/prophet.jpg" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #9</span>
-            <span class="pc-cat">Pronóstico Prophet</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Pronósticos con Prophet para el Bitcoin y Ether</h4>
-            <div class="pc-meta"><span class="pc-tags">Prophet de Facebook · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/ima-x1.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="power-bi.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/ima-x2.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #11</span>
-            <span class="pc-cat">Power BI</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Power BI, una de las mejores herramientas BI</h4>
-            <div class="pc-meta"><span class="pc-tags">Power BI · Dashboard Financiero</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/data-mining-blog.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #12</span>
-            <span class="pc-cat">Data Mining</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis de procesos de negocio utilizando la plataforma de Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Data Analytics · Data mining</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="trading-medias-moviles-rstudio.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/ima-x3.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #13</span>
-            <span class="pc-cat">Análisis Técnico</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis Técnico del Bitcoin en Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Trading · Bitcoin</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-a.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">Rstudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-i.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad & VaR</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-c.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · Rstudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-f.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="EvaluacionProyecto.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-g.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #5</span>
-            <span class="pc-cat">Evaluación de Proyectos</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión</h4>
-            <div class="pc-meta"><span class="pc-tags">Evaluación de Proyectos · Proyecto de Inversión</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto7.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/imagen-j.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #7</span>
-            <span class="pc-cat">Macroeconomía</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Exploración de Datos Macroeconómicos con Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Macroeconomía · Exploración de datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="powermap.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/ima-x.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #8</span>
-            <span class="pc-cat">Inteligencia Geoespacial</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Sistema Integrado Geográfico SIG</h4>
-            <div class="pc-meta"><span class="pc-tags">Power Map · Modelo de Datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/miniatura/prophet.jpg" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #9</span>
-            <span class="pc-cat">Pronóstico Prophet</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Pronósticos con Prophet para el Bitcoin y Ether</h4>
-            <div class="pc-meta"><span class="pc-tags">Prophet de Facebook · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/ima-x1.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="power-bi.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/ima-x2.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #11</span>
-            <span class="pc-cat">Power BI</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Power BI, una de las mejores herramientas BI</h4>
-            <div class="pc-meta"><span class="pc-tags">Power BI · Dashboard Financiero</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/data-mining-blog.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #12</span>
-            <span class="pc-cat">Data Mining</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis de procesos de negocio utilizando la plataforma de Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Data Analytics · Data mining</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="trading-medias-moviles-rstudio.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/ima-x3.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #13</span>
-            <span class="pc-cat">Análisis Técnico</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis Técnico del Bitcoin en Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Trading · Bitcoin</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-    </div>
-  </div>
-</section>
-<!-- RELATED-CAROUSEL-END -->
-<div class="disqus-container-modern">
-  <div class="disqus-header-card">
-    <div class="disqus-header-title">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-      <span>Comentarios y Discusión Técnica</span>
-    </div>
-    <span class="disqus-sub-badge">Comunidad Cuantitativa</span>
-  </div>
-  <div id="disqus_thread">
-    <div id="disqus_loader" class="disqus-loader-msg">
-      <span class="disqus-spinner"></span>
-      <span>Cargando comentarios de la comunidad...</span>
-    </div>
-  </div>
-  <div id="disqus_fallback" class="disqus-fallback-card" style="display: none;">
-    <p><strong>¿No se visualiza el módulo de comentarios?</strong> Es posible que tu navegador o red tenga activo un bloqueador de anuncios o restricciones de privacidad para el servicio de Disqus.</p>
-    <p>Para consultas directas sobre este modelo o asesoría corporativa, puedes contactar a Jesús Benjamín Zerpa a través del <a href="formulario.html">Formulario de Contacto</a> o por <a href="https://wa.me/584241487870" target="_blank" rel="noopener noreferrer">WhatsApp (+58 424 148 78 70)</a>.</p>
-    <button type="button" class="btn-retry-disqus" onclick="reloadDisqusThread()">Reintentar carga de Disqus</button>
-  </div>
-</div>
-<script>
-  var disqus_config = function () {
-    this.page.url = 'https://jesusbz.github.io/Dashboard.html';
-    this.page.identifier = 'Dashboard.html';
-  };
-  function loadDisqus() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://portafolio-11.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    s.onload = function() {
-      var loader = document.getElementById('disqus_loader');
-      if (loader) loader.style.display = 'none';
-      var fb = document.getElementById('disqus_fallback');
-      if (fb) fb.style.display = 'none';
-    };
-    s.onerror = function() {
-      var loader = document.getElementById('disqus_loader');
-      if (loader) loader.style.display = 'none';
-      var fb = document.getElementById('disqus_fallback');
-      if (fb) fb.style.display = 'block';
-    };
-    (d.head || d.body).appendChild(s);
-  }
-  function reloadDisqusThread() {
-    var fb = document.getElementById('disqus_fallback');
-    if (fb) fb.style.display = 'none';
-    var loader = document.getElementById('disqus_loader');
-    if (loader) loader.style.display = 'flex';
-    loadDisqus();
-  }
-  loadDisqus();
-  setTimeout(function() {
-    var thread = document.getElementById('disqus_thread');
-    var iframe = thread ? thread.querySelector('iframe') : null;
-    if (!iframe) {
-      var loader = document.getElementById('disqus_loader');
-      if (loader) loader.style.display = 'none';
-      var fb = document.getElementById('disqus_fallback');
-      if (fb) fb.style.display = 'block';
-    } else {
-      var loader = document.getElementById('disqus_loader');
-      if (loader) loader.style.display = 'none';
+  <style>
+    .quant-study-wrap {
+      max-width: 1140px;
+      margin: 28px auto 60px auto;
+      padding: 0 20px;
     }
-  }, 6000);
-</script>
-<noscript>Por favor activa JavaScript para ver los comentarios soportados por <a href="https://disqus.com/?ref_noscript">Disqus</a>.</noscript>
+    .quant-paper-card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.08);
+      padding: 2.6rem 3rem 3.8rem 3rem;
+    }
+    @media (max-width: 768px) {
+      .quant-paper-card { padding: 1.4rem 1.15rem 2.4rem 1.15rem; }
+    }
+    .study-hero-panel {
+      background: linear-gradient(135deg, #0B1B33 0%, #163259 100%);
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 2.3rem 2.4rem;
+      margin-bottom: 2.1rem;
+      border: 1.5px solid #B8955A;
+      box-shadow: 0 16px 38px -8px rgba(11, 27, 51, 0.35);
+    }
+    .study-hero-badges { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 1rem; }
+    .study-badge {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.32rem 0.85rem; border-radius: 999px;
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .study-badge.cyan { background: rgba(184, 149, 90, 0.22); color: #FDE68A; border: 1px solid rgba(217, 194, 154, 0.55); }
+    .study-badge.violet { background: rgba(255, 255, 255, 0.10); color: #F1F5F9; border: 1px solid rgba(255, 255, 255, 0.28); }
+    .study-badge.emerald { background: rgba(16, 185, 129, 0.22); color: #A7F3D0; border: 1px solid rgba(110, 231, 183, 0.42); }
+    .study-hero-panel h1 {
+      color: #ffffff !important; font-size: 2.05rem !important; line-height: 1.24 !important;
+      border-bottom: none !important; margin: 0 0 0.85rem 0 !important; padding: 0 !important;
+    }
+    .study-hero-panel p {
+      color: #E2E8F0 !important; font-size: 1.03rem !important; line-height: 1.68 !important; margin-bottom: 1.35rem !important;
+    }
+    .study-meta-bar {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 1rem; padding-top: 1.1rem; border-top: 1px solid rgba(184, 149, 90, 0.35);
+      font-size: 0.88rem; color: #D9C29A;
+    }
+    .study-dl-group { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+    .btn-study-action {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.58rem 1.15rem; border-radius: 9px; font-size: 0.86rem; font-weight: 800;
+      text-decoration: none !important; transition: all 0.2s ease;
+    }
+    .btn-study-action.neon {
+      background: linear-gradient(135deg, #B8955A 0%, #D9C29A 100%);
+      color: #0B1B33 !important; border: 1px solid #E5D4B3;
+      box-shadow: 0 6px 20px rgba(184, 149, 90, 0.32);
+    }
+    .btn-study-action.neon:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(184, 149, 90, 0.48); color: #0B1B33 !important; }
+    .btn-study-action.outline {
+      background: rgba(255, 255, 255, 0.08); color: #f8fafc !important;
+      border: 1px solid rgba(217, 194, 154, 0.4);
+    }
+    .btn-study-action.outline:hover { background: rgba(184, 149, 90, 0.18); transform: translateY(-1px); }
 
-</div>
-<!-- Unified Modern Site Footer -->
-<footer class="site-footer">
+    .kpi-exec-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0 2.1rem 0;
+    }
+    @media (max-width: 920px) { .kpi-exec-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .kpi-exec-grid { grid-template-columns: 1fr; } }
+    .kpi-exec-box {
+      background: #f8fafc; border: 1px solid #cbd5e1; border-top: 3px solid #B8955A; border-radius: 12px; padding: 1.15rem 1.2rem;
+    }
+    .kpi-exec-tag {
+      font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+      color: #9A7438; display: block; margin-bottom: 0.35rem;
+    }
+    .kpi-exec-val { font-size: 1.48rem; font-weight: 900; color: #0B1B33; line-height: 1.2; display: block; }
+    .kpi-exec-meta { display: block; font-size: 0.8rem; color: #475569; margin-top: 0.4rem; line-height: 1.45; }
+
+    /* Contenedor Vista Previa Interactiva Embebida */
+    .live-preview-shell {
+      border-radius: 16px;
+      background: #F4F6FA;
+      border: 2px solid #B8955A;
+      box-shadow: 0 20px 50px -12px rgba(11, 27, 51, 0.22);
+      overflow: hidden;
+      margin: 1.8rem 0 2.4rem 0;
+    }
+    .live-preview-bar {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+      padding: 0.85rem 1.25rem;
+      background: linear-gradient(135deg, #0B1B33 0%, #163259 100%);
+      border-bottom: 2px solid #B8955A;
+      color: #f8fafc;
+    }
+    .live-preview-iframe {
+      width: 100%;
+      height: 760px;
+      border: none;
+      display: block;
+      background: #F4F6FA;
+    }
+    @media (max-width: 768px) {
+      .live-preview-iframe { height: 620px; }
+    }
+
+    .quant-table-wrap {
+      overflow-x: auto; margin: 1.4rem 0 2rem 0; border-radius: 12px; border: 1px solid #cbd5e1;
+    }
+    .quant-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; background: #ffffff; }
+    .quant-table thead tr { background: linear-gradient(135deg, #0B1B33 0%, #163259 100%); color: #ffffff; text-align: left; }
+    .quant-table th {
+      padding: 0.85rem 0.95rem; font-weight: 700; font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.03em; color: #D9C29A !important;
+      border-bottom: 2px solid #B8955A;
+    }
+    .quant-table td { padding: 0.78rem 0.95rem; border-bottom: 1px solid #e2e8f0; color: #1e293b; vertical-align: top; }
+    .quant-table tbody tr:hover { background: #f8fafc; }
+
+    .callout-quant {
+      background: #f8fafc; border-left: 4px solid #B8955A; border-radius: 0 10px 10px 0;
+      padding: 1.15rem 1.35rem; margin: 1.5rem 0;
+      border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;
+    }
+    .math-block-card {
+      background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #0B1B33;
+      border-radius: 10px; padding: 1.1rem 1.4rem; margin: 1.2rem 0; overflow-x: auto; text-align: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.98rem; color: #0B1B33;
+    }
+    .section-kicker {
+      display: inline-block; font-size: 0.76rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #9A7438; margin-bottom: 0.25rem;
+    }
+    .quant-paper-card h2 {
+      color: #0B1B33; font-size: 1.55rem; font-weight: 800; margin: 0 0 0.9rem 0;
+      padding-bottom: 0.55rem; border-bottom: 2px solid #e2e8f0;
+    }
+    .quant-paper-card h3 {
+      color: #163259; font-size: 1.18rem; font-weight: 800; margin: 1.4rem 0 0.65rem 0;
+    }
+    .quant-paper-card p, .quant-paper-card li {
+      color: #334155; font-size: 0.98rem; line-height: 1.72;
+    }
+    .disqus-container-modern {
+      margin-top: 2.5rem;
+    }
+    .disqus-header-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 1rem 1.4rem;
+      background: linear-gradient(135deg, #0B1B33 0%, #163259 100%);
+      color: #ffffff;
+      border-radius: 12px 12px 0 0;
+      border: 1.5px solid #B8955A;
+      border-bottom: 2px solid #B8955A;
+    }
+    .disqus-header-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .disqus-sub-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(184, 149, 90, 0.22);
+      color: #D9C29A;
+      border: 1px solid rgba(217, 194, 154, 0.45);
+    }
+    .disqus-container-modern #disqus_thread {
+      margin-top: 0 !important;
+      margin-bottom: 1.5rem !important;
+      border-top-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
+    }
+    .disqus-container-modern #disqus_thread::before {
+      display: none !important;
+      content: none !important;
+    }
+    .disqus-loader-msg {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      color: #475569;
+      font-size: 0.92rem;
+      padding: 1rem 0;
+    }
+    .disqus-spinner {
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid #cbd5e1;
+      border-top-color: #B8955A;
+      border-radius: 50%;
+      display: inline-block;
+      animation: nxDisqusSpin 0.8s linear infinite;
+    }
+    @keyframes nxDisqusSpin {
+      to { transform: rotate(360deg); }
+    }
+    .disqus-fallback-card {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #B8955A;
+      border-radius: 10px;
+      padding: 1.25rem 1.4rem;
+      margin-top: 1rem;
+    }
+    .btn-retry-disqus {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #B8955A;
+      background: #0B1B33;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .btn-retry-disqus:hover {
+      background: #163259;
+    }
+    #copilotToggleBtn, #copilotChatWindow {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Navegación Corporativa -->
+  <header class="site-header">
+    <div class="site-container header-inner">
+      <a href="index.html" class="brand-wrapper" title="Ir al Inicio">
+        <img src="imagenes/jesus-zerpa-profile.jpg?v=20261029b" alt="Jesús Benjamín Zerpa" class="brand-avatar" decoding="async" loading="lazy" />
+        <div class="brand-text">
+          <span class="brand-name">Jesús Benjamín Zerpa</span>
+          <span class="brand-title">Economist &amp; Data Scientist</span>
+        </div>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li class="nav-item"><a href="index.html">Inicio</a></li>
+          <li class="nav-item active"><a href="index.html#trabajos">Trabajos</a></li>
+          <li class="nav-item"><a href="acercade.html">Acerca de</a></li>
+          <li class="nav-item"><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Consultoría</a></li>
+          <li class="nav-item"><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo</a></li>
+          <li class="nav-item"><a href="formulario.html">Contacto</a></li>
+        </ul>
+
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0-.02-3.28 1.64 1.64 0 0 0 .02 3.28m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+          </a>
+          <a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="GitHub">
+            <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+          </a>
+          <a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="RPubs">
+            <svg viewBox="0 0 581 512"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9H239.4v208.3c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5h26.6c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg>
+          </a>
+          <a href="mailto:jesuszerpaeconomia@gmail.com" class="social-icon-btn" title="Correo Electrónico">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+        </div>
+      </nav>
+
+      <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa">
+        <img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" />
+      </a>
+    </div>
+
+    <div id="mobileNavDrawer" class="mobile-nav-drawer">
+      <ul class="mobile-nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#trabajos">Trabajos y Modelos</a></li>
+        <li><a href="acercade.html">Acerca de</a></li>
+        <li><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Servicios de Consultoría</a></li>
+        <li><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo Web</a></li>
+        <li><a href="formulario.html">Formulario de Contacto</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="quant-study-wrap">
+    <article class="quant-paper-card">
+
+      <!-- HERO PANEL ACTUALIZADO -->
+      <div class="study-hero-panel">
+        <div class="study-hero-badges">
+          <span class="study-badge cyan">Trabajo #6 • Transformación Total 2026</span>
+          <span class="study-badge violet">Simulador Q × Tarifa • Nowcast Bayesiano P10–P90</span>
+          <span class="study-badge emerald">100% Interactivo en Navegador · Datos Sintéticos Aleatorios</span>
+        </div>
+        <h1>Nexus Quant FP&amp;A: Financial Dashboard Corporativo y Simulador Estocástico Interactivo</h1>
+        <p>
+          Evolución integral desde el cuadro de mando clásico hacia una <strong>plataforma interactiva de Revenue Intelligence y simulación financiera en tiempo real</strong>. Construida completamente del lado del cliente con arquitectura sin servidor ni barreras de acceso, opera sobre <strong>6 líneas de negocio tecnológicas y 24 sub-líneas granulares</strong> con datos sintéticos estocásticos regenerables bajo demanda. Cualquier usuario puede ajustar cantidades (<strong>Q</strong>), tarifas unitarias (<strong>$/Q</strong>), ingresos fijos y metas presupuestarias mientras el motor calcula bandas Bayesianas <strong>P10–P50–P90</strong>, descomposición <strong>Precio-Volumen</strong>, <strong>HBW-Nowcast</strong> y alertas estadísticas <strong>Z-MAD</strong>.
+        </p>
+        <div class="study-meta-bar">
+          <div>
+            <strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Actualización:</strong> Noviembre de 2026 &nbsp;|&nbsp; <strong>Acceso:</strong> Abierto e Interactivo
+          </div>
+          <div class="study-dl-group">
+            <a href="FinancialDashboard.htm" class="btn-study-action neon" target="_blank" rel="noopener noreferrer">
+              <span>Abrir Simulador a Pantalla Completa</span>
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="#arquitectura-metodologica" class="btn-study-action outline">
+              <span>Ver Formulación Matemática</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI GRID RESUMEN -->
+      <div class="kpi-exec-grid">
+        <div class="kpi-exec-box">
+          <span class="kpi-exec-tag">Cobertura Estructural</span>
+          <span class="kpi-exec-val">6 Líneas · 24 Sub-Líneas</span>
+          <span class="kpi-exec-meta">Cloud &amp; SaaS, Fintech, Data &amp; BI, Ciberseguridad, Soluciones B2B y Consultoría PMO (2025–2026).</span>
+        </div>
+        <div class="kpi-exec-box">
+          <span class="kpi-exec-tag">Motor Predictivo</span>
+          <span class="kpi-exec-val">Bayesiano P10–P90</span>
+          <span class="kpi-exec-meta">Ensamble de Pacing Intra-Mensual S1–S4 + tendencia EWMA-YoY y Holt amortiguado.</span>
+        </div>
+        <div class="kpi-exec-box">
+          <span class="kpi-exec-tag">Simulador Interactivo</span>
+          <span class="kpi-exec-val">Q × Tarifa + Fijo</span>
+          <span class="kpi-exec-meta">Sensibilidad en vivo por línea, sub-línea, curva semanal CSV y escenarios de estrés.</span>
+        </div>
+        <div class="kpi-exec-box">
+          <span class="kpi-exec-tag">Control Robusto</span>
+          <span class="kpi-exec-val">Detector Z-MAD</span>
+          <span class="kpi-exec-meta">Puntaje de viabilidad (0–100) y auditoría instantánea sin credenciales ni backends privados.</span>
+        </div>
+      </div>
+
+      <!-- VENTANA INTERACTIVA EMBEBIDA -->
+      <section aria-label="Vista previa interactiva del Simulador Financiero">
+        <span class="section-kicker">Sandbox Interactivo en Vivo</span>
+        <h2>Explora y Simula Directamente Aquí (o en Pantalla Completa)</h2>
+        <p>
+          La instancia embebida a continuación corre el motor estocástico <strong>Nexus Quant FP&amp;A</strong> completo con cifras aleatorias coherentes. Puedes cambiar entre las tres vistas superiores, hacer clic en <strong>Simulador Q × Tarifa</strong> para modificar supuestos o pulsar <strong>Nueva Simulación Aleatoria</strong> para regenerar todo el universo corporativo de 24 meses al instante.
+        </p>
+
+        <div class="live-preview-shell">
+          <div class="live-preview-bar">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;box-shadow:0 0 10px #10b981;"></span>
+              <strong style="font-size:0.9rem;letter-spacing:0.03em;color:#FFFFFF;">NEXUS QUANT FP&amp;A · SIMULADOR EJECUTIVO ACTIVO (IDENTIDAD NAVY &amp; GOLD)</strong>
+            </div>
+            <a href="FinancialDashboard.htm" target="_blank" rel="noopener noreferrer" class="btn-study-action neon" style="padding:0.42rem 0.9rem;font-size:0.8rem;">
+              <span>Expandir a Pantalla Completa ↗</span>
+            </a>
+          </div>
+          <iframe src="FinancialDashboard.htm?v=20261114c" class="live-preview-iframe" title="Nexus Quant FP&A Interactive Financial Simulator" loading="lazy"></iframe>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 1: ARQUITECTURA DE TRES VISTAS -->
+      <section id="arquitectura-metodologica" style="margin-top:2.2rem;">
+        <span class="section-kicker">Arquitectura Funcional</span>
+        <h2>1. Tres Vistas Ejecutivas Diseñadas para la Toma de Decisiones</h2>
+        <p>
+          Inspirada en plataformas institucionales de seguimiento semanal de ingresos, la interfaz organiza el ciclo completo de Planificación Financiera y Análisis (FP&amp;A) en tres espacios de trabajo sincronizados:
+        </p>
+
+        <div class="quant-table-wrap">
+          <table class="quant-table">
+            <thead>
+              <tr>
+                <th>Vista / Módulo</th>
+                <th>Componentes Principales</th>
+                <th>Valor Analítico para Dirección Financiera</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Ingresos y Ejecución</strong></td>
+                <td>Cinta de señales Z-MAD, 4 KPI Cards, Serie Anual Real vs Ppto vs Año Anterior, Gauges Intra-Mensuales S1–S4 y Matriz de 6 Líneas con Drawer deslizable.</td>
+                <td>Permite diagnosticar en segundos si una desviación presupuestaria obedece a menor volumen comercial (<strong>ΔQ</strong>) o erosión tarifaria (<strong>ΔP</strong>), con salto directo al simulador de cierre mensual.</td>
+              </tr>
+              <tr>
+                <td><strong>2. Analítica &amp; Sub-Líneas</strong></td>
+                <td>Puente Waterfall Ppto → Real, Mix de Portafolio, Índice Herfindahl-Hirschman (<strong>HHI</strong>), Curva Pareto 80/20, Explorador de 24 sub-líneas y Heatmap Anual.</td>
+                <td>Cuantifica la concentración del portafolio, identifica qué pocas sub-líneas explican el 80% de la facturación y expone estacionalidades mes a mes.</td>
+              </tr>
+              <tr>
+                <td><strong>3. Semáforo Comercial</strong></td>
+                <td>Gauge de Salud Global OKR, 4 filtros interactivos (&gt;105%, 95–105%, 90–94%, &lt;90%), 6 Drivers Operativos Clave y tableros de Productos, KPIs e Iniciativas.</td>
+                <td>Conecta los drivers físicos no financieros (licencias activas, transacciones digitales, NRR%, endpoints SOC) con la trayectoria monetaria del Estado de Resultados.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: FORMULACIÓN CUANTITATIVA -->
+      <section style="margin-top:2.2rem;">
+        <span class="section-kicker">Ingeniería Cuantitativa</span>
+        <h2>2. Motor Matemático del Simulador, Nowcast Bayesiano y Detector Z-MAD</h2>
+
+        <h3>2.1 Ecuación Estructural Híbrida y Descomposición Precio-Volumen</h3>
+        <p>
+          Cada unidad de negocio combina ingresos variables por transacción o suscripción con componentes fijos recurrentes (retainers de soporte, integraciones ERP o estructuras CAPEX):
+        </p>
+        <div class="math-block-card">
+          I<sub>i,s</sub> = Q<sub>i,s</sub> × P<sub>i,s</sub> + F<sub>i,s</sub> &nbsp;&nbsp;|&nbsp;&nbsp; ΔI = (Q<sub>Real</sub> − Q<sub>Ppto</sub>)·P<sub>Ppto</sub> [Efecto Volumen ΔQ] + (P<sub>Real</sub> − P<sub>Ppto</sub>)·Q<sub>Real</sub> [Efecto Tarifa ΔP]
+        </div>
+        <p>
+          Dentro del <strong>Simulador Q × Tarifa</strong>, el usuario puede editar independientemente el volumen, la tarifa unitaria o el ingreso fijo tanto para la semana de corte (<strong>S</strong>) como para el cierre proyectado (<strong>S4</strong>), propagándose los ajustes de manera bidireccional en tiempo real.
+        </p>
+
+        <h3>2.2 Ensamble Bayesiano de Cierre (P10–P50–P90) y Pre-Carga HBW-Nowcast</h3>
+        <p>
+          Para estimar el cierre mensual esperado desde cualquier corte semanal (<em>S1 a S4</em>), el motor combina dos señales ortogonales: el <strong>Pacing Intra-Mensual</strong> (ponderado por la mediana histórica tras cambios de régimen) y una tendencia <strong>EWMA ajustada por factor interanual YoY</strong>. A nivel granular, la ventana de <strong>Pre-Carga HBW-Nowcast</strong> aplica <em>Suavizamiento Exponencial de Holt Amortiguado</em> sobre las 24 sub-líneas antes de inyectarlas en el simulador.
+        </p>
+
+        <h3>2.3 Detector Robusto de Anomalías mediante Estadístico Z-MAD</h3>
+        <p>
+          A diferencia de la desviación estándar clásica (muy sensible a valores extremos), el sistema evalúa la plausibilidad de cada cifra observada o simulada mediante la <strong>Desviación Absoluta Mediana (MAD)</strong>:
+        </p>
+        <div class="math-block-card">
+          Z<sub>MAD</sub> = (x − Mediana(X<sub>hist</sub>)) / max(1.4826 · MAD(X<sub>hist</sub>), 0.045 · Mediana)
+        </div>
+        <p>
+          Cualquier proyección de volumen, tarifa o cierre con <code>|Z_MAD| &gt; 2.0</code> genera un diagnóstico detallado dentro del simulador y reduce dinámicamente el <strong>Score de Viabilidad (0–100)</strong>, guiando al analista hacia supuestos financieramente consistentes.
+        </p>
+
+        <div class="callout-quant">
+          <h4>Privacidad Total, Cero Dependencias Externas y Reproducibilidad</h4>
+          <p>
+            Siguiendo buenas prácticas de ingeniería de software, esta versión pública sustituye cualquier repositorio privado empresarial por un <strong>generador estocástico semillado (Mulberry32 + Box-Muller)</strong> que construye series coherentes de 23 meses en milisegundos dentro del navegador, sin login restrictivo ni asistentes virtuales flotantes, listo para pruebas de estrés, demostraciones ejecutivas y exportación en formatos <strong>PNG 4K/8K, CSV, PDF e HTML</strong>.
+          </p>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section style="margin-top:2rem;padding:1.6rem;border-radius:14px;background:linear-gradient(135deg,#0B1B33,#163259);border:1.5px solid #B8955A;color:#ffffff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
+        <div>
+          <h3 style="color:#D9C29A !important;margin:0 0 0.35rem 0 !important;">¿Listo para probar tu propio escenario de ingresos?</h3>
+          <p style="color:#E2E8F0 !important;margin:0 !important;font-size:0.95rem !important;">Abre la suite completa en una pestaña dedicada y pon a prueba la elasticidad Q × Tarifa o genera nuevas cifras aleatorias.</p>
+        </div>
+        <a href="FinancialDashboard.htm" target="_blank" rel="noopener noreferrer" class="btn-study-action neon">
+          <span>Lanzar Nexus Quant FP&amp;A Simulator →</span>
+        </a>
+      </section>
+
+      <!-- Caja de Compartición Social -->
+      <div class="corporate-share-box">
+        <span class="share-box-title">Compartir este Trabajo Cuantitativo:</span>
+        <div class="share-buttons-strip">
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjesusbz.github.io%2FDashboard.html" target="_blank" rel="noopener noreferrer" class="btn-share-corporate linkedin" title="Compartir en LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0-.02-3.28 1.64 1.64 0 0 0 .02 3.28m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fjesusbz.github.io%2FDashboard.html&text=Nexus%20Quant%20FP%26A%3A%20Financial%20Dashboard%20%26%20Simulador%20Corporativo%20-%20Jes%C3%BAs%20Benjam%C3%ADn%20Zerpa" target="_blank" rel="noopener noreferrer" class="btn-share-corporate twitter-x" title="Compartir en X">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>X (Twitter)</span>
+          </a>
+          <a href="https://api.whatsapp.com/send?text=Nexus%20Quant%20FP%26A%20Simulador%20Financiero%20https%3A%2F%2Fjesusbz.github.io%2FDashboard.html" target="_blank" rel="noopener noreferrer" class="btn-share-corporate whatsapp" title="Compartir por WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.71 4.3 3.8 2.53 1.08 2.53.72 2.99.68.45-.04 1.47-.6 1.68-1.18.2-.59.2-1.09.14-1.19-.06-.1-.23-.16-.48-.28z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+          <button type="button" class="btn-share-corporate copylink" onclick="navigator.clipboard.writeText(window.location.href); this.classList.add('copied'); this.querySelector('.btn-label').textContent='¡Enlace Copiado!'; setTimeout(() => { this.classList.remove('copied'); this.querySelector('.btn-label').textContent='Copiar Enlace'; }, 2000);">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span class="btn-label">Copiar Enlace</span>
+          </button>
+        </div>
+      </div>
+
+      <hr style="margin:2rem 0 1.4rem 0;border-color:#e2e8f0;" />
+      <p style="font-size:0.95rem;color:#334155;margin-bottom:1rem;">
+        Por:<br />
+        <strong>Jesús Benjamín Zerpa</strong><br />
+        <strong>Economista</strong> · <a href="mailto:JesusZerpaEconomia@Gmail.Com">JesusZerpaEconomia@Gmail.Com</a><br />
+        <span style="color:#64748b;font-size:0.88rem;">Publicación original: Junio de 2020 · Transformación interactiva: Noviembre de 2026</span>
+      </p>
+      <div style="overflow:hidden;margin-bottom:1.5rem;">
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" style="float:left;margin-right:1rem;margin-bottom:0.5rem;">
+          <img alt="Licencia Creative Commons Reconocimiento 4.0 Internacional" src="https://i.creativecommons.org/l/by/4.0/88x31.png" width="88" height="31" decoding="async" loading="lazy" style="margin:0 !important;border:none !important;box-shadow:none !important;border-radius:0 !important;" />
+        </a>
+        <span style="font-size:0.9rem;color:#475569;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
+      </div>
+
+      <!-- RELATED-CAROUSEL-START -->
+      <section class="pc-section" aria-label="Otros trabajos del portafolio">
+        <div class="pc-header">
+          <div>
+            <span class="pc-kicker">Sigue explorando</span>
+            <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
+          </div>
+          <div class="pc-controls">
+            <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+          </div>
+        </div>
+        <div class="pc-viewport" id="carouselViewport">
+          <div class="pc-track" id="carouselTrack">
+            <a href="simulacion-monte-carlo-portafolios-python.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-16-monte-carlo-cholesky-merton-python.webp" alt="Simulación Estocástica de Monte Carlo Multivariante en Python" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #16</span>
+                <span class="pc-cat">Monte Carlo Python</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Simulación Estocástica de Monte Carlo Multivariante en Python: Cholesky y Merton</h4>
+                <div class="pc-meta"><span class="pc-tags">Python · VaR &amp; CVaR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="volatilidad-garch-var-cvar-python.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp" alt="Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #15</span>
+                <span class="pc-cat">EGARCH &amp; CVaR Python</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python (2014–2026)</h4>
+                <div class="pc-meta"><span class="pc-tags">Python · Skewed-t</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="deep-portfolio-lstm-python.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #14</span>
+                <span class="pc-cat">Deep Learning LSTM</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Deep Portfolio Optimization con Redes Neuronales LSTM en Python (2020–2026)</h4>
+                <div class="pc-meta"><span class="pc-tags">PyTorch · Markowitz</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="EvaluacionProyecto.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #5</span>
+                <span class="pc-cat">Evaluación de Proyectos</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión: Global Nutrition España</h4>
+                <div class="pc-meta"><span class="pc-tags">CAPEX · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="power-bi.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI Business Intelligence" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #11</span>
+                <span class="pc-cat">Business Intelligence</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Power BI: Inteligencia de Negocios y Visualización Ejecutiva de Datos</h4>
+                <div class="pc-meta"><span class="pc-tags">Power BI · Dashboards</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="proyecto4.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #4</span>
+                <span class="pc-cat">Teoría de Portafolios</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Portafolio Eficiente y Portafolio Tangente de Markowitz (RStudio 2020)</h4>
+                <div class="pc-meta"><span class="pc-tags">Markowitz · S&amp;P 500</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="simulacion-monte-carlo-portafolios-python.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-16-monte-carlo-cholesky-merton-python.webp" alt="Simulación Estocástica de Monte Carlo Multivariante en Python" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #16</span>
+                <span class="pc-cat">Monte Carlo Python</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Simulación Estocástica de Monte Carlo Multivariante en Python: Cholesky y Merton</h4>
+                <div class="pc-meta"><span class="pc-tags">Python · VaR &amp; CVaR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="volatilidad-garch-var-cvar-python.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp" alt="Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #15</span>
+                <span class="pc-cat">EGARCH &amp; CVaR Python</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python (2014–2026)</h4>
+                <div class="pc-meta"><span class="pc-tags">Python · Skewed-t</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="deep-portfolio-lstm-python.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #14</span>
+                <span class="pc-cat">Deep Learning LSTM</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Deep Portfolio Optimization con Redes Neuronales LSTM en Python (2020–2026)</h4>
+                <div class="pc-meta"><span class="pc-tags">PyTorch · Markowitz</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="EvaluacionProyecto.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #5</span>
+                <span class="pc-cat">Evaluación de Proyectos</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión: Global Nutrition España</h4>
+                <div class="pc-meta"><span class="pc-tags">CAPEX · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="power-bi.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI Business Intelligence" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #11</span>
+                <span class="pc-cat">Business Intelligence</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Power BI: Inteligencia de Negocios y Visualización Ejecutiva de Datos</h4>
+                <div class="pc-meta"><span class="pc-tags">Power BI · Dashboards</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+            <a href="proyecto4.html" class="pc-card">
+              <div class="pc-media">
+                <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
+                <span class="pc-num">TRABAJO #4</span>
+                <span class="pc-cat">Teoría de Portafolios</span>
+              </div>
+              <div class="pc-body">
+                <h4 class="pc-title">Portafolio Eficiente y Portafolio Tangente de Markowitz (RStudio 2020)</h4>
+                <div class="pc-meta"><span class="pc-tags">Markowitz · S&amp;P 500</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+      <!-- RELATED-CAROUSEL-END -->
+
+      <!-- Disqus Comments Section -->
+      <div class="disqus-container-modern">
+        <div class="disqus-header-card">
+          <div class="disqus-header-title">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span>Comentarios y Discusión Técnica</span>
+          </div>
+          <span class="disqus-sub-badge">Comunidad Cuantitativa</span>
+        </div>
+        <div id="disqus_thread">
+          <div id="disqus_loader" class="disqus-loader-msg">
+            <span class="disqus-spinner"></span>
+            <span>Cargando comentarios de la comunidad...</span>
+          </div>
+        </div>
+        <div id="disqus_fallback" class="disqus-fallback-card" style="display: none;">
+          <p><strong>¿No se visualiza el módulo de comentarios?</strong> Es posible que tu navegador o red tenga activo un bloqueador de anuncios o restricciones de privacidad para el servicio de Disqus.</p>
+          <p>Para consultas directas sobre este modelo o asesoría corporativa, puedes contactar a Jesús Benjamín Zerpa a través del <a href="formulario.html">Formulario de Contacto</a> o por <a href="https://wa.me/584241487870" target="_blank" rel="noopener noreferrer">WhatsApp (+58 424 148 78 70)</a>.</p>
+          <button type="button" class="btn-retry-disqus" onclick="reloadDisqusThread()">Reintentar carga de Disqus</button>
+        </div>
+      </div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https://jesusbz.github.io/Dashboard.html';
+          this.page.identifier = 'Dashboard.html';
+        };
+        function loadDisqus() {
+          var d = document, s = d.createElement('script');
+          s.src = 'https://portafolio-11.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          s.onload = function() {
+            var loader = document.getElementById('disqus_loader');
+            if (loader) loader.style.display = 'none';
+            var fb = document.getElementById('disqus_fallback');
+            if (fb) fb.style.display = 'none';
+          };
+          s.onerror = function() {
+            var loader = document.getElementById('disqus_loader');
+            if (loader) loader.style.display = 'none';
+            var fb = document.getElementById('disqus_fallback');
+            if (fb) fb.style.display = 'block';
+          };
+          (d.head || d.body).appendChild(s);
+        }
+        function reloadDisqusThread() {
+          var fb = document.getElementById('disqus_fallback');
+          if (fb) fb.style.display = 'none';
+          var loader = document.getElementById('disqus_loader');
+          if (loader) loader.style.display = 'flex';
+          if (window.DISQUS && typeof window.DISQUS.reset === 'function') {
+            window.DISQUS.reset({ reload: true, config: disqus_config });
+            if (loader) loader.style.display = 'none';
+          } else {
+            loadDisqus();
+          }
+        }
+        loadDisqus();
+        setTimeout(function() {
+          var thread = document.getElementById('disqus_thread');
+          var iframe = thread ? thread.querySelector('iframe') : null;
+          if (!iframe) {
+            var loader = document.getElementById('disqus_loader');
+            if (loader) loader.style.display = 'none';
+            var fb = document.getElementById('disqus_fallback');
+            if (fb) fb.style.display = 'block';
+          } else {
+            var loader = document.getElementById('disqus_loader');
+            if (loader) loader.style.display = 'none';
+            var fb = document.getElementById('disqus_fallback');
+            if (fb) fb.style.display = 'none';
+          }
+        }, 10000);
+      </script>
+      <noscript>Por favor activa JavaScript para ver los comentarios soportados por <a href="https://disqus.com/?ref_noscript">Disqus</a>.</noscript>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
     <div class="site-container">
       <div class="footer-top-grid">
         <div class="footer-brand-col">
@@ -1059,6 +921,8 @@ Un panel de control financiero (Financial Dashboard) es una herramienta de “in
             <li><a href="index.html">Inicio</a></li>
             <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
             <li><a href="acercade.html">Trayectoria Profesional</a></li>
+            <li><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Consultoría &amp; Servicios</a></li>
+            <li><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo Web</a></li>
             <li><a href="formulario.html">Formulario de Contacto</a></li>
             <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a></li>
           </ul>
@@ -1076,53 +940,13 @@ Un panel de control financiero (Financial Dashboard) es una herramienta de “in
       </div>
 
       <div class="footer-bottom-strip">
-        <span>Copyright © 2026 Jesús B. Zerpa. Todos los derechos reservados.</span>
+        <span>Copyright © 2026 Jesús Benjamín Zerpa. Todos los derechos reservados.</span>
         <span>Finanzas Cuantitativas • Machine Learning • Business Intelligence</span>
       </div>
     </div>
   </footer>
 
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-<script id="dsq-count-scr" src="//portafolio-11.disqus.com/count.js" async></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169665920-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-169665920-1');
-gtag('set', {'user_id': 'USER_ID'}); 
-ga('set', 'userId', 'USER_ID');    
-</script> 
-		
-  <script src="js/futuristic-app.js?v=20261108b"></script>
+  <script id="dsq-count-scr" src="https://portafolio-11.disqus.com/count.js" async></script>
+  <script src="js/futuristic-app.js?v=20261114c"></script>
 </body>
 </html>

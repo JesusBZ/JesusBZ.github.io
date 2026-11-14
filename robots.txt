@@ -4,6 +4,9 @@ Disallow: /scratch/
 Disallow: /_site/
 Disallow: /_header.html
 Disallow: /_footer.html
-Disallow: /FinancialDashboard.htm
+Disallow: /FinancialDashboard_archivos/
+Disallow: /bot-trading-python/
+Disallow: /cursos.html
+Disallow: /enviado.html
 
 Sitemap: https://jesusbz.github.io/sitemap.xml

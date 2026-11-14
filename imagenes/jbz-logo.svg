@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268 46" width="268" height="46" role="img" aria-label="JBZ - Jesús Benjamín Zerpa">
+  <defs>
+    <linearGradient id="jbzNavyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1B33"/>
+      <stop offset="100%" stop-color="#163259"/>
+    </linearGradient>
+    <linearGradient id="jbzGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#B8955A"/>
+      <stop offset="50%" stop-color="#D9C29A"/>
+      <stop offset="100%" stop-color="#B8955A"/>
+    </linearGradient>
+    <linearGradient id="jbzGoldVert" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#B8955A"/>
+      <stop offset="100%" stop-color="#D9C29A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer executive capsule -->
+  <rect x="1" y="1" width="266" height="44" rx="9" fill="url(#jbzNavyGrad)" stroke="url(#jbzGoldGrad)" stroke-width="1.5"/>
+
+  <!-- Left monogram crest -->
+  <rect x="5.5" y="5.5" width="54" height="35" rx="6.5" fill="#081426" stroke="url(#jbzGoldGrad)" stroke-width="1"/>
+  <rect x="12" y="34" width="41" height="2" rx="1" fill="url(#jbzGoldGrad)"/>
+
+  <text x="32.5" y="27.5" text-anchor="middle" font-family="'Segoe UI', 'Plus Jakarta Sans', Arial, sans-serif" font-size="18.5" font-weight="800" letter-spacing="1.2">
+    <tspan fill="#FFFFFF">J</tspan><tspan fill="#D9C29A">B</tspan><tspan fill="#FFFFFF">Z</tspan>
+  </text>
+
+  <!-- Gold hairline divider -->
+  <line x1="66.5" y1="8.5" x2="66.5" y2="37.5" stroke="url(#jbzGoldVert)" stroke-width="1" opacity="0.7"/>
+
+  <!-- Full name & executive descriptor -->
+  <text x="74" y="21.5" font-family="'Segoe UI', 'Plus Jakarta Sans', Arial, sans-serif" font-size="13.2" font-weight="700" fill="#FFFFFF" letter-spacing="0.15">Jesús Benjamín Zerpa</text>
+  <text x="74" y="34.5" font-family="'Segoe UI', 'Plus Jakarta Sans', Arial, sans-serif" font-size="8.6" font-weight="600" fill="#D9C29A" letter-spacing="1.15">ECONOMISTA · FINANZAS</text>
+
+  <!-- Ascending financial micro-bars -->
+  <rect x="245" y="24" width="3.5" height="9" rx="1" fill="#B8955A" opacity="0.75"/>
+  <rect x="250.5" y="18.5" width="3.5" height="14.5" rx="1" fill="#D9C29A" opacity="0.9"/>
+  <rect x="256" y="12.5" width="3.5" height="20.5" rx="1" fill="url(#jbzGoldVert)"/>
+</svg>

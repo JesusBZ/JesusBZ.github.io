@@ -4,191 +4,213 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
 
-  <title>Deep Portfolio Optimization con Redes LSTM en Python (PyTorch) | Jesús Zerpa</title>
-<!-- SEO:START -->
-<meta name="description" content="Optimización dinámica de carteras con redes neuronales LSTM en Python (PyTorch) y auditoría real de $5,000 USD sobre el S&amp;P 500 (2020–2026). Por Jesús Zerpa." />
-<meta name="keywords" content="Deep Portfolio Optimization, redes neuronales LSTM Python, portafolio tangente, portafolio de Markowitz, frontera eficiente Python, PyTorch finanzas cuantitativas, optimización de carteras Deep Learning, Ratio de Sharpe diferenciable, Ratio de Sortino, MSFT, JNJ, MA, PEP, WMT, MCD, S&amp;P 500, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
-<meta name="author" content="Jesús Benjamín Zerpa" />
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<link rel="canonical" href="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
-<meta property="og:locale" content="es_ES" />
-<meta property="og:type" content="article" />
-<meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
-<meta property="og:title" content="Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Portafolio Tangente de Markowitz (2020–2026)" />
-<meta property="og:description" content="Auditoría empírica de $5,000 USD invertidos en el Portafolio Tangente de abril de 2020 y optimización dinámica con Redes Neuronales LSTM en Python (PyTorch) hasta 2026. Por Jesús Benjamín Zerpa." />
-<meta property="og:url" content="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
-<meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-lstm-portafolio.webp" />
-<meta property="og:image:alt" content="Deep Portfolio Optimization con Redes Neuronales LSTM en Python — Portafolio Tangente de Markowitz por Jesús Benjamín Zerpa" />
-<meta property="article:published_time" content="2026-10-30T00:00:00Z" />
-<meta property="article:modified_time" content="2026-10-30T07:20:00Z" />
-<meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
-<meta property="article:section" content="Finanzas Cuantitativas y Deep Learning" />
-<meta property="article:tag" content="Deep Portfolio Optimization" />
-<meta property="article:tag" content="LSTM Python" />
-<meta property="article:tag" content="Portafolio Tangente de Markowitz" />
-<meta property="article:tag" content="PyTorch" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Deep Portfolio Optimization con Redes Neuronales LSTM en Python: Portafolio Tangente de Markowitz (2020–2026)" />
-<meta name="twitter:description" content="Auditoría empírica de $5,000 USD invertidos en el Portafolio Tangente de abril de 2020 y optimización dinámica con Redes Neuronales LSTM en Python (PyTorch) hasta 2026. Por Jesús Benjamín Zerpa." />
-<meta name="twitter:image" content="https://jesusbz.github.io/imagenes/imagen-lstm-portafolio.webp" />
-<script type="application/ld+json">
+  <title>Deep Portfolio Optimization con LSTM en PyTorch | Jesús Benjamín Zerpa</title>
+  <!-- SEO:START -->
+  <meta name="description" content="Optimización dinámica de portafolios con redes LSTM en Python (PyTorch) sobre cartera tangente S&amp;P 500. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="keywords" content="Deep Portfolio Optimization, redes neuronales LSTM Python, PyTorch finanzas cuantitativas, portafolio tangente Markowitz, frontera eficiente Python, Ratio de Sharpe diferenciable, Ratio de Sortino, S&amp;P 500, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+  <meta name="author" content="Jesús Benjamín Zerpa (Jesús Zerpa)" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
+  <link rel="alternate" hreflang="es" href="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
+  <link rel="alternate" hreflang="x-default" href="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:type" content="" />
+  <meta property="og:site_name" content="Portafolio Cuantitativo de Jesús Benjamín Zerpa" />
+  <meta property="og:title" content="Deep Portfolio Optimization con LSTM en PyTorch | Jesús Benjamín Zerpa" />
+  <meta property="og:description" content="Optimización dinámica de portafolios con redes LSTM en Python (PyTorch) sobre cartera tangente S&amp;P 500. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta property="og:url" content="https://jesusbz.github.io/deep-portfolio-lstm-python.html" />
+  <meta property="og:image" content="https://jesusbz.github.io/imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp" />
+  <meta property="og:image:alt" content="Deep Portfolio Optimization con Redes Neuronales LSTM en PyTorch por Jesús Benjamín Zerpa" />
+  <meta property="article:published_time" content="2026-10-30T00:00:00Z" />
+  <meta property="article:modified_time" content="2026-11-14T18:00:00Z" />
+  <meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
+  <meta property="article:section" content="Finanzas Cuantitativas y Deep Learning" />
+  <meta property="article:tag" content="Deep Portfolio Optimization" />
+  <meta property="article:tag" content="LSTM Python" />
+  <meta property="article:tag" content="Portafolio Tangente de Markowitz" />
+  <meta property="article:tag" content="PyTorch" />  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Deep Portfolio Optimization con LSTM en PyTorch | Jesús Benjamín Zerpa" />
+  <meta name="twitter:description" content="Optimización dinámica de portafolios con redes LSTM en Python (PyTorch) sobre cartera tangente S&amp;P 500. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="twitter:image" content="https://jesusbz.github.io/imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp" />
+  <meta name="twitter:image:alt" content="Deep Portfolio Optimization con Redes Neuronales LSTM en PyTorch por Jesús Benjamín Zerpa" />
+  <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-      "name": "Jesús Benjamín Zerpa",
-      "alternateName": [
-        "Jesús Zerpa",
-        "Jesús B. Zerpa",
-        "Jesus Benjamin Zerpa",
-        "Jesus Zerpa"
-      ],
-      "url": "https://jesusbz.github.io/",
-      "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-      "jobTitle": "Gerente de Planificación Financiera y Presupuesto",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Consorcio Credicard"
-      },
-      "description": "Economista y Data Scientist con más de 14 años de experiencia en planificación financiera, formulación presupuestaria, control de gestión y modelización econométrica y de Deep Learning en R y Python.",
-      "email": "mailto:JesusZerpaEconomia@Gmail.Com",
-      "telephone": "+58 424 148 78 70",
-      "knowsAbout": [
-        "Planificación financiera corporativa",
-        "Presupuesto y control de gestión",
-        "Deep Portfolio Optimization con Redes Neuronales LSTM",
-        "Teoría de portafolios de Markowitz",
-        "Portafolio tangente y frontera eficiente",
-        "Finanzas cuantitativas en Python y R",
-        "PyTorch y aprendizaje profundo aplicado a series financieras",
-        "Simulación Monte Carlo",
-        "Modelos GARCH y Valor en Riesgo (VaR)",
-        "Business Intelligence y Power BI",
-        "Evaluación y formulación de proyectos de inversión"
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
-        "https://github.com/JesusBZ",
-        "https://rpubs.com/JesusZ"
-      ]
-    },
-    {
-      "@type": "TechArticle",
-      "@id": "https://jesusbz.github.io/deep-portfolio-lstm-python.html#article",
-      "headline": "Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz",
-      "alternativeHeadline": "Evaluación Empírica de $5,000 USD (2020–2026) y Asignación Dinámica con Redes LSTM en PyTorch",
-      "description": "Auditoría empírica ex-post de $5,000 USD invertidos en el Portafolio Tangente de Markowitz de abril de 2020 (MSFT, JNJ, MA, PEP, WMT, MCD) y nueva arquitectura de asignación dinámica con Redes Neuronales Recurrentes LSTM en Python y PyTorch.",
-      "image": [
-        "https://jesusbz.github.io/imagenes/imagen-lstm-portafolio.webp",
-        "https://jesusbz.github.io/imagenes/imagen-f.webp"
-      ],
-      "url": "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
-      "mainEntityOfPage": "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
-      "inLanguage": "es",
-      "proficiencyLevel": "Expert",
-      "datePublished": "2026-10-30",
-      "dateModified": "2026-10-30",
-      "isBasedOn": "https://jesusbz.github.io/proyecto4.html",
-      "author": {
-        "@type": "Person",
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-        "name": "Jesús Benjamín Zerpa",
-        "url": "https://jesusbz.github.io/acercade.html"
-      },
-      "publisher": {
-        "@type": "Person",
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-        "name": "Jesús Benjamín Zerpa",
-        "url": "https://jesusbz.github.io/acercade.html"
-      },
-      "keywords": [
-        "Deep Portfolio Optimization",
-        "Redes Neuronales LSTM Python",
-        "PyTorch",
-        "Portafolio Tangente",
-        "Portafolio de Markowitz",
-        "Frontera Eficiente",
-        "Ratio de Sharpe",
-        "Ratio de Sortino",
-        "S&P 500",
-        "MSFT",
-        "JNJ",
-        "MA",
-        "PEP",
-        "WMT",
-        "MCD",
-        "Jesús Benjamín Zerpa"
-      ],
-      "isPartOf": {
-        "@type": "WebSite",
-        "@id": "https://jesusbz.github.io/#website",
-        "url": "https://jesusbz.github.io/"
-      }
-    },
-    {
-      "@type": "SoftwareSourceCode",
-      "@id": "https://jesusbz.github.io/models/deep_portfolio_lstm.py#code",
-      "name": "deep_portfolio_lstm.py — Deep Portfolio Optimization con Redes Neuronales LSTM en PyTorch",
-      "description": "Script reproducible en Python (PyTorch, SciPy, pandas, numpy, yfinance) para optimizar dinámicamente la cartera S&P 500 del Portafolio Tangente de Markowitz maximizando el Ratio de Sharpe-Sortino diferencial.",
-      "programmingLanguage": "Python",
-      "runtimePlatform": "Python 3.11 / PyTorch",
-      "codeRepository": "https://jesusbz.github.io/models/deep_portfolio_lstm.py",
-      "author": {
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa"
-      }
-    },
-    {
-      "@type": "Dataset",
-      "@id": "https://jesusbz.github.io/data/sp500_6assets_2010_2026.csv#dataset",
-      "name": "Series Históricas Diarias S&P 500 (MSFT, JNJ, MA, PEP, WMT, MCD y ^GSPC, 2010–2026)",
-      "description": "Serie temporal diaria de precios de cierre ajustados (4,232 sesiones bursátiles entre enero de 2010 y octubre de 2026) utilizada para evaluar el Portafolio Tangente de Markowitz y entrenar la red neuronal LSTM.",
-      "url": "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
-      "distribution": {
-        "@type": "DataDownload",
-        "encodingFormat": "text/csv",
-        "contentUrl": "https://jesusbz.github.io/data/sp500_6assets_2010_2026.csv"
-      },
-      "creator": {
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Inicio",
-          "item": "https://jesusbz.github.io/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Portafolio Tangente de Markowitz (2020)",
-          "item": "https://jesusbz.github.io/proyecto4.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Deep Portfolio Optimization con LSTM en Python (2026)",
-          "item": "https://jesusbz.github.io/deep-portfolio-lstm-python.html"
-        }
-      ]
-    }
-  ]
+    "@context":  "https://schema.org",
+    "@graph":  [
+                   {
+                       "@type":  "Person",
+                       "@id":  "https://jesusbzerpa.github.io/#person",
+                       "name":  "Jesús Benjamín Zerpa",
+                       "givenName":  "Jesús Benjamín",
+                       "familyName":  "Zerpa",
+                       "alternateName":  [
+                                             "Jesús Zerpa",
+                                             "Jesus Zerpa",
+                                             "Jesús Benjamín Zerpa",
+                                             "Jesus Benjamin Zerpa",
+                                             "Jesús B. Zerpa",
+                                             "Jesus B. Zerpa",
+                                             "Jesús Benjamín",
+                                             "Economista Jesús Zerpa",
+                                             "Economista Jesús Benjamín Zerpa"
+                                         ],
+                       "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
+                       "url":  "https://jesusbzerpa.github.io/",
+                       "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
+                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
+                       "telephone":  "+58 424 148 78 70",
+                       "worksFor":  {
+                                        "@type":  "Organization",
+                                        "name":  "Consorcio Credicard"
+                                    },
+                       "alumniOf":  [
+                                        {
+                                            "@type":  "CollegeOrUniversity",
+                                            "name":  "Universidad Alejandro de Humboldt"
+                                        },
+                                        {
+                                            "@type":  "EducationalOrganization",
+                                            "name":  "Instituto Universitario de Profesiones Gerenciales (I.U.P.G.)"
+                                        }
+                                    ],
+                       "knowsAbout":  [
+                                          "Planificación Financiera Corporativa (FP\u0026A)",
+                                          "Presupuesto Maestro",
+                                          "Control de Gestión",
+                                          "Inteligencia Financiera",
+                                          "Evaluación de Proyectos de Inversión (CAPEX)",
+                                          "Business Intelligence",
+                                          "Microsoft Power BI",
+                                          "Ciencia de Datos",
+                                          "Econometría Financiera",
+                                          "Series Temporales (SARIMA, Prophet, VAR, GARCH, EGARCH)",
+                                          "Simulación Estocástica de Monte Carlo",
+                                          "Deep Learning LSTM en PyTorch",
+                                          "Optimización de Portafolios de Markowitz",
+                                          "Python",
+                                          "RStudio"
+                                      ],
+                       "sameAs":  [
+                                      "https://jesusbzerpa.github.io/",
+                                      "https://jesusbezerpa.github.io/",
+                                      "https://jesusbz.github.io/",
+                                      "https://jesusbz.github.io/acercade.html",
+                                      "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
+                                      "https://github.com/JesusBZ",
+                                      "https://rpubs.com/JesusZ",
+                                      "https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa"
+                                  ]
+                   },
+                   {
+                       "@type":  "TechArticle",
+                       "@id":  "https://jesusbz.github.io/deep-portfolio-lstm-python.html#article",
+                       "headline":  "Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz",
+                       "description":  "Optimización dinámica de portafolios con redes LSTM en Python (PyTorch) sobre cartera tangente S\u0026P 500. Por Jesús Benjamín Zerpa (Jesús Zerpa).",
+                       "image":  [
+                                     "https://jesusbz.github.io/imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp",
+                                     "https://jesusbz.github.io/imagenes/imagen-lstm-portafolio.webp",
+                                     "https://jesusbz.github.io/imagenes/imagen-f.webp"
+                                 ],
+                       "url":  "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
+                       "mainEntityOfPage":  "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
+                       "inLanguage":  "es",
+                       "proficiencyLevel":  "Expert",
+                       "dependencies":  "Python 3.11, PyTorch, NumPy, Pandas, SciPy, Plotly",
+                       "datePublished":  "2026-10-30",
+                       "dateModified":  "2026-11-14",
+                       "alternativeHeadline":  "Evaluación Empírica de $5,000 USD (2020–2026) y Asignación Dinámica con Redes LSTM en PyTorch",
+                       "isBasedOn":  "https://jesusbz.github.io/proyecto4.html",
+                       "author":  {
+                                      "@id":  "https://jesusbzerpa.github.io/#person"
+                                  },
+                       "publisher":  {
+                                         "@id":  "https://jesusbzerpa.github.io/#person"
+                                     },
+                       "about":  [
+                                     "Redes Neuronales LSTM",
+                                     "Deep Learning en Finanzas",
+                                     "Optimización de Carteras",
+                                     "Ratio de Sharpe"
+                                 ],
+                       "keywords":  [
+                                        "Deep Portfolio Optimization",
+                                        "LSTM Python",
+                                        "Portafolio Tangente de Markowitz",
+                                        "PyTorch",
+                                        "Jesús Benjamín Zerpa",
+                                        "Jesús Zerpa",
+                                        "Jesus Zerpa",
+                                        "Jesus Benjamin Zerpa"
+                                    ],
+                       "isPartOf":  {
+                                        "@type":  "WebSite",
+                                        "@id":  "https://jesusbz.github.io/#website",
+                                        "url":  "https://jesusbz.github.io/"
+                                    }
+                   },
+                   {
+                       "@type":  "SoftwareSourceCode",
+                       "@id":  "https://jesusbz.github.io/models/deep_portfolio_lstm.py#code",
+                       "name":  "deep_portfolio_lstm.py — Deep Portfolio Optimization con Redes Neuronales LSTM en PyTorch",
+                       "description":  "Script reproducible en Python (PyTorch, SciPy, pandas, numpy, yfinance) para optimizar dinámicamente la cartera S\u0026P 500 del Portafolio Tangente de Markowitz maximizando el Ratio de Sharpe-Sortino diferencial.",
+                       "programmingLanguage":  "Python",
+                       "runtimePlatform":  "Python 3.11 / PyTorch",
+                       "codeRepository":  "https://jesusbz.github.io/models/deep_portfolio_lstm.py",
+                       "author":  {
+                                      "@id":  "https://jesusbzerpa.github.io/#person"
+                                  }
+                   },
+                   {
+                       "@type":  "Dataset",
+                       "@id":  "https://jesusbz.github.io/data/sp500_6assets_2010_2026.csv#dataset",
+                       "name":  "Series Históricas Diarias S\u0026P 500 (MSFT, JNJ, MA, PEP, WMT, MCD y ^GSPC, 2010–2026)",
+                       "description":  "Serie temporal diaria de precios de cierre ajustados (4,232 sesiones bursátiles entre enero de 2010 y octubre de 2026) utilizada para evaluar el Portafolio Tangente de Markowitz y entrenar la red neuronal LSTM.",
+                       "url":  "https://jesusbz.github.io/deep-portfolio-lstm-python.html",
+                       "distribution":  {
+                                            "@type":  "DataDownload",
+                                            "encodingFormat":  "text/csv",
+                                            "contentUrl":  "https://jesusbz.github.io/data/sp500_6assets_2010_2026.csv"
+                                        },
+                       "creator":  {
+                                       "@id":  "https://jesusbzerpa.github.io/#person"
+                                   }
+                   },
+                   {
+                       "@type":  "BreadcrumbList",
+                       "itemListElement":  [
+                                               {
+                                                   "@type":  "ListItem",
+                                                   "position":  1,
+                                                   "name":  "Inicio",
+                                                   "item":  "https://jesusbz.github.io/"
+                                               },
+                                               {
+                                                   "@type":  "ListItem",
+                                                   "position":  2,
+                                                   "name":  "Portafolio Tangente de Markowitz (2020)",
+                                                   "item":  "https://jesusbz.github.io/proyecto4.html"
+                                               },
+                                               {
+                                                   "@type":  "ListItem",
+                                                   "position":  3,
+                                                   "name":  "Deep Portfolio Optimization con LSTM en Python (2026)",
+                                                   "item":  "https://jesusbz.github.io/deep-portfolio-lstm-python.html"
+                                               }
+                                           ]
+                   }
+               ]
 }
-</script>
-<!-- SEO:END -->
+  </script>
+  <!-- SEO:END -->
 
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="icon" href="favi.png" type="image/png" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
 
   <!-- Corporate Stylesheets -->
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261030h" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261108a" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114c" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
 
   <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
@@ -209,13 +231,15 @@
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169665920-1"></script>
+    <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'UA-169665920-1');
+    gtag('config', 'G-9M6MYPFL3M', {
+      'linker': { 'domains': ['jesusbzerpa.github.io', 'jesusbezerpa.github.io', 'jesusbz.github.io'] }
+    });
   </script>
 
   <style>
@@ -615,7 +639,10 @@
       overflow-x: auto;
     }
   </style>
-</head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" /></head>
 <body>
 
   <!-- =========================================================================
@@ -626,7 +653,7 @@
       <a href="index.html" class="brand-wrapper" title="Ir al Inicio">
         <img src="imagenes/jesus-zerpa-profile.jpg?v=20261029b" alt="Jesús Benjamín Zerpa" class="brand-avatar" decoding="async" loading="lazy" />
         <div class="brand-text">
-          <span class="brand-name">Jesús B. Zerpa</span>
+          <span class="brand-name">Jesús Benjamín Zerpa</span>
           <span class="brand-title">Economist &amp; Data Scientist</span>
         </div>
       </a>
@@ -636,6 +663,8 @@
           <li class="nav-item"><a href="index.html">Inicio</a></li>
           <li class="nav-item active"><a href="index.html#trabajos">Trabajos</a></li>
           <li class="nav-item"><a href="acercade.html">Acerca de</a></li>
+          <li class="nav-item"><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Consultoría</a></li>
+          <li class="nav-item"><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo</a></li>
           <li class="nav-item"><a href="formulario.html">Contacto</a></li>
         </ul>
 
@@ -666,13 +695,18 @@
       <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
+      <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa">
+        <img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" />
+      </a>
     </div>
 
     <div id="mobileNavDrawer" class="mobile-nav-drawer">
       <ul class="mobile-nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="index.html#trabajos">Trabajos y Modelos</a></li>
-        <li><a href="acercade.html">Acerca de Jesús Zerpa</a></li>
+        <li><a href="acercade.html">Acerca de</a></li>
+        <li><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Servicios de Consultoría</a></li>
+        <li><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo Web</a></li>
         <li><a href="formulario.html">Formulario de Contacto</a></li>
       </ul>
     </div>
@@ -1438,7 +1472,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
           <div class="pc-track" id="carouselTrack">
         <a href="proyecto4.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-f.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #4</span>
             <span class="pc-cat">Teoría de Portafolios</span>
           </div>
@@ -1449,7 +1483,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="modelo-ventas.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-a.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #1</span>
             <span class="pc-cat">Series Temporales</span>
           </div>
@@ -1460,7 +1494,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="Proyecto2.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-i.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #2</span>
             <span class="pc-cat">Volatilidad &amp; VaR</span>
           </div>
@@ -1471,7 +1505,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="proyecto3.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-c.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #3</span>
             <span class="pc-cat">Machine Learning</span>
           </div>
@@ -1482,7 +1516,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="EvaluacionProyecto.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-g.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #5</span>
             <span class="pc-cat">Evaluación de Proyectos</span>
           </div>
@@ -1493,7 +1527,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="Dashboard.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-h.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #6</span>
             <span class="pc-cat">Dashboard Financiero</span>
           </div>
@@ -1504,7 +1538,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="proyecto7.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-j.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #7</span>
             <span class="pc-cat">Macroeconomía</span>
           </div>
@@ -1515,7 +1549,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="powermap.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #8</span>
             <span class="pc-cat">Inteligencia Geoespacial</span>
           </div>
@@ -1526,7 +1560,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/miniatura/prophet.jpg" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #9</span>
             <span class="pc-cat">Pronóstico Prophet</span>
           </div>
@@ -1537,7 +1571,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x1.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #10</span>
             <span class="pc-cat">Simulación Monte Carlo</span>
           </div>
@@ -1548,7 +1582,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="power-bi.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x2.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #11</span>
             <span class="pc-cat">Power BI</span>
           </div>
@@ -1559,7 +1593,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/data-mining-blog.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #12</span>
             <span class="pc-cat">Data Mining</span>
           </div>
@@ -1570,7 +1604,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="trading-medias-moviles-rstudio.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x3.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #13</span>
             <span class="pc-cat">Análisis Técnico</span>
           </div>
@@ -1581,7 +1615,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="proyecto4.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-f.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #4</span>
             <span class="pc-cat">Teoría de Portafolios</span>
           </div>
@@ -1592,7 +1626,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="modelo-ventas.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-a.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #1</span>
             <span class="pc-cat">Series Temporales</span>
           </div>
@@ -1603,7 +1637,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="Proyecto2.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-i.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #2</span>
             <span class="pc-cat">Volatilidad &amp; VaR</span>
           </div>
@@ -1614,7 +1648,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="proyecto3.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-c.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #3</span>
             <span class="pc-cat">Machine Learning</span>
           </div>
@@ -1625,7 +1659,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="EvaluacionProyecto.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-g.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #5</span>
             <span class="pc-cat">Evaluación de Proyectos</span>
           </div>
@@ -1636,7 +1670,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="Dashboard.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-h.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #6</span>
             <span class="pc-cat">Dashboard Financiero</span>
           </div>
@@ -1647,7 +1681,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="proyecto7.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-j.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #7</span>
             <span class="pc-cat">Macroeconomía</span>
           </div>
@@ -1658,7 +1692,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="powermap.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #8</span>
             <span class="pc-cat">Inteligencia Geoespacial</span>
           </div>
@@ -1669,7 +1703,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/miniatura/prophet.jpg" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #9</span>
             <span class="pc-cat">Pronóstico Prophet</span>
           </div>
@@ -1680,7 +1714,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x1.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #10</span>
             <span class="pc-cat">Simulación Monte Carlo</span>
           </div>
@@ -1691,7 +1725,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="power-bi.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x2.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #11</span>
             <span class="pc-cat">Power BI</span>
           </div>
@@ -1702,7 +1736,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/data-mining-blog.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #12</span>
             <span class="pc-cat">Data Mining</span>
           </div>
@@ -1713,7 +1747,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         </a>
         <a href="trading-medias-moviles-rstudio.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x3.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #13</span>
             <span class="pc-cat">Análisis Técnico</span>
           </div>
@@ -1801,7 +1835,31 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
   <!-- =========================================================================
        Corporate Footer
        ========================================================================= -->
-  <footer class="site-footer">
+  <!-- EXEC-CTA-BRIDGE-START -->
+<section class="site-container" aria-label="Consultoría Financiera y CV Ejecutivo">
+  <div class="exec-cta-bridge">
+    <div>
+      <span class="exec-cta-eyebrow">Ecosistema Profesional · Jesús Benjamín Zerpa</span>
+      <h3 class="exec-cta-title">¿Deseas implementar modelos cuantitativos o planificación financiera en tu empresa?</h3>
+      <p class="exec-cta-desc">
+        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, cuadros de mando en Power BI y modelos predictivos en Python y R.
+      </p>
+    </div>
+    <div class="exec-cta-actions">
+      <a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer" class="exec-cta-btn-gold">
+        <span>Servicios de Consultoría</span>
+      </a>
+      <a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer" class="exec-cta-btn-outline">
+        <span>CV Ejecutivo Web</span>
+      </a>
+      <a href="formulario.html" class="exec-cta-btn-outline">
+        <span>Contacto Directo</span>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- EXEC-CTA-BRIDGE-END -->
+<footer class="site-footer">
     <div class="site-container">
       <div class="footer-top-grid">
         <div class="footer-brand-col">
@@ -1823,6 +1881,8 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
             <li><a href="index.html">Inicio</a></li>
             <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
             <li><a href="acercade.html">Trayectoria Profesional</a></li>
+            <li><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Consultoría &amp; Servicios</a></li>
+            <li><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo Web</a></li>
             <li><a href="formulario.html">Formulario de Contacto</a></li>
             <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a></li>
           </ul>
@@ -1840,7 +1900,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
       </div>
 
       <div class="footer-bottom-strip">
-        <span>Copyright © 2026 Jesús B. Zerpa. Todos los derechos reservados.</span>
+        <span>Copyright © 2026 Jesús Benjamín Zerpa. Todos los derechos reservados.</span>
         <span>Finanzas Cuantitativas • Machine Learning • Business Intelligence</span>
       </div>
     </div>
@@ -2238,6 +2298,6 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
   </script>
 
   <!-- Corporate Portfolio JS (Code Copy Buttons, Moving Carousel, Scroll Top, Navigation) -->
-  <script src="js/futuristic-app.js?v=20261108b"></script>
+  <script src="js/futuristic-app.js?v=20261114c"></script>
 </body>
 </html>

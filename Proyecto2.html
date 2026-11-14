@@ -7,145 +7,188 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-<title>Volatilidad del Bitcoin y Valor en Riesgo (VaR) con modelos GARCH en R | Jesús Zerpa</title>
-<!-- SEO:START -->
-<meta name="description" content="Volatilidad y VaR de los retornos diarios del Bitcoin (2014-2020) con modelos sGARCH, eGARCH, gjrGARCH y TGARCH en RStudio. El eGARCH(2,1) con t-Student fue el mejor ajuste según AIC. Por Jesús Benjamín Zerpa." />
-<meta name="keywords" content="volatilidad del Bitcoin, VaR Bitcoin, valor en riesgo, GARCH, eGARCH, gjrGARCH, TGARCH, rmgarch, econometría en R, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
-<meta name="author" content="Jesús Benjamín Zerpa" />
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-<link rel="canonical" href="https://jesusbz.github.io/Proyecto2.html" />
-<meta property="og:locale" content="es_ES" />
-<meta property="og:type" content="article" />
-<meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
-<meta property="og:title" content="Volatilidad del Bitcoin y Valor en Riesgo (VaR) con modelos GARCH en R | Jesús Zerpa" />
-<meta property="og:description" content="Volatilidad y VaR de los retornos diarios del Bitcoin (2014-2020) con modelos sGARCH, eGARCH, gjrGARCH y TGARCH en RStudio. El eGARCH(2,1) con t-Student fue el mejor ajuste según AIC. Por Jesús Benjamín Zerpa." />
-<meta property="og:url" content="https://jesusbz.github.io/Proyecto2.html" />
-<meta property="og:image" content="https://jesusbz.github.io/imagenes/imagen-i.webp" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Volatilidad del Bitcoin y Valor en Riesgo (VaR) con modelos GARCH en R | Jesús Zerpa" />
-<meta name="twitter:description" content="Volatilidad y VaR de los retornos diarios del Bitcoin (2014-2020) con modelos sGARCH, eGARCH, gjrGARCH y TGARCH en RStudio. El eGARCH(2,1) con t-Student fue el mejor ajuste según AIC. Por Jesús Benjamín Zerpa." />
-<meta name="twitter:image" content="https://jesusbz.github.io/imagenes/imagen-i.webp" />
-<script type="application/ld+json">
+<title>Volatilidad y VaR del Bitcoin con GARCH en R | Jesús Benjamín Zerpa</title>
+  <!-- SEO:START -->
+  <meta name="description" content="Modelización de volatilidad condicional y Valor en Riesgo (VaR) del Bitcoin con sGARCH, eGARCH y gjrGARCH en RStudio. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="keywords" content="volatilidad del Bitcoin, VaR Bitcoin, valor en riesgo RStudio, sGARCH, eGARCH, gjrGARCH, TGARCH, rugarch, econometría financiera en R, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+  <meta name="author" content="Jesús Benjamín Zerpa (Jesús Zerpa)" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://jesusbz.github.io/Proyecto2.html" />
+  <link rel="alternate" hreflang="es" href="https://jesusbz.github.io/Proyecto2.html" />
+  <link rel="alternate" hreflang="x-default" href="https://jesusbz.github.io/Proyecto2.html" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:type" content="" />
+  <meta property="og:site_name" content="Portafolio Cuantitativo de Jesús Benjamín Zerpa" />
+  <meta property="og:title" content="Volatilidad y VaR del Bitcoin con GARCH en R | Jesús Benjamín Zerpa" />
+  <meta property="og:description" content="Modelización de volatilidad condicional y Valor en Riesgo (VaR) del Bitcoin con sGARCH, eGARCH y gjrGARCH en RStudio. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta property="og:url" content="https://jesusbz.github.io/Proyecto2.html" />
+  <meta property="og:image" content="https://jesusbz.github.io/imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" />
+  <meta property="og:image:alt" content="Volatilidad Condicional GARCH y Valor en Riesgo (VaR) del Bitcoin en R por Jesús Benjamín Zerpa" />
+  <meta property="article:published_time" content="2020-05-18T08:00:00-04:00" />
+  <meta property="article:modified_time" content="2026-11-14T18:00:00Z" />
+  <meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
+  <meta property="article:section" content="Econometría Financiera y Gestión de Riesgo" />
+  <meta property="article:tag" content="GARCH en R" />
+  <meta property="article:tag" content="eGARCH" />
+  <meta property="article:tag" content="Valor en Riesgo VaR" />
+  <meta property="article:tag" content="Bitcoin" />
+  <meta property="article:tag" content="rugarch" />  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Volatilidad y VaR del Bitcoin con GARCH en R | Jesús Benjamín Zerpa" />
+  <meta name="twitter:description" content="Modelización de volatilidad condicional y Valor en Riesgo (VaR) del Bitcoin con sGARCH, eGARCH y gjrGARCH en RStudio. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="twitter:image" content="https://jesusbz.github.io/imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" />
+  <meta name="twitter:image:alt" content="Volatilidad Condicional GARCH y Valor en Riesgo (VaR) del Bitcoin en R por Jesús Benjamín Zerpa" />
+  <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-      "name": "Jesús Benjamín Zerpa",
-      "alternateName": [
-        "Jesús Zerpa",
-        "Jesús B. Zerpa",
-        "Jesus Benjamin Zerpa",
-        "Jesus Zerpa"
-      ],
-      "url": "https://jesusbz.github.io/",
-      "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-      "jobTitle": "Gerente de Planificación Financiera y Presupuesto",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Consorcio Credicard"
-      },
-      "description": "Economista y Data Scientist con más de 14 años de experiencia en planificación, presupuesto y control. Trayectoria: Gerente de Planificación Financiera y Presupuesto en Consorcio Credicard; Planificador Corporativo de Finanzas en Grupo Mistral; Coordinador Corporativo de Presupuesto y Control en Multimédica; Gestión Senior de Presupuesto en Segutronic (CG Security Group); Subgerente de Finanzas en Grupo Empresarial Admibien; Ejecutivo de Negocios en Banesco Banco Universal.",
-      "email": "mailto:JesusZerpaEconomia@Gmail.Com",
-      "telephone": "+58 424 148 78 70",
-      "knowsAbout": [
-        "Planificación financiera",
-        "Presupuesto y control de gestión",
-        "Pronósticos y series temporales",
-        "Modelos GARCH y Valor en Riesgo (VaR)",
-        "Teoría de portafolios de Markowitz",
-        "Portafolio tangente",
-        "Simulación Monte Carlo",
-        "Machine Learning en R",
-        "Business Intelligence",
-        "Power BI",
-        "RStudio",
-        "Evaluación y formulación de proyectos de inversión"
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
-        "https://github.com/JesusBZ",
-        "https://rpubs.com/JesusZ"
-      ]
-    },
-    {
-      "@type": "TechArticle",
-      "@id": "https://jesusbz.github.io/Proyecto2.html#article",
-      "headline": "Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin",
-      "description": "Volatilidad y VaR de los retornos diarios del Bitcoin (2014-2020) con modelos sGARCH, eGARCH, gjrGARCH y TGARCH en RStudio. El eGARCH(2,1) con t-Student fue el mejor ajuste según AIC. Por Jesús Benjamín Zerpa.",
-      "image": "https://jesusbz.github.io/imagenes/imagen-i.webp",
-      "url": "https://jesusbz.github.io/Proyecto2.html",
-      "mainEntityOfPage": "https://jesusbz.github.io/Proyecto2.html",
-      "inLanguage": "es",
-      "author": {
-        "@type": "Person",
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-        "name": "Jesús Benjamín Zerpa",
-        "url": "https://jesusbz.github.io/acercade.html"
-      },
-      "publisher": {
-        "@type": "Person",
-        "@id": "https://jesusbz.github.io/#jesus-benjamin-zerpa",
-        "name": "Jesús Benjamín Zerpa",
-        "url": "https://jesusbz.github.io/acercade.html"
-      },
-      "dateModified": "2026-10-29",
-      "keywords": [
-        "volatilidad del Bitcoin",
-        "VaR Bitcoin",
-        "valor en riesgo",
-        "GARCH",
-        "eGARCH",
-        "gjrGARCH",
-        "TGARCH",
-        "rmgarch",
-        "econometría en R",
-        "Jesús Benjamín Zerpa"
-      ],
-      "isPartOf": {
-        "@type": "WebSite",
-        "@id": "https://jesusbz.github.io/#website",
-        "url": "https://jesusbz.github.io/"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Inicio",
-          "item": "https://jesusbz.github.io/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin",
-          "item": "https://jesusbz.github.io/Proyecto2.html"
-        }
-      ]
-    }
-  ]
+    "@context":  "https://schema.org",
+    "@graph":  [
+                   {
+                       "@type":  "Person",
+                       "@id":  "https://jesusbzerpa.github.io/#person",
+                       "name":  "Jesús Benjamín Zerpa",
+                       "givenName":  "Jesús Benjamín",
+                       "familyName":  "Zerpa",
+                       "alternateName":  [
+                                             "Jesús Zerpa",
+                                             "Jesus Zerpa",
+                                             "Jesús Benjamín Zerpa",
+                                             "Jesus Benjamin Zerpa",
+                                             "Jesús B. Zerpa",
+                                             "Jesus B. Zerpa",
+                                             "Jesús Benjamín",
+                                             "Economista Jesús Zerpa",
+                                             "Economista Jesús Benjamín Zerpa"
+                                         ],
+                       "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
+                       "url":  "https://jesusbzerpa.github.io/",
+                       "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
+                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
+                       "telephone":  "+58 424 148 78 70",
+                       "worksFor":  {
+                                        "@type":  "Organization",
+                                        "name":  "Consorcio Credicard"
+                                    },
+                       "alumniOf":  [
+                                        {
+                                            "@type":  "CollegeOrUniversity",
+                                            "name":  "Universidad Alejandro de Humboldt"
+                                        },
+                                        {
+                                            "@type":  "EducationalOrganization",
+                                            "name":  "Instituto Universitario de Profesiones Gerenciales (I.U.P.G.)"
+                                        }
+                                    ],
+                       "knowsAbout":  [
+                                          "Planificación Financiera Corporativa (FP\u0026A)",
+                                          "Presupuesto Maestro",
+                                          "Control de Gestión",
+                                          "Inteligencia Financiera",
+                                          "Evaluación de Proyectos de Inversión (CAPEX)",
+                                          "Business Intelligence",
+                                          "Microsoft Power BI",
+                                          "Ciencia de Datos",
+                                          "Econometría Financiera",
+                                          "Series Temporales (SARIMA, Prophet, VAR, GARCH, EGARCH)",
+                                          "Simulación Estocástica de Monte Carlo",
+                                          "Deep Learning LSTM en PyTorch",
+                                          "Optimización de Portafolios de Markowitz",
+                                          "Python",
+                                          "RStudio"
+                                      ],
+                       "sameAs":  [
+                                      "https://jesusbzerpa.github.io/",
+                                      "https://jesusbezerpa.github.io/",
+                                      "https://jesusbz.github.io/",
+                                      "https://jesusbz.github.io/acercade.html",
+                                      "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
+                                      "https://github.com/JesusBZ",
+                                      "https://rpubs.com/JesusZ",
+                                      "https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa"
+                                  ]
+                   },
+                   {
+                       "@type":  "TechArticle",
+                       "@id":  "https://jesusbz.github.io/Proyecto2.html#article",
+                       "headline":  "Modelización de la Volatilidad Condicional y Valor en Riesgo (VaR) del Bitcoin",
+                       "description":  "Modelización de volatilidad condicional y Valor en Riesgo (VaR) del Bitcoin con sGARCH, eGARCH y gjrGARCH en RStudio. Por Jesús Benjamín Zerpa (Jesús Zerpa).",
+                       "image":  "https://jesusbz.github.io/imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp",
+                       "url":  "https://jesusbz.github.io/Proyecto2.html",
+                       "mainEntityOfPage":  "https://jesusbz.github.io/Proyecto2.html",
+                       "inLanguage":  "es",
+                       "proficiencyLevel":  "Expert",
+                       "dependencies":  "R, RStudio, rugarch, quantmod, PerformanceAnalytics",
+                       "datePublished":  "2020-05-18",
+                       "dateModified":  "2026-11-14",
+                       "sameAs":  "https://rpubs.com/JesusZ/BitcoinGarch",
+                       "author":  {
+                                      "@id":  "https://jesusbzerpa.github.io/#person"
+                                  },
+                       "publisher":  {
+                                         "@id":  "https://jesusbzerpa.github.io/#person"
+                                     },
+                       "about":  [
+                                     "Volatilidad Condicional",
+                                     "Modelos GARCH",
+                                     "Valor en Riesgo",
+                                     "Criptomonedas"
+                                 ],
+                       "keywords":  [
+                                        "GARCH en R",
+                                        "eGARCH",
+                                        "Valor en Riesgo VaR",
+                                        "Bitcoin",
+                                        "rugarch",
+                                        "Jesús Benjamín Zerpa",
+                                        "Jesús Zerpa",
+                                        "Jesus Zerpa",
+                                        "Jesus Benjamin Zerpa"
+                                    ],
+                       "isPartOf":  {
+                                        "@type":  "WebSite",
+                                        "@id":  "https://jesusbz.github.io/#website",
+                                        "url":  "https://jesusbz.github.io/"
+                                    }
+                   },
+                   {
+                       "@type":  "BreadcrumbList",
+                       "itemListElement":  [
+                                               {
+                                                   "@type":  "ListItem",
+                                                   "position":  1,
+                                                   "name":  "Inicio",
+                                                   "item":  "https://jesusbz.github.io/"
+                                               },
+                                               {
+                                                   "@type":  "ListItem",
+                                                   "position":  2,
+                                                   "name":  "Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin",
+                                                   "item":  "https://jesusbz.github.io/Proyecto2.html"
+                                               }
+                                           ]
+                   }
+               ]
 }
-</script>
-<!-- SEO:END -->
+  </script>
+  <!-- SEO:END -->
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <link rel="dns-prefetch" href="https://portafolio-2.disqus.com" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NC4HGWB');</script>
-<!-- End Google Tag Manager -->
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
+  <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9M6MYPFL3M', {
+      'linker': { 'domains': ['jesusbzerpa.github.io', 'jesusbezerpa.github.io', 'jesusbz.github.io'] }
+    });
+  </script>
 
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-<link  rel="icon"   href="favi.png" type="image/png" />
+<link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
@@ -245,7 +288,7 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="styles.css?v=20261111e" type="text/css" />
 
 
 
@@ -498,22 +541,23 @@ font-weight: 300;
 </style>
 
 <!-- code folding -->
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261108a" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114c" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
-</head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" /></head>
 
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NC4HGWB"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 <div class="container-fluid main-container">
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
-    <div class="navbar-header">
+    <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa"><img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" /></a>
+<div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -1593,7 +1637,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
     <div class="pc-track" id="carouselTrack">
         <a href="modelo-ventas.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-a.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #1</span>
             <span class="pc-cat">Series Temporales</span>
           </div>
@@ -1604,7 +1648,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="proyecto3.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-c.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #3</span>
             <span class="pc-cat">Machine Learning</span>
           </div>
@@ -1615,7 +1659,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="proyecto4.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-f.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #4</span>
             <span class="pc-cat">Teoría de Portafolios</span>
           </div>
@@ -1626,7 +1670,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="EvaluacionProyecto.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-g.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #5</span>
             <span class="pc-cat">Evaluación de Proyectos</span>
           </div>
@@ -1637,7 +1681,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="Dashboard.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-h.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #6</span>
             <span class="pc-cat">Dashboard Financiero</span>
           </div>
@@ -1648,7 +1692,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="proyecto7.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-j.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #7</span>
             <span class="pc-cat">Macroeconomía</span>
           </div>
@@ -1659,7 +1703,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="powermap.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #8</span>
             <span class="pc-cat">Inteligencia Geoespacial</span>
           </div>
@@ -1670,7 +1714,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/miniatura/prophet.jpg" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #9</span>
             <span class="pc-cat">Pronóstico Prophet</span>
           </div>
@@ -1681,7 +1725,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x1.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #10</span>
             <span class="pc-cat">Simulación Monte Carlo</span>
           </div>
@@ -1692,7 +1736,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="power-bi.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x2.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #11</span>
             <span class="pc-cat">Power BI</span>
           </div>
@@ -1703,7 +1747,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/data-mining-blog.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #12</span>
             <span class="pc-cat">Data Mining</span>
           </div>
@@ -1714,7 +1758,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="trading-medias-moviles-rstudio.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x3.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #13</span>
             <span class="pc-cat">Análisis Técnico</span>
           </div>
@@ -1725,7 +1769,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="modelo-ventas.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-a.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #1</span>
             <span class="pc-cat">Series Temporales</span>
           </div>
@@ -1736,7 +1780,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="proyecto3.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-c.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #3</span>
             <span class="pc-cat">Machine Learning</span>
           </div>
@@ -1747,7 +1791,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="proyecto4.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-f.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #4</span>
             <span class="pc-cat">Teoría de Portafolios</span>
           </div>
@@ -1758,7 +1802,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="EvaluacionProyecto.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-g.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #5</span>
             <span class="pc-cat">Evaluación de Proyectos</span>
           </div>
@@ -1769,7 +1813,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="Dashboard.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-h.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #6</span>
             <span class="pc-cat">Dashboard Financiero</span>
           </div>
@@ -1780,7 +1824,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="proyecto7.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/imagen-j.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #7</span>
             <span class="pc-cat">Macroeconomía</span>
           </div>
@@ -1791,7 +1835,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="powermap.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #8</span>
             <span class="pc-cat">Inteligencia Geoespacial</span>
           </div>
@@ -1802,7 +1846,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/miniatura/prophet.jpg" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #9</span>
             <span class="pc-cat">Pronóstico Prophet</span>
           </div>
@@ -1813,7 +1857,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x1.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #10</span>
             <span class="pc-cat">Simulación Monte Carlo</span>
           </div>
@@ -1824,7 +1868,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="power-bi.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x2.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #11</span>
             <span class="pc-cat">Power BI</span>
           </div>
@@ -1835,7 +1879,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/data-mining-blog.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #12</span>
             <span class="pc-cat">Data Mining</span>
           </div>
@@ -1846,7 +1890,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
         </a>
         <a href="trading-medias-moviles-rstudio.html" class="pc-card">
           <div class="pc-media">
-            <img src="imagenes/ima-x3.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
+            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
             <span class="pc-num">TRABAJO #13</span>
             <span class="pc-cat">Análisis Técnico</span>
           </div>
@@ -1927,6 +1971,30 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
 <noscript>Por favor activa JavaScript para ver los comentarios soportados por <a href="https://disqus.com/?ref_noscript">Disqus</a>.</noscript>
 </div>
 <!-- Unified Modern Site Footer -->
+<!-- EXEC-CTA-BRIDGE-START -->
+<section class="site-container" aria-label="Consultoría Financiera y CV Ejecutivo">
+  <div class="exec-cta-bridge">
+    <div>
+      <span class="exec-cta-eyebrow">Ecosistema Profesional · Jesús Benjamín Zerpa</span>
+      <h3 class="exec-cta-title">¿Deseas implementar modelos cuantitativos o planificación financiera en tu empresa?</h3>
+      <p class="exec-cta-desc">
+        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, cuadros de mando en Power BI y modelos predictivos en Python y R.
+      </p>
+    </div>
+    <div class="exec-cta-actions">
+      <a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer" class="exec-cta-btn-gold">
+        <span>Servicios de Consultoría</span>
+      </a>
+      <a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer" class="exec-cta-btn-outline">
+        <span>CV Ejecutivo Web</span>
+      </a>
+      <a href="formulario.html" class="exec-cta-btn-outline">
+        <span>Contacto Directo</span>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- EXEC-CTA-BRIDGE-END -->
 <footer class="site-footer">
     <div class="site-container">
       <div class="footer-top-grid">
@@ -1949,6 +2017,8 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
             <li><a href="index.html">Inicio</a></li>
             <li><a href="index.html#trabajos">Catálogo de Modelos</a></li>
             <li><a href="acercade.html">Trayectoria Profesional</a></li>
+            <li><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Consultoría &amp; Servicios</a></li>
+            <li><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo Web</a></li>
             <li><a href="formulario.html">Formulario de Contacto</a></li>
             <li><a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer">RPubs</a></li>
           </ul>
@@ -1966,7 +2036,7 @@ El modelo de predicción válido tiene una cobertura cercana al nivel de probabi
       </div>
 
       <div class="footer-bottom-strip">
-        <span>Copyright © 2026 Jesús B. Zerpa. Todos los derechos reservados.</span>
+        <span>Copyright © 2026 Jesús Benjamín Zerpa. Todos los derechos reservados.</span>
         <span>Finanzas Cuantitativas • Machine Learning • Business Intelligence</span>
       </div>
     </div>
@@ -2103,6 +2173,6 @@ gtag('set', {'user_id': 'USER_ID'});
 ga('set', 'userId', 'USER_ID');    
 </script> 
 
-  <script src="js/futuristic-app.js?v=20261108b"></script>
+  <script src="js/futuristic-app.js?v=20261114c"></script>
 </body>
 </html>
