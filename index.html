@@ -254,7 +254,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Modern Clean Corporate FinTech Theme -->
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114c" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114f" />
 
   <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem + Clean URL Bar) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
@@ -1230,18 +1230,21 @@
           <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm4 8a4 4 0 0 0-8 0v2h8v-2z"/></svg>
         </div>
         <div class="copilot-header-info">
-          <span class="copilot-name-label">Asistente Analítico</span>
+          <span class="copilot-name-label">Asistente · Jesús Benjamín Zerpa</span>
           <span class="copilot-tech-badge">
-            <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10b981;"></span>
-            Gemini AI Cuantitativo
+            <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#D9C29A;"></span>
+            <span>Google Gemini · Base Verificada</span>
           </span>
         </div>
       </div>
       <div class="copilot-header-actions">
-        <button id="copilotClearBtn" class="copilot-action-icon-btn" title="Reiniciar Sesión">
+        <button id="copilotExpandBtn" type="button" class="copilot-action-icon-btn" title="Expandir o contraer ventana" aria-label="Expandir o contraer asistente">
+          <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+        </button>
+        <button id="copilotClearBtn" type="button" class="copilot-action-icon-btn" title="Reiniciar Sesión" aria-label="Reiniciar Sesión">
           <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
         </button>
-        <button id="copilotCloseBtn" class="copilot-action-icon-btn" title="Cerrar Asistente">
+        <button id="copilotCloseBtn" type="button" class="copilot-action-icon-btn" title="Cerrar Asistente" aria-label="Cerrar Asistente">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
@@ -1250,23 +1253,23 @@
     <!-- Quick Corporate Prompts Strip -->
     <div class="copilot-chips-strip">
       <button class="quick-chip-btn" data-prompt="¿Cuáles son las áreas de conocimiento y sólidas fortalezas de Jesús Benjamín Zerpa?">Conocimiento y Fortalezas</button>
-      <button class="quick-chip-btn" data-prompt="¿Cómo puedo recorrer la página y en qué secciones puedes apoyarme?">Apoyo en el Recorrido</button>
+      <button class="quick-chip-btn" data-prompt="¿Cuáles son los modelos más recientes en Python (Monte Carlo Cholesky, LSTM y GARCH)?">Modelos Python 2026</button>
       <button class="quick-chip-btn" data-prompt="¿Cuál es la trayectoria profesional y experiencia de Jesús Benjamín Zerpa?">Trayectoria Profesional</button>
-      <button class="quick-chip-btn" data-prompt="¿Qué herramientas, lenguajes y metodologías domina Jesús Benjamín Zerpa?">Dominio Tecnológico</button>
-      <button class="quick-chip-btn" data-prompt="¿Cómo puedo contactar a Jesús Benjamín Zerpa para un caso de negocio o consultoría?">Contacto y Consultoría</button>
+      <button class="quick-chip-btn" data-prompt="¿Qué servicios de consultoría ofrece en jesusbezerpa.github.io?">Consultoría Corporativa</button>
+      <button class="quick-chip-btn" data-prompt="Quiero agendar una cita o reunión con Jesús Benjamín Zerpa">Agendar Reunión</button>
     </div>
 
     <!-- Chat History -->
     <div id="copilotHistoryBox" class="copilot-history-box">
       <div class="chat-bubble bot">
-        <strong>Asistente:</strong> ¡Bienvenido! Soy el asistente virtual de <strong>Jesús Benjamín Zerpa</strong>. Mi propósito es acompañarte y apoyarte durante todo tu recorrido por la página, poniendo a tu disposición su conocimiento, amplia experiencia y sólidas fortalezas en <strong>planificación financiera corporativa, presupuestos maestros, control de gestión, modelización econométrica avanzada, Ciencia de Datos, Deep Learning y Business Intelligence</strong>. ¿En qué puedo orientarte hoy?
+        <strong>Asistente:</strong> ¡Bienvenido! Soy el asistente de IA de <strong>Jesús Benjamín Zerpa</strong>. Puedo guiarte por sus <strong>17 estudios y suites cuantitativas</strong> (incluyendo el Simulador Nexus Quant FP&amp;A), comparar metodologías o compartir su amplia experiencia y sólidas fortalezas. ¿Qué deseas explorar hoy?
       </div>
     </div>
 
     <!-- Input Form -->
     <div class="copilot-input-area">
-      <input type="text" id="copilotInput" class="copilot-input-field" maxlength="550" placeholder="Escribe tu consulta o pega un caso de negocio / vacante..." autocomplete="off" />
-      <button id="copilotSendBtn" class="copilot-send-btn" aria-label="Enviar Mensaje" title="Enviar Mensaje">
+      <textarea id="copilotInput" class="copilot-input-field" rows="1" maxlength="1800" placeholder="Consulta sobre modelos, comparativas, finanzas o pega tu caso..." autocomplete="off"></textarea>
+      <button id="copilotSendBtn" type="button" class="copilot-send-btn" aria-label="Enviar Mensaje" title="Enviar Mensaje">
         <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
       </button>
     </div>
@@ -1278,7 +1281,7 @@
   </button>
 
   <!-- Application Logic -->
-  <script src="js/futuristic-app.js?v=20261114c"></script>
+  <script src="js/futuristic-app.js?v=20261114f"></script>
 
 </body>
 </html>

@@ -1131,18 +1131,25 @@ button {
   position: fixed;
   bottom: 96px;
   right: 28px;
-  width: 400px;
-  height: 580px;
-  max-height: calc(100vh - 120px);
+  width: 415px;
+  height: 590px;
+  max-height: calc(100vh - 115px);
+  max-width: calc(100vw - 32px);
   background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(184, 149, 90, 0.35);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 22px 48px rgba(11, 27, 51, 0.24), 0 0 0 1px rgba(184, 149, 90, 0.14);
   display: none;
   flex-direction: column;
   z-index: 9998;
   overflow: hidden;
+  transition: width 0.22s ease, height 0.22s ease;
   animation: copilotAppear 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.copilot-chat-window.expanded {
+  width: min(560px, calc(100vw - 36px));
+  height: min(740px, calc(100vh - 106px));
 }
 
 @keyframes copilotAppear {
@@ -1156,13 +1163,13 @@ button {
 
 /* Window Header */
 .copilot-header {
-  background: var(--corporate-navy);
+  background: linear-gradient(135deg, #0B1B33 0%, #163259 100%);
   color: #ffffff;
-  padding: 1rem 1.25rem;
+  padding: 0.95rem 1.15rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(184, 149, 90, 0.35);
 }
 
 .header-copilot-title {
@@ -1172,14 +1179,15 @@ button {
 }
 
 .copilot-avatar-icon {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(184, 149, 90, 0.16);
+  border: 1px solid rgba(217, 194, 154, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #60a5fa;
+  color: #D9C29A;
 }
 
 .copilot-avatar-icon svg {
@@ -1196,14 +1204,14 @@ button {
 }
 
 .copilot-name-label {
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
 .copilot-tech-badge {
   font-size: 0.7rem;
-  color: #93c5fd;
+  color: #D9C29A;
   font-family: var(--font-mono);
   display: flex;
   align-items: center;
@@ -1357,9 +1365,9 @@ button {
 }
 
 .quick-chip-btn:hover {
-  background: var(--corporate-blue-soft);
-  color: var(--corporate-blue);
-  border-color: rgba(0, 82, 204, 0.3);
+  background: rgba(11, 27, 51, 0.06);
+  color: #0B1B33;
+  border-color: #B8955A;
 }
 
 /* Chat Messages Box */
@@ -1369,14 +1377,14 @@ button {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.75rem;
   background: var(--bg-page);
-  font-size: 0.9rem;
+  font-size: 0.89rem;
 }
 
 .chat-bubble {
-  max-width: 85%;
-  padding: 0.85rem 1.1rem;
+  max-width: 88%;
+  padding: 0.85rem 1.05rem;
   border-radius: var(--radius-md);
   line-height: 1.55;
   word-break: break-word;
@@ -1387,12 +1395,89 @@ button {
   color: var(--text-primary);
   align-self: flex-start;
   border: 1px solid var(--border-subtle);
+  border-left: 3px solid #B8955A;
   box-shadow: var(--shadow-xs);
   border-bottom-left-radius: 2px;
 }
 
 .chat-bubble.bot strong {
-  color: var(--corporate-navy);
+  color: #0B1B33;
+}
+
+.chat-md-heading {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0B1B33;
+  margin: 0.45rem 0 0.25rem;
+}
+
+.chat-md-list {
+  padding-left: 1.15rem;
+  margin: 0.35rem 0;
+}
+
+.chat-md-list li {
+  margin: 0.2rem 0;
+}
+
+.chat-bubble-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.45rem;
+  padding-top: 0.35rem;
+  border-top: 1px dashed rgba(148, 163, 184, 0.35);
+}
+
+.chat-bubble-copy-btn {
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 0.16rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.chat-bubble-copy-btn:hover {
+  border-color: #B8955A;
+  color: #0B1B33;
+}
+
+.chat-bubble-copy-btn.copied {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+}
+
+.chat-followup-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-self: flex-start;
+  max-width: 92%;
+  margin-top: -0.25rem;
+}
+
+.followup-chip-btn {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #0B1B33;
+  background: #ffffff;
+  border: 1px solid rgba(184, 149, 90, 0.55);
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.16s ease;
+}
+
+.followup-chip-btn:hover {
+  background: #0B1B33;
+  color: #D9C29A;
+  border-color: #0B1B33;
 }
 
 .chat-bubble.bot pre {
@@ -1416,9 +1501,10 @@ button {
 }
 
 .chat-bubble.user {
-  background: var(--corporate-blue);
+  background: linear-gradient(135deg, #0B1B33 0%, #163259 100%);
   color: #ffffff;
   align-self: flex-end;
+  border: 1px solid rgba(184, 149, 90, 0.35);
   border-bottom-right-radius: 2px;
 }
 
@@ -1449,7 +1535,8 @@ button {
 /* Chat Input Form */
 .copilot-input-area {
   display: flex;
-  padding: 0.75rem 1rem;
+  align-items: flex-end;
+  padding: 0.7rem 0.9rem;
   background: #ffffff;
   border-top: 1px solid var(--border-subtle);
   gap: 0.5rem;
@@ -1457,22 +1544,29 @@ button {
 
 .copilot-input-field {
   flex: 1;
-  padding: 0.65rem 0.85rem;
+  padding: 0.62rem 0.8rem;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  min-height: 46px;
+  max-height: 112px;
+  resize: none;
+  overflow-y: hidden;
   outline: none;
   font-family: inherit;
   transition: border-color var(--transition-fast);
 }
 
 .copilot-input-field:focus {
-  border-color: var(--corporate-blue);
+  border-color: #0B1B33;
+  box-shadow: 0 0 0 2px rgba(184, 149, 90, 0.22);
 }
 
 .copilot-send-btn {
-  background: var(--corporate-blue);
-  color: #ffffff;
+  background: linear-gradient(135deg, #0B1B33 0%, #163259 100%);
+  color: #D9C29A;
+  border: 1px solid rgba(184, 149, 90, 0.5);
   width: 38px;
   height: 38px;
   border-radius: var(--radius-sm);
@@ -1484,7 +1578,8 @@ button {
 }
 
 .copilot-send-btn:hover {
-  background: var(--corporate-blue-hover);
+  background: #163259;
+  color: #ffffff;
 }
 
 .copilot-send-btn svg {
@@ -1702,7 +1797,8 @@ button {
     width: 100%;
     padding: 1.45rem;
   }
-  .copilot-chat-window {
+  .copilot-chat-window,
+  .copilot-chat-window.expanded {
     width: calc(100vw - 32px);
     right: 16px;
     bottom: 92px;
