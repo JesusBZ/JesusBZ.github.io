@@ -1,0 +1,48 @@
+services:
+  - type: web
+    name: jbz-quant-crypto-multibot
+    runtime: python
+    region: frankfurt
+    plan: starter
+    buildCommand: pip install --upgrade pip==24.3.1 && pip install --only-binary=:all: -r requirements.txt
+    startCommand: python -B main.py --daemon-intraday --serve-web --interval 60
+    healthCheckPath: /health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - render.yaml
+        - main.py
+        - requirements.txt
+        - config/**
+        - src/**
+      ignoredPaths:
+        - history.json
+        - quant_crypto_suite.json
+        - bot_state_ledger.json
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: EXECUTION_MODE
+        value: "paper"
+      - key: LIVE_TRADING_ARMED
+        value: "FALSE"
+      - key: ALLOWED_ORIGINS
+        value: "https://jesusbz.github.io,https://jesusbezerpa.github.io,https://jesusbzerpa.github.io"
+      - key: INBOUND_FORM_ENDPOINT
+        sync: false
+      - key: RENDER_ADMIN_TOKEN
+        sync: false
+      - key: OKX_API_KEY
+        sync: false
+      - key: OKX_API_SECRET
+        sync: false
+      - key: OKX_API_PASSPHRASE
+        sync: false
+      - key: BYBIT_API_KEY
+        sync: false
+      - key: BYBIT_API_SECRET
+        sync: false

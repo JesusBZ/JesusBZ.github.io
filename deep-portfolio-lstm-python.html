@@ -4,7 +4,9 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
 
   <title>Deep Portfolio Optimization con LSTM en PyTorch | Jesús Benjamín Zerpa</title>
   <!-- SEO:START -->
@@ -59,8 +61,7 @@
                        "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
                        "url":  "https://jesusbzerpa.github.io/",
                        "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
-                       "telephone":  "+58 424 148 78 70",
+"telephone":  "+58 424 148 78 70",
                        "worksFor":  {
                                         "@type":  "Organization",
                                         "name":  "Consorcio Credicard"
@@ -206,11 +207,14 @@
   <!-- SEO:END -->
 
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg?v=20261115a" />
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/jbz-favicon-32.png?v=20261115a" />
+  <link rel="shortcut icon" href="favicon.ico?v=20261115a" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="imagenes/jbz-apple-touch-icon.png?v=20261115a" />
 
   <!-- Corporate Stylesheets -->
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114f" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261121s" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261122a" />
 
   <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
@@ -229,7 +233,7 @@
       }
     };
   </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" integrity="sha384-M5jmNxKC9EVnuqeMwRHvFuYUE8Hhp0TgBruj/GZRkYtiMrCRgH7yvv5KY+Owi7TW" crossorigin="anonymous"></script>
 
   <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem + Clean URL Bar) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
@@ -273,7 +277,7 @@
 
   <style>
     .quant-study-wrap {
-      max-width: 1120px;
+      max-width: 1272px;
       margin: 28px auto 60px auto;
       padding: 0 20px;
     }
@@ -290,14 +294,14 @@
       }
     }
     .study-hero-panel {
-      background: linear-gradient(135deg, #091e42 0%, #0f172a 55%, #1e3a8a 100%);
+      background: linear-gradient(135deg, #0B1B33 0%, #102342 58%, #163259 100%);
       color: #ffffff;
       border-radius: 14px;
       padding: 2.4rem 2.5rem;
       margin-bottom: 2.25rem;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(59, 130, 246, 0.3);
+      border: 1px solid rgba(184, 149, 90, 0.42);
       box-shadow: 0 14px 34px -6px rgba(9, 30, 66, 0.35);
     }
     .study-hero-badges {
@@ -390,7 +394,7 @@
     }
     .btn-study-action.outline {
       background: rgba(255, 255, 255, 0.08);
-      color: #f8fafc !important;
+      color: #FFFFFF !important;
       border: 1px solid rgba(255, 255, 255, 0.22);
     }
     .btn-study-action.outline:hover {
@@ -414,7 +418,7 @@
       }
     }
     .kpi-exec-box {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 1.2rem 1.25rem;
@@ -426,7 +430,7 @@
       box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.08);
     }
     .kpi-exec-box.highlight-lstm {
-      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      background: linear-gradient(180deg, #F4F6FA 0%, #EFF6FF 100%);
       border: 2px solid #2563eb;
     }
     .kpi-exec-tag {
@@ -444,7 +448,7 @@
     .kpi-exec-val {
       font-size: 1.65rem;
       font-weight: 900;
-      color: #091e42;
+      color: #0B1B33;
       line-height: 1.2;
       display: block;
     }
@@ -471,9 +475,9 @@
       margin-top: 0.45rem;
     }
     .toc-executive-box {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #cbd5e1;
-      border-left: 4px solid #0052cc;
+      border-left: 4px solid #1D4ED8;
       border-radius: 10px;
       padding: 1.25rem 1.5rem;
       margin-bottom: 2.25rem;
@@ -483,7 +487,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: #091e42;
+      color: #0B1B33;
       margin-bottom: 0.65rem;
       display: flex;
       align-items: center;
@@ -511,7 +515,7 @@
       gap: 0.4rem;
     }
     .toc-grid-list li a:hover {
-      color: #0052cc !important;
+      color: #1D4ED8 !important;
     }
     .quant-table-wrap {
       overflow-x: auto;
@@ -527,7 +531,7 @@
       background: #ffffff;
     }
     .quant-table thead tr {
-      background: #091e42;
+      background: #0B1B33;
       color: #ffffff;
       text-align: left;
     }
@@ -547,7 +551,7 @@
       vertical-align: middle;
     }
     .quant-table tbody tr:hover {
-      background: #f8fafc;
+      background: #F4F6FA;
     }
     .quant-table tbody tr.row-winner {
       background: #eff6ff;
@@ -576,12 +580,13 @@
       color: #92400e;
     }
     .plotly-card-box {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
+      background: #0B1B33;
+      border: 1px solid rgba(184, 149, 90, 0.38);
+      border-top: 3px solid #B8955A;
       border-radius: 14px;
       padding: 1.25rem 1.25rem 0.85rem 1.25rem;
       margin: 1.85rem 0 2.35rem 0;
-      box-shadow: 0 8px 25px -5px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 12px 32px rgba(11, 27, 51, 0.22);
     }
     .plotly-card-header {
       display: flex;
@@ -591,31 +596,31 @@
       gap: 0.8rem;
       padding-bottom: 0.85rem;
       margin-bottom: 0.65rem;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid rgba(199, 210, 227, 0.18);
     }
     .plotly-card-title {
       font-size: 1.08rem;
       font-weight: 800;
-      color: #091e42;
+      color: #FFFFFF;
       margin: 0 !important;
     }
     .plotly-card-sub {
       font-size: 0.83rem !important;
-      color: #64748b !important;
+      color: #C7D2E3 !important;
       margin: 0.15rem 0 0 0 !important;
     }
     .chart-ctrl-group {
       display: inline-flex;
-      background: #f1f5f9;
+      background: #102342;
       padding: 0.22rem;
       border-radius: 8px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid rgba(184, 149, 90, 0.35);
       gap: 0.2rem;
     }
     .chart-ctrl-btn {
       border: none;
       background: transparent;
-      color: #475569;
+      color: #C7D2E3;
       font-size: 0.78rem;
       font-weight: 700;
       padding: 0.35rem 0.7rem;
@@ -624,9 +629,10 @@
       transition: all 0.15s ease;
     }
     .chart-ctrl-btn.active {
-      background: #0052cc;
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(0, 82, 204, 0.25);
+      background: #1D4ED8;
+      color: #FFFFFF;
+      border: 1px solid #B8955A;
+      box-shadow: 0 2px 8px rgba(29, 78, 216, 0.35);
     }
     .plotly-canvas {
       width: 100%;
@@ -636,8 +642,8 @@
       position: relative;
     }
     .callout-quant {
-      background: #f8fafc;
-      border-left: 4px solid #0052cc;
+      background: #F4F6FA;
+      border-left: 4px solid #1D4ED8;
       border-radius: 0 10px 10px 0;
       padding: 1.15rem 1.35rem;
       margin: 1.5rem 0;
@@ -653,14 +659,14 @@
       margin-top: 0 !important;
       margin-bottom: 0.45rem !important;
       font-size: 1.02rem !important;
-      color: #091e42 !important;
+      color: #0B1B33 !important;
     }
     .callout-quant p {
       margin-bottom: 0 !important;
       font-size: 0.96rem !important;
     }
     .math-block-card {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #e2e8f0;
       border-radius: 10px;
       padding: 1.1rem 1.4rem;
@@ -715,7 +721,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
           </a>
           <!-- Email -->
-          <a href="mailto:jesuszerpaeconomia@gmail.com" class="social-icon-btn" title="Correo Electrónico">
+          <a href="formulario.html" data-jbz-mail="link" class="social-icon-btn" title="Correo Electrónico">
             <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>
@@ -724,9 +730,6 @@
       <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
-      <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa">
-        <img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" />
-      </a>
     </div>
 
     <div id="mobileNavDrawer" class="mobile-nav-drawer">
@@ -752,7 +755,7 @@
         <div class="study-hero-badges">
           <span class="study-badge primary">ACTUALIZACIÓN DEEP LEARNING 2026</span>
           <span class="study-badge emerald">PYTHON • PYTORCH • LSTM • PLOTLY</span>
-          <span class="study-badge amber">AUDITORÍA EMPÍRICA: $5,000 USD (2020–2026)</span>
+          <span class="study-badge amber">VALIDACIÓN FUERA DE MUESTRA: $5,000 USD (2020–2026)</span>
           <span class="study-badge ai-argon">✦ Optimizado con Gemini 4 Argon</span>
         </div>
         <h1>Deep Portfolio Optimization con Redes Neuronales LSTM en Python sobre la Cartera del Portafolio Tangente de Markowitz</h1>
@@ -808,12 +811,12 @@
       <!-- Executive Table of Contents -->
       <div class="toc-executive-box">
         <div class="toc-executive-title">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0052cc" stroke-width="2.3"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.3"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
           Índice Estructurado del Estudio Cuantitativo
         </div>
         <ul class="toc-grid-list">
           <li><a href="#sec-referencia-2020">1. Punto de Partida: El Portafolio Tangente Original de Abril 2020</a></li>
-          <li><a href="#sec-auditoria-5000">2. Auditoría de $5,000 USD (2020–2026): Rendimiento del Portafolio de Markowitz</a></li>
+          <li><a href="#sec-validacion-5000">2. Evaluación Fuera de Muestra de $5,000 USD (2020–2026): Rendimiento del Portafolio de Markowitz</a></li>
           <li><a href="#sec-teoria-lstm">3. De Markowitz Estático a Deep Portfolio Optimization con Redes LSTM</a></li>
           <li><a href="#sec-codigo-python">4. Librerías de Python y Arquitectura Completa del Código (PyTorch &amp; SciPy)</a></li>
           <li><a href="#sec-laboratorio-plotly">5. Laboratorio Visual Interactivo (5 Gráficos Dinámicos de Última Generación)</a></li>
@@ -922,10 +925,10 @@
       </section>
 
       <!-- =====================================================================
-           SECCIÓN 2: AUDITORÍA REAL DE $5,000 USD (2020 - 2026)
+           SECCIÓN 2: EVALUACIÓN FUERA DE MUESTRA DE $5,000 USD (2020 - 2026)
            ===================================================================== -->
-      <section id="sec-auditoria-5000">
-        <h2>2. Auditoría Empírica Ex-Post: Valoración Actual de $5,000 USD Invertidos en el Portafolio Tangente (2020–2026)</h2>
+      <section id="sec-validacion-5000">
+        <h2>2. Evaluación Empírica Ex-Post: Valoración Fuera de Muestra de $5,000 USD Invertidos en el Portafolio Tangente (2020–2026)</h2>
         <p>
           La validación rigurosa de todo modelo cuantitativo de asignación de activos radica en su desempeño fuera de muestra (<em>out-of-sample</em>) ante escenarios macroeconómicos no contemplados durante el período de calibración (<em>in-sample</em>, 2010–2020). Para ello, se evalúan los pesos exactos publicados el <strong>30 de abril de 2020</strong> aplicando un capital inicial de <strong>$5,000.00 USD</strong> hasta el <strong>29 de octubre de 2026</strong> (6.5 años de negociación bursátil real, abarcando la recuperación posterior a la pandemia en 2020–2021, el ciclo inflacionario y el ajuste de tasas de interés de la Reserva Federal en 2022, y la expansión tecnológica de 2023–2026).
         </p>
@@ -1163,7 +1166,7 @@ bench_oos_2026    <span class="op">=</span> raw_data.loc[<span class="st">&quot;
 <span class="fu">print</span>(<span class="st">f&quot;Sesiones Out-of-Sample (2020-2026): {len(prices_oos_2026)} días&quot;</span>)</code></pre>
         </div>
 
-        <h3>Paso 4.2. Auditoría Ex-Post en Python de los $5,000 USD en el Portafolio Tangente de 2020</h3>
+        <h3>Paso 4.2. Evaluación Ex-Post en Python de los $5,000 USD en el Portafolio Tangente de 2020</h3>
         <p>
           Se replican en Python los vectores de pesos óptimos obtenidos en abril de 2020 y se cuantifica el crecimiento patrimonial diario de los <strong>$5,000.00 USD</strong> tanto bajo tenencia pasiva (<em>Buy &amp; Hold</em>) como bajo rebalanceo periódico:
         </p>
@@ -1340,7 +1343,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
       <section id="sec-conclusiones">
         <h2>6. Tabla Maestra Comparativa y Conclusiones Ejecutivas</h2>
         <p>
-          En la siguiente tabla maestra se consolidan las métricas institucionales de rentabilidad, riesgo y eficiencia ajustada por volatilidad para el capital inicial de <strong>$5,000.00 USD</strong> entre el 30 de abril de 2020 y el 29 de octubre de 2026:
+          En la siguiente tabla maestra se consolidan las métricas estadísticas y financieras de rentabilidad, riesgo y eficiencia ajustada por volatilidad para el capital inicial de <strong>$5,000.00 USD</strong> entre el 30 de abril de 2020 y el 29 de octubre de 2026:
         </p>
 
         <div class="quant-table-wrap">
@@ -1472,12 +1475,12 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
 
       <hr />
       <span style="font-size: medium;"><br /></span>
-      <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<br /><span style="color: #475569; font-size: 0.92em;">Publicado: Octubre de 2026</span><span style="font-size: medium;"><span style="color: black;">
+      <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br /><span data-jbz-mail-text="1">Canal de correo protegido</span><br /><span style="color: #475569; font-size: 0.92em;">Publicado: Octubre de 2026</span><span style="font-size: medium;"><span style="color: black;">
       </span></span></span><br />
       <br />
       <div style="text-align: center;">
       <div style="text-align: left;">
-      <a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python - Licencia Creative Commons 4.0" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+      <a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img class="cc-badge" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python - Licencia Creative Commons 4.0" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
       </div>
       <div style="text-align: center;">
       <div style="text-align: left;">
@@ -1486,305 +1489,218 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
       <hr />
 
       <!-- RELATED-CAROUSEL-START -->
-      <section class="pc-section" aria-label="Otros trabajos del portafolio">
+                  <section class="pc-section" aria-label="Otros trabajos del portafolio">
         <div class="pc-header">
           <div>
             <span class="pc-kicker">Sigue explorando</span>
             <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
           </div>
           <div class="pc-controls">
+            <span class="pc-page-badge">1–4 de 18</span>
             <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
             <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
           </div>
         </div>
         <div class="pc-viewport" id="carouselViewport">
           <div class="pc-track" id="carouselTrack">
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz (Post Original 2020)</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">RStudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad &amp; VaR</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGARCH</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · RStudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="EvaluacionProyecto.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #5</span>
-            <span class="pc-cat">Evaluación de Proyectos</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión</h4>
-            <div class="pc-meta"><span class="pc-tags">Evaluación de Proyectos · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Dashboard.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #6</span>
-            <span class="pc-cat">Dashboard Financiero</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Financial Dashboard</h4>
-            <div class="pc-meta"><span class="pc-tags">Dashboard Financiero · KPIs</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto7.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #7</span>
-            <span class="pc-cat">Macroeconomía</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Exploración de Datos Macroeconómicos con RStudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Macroeconomía · Reserva Federal</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="powermap.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #8</span>
-            <span class="pc-cat">Inteligencia Geoespacial</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Sistema Integrado Geográfico SIG</h4>
-            <div class="pc-meta"><span class="pc-tags">Power Map · Modelo de Datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #9</span>
-            <span class="pc-cat">Pronóstico Prophet</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Pronósticos con Prophet para el Bitcoin y Ether</h4>
-            <div class="pc-meta"><span class="pc-tags">Prophet · Criptoactivos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="power-bi.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #11</span>
-            <span class="pc-cat">Power BI</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Power BI, una de las mejores herramientas BI</h4>
-            <div class="pc-meta"><span class="pc-tags">Power BI · Dashboard Financiero</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #12</span>
-            <span class="pc-cat">Data Mining</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis de procesos de negocio utilizando la plataforma de RStudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Data Analytics · Data Mining</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="trading-medias-moviles-rstudio.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #13</span>
-            <span class="pc-cat">Análisis Técnico</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis Técnico del Bitcoin en RStudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Trading · Bitcoin</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz (Post Original 2020)</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">RStudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad &amp; VaR</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGARCH</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · RStudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="EvaluacionProyecto.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #5</span>
-            <span class="pc-cat">Evaluación de Proyectos</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión</h4>
-            <div class="pc-meta"><span class="pc-tags">Evaluación de Proyectos · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Dashboard.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #6</span>
-            <span class="pc-cat">Dashboard Financiero</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Financial Dashboard</h4>
-            <div class="pc-meta"><span class="pc-tags">Dashboard Financiero · KPIs</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto7.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #7</span>
-            <span class="pc-cat">Macroeconomía</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Exploración de Datos Macroeconómicos con RStudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Macroeconomía · Reserva Federal</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="powermap.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #8</span>
-            <span class="pc-cat">Inteligencia Geoespacial</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Sistema Integrado Geográfico SIG</h4>
-            <div class="pc-meta"><span class="pc-tags">Power Map · Modelo de Datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #9</span>
-            <span class="pc-cat">Pronóstico Prophet</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Pronósticos con Prophet para el Bitcoin y Ether</h4>
-            <div class="pc-meta"><span class="pc-tags">Prophet · Criptoactivos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="power-bi.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #11</span>
-            <span class="pc-cat">Power BI</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Power BI, una de las mejores herramientas BI</h4>
-            <div class="pc-meta"><span class="pc-tags">Power BI · Dashboard Financiero</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #12</span>
-            <span class="pc-cat">Data Mining</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis de procesos de negocio utilizando la plataforma de RStudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Data Analytics · Data Mining</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="trading-medias-moviles-rstudio.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #13</span>
-            <span class="pc-cat">Análisis Técnico</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis Técnico del Bitcoin en RStudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Trading · Bitcoin</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
+          <a href="bot-trading-python/index.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-19-bot-trading-cripto-python.webp?v=20261121w" alt="Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #19</span>
+              <span class="pc-cat">Python · 4 Bots</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · GARCH · MLP</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-vectores-autoregresivos-en-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-18-var-granger-rstudio.webp?v=20261121b" alt="Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #18</span>
+              <span class="pc-cat">RStudio · vars</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">R 4.4+ · urca · IRF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="vectores-autorregresivos-var-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-17-var-granger-spillover-python.webp?v=20261121b" alt="Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #17</span>
+              <span class="pc-cat">Python · VAR(8)</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Johansen · GFEVD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="simulacion-monte-carlo-portafolios-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-16-monte-carlo-cholesky-merton-python.webp?v=20261121b" alt="Modelización Estocástica de Monte Carlo Multivariante en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #16</span>
+              <span class="pc-cat">Monte Carlo Python</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Monte Carlo Multivariante en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Cholesky · Merton</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="volatilidad-garch-var-cvar-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp?v=20261121b" alt="Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR)" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #15</span>
+              <span class="pc-cat">EGARCH &amp; CVaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR)</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Skewed-t</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-medias-moviles-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp?v=20261121b" alt="Análisis Técnico Cuantitativo del Bitcoin en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #13</span>
+              <span class="pc-cat">Análisis Técnico</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis Técnico Cuantitativo del Bitcoin en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">quantmod · Bollinger · MACD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp?v=20261121b" alt="Análisis de Procesos de Negocio y Minería de Datos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #12</span>
+              <span class="pc-cat">Process Mining</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis de Procesos de Negocio y Minería de Datos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">bupaR · Event Logs</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="power-bi.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp?v=20261121b" alt="Implementación de Business Intelligence y Modelado Analítico" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #11</span>
+              <span class="pc-cat">Business Intelligence</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Implementación de Business Intelligence y Modelado Analítico</h4>
+              <div class="pc-meta"><span class="pc-tags">Power BI · KPIs Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp?v=20261121b" alt="Modelización Estocástica de Carteras con Monte Carlo en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #10</span>
+              <span class="pc-cat">Monte Carlo R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Carteras con Monte Carlo en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">Monte Carlo · Frontera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp?v=20261121b" alt="Pronósticos Econométricos con Prophet para Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #9</span>
+              <span class="pc-cat">Prophet RStudio</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Pronósticos Econométricos con Prophet para Bitcoin y Ether</h4>
+              <div class="pc-meta"><span class="pc-tags">Prophet · Criptoactivos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="powermap.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp?v=20261121b" alt="Sistema de Información Geográfica (SIG) y Analítica 3D" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #8</span>
+              <span class="pc-cat">SIG Geoespacial</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Sistema de Información Geográfica (SIG) y Analítica 3D</h4>
+              <div class="pc-meta"><span class="pc-tags">Power Map · Geoespacial</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto7.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp?v=20261121b" alt="Exploración Econométrica de Datos Macroeconómicos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #7</span>
+              <span class="pc-cat">Macroeconomía</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Exploración Econométrica de Datos Macroeconómicos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">WDI · Regresión Lineal</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Dashboard.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp?v=20261121b" alt="Cuadro de Mando Financiero y Suite Interactiva FP&amp;A" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #6</span>
+              <span class="pc-cat">FP&amp;A Suite</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Cuadro de Mando Financiero y Suite Interactiva FP&amp;A</h4>
+              <div class="pc-meta"><span class="pc-tags">FP&amp;A · EBITDA · FCF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="EvaluacionProyecto.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp?v=20261121b" alt="Formulación y Evaluación Financiera de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #5</span>
+              <span class="pc-cat">CAPEX &amp; VAN/TIR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Formulación y Evaluación Financiera de Proyectos de Inversión</h4>
+              <div class="pc-meta"><span class="pc-tags">CAPEX · WACC · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto4.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp?v=20261121b" alt="Optimización de Portafolios y Frontera Eficiente de Markowitz" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #4</span>
+              <span class="pc-cat">Markowitz R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Optimización de Portafolios y Frontera Eficiente de Markowitz</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · Ratio Sharpe</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto3.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp?v=20261121b" alt="Aprendizaje Automático (Machine Learning) Financiero en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #3</span>
+              <span class="pc-cat">Machine Learning</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Aprendizaje Automático (Machine Learning) Financiero en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">tidymodels · Series</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Proyecto2.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp?v=20261121b" alt="Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #2</span>
+              <span class="pc-cat">eGARCH &amp; VaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo</h4>
+              <div class="pc-meta"><span class="pc-tags">Bitcoin · rugarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelo-ventas.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp?v=20261121b" alt="Modelo Econométrico de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #1</span>
+              <span class="pc-cat">Series SARIMA</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelo Econométrico de Pronósticos para Ventas en Volumen</h4>
+              <div class="pc-meta"><span class="pc-tags">SARIMA · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
           </div>
         </div>
       </section>
@@ -1871,7 +1787,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
       <span class="exec-cta-eyebrow">Ecosistema Profesional · Jesús Benjamín Zerpa</span>
       <h3 class="exec-cta-title">¿Deseas implementar modelos cuantitativos o planificación financiera en tu empresa?</h3>
       <p class="exec-cta-desc">
-        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, cuadros de mando en Power BI y modelos predictivos en Python y R.
+        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, Implementación de Business Intelligence y modelos econométricos y predictivos en Python y R.
       </p>
     </div>
     <div class="exec-cta-actions">
@@ -1898,7 +1814,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
           </p>
           <div class="footer-license-box">
             <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
-              <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
+              <img class="cc-badge" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
             </a>
             <span>Contenido bajo <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
           </div>
@@ -1922,7 +1838,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
           <ul class="footer-links-list">
             <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
             <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
-            <li><a href="mailto:jesuszerpaeconomia@gmail.com">jesuszerpaeconomia@gmail.com</a></li>
+            <li><a href="formulario.html" data-jbz-mail="text">Contacto directo</a></li>
             <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Telegram @jesusbz21</a></li>
           </ul>
         </div>
@@ -1977,7 +1893,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
                 name: 'Deep Portfolio LSTM (Python) — $15,057',
                 type: 'scatter',
                 mode: 'lines',
-                line: { color: '#2563eb', width: 3.2 },
+                line: { color: '#38BDF8', width: 3.2 },
                 hovertemplate: '<b>Deep Portfolio LSTM</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
               },
               {
@@ -1986,7 +1902,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
                 name: 'Benchmark S&P 500 (^GSPC) — $13,132',
                 type: 'scatter',
                 mode: 'lines',
-                line: { color: '#0f172a', width: 2.3, dash: 'dash' },
+                line: { color: '#D9C29A', width: 2.4, dash: 'dash' },
                 hovertemplate: '<b>S&P 500 (^GSPC)</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
               },
               {
@@ -1995,7 +1911,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
                 name: 'Cartera Equiponderada (1/N) — $11,836',
                 type: 'scatter',
                 mode: 'lines',
-                line: { color: '#64748b', width: 1.8, dash: 'dot' },
+                line: { color: '#C7D2E3', width: 1.8, dash: 'dot' },
                 hovertemplate: '<b>Equiponderada (1/N)</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
               },
               {
@@ -2022,38 +1938,41 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
                 name: 'Portafolio Mínima Varianza 2020 — $10,599',
                 type: 'scatter',
                 mode: 'lines',
-                line: { color: '#f59e0b', width: 2.0 },
+                line: { color: '#B8955A', width: 2.2 },
                 hovertemplate: '<b>Mínima Varianza 2020</b>: ' + yPrefix + '%{y:,.2f}' + ySuffix + '<extra></extra>'
               }
             ];
 
             const layout = {
               height: 460,
-              font: { family: fontFamily, color: '#1e293b' },
+              font: { family: fontFamily, color: '#FFFFFF' },
               margin: { l: 68, r: 24, t: 36, b: 48 },
-              paper_bgcolor: '#ffffff',
-              plot_bgcolor: '#f8fafc',
+              paper_bgcolor: '#0B1B33',
+              plot_bgcolor: '#102342',
               hovermode: 'x',
               xaxis: {
                 title: 'Fecha de Negociación (Out-of-Sample: Abril 2020 – Octubre 2026)',
-                gridcolor: '#e2e8f0',
-                linecolor: '#cbd5e1'
+                gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)',
+                linecolor: 'rgba(199, 210, 227, 0.25)'
               },
               yaxis: {
                 title: mode === 'pct' ? 'Rendimiento Acumulado (%)' : 'Valor del Portafolio ($ USD)',
                 type: mode === 'log' ? 'log' : 'linear',
                 tickprefix: mode === 'pct' ? '' : '$',
                 ticksuffix: mode === 'pct' ? '%' : '',
-                gridcolor: '#e2e8f0',
-                linecolor: '#cbd5e1'
+                gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)',
+                linecolor: 'rgba(199, 210, 227, 0.25)'
               },
               legend: {
                 orientation: 'h',
                 yanchor: 'bottom',
-                y: 1.02,
+                y: 1.03,
                 xanchor: 'left',
                 x: 0,
-                bgcolor: 'rgba(255,255,255,0.9)'
+                bgcolor: 'rgba(11, 27, 51, 0.88)',
+                bordercolor: 'rgba(184, 149, 90, 0.42)',
+                borderwidth: 1,
+                font: { color: '#FFFFFF', size: 11 }
               },
               shapes: [
                 {
@@ -2076,8 +1995,8 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
                   yref: 'paper',
                   text: 'Bear Market 2022 (Inflación / Alzas Fed)',
                   showarrow: false,
-                  font: { size: 11, color: '#b91c1c' },
-                  bgcolor: 'rgba(254, 226, 226, 0.88)',
+                  font: { size: 11, color: '#FECDD3' },
+                  bgcolor: 'rgba(244, 63, 94, 0.24)', bordercolor: '#F43F5E',
                   borderpad: 4
                 }
               ]
@@ -2126,7 +2045,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
             y: initVals,
             name: 'Inversión Inicial (30-Abr-2020)',
             type: 'bar',
-            marker: { color: '#94a3b8', line: { color: '#64748b', width: 1 } },
+            marker: { color: '#64748B', line: { color: '#C7D2E3', width: 1 } },
             text: initVals.map(function(v) { return '$' + Math.round(v).toLocaleString('en-US'); }),
             textposition: 'auto',
             hovertemplate: '<b>%{x}</b> — Capital Inicial (2020): <b>$%{y:,.2f} USD</b><extra></extra>'
@@ -2137,7 +2056,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
             y: endVals,
             name: 'Valor Final (29-Oct-2026)',
             type: 'bar',
-            marker: { color: '#0052cc', line: { color: '#1e3a8a', width: 1 } },
+            marker: { color: '#38BDF8', line: { color: '#B8955A', width: 1 } },
             text: endVals.map(function(v, i) { return '$' + Math.round(v).toLocaleString('en-US') + ' (+' + cumRets[i] + '%)'; }),
             textposition: 'outside',
             hovertemplate: '<b>%{x}</b> — Valor Final (2026): <b>$%{y:,.2f} USD</b><extra></extra>'
@@ -2145,13 +2064,13 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
 
           Plotly.newPlot('chartAssetBreakdown', [traceInit, traceEnd], {
             height: 430,
-            font: { family: fontFamily, color: '#1e293b' },
+            font: { family: fontFamily, color: '#FFFFFF' },
             barmode: 'group',
             margin: { l: 65, r: 24, t: 36, b: 48 },
-            paper_bgcolor: '#ffffff',
-            plot_bgcolor: '#f8fafc',
-            xaxis: { title: 'Acciones del S&P 500 en el Portafolio Tangente (Pesos Abril 2020)', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Valor en Dólares ($ USD)', tickprefix: '$', gridcolor: '#e2e8f0', range: [0, 4450] },
+            paper_bgcolor: '#0B1B33',
+            plot_bgcolor: '#102342',
+            xaxis: { title: 'Acciones del S&P 500 en el Portafolio Tangente (Pesos Abril 2020)', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+            yaxis: { title: 'Valor en Dólares ($ USD)', tickprefix: '$', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)', range: [0, 4450] },
             legend: { orientation: 'h', y: 1.11, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2163,12 +2082,12 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
         // ---------------------------------------------------------------------
         try {
           const palette = {
-            MSFT: '#2563eb',
-            MA:   '#0ea5e9',
-            WMT:  '#10b981',
-            JNJ:  '#14b8a6',
-            MCD:  '#f59e0b',
-            PEP:  '#8b5cf6'
+            MSFT: '#38BDF8',
+            MA:   '#60A5FA',
+            WMT:  '#10B981',
+            JNJ:  '#2DD4BF',
+            MCD:  '#B8955A',
+            PEP:  '#818CF8'
           };
           const weightTraces = ['MSFT', 'MA', 'WMT', 'JNJ', 'MCD', 'PEP'].map(function(t) {
             return {
@@ -2185,14 +2104,14 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
           });
 
           Plotly.newPlot('chartLstmWeights', weightTraces, {
-            height: 440,
-            font: { family: fontFamily, color: '#1e293b' },
-            margin: { l: 62, r: 24, t: 32, b: 48 },
-            paper_bgcolor: '#ffffff',
-            plot_bgcolor: '#f8fafc',
+            height: 465,
+            font: { family: fontFamily, color: '#FFFFFF' },
+            margin: { l: 62, r: 24, t: 36, b: 86 },
+            paper_bgcolor: '#0B1B33',
+            plot_bgcolor: '#102342',
             hovermode: 'x',
-            xaxis: { title: 'Trimestre (Rebalanceo Dinámico Out-of-Sample 2020Q2 – 2026Q4)', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Participación en la Cartera (%)', ticksuffix: '%', range: [0, 100], gridcolor: '#e2e8f0' },
+            xaxis: { title: { text: 'Trimestre (Rebalanceo Dinámico Out-of-Sample 2020Q2 – 2026Q4)', standoff: 16 }, tickangle: -40, nticks: 10, automargin: true, gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+            yaxis: { title: 'Participación en la Cartera (%)', ticksuffix: '%', range: [0, 100], gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
             legend: { orientation: 'h', y: 1.11, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2213,7 +2132,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
             marker: {
               size: 6,
               color: DATA.mc.sharpes,
-              colorscale: 'Viridis',
+              colorscale: [[0, '#102342'], [0.35, '#1D4ED8'], [0.7, '#38BDF8'], [1, '#B8955A']],
               opacity: 0.55,
               colorbar: { title: 'Sharpe', thickness: 14, len: 0.75 }
             },
@@ -2228,7 +2147,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
             type: 'scatter',
             name: 'Acciones Individuales S&P 500',
             textposition: 'top center',
-            marker: { size: 11, color: '#334155', symbol: 'diamond' },
+            marker: { size: 11, color: '#D9C29A', symbol: 'diamond', line: { color: '#0B1B33', width: 1.5 } },
             hovertemplate: '<b>%{text}</b><br>Volatilidad: %{x:.2f}%<br>Retorno Anual: %{y:.2f}%<extra></extra>'
           };
 
@@ -2242,22 +2161,22 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
             textposition: ['bottom right', 'bottom left', 'top left', 'top center'],
             marker: {
               size: [15, 14, 15, 18],
-              color: ['#10b981', '#f59e0b', '#0f172a', '#2563eb'],
+              color: ['#10B981', '#B8955A', '#D9C29A', '#38BDF8'],
               symbol: ['star', 'circle', 'square', 'star'],
-              line: { color: '#ffffff', width: 2 }
+              line: { color: '#0B1B33', width: 2 }
             },
             hovertemplate: '<b>%{text}</b><br>Volatilidad Anual: %{x:.2f}%<br>CAGR Anual: %{y:.2f}%<extra></extra>'
           };
 
           Plotly.newPlot('chartEfficientFrontier', [mcTrace, assetScatter, stratPoints], {
             height: 470,
-            font: { family: fontFamily, color: '#1e293b' },
+            font: { family: fontFamily, color: '#FFFFFF' },
             margin: { l: 65, r: 30, t: 32, b: 50 },
-            paper_bgcolor: '#ffffff',
-            plot_bgcolor: '#f8fafc',
+            paper_bgcolor: '#0B1B33',
+            plot_bgcolor: '#102342',
             hovermode: 'closest',
-            xaxis: { title: 'Riesgo / Volatilidad Anualizada Realizada (σ %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Retorno Compuesto Anualizado Realizado (E[R] / CAGR %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Riesgo / Volatilidad Anualizada Realizada (σ %)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+            yaxis: { title: 'Retorno Compuesto Anualizado Realizado (E[R] / CAGR %)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
             legend: { orientation: 'h', y: 1.11, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2286,7 +2205,7 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
               name: 'Deep Portfolio LSTM (Max DD: -19.00%)',
               type: 'scatter',
               mode: 'lines',
-              line: { color: '#2563eb', width: 2.4 },
+              line: { color: '#38BDF8', width: 2.4 },
               hovertemplate: '<b>Deep Portfolio LSTM</b>: %{y:.2f}%<extra></extra>'
             },
             {
@@ -2297,20 +2216,20 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
               mode: 'lines',
               fill: 'tozeroy',
               fillcolor: 'rgba(239, 68, 68, 0.09)',
-              line: { color: '#ef4444', width: 1.9, dash: 'dot' },
+              line: { color: '#F43F5E', width: 2.0, dash: 'dot' },
               hovertemplate: '<b>S&P 500</b>: %{y:.2f}%<extra></extra>'
             }
           ];
 
           Plotly.newPlot('chartDrawdowns', ddTraces, {
             height: 390,
-            font: { family: fontFamily, color: '#1e293b' },
+            font: { family: fontFamily, color: '#FFFFFF' },
             margin: { l: 65, r: 24, t: 32, b: 48 },
-            paper_bgcolor: '#ffffff',
-            plot_bgcolor: '#f8fafc',
+            paper_bgcolor: '#0B1B33',
+            plot_bgcolor: '#102342',
             hovermode: 'x',
-            xaxis: { title: 'Fecha (2020–2026)', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Drawdown desde el Máximo (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Fecha (2020–2026)', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+            yaxis: { title: 'Drawdown desde el Máximo (%)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
             legend: { orientation: 'h', y: 1.12, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2327,6 +2246,6 @@ capital_final_accion   <span class="op">=</span> capital_inicial_accion <span cl
   </script>
 
   <!-- Corporate Portfolio JS (Code Copy Buttons, Moving Carousel, Scroll Top, Navigation) -->
-  <script src="js/futuristic-app.js?v=20261114f"></script>
+  <script src="js/futuristic-app.js?v=20261123a"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ import yfinance as yf
 from scipy import stats, optimize
 from scipy.special import gammaln
 
-# 1. Parámetros Globales de Auditoría y Configuración Institucional
+# 1. Parámetros Globales de Estimación y Configuración Cuantitativa
 ASSETS = ["MSFT", "JNJ", "MA", "PEP", "WMT", "MCD"]
 BENCHMARK = "^GSPC"
 ALL_TICKERS = ASSETS + [BENCHMARK]
@@ -65,7 +65,7 @@ def load_market_prices(csv_fallback: str = "data/sp500_montecarlo_2010_2026.csv"
     return prices
 
 
-# 3. Réplica de la Línea Base de Julio 2020 (2010-2020) y Auditoría Ex-Post (2020-2026)
+# 3. Réplica de la Línea Base de Julio 2020 (2010-2020) y Evaluación Ex-Post (2020-2026)
 def audit_2020_baseline_and_expost(prices: pd.DataFrame) -> dict:
     """
     Replica exactamente la parametrización mensual en RStudio de julio de 2020 (N = 123 meses)
@@ -84,7 +84,7 @@ def audit_2020_baseline_and_expost(prices: pd.DataFrame) -> dict:
     cone_2020 = np.cumprod(1.0 + rng_base.normal(mu_2020, sd_2020, size=(N_MONTE_CARLO_PATHS, HORIZON_MONTHS)), axis=1)
     cone_2020 = np.hstack([np.ones((N_MONTE_CARLO_PATHS, 1)), cone_2020])
 
-    # Auditoría empírica fuera de muestra (30-Abr-2020 -> 10-Nov-2026)
+    # Validación Estadística empírica fuera de muestra (30-Abr-2020 -> 10-Nov-2026)
     p_post = prices.loc[CUTOFF_2020:]
     dates_post = p_post.index
     rel_assets = p_post[ASSETS] / p_post[ASSETS].iloc[0]
@@ -506,9 +506,9 @@ if __name__ == "__main__":
     mc_2026_w = run_stochastic_tournament(prices_df, mkw_res["w_tan_2026"], tail_res)
 
     print("=" * 90)
-    print("AUDITORÍA MONTE CARLO MULTIVARIANTE EN PYTHON (2010 -> NOVIEMBRE 2026 -> 2036)")
+    print("EVALUACIÓN MONTE CARLO MULTIVARIANTE EN PYTHON (2010 -> NOVIEMBRE 2026 -> 2036)")
     print("=" * 90)
-    print(f"Sesiones diarias auditadas : {len(prices_df):,} ({prices_df.index[0].date()} -> {prices_df.index[-1].date()})")
+    print(f"Sesiones diarias analizadas : {len(prices_df):,} ({prices_df.index[0].date()} -> {prices_df.index[-1].date()})")
     print(f"Ex-Post Tangente 2020 Rebal: $1.00 -> ${audit_res['summary_expost']['tangent_rebal']['unit_final']:.4f} "
           f"(${audit_res['summary_expost']['tangent_rebal']['usd_10k_final']:,.2f} por $10k | "
           f"Percentil {audit_res['summary_expost']['tangent_rebal']['cone_2020_percentile']:.1f}% del Cono 2020)")

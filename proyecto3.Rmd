@@ -159,7 +159,44 @@ library(timetk)
 library(plotly)
 library(knitr)
 library(kableExtra)
-bicicleta <- read_csv("C:/Users/Personal/Desktop/Modelo en R/Arima manufactura/Prueba/day.csv")
+# Paleta Corporativa Unificada (Curriculum.pdf — Executive Navy & Champagne Gold)
+jbz_cv_palette <- c(
+  navy = "#0B1B33", plot_navy = "#102342", elev_navy = "#163259",
+  cobalt = "#1D4ED8", sky = "#38BDF8", gold = "#B8955A",
+  gold_soft = "#D9C29A", emerald = "#10B981", rose = "#F43F5E",
+  mist = "#C7D2E3", white = "#FFFFFF"
+)
+jbz_series_colors <- c("#38BDF8", "#B8955A", "#10B981", "#F43F5E", "#60A5FA", "#D9C29A", "#2DD4BF")
+
+theme_jbz_cv <- function(base_size = 12) {
+  ggplot2::theme_minimal(base_size = base_size) +
+    ggplot2::theme(
+      plot.background   = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      panel.background  = ggplot2::element_rect(fill = "#102342", colour = NA),
+      panel.grid.major  = ggplot2::element_line(colour = "#1E3A5F", linewidth = 0.35),
+      panel.grid.minor  = ggplot2::element_blank(),
+      text              = ggplot2::element_text(colour = "#FFFFFF"),
+      axis.text         = ggplot2::element_text(colour = "#C7D2E3"),
+      axis.title        = ggplot2::element_text(colour = "#D9C29A", face = "bold"),
+      plot.title        = ggplot2::element_text(colour = "#FFFFFF", face = "bold"),
+      plot.subtitle     = ggplot2::element_text(colour = "#C7D2E3"),
+      legend.background = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      legend.text       = ggplot2::element_text(colour = "#FFFFFF")
+    )
+}
+
+jbz_plotly_cv <- function(p) {
+  plotly::layout(
+    p,
+    paper_bgcolor = "#0B1B33",
+    plot_bgcolor  = "#102342",
+    font  = list(color = "#FFFFFF", family = "Plus Jakarta Sans, Inter, sans-serif"),
+    xaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3")),
+    yaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3"))
+  )
+}
+data_path <- file.path("data", "day.csv")
+bicicleta <- if (file.exists(data_path)) readr::read_csv(data_path, show_col_types = FALSE) else readr::read_csv(unz({tmp <- tempfile(); download.file("https://archive.ics.uci.edu/ml/machine-learning-databases/00275/Bike-Sharing-Dataset.zip", tmp, quiet = TRUE); tmp}, "day.csv"), show_col_types = FALSE)
 Bicicletas_tab <- bicicleta %>%
     select(dteday, cnt) %>%
     rename(date  = dteday,
@@ -182,12 +219,12 @@ ggplotly(Bicicletas_tab %>%
               ymin = 0, ymax = 10000,
               fill = "#ff4242", color = NA, size = 0, alpha = 0.4) +
     annotate("text", x = ymd("2011-10-01"), y = 7800,
-             color = palette_light()[[1]], label = "Entrenamiento") +
+             color = "#38BDF8", label = "Entrenamiento") +
     annotate("text", x = ymd("2012-10-01"), y = 1550,
-             color = palette_light()[[1]], label = "Prueba") +
-    geom_point(alpha = 0.5, color = palette_light()[[1]]) +
+             color = "#38BDF8", label = "Prueba") +
+    geom_point(alpha = 0.5, color = "#38BDF8") +
     labs(title = "Bicicletas compartidas Dataset: Frecuencia Diaria", x = "") +
-    theme_tq())
+    theme_jbz_cv())
 ```
 <div style="text-align: justify;">
 <span style="font-size: large;">Se dividen los datos en entrenamiento y conjuntos de pruebas fecha común: "2012-07-01".</span></div>
@@ -260,8 +297,8 @@ kable(bake(prep(recipe_spec_final), new_data = entrenamiento_tab), digits = 2, f
 <div style="text-align: justify;">
 <span style="font-size: large;"> En este paso, se creará una especificación del modelo. Se usará un modelo de regresión lineal. Tomado del paquete&nbsp;<a href="https://cran.r-project.org/web/packages/glmnet/glmnet.pdf" rel="nofollow" target="_blank">glmnet.</a>&nbsp;El cual contiene procedimientos extremadamente eficientes para ajustar&nbsp; el camino de regularización de lazo o red elástica para regresión lineal, modelos de regresión logística y multinomial, regresión de Poisson y el modelo de Cox.</span></div>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-model_spec_glmnet <- linear_reg(mode = "regression") %>%
-    set_engine("lm")
+model_spec_glmnet <- linear_reg(mode = "regression", penalty = 0.01, mixture = 0.5) %>%
+    set_engine("glmnet")
 ```
 <h3>
 <span style="font-size: large;">Flujo de trabajo&nbsp;</span></h3>
@@ -306,15 +343,15 @@ ggplotly(ggplot(aes(x = date), data = Bicicletas_tab) +
               ymin = 0, ymax = 10000,
               fill = "#ff4242", color = NA, size = 0, alpha = 0.4) +
     annotate("text", x = ymd("2011-10-01"), y = 7800,
-             color = palette_light()[[1]], label = "Entrenamiento") +
+             color = "#38BDF8", label = "Entrenamiento") +
     annotate("text", x = ymd("2012-10-01"), y = 1550,
-             color = palette_light()[[1]], label = "Prueba") + 
+             color = "#38BDF8", label = "Prueba") + 
     geom_point(aes(x = date, y = value),  
-               alpha = 0.5, color = palette_light()[[1]]) +
+               alpha = 0.5, color = "#38BDF8") +
     # se agregan los pronósticos de prueba
     geom_point(aes(x = date, y = .pred), data = pronostico_tab, 
-               alpha = 0.5, color = palette_light()[[2]]) +
-    theme_tq()) 
+               alpha = 0.5, color = "#B8955A") +
+    theme_jbz_cv()) 
 ```
 <br />
 <h3 style="text-align: justify;">
@@ -323,7 +360,7 @@ ggplotly(ggplot(aes(x = date), data = Bicicletas_tab) +
 La precisión del pronóstico fuera de la muestra se puede medir con un criterio.</div>
 </span>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-tbl_df(pronostico_tab %>% metrics(value, .pred))
+tibble::as_tibble(pronostico_tab %>% metrics(value, .pred))
 ```
 <div style="text-align: justify;">
 <span style="font-size: large;">Se pueden&nbsp; visualizar los residuos del conjunto de prueba. Los residuos del modelo no son perfectos, pero se puede trabajar con él. Los residuos muestran que el modelo predice baja en octubre y alta en diciembre.</span></div>
@@ -331,9 +368,9 @@ tbl_df(pronostico_tab %>% metrics(value, .pred))
 ggplotly(pronostico_tab %>%
     ggplot(aes(x = date, y = value - .pred)) +
     geom_hline(yintercept = 0, color = "red") +
-    geom_point(color = palette_light()[[1]], alpha = 0.5) +
+    geom_point(color = "#38BDF8", alpha = 0.5) +
     geom_smooth() +
-    theme_tq() +
+    theme_jbz_cv() +
     labs(title = "Prueba Set: GLM Residuos del Modelo", x = "") +
     scale_y_continuous(limits = c(-5000, 5000)))
 ```
@@ -383,19 +420,19 @@ ggplotly(Bicicletas_tab %>%
               ymin = 0, ymax = 10000,
               fill = "#42e3ff", color = NA, size = 0, alpha = 0.4) +
     annotate("text", x = ymd("2011-10-01"), y = 7800,
-             color = palette_light()[[1]], label = "Entrenamiento") +
+             color = "#38BDF8", label = "Entrenamiento") +
     annotate("text", x = ymd("2012-10-01"), y = 1550,
-             color = palette_light()[[1]], label = "Prueba") +
+             color = "#38BDF8", label = "Prueba") +
     annotate("text", x = ymd("2013-4-01"), y = 1550,
-             color = palette_light()[[1]], label = "Pronóstico") +
-    geom_point(alpha = 0.5, color = palette_light()[[1]]) +
+             color = "#38BDF8", label = "Pronóstico") +
+    geom_point(alpha = 0.5, color = "#38BDF8") +
     # future data
     geom_point(aes(x = date, y = .pred), data = pronosticos_meses_tab,
-               alpha = 0.5, color = palette_light()[[2]]) +
+               alpha = 0.5, color = "#B8955A") +
     geom_smooth(aes(x = date, y = .pred), data = pronosticos_meses_tab,
                 method = 'loess') + 
     labs(title = "Bicicletas compartidas Dataset: 6 meses de pronóstico", x = "") +
-    theme_tq())
+    theme_jbz_cv())
 ```
 <h3>
 <span style="font-size: large;">Error de pronóstico</span></h3>
@@ -417,7 +454,7 @@ pronosticos_meses_tab <- pronosticos_meses_tab %>%
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 ggplotly(Bicicletas_tab %>%
     ggplot(aes(x = date, y = value)) +
-    geom_point(alpha = 0.5, color = palette_light()[[1]]) +
+    geom_point(alpha = 0.5, color = "#38BDF8") +
     geom_ribbon(aes(y = .pred, ymin = lo.95, ymax = hi.95), 
                 data = pronosticos_meses_tab, 
                 fill = "#D5DBFF", color = NA, size = 0) +
@@ -425,11 +462,11 @@ ggplotly(Bicicletas_tab %>%
                 data = pronosticos_meses_tab,
                 fill = "#596DD5", color = NA, size = 0, alpha = 0.8) +
     geom_point(aes(x = date, y = .pred), data = pronosticos_meses_tab,
-               alpha = 0.5, color = palette_light()[[2]]) +
+               alpha = 0.5, color = "#B8955A") +
     geom_smooth(aes(x = date, y = .pred), data = pronosticos_meses_tab,
                 method = 'loess', color = "white") + 
-    labs(title = "Bicicletas compartidas: 6 meses de pronóstico con intérvalos 80/95", x = "") +
-    theme_tq())
+    labs(title = "Bicicletas compartidas: 6 meses de pronóstico con intervalos 80/95", x = "") +
+    theme_jbz_cv())
 ```
 <span style="font-size: large;"><a href="https://raw.githubusercontent.com/JesusBZ/Rstudio/master/Machine%20Learning">Código del modelo</a></span><br />
 <br />

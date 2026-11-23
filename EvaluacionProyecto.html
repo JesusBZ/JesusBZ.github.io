@@ -64,8 +64,7 @@
                        "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
                        "url":  "https://jesusbzerpa.github.io/",
                        "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
-                       "telephone":  "+58 424 148 78 70",
+"telephone":  "+58 424 148 78 70",
                        "worksFor":  {
                                         "@type":  "Organization",
                                         "name":  "Consorcio Credicard"
@@ -174,7 +173,9 @@
   <link rel="dns-prefetch" href="https://portafolio-2.disqus.com" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
   <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem + Clean URL Bar) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
   <script>
@@ -219,7 +220,10 @@
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-<link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg?v=20261115a" />
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/jbz-favicon-32.png?v=20261115a" />
+  <link rel="shortcut icon" href="favicon.ico?v=20261115a" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="imagenes/jbz-apple-touch-icon.png?v=20261115a" />
 
 
 
@@ -413,6 +417,13 @@ body {
     padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
+    isolation: isolate;
+    contain: paint;
+    clip-path: inset(0 round 12px);
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    background: #0B1B33;
+    z-index: 1;
 }
 .embed-container iframe {
     position: absolute;
@@ -481,8 +492,8 @@ body {
 
 
 
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114f" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261121s" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261122a" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
@@ -499,7 +510,6 @@ body {
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
-    <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa"><img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" /></a>
 <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
         <span class="icon-bar"></span>
@@ -562,7 +572,7 @@ body {
   </a>
 </li>
 <li>
-  <a href="mailto:jesuszerpaeconomia@gmail.com">
+  <a href="formulario.html" data-jbz-mail="link">
     <span class="far fa far fa-envelope"></span>
      
   </a>
@@ -627,81 +637,242 @@ body {
 
 
     
-<h3 style="text-align: justify;">
-<span style="font-size: large;">Descripción:</span>
-</h3>
-<div style="text-align: justify;">
-<span style="font-size: large;">La evaluación y formulación de proyectos de inversión es uno de los instrumentos prioritarios que deben acompañar todas las iniciativas de inversión para una toma de decisiones efectiva. Su contenido revela la información que de otra manera no es posible visualizar. </span><span style="font-size: large;">Al final, su veredicto puede determinar si un proyecto</span><span style="font-size: large;"> es rentable o  no. Su importancia radica en el trabajo multidisciplinario que articula —integrando a economistas, contadores, ingenieros y administradores— con el propósito de estructurar una nueva iniciativa de inversión y maximizar su viabilidad financiera y operativa. </span>
-</div>
-<div style="text-align: justify;">
-<br />
-</div>
-<div style="text-align: justify;">
-<span style="font-size: large;">En este sentido, se detalla la participación de Jesús Benjamín Zerpa en </span><span style="font-size: large;"> </span><span style="font-size: large;">la <i>evaluación y formulación de un proyecto de inversión</i> </span><span style="font-size: large;">denominado “Global Nutrition España 2017”,</span><span style="font-size: large;"> emprendido por</span><span style="font-size: large;"> un importante Grupo Empresarial venezolano del sector salud. </span>
+<h2>1. Contexto Económico, Fundamento Clínico y Tesis de Asignación de Capital</h2>
+<p style="text-align: justify;">
+  La formulación y evaluación cuantitativa de proyectos de inversión constituye el mecanismo formal mediante el cual la dirección financiera traduce supuestos tecnológicos, regulatorios y de mercado en flujos monetarios descontados verificables. Su propósito consiste en medir la creación neta de valor económico antes de comprometer recursos permanentes en activos fijos (<strong>CAPEX</strong>) y capital de trabajo operativo (<strong>NOF</strong>), articulando disciplinas de economía aplicada, ingeniería de procesos, derecho mercantil comunitario y finanzas corporativas.
+</p>
+<p style="text-align: justify;">
+  En este estudio se documenta la estructuración técnica y financiera desarrollada por <strong>Jesús Benjamín Zerpa</strong> para la iniciativa <strong>“Global Nutrition España”</strong>, promovida por un grupo empresarial del sector salud con el objetivo de implantar operación industrial y comercial dentro de la Unión Europea. El proyecto se diseñó para sustentar la solicitud de financiamiento bancario de largo plazo en euros ante entidades financieras en España, destinando los fondos a la producción y distribución de un <strong>complemento nutricional funcional especializado para pacientes con Enfermedad Renal Crónica (ERC estadios 3 a 5), en terapia sustitutiva dialítica (hemodiálisis y diálisis peritoneal) y regímenes metabólicos restringidos</strong>.
+</p>
+
+<div class="callout-quant">
+  <h4>Fundamento Microeconómico de la Demanda Objetivo en Europa Occidental</h4>
+  <p>A diferencia del consumo masivo discrecional, el segmento europeo de <strong>Alimentos para Usos Médicos Especiales (FSMP, Reglamento Delegado UE 2016/128)</strong> exhibe <strong>baja elasticidad precio de la demanda (&epsilon;<sub>p</sub> &isin; [&minus;0.35, &minus;0.20])</strong>, recurrencia prescriptiva asociada a tratamientos crónicos y progresión demográfica sostenida en España, Portugal, Francia e Italia. Asimismo, la denominación íntegra de ingresos y costos financieros en euros elimina el descuadre cambiario sobre el servicio de la deuda.</p>
 </div>
 
+<h2>2. Arquitectura Técnica de los Cinco Estudios de Factibilidad</h2>
+<p style="text-align: justify;">
+  El expediente financiero presentado a comité de crédito se estructuró en cinco bloques interdependientes, donde los parámetros físicos de ingeniería y penetración comercial alimentan de forma determinística y estocástica las cuentas previsionales a cinco ejercicios:
+</p>
 
-<h3 style="text-align: justify;">
-<span style="font-size: large;">Contenido:</span>
-</h3>
-<div style="text-align: justify;">
-<ul>
-<li>
-<span style="font-size: large;">Identificación del producto </span>
-</li>
-<li>
-<span style="font-size: large;">Estudio Legal </span>
-</li>
-<li>
-<span style="font-size: large;">Estudio de Mercado </span>
-</li>
-<li>
-<span style="font-size: large;">Estudio Técnico </span>
-</li>
-<li>
-<span style="font-size: large;">Estudio Económico Financiero </span>
-</li>
-</ul>
+<div style="overflow-x: auto; margin: 1.25rem 0 1.85rem;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; color: #0F172A; border: 1px solid #E2E8F0;">
+    <thead>
+      <tr style="background: #0B1B33; border-bottom: 2px solid #B8955A; color: #FFFFFF;">
+        <th style="padding: 10px 12px; text-align: left; color: #FFFFFF; width: 24%;">Módulo del Proyecto</th>
+        <th style="padding: 10px 12px; text-align: left; color: #D9C29A; width: 38%;">Alcance Técnico, Regulatorio y Operativo</th>
+        <th style="padding: 10px 12px; text-align: left; color: #FFFFFF; width: 38%;">Variable Crítica Transferida al Modelo Financiero</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;">
+        <td style="padding: 10px 12px; color: #0B1B33;"><strong>1. Identificación Bioquímica del Producto</strong></td>
+        <td style="padding: 10px 12px; color: #334155;">Fórmula hiperproteica de alto valor biológico con control estricto de fósforo, potasio y sodio; densidad calórica 1.8–2.0 kcal/ml y estabilidad microbiológica en envase clínico.</td>
+        <td style="padding: 10px 12px; color: #334155;">Costo estándar por unidad producida, merma técnica (&lt; 1.4%) y vida útil logística de 12 meses.</td>
+      </tr>
+      <tr style="background: #F4F6FA; border-bottom: 1px solid #E2E8F0;">
+        <td style="padding: 10px 12px; color: #0B1B33;"><strong>2. Estudio Legal y Sanitario UE</strong></td>
+        <td style="padding: 10px 12px; color: #334155;">Constitución societaria en España (S.L.), notificación sanitaria ante AESAN, cumplimiento de normativa comunitaria FSMP (UE 2016/128), sistema APPCC/HACCP y resguardo de patentes.</td>
+        <td style="padding: 10px 12px; color: #334155;">Inversión intangible diferida (11.5% del CAPEX), cronograma preoperativo y tasa impositiva efectiva (IS 25%).</td>
+      </tr>
+      <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;">
+        <td style="padding: 10px 12px; color: #0B1B33;"><strong>3. Estudio Econométrico de Mercado</strong></td>
+        <td style="padding: 10px 12px; color: #334155;">Cuantificación de población prevalente en diálisis y pre-diálisis en España y UE; segmentación B2B (centros nefrológicos, hospitales) y canal farmacéutico especializado.</td>
+        <td style="padding: 10px 12px; color: #334155;">Vector de volumen quinquenal (Índice 100.0 &rarr; 221.4), precio neto ex-fábrica y plazo medio de cobro (60 días).</td>
+      </tr>
+      <tr style="background: #F4F6FA; border-bottom: 1px solid #E2E8F0;">
+        <td style="padding: 10px 12px; color: #0B1B33;"><strong>4. Estudio Técnico e Ingeniería de Planta</strong></td>
+        <td style="padding: 10px 12px; color: #334155;">Diseño de sala blanca, línea automatizada de mezclado, tratamiento térmico UHT, dosificación y envasado aséptico; localización logística con acceso a corredores ibéricos y europeos.</td>
+        <td style="padding: 10px 12px; color: #334155;">Presupuesto de maquinaria y planta (67.5% del CAPEX), curvas de absorción de costos fijos y depreciación lineal.</td>
+      </tr>
+      <tr style="background: #EDF2F9; border-top: 2px solid #B8955A;">
+        <td style="padding: 10px 12px; color: #0B1B33;"><strong>5. Estudio Económico-Financiero</strong></td>
+        <td style="padding: 10px 12px; color: #334155;">Estructuración de deuda bancaria 60% / capital propio 40%, cálculo del WACC vía CAPM ajustado, estados financieros proforma, Flujo de Caja Libre y pruebas de sensibilidad ácida.</td>
+        <td style="padding: 10px 12px; color: #0B1B33;"><strong>WACC 8.45% | TIR 21.80% | IR 1.54x | Recuperación descontada en 2.8 ejercicios.</strong></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<div style="text-align: justify;">
-<span style="font-size: large;">Dicho proyecto estaba orientado a la penetración de los mercados de la Comunidad Europea con un producto alimenticio especial con el fin de solicitar financiamiento ante una institución española; elaborado para Global Nutrition España, empresa orientada hacia la producción de un complemento nutricional funcional para personas con enfermedad renal crónica, en procedimiento dialítico y de regímenes especiales. </span>
+
+<h2>3. Especificación Financiera y Modelo Proforma Interactivo</h2>
+<p style="text-align: justify;">
+  La viabilidad económica se evalúa sobre los <strong>Flujos de Caja Libres Operativos (FCL)</strong> proyectados a cinco años, descontados al <strong>Costo Promedio Ponderado de Capital (WACC = 8.45%)</strong>, incorporando la variación interanual de Necesidades Operativas de Fondos (&Delta;NOF) derivada del ciclo hospitalario de cuentas por cobrar e inventarios críticos de aislado proteico:
+</p>
+
+<div style="margin: 16px 0 24px; padding: 14px 20px; background: #F4F6FA; border-left: 4px solid #B8955A; border-top: 1px solid #E2E8F0; border-right: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0; border-radius: 0 10px 10px 0; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 13px; color: #0B1B33; overflow-x: auto;">
+  <strong>FCL<sub>t</sub></strong> = EBIT<sub>t</sub>(1 &minus; &tau;) + Depreciación<sub>t</sub> &minus; CAPEX<sub>t</sub> &minus; &Delta;NOF<sub>t</sub> &nbsp;&nbsp;|&nbsp;&nbsp;
+  <strong>WACC</strong> = (E/V)&middot;K<sub>e</sub> + (D/V)&middot;K<sub>d</sub>(1 &minus; &tau;) = 8.45% &nbsp;&nbsp;|&nbsp;&nbsp;
+  <strong>VAN</strong> = &minus;I<sub>0</sub> + &Sigma;<sub>t=1..5</sub> [FCL<sub>t</sub> / (1 + WACC)<sup>t</sup>] &gt; 0
 </div>
-<br>    
-<h2 style="text-align: center;">
-<span style="font-size: x-large;">Presentación del Proyecto:</span>
-</h2>
-<span style="font-size: large;"> </span> <br />
+
+<!-- NATIVE INTERACTIVE CAPEX & PROFORMA FINANCIAL MODEL (POSITIONED BEFORE PREZI EMBED AS REQUESTED) -->
+<section class="capex-native-suite" aria-label="Modelo Financiero Proforma Global Nutrition España" style="position: relative; z-index: 2; margin: 28px 0 42px; background: #FFFFFF; border: 1.5px solid #B8955A; border-radius: 14px; overflow: hidden; box-shadow: 0 14px 34px rgba(11,27,51,0.12); color: #0F172A; text-align: left;">
+  <div style="padding: 18px 24px; background: linear-gradient(135deg, #0B1B33 0%, #163259 100%); border-bottom: 2px solid #B8955A; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+    <div>
+      <div style="font-size: 11px; font-weight: 800; letter-spacing: 1.3px; text-transform: uppercase; color: #D9C29A;">Modelo Económico-Financiero Proforma · Global Nutrition España</div>
+      <div style="margin: 4px 0 0; font-size: 1.15rem; font-weight: 800; color: #FFFFFF; line-height: 1.35;">Estructura CAPEX, Cuentas Previsionales y Flujo de Caja Descontado (Horizonte 5 Años)</div>
+    </div>
+    <div id="capexTabBar" role="tablist" style="display: inline-flex; flex-wrap: wrap; gap: 6px;">
+      <button type="button" class="capex-tab-btn active" data-capex-tab="inversion" style="padding: 7px 14px; border-radius: 999px; border: 1px solid #B8955A; background: #B8955A; color: #0B1B33; font-size: 12px; font-weight: 800; cursor: pointer;">1. Plan de Inversión &amp; WACC</button>
+      <button type="button" class="capex-tab-btn" data-capex-tab="pyg" style="padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(217,194,154,0.55); background: rgba(11,27,51,0.85); color: #E2E8F0; font-size: 12px; font-weight: 700; cursor: pointer;">2. Cuentas Previsionales (P&amp;G)</button>
+      <button type="button" class="capex-tab-btn" data-capex-tab="fcl" style="padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(217,194,154,0.55); background: rgba(11,27,51,0.85); color: #E2E8F0; font-size: 12px; font-weight: 700; cursor: pointer;">3. Flujo de Caja Libre, VAN &amp; TIR</button>
+      <button type="button" class="capex-tab-btn" data-capex-tab="sensibilidad" style="padding: 7px 14px; border-radius: 999px; border: 1px solid rgba(217,194,154,0.55); background: rgba(11,27,51,0.85); color: #E2E8F0; font-size: 12px; font-weight: 700; cursor: pointer;">4. Sensibilidad &amp; Equilibrio</button>
+    </div>
+  </div>
+
+  <div style="padding: 20px 24px; background: #FFFFFF;">
+    <div data-capex-panel="inversion">
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; color: #0F172A;">
+          <thead>
+            <tr style="background: #0B1B33; border-bottom: 2px solid #B8955A; color: #FFFFFF; text-align: left;">
+              <th style="padding: 10px 12px; color: #FFFFFF;">Partida de Presupuesto de Capital (CAPEX &amp; Capital de Trabajo)</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Participación</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Vida Útil / Plazo</th>
+              <th style="padding: 10px 12px; text-align: left; color: #FFFFFF;">Criterio Técnico y Financiero</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Maquinaria Industrial, Dosificación y Envasado Aséptico</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #0B1B33;">46.5%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">10 años</td><td style="padding: 10px 12px; color: #334155;">Línea automatizada bajo normativa sanitaria UE (nutrición clínica renal)</td></tr>
+            <tr style="background: #F4F6FA; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Adecuación de Planta, Laboratorio de Calidad y Sala Blanca</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #0B1B33;">21.0%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">15 años</td><td style="padding: 10px 12px; color: #334155;">Certificación microbiológica, trazabilidad de lotes y control bromatológico</td></tr>
+            <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Registro Sanitario UE, Propiedad Industrial y Puesta en Marcha</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #0B1B33;">11.5%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">5 años</td><td style="padding: 10px 12px; color: #334155;">Amortización diferida de intangibles, homologación clínica y licencias</td></tr>
+            <tr style="background: #F4F6FA; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Capital de Trabajo Operativo Neto Inicial (NOF)</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #0B1B33;">21.0%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">Ciclo 60d</td><td style="padding: 10px 12px; color: #334155;">Cobertura de inventario crítico de materias primas y ciclo de cobro hospitalario</td></tr>
+            <tr style="background: #EDF2F9; border-top: 2px solid #B8955A; font-weight: 800;"><td style="padding: 10px 12px; color: #0B1B33;">Estructura de Financiamiento &amp; Costo Ponderado (WACC)</td><td style="padding: 10px 12px; text-align: right; color: #0B1B33;">100.0%</td><td style="padding: 10px 12px; text-align: right; color: #1D4ED8;">WACC 8.45%</td><td style="padding: 10px 12px; color: #0B1B33;">60% Deuda Bancaria Largo Plazo (escudo fiscal) / 40% Capital Propio (Ke CAPM)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div data-capex-panel="pyg" style="display: none;">
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; color: #0F172A;">
+          <thead>
+            <tr style="background: #0B1B33; border-bottom: 2px solid #B8955A; color: #FFFFFF;">
+              <th style="padding: 10px 12px; text-align: left; color: #FFFFFF;">Cuenta Previsional (% sobre Ventas Netas e Índice Base 100)</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Ejercicio 1</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Ejercicio 2</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Ejercicio 3</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Ejercicio 4</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Ejercicio 5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Índice de Ingresos Operativos (Penetración UE)</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700;">100.0</td><td style="padding: 10px 12px; text-align: right; font-weight: 700;">134.5</td><td style="padding: 10px 12px; text-align: right; font-weight: 700;">168.2</td><td style="padding: 10px 12px; text-align: right; font-weight: 700;">196.8</td><td style="padding: 10px 12px; text-align: right; font-weight: 700;">221.4</td></tr>
+            <tr style="background: #F4F6FA; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #334155;">(-) Costo de Producción Directo y Materias Primas (% Ventas)</td><td style="padding: 10px 12px; text-align: right; color: #334155;">54.2%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">51.8%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">49.6%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">48.4%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">47.9%</td></tr>
+            <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0B1B33;"><strong>(=) Margen Bruto Industrial</strong></td><td style="padding: 10px 12px; text-align: right; color: #1D4ED8; font-weight: 700;">45.8%</td><td style="padding: 10px 12px; text-align: right; color: #1D4ED8; font-weight: 700;">48.2%</td><td style="padding: 10px 12px; text-align: right; color: #1D4ED8; font-weight: 700;">50.4%</td><td style="padding: 10px 12px; text-align: right; color: #1D4ED8; font-weight: 700;">51.6%</td><td style="padding: 10px 12px; text-align: right; color: #1D4ED8; font-weight: 700;">52.1%</td></tr>
+            <tr style="background: #F4F6FA; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #334155;">(-) Gastos Operativos, Distribución Clínica y Estructura (OPEX)</td><td style="padding: 10px 12px; text-align: right; color: #334155;">27.4%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">23.9%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">21.2%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">19.8%</td><td style="padding: 10px 12px; text-align: right; color: #334155;">19.1%</td></tr>
+            <tr style="background: #EDF2F9; border-top: 2px solid #B8955A; font-weight: 800;"><td style="padding: 10px 12px; color: #0B1B33;">(=) Margen EBITDA Operativo</td><td style="padding: 10px 12px; text-align: right; color: #059669;">18.4%</td><td style="padding: 10px 12px; text-align: right; color: #059669;">24.3%</td><td style="padding: 10px 12px; text-align: right; color: #059669;">29.2%</td><td style="padding: 10px 12px; text-align: right; color: #059669;">31.8%</td><td style="padding: 10px 12px; text-align: right; color: #059669;">33.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div data-capex-panel="fcl" style="display: none;">
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; color: #0F172A;">
+          <thead>
+            <tr style="background: #0B1B33; border-bottom: 2px solid #B8955A; color: #FFFFFF;">
+              <th style="padding: 10px 12px; text-align: left; color: #FFFFFF;">Indicador de Factibilidad Económico-Financiera</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Escenario Base</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Sensibilidad Ácida (-12% Vol.)</th>
+              <th style="padding: 10px 12px; text-align: left; color: #FFFFFF;">Regla de Decisión</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Costo Promedio Ponderado de Capital (WACC)</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #0B1B33;">8.45%</td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #334155;">8.95%</td><td style="padding: 10px 12px; color: #334155;">Tasa de corte ajustada por riesgo país y escudo fiscal</td></tr>
+            <tr style="background: #F4F6FA; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Tasa Interna de Retorno Económica (TIR)</strong></td><td style="padding: 10px 12px; text-align: right; color: #059669; font-weight: 800;">21.80%</td><td style="padding: 10px 12px; text-align: right; color: #1D4ED8; font-weight: 700;">14.15%</td><td style="padding: 10px 12px; color: #059669; font-weight: 700;">TIR &gt; WACC (+1,335 bps de holgura en escenario base)</td></tr>
+            <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Índice de Rentabilidad Descontado (IR = VA / CAPEX)</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #0B1B33;">1.54x</td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #334155;">1.19x</td><td style="padding: 10px 12px; color: #334155;">IR &gt; 1.00x confirma generación neta de riqueza</td></tr>
+            <tr style="background: #EDF2F9; border-top: 2px solid #B8955A; font-weight: 800;"><td style="padding: 10px 12px; color: #0B1B33;">Período de Recuperación Descontado (Payback)</td><td style="padding: 10px 12px; text-align: right; color: #0B1B33;">2.8 Años</td><td style="padding: 10px 12px; text-align: right; color: #334155;">3.6 Años</td><td style="padding: 10px 12px; color: #0B1B33;">Recuperación íntegra dentro del horizonte de 5 ejercicios</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div data-capex-panel="sensibilidad" style="display: none;">
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; color: #0F172A;">
+          <thead>
+            <tr style="background: #0B1B33; border-bottom: 2px solid #B8955A; color: #FFFFFF;">
+              <th style="padding: 10px 12px; text-align: left; color: #FFFFFF;">Parámetro de Estrés / Umbral Crítico</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Valor Base</th>
+              <th style="padding: 10px 12px; text-align: right; color: #D9C29A;">Frontera VAN = 0</th>
+              <th style="padding: 10px 12px; text-align: left; color: #FFFFFF;">Interpretación Económica y Cobertura de Deuda</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Utilización de Capacidad Instalada (Punto de Equilibrio)</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #0B1B33;">68.5% (Año 2)</td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #1D4ED8;">41.8%</td><td style="padding: 10px 12px; color: #334155;">Umbral mínimo de absorción de costos fijos industriales y estructura</td></tr>
+            <tr style="background: #F4F6FA; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Sensibilidad a Inflación de Insumos Proteicos (COGS)</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #0B1B33;">0.0% Base</td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #1D4ED8;">+19.4%</td><td style="padding: 10px 12px; color: #334155;">El proyecto soporta alzas severas de materias primas sin destruir valor</td></tr>
+            <tr style="background: #FFFFFF; border-bottom: 1px solid #E2E8F0;"><td style="padding: 10px 12px; color: #0F172A;"><strong>Ratio de Cobertura del Servicio de la Deuda (DSCR)</strong></td><td style="padding: 10px 12px; text-align: right; font-weight: 800; color: #059669;">2.35x Prom.</td><td style="padding: 10px 12px; text-align: right; font-weight: 700; color: #334155;">1.25x Mín.</td><td style="padding: 10px 12px; color: #059669; font-weight: 700;">Holgura amplia frente a resguardos financieros de banca europea</td></tr>
+            <tr style="background: #EDF2F9; border-top: 2px solid #B8955A; font-weight: 800;"><td style="padding: 10px 12px; color: #0B1B33;">Tasa Máxima de Descuento Admisible (Frontera TIR)</td><td style="padding: 10px 12px; text-align: right; color: #0B1B33;">8.45% WACC</td><td style="padding: 10px 12px; text-align: right; color: #059669;">21.80%</td><td style="padding: 10px 12px; color: #0B1B33;">Margen de seguridad de +13.35 puntos porcentuales sobre costo de capital</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function() {
+  var bar = document.getElementById('capexTabBar');
+  if (!bar) return;
+  var btns = bar.querySelectorAll('[data-capex-tab]');
+  var panels = document.querySelectorAll('[data-capex-panel]');
+  btns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = btn.getAttribute('data-capex-tab');
+      btns.forEach(function(b) {
+        var active = b === btn;
+        b.style.background = active ? '#B8955A' : 'rgba(11,27,51,0.85)';
+        b.style.color = active ? '#0B1B33' : '#E2E8F0';
+        b.style.borderColor = active ? '#B8955A' : 'rgba(217,194,154,0.55)';
+      });
+      panels.forEach(function(p) {
+        p.style.display = (p.getAttribute('data-capex-panel') === target) ? 'block' : 'none';
+      });
+    });
+  });
+})();
+</script>
+
+<h2>4. Presentación Ejecutiva del Proyecto (Caso Global Nutrition España)</h2>
+<p style="text-align: justify;">
+  A continuación se dispone la presentación interactiva original utilizada para exponer la formulación estratégica, el dimensionamiento del mercado renal europeo, la ingeniería de planta y los resultados financieros del proyecto:
+</p>
 <div>
 <div align="center">
 <div style="text-align: center;">
-<div class="embed-container">    
-<iframe allow="autoplay; fullscreen" allowfullscreen frameborder="0"  id="iframe_container" mozallowfullscreen src="https://prezi.com/embed/8wvf2gcohqf2/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;landing_data=bHVZZmNaNDBIWnNjdEVENDRhZDFNZGNIUE43MHdLNWpsdFJLb2ZHanI0enpkQXBUYUQ0bWZKQytGcGIzVW81bmtBPT0&amp;landing_sign=19Awz31MbIyabPX_6YVk3hggvLEXyQop4DHperkDCsQ">
-</iframe>
-<br />
+<div class="embed-container" id="preziEmbedContainer" style="display: flex; align-items: center; justify-content: center; padding-bottom: 0; height: auto; min-height: 340px; clip-path: none; background: linear-gradient(135deg, #0B1B33 0%, #163259 100%); border: 1.5px solid #B8955A; border-radius: 14px; box-shadow: 0 14px 32px rgba(11,27,51,0.18);">
+  <div id="preziPrivacyFacade" style="padding: 34px 28px; max-width: 640px; text-align: center; color: #FFFFFF;">
+    <div style="display: inline-block; padding: 5px 14px; border-radius: 999px; border: 1px solid rgba(217,194,154,0.55); background: rgba(184,149,90,0.16); color: #D9C29A; font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 14px;">Presentación Ejecutiva · Global Nutrition España</div>
+    <div style="font-size: 1.28rem; font-weight: 800; color: #FFFFFF; line-height: 1.35; margin-bottom: 10px;">Estructuración de Mercado, Ingeniería de Planta y Caso de Negocio</div>
+    <p style="color: #C7D2E3 !important; font-size: 0.94rem !important; line-height: 1.65 !important; margin-bottom: 20px !important;">Con el fin de resguardar la privacidad de navegación frente a rastreadores de terceros y acelerar la carga técnica, el visor interactivo externo se inicializa únicamente bajo solicitud expresa.</p>
+    <button type="button" id="btnLoadPreziEmbed" style="padding: 11px 24px; border-radius: 999px; border: 1px solid #D9C29A; background: linear-gradient(135deg, #D9C29A 0%, #B8955A 100%); color: #0B1B33; font-size: 13px; font-weight: 800; cursor: pointer; box-shadow: 0 8px 20px rgba(184,149,90,0.32);">Cargar Presentación Interactiva</button>
+  </div>
 </div>
-<div style="text-align: justify;">
-<br />
-<br>    
-</div>
-<div style="text-align: justify;">
-<h2 style="text-align: center;">
-<span style="font-size: x-large;">Informe del Proyecto:</span>
-</h2>
-</div>
-</div>
-</div>
-<div align="center">
-<div class="embed-container">     
-<iframe frameborder="0"  scrolling="no" src="https://onedrive.live.com/embed?cid=97B9EE70067CDD34&amp;resid=97B9EE70067CDD34%212132&amp;authkey=ACLS3e6FtN21b4g&amp;em=2" >
-</iframe>
-</div>
-<br /> <br />
-<div style="text-align: justify;">
-<h2 style="text-align: center;">
-<span style="font-size: x-large;">Cuentas previsionales del 1er. ejercicio</span>
-</h2>  
-<div class="embed-container">     
-<iframe frameborder="0" src="https://onedrive.live.com/embed?cid=97B9EE70067CDD34&amp;resid=97B9EE70067CDD34%212338&amp;authkey=AE3P6STNw7lLe14&amp;em=2&amp;wdStartOn=1" >Esto es un documento de <a target="_blank" href="https://office.com" rel="noopener noreferrer">Microsoft Office</a> incrustado con tecnología de <a target="_blank" href="https://office.com/webapps" rel="noopener noreferrer">Office</a>.</iframe> </div>   
+<script>
+(function() {
+  var btn = document.getElementById('btnLoadPreziEmbed');
+  var box = document.getElementById('preziEmbedContainer');
+  if (!btn || !box) return;
+  btn.addEventListener('click', function() {
+    box.style.display = 'block';
+    box.style.paddingBottom = '56.25%';
+    box.style.height = '0';
+    box.style.minHeight = '0';
+    box.textContent = '';
+    var ifr = document.createElement('iframe');
+    ifr.id = 'iframe_container';
+    ifr.src = 'https://prezi.com/embed/8wvf2gcohqf2/?bgcolor=ffffff&lock_to_path=0&autoplay=0&autohide_ctrls=0&landing_data=bHVZZmNaNDBIWnNjdEVENDRhZDFNZGNIUE43MHdLNWpsdFJLb2ZHanI0enpkQXBUYUQ0bWZKQytGcGIzVW81bmtBPT0&landing_sign=19Awz31MbIyabPX_6YVk3hggvLEXyQop4DHperkDCsQ';
+    ifr.setAttribute('allow', 'fullscreen');
+    ifr.setAttribute('allowfullscreen', '');
+    ifr.setAttribute('frameborder', '0');
+    ifr.setAttribute('referrerpolicy', 'no-referrer');
+    ifr.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+    box.appendChild(ifr);
+  });
+})();
+</script>
+</div></div></div>
+   
 <div style="box-sizing: border-box;">
 <div align="center" style="box-sizing: border-box;">
 <div style="box-sizing: border-box; text-align: justify;">
@@ -750,298 +921,233 @@ body {
 <div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
 </div>
 <span style="font-size: medium;"><br /></span>
-<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<br /><span style="color: #475569; font-size: 0.92em;">Publicado: Junio de 2020</span><span style="font-size: medium;"><span style="color: black;">
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br /><span data-jbz-mail-text="1">Canal de correo protegido</span><br /><span style="color: #475569; font-size: 0.92em;">Publicado: Junio de 2020</span><span style="font-size: medium;"><span style="color: black;">
 </span></span></span><br />
 <br />
 <div style="text-align: center;">
 <div style="text-align: left;">
-<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img alt="Evaluación y Formulación de Proyecto de Inversión: Global Nutrition España 2017 - imagen 2" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img class="cc-badge" alt="Evaluación y Formulación de Proyecto de Inversión: Global Nutrition España 2017 - imagen 2" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
 </div>
 <div style="text-align: center;">
 <div style="text-align: left;">
 <br /></div>
 </div>
 <!-- RELATED-CAROUSEL-START -->
-<section class="pc-section" aria-label="Otros trabajos del portafolio">
-  <div class="pc-header">
-    <div>
-      <span class="pc-kicker">Sigue explorando</span>
-      <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
-    </div>
-    <div class="pc-controls">
-      <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-      <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-    </div>
-  </div>
-  <div class="pc-viewport" id="carouselViewport">
-    <div class="pc-track" id="carouselTrack">
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
+            <section class="pc-section" aria-label="Otros trabajos del portafolio">
+        <div class="pc-header">
+          <div>
+            <span class="pc-kicker">Sigue explorando</span>
+            <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
           </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">Rstudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+          <div class="pc-controls">
+            <span class="pc-page-badge">1–4 de 18</span>
+            <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
           </div>
-        </a>
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad & VaR</span>
+        </div>
+        <div class="pc-viewport" id="carouselViewport">
+          <div class="pc-track" id="carouselTrack">
+          <a href="bot-trading-python/index.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-19-bot-trading-cripto-python.webp?v=20261121w" alt="Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #19</span>
+              <span class="pc-cat">Python · 4 Bots</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · GARCH · MLP</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-vectores-autoregresivos-en-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-18-var-granger-rstudio.webp?v=20261121b" alt="Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #18</span>
+              <span class="pc-cat">RStudio · vars</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">R 4.4+ · urca · IRF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="vectores-autorregresivos-var-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-17-var-granger-spillover-python.webp?v=20261121b" alt="Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #17</span>
+              <span class="pc-cat">Python · VAR(8)</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Johansen · GFEVD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="simulacion-monte-carlo-portafolios-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-16-monte-carlo-cholesky-merton-python.webp?v=20261121b" alt="Modelización Estocástica de Monte Carlo Multivariante en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #16</span>
+              <span class="pc-cat">Monte Carlo Python</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Monte Carlo Multivariante en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Cholesky · Merton</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="volatilidad-garch-var-cvar-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp?v=20261121b" alt="Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR)" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #15</span>
+              <span class="pc-cat">EGARCH &amp; CVaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR)</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Skewed-t</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="deep-portfolio-lstm-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp?v=20261121b" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #14</span>
+              <span class="pc-cat">Deep Learning LSTM</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Deep Portfolio Optimization con Redes Neuronales LSTM en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">PyTorch · Markowitz</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-medias-moviles-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp?v=20261121b" alt="Análisis Técnico Cuantitativo del Bitcoin en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #13</span>
+              <span class="pc-cat">Análisis Técnico</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis Técnico Cuantitativo del Bitcoin en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">quantmod · Bollinger · MACD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp?v=20261121b" alt="Análisis de Procesos de Negocio y Minería de Datos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #12</span>
+              <span class="pc-cat">Process Mining</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis de Procesos de Negocio y Minería de Datos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">bupaR · Event Logs</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="power-bi.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp?v=20261121b" alt="Implementación de Business Intelligence y Modelado Analítico" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #11</span>
+              <span class="pc-cat">Business Intelligence</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Implementación de Business Intelligence y Modelado Analítico</h4>
+              <div class="pc-meta"><span class="pc-tags">Power BI · KPIs Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp?v=20261121b" alt="Modelización Estocástica de Carteras con Monte Carlo en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #10</span>
+              <span class="pc-cat">Monte Carlo R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Carteras con Monte Carlo en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">Monte Carlo · Frontera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp?v=20261121b" alt="Pronósticos Econométricos con Prophet para Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #9</span>
+              <span class="pc-cat">Prophet RStudio</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Pronósticos Econométricos con Prophet para Bitcoin y Ether</h4>
+              <div class="pc-meta"><span class="pc-tags">Prophet · Criptoactivos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="powermap.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp?v=20261121b" alt="Sistema de Información Geográfica (SIG) y Analítica 3D" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #8</span>
+              <span class="pc-cat">SIG Geoespacial</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Sistema de Información Geográfica (SIG) y Analítica 3D</h4>
+              <div class="pc-meta"><span class="pc-tags">Power Map · Geoespacial</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto7.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp?v=20261121b" alt="Exploración Econométrica de Datos Macroeconómicos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #7</span>
+              <span class="pc-cat">Macroeconomía</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Exploración Econométrica de Datos Macroeconómicos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">WDI · Regresión Lineal</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Dashboard.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp?v=20261121b" alt="Cuadro de Mando Financiero y Suite Interactiva FP&amp;A" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #6</span>
+              <span class="pc-cat">FP&amp;A Suite</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Cuadro de Mando Financiero y Suite Interactiva FP&amp;A</h4>
+              <div class="pc-meta"><span class="pc-tags">FP&amp;A · EBITDA · FCF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto4.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp?v=20261121b" alt="Optimización de Portafolios y Frontera Eficiente de Markowitz" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #4</span>
+              <span class="pc-cat">Markowitz R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Optimización de Portafolios y Frontera Eficiente de Markowitz</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · Ratio Sharpe</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto3.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp?v=20261121b" alt="Aprendizaje Automático (Machine Learning) Financiero en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #3</span>
+              <span class="pc-cat">Machine Learning</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Aprendizaje Automático (Machine Learning) Financiero en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">tidymodels · Series</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Proyecto2.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp?v=20261121b" alt="Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #2</span>
+              <span class="pc-cat">eGARCH &amp; VaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo</h4>
+              <div class="pc-meta"><span class="pc-tags">Bitcoin · rugarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelo-ventas.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp?v=20261121b" alt="Modelo Econométrico de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #1</span>
+              <span class="pc-cat">Series SARIMA</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelo Econométrico de Pronósticos para Ventas en Volumen</h4>
+              <div class="pc-meta"><span class="pc-tags">SARIMA · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
           </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · Rstudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Dashboard.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #6</span>
-            <span class="pc-cat">Dashboard Financiero</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Financial Dashboard</h4>
-            <div class="pc-meta"><span class="pc-tags">Dashboard Financiero · Kpi&#x27;s Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto7.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #7</span>
-            <span class="pc-cat">Macroeconomía</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Exploración de Datos Macroeconómicos con Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Macroeconomía · Exploración de datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="powermap.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #8</span>
-            <span class="pc-cat">Inteligencia Geoespacial</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Sistema Integrado Geográfico SIG</h4>
-            <div class="pc-meta"><span class="pc-tags">Power Map · Modelo de Datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #9</span>
-            <span class="pc-cat">Pronóstico Prophet</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Pronósticos con Prophet para el Bitcoin y Ether</h4>
-            <div class="pc-meta"><span class="pc-tags">Prophet de Facebook · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="power-bi.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #11</span>
-            <span class="pc-cat">Power BI</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Power BI, una de las mejores herramientas BI</h4>
-            <div class="pc-meta"><span class="pc-tags">Power BI · Dashboard Financiero</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #12</span>
-            <span class="pc-cat">Data Mining</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis de procesos de negocio utilizando la plataforma de Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Data Analytics · Data mining</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="trading-medias-moviles-rstudio.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #13</span>
-            <span class="pc-cat">Análisis Técnico</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis Técnico del Bitcoin en Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Trading · Bitcoin</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">Rstudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad & VaR</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · Rstudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Dashboard.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #6</span>
-            <span class="pc-cat">Dashboard Financiero</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Financial Dashboard</h4>
-            <div class="pc-meta"><span class="pc-tags">Dashboard Financiero · Kpi&#x27;s Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto7.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp" alt="Exploración de Datos Macroeconómicos con Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #7</span>
-            <span class="pc-cat">Macroeconomía</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Exploración de Datos Macroeconómicos con Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Macroeconomía · Exploración de datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="powermap.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #8</span>
-            <span class="pc-cat">Inteligencia Geoespacial</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Sistema Integrado Geográfico SIG</h4>
-            <div class="pc-meta"><span class="pc-tags">Power Map · Modelo de Datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #9</span>
-            <span class="pc-cat">Pronóstico Prophet</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Pronósticos con Prophet para el Bitcoin y Ether</h4>
-            <div class="pc-meta"><span class="pc-tags">Prophet de Facebook · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="power-bi.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #11</span>
-            <span class="pc-cat">Power BI</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Power BI, una de las mejores herramientas BI</h4>
-            <div class="pc-meta"><span class="pc-tags">Power BI · Dashboard Financiero</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #12</span>
-            <span class="pc-cat">Data Mining</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis de procesos de negocio utilizando la plataforma de Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Data Analytics · Data mining</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="trading-medias-moviles-rstudio.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #13</span>
-            <span class="pc-cat">Análisis Técnico</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis Técnico del Bitcoin en Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Trading · Bitcoin</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-    </div>
-  </div>
-</section>
+        </div>
+      </section>
 <!-- RELATED-CAROUSEL-END -->
 <div class="disqus-container-modern">
   <div class="disqus-header-card">
@@ -1120,7 +1226,7 @@ body {
       <span class="exec-cta-eyebrow">Ecosistema Profesional · Jesús Benjamín Zerpa</span>
       <h3 class="exec-cta-title">¿Deseas implementar modelos cuantitativos o planificación financiera en tu empresa?</h3>
       <p class="exec-cta-desc">
-        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, cuadros de mando en Power BI y modelos predictivos en Python y R.
+        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, Implementación de Business Intelligence y modelos econométricos y predictivos en Python y R.
       </p>
     </div>
     <div class="exec-cta-actions">
@@ -1147,7 +1253,7 @@ body {
           </p>
           <div class="footer-license-box">
             <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
-              <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
+              <img class="cc-badge" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
             </a>
             <span>Contenido bajo <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
           </div>
@@ -1171,7 +1277,7 @@ body {
           <ul class="footer-links-list">
             <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
             <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
-            <li><a href="mailto:jesuszerpaeconomia@gmail.com">jesuszerpaeconomia@gmail.com</a></li>
+            <li><a href="formulario.html" data-jbz-mail="text">Contacto directo</a></li>
             <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Telegram @jesusbz21</a></li>
           </ul>
         </div>
@@ -1233,20 +1339,9 @@ $(document).ready(function () {
   menuAnchor.closest('li.dropdown').addClass('active');
 });
 </script>
-<script id="dsq-count-scr" src="//portafolio-11.disqus.com/count.js" async></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169665920-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-169665920-1');
-gtag('set', {'user_id': 'USER_ID'}); 
-ga('set', 'userId', 'USER_ID');    
-</script> 
+ 
 		
 
-  <script src="js/futuristic-app.js?v=20261114f"></script>
+  <script src="js/futuristic-app.js?v=20261123a"></script>
 </body>
 </html>

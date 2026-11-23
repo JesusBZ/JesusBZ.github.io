@@ -76,7 +76,7 @@
       sublines: [
         { code: 'ENDPOINTS_SOC_MDR', label: 'Endpoints Monitoreados SOC', hasQty: true, countsMacroQ: true, baseQ: 64000, baseTariff: 17.5, qGrowthMo: 0.014, tariffDrift: 0.001 },
         { code: 'IDENTIDADES_ZERO_TRUST', label: 'Gestión Identidades IAM/MFA', hasQty: true, countsMacroQ: true, baseQ: 92000, baseTariff: 8.2, qGrowthMo: 0.015, tariffDrift: 0.0008 },
-        { code: 'AUDITORIA_PENTESTING', label: 'Auditorías & Pentesting (Q)', hasQty: true, countsMacroQ: false, baseQ: 34, baseTariff: 8900.0, qGrowthMo: 0.008, tariffDrift: 0.002 },
+        { code: 'EVALUACION_PENTESTING', label: 'Evaluación Técnica & Pentesting (Q)', hasQty: true, countsMacroQ: false, baseQ: 34, baseTariff: 8900.0, qGrowthMo: 0.008, tariffDrift: 0.002 },
         { code: 'RETAINER_RESPUESTA_CSIRT', label: 'Retainer Respuesta CSIRT (Fijo)', hasQty: false, countsMacroQ: false, baseQ: 0, baseTariff: 0, baseFixed: 215000, fixedGrowthMo: 0.006 }
       ]
     },
@@ -175,7 +175,7 @@
     const ACTIVE_MONTH = 'NOVIEMBRE';
     const ACTIVE_WEEK = 3;
 
-    // Elegir 2 líneas aleatorias para inducir anomalías realistas en el corte actual (demo Z-MAD & Auditoría)
+    // Elegir 2 líneas aleatorias para inducir anomalías realistas en el corte actual (demo Z-MAD & Control Estadístico)
     const anomalyIdxA = Math.floor(rng() * LN.length);
     const anomalyIdxB = (anomalyIdxA + 1 + Math.floor(rng() * (LN.length - 1))) % LN.length;
     const anomalyLineA = LN[anomalyIdxA]; // Anomalía de volumen + tarifa positiva extrema
@@ -344,7 +344,7 @@
       }
     });
 
-    // Construir reporte inicial de Auditoría + Anomalías Z-MAD
+    // Construir reporte inicial de Control Estadístico + Anomalías Z-MAD
     const audit = buildAuditReport(datos, sublineas, cierre, seed);
 
     return {

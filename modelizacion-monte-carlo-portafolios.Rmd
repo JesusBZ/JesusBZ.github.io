@@ -134,7 +134,44 @@ El primer paso será transformar el histórico de precios diarios de los instrum
 <br /></div>
 </span>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+set.seed(2026)
 library(tidyquant)
+# Paleta Corporativa Unificada (Curriculum.pdf — Executive Navy & Champagne Gold)
+jbz_cv_palette <- c(
+  navy = "#0B1B33", plot_navy = "#102342", elev_navy = "#163259",
+  cobalt = "#1D4ED8", sky = "#38BDF8", gold = "#B8955A",
+  gold_soft = "#D9C29A", emerald = "#10B981", rose = "#F43F5E",
+  mist = "#C7D2E3", white = "#FFFFFF"
+)
+jbz_series_colors <- c("#38BDF8", "#B8955A", "#10B981", "#F43F5E", "#60A5FA", "#D9C29A", "#2DD4BF")
+
+theme_jbz_cv <- function(base_size = 12) {
+  ggplot2::theme_minimal(base_size = base_size) +
+    ggplot2::theme(
+      plot.background   = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      panel.background  = ggplot2::element_rect(fill = "#102342", colour = NA),
+      panel.grid.major  = ggplot2::element_line(colour = "#1E3A5F", linewidth = 0.35),
+      panel.grid.minor  = ggplot2::element_blank(),
+      text              = ggplot2::element_text(colour = "#FFFFFF"),
+      axis.text         = ggplot2::element_text(colour = "#C7D2E3"),
+      axis.title        = ggplot2::element_text(colour = "#D9C29A", face = "bold"),
+      plot.title        = ggplot2::element_text(colour = "#FFFFFF", face = "bold"),
+      plot.subtitle     = ggplot2::element_text(colour = "#C7D2E3"),
+      legend.background = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      legend.text       = ggplot2::element_text(colour = "#FFFFFF")
+    )
+}
+
+jbz_plotly_cv <- function(p) {
+  plotly::layout(
+    p,
+    paper_bgcolor = "#0B1B33",
+    plot_bgcolor  = "#102342",
+    font  = list(color = "#FFFFFF", family = "Plus Jakarta Sans, Inter, sans-serif"),
+    xaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3")),
+    yaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3"))
+  )
+}
 library(tidyverse)
 library(timetk)
 library(broom)
@@ -170,7 +207,7 @@ retornosp <-
  precios %>% 
   to.monthly(indexAt = "lastof", OHLC = FALSE) %>% 
   tk_tbl(preserve_index = TRUE, rename_index = "date") %>%
-  gather(asset, returns, -date) %>% 
+  tidyr::pivot_longer(-date, names_to = "asset", values_to = "returns") %>% 
   group_by(asset) %>%  
   mutate(returns = (log(returns) - log(lag(returns)))) %>% 
   na.omit()
@@ -234,11 +271,11 @@ tail(comienzo)
 <span style="font-size: large;"><div style="text-align: justify;">
 <br /></div>
 </span><span style="font-size: large;"><div style="text-align: justify;">
-Luego, se debe aplicar "simulacion_acumul_1" a cada una de las 100 columnas de la matriz "comienzo", y se hará utilizando la función "map_dfc()" del paquete "purrr".</div>
+Luego, se debe aplicar "simulacion_acumul_1" a cada una de las 100 columnas de la matriz "comienzo", y se hará utilizando "purrr::map() |> purrr::list_cbind()" del paquete "purrr".</div>
 </span><span style="font-size: large;"><div style="text-align: justify;">
 <br /></div>
 </span><span style="font-size: large;"><div style="text-align: justify;">
-Se necesita tomar un vector con la función "map_dfc()", en este caso, las columnas de "comienzo". Al agregar "dfc()" a la "map_función", le pedimos que almacene cada uno de los resultados como columna de un marco de datos.&nbsp;</div>
+Se necesita tomar un vector con la función "purrr::map() |> purrr::list_cbind()", en este caso, las columnas de "comienzo". Al agregar "dfc()" a la "map_función", le pedimos que almacene cada uno de los resultados como columna de un marco de datos.&nbsp;</div>
 <div style="text-align: justify;">
 <br /></div>
 <div style="text-align: justify;">
@@ -249,7 +286,7 @@ Después de ejecutar el siguiente código, tendremos un marco de datos con 100 c
 También debemos elegir cuántos meses simular (el argumento N para nuestra función de simulación) y proporcionar los parámetros de distribución. No proporcionamos el argumento "init_value"&nbsp; porque "init_value" es 1, el mismo 1 que ya está en las 100 columnas.</div>
 </span>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-monte_carlo_sim_100 <-map_dfc(comienzo,simulacion_acumul_1,N = 120, mean = media_retornos,stdev =destandar_retornos)
+monte_carlo_sim_100 <-purrr::map(comienzo,simulacion_acumul_1,N = 120, mean = media_retornos,stdev =destandar_retornos) %>% purrr::list_cbind()
 ```
 
 
@@ -269,7 +306,7 @@ monte_carlo_sim_100 <-
   mutate(month = seq(1:nrow(.))) %>% 
   select(month, everything()) %>% 
   `colnames<-`(c("month", names(comienzo))) %>% 
-   mutate_all(funs(round(., 2))) 
+   dplyr::mutate(dplyr::across(dplyr::everything(), ~ round(.x, 2))) 
 ```
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -279,11 +316,10 @@ tail(monte_carlo_sim_100 %>%  select(month, sim1, sim2,
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Observar simulaciones</span></h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Se han logrado correr las 100 simulaciones. Ahora utilizaremos un&nbsp; segundo método usando la línea de comando&nbsp;para la función "rerun()" del paquete "purrr". Esta función "volverá a ejecutar" otra función, y calibramos cuántas veces hacerlo mediante la configuración .n = número de tiempos de rerun. Por ejemplo, para ejecutar la "simulacion_acum_1" 6 veces, este sería el código.</span></div>
+<span style="font-size: large;">Se han logrado correr las 100 simulaciones. Ahora utilizaremos un&nbsp; segundo método usando la línea de comando&nbsp;para la función "purrr::map()" del paquete "purrr". Esta función "volverá a ejecutar" otra función, y calibramos cuántas veces hacerlo mediante la configuración .n = número de tiempos de rerun. Por ejemplo, para ejecutar la "simulacion_acum_1" 6 veces, este sería el código.</span></div>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 monte_carlo_rerun_6 <-  
-  rerun(.n = 6, 
-      simulacion_acumul_1(1, 
+  purrr::map(seq_len(6), ~ simulacion_acumul_1(1, 
                         120,
                         media_retornos, 
                         destandar_retornos))
@@ -299,8 +335,7 @@ map(monte_carlo_rerun_6, head)
 reruns <- 100
 
 monte_carlo_rerun_100<- 
-rerun(.n = reruns, 
-      simulacion_acumul_1(1, 
+purrr::map(seq_len(reruns), ~ simulacion_acumul_1(1, 
                         120,
                         media_retornos, 
                         destandar_retornos)) %>%
@@ -330,7 +365,7 @@ Comenzamos con un gráfico de las 100 simulaciones y asignamos un color diferent
 </span>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 monte_carlo_sim_100 %>% 
-  gather(sim, growth, -month) %>% 
+  tidyr::pivot_longer(-month, names_to = "sim", values_to = "growth") %>% 
   group_by(sim) %>% 
   ggplot(aes(x = month, y = growth, color = sim)) + 
   geom_line() +
@@ -343,7 +378,7 @@ monte_carlo_sim_100 %>%
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 
 ggplotly(monte_carlo_sim_100 %>% 
-  gather(sim, growth, -month) %>% 
+  tidyr::pivot_longer(-month, names_to = "sim", values_to = "growth") %>% 
   group_by(sim) %>% 
   ggplot(aes(x = month, y = growth, color = sim)) + 
   geom_line() +
@@ -356,7 +391,7 @@ ggplotly(monte_carlo_sim_100 %>%
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 resumen<- 
   monte_carlo_sim_100 %>% 
-  gather(sim, growth, -month) %>% 
+  tidyr::pivot_longer(-month, names_to = "sim", values_to = "growth") %>% 
   group_by(sim) %>% 
   summarise(final = last(growth)) %>% 
   summarise(
@@ -371,7 +406,7 @@ resumen
 </span>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 monte_carlo_sim_100 %>% 
-  gather(sim, growth, -month) %>% 
+  tidyr::pivot_longer(-month, names_to = "sim", values_to = "growth") %>% 
   group_by(sim) %>%
   filter(
     last(growth) == resumen$max_1 ||
@@ -384,7 +419,7 @@ monte_carlo_sim_100 %>%
 
 ```{r}
 ggplotly(monte_carlo_sim_100 %>% 
-  gather(sim, growth, -month) %>% 
+  tidyr::pivot_longer(-month, names_to = "sim", values_to = "growth") %>% 
   group_by(sim) %>%
   filter(
     last(growth) == resumen$max_1 ||

@@ -9,15 +9,16 @@ from typing import Dict, List, Tuple, Any
 import warnings
 
 # Silenciar advertencias numéricas de optimización en producción
-warnings.filterwarnings('ignore')
+from sklearn.exceptions import ConvergenceWarning
+warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
-# Configuración del logger para auditoría del servidor en tiempo real
+# Configuración del logger para validación estadística del servidor en tiempo real
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 class DeepGarchPortfolioModel:
     """
-    Fusión Cuántica de Grado Institucional (Alpha NN + GJR-GARCH MVO).
+    Fusión Cuántica de Especificación Cuantitativa (Alpha NN + GJR-GARCH MVO).
     Utiliza un Perceptrón Multicapa (MLP) para extraer tendencias no lineales a 3 días,
     un filtro de volatilidad condicional asimétrica GJR-GARCH con distribución Skew-t,
     y un optimizador numérico SLSQP para el control diario del Drawdown.
@@ -52,7 +53,7 @@ class DeepGarchPortfolioModel:
                 logger.warning(f"Fallo numérico GARCH para {asset}: {str(e)}. Aplicando desviación móvil clásica.")
                 garch_vols[asset] = returns[asset].rolling(window=14).std()
                 
-        return garch_vols.fillna(method='bfill')
+        return garch_vols.ffill().fillna(returns.expanding(min_periods=2).std()).fillna(0.02)
 
     def _prepare_features(self, prices: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, pd.Index]:
         """Procesa la ingeniería de características (Lags + GARCH Vols) alineando los vectores temporales."""
@@ -79,6 +80,8 @@ class DeepGarchPortfolioModel:
         """Entrena las sinapsis de la Red Neuronal utilizando las características normalizadas."""
         logger.info("Iniciando Pipeline de Ingeniería de Características...")
         X_raw, Y_raw, _, _ = self._prepare_features(historical_prices)
+        if len(X_raw) > 10:
+            X_raw, Y_raw = X_raw[:-3], Y_raw[:-3]
         
         logger.info("Normalizando entradas estadísticas con StandardScaler...")
         X_scaled = self.scaler.fit_transform(X_raw)
@@ -115,7 +118,7 @@ class DeepGarchPortfolioModel:
         D_t = np.diag(vols_today)
         current_cov_matrix = D_t @ correlation_matrix @ D_t
         
-        # 4. Lanzar Optimizador SLSQP bajo restricciones institucionales
+        # 4. Lanzar Optimizador SLSQP bajo restricciones lineales de cartera
         num_assets = len(self.assets)
         init_guess = [1.0 / num_assets] * num_assets
         bounds = tuple((self.min_weight, self.max_weight) for _ in range(num_assets))

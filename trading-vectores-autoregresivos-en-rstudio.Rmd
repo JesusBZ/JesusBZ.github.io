@@ -1,161 +1,162 @@
 ---
-title: " "
+title: "Modelización Econométrica de Vectores Autorregresivos VAR(p) en RStudio"
+author: "Jesús Benjamín Zerpa"
+output: html_document
 ---
 
-```{r}
+```{r setup, message=FALSE, warning=FALSE}
+set.seed(42)
 library(tidyquant)
 library(tidyverse)
-library(plotly)
 library(vars)
-```
+library(urca)
+library(tseries)
+library(plotly)
 
+# Paleta Corporativa Unificada (Curriculum.pdf — Executive Navy & Champagne Gold)
+jbz_cv_palette <- c(
+  navy = "#0B1B33", plot_navy = "#102342", elev_navy = "#163259",
+  cobalt = "#1D4ED8", sky = "#38BDF8", gold = "#B8955A",
+  gold_soft = "#D9C29A", emerald = "#10B981", rose = "#F43F5E",
+  mist = "#C7D2E3", white = "#FFFFFF"
+)
+jbz_series_colors <- c("#38BDF8", "#B8955A", "#10B981", "#F43F5E", "#60A5FA", "#D9C29A", "#2DD4BF")
 
-```{r}
-# Extract basket prices
-tickers <- c("MSFT","JNJ","MA", "PEP", "WMT","MCD")
-```
+theme_jbz_cv <- function(base_size = 12) {
+  ggplot2::theme_minimal(base_size = base_size) +
+    ggplot2::theme(
+      plot.background   = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      panel.background  = ggplot2::element_rect(fill = "#102342", colour = NA),
+      panel.grid.major  = ggplot2::element_line(colour = "#1E3A5F", linewidth = 0.35),
+      panel.grid.minor  = ggplot2::element_blank(),
+      text              = ggplot2::element_text(colour = "#FFFFFF"),
+      axis.text         = ggplot2::element_text(colour = "#C7D2E3"),
+      axis.title        = ggplot2::element_text(colour = "#D9C29A", face = "bold"),
+      plot.title        = ggplot2::element_text(colour = "#FFFFFF", face = "bold"),
+      plot.subtitle     = ggplot2::element_text(colour = "#C7D2E3"),
+      legend.background = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      legend.text       = ggplot2::element_text(colour = "#FFFFFF")
+    )
+}
 
-```{r}
-# Load basket prices
-tickers <- c("MSFT","JNJ","MA", "PEP", "WMT","MCD")
-basket_prices <- tq_get(tickers, get='stock.prices', from='2008-01-01', to = '2020-09-30') %>%
-  rename(ticker = symbol)
-basket_prices %>%
-  ggplot(aes(x = date, y = adjusted)) +
-    geom_line(aes(color = ticker))
-```
-
-```{r}
-# Calculate returns
-ret <- basket_prices %>%
-  group_by(ticker) %>%
-  filter(date >= '2008-01-01', date < '2020-09-30') %>%
-  tq_transmute(select=adjusted, mutate_fun=periodReturn, period="daily", type="log")
-# make wide dataframe of returns
-ret_wide <- ret %>%
-  spread(key=ticker, value=daily.returns)
-```
-
-```{r}
-wdw <- 250
-var <- VAR(ret_wide[1:wdw, -1], p=1, type="const")
-summary(var)
-```
-
-```{r}
-# step ahead predictions
-p <- predict(var, n.ahead = 1) 
-fcsts <- t(do.call(rbind, lapply(p$fcst, "[", 1)))
-fcsts
-```
-
-```{r}
-# predictions vs actuals
-ret_wide[wdw+1, -1] - fcsts
-```
-
-```{r}
-# sign of predictions vs actuals
-sign(ret_wide[wdw+1, -1]/fcsts)
-```
-
-```{r}
-# rank of predictions vs actuals
-rank(t(ret_wide[wdw+1, -1]))
-rank(fcsts)
-```
-
-```{r}
-# dollar weight assets based on normalised difference to forecast mean basket return
-dollar_wgts <- (fcsts - mean(fcsts))/sum(abs(fcsts - mean(fcsts)))  # h.t. Ernie Chan
-dollar_wgts
-```
-
-```{r}
-port_ret <- sum(dollar_wgts * ret_wide[wdw+1, -1])
-port_ret
-```
-
-```{r}
-# rolling VAR estimation and prediction
-wdw <- 500
-dollar_wgts <- vector('list', nrow(ret_wide)-wdw)
-for(i in (wdw):(nrow(ret_wide)-1)) {  # don't need to get a forecast for the final data point for backtesting purposes
-  
-  var <- ret_wide %>%
-    slice((i-wdw):(i-1)) %>%
-    dplyr::select(-date) %>%
-    VAR(p=1, type="const")
-  
-  p <- var %>% 
-    predict(n.ahead = 1)
-  
-  fcsts <- t(do.call(rbind, lapply(p$fcst, "[", 1)))
-  dollar_wgts[[i]] <- (fcsts - mean(fcsts))/sum(abs(fcsts - mean(fcsts))) 
+jbz_plotly_cv <- function(p) {
+  plotly::layout(
+    p,
+    paper_bgcolor = "#0B1B33",
+    plot_bgcolor  = "#102342",
+    font  = list(color = "#FFFFFF", family = "Plus Jakarta Sans, Inter, sans-serif"),
+    xaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3")),
+    yaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3"))
+  )
 }
 ```
 
-```{r}
-wgts <- bind_rows(lapply(dollar_wgts, as.data.frame))
-port_ret <- data.frame('date' = ret_wide[(wdw+1):(nrow(ret_wide)), 'date'], 
-                       'ret' = rowSums(wgts * ret_wide[(wdw+1):(nrow(ret_wide)), -1]))  # first wgt is from idx==wdw, assign return from wdw:(wdw+1)
-port_ret <- port_ret %>%
-  mutate('cum_ret' = cumsum(ret))
-port_ret %>%
-  ggplot(aes(x = date, y = cum_ret)) +
-    geom_line() +
-    labs(
-      title = 'Cumulative Returns to VAR Trading Model',
-      x = 'Date',
-      y = 'Return'
-    )
+## 1. Descarga de Activos y Series de Precios Ajustados
+
+```{r precios}
+# 1. Descarga de precios ajustados para la cesta S&P 500 (MSFT, JNJ, MA, PEP, WMT, MCD)
+tickers <- c("MSFT", "JNJ", "MA", "PEP", "WMT", "MCD")
+basket_prices <- tidyquant::tq_get(
+  tickers,
+  get  = "stock.prices",
+  from = "2008-01-01",
+  to   = "2020-09-30"
+) %>% dplyr::rename(ticker = symbol)
+
+p_precios <- basket_prices %>%
+  ggplot(aes(x = date, y = adjusted, color = ticker)) +
+  geom_line(linewidth = 0.75, alpha = 0.9) +
+  scale_color_manual(values = jbz_series_colors) +
+  theme_jbz_cv() +
+  labs(title = "Precios Ajustados de la Cesta Corporativa S&P 500", x = "Fecha", y = "USD")
+
+jbz_plotly_cv(plotly::ggplotly(p_precios))
 ```
 
-```{r}
-# check stability of window length parameter
-wdws <- c(250, 500, 750, 1000)
-ports <- vector("list")
-for (wdw in wdws) {
-  dollar_wgts <- vector('list', nrow(ret_wide)-wdw)
-  for(i in (wdw):(nrow(ret_wide)-1)) {  # don't need to get a forecast for the final data point for backtesting purposes
-    
-    var <- ret_wide %>%
-      slice((i-wdw):(i-1)) %>%
-      dplyr::select(-date) %>%
-      VAR(p=1, type="const")
-    
-    p <- var %>% 
-      predict(n.ahead = 1)
-    
-    fcsts <- t(do.call(rbind, lapply(p$fcst, "[", 1)))
-    dollar_wgts[[i]] <- (fcsts - mean(fcsts))/sum(abs(fcsts - mean(fcsts)))  # h.t. Ernie Chan
-    
-  }
-  
-  wgts <- bind_rows(lapply(dollar_wgts, as.data.frame))
-  port_ret <- data.frame('date' = ret_wide[(wdw+1):(nrow(ret_wide)), 'date'], 
-                         'ret' = rowSums(wgts * ret_wide[(wdw+1):(nrow(ret_wide)), -1]))  # first wgt is from idx==wdw, assign return from wdw:(wdw+1)
-  
-  name <- paste0(wdw)
-  port_ret <- port_ret %>%
-    mutate(!!name := cumsum(ret))
-  
-  ports <- c(ports, list(port_ret))
+## 2. Estacionariedad (ADF) y Selección de Rezagos VAR(p)
+
+```{r estacionariedad}
+# 2. Retornos logarítmicos estacionarios I(0) y matriz multivariante
+ret_wide <- basket_prices %>%
+  dplyr::group_by(ticker) %>%
+  tidyquant::tq_transmute(select = adjusted, mutate_fun = periodReturn, period = "daily", type = "log") %>%
+  tidyr::pivot_wider(names_from = ticker, values_from = daily.returns) %>%
+  tidyr::drop_na()
+
+# Verificación formal de estacionariedad (Augmented Dickey-Fuller sin deriva significativa)
+adf_resumen <- purrr::map_dfr(tickers, function(sym) {
+  test_adf <- urca::ur.df(ret_wide[[sym]], type = "drift", selectlags = "AIC")
+  tibble::tibble(Activo = sym, Estadistico_tau = round(test_adf@teststat[1], 3), Crit_1pct = test_adf@cval[1, 1])
+})
+knitr::kable(adf_resumen, caption = "Diagnóstico de Raíces Unitarias ADF sobre Retornos Diarios")
+```
+
+```{r seleccion_var}
+# 3. Selección de orden de rezagos (AIC / HQ / SC / FPE) y estimación VAR(p)
+ret_mat <- ret_wide %>% dplyr::select(-date) %>% as.data.frame()
+lag_sel <- vars::VARselect(ret_mat, lag.max = 10, type = "const")
+p_opt   <- as.integer(lag_sel$selection[["AIC(n)"]])
+
+var_fit <- vars::VAR(ret_mat, p = p_opt, type = "const")
+max_root <- max(vars::roots(var_fit, modulus = TRUE))
+cat("Orden óptimo AIC:", p_opt, "| Máx. raíz característica:", round(max_root, 4), "(< 1 => Estable)\n")
+```
+
+## 3. Diagnóstico Residual, Granger, IRF y FEVD
+
+```{r diagnosticos}
+# 4. Diagnóstico estadístico de residuos (Portmanteau serial.test y ARCH multivariante)
+serial_chk <- vars::serial.test(var_fit, lags.pt = 16, type = "PT.asymptotic")
+arch_chk   <- vars::arch.test(var_fit, lags.multi = 5)
+list(Portmanteau_p = serial_chk$serial$p.value, ARCH_p = arch_chk$arch.mul$p.value)
+```
+
+```{r inferencia_dinamica}
+# 5. Causalidad de Granger e Impulso-Respuesta Ortogonalizada (Cholesky IRF)
+granger_msft <- vars::causality(var_fit, cause = "MSFT")
+print(granger_msft$Granger)
+
+irf_msft_ma <- vars::irf(
+  var_fit,
+  impulse  = "MSFT",
+  response = "MA",
+  n.ahead  = 15,
+  boot     = TRUE,
+  ci       = 0.95,
+  runs     = 200
+)
+
+# Descomposición de Varianza del Error de Pronóstico (FEVD a 10 sesiones)
+fevd_10 <- vars::fevd(var_fit, n.ahead = 10)
+round(fevd_10$MA * 100, 2)
+```
+
+## 4. Estrategia Táctica Rolling VAR Dollar-Neutral
+
+```{r rolling_backtest}
+# 6. Estrategia Rolling Out-of-Sample basada en señales VAR(p) (ventanas 250–1000 días)
+wdw <- 500L
+n_obs <- nrow(ret_wide)
+dollar_wgts <- vector("list", n_obs - wdw)
+
+for (i in seq(wdw, n_obs - 1L)) {
+  sub_df <- ret_wide %>% dplyr::slice((i - wdw + 1L):i) %>% dplyr::select(-date)
+  m_roll <- vars::VAR(sub_df, p = 1L, type = "const")
+  fcst   <- sapply(stats::predict(m_roll, n.ahead = 1L)$fcst, function(x) x[1L, "fcst"])
+  denom  <- sum(abs(fcst - mean(fcst)))
+  dollar_wgts[[i - wdw + 1L]] <- if (denom > 0) (fcst - mean(fcst)) / denom else rep(0, length(fcst))
 }
-```
 
-```{r}
-# plot returns by window length
-ports %>%
-  map(~ (.x %>% dplyr::select(-ret))) %>%  # drop ret column from each dataframe in list
-  reduce(left_join, by="date") %>%  
-  pivot_longer(-date, names_to = "window", values_to = "return") %>%
-  ggplot(aes(x = date, y = return)) +
-    geom_line(aes(color = window)) +
-    labs(
-      title = 'Return to VAR models of different data windows',
-      x = "Date",
-      y = "Return"
-    )
-```
+wgts_df <- dplyr::bind_rows(lapply(dollar_wgts, function(w) as.data.frame(t(w))))
+port_ret <- tibble::tibble(
+  date    = ret_wide$date[(wdw + 1L):n_obs],
+  ret     = rowSums(wgts_df * ret_wide[(wdw + 1L):n_obs, -1]),
+  cum_ret = cumsum(ret)
+)
 
+p_cum <- ggplot(port_ret, aes(x = date, y = cum_ret)) +
+  geom_line(color = "#B8955A", linewidth = 0.95) +
+  theme_jbz_cv() +
+  labs(title = "Retorno Acumulado del Sistema Rolling VAR(p) en RStudio", x = "Fecha", y = "Retorno Log Acumulado")
+jbz_plotly_cv(ggplotly(p_cum))
+```

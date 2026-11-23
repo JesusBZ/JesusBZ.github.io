@@ -15,10 +15,10 @@
 <span style="font-size: large;"><br /></span></div>
 <div>
 <div style="text-align: justify;">
-<span style="font-size: large;">La segunda parte del entrenamiento se hará con el paquete&nbsp;<a href="https://cran.r-project.org/web/packages/Quandl/Quandl.pdf" rel="nofollow" target="_blank">Quandl</a>, una herramienta poderosa para descargar directamente información macroeconómica, en este caso de Venezuela, utilizando la plataforma del</span><span style="font-size: large;">&nbsp;Banco Mundial y su base de datos llamada Indicadores del desarrollo mundial <a href="http://datatopics.worldbank.org/world-development-indicators/" rel="nofollow" target="_blank">(WDI)</a>&nbsp;"</span><span style="font-size: large;">World Development Indicators".</span></div>
+<span style="font-size: large;">La segunda parte del entrenamiento se hará con el paquete&nbsp;<a href="https://cran.r-project.org/web/packages/WDI/WDI.pdf" rel="nofollow" target="_blank">WDI</a>, una herramienta poderosa para descargar directamente información macroeconómica, en este caso de Venezuela, utilizando la plataforma del</span><span style="font-size: large;">&nbsp;Banco Mundial y su base de datos llamada Indicadores del desarrollo mundial <a href="http://datatopics.worldbank.org/world-development-indicators/" rel="nofollow" target="_blank">(WDI)</a>&nbsp;"</span><span style="font-size: large;">World Development Indicators".</span></div>
 <br />
 <div style="text-align: justify;">
-<span style="font-size: large;">Para concluir, se va ha construir un mapa interactivo para acceder a los datos macroeconómicos a través de Quandl con <a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow" target="_blank">leaflet</a>, lo que permite al usuario elegir un indicador económico y hacer clic en un país para acceder a los valores de ese indicador, campo de estudio de la <i><b>Estadística Espacial.</b></i></span></div>
+<span style="font-size: large;">Para concluir, se construye un mapa interactivo para acceder a los datos macroeconómicos a través de WDI (Banco Mundial) con <a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow" target="_blank">leaflet</a>, lo que permite al usuario elegir un indicador económico y hacer clic en un país para acceder a los valores de ese indicador, campo de estudio de la <i><b>Estadística Espacial.</b></i></span></div>
 </div>
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Esperanza de Vida</span></h3>
@@ -64,9 +64,9 @@
 <div style="text-align: justify;">
 <span style="font-size: large;">Un extracto de los datos disponibles en <a href="http://gapminder.org./" rel="nofollow" target="_blank">Gapminder.org.</a> Para cada uno de los 142 países del conjunto, el paquete proporciona valores para la esperanza de vida, el PIB per cápita, y población, cada cinco años, de 1952 a 2007.</span></div>
 <h3 style="text-align: justify;">
-<a href="https://cran.r-project.org/web/packages/Quandl/Quandl.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Quandl</span></a></h3>
+<a href="https://cran.r-project.org/web/packages/WDI/WDI.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">WDI</span></a></h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Funciones para interactuar directamente con la API de Quandl y ofrecer datos en varios formatos utilizables en R, descargar un archivo zip con todos los datos de una base de datos de Quandl y la capacidad de buscarlos.&nbsp;</span></div>
+<span style="font-size: large;">Funciones para interactuar directamente con la API oficial WDI del Banco Mundial y ofrecer datos en varios formatos utilizables en R, descargar un archivo zip con todos los datos de una base de datos de WDI y la capacidad de buscarlos.&nbsp;</span></div>
 <h3 style="text-align: justify;">
 <a href="https://cran.r-project.org/web/packages/knitr/knitr.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">knitr</span></a></h3>
 <div style="text-align: justify;">
@@ -92,7 +92,7 @@
 <div style="text-align: justify;">
 <span style="font-size: large;">Clases y métodos para datos espaciales; el documento de clases donde se encuentra la información de ubicación espacial, para datos 2D o 3D. Se proporcionan funciones de utilidad, p. para trazar datos como mapas, selección espacial, así como métodos para recuperación de coordenadas, para subconjuntos, impresión, resumen, etc.</span></div>
 <h3 style="text-align: justify;">
-<a href="https://cran.rstudio.com/web/packages/rgeos/rgeos.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">Rgeos</span></a></h3>
+<a href="https://cran.r-project.org/web/packages/sf/sf.pdf" rel="nofollow" target="_blank"><span style="font-size: large;">sf</span></a></h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">Interfaz con el motor de geometría: código abierto ('GEOS') utilizando la 'API C' para operaciones de topología en geometrías.</span></div>
 <h3 style="text-align: justify;">
@@ -143,14 +143,50 @@ library(plotly)
 library(gganimate)
 library(ggplot2)
 library(gapminder)
-library(Quandl)
+library(WDI)
+library(rnaturalearth)
+# Paleta Corporativa Unificada (Curriculum.pdf — Executive Navy & Champagne Gold)
+jbz_cv_palette <- c(
+  navy = "#0B1B33", plot_navy = "#102342", elev_navy = "#163259",
+  cobalt = "#1D4ED8", sky = "#38BDF8", gold = "#B8955A",
+  gold_soft = "#D9C29A", emerald = "#10B981", rose = "#F43F5E",
+  mist = "#C7D2E3", white = "#FFFFFF"
+)
+jbz_series_colors <- c("#38BDF8", "#B8955A", "#10B981", "#F43F5E", "#60A5FA", "#D9C29A", "#2DD4BF")
+
+theme_jbz_cv <- function(base_size = 12) {
+  ggplot2::theme_minimal(base_size = base_size) +
+    ggplot2::theme(
+      plot.background   = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      panel.background  = ggplot2::element_rect(fill = "#102342", colour = NA),
+      panel.grid.major  = ggplot2::element_line(colour = "#1E3A5F", linewidth = 0.35),
+      panel.grid.minor  = ggplot2::element_blank(),
+      text              = ggplot2::element_text(colour = "#FFFFFF"),
+      axis.text         = ggplot2::element_text(colour = "#C7D2E3"),
+      axis.title        = ggplot2::element_text(colour = "#D9C29A", face = "bold"),
+      plot.title        = ggplot2::element_text(colour = "#FFFFFF", face = "bold"),
+      plot.subtitle     = ggplot2::element_text(colour = "#C7D2E3"),
+      legend.background = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      legend.text       = ggplot2::element_text(colour = "#FFFFFF")
+    )
+}
+
+jbz_plotly_cv <- function(p) {
+  plotly::layout(
+    p,
+    paper_bgcolor = "#0B1B33",
+    plot_bgcolor  = "#102342",
+    font  = list(color = "#FFFFFF", family = "Plus Jakarta Sans, Inter, sans-serif"),
+    xaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3")),
+    yaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3"))
+  )
+}
 library(knitr)
 library(kableExtra)
 library(purrr)
 library(dygraphs)
 library(rnaturalearth)
-library(sp)
-library(rgeos)
+library(sf)
 library(leaflet)
 library(coefplot)
 library(ggrepel)
@@ -260,7 +296,7 @@ ggplotly(p + geom_point() + geom_smooth(method = "loess") + scale_x_log10()+labs
 ```{r out.width = "100%", echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 p <- ggplot(gapminder, aes(x = year, y = gdpPercap))  
 
-ggplotly(p + geom_line(color = "gray70", aes(group = country)) + geom_smooth(size = 1.1, method = "loess", se = FALSE) + scale_y_log10(labels = scales::dollar) + facet_wrap(~ continent, ncol = 5) + labs(
+ggplotly(p + geom_line(color = "#64748B", aes(group = country)) + geom_smooth(linewidth = 1.1, color = "#B8955A", method = "loess", se = FALSE) + scale_y_log10(labels = scales::dollar) + facet_wrap(~ continent, ncol = 5) + labs(
   x = "Año", 
   y = "PIB per cápita", 
   title = "PIB per cápita en los continentes"
@@ -284,7 +320,7 @@ ggplotly(p + geom_line(color = "gray70", aes(group = country)) + geom_smooth(siz
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 library("ggplot2")
 ggplotly(ggplot(gapminder, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(outlier.colour = "hotpink") +
+  geom_boxplot(outlier.colour = "#F43F5E") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)+labs(
   x = "Continentes", y = "Esperanza de Vida en Años", title = "Gráficos de caja", caption = "Fuente: gapminder."
 ))
@@ -344,7 +380,7 @@ coefplot(out, sort = "magnitude", intercept = FALSE)
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Exploración de datos Macroeconómicos</span></h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Se utilizará la fuente de datos macroeconómicos del Banco Mundial llamada Indicadores del desarrollo mundial <a href="http://data.worldbank.org/products/wdi" rel="nofollow" target="_blank">(WDI)</a> . El código&nbsp;</span><span style="font-size: large;"><i>Quandl</i>&nbsp;</span><span style="font-size: large;">para WDI es WWDI, y se antepone WWDI/ para cada llamada al conjunto de datos.</span></div>
+<span style="font-size: large;">Se utilizará la fuente de datos macroeconómicos del Banco Mundial llamada Indicadores del desarrollo mundial <a href="http://data.worldbank.org/products/wdi" rel="nofollow" target="_blank">(WDI)</a> . El código&nbsp;</span><span style="font-size: large;"><i>WDI</i>&nbsp;</span><span style="font-size: large;">para WDI es WWDI, y se antepone WWDI/ para cada llamada al conjunto de datos.</span></div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span></div>
 <div style="text-align: justify;">
@@ -352,7 +388,7 @@ coefplot(out, sort = "magnitude", intercept = FALSE)
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span></div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Se utiliza el código WWDI/VEN _NY_GDP_PCAP_KN&nbsp; Quandl, que consiste en el código WDI WWDI/, agregando el código de país de Venezuela VEN, por último el código del PIB per cápita _NY_GDP_PCAP_KN.</span></div>
+<span style="font-size: large;">Se consulta directamente el indicador oficial <code>NY.GDP.PCAP.KN</code> mediante <code>WDI::WDI(country = "VE")</code>.</span></div>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 gapminder %>%
  filter(year == 2007, country %in% c("Kenya", "Venezuela", "China")) %>%
@@ -361,8 +397,7 @@ gapminder %>%
 ```
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-Venezuela_GDPPC <- Quandl("WWDI/VEN_NY_GDP_PCAP_KN", type = 'xts') %>% 
- `colnames<-`("PIB Per Capita")
+Venezuela_GDPPC <- WDI::WDI(country = "VE", indicator = c("PIB Per Capita" = "NY.GDP.PCAP.KN"), start = 1995, end = 2023)
 tail(Venezuela_GDPPC, n = 20)
 ```
 <h3 style="text-align: justify;">
@@ -374,18 +409,18 @@ tail(Venezuela_GDPPC, n = 20)
 <div style="text-align: justify;">
 <span style="font-size: large;">En los detalles, se usará la función reduce() del paquete <i>purrr </i>y se aplicará&nbsp;merge() para combinar las ocho listas de un objeto xts. La visualización se realizará con dygraphs. La última función&nbsp; colnames&lt;- se usa para limpiar los nombres de columna.</span></div>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-econIndicators <- c("PIB Per Capita" = "WWDI/VEN_NY_GDP_PCAP_KN",
-                  "Crecimiento PIB Per Capita" = "WWDI/VEN_NY_GDP_PCAP_KD_ZG",
-                  "Tasa de Interés Real" = "WWDI/VEN_FR_INR_RINR",
-                  "Tipo de Cambio" = "WWDI/VEN_PX_REX_REER",
-                  "INPC" = "WWDI/VEN_FP_CPI_TOTL_ZG",
-                  "Parte de la Fuerza Laboral. Rate" = "WWDI/VEN_SL_TLF_ACTI_ZS","Formación Bruta de Capital" = "WWDI/VEN_NE_GDI_TOTL_ZS","Importación de Bienes y Servicios" = "WWDI/VEN_NE_IMP_GNFS_ZS")
-Quandl.api_key("SqUMJfB4VhjJaL9dQtaY")
+econIndicators <- c("PIB Per Capita" = "NY.GDP.PCAP.KN / NY_GDP_PCAP_KN",
+                  "Crecimiento PIB Per Capita" = "NY.GDP.PCAP.KN / NY_GDP_PCAP_KD_ZG",
+                  "Tasa de Interés Real" = "NY.GDP.PCAP.KN / FR_INR_RINR",
+                  "Tipo de Cambio" = "NY.GDP.PCAP.KN / PX_REX_REER",
+                  "INPC" = "NY.GDP.PCAP.KN / FP_CPI_TOTL_ZG",
+                  "Parte de la Fuerza Laboral. Rate" = "NY.GDP.PCAP.KN / SL_TLF_ACTI_ZS","Formación Bruta de Capital" = "NY.GDP.PCAP.KN / NE_GDI_TOTL_ZS","Importación de Bienes y Servicios" = "NY.GDP.PCAP.KN / NE_IMP_GNFS_ZS")
+# WDI no requiere API key privada
 Venezuela_all_indicators <- 
  
   econIndicators %>% 
  
-  map(Quandl, type = "xts") %>% 
+  purrr::map(~ WDI::WDI(country = "VE", indicator = .x)) %>% 
 
   reduce(merge) %>% 
 
@@ -468,14 +503,14 @@ popup <- paste0("<strong>Country: </strong>",
                 world$income_grp)
 ```
 <div style="text-align: justify;">
-<span style="font-size: large;">Por último se construye el mapa. Necesitamos pasar un código de país a Quandl, no el nombre del país ni su símbolo de teletipo. Por lo tanto, no queremos establecer layerId = name, tampoco necesitamos agregar nada especial a nuestro objeto world. Ya contiene una columna llamada iso_a3, y esa columna contiene los códigos de país utilizados por Quandl.</span></div>
+<span style="font-size: large;">Por último se construye el mapa. Necesitamos pasar un código ISO a WDI, no el nombre del país ni su símbolo de teletipo. Por lo tanto, no queremos establecer layerId = name, tampoco necesitamos agregar nada especial a nuestro objeto world. Ya contiene una columna llamada iso_a3, y esa columna contiene los códigos de país utilizados por WDI.</span></div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span></div>
 <div style="text-align: justify;">
 <br /></div>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 leaf_world <- leaflet(world) %>%
-  addProviderTiles("CartoDB.Positron") %>% 
+  addProviderTiles("CartoDB.DarkMatter") %>% 
   setView(lng =  20, lat =  15, zoom = 2) %>%
       addPolygons(stroke = FALSE, smoothFactor = 0.2, fillOpacity = .7,
                      color = ~gdpPal(gdp_md_est), layerId = ~iso_a3, popup = popup)
@@ -483,7 +518,7 @@ leaf_world <- leaflet(world) %>%
 leaf_world
 ```
 <div style="text-align: justify;">
-<span style="font-size: large;">Debido a que Quandl usa el <a href="https://blog.quandl.com/api-for-economic-data">código ISO de 3 letras</a> para identificar un país, y porque el rnaturalearth objeto sf&nbsp;</span><span style="font-size: large;">&nbsp;ya contiene una columna con códigos de país iso_a3. Ahora, tenemos un mapa con layerID = iso_a3 la columna incorporada de códigos de país.&nbsp;</span></div>
+<span style="font-size: large;">Utilizando el <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/898590">código ISO de 3 letras</a> para identificar un país, y porque el rnaturalearth objeto sf&nbsp;</span><span style="font-size: large;">&nbsp;ya contiene una columna con códigos de país iso_a3. Ahora, tenemos un mapa con layerID = iso_a3 la columna incorporada de códigos de país.&nbsp;</span></div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span></div>
 <div style="text-align: justify;">

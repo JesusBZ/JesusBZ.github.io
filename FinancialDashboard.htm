@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
 
-  <title>Simulador Financiero FP&amp;A y Financial Dashboard | Jesús Benjamín Zerpa</title>
+  <title>Suite Interactiva de Data Analytics, BI &amp; FP&amp;A | Jesús Benjamín Zerpa</title>
   <!-- SEO:START -->
-  <meta name="description" content="Simulador financiero corporativo interactivo FP&amp;A: elasticidad Q × Tarifa, Nowcast Bayesiano P10-P50-P90 y control Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
-  <meta name="keywords" content="simulador financiero interactivo, financial dashboard corporativo, planificación financiera FP&amp;A, Nowcast Bayesiano P10 P50 P90, elasticidad precio volumen, presupuesto maestro interactivo, control de gestión KPIs, detector anomalías Z-MAD, inteligencia financiera, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+  <meta name="description" content="Plataforma interactiva de Data Analytics, Business Intelligence y FP&amp;A: Cross-Filtering tipo Power BI, P&amp;L 4 niveles, Forecasting ML, Monte Carlo y carga de CSV propio. Por Jesús Benjamín Zerpa." />
+  <meta name="keywords" content="data analytics dashboard interactivo, business intelligence web app, financial dashboard corporativo, cross-filtering Power BI, P&amp;L 4 niveles EBITDA, pronóstico Holt-Winters, simulación Monte Carlo interactiva, análisis sensibilidad Tornado, carga CSV propio, Jesús Benjamín Zerpa, Jesús Zerpa" />
   <meta name="author" content="Jesús Benjamín Zerpa (Jesús Zerpa)" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
   <link rel="canonical" href="https://jesusbz.github.io/FinancialDashboard.htm" />
@@ -18,16 +21,15 @@
   <meta property="og:locale" content="es_ES" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Portafolio de Jesús Benjamín Zerpa" />
-  <meta property="og:title" content="Simulador Financiero FP&amp;A y Financial Dashboard | Jesús Benjamín Zerpa" />
-  <meta property="og:description" content="Simulador financiero corporativo interactivo FP&amp;A: elasticidad Q × Tarifa, Nowcast Bayesiano P10-P50-P90 y control Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta property="og:title" content="Suite Interactiva de Data Analytics, BI &amp; FP&amp;A | Jesús Benjamín Zerpa" />
+  <meta property="og:description" content="Explora en tiempo real: Cross-Filtering bidireccional, Cascada P&amp;L/EBITDA, Laboratorio Predictivo Holt-Winters + Correlación, Simulador Monte Carlo y Carga de CSV propio." />
   <meta property="og:url" content="https://jesusbz.github.io/FinancialDashboard.htm" />
   <meta property="og:image" content="https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" />
-  <meta property="og:image:alt" content="Nexus Quant FP&amp;A Simulador Financiero Corporativo y Financial Dashboard por Jesús Benjamín Zerpa" />
+  <meta property="og:image:alt" content="Nexus Quant Data Analytics &amp; FP&amp;A Suite por Jesús Benjamín Zerpa" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Simulador Financiero FP&amp;A y Financial Dashboard | Jesús Benjamín Zerpa" />
-  <meta name="twitter:description" content="Simulador financiero corporativo interactivo FP&amp;A: elasticidad Q × Tarifa, Nowcast Bayesiano P10-P50-P90 y control Z-MAD. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
+  <meta name="twitter:title" content="Suite Interactiva de Data Analytics, BI &amp; FP&amp;A | Jesús Benjamín Zerpa" />
+  <meta name="twitter:description" content="Cross-Filtering tipo Power BI, P&amp;L 4 niveles, Forecasting estadístico, Simulador Monte Carlo y carga de CSV propio en navegador." />
   <meta name="twitter:image" content="https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" />
-  <meta name="twitter:image:alt" content="Nexus Quant FP&amp;A Simulador Financiero Corporativo por Jesús Benjamín Zerpa" />
 
   <script type="application/ld+json">
   {
@@ -37,103 +39,31 @@
         "@type": "Person",
         "@id": "https://jesusbzerpa.github.io/#person",
         "name": "Jesús Benjamín Zerpa",
-        "givenName": "Jesús Benjamín",
-        "familyName": "Zerpa",
-        "alternateName": [
-          "Jesús Zerpa",
-          "Jesus Zerpa",
-          "Jesús Benjamín Zerpa",
-          "Jesus Benjamin Zerpa",
-          "Jesús B. Zerpa",
-          "Jesus B. Zerpa",
-          "Jesús Benjamín",
-          "Economista Jesús Zerpa",
-          "Economista Jesús Benjamín Zerpa"
-        ],
-        "jobTitle": "Economista Senior, Gerente de Planificación Financiera (FP&A) & Científico de Datos",
         "url": "https://jesusbzerpa.github.io/",
         "image": "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-        "email": "mailto:JesusZerpaEconomia@Gmail.Com",
-        "telephone": "+58 424 148 78 70",
-        "alumniOf": [
-          {
-            "@type": "CollegeOrUniversity",
-            "name": "Universidad Alejandro de Humboldt"
-          },
-          {
-            "@type": "EducationalOrganization",
-            "name": "Instituto Universitario de Profesiones Gerenciales (I.U.P.G.)"
-          }
-        ],
-        "knowsAbout": [
-          "Planificación Financiera Corporativa (FP&A)",
-          "Presupuesto Maestro",
-          "Control de Gestión",
-          "Inteligencia Financiera",
-          "Evaluación de Proyectos de Inversión (CAPEX)",
-          "Business Intelligence",
-          "Microsoft Power BI",
-          "Ciencia de Datos",
-          "Econometría Financiera",
-          "Series Temporales (SARIMA, Prophet, VAR, GARCH, EGARCH)",
-          "Simulación Estocástica de Monte Carlo",
-          "Deep Learning LSTM en PyTorch",
-          "Optimización de Portafolios de Markowitz",
-          "Python",
-          "RStudio"
-        ],
-        "sameAs": [
-          "https://jesusbzerpa.github.io/",
-          "https://jesusbezerpa.github.io/",
-          "https://jesusbz.github.io/",
-          "https://jesusbz.github.io/acercade.html",
-          "https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/",
-          "https://github.com/JesusBZ",
-          "https://rpubs.com/JesusZ",
-          "https://es.scribd.com/user/330352375/Jesus-Benjamin-Zerpa"
-        ]
+        "jobTitle": "Economista Senior, Gerente de Planificación Financiera (FP&A) & Científico de Datos"
       },
       {
         "@type": "WebApplication",
         "@id": "https://jesusbz.github.io/FinancialDashboard.htm#webapp",
-        "name": "Nexus Quant FP&A — Simulador Financiero Corporativo Interactivo",
+        "name": "Nexus Quant Analytics & FP&A Intelligence Suite v3.0",
         "url": "https://jesusbz.github.io/FinancialDashboard.htm",
         "image": "https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp",
-        "applicationCategory": "FinanceApplication",
+        "applicationCategory": "BusinessApplication",
         "operatingSystem": "Any",
         "browserRequirements": "Requires JavaScript",
         "inLanguage": "es",
         "isAccessibleForFree": true,
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "description": "Plataforma interactiva de planificación financiera (FP&A), simulación de sensibilidad Q × Tarifa + Fijo, Nowcast Bayesiano P10–P90, Pareto 80/20, HHI y detección de anomalías Z-MAD sobre 6 líneas de negocio corporativas sintéticas.",
-        "author": { "@id": "https://jesusbzerpa.github.io/#person" },
-        "creator": { "@id": "https://jesusbzerpa.github.io/#person" }
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Suite interactiva híbrida de Data Analytics, Business Intelligence con Cross-Filtering, Estado de Resultados (P&L 4 niveles), Laboratorio Predictivo Holt-Winters / OLS, Simulador What-If Monte Carlo y explorador dinámico con carga segura de CSV propio.",
+        "author": { "@id": "https://jesusbzerpa.github.io/#person" }
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Inicio",
-            "item": "https://jesusbz.github.io/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Financial Dashboard",
-            "item": "https://jesusbz.github.io/Dashboard.html"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Simulador FP&A Interactivo",
-            "item": "https://jesusbz.github.io/FinancialDashboard.htm"
-          }
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://jesusbz.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Data Analytics & Financial Dashboard", "item": "https://jesusbz.github.io/Dashboard.html" },
+          { "@type": "ListItem", "position": 3, "name": "Suite Interactiva v3.0", "item": "https://jesusbz.github.io/FinancialDashboard.htm" }
         ]
       }
     ]
@@ -141,19 +71,19 @@
   </script>
   <!-- SEO:END -->
 
-  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg?v=20261119a" />
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/jbz-favicon-32.png?v=20261119a" />
+  <link rel="shortcut icon" href="favicon.ico?v=20261119a" type="image/x-icon" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/nexus-fpa-simulator.css?v=20261114d" />
+  <link rel="stylesheet" href="css/nexus-analytics-suite.css?v=20261119d" />
 
-  <!-- Motores de Visualización y Exportación UHD -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- Motor Gráfico Interactivo Local (100% autónomo y rápido) -->
+  <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
-  <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem + Clean URL Bar) -->
+  <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -162,669 +92,526 @@
     gtag('config', 'G-9M6MYPFL3M', {
       'linker': { 'domains': ['jesusbzerpa.github.io', 'jesusbezerpa.github.io', 'jesusbz.github.io'] }
     });
-    (function() {
-      var cleaned = false;
-      function cleanGaLinkerUrl() {
-        if (cleaned || !window.history || !window.history.replaceState) return;
-        try {
-          var url = new URL(window.location.href);
-          var dirty = false;
-          if (url.searchParams.has('_gl')) { url.searchParams.delete('_gl'); dirty = true; }
-          if (url.searchParams.has('_ga')) { url.searchParams.delete('_ga'); dirty = true; }
-          if (url.hash && /(?:^|[&#])_gl=/.test(url.hash)) {
-            var cleanHash = url.hash.replace(/^#_gl=[^&]*&?/, '#').replace(/[&]_gl=[^&]*/g, '');
-            url.hash = (cleanHash === '#') ? '' : cleanHash;
-            dirty = true;
-          }
-          if (dirty) {
-            cleaned = true;
-            var nextUrl = url.pathname + url.search + url.hash;
-            window.history.replaceState(window.history.state, document.title, nextUrl);
-          } else {
-            cleaned = true;
-          }
-        } catch (e) {}
-      }
-      if (/[?&#]_(?:gl|ga)=/.test(window.location.href)) {
-        gtag('get', 'G-9M6MYPFL3M', 'client_id', cleanGaLinkerUrl);
-        window.addEventListener('load', function() { setTimeout(cleanGaLinkerUrl, 300); }, { once: true });
-        setTimeout(cleanGaLinkerUrl, 2000);
-      }
-    })();
   </script>
 </head>
 <body>
-  <h1 class="sr-only">Nexus Quant FP&amp;A: Simulador Financiero Corporativo y Financial Dashboard Interactivo — Jesús Benjamín Zerpa</h1>
+  <h1 class="sr-only">Nexus Quant Analytics &amp; FP&amp;A Intelligence Suite — Data Analytics, Cross-Filtering BI, P&amp;L y Simulación Monte Carlo por Jesús Benjamín Zerpa</h1>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       BARRA SUPERIOR EJECUTIVA (CERO LOGIN · CERO ASISTENTE)
-       ═══════════════════════════════════════════════════════════════ -->
-  <header id="top-bar" class="no-print">
-    <div class="tb-brand">
-      <div class="tb-logo-box" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" stroke="#D9C29A" stroke-width="1.8" fill="rgba(184,149,90,0.16)"/>
-          <polyline points="7,14 10.5,10 13.5,13 17,8.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- =========================================================================
+       BARRA DE COMANDO EJECUTIVA (5 MÓDULOS + MODO DUAL NAVY/CLARO)
+       ========================================================================= -->
+  <header class="nx-topbar">
+    <div class="nx-brand">
+      <div class="nx-brand-badge" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" stroke="#D9C29A" stroke-width="1.8" fill="rgba(184,149,90,0.2)"/>
+          <polyline points="7,14 10.5,10 13.5,13 17,8.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       <div>
-        <div class="tb-title">NEXUS QUANT FP&amp;A // REVENUE INTELLIGENCE</div>
-        <div class="tb-sub">
-          <span class="tb-pulse-dot"></span>
-          <span id="sync-status-txt">Motor Sintético Estocástico</span>
-          <span>· por Jesús Benjamín Zerpa</span>
+        <div class="nx-brand-title">NEXUS QUANT // DATA ANALYTICS &amp; FP&amp;A SUITE v3.0</div>
+        <div class="nx-brand-sub">
+          <span class="nx-pulse"></span>
+          <span id="activeDatasetLabel">Walmart Inc. (NYSE: WMT) · Retail Omnicanal &amp; Supercenters</span>
+          <span>· Econ. Jesús Benjamín Zerpa</span>
         </div>
       </div>
     </div>
 
-    <nav class="tb-nav" aria-label="Vistas del Dashboard">
-      <button type="button" class="tb-tab active" data-view="view-ingresos" onclick="window.switchView('view-ingresos')">
-        <span data-icon="bar-chart" data-size="14"></span>
-        <span>1. Ingresos y Ejecución</span>
-      </button>
-      <button type="button" class="tb-tab" data-view="view-analitica" onclick="window.switchView('view-analitica')">
-        <span data-icon="pie-chart" data-size="14"></span>
-        <span>2. Analítica &amp; Sub-Líneas</span>
-      </button>
-      <button type="button" class="tb-tab" data-view="view-semaforo" onclick="window.switchView('view-semaforo')">
-        <span data-icon="traffic" data-size="14"></span>
-        <span>3. Semáforo Comercial</span>
-      </button>
+    <nav class="nx-tabs" aria-label="Módulos del Dashboard">
+      <button type="button" class="nx-tab active" data-view="view-bi">1. Resumen BI &amp; Cross-Filter</button>
+      <button type="button" class="nx-tab" data-view="view-pnl">2. P&amp;G (4 Niveles) &amp; Waterfall</button>
+      <button type="button" class="nx-tab" data-view="view-analytics">3. Laboratorio Predictivo &amp; ML</button>
+      <button type="button" class="nx-tab" data-view="view-whatif">4. Simulador What-If &amp; Monte Carlo</button>
+      <button type="button" class="nx-tab" data-view="view-explorer">5. Pivot Explorer &amp; Subir CSV</button>
     </nav>
 
-    <div class="tb-actions">
-      <button type="button" id="btn-open-simulator" class="tb-btn tb-btn-sim" onclick="window.openChartModal('comp','CLOUD_SAAS','predictive')">
-        <span data-icon="sliders" data-size="14"></span>
-        <span>Simulador Q × Tarifa</span>
-      </button>
-      <button type="button" id="btn-random-scenario" class="tb-btn tb-btn-random" onclick="window.regenerateRandomScenario()" title="Genera nuevas cifras estocásticas coherentes para 2025–2026">
-        <span data-icon="shuffle" data-size="14"></span>
-        <span>Nueva Simulación Aleatoria</span>
-      </button>
-      <button type="button" id="db-health-badge" class="db-health-pill" onclick="window.openAuditModal()">
-        <span data-icon="shield-check" data-size="13"></span>
-        <span>Auditoría BD</span>
-      </button>
-
-      <div class="export-wrap" id="export-menu-wrap">
-        <button type="button" class="tb-btn" onclick="window.toggleExportMenu(event)">
-          <span data-icon="download" data-size="14"></span>
-          <span>Exportar</span>
-        </button>
-        <div id="export-dropdown" class="export-dropdown">
-          <button type="button" class="export-item" onclick="window.print()">
-            <span data-icon="printer" data-size="14"></span> <span>Imprimir / Guardar PDF</span>
-          </button>
-          <button type="button" class="export-item" onclick="window.exportPNG(2)">
-            <span data-icon="image" data-size="14"></span> <span>Captura PNG 4K (UHD)</span>
-          </button>
-          <button type="button" class="export-item" onclick="window.exportPNG(4)">
-            <span data-icon="image" data-size="14"></span> <span>Captura PNG 8K (Poster)</span>
-          </button>
-          <button type="button" class="export-item" onclick="window.exportCSV()">
-            <span data-icon="file-spreadsheet" data-size="14"></span> <span>Exportar Datos CSV</span>
-          </button>
-          <button type="button" class="export-item" onclick="window.exportHTML()">
-            <span data-icon="code" data-size="14"></span> <span>Descargar Instantánea HTML</span>
-          </button>
-        </div>
-      </div>
-
-      <button type="button" class="tb-btn" onclick="window.openWelcomeModal()">
-        <span data-icon="compass" data-size="14"></span>
-        <span>Guía</span>
-      </button>
-      <a href="Dashboard.html" class="tb-btn hide-in-embed" title="Volver al estudio metodológico del portafolio">
-        <span data-icon="arrow-left" data-size="14"></span>
-        <span>Volver al Post</span>
-      </a>
+    <div class="nx-actions">
+      <button type="button" class="nx-btn nx-btn-gold" id="btnRandomSeed" title="Genera un nuevo escenario estocástico de 36 meses">🎲 Simular Datos</button>
+      <button type="button" class="nx-btn" id="btnToggleTheme" title="Alternar entre Midnight Navy & Gold y Modo Claro Ejecutivo">☀️ Modo Claro</button>
+      <button type="button" class="nx-btn" id="btnExportCsv" title="Descargar corte filtrado en CSV">⬇ CSV</button>
+      <button type="button" class="nx-btn" onclick="window.print()" title="Imprimir o guardar vista en PDF">🖨 PDF</button>
+      <a href="Dashboard.html" class="nx-btn" id="btnBackToPost">← Post</a>
     </div>
-
-    <a href="index.html" class="tb-jbz-logo" title="Jesús Benjamín Zerpa — Inicio del Portafolio">
-      <img src="imagenes/jbz-logo.svg" alt="JBZ — Jesús Benjamín Zerpa" width="210" height="36" />
-    </a>
   </header>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       CONTENEDOR PRINCIPAL DEL ECOSISTEMA
-       ═══════════════════════════════════════════════════════════════ -->
-  <main id="shell">
+  <main class="nx-shell">
 
-    <!-- BARRA DE FILTROS DE CORTE Y ESCENARIO -->
-    <section class="filter-bar no-print" aria-label="Filtros temporales y escenario">
-      <div class="filter-controls">
-        <div class="f-group">
-          <label class="f-label" for="selAnio">Año Fiscal</label>
-          <select id="selAnio" class="f-select" onchange="window.onYearOrMonthChange('anio')"></select>
+    <!-- =======================================================================
+         SEGMENTADORES GLOBALES BIDIRECCIONALES (POWER BI SLICER BAR)
+         ======================================================================= -->
+    <section class="nx-slicer-bar" aria-label="Segmentadores globales y filtros cruzados">
+      <div class="nx-slicer-row">
+        <div class="nx-slicer-controls">
+          <div class="nx-field">
+            <label class="nx-label" for="selDataset">Industria / Dataset</label>
+            <select id="selDataset" class="nx-select">
+              <option value="WALMART_WMT">1. Walmart Inc. (WMT) — Retail &amp; Supercenters</option>
+              <option value="RETAIL_CLUB">2. Club Mayorista &amp; Membresías (Warehouse)</option>
+              <option value="RETAIL_OMNI">3. Supermercados, Farmacia &amp; Omnicanal</option>
+            </select>
+          </div>
+          <div class="nx-field">
+            <label class="nx-label" for="selYear">Año Fiscal</label>
+            <select id="selYear" class="nx-select"></select>
+          </div>
+          <div class="nx-field">
+            <label class="nx-label" for="selQuarter">Trimestre</label>
+            <select id="selQuarter" class="nx-select">
+              <option value="ALL">Todos (Q1–Q4)</option>
+              <option value="Q1">Q1 (Ene–Mar)</option>
+              <option value="Q2">Q2 (Abr–Jun)</option>
+              <option value="Q3">Q3 (Jul–Sep)</option>
+              <option value="Q4">Q4 (Oct–Dic)</option>
+            </select>
+          </div>
+          <div class="nx-field">
+            <label class="nx-label" for="selRegion">Región</label>
+            <select id="selRegion" class="nx-select"></select>
+          </div>
+          <div class="nx-field">
+            <label class="nx-label" for="selSegment">Segmento</label>
+            <select id="selSegment" class="nx-select"></select>
+          </div>
         </div>
-        <div class="f-group">
-          <label class="f-label" for="selMes">Mes de Corte</label>
-          <select id="selMes" class="f-select" onchange="window.onYearOrMonthChange('mes')"></select>
-        </div>
-        <div class="f-group">
-          <label class="f-label" for="selSemana">Semana Acumulada</label>
-          <select id="selSemana" class="f-select" onchange="window.renderCurrentView()"></select>
-        </div>
-        <div class="f-group">
-          <label class="f-label" for="selCmp">Referencia Principal</label>
-          <select id="selCmp" class="f-select" onchange="window.renderCurrentView()">
-            <option value="PRESUPUESTO">Descomposición vs Presupuesto</option>
-            <option value="ANIO_ANT">Variación Interanual (YoY)</option>
-            <option value="MES_ANT">Variación Intermensual (MoM)</option>
-          </select>
+
+        <div class="nx-field">
+          <span class="nx-label">Filtro Rápido por Unidad de Negocio</span>
+          <div id="unitPills" class="nx-unit-pills"></div>
         </div>
       </div>
 
-      <div class="filter-meta">
-        <span id="scenario-badge" class="scenario-chip">
-          <span data-icon="cpu" data-size="13"></span>
-          <span>Universo Sintético LIVE</span>
-        </span>
-        <button type="button" class="btn-preload-bar" onclick="window.openPreloadModal()">
-          <span data-icon="zap" data-size="13"></span>
-          <span>Pre-Carga HBW-Nowcast (24 Sub-Líneas)</span>
-        </button>
+      <div id="activeFilterStrip" class="nx-active-filters"></div>
+    </section>
+
+    <!-- =======================================================================
+         CINTA GLOBAL DE 6 KPIs EJECUTIVOS SINCRONIZADOS
+         ======================================================================= -->
+    <section class="nx-kpi-grid" aria-label="Indicadores clave sincronizados">
+      <article class="nx-kpi-card sky">
+        <span class="nx-kpi-lbl">Ingresos Netos ($)</span>
+        <div id="kpiRevVal" class="nx-kpi-val">—</div>
+        <div id="kpiRevValSub" class="nx-kpi-deltas"></div>
+      </article>
+      <article class="nx-kpi-card">
+        <span class="nx-kpi-lbl">EBITDA Operativo ($)</span>
+        <div id="kpiEbitdaVal" class="nx-kpi-val">—</div>
+        <div id="kpiEbitdaValSub" class="nx-kpi-deltas"></div>
+      </article>
+      <article class="nx-kpi-card emerald">
+        <span class="nx-kpi-lbl">Flujo Caja Libre (FCF)</span>
+        <div id="kpiFcfVal" class="nx-kpi-val">—</div>
+        <div id="kpiFcfValSub" class="nx-kpi-deltas"></div>
+      </article>
+      <article class="nx-kpi-card indigo">
+        <span class="nx-kpi-lbl">Cumplimiento Ppto (%)</span>
+        <div id="kpiAttVal" class="nx-kpi-val">—</div>
+        <div id="kpiAttValSub" class="nx-kpi-deltas"></div>
+      </article>
+      <article class="nx-kpi-card teal">
+        <span class="nx-kpi-lbl">Volumen Total (Q)</span>
+        <div id="kpiQtyVal" class="nx-kpi-val">—</div>
+        <div id="kpiQtyValSub" class="nx-kpi-deltas"></div>
+      </article>
+      <article class="nx-kpi-card rose">
+        <span class="nx-kpi-lbl">Salud Estadística Z-MAD</span>
+        <div id="kpiHealthVal" class="nx-kpi-val">—</div>
+        <div id="kpiHealthValSub" class="nx-kpi-deltas"></div>
+      </article>
+    </section>
+
+    <!-- =======================================================================
+         MÓDULO 1: RESUMEN EJECUTIVO & CROSS-FILTER BI
+         ======================================================================= -->
+    <section id="view-bi" class="nx-view active">
+      <div class="nx-grid-main-side">
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
+            <div>
+              <h2 class="nx-panel-title">Evolución Mensual: Ingresos Reales vs Presupuesto y EBITDA</h2>
+              <div class="nx-panel-sub">Serie dinámica de 36 meses con actualización instantánea al filtrar región, trimestre o unidad</div>
+            </div>
+            <span class="nx-badge">Serie Temporal Interactiva</span>
+          </div>
+          <div id="cBiTrend" class="nx-plot"></div>
+        </article>
+
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
+            <div>
+              <h2 class="nx-panel-title">Desempeño por Unidad de Negocio</h2>
+              <div class="nx-panel-sub">Haz clic sobre cualquier barra para filtrar todo el dashboard</div>
+            </div>
+            <span class="nx-badge">Cross-Filter Activo</span>
+          </div>
+          <div id="cBiUnits" class="nx-plot"></div>
+        </article>
+      </div>
+
+      <div class="nx-grid-2">
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
+            <div>
+              <h2 class="nx-panel-title">Distribución Regional de Ingresos (%)</h2>
+              <div class="nx-panel-sub">Haz clic en cualquier región del anillo para filtrar en cruz todas las vistas</div>
+            </div>
+            <span class="nx-badge">Clic = Filtrar Región</span>
+          </div>
+          <div id="cBiRegions" class="nx-plot"></div>
+        </article>
+
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
+            <div>
+              <h2 class="nx-panel-title">Matriz Estratégica: Cumplimiento Ppto vs Margen EBITDA</h2>
+              <div class="nx-panel-sub">Tamaño de burbuja = Facturación ($). Clic en burbuja aisla la unidad de negocio</div>
+            </div>
+            <span class="nx-badge">Cuadrantes de Rentabilidad</span>
+          </div>
+          <div id="cBiBubble" class="nx-plot"></div>
+        </article>
+      </div>
+
+      <article class="nx-panel">
+        <div class="nx-panel-hdr">
+          <div>
+            <h2 class="nx-panel-title">Matriz Ejecutiva Multidimensional (Descomposición Precio-Volumen ΔQ / ΔP, EBITDA y FCF)</h2>
+            <div class="nx-panel-sub">Haz clic en los encabezados de columna para ordenar o en cualquier fila para aplicar filtro cruzado</div>
+          </div>
+          <span class="nx-badge">Ordenamiento &amp; Drill-Down</span>
+        </div>
+        <div class="nx-table-wrap">
+          <table class="nx-table" id="tblBiUnits">
+            <thead>
+              <tr>
+                <th data-col="key">Unidad de Negocio ⇅</th>
+                <th data-col="qty">Volumen Q ⇅</th>
+                <th data-col="avgPrice">Tarifa $/Q ⇅</th>
+                <th data-col="revReal">Ingresos Reales ⇅</th>
+                <th data-col="revBudget">Presupuesto ⇅</th>
+                <th>Brecha ($)</th>
+                <th data-col="attainment">% Cumpl. ⇅</th>
+                <th>Efecto Vol (ΔQ)</th>
+                <th>Efecto Precio (ΔP)</th>
+                <th data-col="ebitdaReal">EBITDA ($) ⇅</th>
+                <th data-col="ebitdaMargin">Margen % ⇅</th>
+                <th data-col="fcfReal">Flujo Caja (FCF) ⇅</th>
+                <th>Mix %</th>
+              </tr>
+            </thead>
+            <tbody id="tbBiUnits"></tbody>
+            <tfoot id="tfBiUnits"></tfoot>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <!-- =======================================================================
+         MÓDULO 2: ESTADO DE RESULTADOS (P&G 4 NIVELES) & WATERFALL
+         ======================================================================= -->
+    <section id="view-pnl" class="nx-view">
+      <div class="nx-grid-2">
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
+            <div>
+              <h2 class="nx-panel-title">Cascada Estructural de Rentabilidad (P&amp;G 4 Niveles → FCF)</h2>
+              <div class="nx-panel-sub">Conversión desde Facturación Bruta hasta Utilidad Bruta, EBITDA y Flujo de Caja Libre</div>
+            </div>
+            <span class="nx-badge">Waterfall Corporativo</span>
+          </div>
+          <div id="cPnlWaterfall" class="nx-plot-tall"></div>
+        </article>
+
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
+            <div>
+              <h2 class="nx-panel-title">Puente Explicativo de Variación de EBITDA (Presupuesto → Real)</h2>
+              <div class="nx-panel-sub">Aísla el impacto monetario exacto de Volumen (ΔQ), Precio (ΔP), COGS y Gastos OPEX</div>
+            </div>
+            <span class="nx-badge">Variance Bridge FP&amp;A</span>
+          </div>
+          <div id="cPnlBridge" class="nx-plot-tall"></div>
+        </article>
+      </div>
+
+      <article class="nx-panel">
+        <div class="nx-panel-hdr">
+          <div>
+            <h2 class="nx-panel-title">Estado de Resultados Gerencial en 4 Niveles (Análisis Vertical y Horizontal)</h2>
+            <div class="nx-panel-sub">Responde en vivo a todos los filtros activos de Año, Trimestre, Unidad, Región y Segmento</div>
+          </div>
+          <span class="nx-badge">Control Presupuestario</span>
+        </div>
+        <div class="nx-table-wrap">
+          <table class="nx-table">
+            <thead>
+              <tr>
+                <th>Rubro / Nivel del Estado de Resultados (P&amp;L)</th>
+                <th>Ejecución Real ($)</th>
+                <th>Análisis Vertical (%)</th>
+                <th>Presupuesto ($)</th>
+                <th>Variación Absoluta ($)</th>
+                <th>Variación Relativa (%)</th>
+              </tr>
+            </thead>
+            <tbody id="tbPnl4Levels"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <!-- =======================================================================
+         MÓDULO 3: LABORATORIO DE DATA ANALYTICS, FORECASTING & CORRELACIÓN
+         ======================================================================= -->
+    <section id="view-analytics" class="nx-view">
+      <article class="nx-panel">
+        <div class="nx-panel-hdr">
+          <div>
+            <h2 class="nx-panel-title">Motor de Pronóstico Estacional Holt-Winters + Bandas de Confianza y Anomalías Z-MAD</h2>
+            <div class="nx-panel-sub" id="labModelStats">Calculando métricas de ajuste in-sample y proyección...</div>
+          </div>
+          <div style="display:flex;gap:0.55rem;flex-wrap:wrap;align-items:flex-end;">
+            <div class="nx-field">
+              <label class="nx-label" for="labMetric">Variable Objetivo</label>
+              <select id="labMetric" class="nx-select">
+                <option value="revReal">Ingresos Netos ($)</option>
+                <option value="ebitdaReal">EBITDA Operativo ($)</option>
+                <option value="fcfReal">Flujo de Caja Libre ($)</option>
+                <option value="qty">Volumen Físico (Q)</option>
+              </select>
+            </div>
+            <div class="nx-field">
+              <label class="nx-label" for="labHorizon">Horizonte</label>
+              <select id="labHorizon" class="nx-select">
+                <option value="6">+6 Meses</option>
+                <option value="12" selected>+12 Meses</option>
+                <option value="18">+18 Meses</option>
+              </select>
+            </div>
+            <div class="nx-field">
+              <label class="nx-label" for="labCi">Banda IC</label>
+              <select id="labCi" class="nx-select">
+                <option value="0.80">IC 80%</option>
+                <option value="0.90">IC 90%</option>
+                <option value="0.95" selected>IC 95%</option>
+              </select>
+            </div>
+            <div class="nx-field">
+              <label class="nx-label" for="labZThresh">Umbral Z-MAD</label>
+              <select id="labZThresh" class="nx-select">
+                <option value="1.8">Estricto (1.8σ)</option>
+                <option value="2.1" selected>Estándar (2.1σ)</option>
+                <option value="2.8">Extremo (2.8σ)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div id="cLabForecast" class="nx-plot-tall"></div>
+      </article>
+
+      <div class="nx-grid-2">
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
+            <div>
+              <h2 class="nx-panel-title">Matriz de Correlación de Pearson (6 Variables Críticas)</h2>
+              <div class="nx-panel-sub">Cuantifica relaciones lineales entre Volumen, Tarifa, Descuentos, Marketing, Ingresos y EBITDA</div>
+            </div>
+            <span class="nx-badge">Correlación Multivariante</span>
+          </div>
+          <div id="cLabCorr" class="nx-plot"></div>
+        </article>
+
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
+            <div>
+              <h2 class="nx-panel-title">Regresión MCO: Apalancamiento Operativo (Ingresos → EBITDA)</h2>
+              <div class="nx-panel-sub" id="labOlsFormula">Ajuste lineal ordinario sobre corte activo</div>
+            </div>
+            <span class="nx-badge">OLS Regression</span>
+          </div>
+          <div id="cLabReg" class="nx-plot"></div>
+        </article>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════════════════
-         VISTA 1: INGRESOS, EJECUCIÓN Y SIMULADOR BAYESIANO
-         ═══════════════════════════════════════════════════════════ -->
-    <div id="view-ingresos" style="display:flex;flex-direction:column;gap:14px;">
-      <div id="v1-ribbon" class="exec-ribbon"></div>
-
-      <section class="kpi-grid" aria-label="Indicadores ejecutivos">
-        <article class="kpi-card">
-          <div class="kpi-top">
-            <span class="kpi-lbl">Ingreso Real Corte (S)</span>
-            <span data-icon="dollar" data-size="15"></span>
-          </div>
-          <div id="kpi-v1-real" class="kpi-val tabular">—</div>
-          <div id="kpi-v1-real-sub" class="kpi-sub"></div>
+    <!-- =======================================================================
+         MÓDULO 4: SIMULADOR WHAT-IF EN PANTALLA, TORNADO & MONTE CARLO
+         ======================================================================= -->
+    <section id="view-whatif" class="nx-view">
+      <div class="nx-kpi-grid" style="grid-template-columns:repeat(5, 1fr);">
+        <article class="nx-kpi-card sky">
+          <span class="nx-kpi-lbl">Ingresos Simulados</span>
+          <div id="simKpiRev" class="nx-kpi-val">—</div>
+          <div id="simKpiRevSub" class="nx-kpi-deltas"></div>
         </article>
-
-        <article class="kpi-card kpi-accent-emerald">
-          <div class="kpi-top">
-            <span class="kpi-lbl">Cumplimiento vs Presupuesto</span>
-            <span data-icon="target" data-size="15"></span>
-          </div>
-          <div id="kpi-v1-ppto" class="kpi-val tabular">—</div>
-          <div id="kpi-v1-ppto-sub" class="kpi-sub"></div>
+        <article class="nx-kpi-card">
+          <span class="nx-kpi-lbl">EBITDA Simulado</span>
+          <div id="simKpiEbitda" class="nx-kpi-val">—</div>
+          <div id="simKpiEbitdaSub" class="nx-kpi-deltas"></div>
         </article>
-
-        <article class="kpi-card kpi-accent-violet clickable" onclick="window.openChartModal('comp','CLOUD_SAAS','predictive')" title="Clic para abrir el Simulador Interactivo Q × Tarifa">
-          <div class="kpi-top">
-            <span class="kpi-lbl">Proyección Bayesiana Cierre S4</span>
-            <span data-icon="sliders" data-size="15"></span>
-          </div>
-          <div id="kpi-v1-pred" class="kpi-val tabular" style="color:#1D4ED8;">—</div>
-          <div id="kpi-v1-pred-sub" class="kpi-sub"></div>
+        <article class="nx-kpi-card emerald">
+          <span class="nx-kpi-lbl">VAN Operativo (5 Años)</span>
+          <div id="simKpiNpv" class="nx-kpi-val">—</div>
+          <div id="simKpiNpvSub" class="nx-kpi-deltas"></div>
         </article>
-
-        <article class="kpi-card kpi-accent-amber">
-          <div class="kpi-top">
-            <span id="kpi-v1-var-lbl" class="kpi-lbl">Crecimiento Interanual (YoY)</span>
-            <span data-icon="trending-up" data-size="15"></span>
-          </div>
-          <div id="kpi-v1-var" class="kpi-val tabular">—</div>
-          <div id="kpi-v1-var-sub" class="kpi-sub"></div>
+        <article class="nx-kpi-card rose">
+          <span class="nx-kpi-lbl">EBITDA en Riesgo (VaR 95%)</span>
+          <div id="simKpiVar" class="nx-kpi-val">—</div>
+          <div id="simKpiVarSub" class="nx-kpi-deltas"></div>
         </article>
-      </section>
+        <article class="nx-kpi-card indigo">
+          <span class="nx-kpi-lbl">Prob. Superar Presupuesto</span>
+          <div id="simKpiProb" class="nx-kpi-val">—</div>
+          <div id="simKpiProbSub" class="nx-kpi-deltas"></div>
+        </article>
+      </div>
 
-      <section class="grid-main-side">
-        <article class="card-panel">
-          <div class="panel-hdr">
+      <div class="nx-grid-side-main">
+        <article class="nx-panel">
+          <div class="nx-panel-hdr">
             <div>
-              <div class="panel-title">
-                <span data-icon="activity" data-size="15"></span>
-                <span>Evolución Histórica Anual vs Presupuesto y Año Anterior</span>
-              </div>
-              <div class="panel-sub">Serie mensual consolidada de las 6 unidades de negocio sintéticas</div>
-            </div>
-            <div class="panel-actions">
-              <button type="button" class="ch-expand-btn ch-expand-accent" onclick="window.openChartModal('comp','CLOUD_SAAS','predictive')">
-                <span data-icon="sliders" data-size="12"></span> <span>Simulador P10–P90</span>
-              </button>
-              <button type="button" class="ch-expand-btn" onclick="window.openChartModal('lines')">
-                <span data-icon="maximize" data-size="12"></span> <span>Efecto ΔQ / ΔP</span>
-              </button>
+              <h2 class="nx-panel-title">Palancas Interactivas What-If</h2>
+              <div class="nx-panel-sub">Desliza cualquier parámetro y observa el impacto estocástico inmediato</div>
             </div>
           </div>
-          <div class="chart-box"><canvas id="cHist"></canvas></div>
+
+          <div class="nx-preset-row">
+            <button type="button" class="nx-btn" id="preBase">Caso Base</button>
+            <button type="button" class="nx-btn nx-btn-gold" id="preBull">🚀 Expansión</button>
+            <button type="button" class="nx-btn" id="preStress">⚠️ Estrés</button>
+            <button type="button" class="nx-btn" id="preLean">⚙️ Lean OPEX</button>
+          </div>
+
+          <div class="nx-slider-list">
+            <div class="nx-slider-item">
+              <div class="nx-slider-top"><span>Choque Exógeno de Volumen (ΔQ %)</span><span id="lblDQ" class="nx-slider-val">0.0%</span></div>
+              <input type="range" id="slDQ" class="nx-range" min="-30" max="40" step="0.5" value="0" />
+            </div>
+            <div class="nx-slider-item">
+              <div class="nx-slider-top"><span>Ajuste de Precio / Tarifa Unitaria (ΔP %)</span><span id="lblDP" class="nx-slider-val">0.0%</span></div>
+              <input type="range" id="slDP" class="nx-range" min="-20" max="30" step="0.5" value="0" />
+            </div>
+            <div class="nx-slider-item">
+              <div class="nx-slider-top"><span>Elasticidad Precio-Demanda (ε)</span><span id="lblElast" class="nx-slider-val">-0.65</span></div>
+              <input type="range" id="slElast" class="nx-range" min="-1.8" max="0" step="0.05" value="-0.65" />
+            </div>
+            <div class="nx-slider-item">
+              <div class="nx-slider-top"><span>Variación Costo Unitario COGS (%)</span><span id="lblDCogs" class="nx-slider-val">0.0%</span></div>
+              <input type="range" id="slDCogs" class="nx-range" min="-20" max="25" step="0.5" value="0" />
+            </div>
+            <div class="nx-slider-item">
+              <div class="nx-slider-top"><span>Variación Gastos Operativos OPEX (%)</span><span id="lblDOpex" class="nx-slider-val">0.0%</span></div>
+              <input type="range" id="slDOpex" class="nx-range" min="-25" max="25" step="0.5" value="0" />
+            </div>
+            <div class="nx-slider-item">
+              <div class="nx-slider-top"><span>Costo de Capital WACC (%)</span><span id="lblWacc" class="nx-slider-val">7.5%</span></div>
+              <input type="range" id="slWacc" class="nx-range" min="5" max="22" step="0.5" value="7.5" />
+            </div>
+          </div>
         </article>
 
-        <article class="card-panel">
-          <div class="panel-hdr">
-            <div>
-              <div class="panel-title">
-                <span data-icon="gauge" data-size="15"></span>
-                <span>Ritmo Intra-Mensual (S1 → S4)</span>
+        <div style="display:flex;flex-direction:column;gap:0.95rem;">
+          <article class="nx-panel">
+            <div class="nx-panel-hdr">
+              <div>
+                <h2 class="nx-panel-title">Diagrama Tornado de Sensibilidad (±10% sobre EBITDA)</h2>
+                <div class="nx-panel-sub">Jerarquiza qué palanca financiera tiene mayor impacto marginal considerando elasticidad</div>
               </div>
-              <div class="panel-sub">Avance semanal sobre Meta Mensual S4</div>
+              <span class="nx-badge">Sensibilidad Marginal</span>
             </div>
-            <button type="button" class="ch-expand-btn" onclick="window.openChartModal('gauges')">
-              <span data-icon="maximize" data-size="12"></span> <span>Ver Regímenes</span>
-            </button>
-          </div>
-          <div class="gauge-grid">
-            <div id="g1-card" class="gauge-card">
-              <div style="font-size:10.5px;font-weight:800;color:#0B1B33;">Semana 1</div>
-              <div class="gauge-wrap">
-                <canvas id="g1"></canvas>
-                <div class="gauge-center"><span id="g1-pct" class="gauge-pct">—</span></div>
-              </div>
-              <div id="g1-sub" class="gauge-sub"></div>
-            </div>
-            <div id="g2-card" class="gauge-card">
-              <div style="font-size:10.5px;font-weight:800;color:#0B1B33;">Semana 2</div>
-              <div class="gauge-wrap">
-                <canvas id="g2"></canvas>
-                <div class="gauge-center"><span id="g2-pct" class="gauge-pct">—</span></div>
-              </div>
-              <div id="g2-sub" class="gauge-sub"></div>
-            </div>
-            <div id="g3-card" class="gauge-card">
-              <div style="font-size:10.5px;font-weight:800;color:#0B1B33;">Semana 3</div>
-              <div class="gauge-wrap">
-                <canvas id="g3"></canvas>
-                <div class="gauge-center"><span id="g3-pct" class="gauge-pct">—</span></div>
-              </div>
-              <div id="g3-sub" class="gauge-sub"></div>
-            </div>
-            <div id="g4-card" class="gauge-card">
-              <div style="font-size:10.5px;font-weight:800;color:#9A7438;">Semana 4</div>
-              <div class="gauge-wrap">
-                <canvas id="g4"></canvas>
-                <div class="gauge-center"><span id="g4-pct" class="gauge-pct">—</span></div>
-              </div>
-              <div id="g4-sub" class="gauge-sub"></div>
-            </div>
-          </div>
-          <div style="margin-top:12px;">
-            <div class="panel-sub" style="margin-bottom:6px;font-weight:700;color:#334155;">Comparativa Real vs Presupuesto por Unidad (clic en barra para detalle)</div>
-            <div style="position:relative;height:142px;"><canvas id="cLines"></canvas></div>
-          </div>
-        </article>
-      </section>
+            <div id="cSimTornado" class="nx-plot"></div>
+          </article>
 
-      <section class="card-panel">
-        <div class="panel-hdr">
+          <article class="nx-panel">
+            <div class="nx-panel-hdr">
+              <div>
+                <h2 class="nx-panel-title">Simulación Estocástica de Monte Carlo en Vivo (2,000 Escenarios)</h2>
+                <div class="nx-panel-sub">Distribución de EBITDA con umbrales de riesgo VaR 95%, Expected Shortfall (CVaR), Mediana P50 y P90</div>
+              </div>
+              <span class="nx-badge">2,000 Iteraciones</span>
+            </div>
+            <div id="cSimMonteCarlo" class="nx-plot"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         MÓDULO 5: PIVOT EXPLORER & CARGA SEGURA DE CSV / JSON PROPIO
+         ======================================================================= -->
+    <section id="view-explorer" class="nx-view">
+      <article class="nx-panel">
+        <div class="nx-panel-hdr">
           <div>
-            <div class="panel-title">
-              <span data-icon="table" data-size="15"></span>
-              <span>Matriz Ejecutiva de Ingresos, Descomposición Precio-Volumen y Proyección Bayesiana</span>
+            <h2 class="nx-panel-title">Analiza tus Propios Datos (Carga Local de CSV / JSON · 100% Privado en tu Navegador)</h2>
+            <div class="nx-panel-sub">Ningún archivo se sube a servidores externos: todo el procesamiento ocurre localmente en memoria</div>
+          </div>
+          <button type="button" class="nx-btn nx-btn-gold" id="btnDownloadTemplate">⬇ Descargar CSV de Ejemplo</button>
+        </div>
+
+        <div id="csvDropzone" class="nx-dropzone" role="button" tabindex="0">
+          <div style="font-size:1.4rem;margin-bottom:0.3rem;">📂</div>
+          <div style="font-weight:800;font-size:0.95rem;color:var(--text-primary);">Arrastra y suelta aquí tu archivo <code>.csv</code> o <code>.json</code>, o haz clic para seleccionarlo</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">El mapeador inteligente detectará tus columnas de Fecha, Categoría, Región, Ventas, Presupuesto y Costos automáticamente</div>
+          <input type="file" id="csvFileInput" accept=".csv,.txt,.json" style="display:none;" />
+        </div>
+
+        <div id="csvMapperBox" class="nx-mapper-grid" style="display:none;"></div>
+      </article>
+
+      <article class="nx-panel">
+        <div class="nx-panel-hdr">
+          <div>
+            <h2 class="nx-panel-title">Tabla Dinámica Multidimensional (Pivot Explorer &amp; Ranking Pareto 80/20)</h2>
+            <div class="nx-panel-sub">Agrupa instantáneamente el dataset activo por cualquier dimensión y audita la concentración acumulada</div>
+          </div>
+          <div style="display:flex;gap:0.55rem;flex-wrap:wrap;align-items:flex-end;">
+            <div class="nx-field">
+              <label class="nx-label" for="pivGroupBy">Agrupar Filas Por</label>
+              <select id="pivGroupBy" class="nx-select">
+                <option value="unit">Unidad de Negocio</option>
+                <option value="region">Región Geográfica</option>
+                <option value="segment">Segmento de Cliente</option>
+                <option value="year">Año Fiscal</option>
+                <option value="quarter">Trimestre</option>
+                <option value="ym">Periodo Mensual (YYYY-MM)</option>
+              </select>
             </div>
-            <div class="panel-sub">Haz clic en cualquier fila para abrir el Drawer de sub-líneas o en "Simular" para ajustar Q y Tarifa $/Q en vivo</div>
+            <div class="nx-field">
+              <label class="nx-label" for="pivSearch">Buscar Elemento</label>
+              <input type="search" id="pivSearch" class="nx-input" placeholder="Filtrar dimensión..." />
+            </div>
+            <button type="button" class="nx-btn" id="btnExportCsv2">⬇ Exportar Corte CSV</button>
           </div>
         </div>
-        <div class="tbl-scroll">
-          <table>
+
+        <div class="nx-table-wrap">
+          <table class="nx-table" id="tblPivot">
             <thead>
               <tr>
-                <th>Línea de Negocio</th>
-                <th>Volumen Q</th>
-                <th>Tarifa Eff. $/Q</th>
-                <th>Real Corte ($)</th>
-                <th>Presupuesto ($)</th>
-                <th>Brecha ($)</th>
-                <th>% Cumpl.</th>
-                <th>Efecto Vol (ΔQ)</th>
-                <th>Efecto Tarifa (ΔP)</th>
-                <th>YoY (%)</th>
-                <th>Bayes P50 S4</th>
-                <th>Mix (%)</th>
-                <th>Simulador</th>
+                <th data-col="key">Dimensión Agrupada ⇅</th>
+                <th data-col="n">Registros ⇅</th>
+                <th data-col="qty">Volumen Q ⇅</th>
+                <th data-col="revReal">Ingresos Netos ⇅</th>
+                <th data-col="revBudget">Presupuesto ⇅</th>
+                <th data-col="attainment">% Cumpl. ⇅</th>
+                <th data-col="ebitdaReal">EBITDA ($) ⇅</th>
+                <th data-col="ebitdaMargin">Margen % ⇅</th>
+                <th data-col="fcfReal">Flujo Caja (FCF) ⇅</th>
+                <th>Participación %</th>
+                <th>Pareto Acumulado %</th>
               </tr>
             </thead>
-            <tbody id="tb-exec"></tbody>
-            <tfoot id="tf-exec"></tfoot>
+            <tbody id="tbPivot"></tbody>
           </table>
         </div>
-      </section>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         VISTA 2: ANALÍTICA ESTRUCTURAL, PARETO, HHI & HEATMAP
-         ═══════════════════════════════════════════════════════════ -->
-    <div id="view-analitica" style="display:none;flex-direction:column;gap:14px;">
-      <section class="kpi-grid">
-        <article class="kpi-card">
-          <div class="kpi-top"><span class="kpi-lbl">Índice Concentración HHI</span><span data-icon="pie-chart" data-size="15"></span></div>
-          <div id="ana-hhi-val" class="kpi-val tabular">—</div>
-          <div id="ana-hhi-sub" class="kpi-sub"></div>
-        </article>
-        <article class="kpi-card kpi-accent-emerald">
-          <div class="kpi-top"><span class="kpi-lbl">Concentración Pareto 80/20</span><span data-icon="git-branch" data-size="15"></span></div>
-          <div id="ana-pareto-val" class="kpi-val tabular" style="color:#0B1B33;">—</div>
-          <div id="ana-pareto-sub" class="kpi-sub"></div>
-        </article>
-        <article class="kpi-card kpi-accent-violet">
-          <div class="kpi-top"><span class="kpi-lbl">Mayor Impulsor Positivo</span><span data-icon="trending-up" data-size="15"></span></div>
-          <div id="ana-top-pos-val" class="kpi-val" style="font-size:15px;">—</div>
-          <div id="ana-top-pos-sub" class="kpi-sub"></div>
-        </article>
-        <article class="kpi-card kpi-accent-amber">
-          <div class="kpi-top"><span class="kpi-lbl">Principal Foco de Brecha</span><span data-icon="trending-down" data-size="15"></span></div>
-          <div id="ana-top-neg-val" class="kpi-val" style="font-size:15px;">—</div>
-          <div id="ana-top-neg-sub" class="kpi-sub"></div>
-        </article>
-      </section>
-
-      <section class="grid-2">
-        <article class="card-panel">
-          <div class="panel-hdr">
-            <div>
-              <div class="panel-title"><span data-icon="git-branch" data-size="15"></span><span>Puente Waterfall: Presupuesto → Real Corte</span></div>
-              <div class="panel-sub">Contribución neta de cada unidad de negocio a la variación total</div>
-            </div>
-            <button type="button" class="ch-expand-btn" onclick="window.openChartModal('waterfall')">
-              <span data-icon="maximize" data-size="12"></span> <span>Pareto 24 Sub-Líneas</span>
-            </button>
-          </div>
-          <div class="chart-box"><canvas id="cWf"></canvas></div>
-        </article>
-
-        <article class="card-panel">
-          <div class="panel-hdr">
-            <div>
-              <div class="panel-title"><span data-icon="pie-chart" data-size="15"></span><span>Mix de Portafolio por Unidad de Negocio (%)</span></div>
-              <div class="panel-sub">Distribución porcentual del ingreso acumulado en el corte</div>
-            </div>
-          </div>
-          <div class="chart-box"><canvas id="cMix"></canvas></div>
-        </article>
-      </section>
-
-      <section class="card-panel">
-        <div class="panel-hdr">
-          <div>
-            <div class="panel-title"><span data-icon="layers" data-size="15"></span><span>Explorador Granular de las 24 Sub-Líneas (Drivers Q × Tarifa y Fijos)</span></div>
-            <div class="panel-sub">Haz clic en cualquier sub-línea para simular directamente su línea en el Motor Predictivo</div>
-          </div>
-        </div>
-        <div class="ana-toolbar">
-          <div id="ana-line-pills" class="pill-group"></div>
-          <input id="ana-sub-search" class="nx-input" type="search" placeholder="Filtrar sub-línea o unidad..." oninput="window.renderAnaSublinesTable()" style="min-width:230px;" />
-        </div>
-        <div class="tbl-scroll" style="max-height:360px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Sub-Línea / Unidad</th>
-                <th>Modelo</th>
-                <th>Volumen Q</th>
-                <th>Tarifa Eff. $/Q</th>
-                <th>Real Corte ($)</th>
-                <th>Ppto Corte ($)</th>
-                <th>Brecha ($)</th>
-                <th>% Cumpl.</th>
-                <th>Peso Mix</th>
-              </tr>
-            </thead>
-            <tbody id="tb-ana-sublines"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="card-panel">
-        <div class="panel-hdr">
-          <div>
-            <div class="panel-title"><span data-icon="grid" data-size="15"></span><span>Mapa de Calor Anual de Cumplimiento Presupuestario (%)</span></div>
-            <div class="panel-sub">Desempeño mensual Enero–Diciembre para las 6 unidades y el consolidado</div>
-          </div>
-        </div>
-        <div class="tbl-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Unidad</th>
-                <th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th>
-                <th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th>
-              </tr>
-            </thead>
-            <tbody id="tb-heatmap"></tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         VISTA 3: SEMÁFORO COMERCIAL, DRIVERS & OKRS ESTRATÉGICOS
-         ═══════════════════════════════════════════════════════════ -->
-    <div id="view-semaforo" style="display:none;flex-direction:column;gap:14px;">
-      <section class="sf-top-grid">
-        <article class="card-panel">
-          <div class="panel-title"><span data-icon="award" data-size="15"></span><span>Salud Global del Portafolio OKR</span></div>
-          <div style="position:relative;height:130px;margin-top:6px;">
-            <canvas id="gSalud"></canvas>
-            <div class="gauge-center" style="padding-top:26px;">
-              <span id="sf-salud-val" style="font-size:26px;font-weight:900;">—</span>
-              <span style="font-size:10px;color:#64748B;text-transform:uppercase;">Cumplimiento Medio</span>
-            </div>
-          </div>
-          <div id="sf-salud-desc" style="margin-top:8px;"></div>
-        </article>
-
-        <article class="card-panel">
-          <div class="panel-hdr" style="margin-bottom:10px;">
-            <div class="panel-title"><span data-icon="traffic" data-size="15"></span><span>Distribución Semáforo por Rango de Cumplimiento (Clic para filtrar tablas)</span></div>
-            <button type="button" class="btn-ghost-sm" onclick="window.setSfFilter('ALL')">Ver Todos</button>
-          </div>
-          <div class="sf-filter-grid">
-            <div class="sf-filter-card" data-sf-filter="azul" onclick="window.setSfFilter('azul')">
-              <div style="font-size:10.5px;font-weight:800;color:#1D4ED8;">SOBRESALIENTE (&gt;105%)</div>
-              <div id="sf-cnt-azul" style="font-size:26px;font-weight:900;margin:2px 0;color:#0B1B33;">0</div>
-              <div id="sf-pct-azul" style="font-size:10.5px;color:#64748B;"></div>
-              <div id="sf-list-azul" style="margin-top:6px;"></div>
-            </div>
-            <div class="sf-filter-card" data-sf-filter="verde" onclick="window.setSfFilter('verde')">
-              <div style="font-size:10.5px;font-weight:800;color:#059669;">EN META (95–105%)</div>
-              <div id="sf-cnt-verde" style="font-size:26px;font-weight:900;margin:2px 0;color:#0B1B33;">0</div>
-              <div id="sf-pct-verde" style="font-size:10.5px;color:#64748B;"></div>
-              <div id="sf-list-verde" style="margin-top:6px;"></div>
-            </div>
-            <div class="sf-filter-card" data-sf-filter="amarillo" onclick="window.setSfFilter('amarillo')">
-              <div style="font-size:10.5px;font-weight:800;color:#B45309;">PRECAUCIÓN (90–94%)</div>
-              <div id="sf-cnt-alerta" style="font-size:26px;font-weight:900;margin:2px 0;color:#0B1B33;">0</div>
-              <div id="sf-pct-alerta" style="font-size:10.5px;color:#64748B;"></div>
-              <div id="sf-list-alerta" style="margin-top:6px;"></div>
-            </div>
-            <div class="sf-filter-card" data-sf-filter="rojo" onclick="window.setSfFilter('rojo')">
-              <div style="font-size:10.5px;font-weight:800;color:#BE123C;">CRÍTICO (&lt;90%)</div>
-              <div id="sf-cnt-rojo" style="font-size:26px;font-weight:900;margin:2px 0;color:#0B1B33;">0</div>
-              <div id="sf-pct-rojo" style="font-size:10.5px;color:#64748B;"></div>
-              <div id="sf-list-rojo" style="margin-top:6px;"></div>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="sf-drivers-grid" aria-label="Drivers Operativos Clave">
-        <div id="sf-driver-1" class="sf-driver-card">
-          <div id="sf-driver-1-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 1</div>
-          <div id="sf-driver-1-val" class="tabular" style="font-size:19px;font-weight:900;color:#0B1B33;margin:5px 0;">—</div>
-          <div id="sf-driver-1-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
-        </div>
-        <div id="sf-driver-2" class="sf-driver-card">
-          <div id="sf-driver-2-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 2</div>
-          <div id="sf-driver-2-val" class="tabular" style="font-size:19px;font-weight:900;color:#9A7438;margin:5px 0;">—</div>
-          <div id="sf-driver-2-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
-        </div>
-        <div id="sf-driver-3" class="sf-driver-card">
-          <div id="sf-driver-3-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 3</div>
-          <div id="sf-driver-3-val" class="tabular" style="font-size:19px;font-weight:900;color:#1D4ED8;margin:5px 0;">—</div>
-          <div id="sf-driver-3-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
-        </div>
-        <div id="sf-driver-4" class="sf-driver-card">
-          <div id="sf-driver-4-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 4</div>
-          <div id="sf-driver-4-val" class="tabular" style="font-size:19px;font-weight:900;color:#0F766E;margin:5px 0;">—</div>
-          <div id="sf-driver-4-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
-        </div>
-        <div id="sf-driver-5" class="sf-driver-card">
-          <div id="sf-driver-5-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 5</div>
-          <div id="sf-driver-5-val" class="tabular" style="font-size:19px;font-weight:900;color:#334155;margin:5px 0;">—</div>
-          <div id="sf-driver-5-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
-        </div>
-        <div id="sf-driver-6" class="sf-driver-card">
-          <div id="sf-driver-6-title" style="font-size:10.5px;font-weight:700;color:#64748B;">Driver 6</div>
-          <div id="sf-driver-6-val" class="tabular" style="font-size:19px;font-weight:900;color:#854D0E;margin:5px 0;">—</div>
-          <div id="sf-driver-6-var" style="display:flex;justify-content:space-between;font-size:10.5px;"></div>
-        </div>
-      </section>
-
-      <section class="card-panel">
-        <div class="panel-hdr">
-          <div class="panel-title"><span data-icon="search" data-size="15"></span><span>Tablero Detallado de Productos, KPIs e Iniciativas Estratégicas (Clic en fila para serie histórica)</span></div>
-          <input id="sf-search" class="sf-search-input" type="search" placeholder="Buscar indicador OKR..." oninput="window.renderSemaforo()" style="min-width:220px;" />
-        </div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div class="tbl-scroll">
-            <table>
-              <thead><tr><th>Productos Comerciales</th><th>Meta Mes</th><th>Meta Corte</th><th>Ejecución Real</th><th>vs Meta</th><th>vs Mes Ant.</th><th>Cumpl. %</th></tr></thead>
-              <tbody id="sf-tb-productos"></tbody>
-            </table>
-          </div>
-          <div class="tbl-scroll">
-            <table>
-              <thead><tr><th>KPIs Operativos</th><th>Meta Mes</th><th>Meta Corte</th><th>Ejecución Real</th><th>vs Meta</th><th>vs Mes Ant.</th><th>Cumpl. %</th></tr></thead>
-              <tbody id="sf-tb-kpis"></tbody>
-            </table>
-          </div>
-          <div class="tbl-scroll">
-            <table>
-              <thead><tr><th>Proyectos Estratégicos</th><th>Meta Mes</th><th>Meta Corte</th><th>Avance Real</th><th>vs Meta</th><th>vs Mes Ant.</th><th>Cumpl. %</th></tr></thead>
-              <tbody id="sf-tb-proyectos"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-    </div>
+      </article>
+    </section>
 
   </main>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       MODALES, DRAWER & TOOLTIPS
-       ═══════════════════════════════════════════════════════════════ -->
-  <div id="modal-backdrop" class="modal-backdrop" onclick="window.closeChartModal();window.closeAuditModal();window.closePreloadModal();window.closeDrawer();"></div>
+  <div id="nxToast" class="nx-toast" role="status" aria-live="polite"></div>
 
-  <!-- MODAL PRINCIPAL DE SIMULACIÓN & GRÁFICOS -->
-  <div id="chart-modal" class="nx-modal" role="dialog" aria-modal="true">
-    <div class="cm-hdr">
-      <div>
-        <div id="cm-title" class="cm-hdr-title">Simulador</div>
-        <div id="cm-sub" class="cm-hdr-sub"></div>
-      </div>
-      <button type="button" class="cm-close" onclick="window.closeChartModal()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
-    </div>
-    <div id="cm-tabs" class="cm-tabs"></div>
-    <div id="cm-kpis" class="cm-kpis"></div>
-    <div id="cm-body" class="cm-body"></div>
-  </div>
-
-  <!-- MODAL AUDITORÍA & ANOMALÍAS Z-MAD -->
-  <div id="audit-modal" class="nx-modal" role="dialog" aria-modal="true">
-    <div class="cm-hdr">
-      <div>
-        <div class="cm-hdr-title"><span data-icon="shield-check" data-size="17"></span> <span>Monitor de Integridad, Anomalías Z-MAD y Reconciliación</span></div>
-        <div id="aud-sub" class="cm-hdr-sub"></div>
-      </div>
-      <button type="button" class="cm-close" onclick="window.closeAuditModal()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
-    </div>
-    <div id="aud-kpis" class="cm-kpis"></div>
-    <div class="cm-body">
-      <div class="ana-toolbar" id="aud-filters">
-        <div class="pill-group">
-          <button type="button" class="pill-btn active" data-sev="ALL" onclick="window.setAuditFilter('ALL')">Todos</button>
-          <button type="button" class="pill-btn" data-sev="critical" onclick="window.setAuditFilter('critical')">Críticos</button>
-          <button type="button" class="pill-btn" data-sev="anomaly" onclick="window.setAuditFilter('anomaly')">Anomalías Z-MAD</button>
-          <button type="button" class="pill-btn" data-sev="warning" onclick="window.setAuditFilter('warning')">Advertencias</button>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <input id="aud-search" class="nx-input" type="search" placeholder="Filtrar hallazgo..." oninput="window.renderAuditTable()" />
-          <button type="button" class="btn-ghost-sm" onclick="window.exportAuditCSV()"><span data-icon="download" data-size="12"></span> CSV</button>
-        </div>
-      </div>
-      <div class="tbl-scroll" style="max-height:48vh;">
-        <table>
-          <thead><tr><th>Severidad</th><th>Categoría</th><th>Ubicación</th><th>Corte / Línea</th><th>Diagnóstico</th><th>Valor vs Referencia</th></tr></thead>
-          <tbody id="aud-tb"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL PRE-CARGA HBW-NOWCAST (24 SUB-LÍNEAS) -->
-  <div id="preload-modal" class="nx-modal nx-modal-narrow" role="dialog" aria-modal="true">
-    <div class="cm-hdr">
-      <div>
-        <div class="cm-hdr-title"><span data-icon="zap" data-size="17"></span> <span>Pre-Carga Predictiva Multi-Sublínea (HBW-Nowcast Holt Amortiguado)</span></div>
-        <div id="pl-subtitle" class="cm-hdr-sub"></div>
-      </div>
-      <button type="button" class="cm-close" onclick="window.closePreloadModal()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
-    </div>
-    <div id="pl-body" class="cm-body"></div>
-    <div id="pl-footer" style="padding:12px 18px;border-top:1px solid var(--border-subtle);display:flex;justify-content:flex-end;gap:10px;background:#F1F5F9;">
-      <button type="button" class="btn-ghost-sm" onclick="window.closePreloadModal()">Cancelar</button>
-      <button type="button" class="btn-neon-primary" onclick="window.applyPreloadToSimulator()">
-        <span data-icon="sliders" data-size="14"></span> <span>Aplicar Pre-Carga al Simulador</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- DRAWER LATERAL POR LÍNEA DE NEGOCIO -->
-  <aside id="line-drawer" class="line-drawer" aria-label="Detalle de línea de negocio">
-    <div class="cm-hdr">
-      <div>
-        <div id="dr-title" class="cm-hdr-title">Unidad de Negocio</div>
-        <div id="dr-sub" class="cm-hdr-sub"></div>
-      </div>
-      <button type="button" class="cm-close" onclick="window.closeDrawer()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
-    </div>
-    <div id="dr-body" class="drawer-body"></div>
-  </aside>
-
-  <!-- MODAL GUÍA RÁPIDA (SOLO BAJO DEMANDA, SIN TARJETA DE ASISTENTE VIRTUAL) -->
-  <div id="welcome-modal-backdrop" class="modal-backdrop" onclick="window.closeWelcomeModal()"></div>
-  <div id="welcome-modal" class="nx-modal nx-modal-narrow" role="dialog" aria-modal="true">
-    <div class="cm-hdr">
-      <div>
-        <div class="cm-hdr-title"><span data-icon="compass" data-size="17"></span> <span>Guía Ejecutiva — Nexus Quant FP&amp;A Simulator</span></div>
-        <div id="wm-subtitle" class="cm-hdr-sub"></div>
-      </div>
-      <button type="button" class="cm-close" onclick="window.closeWelcomeModal()" aria-label="Cerrar"><span data-icon="x" data-size="16"></span></button>
-    </div>
-    <div class="cm-body">
-      <div id="wm-live-strip" class="wm-live-strip"></div>
-      <div class="wm-grid">
-        <div class="wm-card" onclick="window.closeWelcomeModal('predictivo')">
-          <div style="font-weight:800;color:#0B1B33;margin-bottom:4px;">1. Simulador Interactivo Q × Tarifa</div>
-          <div style="font-size:11.5px;color:#334155;">Modifica cantidades (Q), tarifas unitarias ($/Q), ingresos fijos, sub-líneas o aplica escenarios de estrés (-10% / +15%) con actualización instantánea del Fan Chart P10–P90.</div>
-        </div>
-        <div class="wm-card" onclick="window.closeWelcomeModal('ingresos')">
-          <div style="font-weight:800;color:#059669;margin-bottom:4px;">2. Descomposición Precio-Volumen (ΔQ / ΔP)</div>
-          <div style="font-size:11.5px;color:#334155;">Audita cuánto de la brecha contra presupuesto proviene de expansión comercial en volumen (Q) y cuánto de variaciones de tarifa o mix.</div>
-        </div>
-        <div class="wm-card" onclick="window.closeWelcomeModal('analitica')">
-          <div style="font-weight:800;color:#1D4ED8;margin-bottom:4px;">3. Pareto 80/20, Índice HHI &amp; 24 Sub-Líneas</div>
-          <div style="font-size:11.5px;color:#334155;">Explora la contribución de las 24 sub-líneas, puente Waterfall presupuestario y mapa de calor anual de cumplimiento.</div>
-        </div>
-        <div class="wm-card" onclick="window.closeWelcomeModal('audit')">
-          <div style="font-weight:800;color:#9A7438;margin-bottom:4px;">4. Escenarios Aleatorios &amp; Detector Z-MAD</div>
-          <div style="font-size:11.5px;color:#334155;">Pulsa «Nueva Simulación Aleatoria» en la barra superior en cualquier momento para generar un universo nuevo de datos sintéticos y probar alertas Z-MAD.</div>
-        </div>
-      </div>
-      <div style="text-align:right;">
-        <button type="button" class="btn-neon-primary" onclick="window.closeWelcomeModal()">Comenzar Exploración</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="nx-chart-tooltip"></div>
-  <div id="nx-toast"></div>
-
-  <script src="js/nexus-fpa-icons.js?v=20261114c"></script>
-  <script src="js/nexus-fpa-data.js?v=20261114c"></script>
-  <script src="js/nexus-fpa-simulator.js?v=20261114c"></script>
-  <script src="js/nexus-fpa-app.js?v=20261114c"></script>
+  <script src="js/nexus-analytics-suite.js?v=20261121f"></script>
 </body>
 </html>

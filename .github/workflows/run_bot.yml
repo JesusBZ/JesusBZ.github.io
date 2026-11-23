@@ -1,38 +1,68 @@
-name: Exec_Bot_Live
+name: Exec_Quant_MultiBot_Engine
 
 on:
   schedule:
-    # Corre automáticamente de lunes a viernes a las 22:00 UTC (Cierre de mercados)
-    - cron: '0 22 * * 1-5'
-  workflow_dispatch: # Activa el botón de "Play" manual en la web de GitHub
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build_and_run:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-    - name: Clonar Repositorio
-      uses: actions/checkout@v3
+      - name: Clonar Repositorio (Credenciales aisladas)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: true
 
-    - name: Configurar Entorno Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - name: Configurar Entorno Python 3.11
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
 
-    - name: Instalar Dependencias Cuantitativas
-      run: |
-        python -m pip install --upgrade pip
-        pip install yfinance numpy pandas scikit-learn scipy arch matplotlib
+      - name: Instalar Dependencias Cuantitativas Fijadas (Solo Binarios Verificados)
+        run: |
+          python -m pip install --upgrade pip==24.3.1
+          pip install --only-binary=:all: -r bot-trading-python/requirements.txt
 
-    - name: Ejecutar Inteligencia Artificial
-      run: |
-        cd bot-trading-python
-        python main.py
+      - name: Ejecutar Pruebas Automatizadas de Reglas y Motor Multi-Bot (OKX v5 / Bybit v5)
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          cd bot-trading-python
+          python -B main.py
+          python -B -m unittest discover -s tests -p "test_*.py" -v
 
-    - name: Auto-Commit y Push de los Datos a la Web
-      run: |
-        git config --global user.name "GitHub Actions Bot"
-        git config --global user.email "actions@github.com"
-        git add bot-trading-python/history.json
-        git diff-index --quiet HEAD || git commit -m "Actualización del Portafolio: $(date +'%Y-%m-%d')"
-        git push
+      - name: Compuerta de Integridad (Permitir solo JSON validados del motor)
+        run: |
+          git checkout -- . ':!bot-trading-python/history.json' ':!bot-trading-python/quant_crypto_suite.json' ':!bot-trading-python/bot_state_ledger.json'
+          git clean -fd -e bot-trading-python/history.json -e bot-trading-python/quant_crypto_suite.json -e bot-trading-python/bot_state_ledger.json
+          python -B -c "
+          import json, re
+          suite_raw = open('bot-trading-python/quant_crypto_suite.json', encoding='utf-8').read()
+          hist_raw = open('bot-trading-python/history.json', encoding='utf-8').read()
+          ledger_raw = open('bot-trading-python/bot_state_ledger.json', encoding='utf-8').read()
+          secret_rx = re.compile(r'(AIza[0-9A-Za-z\-_]{16,}|sk-[0-9A-Za-z\-_]{16,}|gh[pousr]_[0-9A-Za-z]{20,}|PRIVATE KEY|99inbound\.com/api/e/|OKX_API_SECRET|BYBIT_API_SECRET)', re.I)
+          for fname, blob in [('quant_crypto_suite.json', suite_raw), ('history.json', hist_raw), ('bot_state_ledger.json', ledger_raw)]:
+              assert not secret_rx.search(blob), f'Credential or secret pattern leaked inside {fname}'
+          suite = json.loads(suite_raw, parse_constant=lambda c: (_ for _ in ()).throw(ValueError(f'Invalid JSON constant: {c}')))
+          hist = json.loads(hist_raw, parse_constant=lambda c: (_ for _ in ()).throw(ValueError(f'Invalid JSON constant: {c}')))
+          assert isinstance(hist, list) and len(hist) > 200
+          assert isinstance(suite, dict) and set(suite.get('algo_bots', {}).keys()) == {'bot_a', 'bot_b', 'bot_c', 'bot_d'}
+          assert suite.get('ledger_chain', {}).get('total_certified_orders', 0) > 10
+          raw_str = json.dumps(suite)
+          assert '<script' not in raw_str.lower() and 'onerror' not in raw_str.lower()
+          print('Multi-Bot Suite, SHA-256 Chain, Secret Gate & 5Y Backtest JSON verified:', len(hist), 'sessions')
+          "
+
+      - name: Registrar Actualización Verificada
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bot-trading-python/history.json bot-trading-python/quant_crypto_suite.json bot-trading-python/bot_state_ledger.json
+          git diff --cached --quiet || git commit -m "chore(quant): actualizar backtest 5Y, reglas y cadena SHA-256 de 4 algoritmos ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+          git push

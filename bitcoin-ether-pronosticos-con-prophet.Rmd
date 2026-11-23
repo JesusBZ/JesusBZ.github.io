@@ -39,7 +39,7 @@ title: "Bitcoin y Ether Pronósticos con Prophet "
 <span style="font-size: large;">Packpages:&nbsp;</span></h3>
 </div>
 <h3 style="text-align: justify;">
-<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/prophet/prophet.pdf">Prophet</a> (0.6.1)</span></h3>
+<span style="font-size: large;"><a href="https://cran.r-project.org/web/packages/prophet/prophet.pdf">Prophet</a> (>= 1.0)</span></h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">Implementa un procedimiento para pronosticar datos de series de tiempo basados en un modelo aditivo en el que las tendencias no lineales se ajustan a las anuales, semanales y estacionalidad diaria, más efectos de vacaciones. Funciona mejor con series de tiempo que tienen fuertes efectos estacionales y varias temporadas de datos históricos. Prophet es robusto ante los datos faltantes y los cambios en la tendencia, y generalmente maneja los valores atípicos bien.</span></div>
 <h3 style="text-align: justify;">
@@ -53,7 +53,7 @@ title: "Bitcoin y Ether Pronósticos con Prophet "
 <div style="text-align: justify;">
 <br /></div>
 <div style="text-align: justify;">
-<span style="font-size: large;"><b>Bitcoin:</b> El Bitcoin es una criptomoneda (moneda que usa criptografía fuerte) originada tras el colapso inmobiliario del año 2009, según su White Paper (documento de importancia capital que describe en detalle el proyecto de cada cripto) fue creada bajo el seudónimo de Satoshi Nakamoto, a la fecha se desconoce quién o quiénes fueron sus creadores.&nbsp;</span></div>
+<span style="font-size: large;"><b>Bitcoin:</b> El Bitcoin es una criptomoneda (moneda que usa criptografía fuerte) originada tras la crisis financiera hipotecaria de 2008–2009, según su White Paper (documento de importancia capital que describe en detalle el proyecto de cada cripto) fue creada bajo el seudónimo de Satoshi Nakamoto, a la fecha se desconoce quién o quiénes fueron sus creadores.&nbsp;</span></div>
 <div style="text-align: justify;">
 <br /></div>
 <div style="text-align: justify;">
@@ -82,6 +82,43 @@ title: "Bitcoin y Ether Pronósticos con Prophet "
 </div>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 library(prophet)
+library(quantmod)
+# Paleta Corporativa Unificada (Curriculum.pdf — Executive Navy & Champagne Gold)
+jbz_cv_palette <- c(
+  navy = "#0B1B33", plot_navy = "#102342", elev_navy = "#163259",
+  cobalt = "#1D4ED8", sky = "#38BDF8", gold = "#B8955A",
+  gold_soft = "#D9C29A", emerald = "#10B981", rose = "#F43F5E",
+  mist = "#C7D2E3", white = "#FFFFFF"
+)
+jbz_series_colors <- c("#38BDF8", "#B8955A", "#10B981", "#F43F5E", "#60A5FA", "#D9C29A", "#2DD4BF")
+
+theme_jbz_cv <- function(base_size = 12) {
+  ggplot2::theme_minimal(base_size = base_size) +
+    ggplot2::theme(
+      plot.background   = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      panel.background  = ggplot2::element_rect(fill = "#102342", colour = NA),
+      panel.grid.major  = ggplot2::element_line(colour = "#1E3A5F", linewidth = 0.35),
+      panel.grid.minor  = ggplot2::element_blank(),
+      text              = ggplot2::element_text(colour = "#FFFFFF"),
+      axis.text         = ggplot2::element_text(colour = "#C7D2E3"),
+      axis.title        = ggplot2::element_text(colour = "#D9C29A", face = "bold"),
+      plot.title        = ggplot2::element_text(colour = "#FFFFFF", face = "bold"),
+      plot.subtitle     = ggplot2::element_text(colour = "#C7D2E3"),
+      legend.background = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      legend.text       = ggplot2::element_text(colour = "#FFFFFF")
+    )
+}
+
+jbz_plotly_cv <- function(p) {
+  plotly::layout(
+    p,
+    paper_bgcolor = "#0B1B33",
+    plot_bgcolor  = "#102342",
+    font  = list(color = "#FFFFFF", family = "Plus Jakarta Sans, Inter, sans-serif"),
+    xaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3")),
+    yaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3"))
+  )
+}
 library(tidyverse)
 ```
 
@@ -90,7 +127,7 @@ library(tidyverse)
 <div style="text-align: justify;">
 <span style="font-size: large;">El comando "head" nos muestras los datos del pricipio y "tail" los del final, esto permite saber si Rstudio leyó la base de datos completos para realizar las prácticas.  El comando "summary" nos arroja un resumen de estadísticos y la distribución de los datos de la muestra.</span></div>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-btc_model <- read.csv("C:/Users/Personal/Desktop/Escritorio/prophet/BTC2.txt", sep=";")
+btc_model <- read.csv(file.path("data", "BTC2.txt"), sep=";")
 head(btc_model)
 tail(btc_model)
 summary(btc_model)
@@ -147,7 +184,7 @@ prophet_plot_components(modelo1, forecast1)
 <span style="font-size: large;">A continuación dejo los datos arrojados para la criptomoneda Ether. Y <a href="https://raw.githubusercontent.com/JesusBZ/Bases-de-datos/master/cripto/ether%20032016-072020" target="_blank">aquí</a> puedes descargar la data ya transformada para hacer prácticas.&nbsp;&nbsp;</span></div>
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-eth_model <- read.csv("C:/Users/Personal/Desktop/Escritorio/prophet/ETH.txt", sep=";")
+eth_model <- read.csv(file.path("data", "ETH.txt"), sep=";")
 head(eth_model)
 tail(eth_model)
 ```
@@ -177,7 +214,7 @@ prophet_plot_components(modelo2, forecast2)
 <div style="background-color: white; box-sizing: border-box; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; line-height: 1.7em; margin-bottom: 10px;">
 </div>
 <span style="font-size: medium;"><br /></span>
-<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<span style="font-size: medium;"><span style="color: black;">
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br /><span data-jbz-mail-text="1">Canal de correo protegido</span><span style="font-size: medium;"><span style="color: black;">
 </span></span></span><br />
 <br />
 <div style="text-align: center;">

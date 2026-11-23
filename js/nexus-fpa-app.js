@@ -1134,7 +1134,7 @@
         <div class="wm-live-item"><span class="wm-live-lbl">Corte Activo</span><span class="wm-live-val">${M.slice(0, 3)} ${A} · S${S}</span></div>
         <div class="wm-live-item"><span class="wm-live-lbl">Ingreso Real Corte</span><span class="wm-live-val" style="color:#0B1B33;">${f$(totReal)}</span></div>
         <div class="wm-live-item"><span class="wm-live-lbl">Cumpl. vs Ppto</span><span class="wm-live-val" style="color:${pct >= 100 ? '#059669' : '#B45309'};">${pct != null ? pct.toFixed(1) + '%' : '—'}</span></div>
-        <div class="wm-live-item"><span class="wm-live-lbl">Auditoría BD</span><span class="wm-live-val" style="color:${audSum.critical > 0 ? '#BE123C' : '#9A7438'};">${audSum.total || 0} hallazgos</span></div>
+        <div class="wm-live-item"><span class="wm-live-lbl">Validación BD</span><span class="wm-live-val" style="color:${audSum.critical > 0 ? '#BE123C' : '#9A7438'};">${audSum.total || 0} hallazgos</span></div>
         <div class="wm-live-item"><span class="wm-live-lbl">Radar Z-MAD</span><span class="wm-live-val" style="color:${outCnt > 0 ? '#B45309' : '#059669'};">${outCnt > 0 ? outCnt + ' señales' : 'Normal'}</span></div>
       `;
     }

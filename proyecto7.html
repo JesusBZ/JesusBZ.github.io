@@ -10,7 +10,7 @@
 <title>Datos Macroeconómicos en R: PIB, Gapminder y WDI | Jesús Benjamín Zerpa</title>
   <!-- SEO:START -->
   <meta name="description" content="Análisis econométrico y espacial de datos macroeconómicos en RStudio: PIB per cápita, Curva de Preston, WDI y Leaflet. Por Jesús Benjamín Zerpa (Jesús Zerpa)." />
-  <meta name="keywords" content="datos macroeconómicos en R, Gapminder RStudio, PIB per cápita, esperanza de vida, Curva de Preston, Banco Mundial WDI, Quandl Reserva Federal FRED, mapas interactivos Leaflet, econometría espacial, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
+  <meta name="keywords" content="datos macroeconómicos en R, Gapminder RStudio, PIB per cápita, esperanza de vida, Curva de Preston, Banco Mundial WDI, WDI Reserva Federal FRED, mapas interactivos Leaflet, econometría espacial, Jesús Benjamín Zerpa, Jesús Zerpa, Jesus Zerpa, Jesus Benjamin Zerpa, Jesús B. Zerpa" />
   <meta name="author" content="Jesús Benjamín Zerpa (Jesús Zerpa)" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://jesusbz.github.io/proyecto7.html" />
@@ -61,8 +61,7 @@
                        "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
                        "url":  "https://jesusbzerpa.github.io/",
                        "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
-                       "telephone":  "+58 424 148 78 70",
+"telephone":  "+58 424 148 78 70",
                        "worksFor":  {
                                         "@type":  "Organization",
                                         "name":  "Consorcio Credicard"
@@ -173,7 +172,9 @@
   <link rel="dns-prefetch" href="https://portafolio-2.disqus.com" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
   <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem + Clean URL Bar) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
   <script>
@@ -221,7 +222,10 @@
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-<link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg?v=20261115a" />
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/jbz-favicon-32.png?v=20261115a" />
+  <link rel="shortcut icon" href="favicon.ico?v=20261115a" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="imagenes/jbz-apple-touch-icon.png?v=20261115a" />
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
@@ -573,22 +577,22 @@ font-weight: 300;
 
 
 
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114f" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261121s" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261122a" />
 
   <!-- Advanced Quantitative SEO & Author Schema -->
 
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" /></head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />  <script src="js/r-quant-theme.js?v=20261119c"></script>
+</head>
 
-<body>
+<body class="r-quant-post">
 <div class="container-fluid main-container">
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
-    <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa"><img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" /></a>
 <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
         <span class="icon-bar"></span>
@@ -651,7 +655,7 @@ font-weight: 300;
   </a>
 </li>
 <li>
-  <a href="mailto:jesuszerpaeconomia@gmail.com">
+  <a href="formulario.html" data-jbz-mail="link">
     <span class="far fa far fa-envelope"></span>
      
   </a>
@@ -672,7 +676,7 @@ font-weight: 300;
     <h1 class="study-hero-title">Exploración de Datos Macroeconómicos Globales y de la Reserva Federal con RStudio</h1>
     <p>Análisis econométrico y visualización interactiva de indicadores de desarrollo económico global (PIB per cápita, esperanza de vida, convergencia intercontinental) y series monetarias y laborales oficiales de la Reserva Federal de los Estados Unidos (FRED).</p>
     <div class="study-meta-bar">
-      <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Junio de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> R, quantmod, gapminder, ggplot2, plotly</div>
+      <div><strong>Autor:</strong> Jesús Benjamín Zerpa &nbsp;|&nbsp; <strong>Publicación:</strong> Junio de 2020 &nbsp;|&nbsp; <strong>Stack:</strong> R 4.4+, WDI, sf, quantmod, gapminder, plotly, leaflet</div>
       <div class="study-dl-group">
         <a href="https://rpubs.com/JesusZ/Macroeconomia" class="btn-study-dl" target="_blank" rel="noopener noreferrer">Ver en RPubs</a>
         <a href="index.html#trabajos" class="btn-study-dl">Catálogo de Modelos</a>
@@ -709,7 +713,7 @@ font-weight: 300;
 
   <div class="callout-quant">
     <h4>Entorno Macroeconómico como Base de la Planificación Corporativa</h4>
-    <p>Ninguna proyección financiera o presupuestaria opera aislada del ciclo macroeconómico. Este estudio demuestra cómo conectar <code>RStudio</code> directamente a los repositorios de la <strong>Reserva Federal (FRED)</strong> y paneles internacionales para auditar el crecimiento del <strong>PIB per cápita</strong>, la dinámica del mercado laboral y la distribución global del ingreso.</p>
+    <p>Ninguna proyección financiera o presupuestaria opera aislada del ciclo macroeconómico. Este estudio demuestra cómo conectar <code>RStudio</code> directamente a los repositorios de la <strong>Reserva Federal (FRED)</strong> y paneles internacionales para examinar econométricamente el crecimiento del <strong>PIB per cápita</strong>, la dinámica del mercado laboral y la distribución global del ingreso.</p>
   </div>
 <!-- EXEC-HEADER-END -->
 </div>
@@ -745,11 +749,11 @@ font-weight: 300;
 </div>
 <div>
 <div style="text-align: justify;">
-<span style="font-size: large;">La segunda parte del entrenamiento se hará con el paquete <a href="https://cran.r-project.org/web/packages/Quandl/Quandl.pdf" rel="nofollow noopener noreferrer" target="_blank">Quandl</a>, una herramienta poderosa para descargar directamente información macroeconómica, en este caso de Venezuela, utilizando la plataforma del</span><span style="font-size: large;"> Banco Mundial y su base de datos llamada Indicadores del desarrollo mundial <a href="http://datatopics.worldbank.org/world-development-indicators/" rel="nofollow noopener noreferrer" target="_blank">(WDI)</a> "</span><span style="font-size: large;">World Development Indicators".</span>
+<span style="font-size: large;">La segunda parte del entrenamiento se hará con el paquete <a href="https://cran.r-project.org/web/packages/WDI/WDI.pdf" rel="nofollow noopener noreferrer" target="_blank">WDI (Banco Mundial)</a>, una herramienta poderosa para descargar directamente información macroeconómica, en este caso de Venezuela, utilizando la plataforma del</span><span style="font-size: large;"> Banco Mundial y su base de datos llamada Indicadores del desarrollo mundial <a href="https://datatopics.worldbank.org/world-development-indicators/" rel="nofollow noopener noreferrer" target="_blank">(WDI)</a> "</span><span style="font-size: large;">World Development Indicators".</span>
 </div>
 <br />
 <div style="text-align: justify;">
-<span style="font-size: large;">Para concluir, se construirá un mapa interactivo que permite consultar los datos macroeconómicos a través de Quandl con <a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow noopener noreferrer" target="_blank">leaflet</a>, lo que permite al usuario elegir un indicador económico y hacer clic en un país para acceder a los valores de ese indicador, campo de estudio de la <i><b>Estadística Espacial.</b></i></span>
+<span style="font-size: large;">Para concluir, se construirá un mapa interactivo que permite consultar los datos macroeconómicos a través de WDI (Banco Mundial) con <a href="https://cran.r-project.org/web/packages/leaflet/leaflet.pdf" rel="nofollow noopener noreferrer" target="_blank">leaflet</a>, lo que permite al usuario elegir un indicador económico y hacer clic en un país para acceder a los valores de ese indicador, campo de estudio de la <i><b>Estadística Espacial.</b></i></span>
 </div>
 </div>
 <h3 style="text-align: justify;">
@@ -814,13 +818,13 @@ font-weight: 300;
 <a href="https://cran.r-project.org/web/packages/gapminder/gapminder.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">GapMinder</span></a>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Un extracto de los datos disponibles en <a href="http://gapminder.org./" rel="nofollow noopener noreferrer" target="_blank">Gapminder.org.</a> Para cada uno de los 142 países del conjunto, el paquete proporciona valores para la esperanza de vida, el PIB per cápita, y población, cada cinco años, de 1952 a 2007.</span>
+<span style="font-size: large;">Un extracto de los datos disponibles en <a href="https://gapminder.org./" rel="nofollow noopener noreferrer" target="_blank">Gapminder.org.</a> Para cada uno de los 142 países del conjunto, el paquete proporciona valores para la esperanza de vida, el PIB per cápita, y población, cada cinco años, de 1952 a 2007.</span>
 </div>
 <h3 style="text-align: justify;">
-<a href="https://cran.r-project.org/web/packages/Quandl/Quandl.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Quandl</span></a>
+<a href="https://cran.r-project.org/web/packages/WDI/WDI.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">WDI (Banco Mundial)</span></a>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Funciones para interactuar directamente con la API de Quandl y ofrecer datos en varios formatos utilizables en R, descargar un archivo zip con todos los datos de una base de datos de Quandl y la capacidad de buscarlos. </span>
+<span style="font-size: large;">Funciones para interactuar directamente con la API oficial WDI del Banco Mundial y ofrecer datos en varios formatos utilizables en R, descargar un archivo zip con todos los datos de una base de datos de WDI y la capacidad de buscarlos. </span>
 </div>
 <h3 style="text-align: justify;">
 <a href="https://cran.r-project.org/web/packages/knitr/knitr.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">knitr</span></a>
@@ -850,16 +854,16 @@ font-weight: 300;
 <a href="https://cran.r-project.org/web/packages/rnaturalearth/rnaturalearth.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Rnaturalearth</span></a>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Facilita el mapeo al hacer que los datos del mapa de la tierra natural de <a href="http://www.naturalearthdata.com/" rel="nofollow noopener noreferrer" target="_blank">http://www.naturalearthdata.com/</a> estén fácilmente disponibles para los usuarios de R.</span>
+<span style="font-size: large;">Facilita el mapeo al hacer que los datos del mapa de la tierra natural de <a href="https://www.naturalearthdata.com/" rel="nofollow noopener noreferrer" target="_blank">http://www.naturalearthdata.com/</a> estén fácilmente disponibles para los usuarios de R.</span>
 </div>
 <h3 style="text-align: justify;">
-<a href="https://cran.r-project.org/web/packages/sp/sp.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Sp</span></a>
+<a href="https://cran.r-project.org/web/packages/sp/sp.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">rnaturalearth</span></a>
 </h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">Clases y métodos para datos espaciales; el documento de clases donde se encuentra la información de ubicación espacial, para datos 2D o 3D. Se proporcionan funciones de utilidad, p. para trazar datos como mapas, selección espacial, así como métodos para recuperación de coordenadas, para subconjuntos, impresión, resumen, etc.</span>
 </div>
 <h3 style="text-align: justify;">
-<a href="https://cran.rstudio.com/web/packages/rgeos/rgeos.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">Rgeos</span></a>
+<a href="https://cran.r-project.org/web/packages/sf/sf.pdf" rel="nofollow noopener noreferrer" target="_blank"><span style="font-size: large;">sf (Simple Features)</span></a>
 </h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">Interfaz con el motor de geometría: código abierto (‘GEOS’) utilizando la ‘API C’ para operaciones de topología en geometrías.</span>
@@ -926,22 +930,57 @@ font-weight: 300;
 <div style="text-align: justify;">
 <span style="font-size: large;">Primero se preparan los paquetes y se instalan. Luego, utilizando la base de datos de Gapminder se realiza el primer gráfico. Muestra la panorámica de dispersión de dos variables macroeconómicas para el año 2007: La Esperanza de Vida al nacer y el PIB per Cápita. En el eje de ordenadas (Y) se encuentran los valores de la Esperanza de Vida al Nacer y en el eje de abscisas (X) los valores del Producto Interno Bruto per Cápita, mientras que el tamaño de cada burbuja está determinado por el volumen poblacional de cada país. Este tipo de gráficos es de 3 dimensiones. </span>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(plotly)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(gganimate)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(gapminder)</a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="kw">library</span>(Quandl)</a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="kw">library</span>(knitr)</a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="kw">library</span>(kableExtra)</a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="kw">library</span>(purrr)</a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="kw">library</span>(dygraphs)</a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="kw">library</span>(rnaturalearth)</a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="kw">library</span>(sp)</a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="kw">library</span>(rgeos)</a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="kw">library</span>(leaflet)</a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="kw">library</span>(coefplot)</a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="kw">library</span>(ggrepel)</a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="kw">library</span>(socviz)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(plotly)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(gganimate)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">library</span>(gapminder)</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">library</span>(WDI)</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">library</span>(sf)</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">library</span>(rnaturalearth)</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">library</span>(knitr)</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">library</span>(kableExtra)</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">library</span>(purrr)</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="kw">library</span>(quantmod)</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="kw">library</span>(leaflet)</a>
+<a class="sourceLine" id="cb1-15" title="15"></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co"># Paleta Corporativa Unificada (Curriculum.pdf — Executive Navy &amp; Champagne Gold)</span></a>
+<a class="sourceLine" id="cb1-17" title="17">jbz_cv_palette <span class="op">&lt;-</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb1-18" title="18">  navy <span class="op">=</span> <span class="st">&quot;#0B1B33&quot;</span>, plot_navy <span class="op">=</span> <span class="st">&quot;#102342&quot;</span>, elev_navy <span class="op">=</span> <span class="st">&quot;#163259&quot;</span>,</a>
+<a class="sourceLine" id="cb1-19" title="19">  cobalt <span class="op">=</span> <span class="st">&quot;#1D4ED8&quot;</span>, sky <span class="op">=</span> <span class="st">&quot;#38BDF8&quot;</span>, gold <span class="op">=</span> <span class="st">&quot;#B8955A&quot;</span>,</a>
+<a class="sourceLine" id="cb1-20" title="20">  gold_soft <span class="op">=</span> <span class="st">&quot;#D9C29A&quot;</span>, emerald <span class="op">=</span> <span class="st">&quot;#10B981&quot;</span>, rose <span class="op">=</span> <span class="st">&quot;#F43F5E&quot;</span>,</a>
+<a class="sourceLine" id="cb1-21" title="21">  mist <span class="op">=</span> <span class="st">&quot;#C7D2E3&quot;</span>, white <span class="op">=</span> <span class="st">&quot;#FFFFFF&quot;</span></a>
+<a class="sourceLine" id="cb1-22" title="22">)</a>
+<a class="sourceLine" id="cb1-23" title="23">jbz_series_colors <span class="op">&lt;-</span> <span class="kw">c</span>(<span class="st">&quot;#38BDF8&quot;</span>, <span class="st">&quot;#B8955A&quot;</span>, <span class="st">&quot;#10B981&quot;</span>, <span class="st">&quot;#F43F5E&quot;</span>, <span class="st">&quot;#60A5FA&quot;</span>, <span class="st">&quot;#D9C29A&quot;</span>, <span class="st">&quot;#2DD4BF&quot;</span>)</a>
+<a class="sourceLine" id="cb1-24" title="24"></a>
+<a class="sourceLine" id="cb1-25" title="25">theme_jbz_cv <span class="op">&lt;-</span> <span class="cf">function</span>(base_size <span class="op">=</span> <span class="dv">12</span>) {</a>
+<a class="sourceLine" id="cb1-26" title="26">  ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">theme_minimal</span>(base_size <span class="op">=</span> base_size) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-27" title="27">    ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">theme</span>(</a>
+<a class="sourceLine" id="cb1-28" title="28">      plot.background   <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_rect</span>(fill <span class="op">=</span> <span class="st">&quot;#0B1B33&quot;</span>, colour <span class="op">=</span> <span class="kw">NA</span>),</a>
+<a class="sourceLine" id="cb1-29" title="29">      panel.background  <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_rect</span>(fill <span class="op">=</span> <span class="st">&quot;#102342&quot;</span>, colour <span class="op">=</span> <span class="kw">NA</span>),</a>
+<a class="sourceLine" id="cb1-30" title="30">      panel.grid.major  <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_line</span>(colour <span class="op">=</span> <span class="st">&quot;#1E3A5F&quot;</span>, linewidth <span class="op">=</span> <span class="dv">0.35</span>),</a>
+<a class="sourceLine" id="cb1-31" title="31">      panel.grid.minor  <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb1-32" title="32">      text              <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_text</span>(colour <span class="op">=</span> <span class="st">&quot;#FFFFFF&quot;</span>),</a>
+<a class="sourceLine" id="cb1-33" title="33">      axis.text         <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_text</span>(colour <span class="op">=</span> <span class="st">&quot;#C7D2E3&quot;</span>),</a>
+<a class="sourceLine" id="cb1-34" title="34">      axis.title        <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_text</span>(colour <span class="op">=</span> <span class="st">&quot;#D9C29A&quot;</span>, face <span class="op">=</span> <span class="st">&quot;bold&quot;</span>),</a>
+<a class="sourceLine" id="cb1-35" title="35">      plot.title        <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_text</span>(colour <span class="op">=</span> <span class="st">&quot;#FFFFFF&quot;</span>, face <span class="op">=</span> <span class="st">&quot;bold&quot;</span>),</a>
+<a class="sourceLine" id="cb1-36" title="36">      plot.subtitle     <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_text</span>(colour <span class="op">=</span> <span class="st">&quot;#C7D2E3&quot;</span>),</a>
+<a class="sourceLine" id="cb1-37" title="37">      legend.background <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_rect</span>(fill <span class="op">=</span> <span class="st">&quot;#0B1B33&quot;</span>, colour <span class="op">=</span> <span class="kw">NA</span>),</a>
+<a class="sourceLine" id="cb1-38" title="38">      legend.text       <span class="op">=</span> ggplot2<span class="op">:</span><span class="op">:</span><span class="kw">element_text</span>(colour <span class="op">=</span> <span class="st">&quot;#FFFFFF&quot;</span>)</a>
+<a class="sourceLine" id="cb1-39" title="39">    )</a>
+<a class="sourceLine" id="cb1-40" title="40">}</a>
+<a class="sourceLine" id="cb1-41" title="41"></a>
+<a class="sourceLine" id="cb1-42" title="42">jbz_plotly_cv <span class="op">&lt;-</span> <span class="cf">function</span>(p) {</a>
+<a class="sourceLine" id="cb1-43" title="43">  plotly<span class="op">:</span><span class="op">:</span><span class="kw">layout</span>(</a>
+<a class="sourceLine" id="cb1-44" title="44">    p,</a>
+<a class="sourceLine" id="cb1-45" title="45">    paper_bgcolor <span class="op">=</span> <span class="st">&quot;#0B1B33&quot;</span>,</a>
+<a class="sourceLine" id="cb1-46" title="46">    plot_bgcolor  <span class="op">=</span> <span class="st">&quot;#102342&quot;</span>,</a>
+<a class="sourceLine" id="cb1-47" title="47">    font  <span class="op">=</span> <span class="kw">list</span>(color <span class="op">=</span> <span class="st">&quot;#FFFFFF&quot;</span>, family <span class="op">=</span> <span class="st">&quot;Plus Jakarta Sans, Inter, sans-serif&quot;</span>),</a>
+<a class="sourceLine" id="cb1-48" title="48">    xaxis <span class="op">=</span> <span class="kw">list</span>(gridcolor <span class="op">=</span> <span class="st">&quot;rgba(199,210,227,0.14)&quot;</span>, tickfont <span class="op">=</span> <span class="kw">list</span>(color <span class="op">=</span> <span class="st">&quot;#C7D2E3&quot;</span>)),</a>
+<a class="sourceLine" id="cb1-49" title="49">    yaxis <span class="op">=</span> <span class="kw">list</span>(gridcolor <span class="op">=</span> <span class="st">&quot;rgba(199,210,227,0.14)&quot;</span>, tickfont <span class="op">=</span> <span class="kw">list</span>(color <span class="op">=</span> <span class="st">&quot;#C7D2E3&quot;</span>))</a>
+<a class="sourceLine" id="cb1-50" title="50">  )</a>
+<a class="sourceLine" id="cb1-51" title="51">}</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">gdata &lt;-<span class="st"> </span>gapminder[gapminder<span class="op">$</span>year<span class="op">==</span><span class="dv">2007</span>, ]</a>
 <a class="sourceLine" id="cb2-2" title="2">g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gdata, <span class="kw">aes</span>(<span class="dt">x=</span>gdpPercap, <span class="dt">y=</span>lifeExp, <span class="dt">label=</span>country)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">col=</span>continent, <span class="dt">size=</span>pop<span class="op">/</span><span class="fl">1e6</span>)) <span class="op">+</span><span class="st"> </span></a>
@@ -950,7 +989,7 @@ font-weight: 300;
 <a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">theme_classic</span>()</a>
 <a class="sourceLine" id="cb2-8" title="8">g</a></code></pre></div>
-<img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 2" src="proyecto7_files/figure-html/unnamed-chunk-2-1.png" width="100%" decoding="async" loading="lazy" />
+<img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 2" src="imagenes/r-charts-dark/proyecto7/unnamed-chunk-2-1.webp?v=20261119c" width="1380" decoding="async" loading="lazy"  class="r-quant-chart-img"/>
 <h3>
 <span style="font-size: large;"><a name="grafico2">6. Gráfico dinámico</a></span>
 </h3>
@@ -1191,13 +1230,15 @@ Oceania
 <h3>
 <span style="font-size: large;">Suavizamiento de datos agrupándolos por continentes</span>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> gdpPercap))  </a>
-<a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="kw">ggplotly</span>(p <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">&quot;gray70&quot;</span>, <span class="kw">aes</span>(<span class="dt">group =</span> country)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">size =</span> <span class="fl">1.1</span>, <span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_log10</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>continent, <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb8-4" title="4">  <span class="dt">x =</span> <span class="st">&quot;Año&quot;</span>, </a>
-<a class="sourceLine" id="cb8-5" title="5">  <span class="dt">y =</span> <span class="st">&quot;PIB per cápita&quot;</span>, </a>
-<a class="sourceLine" id="cb8-6" title="6">  <span class="dt">title =</span> <span class="st">&quot;PIB per cápita en los continentes&quot;</span></a>
-<a class="sourceLine" id="cb8-7" title="7">))</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">p <span class="op">&lt;-</span> <span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(x <span class="op">=</span> year, y <span class="op">=</span> gdpPercap)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="kw">theme_jbz_cv</span>()</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">jbz_plotly_cv</span>(<span class="kw">ggplotly</span>(</a>
+<a class="sourceLine" id="cb8-4" title="4">  p <span class="op">+</span> <span class="kw">geom_line</span>(color <span class="op">=</span> <span class="st">&quot;#64748B&quot;</span>, alpha <span class="op">=</span> <span class="dv">0.55</span>, <span class="kw">aes</span>(group <span class="op">=</span> country)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="kw">geom_smooth</span>(linewidth <span class="op">=</span> <span class="dv">1.2</span>, method <span class="op">=</span> <span class="st">&quot;loess&quot;</span>, se <span class="op">=</span> <span class="kw">FALSE</span>, color <span class="op">=</span> <span class="st">&quot;#B8955A&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-6" title="6">    <span class="kw">scale_y_log10</span>(labels <span class="op">=</span> scales<span class="op">:</span><span class="op">:</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-7" title="7">    <span class="kw">facet_wrap</span>(<span class="op">~</span> continent) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-8" title="8">    <span class="kw">labs</span>(title <span class="op">=</span> <span class="st">&quot;Trayectorias Globales del PIB per Cápita por Continente&quot;</span>, x <span class="op">=</span> <span class="st">&quot;Año&quot;</span>, y <span class="op">=</span> <span class="st">&quot;PIB per Cápita (USD)&quot;</span>)</a>
+<a class="sourceLine" id="cb8-9" title="9">))</a></code></pre></div>
 <div id="htmlwidget-ceddf5b95c8437ce77a3" style="width:100%;height:480px;" class="plotly html-widget"></div>
 <h3>
 <span style="font-size: large;"><a name="grafico4">8. Diagramas interactivos de caja</a></span>
@@ -1227,12 +1268,13 @@ Oceania
 </li>
 </ul>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="kw">ggplotly</span>(<span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> continent, <span class="dt">y =</span> lifeExp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.colour =</span> <span class="st">&quot;hotpink&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">height =</span> <span class="dv">0</span>), <span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>)<span class="op">+</span><span class="kw">labs</span>(</a>
-<a class="sourceLine" id="cb9-5" title="5">  <span class="dt">x =</span> <span class="st">&quot;Continentes&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Esperanza de Vida en Años&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Gráficos de caja&quot;</span>, <span class="dt">caption =</span> <span class="st">&quot;Fuente: gapminder.&quot;</span></a>
-<a class="sourceLine" id="cb9-6" title="6">))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">jbz_plotly_cv</span>(<span class="kw">ggplotly</span>(</a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(x <span class="op">=</span> continent, y <span class="op">=</span> lifeExp)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-3" title="3">    <span class="kw">geom_boxplot</span>(outlier.colour <span class="op">=</span> <span class="st">&quot;#F43F5E&quot;</span>, fill <span class="op">=</span> <span class="st">&quot;#163259&quot;</span>, color <span class="op">=</span> <span class="st">&quot;#38BDF8&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="kw">geom_jitter</span>(position <span class="op">=</span> <span class="kw">position_jitter</span>(width <span class="op">=</span> <span class="dv">0.1</span>, height <span class="op">=</span> <span class="dv">0</span>), alpha <span class="op">=</span> <span class="dv">0.25</span>, color <span class="op">=</span> <span class="st">&quot;#D9C29A&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-5" title="5">    <span class="kw">theme_jbz_cv</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-6" title="6">    <span class="kw">labs</span>(x <span class="op">=</span> <span class="st">&quot;Continentes&quot;</span>, y <span class="op">=</span> <span class="st">&quot;Esperanza de Vida (Años)&quot;</span>, title <span class="op">=</span> <span class="st">&quot;Distribución Global de Esperanza de Vida&quot;</span>, caption <span class="op">=</span> <span class="st">&quot;Fuente: gapminder.&quot;</span>)</a>
+<a class="sourceLine" id="cb9-7" title="7">))</a></code></pre></div>
 <div id="htmlwidget-00af5e97cf22ad35fa14" style="width:672px;height:480px;" class="plotly html-widget"></div>
 <h3>
 <span style="font-size: large;"><a name="grafico5">9. Gráfica con suavizamiento GAM</a></span>
@@ -1257,8 +1299,6 @@ Oceania
 </h3>
 <div style="text-align: justify;">
 <span style="font-size: large;">En 1975, Samuel Preston publicó un artículo influyente, “La relación cambiante entre la mortalidad y el nivel de desarrollo económico”, en el que traza la relación global entre el PIB per cápita y la esperanza de vida en diferentes momentos. Él encuentra que con el tiempo la curva que describe la relación se ha movido hacia arriba, lo que implica que un nivel de ingresos similar se asocia con una mayor esperanza de vida en momentos posteriores.</span>
-<h3>
-</h3>
 </div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp))</a>
 <a class="sourceLine" id="cb11-2" title="2"><span class="kw">ggplotly</span>(p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;gam&quot;</span>,<span class="dt">formula=</span>y <span class="op">~</span><span class="st"> </span><span class="kw">s</span>(x, <span class="dt">bs =</span> <span class="st">&quot;cs&quot;</span>))<span class="op">+</span><span class="kw">labs</span>(</a>
@@ -1310,16 +1350,16 @@ Oceania
 ## Multiple R-squared:  0.7102, Adjusted R-squared:  0.7092 
 ## F-statistic: 693.3 on 6 and 1697 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">plot</span>(out, <span class="dt">which =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">ask =</span> <span class="ot">FALSE</span>) </a></code></pre></div>
-<p><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 3" src="proyecto7_files/figure-html/unnamed-chunk-12-1.png" width="672" decoding="async" loading="lazy" /><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 4" src="proyecto7_files/figure-html/unnamed-chunk-12-2.png" width="672" decoding="async" loading="lazy" /></p>
+<p><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 3" src="imagenes/r-charts-dark/proyecto7/unnamed-chunk-12-1.webp?v=20261119c" width="1380" decoding="async" loading="lazy"  class="r-quant-chart-img"/><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 4" src="imagenes/r-charts-dark/proyecto7/unnamed-chunk-12-2.webp?v=20261119c" width="1380" decoding="async" loading="lazy"  class="r-quant-chart-img"/></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">out &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(gdpPercap) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(pop) <span class="op">+</span><span class="st"> </span>continent, <span class="dt">data =</span> gapminder)</a>
 <a class="sourceLine" id="cb15-2" title="2"></a>
 <a class="sourceLine" id="cb15-3" title="3"><span class="kw">coefplot</span>(out, <span class="dt">sort =</span> <span class="st">&quot;magnitude&quot;</span>, <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 5" src="proyecto7_files/figure-html/unnamed-chunk-13-1.png" width="672" decoding="async" loading="lazy" />
+<img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 5" src="imagenes/r-charts-dark/proyecto7/unnamed-chunk-13-1.webp?v=20261119c" width="1380" decoding="async" loading="lazy"  class="r-quant-chart-img"/>
 <h3 style="text-align: justify;">
 <span style="font-size: large;"><a name="macro">11. Exploración de datos Macroeconómicos</a></span>
 </h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Se utilizará la fuente de datos macroeconómicos del Banco Mundial llamada Indicadores del desarrollo mundial <a href="http://data.worldbank.org/products/wdi" rel="nofollow noopener noreferrer" target="_blank">(WDI)</a> . El código </span><span style="font-size: large;"><i>Quandl</i> </span><span style="font-size: large;">para WDI es WWDI, y se antepone WWDI/ para cada llamada al conjunto de datos.</span>
+<span style="font-size: large;">Se utilizará la fuente de datos macroeconómicos del Banco Mundial llamada Indicadores del desarrollo mundial <a href="https://data.worldbank.org/products/wdi" rel="nofollow noopener noreferrer" target="_blank">(WDI)</a> . El código </span><span style="font-size: large;"><i>WDI (Banco Mundial)</i> </span><span style="font-size: large;">para WDI es WWDI, y se antepone WWDI/ para cada llamada al conjunto de datos.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1331,7 +1371,7 @@ Oceania
 <span style="font-size: large;"><br /></span>
 </div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Se utiliza el código WWDI/VEN _NY_GDP_PCAP_KN  Quandl, que consiste en el código WDI WWDI/, agregando el código de país de Venezuela VEN, por último el código del PIB per cápita _NY_GDP_PCAP_KN.</span>
+<span style="font-size: large;">Se consulta directamente el indicador oficial <code>NY.GDP.PCAP.KN</code> mediante <code>WDI::WDI(country = "VE")</code>.</span>
 </div>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">gapminder <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb16-2" title="2"><span class="st"> </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>, country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Kenya&quot;</span>, <span class="st">&quot;Venezuela&quot;</span>, <span class="st">&quot;China&quot;</span>)) <span class="op">%&gt;%</span></a>
@@ -1343,9 +1383,14 @@ Oceania
 ## 1 China     Asia      CHN           156
 ## 2 Kenya     Africa    KEN           404
 ## 3 Venezuela Americas  VEN           862</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">Venezuela_GDPPC &lt;-<span class="st"> </span><span class="kw">Quandl</span>(<span class="st">&quot;WWDI/VEN_NY_GDP_PCAP_KN&quot;</span>, <span class="dt">type =</span> <span class="st">&#39;xts&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="st"> `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="st">&quot;PIB Per Capita&quot;</span>)</a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="kw">tail</span>(Venezuela_GDPPC, <span class="dt">n =</span> <span class="dv">20</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># Consulta moderna directa al Banco Mundial vía WDI::WDI (API oficial de indicadores del Banco Mundial)</span></a>
+<a class="sourceLine" id="cb18-2" title="2">Venezuela_GDPPC <span class="op">&lt;-</span> WDI<span class="op">:</span><span class="op">:</span><span class="kw">WDI</span>(</a>
+<a class="sourceLine" id="cb18-3" title="3">  country   <span class="op">=</span> <span class="st">&quot;VE&quot;</span>,</a>
+<a class="sourceLine" id="cb18-4" title="4">  indicator <span class="op">=</span> <span class="kw">c</span>(<span class="st">&quot;PIB Per Capita&quot;</span> <span class="op">=</span> <span class="st">&quot;NY.GDP.PCAP.KN&quot;</span>),</a>
+<a class="sourceLine" id="cb18-5" title="5">  start     <span class="op">=</span> <span class="dv">1995</span>,</a>
+<a class="sourceLine" id="cb18-6" title="6">  end       <span class="op">=</span> <span class="dv">2023</span></a>
+<a class="sourceLine" id="cb18-7" title="7">) <span class="op">%&gt;%</span> dplyr<span class="op">:</span><span class="op">:</span><span class="kw">arrange</span>(year)</a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="kw">tail</span>(Venezuela_GDPPC, n <span class="op">=</span> <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>##            PIB Per Capita
 ## 1999-12-31       1666.183
 ## 2000-12-31       1695.293
@@ -1379,24 +1424,24 @@ Oceania
 <div style="text-align: justify;">
 <span style="font-size: large;">En los detalles, se usará la función reduce() del paquete <i>purrr </i>y se aplicará merge() para combinar las ocho listas de un objeto xts. La visualización se realizará con dygraphs. La última función  colnames&lt;- se usa para limpiar los nombres de columna.</span>
 </div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">econIndicators &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;PIB Per Capita&quot;</span> =<span class="st"> &quot;WWDI/VEN_NY_GDP_PCAP_KN&quot;</span>,</a>
-<a class="sourceLine" id="cb20-2" title="2">                  <span class="st">&quot;Crecimiento PIB Per Capita&quot;</span> =<span class="st"> &quot;WWDI/VEN_NY_GDP_PCAP_KD_ZG&quot;</span>,</a>
-<a class="sourceLine" id="cb20-3" title="3">                  <span class="st">&quot;Tasa de Interés Real&quot;</span> =<span class="st"> &quot;WWDI/VEN_FR_INR_RINR&quot;</span>,</a>
-<a class="sourceLine" id="cb20-4" title="4">                  <span class="st">&quot;Tipo de Cambio&quot;</span> =<span class="st"> &quot;WWDI/VEN_PX_REX_REER&quot;</span>,</a>
-<a class="sourceLine" id="cb20-5" title="5">                  <span class="st">&quot;INPC&quot;</span> =<span class="st"> &quot;WWDI/VEN_FP_CPI_TOTL_ZG&quot;</span>,</a>
-<a class="sourceLine" id="cb20-6" title="6">                  <span class="st">&quot;Parte de la Fuerza Laboral. Rate&quot;</span> =<span class="st"> &quot;WWDI/VEN_SL_TLF_ACTI_ZS&quot;</span>,<span class="st">&quot;Formación Bruta de Capital&quot;</span> =<span class="st"> &quot;WWDI/VEN_NE_GDI_TOTL_ZS&quot;</span>,<span class="st">&quot;Importación de Bienes y Servicios&quot;</span> =<span class="st"> &quot;WWDI/VEN_NE_IMP_GNFS_ZS&quot;</span>)</a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="kw">Quandl.api_key</span>(<span class="st">&quot;d9EidiiDWoFESfdk5nPy&quot;</span>)</a>
-<a class="sourceLine" id="cb20-8" title="8">Venezuela_all_indicators &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb20-9" title="9"><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-10" title="10"><span class="st">  </span>econIndicators <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-11" title="11"><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-12" title="12"><span class="st">  </span><span class="kw">map</span>(Quandl, <span class="dt">type =</span> <span class="st">&quot;xts&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-13" title="13"></a>
-<a class="sourceLine" id="cb20-14" title="14"><span class="st">  </span><span class="kw">reduce</span>(merge) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-15" title="15"></a>
-<a class="sourceLine" id="cb20-16" title="16"><span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="kw">names</span>(econIndicators))</a>
-<a class="sourceLine" id="cb20-17" title="17"></a>
-<a class="sourceLine" id="cb20-18" title="18"><span class="kw">tail</span>(Venezuela_all_indicators, <span class="dt">n =</span> <span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Descarga reproducible multiproposito de Indicadores de Desarrollo del Banco Mundial (WDI)</span></a>
+<a class="sourceLine" id="cb20-2" title="2">econIndicators <span class="op">&lt;-</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb20-3" title="3">  <span class="st">&quot;PIB_Per_Capita&quot;</span>      <span class="op">=</span> <span class="st">&quot;NY.GDP.PCAP.KN&quot;</span>,</a>
+<a class="sourceLine" id="cb20-4" title="4">  <span class="st">&quot;Crecimiento_PIB_PC&quot;</span>  <span class="op">=</span> <span class="st">&quot;NY.GDP.PCAP.KD.ZG&quot;</span>,</a>
+<a class="sourceLine" id="cb20-5" title="5">  <span class="st">&quot;Tasa_Interes_Real&quot;</span>   <span class="op">=</span> <span class="st">&quot;FR.INR.RINR&quot;</span>,</a>
+<a class="sourceLine" id="cb20-6" title="6">  <span class="st">&quot;Tipo_Cambio_Real&quot;</span>    <span class="op">=</span> <span class="st">&quot;PX.REX.REER&quot;</span>,</a>
+<a class="sourceLine" id="cb20-7" title="7">  <span class="st">&quot;INPC&quot;</span>                <span class="op">=</span> <span class="st">&quot;FP.CPI.TOTL.ZG&quot;</span>,</a>
+<a class="sourceLine" id="cb20-8" title="8">  <span class="st">&quot;Fuerza_Laboral&quot;</span>      <span class="op">=</span> <span class="st">&quot;SL.TLF.ACTI.ZS&quot;</span>,</a>
+<a class="sourceLine" id="cb20-9" title="9">  <span class="st">&quot;Formacion_Capital&quot;</span>   <span class="op">=</span> <span class="st">&quot;NE.GDI.TOTL.ZS&quot;</span>,</a>
+<a class="sourceLine" id="cb20-10" title="10">  <span class="st">&quot;Importaciones_BS&quot;</span>    <span class="op">=</span> <span class="st">&quot;NE.IMP.GNFS.ZS&quot;</span></a>
+<a class="sourceLine" id="cb20-11" title="11">)</a>
+<a class="sourceLine" id="cb20-12" title="12">Venezuela_all_indicators <span class="op">&lt;-</span> WDI<span class="op">:</span><span class="op">:</span><span class="kw">WDI</span>(</a>
+<a class="sourceLine" id="cb20-13" title="13">  country   <span class="op">=</span> <span class="st">&quot;VE&quot;</span>,</a>
+<a class="sourceLine" id="cb20-14" title="14">  indicator <span class="op">=</span> econIndicators,</a>
+<a class="sourceLine" id="cb20-15" title="15">  start     <span class="op">=</span> <span class="dv">2000</span>,</a>
+<a class="sourceLine" id="cb20-16" title="16">  end       <span class="op">=</span> <span class="dv">2023</span></a>
+<a class="sourceLine" id="cb20-17" title="17">) <span class="op">%&gt;%</span> dplyr<span class="op">:</span><span class="op">:</span><span class="kw">arrange</span>(year)</a>
+<a class="sourceLine" id="cb20-18" title="18"><span class="kw">tail</span>(Venezuela_all_indicators, n <span class="op">=</span> <span class="dv">6</span>)</a></code></pre></div>
 <pre><code>##            PIB Per Capita Crecimiento PIB Per Capita Tasa de Interés Real
 ## 2014-12-31       1990.680                  -4.731050            -16.53998
 ## 2015-12-31       1864.555                  -6.335766            -57.77085
@@ -1508,7 +1553,7 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
 <a class="sourceLine" id="cb33-3" title="3">                <span class="st">&quot;&lt;br&gt;&lt;strong&gt;Market Stage: &lt;/strong&gt;&quot;</span>, </a>
 <a class="sourceLine" id="cb33-4" title="4">                world<span class="op">$</span>income_grp)</a></code></pre></div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Por último se construye el mapa. Necesitamos pasar un código estandarizado de país a la API de Quandl, en lugar del nombre común del país o un identificador bursátil (ticker). Por lo tanto, no queremos establecer layerId = name, tampoco necesitamos agregar nada especial a nuestro objeto world. Ya contiene una columna llamada iso_a3, y esa columna contiene los códigos de país utilizados por Quandl.</span>
+<span style="font-size: large;">Por último se construye el mapa. Necesitamos pasar un código estandarizado de país a la API oficial WDI del Banco Mundial, en lugar del nombre común del país o un identificador bursátil (ticker). Por lo tanto, no queremos establecer layerId = name, tampoco necesitamos agregar nada especial a nuestro objeto world. Ya contiene una columna llamada iso_a3, y esa columna contiene los códigos de país utilizados por WDI.</span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1516,16 +1561,22 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
 <div style="text-align: justify;">
 <br />
 </div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">leaf_world &lt;-<span class="st"> </span><span class="kw">leaflet</span>(world) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-2" title="2"><span class="st">  </span><span class="kw">addProviderTiles</span>(<span class="st">&quot;CartoDB.Positron&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb34-3" title="3"><span class="st">  </span><span class="kw">setView</span>(<span class="dt">lng =</span>  <span class="dv">20</span>, <span class="dt">lat =</span>  <span class="dv">15</span>, <span class="dt">zoom =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-4" title="4"><span class="st">      </span><span class="kw">addPolygons</span>(<span class="dt">stroke =</span> <span class="ot">FALSE</span>, <span class="dt">smoothFactor =</span> <span class="fl">0.2</span>, <span class="dt">fillOpacity =</span> <span class="fl">.7</span>,</a>
-<a class="sourceLine" id="cb34-5" title="5">                     <span class="dt">color =</span> <span class="op">~</span><span class="kw">gdpPal</span>(gdp_md_est), <span class="dt">layerId =</span> <span class="op">~</span>iso_a3, <span class="dt">popup =</span> popup)</a>
-<a class="sourceLine" id="cb34-6" title="6"></a>
-<a class="sourceLine" id="cb34-7" title="7">leaf_world</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># Mapa geoespacial moderno basado en Simple Features (sf + rnaturalearth) y Lienzo Oscuro Curriculum.pdf</span></a>
+<a class="sourceLine" id="cb34-2" title="2">world_sf <span class="op">&lt;-</span> rnaturalearth<span class="op">:</span><span class="op">:</span><span class="kw">ne_countries</span>(scale <span class="op">=</span> <span class="st">&quot;medium&quot;</span>, returnclass <span class="op">=</span> <span class="st">&quot;sf&quot;</span>)</a>
+<a class="sourceLine" id="cb34-3" title="3">gdpPal <span class="op">&lt;-</span> leaflet<span class="op">:</span><span class="op">:</span><span class="kw">colorQuantile</span>(palette <span class="op">=</span> <span class="kw">c</span>(<span class="st">&quot;#102342&quot;</span>, <span class="st">&quot;#1D4ED8&quot;</span>, <span class="st">&quot;#38BDF8&quot;</span>, <span class="st">&quot;#B8955A&quot;</span>, <span class="st">&quot;#D9C29A&quot;</span>), domain <span class="op">=</span> world_sf$gdp_md, n <span class="op">=</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb34-4" title="4">leaf_world <span class="op">&lt;-</span> leaflet<span class="op">:</span><span class="op">:</span><span class="kw">leaflet</span>(world_sf) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-5" title="5">  leaflet<span class="op">:</span><span class="op">:</span><span class="kw">addProviderTiles</span>(<span class="st">&quot;CartoDB.DarkMatter&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-6" title="6">  leaflet<span class="op">:</span><span class="op">:</span><span class="kw">setView</span>(lng <span class="op">=</span> <span class="dv">20</span>, lat <span class="op">=</span> <span class="dv">15</span>, zoom <span class="op">=</span> <span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-7" title="7">  leaflet<span class="op">:</span><span class="op">:</span><span class="kw">addPolygons</span>(</a>
+<a class="sourceLine" id="cb34-8" title="8">    stroke <span class="op">=</span> <span class="kw">TRUE</span>, weight <span class="op">=</span> <span class="dv">0.6</span>, color <span class="op">=</span> <span class="st">&quot;#B8955A&quot;</span>,</a>
+<a class="sourceLine" id="cb34-9" title="9">    smoothFactor <span class="op">=</span> <span class="dv">0.2</span>, fillOpacity <span class="op">=</span> <span class="dv">0.78</span>,</a>
+<a class="sourceLine" id="cb34-10" title="10">    fillColor <span class="op">=</span> <span class="op">~</span><span class="kw">gdpPal</span>(gdp_md),</a>
+<a class="sourceLine" id="cb34-11" title="11">    layerId <span class="op">=</span> <span class="op">~</span>iso_a3, popup <span class="op">=</span> <span class="op">~</span><span class="kw">paste0</span>(<span class="st">&quot;&lt;strong&gt;&quot;</span>, name, <span class="st">&quot;&lt;/strong&gt;&quot;</span>)</a>
+<a class="sourceLine" id="cb34-12" title="12">  )</a>
+<a class="sourceLine" id="cb34-13" title="13">leaf_world</a></code></pre></div>
 <div id="htmlwidget-9166973f99d7daa6cee6" style="width:672px;height:480px;" class="leaflet html-widget"></div>
 <div style="text-align: justify;">
-<span style="font-size: large;">Dado que Quandl emplea el <a href="https://blog.quandl.com/api-for-economic-data">código ISO de 3 letras</a> para identificar a cada nación y el objeto espacial ‘sf’ generado por rnaturalearth ya incorpora la columna ‘iso_a3’, vinculamos directamente el mapa interactivo estableciendo layerId = ~iso_a3. </span>
+<span style="font-size: large;">Dado que la cartografía utiliza el <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/898590">código ISO de 3 letras</a> para identificar a cada nación y el objeto espacial ‘sf’ generado por rnaturalearth ya incorpora la columna ‘iso_a3’, vinculamos directamente el mapa interactivo estableciendo layerId = ~iso_a3. </span>
 </div>
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -1581,298 +1632,233 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
 
 <hr>
 <span style="font-size: medium;"><br /></span>
-<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<br /><span style="color: #475569; font-size: 0.92em;">Publicado: Junio de 2020</span><span style="font-size: medium;"><span style="color: black;">
+<span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br /><span data-jbz-mail-text="1">Canal de correo protegido</span><br /><span style="color: #475569; font-size: 0.92em;">Publicado: Junio de 2020</span><span style="font-size: medium;"><span style="color: black;">
 </span></span></span><br />
 <br />
 <div style="text-align: center;">
 <div style="text-align: left;">
-<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img alt="Exploración de Datos Macroeconómicos con RStudio - imagen 6" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
+<a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img class="cc-badge" alt="Exploración de Datos Macroeconómicos con RStudio - imagen 6" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a><span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span></div>
 </div>
 <div style="text-align: center;">
 <div style="text-align: left;">
 <br /></div>
 </div>
 <!-- RELATED-CAROUSEL-START -->
-<section class="pc-section" aria-label="Otros trabajos del portafolio">
-  <div class="pc-header">
-    <div>
-      <span class="pc-kicker">Sigue explorando</span>
-      <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
-    </div>
-    <div class="pc-controls">
-      <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-      <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-    </div>
-  </div>
-  <div class="pc-viewport" id="carouselViewport">
-    <div class="pc-track" id="carouselTrack">
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
+            <section class="pc-section" aria-label="Otros trabajos del portafolio">
+        <div class="pc-header">
+          <div>
+            <span class="pc-kicker">Sigue explorando</span>
+            <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
           </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">Rstudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+          <div class="pc-controls">
+            <span class="pc-page-badge">1–4 de 18</span>
+            <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
           </div>
-        </a>
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad & VaR</span>
+        </div>
+        <div class="pc-viewport" id="carouselViewport">
+          <div class="pc-track" id="carouselTrack">
+          <a href="bot-trading-python/index.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-19-bot-trading-cripto-python.webp?v=20261121w" alt="Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #19</span>
+              <span class="pc-cat">Python · 4 Bots</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · GARCH · MLP</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-vectores-autoregresivos-en-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-18-var-granger-rstudio.webp?v=20261121b" alt="Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #18</span>
+              <span class="pc-cat">RStudio · vars</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">R 4.4+ · urca · IRF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="vectores-autorregresivos-var-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-17-var-granger-spillover-python.webp?v=20261121b" alt="Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #17</span>
+              <span class="pc-cat">Python · VAR(8)</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Johansen · GFEVD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="simulacion-monte-carlo-portafolios-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-16-monte-carlo-cholesky-merton-python.webp?v=20261121b" alt="Modelización Estocástica de Monte Carlo Multivariante en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #16</span>
+              <span class="pc-cat">Monte Carlo Python</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Monte Carlo Multivariante en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Cholesky · Merton</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="volatilidad-garch-var-cvar-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp?v=20261121b" alt="Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR)" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #15</span>
+              <span class="pc-cat">EGARCH &amp; CVaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR)</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Skewed-t</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="deep-portfolio-lstm-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp?v=20261121b" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #14</span>
+              <span class="pc-cat">Deep Learning LSTM</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Deep Portfolio Optimization con Redes Neuronales LSTM en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">PyTorch · Markowitz</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-medias-moviles-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp?v=20261121b" alt="Análisis Técnico Cuantitativo del Bitcoin en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #13</span>
+              <span class="pc-cat">Análisis Técnico</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis Técnico Cuantitativo del Bitcoin en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">quantmod · Bollinger · MACD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp?v=20261121b" alt="Análisis de Procesos de Negocio y Minería de Datos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #12</span>
+              <span class="pc-cat">Process Mining</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis de Procesos de Negocio y Minería de Datos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">bupaR · Event Logs</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="power-bi.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp?v=20261121b" alt="Implementación de Business Intelligence y Modelado Analítico" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #11</span>
+              <span class="pc-cat">Business Intelligence</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Implementación de Business Intelligence y Modelado Analítico</h4>
+              <div class="pc-meta"><span class="pc-tags">Power BI · KPIs Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp?v=20261121b" alt="Modelización Estocástica de Carteras con Monte Carlo en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #10</span>
+              <span class="pc-cat">Monte Carlo R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Carteras con Monte Carlo en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">Monte Carlo · Frontera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp?v=20261121b" alt="Pronósticos Econométricos con Prophet para Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #9</span>
+              <span class="pc-cat">Prophet RStudio</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Pronósticos Econométricos con Prophet para Bitcoin y Ether</h4>
+              <div class="pc-meta"><span class="pc-tags">Prophet · Criptoactivos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="powermap.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp?v=20261121b" alt="Sistema de Información Geográfica (SIG) y Analítica 3D" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #8</span>
+              <span class="pc-cat">SIG Geoespacial</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Sistema de Información Geográfica (SIG) y Analítica 3D</h4>
+              <div class="pc-meta"><span class="pc-tags">Power Map · Geoespacial</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Dashboard.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp?v=20261121b" alt="Cuadro de Mando Financiero y Suite Interactiva FP&amp;A" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #6</span>
+              <span class="pc-cat">FP&amp;A Suite</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Cuadro de Mando Financiero y Suite Interactiva FP&amp;A</h4>
+              <div class="pc-meta"><span class="pc-tags">FP&amp;A · EBITDA · FCF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="EvaluacionProyecto.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp?v=20261121b" alt="Formulación y Evaluación Financiera de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #5</span>
+              <span class="pc-cat">CAPEX &amp; VAN/TIR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Formulación y Evaluación Financiera de Proyectos de Inversión</h4>
+              <div class="pc-meta"><span class="pc-tags">CAPEX · WACC · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto4.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp?v=20261121b" alt="Optimización de Portafolios y Frontera Eficiente de Markowitz" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #4</span>
+              <span class="pc-cat">Markowitz R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Optimización de Portafolios y Frontera Eficiente de Markowitz</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · Ratio Sharpe</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto3.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp?v=20261121b" alt="Aprendizaje Automático (Machine Learning) Financiero en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #3</span>
+              <span class="pc-cat">Machine Learning</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Aprendizaje Automático (Machine Learning) Financiero en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">tidymodels · Series</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Proyecto2.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp?v=20261121b" alt="Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #2</span>
+              <span class="pc-cat">eGARCH &amp; VaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo</h4>
+              <div class="pc-meta"><span class="pc-tags">Bitcoin · rugarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelo-ventas.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp?v=20261121b" alt="Modelo Econométrico de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #1</span>
+              <span class="pc-cat">Series SARIMA</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelo Econométrico de Pronósticos para Ventas en Volumen</h4>
+              <div class="pc-meta"><span class="pc-tags">SARIMA · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
           </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · Rstudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="EvaluacionProyecto.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #5</span>
-            <span class="pc-cat">Evaluación de Proyectos</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión</h4>
-            <div class="pc-meta"><span class="pc-tags">Evaluación de Proyectos · Proyecto de Inversión</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Dashboard.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #6</span>
-            <span class="pc-cat">Dashboard Financiero</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Financial Dashboard</h4>
-            <div class="pc-meta"><span class="pc-tags">Dashboard Financiero · Kpi&#x27;s Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="powermap.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #8</span>
-            <span class="pc-cat">Inteligencia Geoespacial</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Sistema Integrado Geográfico SIG</h4>
-            <div class="pc-meta"><span class="pc-tags">Power Map · Modelo de Datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #9</span>
-            <span class="pc-cat">Pronóstico Prophet</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Pronósticos con Prophet para el Bitcoin y Ether</h4>
-            <div class="pc-meta"><span class="pc-tags">Prophet de Facebook · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="power-bi.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #11</span>
-            <span class="pc-cat">Power BI</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Power BI, una de las mejores herramientas BI</h4>
-            <div class="pc-meta"><span class="pc-tags">Power BI · Dashboard Financiero</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #12</span>
-            <span class="pc-cat">Data Mining</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis de procesos de negocio utilizando la plataforma de Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Data Analytics · Data mining</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="trading-medias-moviles-rstudio.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #13</span>
-            <span class="pc-cat">Análisis Técnico</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis Técnico del Bitcoin en Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Trading · Bitcoin</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">Rstudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad & VaR</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · Rstudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="EvaluacionProyecto.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #5</span>
-            <span class="pc-cat">Evaluación de Proyectos</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión</h4>
-            <div class="pc-meta"><span class="pc-tags">Evaluación de Proyectos · Proyecto de Inversión</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="Dashboard.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp" alt="Financial Dashboard" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #6</span>
-            <span class="pc-cat">Dashboard Financiero</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Financial Dashboard</h4>
-            <div class="pc-meta"><span class="pc-tags">Dashboard Financiero · Kpi&#x27;s Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="powermap.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp" alt="Sistema Integrado Geográfico SIG" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #8</span>
-            <span class="pc-cat">Inteligencia Geoespacial</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Sistema Integrado Geográfico SIG</h4>
-            <div class="pc-meta"><span class="pc-tags">Power Map · Modelo de Datos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp" alt="Pronósticos con Prophet para el Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #9</span>
-            <span class="pc-cat">Pronóstico Prophet</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Pronósticos con Prophet para el Bitcoin y Ether</h4>
-            <div class="pc-meta"><span class="pc-tags">Prophet de Facebook · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="power-bi.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI, una de las mejores herramientas BI" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #11</span>
-            <span class="pc-cat">Power BI</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Power BI, una de las mejores herramientas BI</h4>
-            <div class="pc-meta"><span class="pc-tags">Power BI · Dashboard Financiero</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp" alt="Análisis de procesos de negocio utilizando la plataforma de Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #12</span>
-            <span class="pc-cat">Data Mining</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis de procesos de negocio utilizando la plataforma de Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Data Analytics · Data mining</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="trading-medias-moviles-rstudio.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp" alt="Análisis Técnico del Bitcoin en Rstudio" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #13</span>
-            <span class="pc-cat">Análisis Técnico</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Análisis Técnico del Bitcoin en Rstudio</h4>
-            <div class="pc-meta"><span class="pc-tags">Trading · Bitcoin</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-    </div>
-  </div>
-</section>
+        </div>
+      </section>
 <!-- RELATED-CAROUSEL-END -->
 <div class="disqus-container-modern">
   <div class="disqus-header-card">
@@ -1950,7 +1936,7 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
       <span class="exec-cta-eyebrow">Ecosistema Profesional · Jesús Benjamín Zerpa</span>
       <h3 class="exec-cta-title">¿Deseas implementar modelos cuantitativos o planificación financiera en tu empresa?</h3>
       <p class="exec-cta-desc">
-        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, cuadros de mando en Power BI y modelos predictivos en Python y R.
+        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, Implementación de Business Intelligence y modelos econométricos y predictivos en Python y R.
       </p>
     </div>
     <div class="exec-cta-actions">
@@ -1977,7 +1963,7 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
           </p>
           <div class="footer-license-box">
             <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
-              <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
+              <img class="cc-badge" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
             </a>
             <span>Contenido bajo <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
           </div>
@@ -2001,7 +1987,7 @@ Se utilizará el paquete <i>rnaturalearth </i>y su  función ne_countries(). Va
           <ul class="footer-links-list">
             <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
             <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
-            <li><a href="mailto:jesuszerpaeconomia@gmail.com">jesuszerpaeconomia@gmail.com</a></li>
+            <li><a href="formulario.html" data-jbz-mail="text">Contacto directo</a></li>
             <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Telegram @jesusbz21</a></li>
           </ul>
         </div>
@@ -2170,9 +2156,9 @@ $(document).ready(function () {
     
             function scrollFunction() {
                 if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                    document.getElementById("movetop").style.display = "block";
+                    (function(){ var _mt = document.getElementById("movetop"); if (_mt) _mt.style.display = "block"; })();
                 } else {
-                    document.getElementById("movetop").style.display = "none";
+                    (function(){ var _mt = document.getElementById("movetop"); if (_mt) _mt.style.display = "none"; })();
                 }
             }
     
@@ -2183,19 +2169,8 @@ $(document).ready(function () {
             }
         </script>
         <!-- /move top -->
-<script id="dsq-count-scr" src="//portafolio-11.disqus.com/count.js" async></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169665920-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-169665920-1');
-gtag('set', {'user_id': 'USER_ID'}); 
-ga('set', 'userId', 'USER_ID');    
-</script> 
+ 
 				
-  <script src="js/futuristic-app.js?v=20261114f"></script>
+  <script src="js/futuristic-app.js?v=20261123a"></script>
 </body>
 </html>

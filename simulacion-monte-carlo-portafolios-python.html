@@ -4,7 +4,9 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
 
   <title>Simulación Monte Carlo de Portafolios en Python | Jesús Benjamín Zerpa</title>
   <!-- SEO:START -->
@@ -26,7 +28,7 @@
   <meta property="article:published_time" content="2026-11-11T00:00:00Z" />
   <meta property="article:modified_time" content="2026-11-14T18:00:00Z" />
   <meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
-  <meta property="article:section" content="Finanzas Cuantitativas, Cálculo Estocástico y Gestión Institucional de Portafolios" />
+  <meta property="article:section" content="Finanzas Cuantitativas, Cálculo Estocástico y Gestión Cuantitativa de Portafolios" />
   <meta property="article:tag" content="Monte Carlo Python" />
   <meta property="article:tag" content="Factorización de Cholesky" />
   <meta property="article:tag" content="Salto-Difusión de Merton" />
@@ -60,8 +62,7 @@
                        "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
                        "url":  "https://jesusbzerpa.github.io/",
                        "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
-                       "telephone":  "+58 424 148 78 70",
+"telephone":  "+58 424 148 78 70",
                        "worksFor":  {
                                         "@type":  "Organization",
                                         "name":  "Consorcio Credicard"
@@ -120,7 +121,7 @@
                        "dependencies":  "Python 3.11, NumPy, SciPy, Pandas, Plotly, yfinance",
                        "datePublished":  "2026-11-11",
                        "dateModified":  "2026-11-14",
-                       "alternativeHeadline":  "Auditoría Empírica Fuera de Muestra 2020–2026, Torneo de Cinco Procesos Estocásticos a 10 Años, Reducción de Varianza con Variables Antitéticas y Playbook Patrimonial",
+                       "alternativeHeadline":  "Evaluación Empírica Fuera de Muestra 2020–2026, Contraste de Cinco Procesos Estocásticos a 10 Años, Reducción de Varianza con Variables Antitéticas y Playbook Patrimonial",
                        "isBasedOn":  "https://jesusbz.github.io/modelizacion-monte-carlo-portafolios.html",
                        "author":  {
                                       "@id":  "https://jesusbzerpa.github.io/#person"
@@ -154,8 +155,8 @@
                    {
                        "@type":  "SoftwareSourceCode",
                        "@id":  "https://jesusbz.github.io/models/monte_carlo_portafolios_2026.py#code",
-                       "name":  "monte_carlo_portafolios_2026.py — Motor Institucional de Simulación Monte Carlo Multivariante en Python",
-                       "description":  "Script cuantitativo reproducible en Python (numpy, scipy, pandas, yfinance) para auditoría ex-post 2020–2026, factorización de Cholesky 6D, MLE t-Student multivariante, frontera de Markowitz con 15,000 carteras Dirichlet + SLSQP y torneo de 5 modelos estocásticos con Variables Antitéticas.",
+                       "name":  "monte_carlo_portafolios_2026.py — Motor Cuantitativo de Simulación Monte Carlo Multivariante en Python",
+                       "description":  "Script cuantitativo reproducible en Python (numpy, scipy, pandas, yfinance) para evaluación ex-post 2020–2026, factorización de Cholesky 6D, MLE t-Student multivariante, frontera de Markowitz con 15,000 carteras Dirichlet + SLSQP y torneo de 5 modelos estocásticos con Variables Antitéticas.",
                        "programmingLanguage":  "Python",
                        "runtimePlatform":  "Python 3.11 / NumPy / SciPy",
                        "codeRepository":  "https://jesusbz.github.io/models/monte_carlo_portafolios_2026.py",
@@ -207,11 +208,14 @@
   <!-- SEO:END -->
 
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg?v=20261115a" />
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/jbz-favicon-32.png?v=20261115a" />
+  <link rel="shortcut icon" href="favicon.ico?v=20261115a" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="imagenes/jbz-apple-touch-icon.png?v=20261115a" />
 
   <!-- Corporate Stylesheets -->
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114f" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261121s" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261122a" />
 
   <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
@@ -258,7 +262,7 @@
 
   <style>
     .quant-study-wrap {
-      max-width: 1120px;
+      max-width: 1272px;
       margin: 28px auto 60px auto;
       padding: 0 20px;
     }
@@ -275,14 +279,14 @@
       }
     }
     .study-hero-panel {
-      background: linear-gradient(135deg, #091e42 0%, #0f172a 55%, #1e3a8a 100%);
+      background: linear-gradient(135deg, #0B1B33 0%, #102342 58%, #163259 100%);
       color: #ffffff;
       border-radius: 14px;
       padding: 2.4rem 2.5rem;
       margin-bottom: 2.25rem;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(59, 130, 246, 0.3);
+      border: 1px solid rgba(184, 149, 90, 0.42);
       box-shadow: 0 14px 34px -6px rgba(9, 30, 66, 0.35);
     }
     .study-hero-badges {
@@ -375,7 +379,7 @@
     }
     .btn-study-action.outline {
       background: rgba(255, 255, 255, 0.08);
-      color: #f8fafc !important;
+      color: #FFFFFF !important;
       border: 1px solid rgba(255, 255, 255, 0.22);
     }
     .btn-study-action.outline:hover {
@@ -399,7 +403,7 @@
       }
     }
     .kpi-exec-box {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 1.2rem 1.25rem;
@@ -411,7 +415,7 @@
       box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.08);
     }
     .kpi-exec-box.highlight-lstm {
-      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      background: linear-gradient(180deg, #F4F6FA 0%, #EFF6FF 100%);
       border: 2px solid #2563eb;
     }
     .kpi-exec-tag {
@@ -429,7 +433,7 @@
     .kpi-exec-val {
       font-size: 1.62rem;
       font-weight: 900;
-      color: #091e42;
+      color: #0B1B33;
       line-height: 1.2;
       display: block;
     }
@@ -456,9 +460,9 @@
       margin-top: 0.45rem;
     }
     .toc-executive-box {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #cbd5e1;
-      border-left: 4px solid #0052cc;
+      border-left: 4px solid #1D4ED8;
       border-radius: 10px;
       padding: 1.25rem 1.5rem;
       margin-bottom: 2.25rem;
@@ -468,7 +472,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: #091e42;
+      color: #0B1B33;
       margin-bottom: 0.65rem;
       display: flex;
       align-items: center;
@@ -496,7 +500,7 @@
       gap: 0.4rem;
     }
     .toc-grid-list li a:hover {
-      color: #0052cc !important;
+      color: #1D4ED8 !important;
     }
     .quant-table-wrap {
       overflow-x: auto;
@@ -512,7 +516,7 @@
       background: #ffffff;
     }
     .quant-table thead tr {
-      background: #091e42;
+      background: #0B1B33;
       color: #ffffff;
       text-align: left;
     }
@@ -532,7 +536,7 @@
       vertical-align: middle;
     }
     .quant-table tbody tr:hover {
-      background: #f8fafc;
+      background: #F4F6FA;
     }
     .quant-table tbody tr.row-winner {
       background: #eff6ff;
@@ -565,12 +569,13 @@
       color: #991b1b;
     }
     .plotly-card-box {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
+      background: #0B1B33;
+      border: 1px solid rgba(184, 149, 90, 0.38);
+      border-top: 3px solid #B8955A;
       border-radius: 14px;
       padding: 1.25rem 1.25rem 0.85rem 1.25rem;
       margin: 1.85rem 0 2.35rem 0;
-      box-shadow: 0 8px 25px -5px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 12px 32px rgba(11, 27, 51, 0.22);
     }
     .plotly-card-header {
       display: flex;
@@ -580,32 +585,32 @@
       gap: 0.8rem;
       padding-bottom: 0.85rem;
       margin-bottom: 0.65rem;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid rgba(199, 210, 227, 0.18);
     }
     .plotly-card-title {
       font-size: 1.08rem;
       font-weight: 800;
-      color: #091e42;
+      color: #FFFFFF;
       margin: 0 !important;
     }
     .plotly-card-sub {
       font-size: 0.83rem !important;
-      color: #64748b !important;
+      color: #C7D2E3 !important;
       margin: 0.15rem 0 0 0 !important;
     }
     .chart-ctrl-group {
       display: inline-flex;
       flex-wrap: wrap;
-      background: #f1f5f9;
+      background: #102342;
       padding: 0.22rem;
       border-radius: 8px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid rgba(184, 149, 90, 0.35);
       gap: 0.2rem;
     }
     .chart-ctrl-btn {
       border: none;
       background: transparent;
-      color: #475569;
+      color: #C7D2E3;
       font-size: 0.77rem;
       font-weight: 700;
       padding: 0.35rem 0.68rem;
@@ -614,9 +619,10 @@
       transition: all 0.15s ease;
     }
     .chart-ctrl-btn.active {
-      background: #0052cc;
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(0, 82, 204, 0.25);
+      background: #1D4ED8;
+      color: #FFFFFF;
+      border: 1px solid #B8955A;
+      box-shadow: 0 2px 8px rgba(29, 78, 216, 0.35);
     }
     .plotly-canvas {
       width: 100%;
@@ -626,8 +632,8 @@
       position: relative;
     }
     .callout-quant {
-      background: #f8fafc;
-      border-left: 4px solid #0052cc;
+      background: #F4F6FA;
+      border-left: 4px solid #1D4ED8;
       border-radius: 0 10px 10px 0;
       padding: 1.15rem 1.35rem;
       margin: 1.5rem 0;
@@ -640,23 +646,23 @@
       background: #f0fdf4;
     }
     .callout-quant.amber {
-      border-left-color: #d97706;
-      background: #fffbeb;
+      border-left-color: #B8955A;
+      background: rgba(184, 149, 90, 0.08);
     }
     .callout-quant h4 {
       margin-top: 0 !important;
       margin-bottom: 0.45rem !important;
       font-size: 1.02rem !important;
-      color: #091e42 !important;
+      color: #0B1B33 !important;
     }
     .callout-quant p {
       margin-bottom: 0 !important;
       font-size: 0.96rem !important;
     }
     .math-block-card {
-      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      background: linear-gradient(180deg, #F4F6FA 0%, #FFFFFF 100%);
       border: 1px solid #cbd5e1;
-      border-left: 4px solid #1e3a8a;
+      border-left: 4px solid #B8955A;
       border-radius: 10px;
       padding: 1.15rem 1.5rem;
       margin: 1.25rem 0;
@@ -745,7 +751,7 @@
       }
     }
     .exec-playbook-card {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #cbd5e1;
       border-top: 4px solid #1d4ed8;
       border-radius: 12px;
@@ -756,14 +762,14 @@
       border-top-color: #059669;
     }
     .exec-playbook-card.amber {
-      border-top-color: #d97706;
+      border-top-color: #B8955A;
     }
     .exec-playbook-card.purple {
       border-top-color: #4f46e5;
     }
     .exec-playbook-card h4 {
       margin: 0 0 0.55rem 0 !important;
-      color: #091e42 !important;
+      color: #0B1B33 !important;
       font-size: 1.03rem !important;
       font-weight: 800 !important;
     }
@@ -814,7 +820,7 @@
           <a href="https://rpubs.com/JesusZ" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="RPubs">
             <svg viewBox="0 0 581 512"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9H239.4v208.3c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5h26.6c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg>
           </a>
-          <a href="mailto:jesuszerpaeconomia@gmail.com" class="social-icon-btn" title="Correo Electrónico">
+          <a href="formulario.html" data-jbz-mail="link" class="social-icon-btn" title="Correo Electrónico">
             <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>
@@ -823,9 +829,6 @@
       <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
-      <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa">
-        <img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" />
-      </a>
     </div>
 
     <div id="mobileNavDrawer" class="mobile-nav-drawer">
@@ -852,11 +855,11 @@
           <span class="study-badge primary">Trabajo #16 • Ingeniería Estocástica de Portafolios</span>
           <span class="study-badge emerald">Python • Cholesky 6D • Merton Jump-Diffusion • SciPy</span>
           <span class="study-badge ai-argon">✦ Optimizado con Gemini 4 Argon</span>
-          <span class="study-badge amber">Horizonte Auditado: 2010–2026 &amp; Proyección 2026–2036</span>
+          <span class="study-badge amber">Horizonte Muestral: 2010–2026 &amp; Proyección 2026–2036</span>
         </div>
         <h1>Simulación Estocástica de Monte Carlo Multivariante en Python: Factorización de Cholesky, Salto-Difusión de Merton y Gestión de Carteras (2010–2036)</h1>
         <p>
-          Actualización econométrica e institucional en <strong>Python</strong> del estudio publicado en julio de 2020 (<a href="modelizacion-monte-carlo-portafolios.html" style="color:#93c5fd !important;text-decoration:underline;">Trabajo #10 en RStudio</a>) sobre las seis acciones líderes del S&amp;P 500 (<code>MSFT</code>, <code>JNJ</code>, <code>MA</code>, <code>PEP</code>, <code>WMT</code> y <code>MCD</code>). Sobre <strong>4,240 sesiones diarias verificadas (2010–2026)</strong>, auditamos empíricamente dónde aterrizó la cartera real tras <strong>78.36 meses fuera de muestra</strong> frente al cono probabilístico de 2020, corregimos el sesgo de discretización univariado mediante <strong>Movimiento Browniano Geométrico acoplado vía Cholesky</strong>, estimamos colas conjuntas <strong><i>t</i>-Student Multivariante (<span class="m-inline" style="color:#ffffff;"><i>&nu;&#770;</i> = 3.937</span>)</strong> y <strong>Salto-Difusión de Merton</strong> con <strong>Variables Antitéticas (-80.26% de varianza)</strong> sobre <strong>10,000 trayectorias a 10 años (2026–2036)</strong>.
+          Actualización econométrica y estocástica en <strong>Python</strong> del estudio publicado en julio de 2020 (<a href="modelizacion-monte-carlo-portafolios.html" style="color:#93c5fd !important;text-decoration:underline;">Trabajo #10 en RStudio</a>) sobre las seis acciones líderes del S&amp;P 500 (<code>MSFT</code>, <code>JNJ</code>, <code>MA</code>, <code>PEP</code>, <code>WMT</code> y <code>MCD</code>). Sobre <strong>4,240 sesiones diarias verificadas (2010–2026)</strong>, auditamos empíricamente dónde aterrizó la cartera real tras <strong>78.36 meses fuera de muestra</strong> frente al cono probabilístico de 2020, corregimos el sesgo de discretización univariado mediante <strong>Movimiento Browniano Geométrico acoplado vía Cholesky</strong>, estimamos colas conjuntas <strong><i>t</i>-Student Multivariante (<span class="m-inline" style="color:#ffffff;"><i>&nu;&#770;</i> = 3.937</span>)</strong> y <strong>Salto-Difusión de Merton</strong> con <strong>Variables Antitéticas (-80.26% de varianza)</strong> sobre <strong>10,000 trayectorias a 10 años (2026–2036)</strong>.
         </p>
         <div class="study-meta-bar">
           <div>
@@ -881,7 +884,7 @@
       <!-- Executive 4-KPI Summary Cards -->
       <div class="kpi-exec-grid">
         <div class="kpi-exec-box">
-          <span class="kpi-exec-tag">Auditoría Ex-Post Real (2020–2026)</span>
+          <span class="kpi-exec-tag">Evaluación Ex-Post Fuera de Muestra (2020–2026)</span>
           <span class="kpi-exec-val">$23,380.72</span>
           <span class="kpi-exec-sub pos">Percentil 55.82% del Cono 2020</span>
           <span class="kpi-exec-meta">$10,000 USD ($1 &rarr; $2.3381) | Sharpe: 0.863 | MDD: -12.92%</span>
@@ -909,18 +912,18 @@
       <!-- Table of Contents -->
       <nav class="toc-executive-box" aria-label="Índice del estudio">
         <div class="toc-executive-title">
-          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#0052cc" stroke-width="2.4"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#1D4ED8" stroke-width="2.4"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
           <span>Estructura Ejecutiva de la Investigación</span>
         </div>
         <ul class="toc-grid-list">
           <li><a href="#sec-baseline">1. Línea Base 2020 (RStudio) y sus 4 Limitaciones Estructurales</a></li>
-          <li><a href="#sec-expost">2. Auditoría Empírica Fuera de Muestra (Abril 2020 – Noviembre 2026)</a></li>
+          <li><a href="#sec-expost">2. Evaluación Empírica Fuera de Muestra (Abril 2020 – Noviembre 2026)</a></li>
           <li><a href="#sec-math">3. Cálculo Estocástico Multivariante: Itô, Cholesky, t-Student y Merton</a></li>
           <li><a href="#sec-python">4. Arquitectura Reproducible y Vectorización Tensorial en Python</a></li>
           <li><a href="#sec-charts">5. Laboratorio Visual Interactivo (6 Gráficos Dinámicos Plotly)</a></li>
           <li><a href="#sec-econometria">6. Re-Optimización de Markowitz 2026 e Interpretación de Cholesky</a></li>
           <li><a href="#sec-playbook">7. Playbook Patrimonial: Capital por Objetivos y Reglas de Retiro</a></li>
-          <li><a href="#sec-torneo">8. Torneo de los 5 Modelos Estocásticos (2026–2036) y Síntesis</a></li>
+          <li><a href="#sec-torneo">8. Evaluación Comparativa de las 5 Especificaciones Estocásticas (2026–2036) y Conclusiones</a></li>
         </ul>
       </nav>
 
@@ -933,16 +936,16 @@
           En julio de 2020 publicamos el <a href="modelizacion-monte-carlo-portafolios.html"><strong>Trabajo #10 en RStudio</strong></a> con el objetivo de superar la rigidez de las proyecciones financieras determinísticas —aquellas que extrapolan una única tasa compuesta fija— incorporando la naturaleza aleatoria de los mercados de capitales. Partiendo de las ponderaciones defensivas obtenidas en el <a href="proyecto4.html"><strong>Trabajo #4 sobre el Portafolio Tangente de Markowitz</strong></a> para seis corporaciones líderes del índice S&amp;P 500 —<strong>Microsoft (<code>MSFT</code>, 4.10%)</strong>, <strong>Johnson &amp; Johnson (<code>JNJ</code>, 27.83%)</strong>, <strong>Mastercard (<code>MA</code>, 7.41%)</strong>, <strong>PepsiCo (<code>PEP</code>, 14.21%)</strong>, <strong>Walmart (<code>WMT</code>, 23.02%)</strong> y <strong>McDonald's (<code>MCD</code>, 23.42%)</strong>— entre enero de 2010 y abril de 2020 (<span class="m-inline"><i>N</i> = 123</span> meses), el modelo en R estimó una media mensual logarítmica <span class="m-inline"><i>&mu;&#770;</i><sub>2020</sub> = 1.0794%</span> y una desviación estándar mensual <span class="m-inline"><i>&sigma;&#770;</i><sub>2020</sub> = 3.2407%</span>.
         </p>
         <p>
-          Con dichos estadísticos, aquel primer diseño ejecutó <span class="m-inline"><i>M</i> = 100</span> trayectorias aleatorias a un horizonte de <span class="m-inline"><i>H</i> = 120</span> meses (10 años, abril 2020 – abril 2030) mediante la instrucción recursiva <code>cumprod(1 + rnorm(120, mean_port_return, stddev_port_return))</code> sobre una unidad monetaria inicial (<span class="m-inline"><i>W</i><sub>0</sub> = $1.00 USD</span>), arrojando en esa corrida un crecimiento terminal mínimo de <strong>$1.48 USD</strong>, una mediana de <strong>$3.47 USD</strong> y un máximo muestral de <strong>$9.00 USD</strong>. Sin embargo, al someter ese diseño fundacional a los estándares contemporáneos de ingeniería cuantitativa institucional en 2026, emergen <strong>cuatro limitaciones matemáticas y econométricas críticas</strong> que esta investigación resuelve de raíz:
+          Con dichos estadísticos, aquel primer diseño ejecutó <span class="m-inline"><i>M</i> = 100</span> trayectorias aleatorias a un horizonte de <span class="m-inline"><i>H</i> = 120</span> meses (10 años, abril 2020 – abril 2030) mediante la instrucción recursiva <code>cumprod(1 + rnorm(120, mean_port_return, stddev_port_return))</code> sobre una unidad monetaria inicial (<span class="m-inline"><i>W</i><sub>0</sub> = $1.00 USD</span>), arrojando en esa corrida un crecimiento terminal mínimo de <strong>$1.48 USD</strong>, una mediana de <strong>$3.47 USD</strong> y un máximo muestral de <strong>$9.00 USD</strong>. Sin embargo, al someter ese diseño fundacional a los estándares contemporáneos de econometría financiera y gestión cuantitativa en 2026, emergen <strong>cuatro limitaciones matemáticas y econométricas críticas</strong> que esta investigación resuelve de raíz:
         </p>
 
         <div class="callout-quant amber">
           <h4>Diagnóstico Técnico de las 4 Limitaciones del Motor Monte Carlo Univariado de 2020</h4>
           <p>
             <strong>1. Error Muestral Severo (<span class="m-inline"><i>M</i> = 100</span> vs. <span class="m-inline"><i>M</i> = 10,000</span> con Variables Antitéticas):</strong> Por el Teorema Central del Límite, el error estándar de un estimador de Monte Carlo converge a razón de <span class="m-inline"><i>&mathcal;O;</i>(<i>M</i><sup>-1/2</sup>)</span>. Con apenas 100 simulaciones, los cuantiles extremos del 5% y 1% carecen de estabilidad numérica (apenas 5 y 1 observaciones en la cola). Elevar el motor a <strong>10,000 trayectorias emparejadas con Variables Antitéticas</strong> comprime el error estándar en más de <strong>22 veces</strong>.<br />
-            <strong>2. Colapso Univariado de la Matriz de Covarianza:</strong> Simular directamente el retorno agregado de la cartera como un escalar ignora la dinámica individual de las 6 acciones, impide auditar la deriva de pesos bajo estrategias <em>Buy &amp; Hold</em> y suprime la transmisión de choques intersectoriales capturada por la <strong>Factorización Triangular de Cholesky (<span class="m-inline"><b>&Sigma;</b> = <b>L</b><b>L</b><sup>&#8868;</sup></span>)</strong>.<br />
+            <strong>2. Reducción Escalar de la Matriz de Covarianza:</strong> Simular directamente el retorno agregado de la cartera como un escalar ignora la dinámica individual de las 6 acciones, impide cuantificar la deriva de pesos bajo estrategias <em>Buy &amp; Hold</em> y suprime la transmisión de choques intersectoriales capturada por la <strong>Factorización Triangular de Cholesky (<span class="m-inline"><b>&Sigma;</b> = <b>L</b><b>L</b><sup>&#8868;</sup></span>)</strong>.<br />
             <strong>3. Sesgo de Discretización y Omisión de la Corrección de Itô:</strong> En el código R de 2020 se introdujo la media de retornos <em>logarítmicos</em> (<span class="m-inline"><i>&mu;</i><sub>log</sub></span>) directamente dentro de un factor multiplicativo lineal <code>1 + rnorm(mu_log, sd_log)</code> en lugar de exponenciar el proceso continuo <span class="m-inline">exp((<i>&mu;</i> &minus; &half;<i>&sigma;</i><sup>2</sup>)&Delta;<i>t</i> + <i>&sigma;</i>&radic;&Delta;<i>t</i><i>Z</i>)</span>. Demostramos en la Sección 8 que esta aproximación de primer orden de Taylor introduce una <strong>subestimación sistemática de -$6,240 USD (-16.3%) sobre $10,000 USD</strong> en la riqueza mediana a 10 años.<br />
-            <strong>4. Ceguera Gaussiana ante Colas Pesadas y Drawdowns Intrames:</strong> El muestreo normal mensual asigna probabilidad prácticamente nula a dislocaciones abruptas como el colapso pandémico de marzo de 2020 o los choques arancelarios y de tasas de 2022–2025, además de ocultar las caídas máximas diarias (subestimando la mediana del <em>Maximum Drawdown</em> en casi <strong>10 puntos porcentuales</strong>: <strong>-15.70%</strong> mensual vs. <strong>-25.68%</strong> diario con saltos de Merton).
+            <strong>4. Ceguera Gaussiana ante Colas Pesadas y Drawdowns Intrames:</strong> El muestreo normal mensual asigna probabilidad prácticamente nula a dislocaciones abruptas como el choque exógeno de volatilidad de marzo de 2020 o los choques arancelarios y de tasas de 2022–2025, además de ocultar las caídas máximas diarias (subestimando la mediana del <em>Maximum Drawdown</em> en casi <strong>10 puntos porcentuales</strong>: <strong>-15.70%</strong> mensual vs. <strong>-25.68%</strong> diario con saltos de Merton).
           </p>
         </div>
       </section>
@@ -951,19 +954,19 @@
            SECTION 2: EX-POST REALITY AUDIT (2020-2026)
            ===================================================================== -->
       <section id="sec-expost">
-        <h2>2. Auditoría Empírica Fuera de Muestra (Abril 2020 – Noviembre 2026): Realidad vs. Cono Estocástico</h2>
+        <h2>2. Evaluación Empírica Fuera de Muestra (Abril 2020 – Noviembre 2026): Realidad vs. Cono Estocástico</h2>
         <p>
           A diferencia de un ejercicio puramente teórico, hoy contamos con <strong>6.53 años exactos de historia bursátil fuera de muestra</strong> transcurridos desde el cierre del estudio original: <strong>1,641 sesiones diarias de negociación</strong> entre el <strong>30 de abril de 2020 y el 10 de noviembre de 2026</strong> (<span class="m-inline"><i>t</i> = 78.36</span> meses dentro del horizonte original de 120 meses). Esta ventana abarca cinco regímenes macrofinancieros de altísima exigencia: la recuperación post-COVID (2020–2021), el choque inflacionario global y el ciclo restrictivo de la Reserva Federal en 2022 (donde el S&amp;P 500 cedió <strong>-25.43%</strong>), la expansión estructural de la Inteligencia Artificial liderada por <code>MSFT</code> (2023–2024) y la reconfiguración comercial y de consumo defensivo de 2025–2026 liderada por <code>WMT</code> y <code>MA</code>.
         </p>
         <p>
-          Al reconstruir con precisión exacta (<span class="m-inline"><i>M</i> = 10,000</span> réplicas) el cono probabilístico formulado en abril de 2020 y evaluar sus cuantiles teóricos exactamente en el mes <span class="m-inline"><i>t</i> = 78.36</span> (noviembre de 2026), los umbrales proyectados por cada $1.00 USD invertido eran: <strong>Percentil 5% = $1.4015</strong> ($14,015 por $10k), <strong>Percentil 25% = $1.8464</strong>, <strong>Mediana (P50) = $2.2403</strong> ($22,403 por $10k), <strong>Media Teórica = $2.3241</strong> ($23,241 por $10k), <strong>Percentil 75% = $2.7014</strong> y <strong>Percentil 95% = $3.5430</strong>. La Tabla 2.1 confronta estos umbrales ex-ante contra el desempeño auditado de mercado:
+          Al reconstruir con precisión exacta (<span class="m-inline"><i>M</i> = 10,000</span> réplicas) el cono probabilístico formulado en abril de 2020 y evaluar sus cuantiles teóricos exactamente en el mes <span class="m-inline"><i>t</i> = 78.36</span> (noviembre de 2026), los umbrales proyectados por cada $1.00 USD invertido eran: <strong>Percentil 5% = $1.4015</strong> ($14,015 por $10k), <strong>Percentil 25% = $1.8464</strong>, <strong>Mediana (P50) = $2.2403</strong> ($22,403 por $10k), <strong>Media Teórica = $2.3241</strong> ($23,241 por $10k), <strong>Percentil 75% = $2.7014</strong> y <strong>Percentil 95% = $3.5430</strong>. La Tabla 2.1 confronta estos umbrales ex-ante contra el desempeño observado de mercado:
         </p>
 
         <div class="quant-table-wrap">
           <table class="quant-table">
             <thead>
               <tr>
-                <th>Estrategia Auditada (30-Abr-2020 &rarr; 10-Nov-2026)</th>
+                <th>Estrategia Evaluada (30-Abr-2020 &rarr; 10-Nov-2026)</th>
                 <th>Valor Final ($1 Base)</th>
                 <th>Capital Final ($10,000 USD)</th>
                 <th>Retorno Acumulado</th>
@@ -1042,7 +1045,7 @@
       <section id="sec-math">
         <h2>3. Formulación Matemática y Cálculo Estocástico Multivariante</h2>
         <p>
-          Para modelar rigurosamente un portafolio institucional compuesto por <span class="m-inline"><i>d</i> = 6</span> activos riesgosos cuyos precios evolucionan en tiempo continuo sobre un espacio de probabilidad filtrado <span class="m-inline">(&Omega;, &mathcal;F;, &#123;&mathcal;F;<sub><i>t</i></sub>&#125;<sub><i>t</i>&ge;0</sub>, &#8473;)</span>, abandonamos el escalar univariado y formulamos el sistema vectorial acoplado de ecuaciones diferenciales estocásticas (SDE).
+          Para modelar rigurosamente un portafolio diversificado compuesto por <span class="m-inline"><i>d</i> = 6</span> activos riesgosos cuyos precios evolucionan en tiempo continuo sobre un espacio de probabilidad filtrado <span class="m-inline">(&Omega;, &mathcal;F;, &#123;&mathcal;F;<sub><i>t</i></sub>&#125;<sub><i>t</i>&ge;0</sub>, &#8473;)</span>, abandonamos el escalar univariado y formulamos el sistema vectorial acoplado de ecuaciones diferenciales estocásticas (SDE).
         </p>
 
         <h3>3.1. Movimiento Browniano Geométrico Multivariante y Corrección del Lema de Itô</h3>
@@ -1076,7 +1079,7 @@
 
         <h3>3.3. Colas Pesadas Conjuntas (<i>t</i>-Student Multivariante) y Co-Dependencia de Extremos</h3>
         <p>
-          En crisis sistémicas, las correlaciones efectivas se disparan simultáneamente: un choque extremo en tecnología co-ocurre con ventas forzadas de liquidez en consumo básico. Una cópula gaussiana posee dependencia asintótica de cola nula (<span class="m-inline">&lambda;<sub><i>L</i></sub> = 0</span>). Para capturar la leptocurtosis conjunta, modelamos el vector diario <span class="m-inline"><b>r</b><sub><i>t</i></sub> &in; &#8477;<sup>6</sup></span> bajo una <strong>Distribución <i>t</i>-Student Multivariante</strong> con <span class="m-inline">&nu; &gt; 2</span> grados de libertad y matriz de dispersión escalada <span class="m-inline"><b>S</b> = ((&nu;&minus;2)/&nu;)<b>&Sigma;</b></span> (garantizando <span class="m-inline">Cov(<b>r</b><sub><i>t</i></sub>) = <b>&Sigma;</b></span>), estimando <span class="m-inline"><i>&nu;&#770;</i><sub>MLE</sub> = 3.937</span> por Máxima Verosimilitud exacta:
+          En crisis sistémicas, las correlaciones condicionales convergen al alza simultáneamente: un choque extremo en tecnología co-ocurre con ventas forzadas de liquidez en consumo básico. Una cópula gaussiana posee dependencia asintótica de cola nula (<span class="m-inline">&lambda;<sub><i>L</i></sub> = 0</span>). Para capturar la leptocurtosis conjunta, modelamos el vector diario <span class="m-inline"><b>r</b><sub><i>t</i></sub> &in; &#8477;<sup>6</sup></span> bajo una <strong>Distribución <i>t</i>-Student Multivariante</strong> con <span class="m-inline">&nu; &gt; 2</span> grados de libertad y matriz de dispersión escalada <span class="m-inline"><b>S</b> = ((&nu;&minus;2)/&nu;)<b>&Sigma;</b></span> (garantizando <span class="m-inline">Cov(<b>r</b><sub><i>t</i></sub>) = <b>&Sigma;</b></span>), estimando <span class="m-inline"><i>&nu;&#770;</i><sub>MLE</sub> = 3.937</span> por Máxima Verosimilitud exacta:
         </p>
 
         <div class="math-block-card">
@@ -1132,7 +1135,7 @@
           Todo el flujo econométrico y estocástico ha sido programado en un módulo de producción autocontenido (<a href="models/monte_carlo_portafolios_2026.py" download><code>models/monte_carlo_portafolios_2026.py</code></a>) utilizando operaciones tensoriales de álgebra lineal en <code>NumPy</code> (<code>np.einsum</code> y <code>np.linalg.cholesky</code>) y optimización no lineal en <code>SciPy</code>, prescindiendo por completo de bucles iterativos lentos sobre trayectorias. A continuación se documentan los cuatro bloques algorítmicos centrales:
         </p>
 
-        <h3>Paso 4.1. Ingesta Auditada (2010–2026) y Verificación Fuera de Muestra</h3>
+        <h3>Paso 4.1. Ingesta Verificada de Series (2010–2026) y Verificación Fuera de Muestra</h3>
         <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">import</span> numpy <span class="kw">as</span> <span class="dt">np</span>
 <span class="kw">import</span> pandas <span class="kw">as</span> <span class="dt">pd</span>
 <span class="kw">from</span> scipy <span class="kw">import</span> <span class="dt">optimize</span>, <span class="dt">special</span>, <span class="dt">stats</span>
@@ -1147,7 +1150,7 @@ prices <span class="op">=</span> <span class="dt">pd</span>.read_csv(<span class
 daily_log <span class="op">=</span> <span class="dt">np</span>.log(prices[ASSETS] <span class="op">/</span> prices[ASSETS].shift(<span class="dv">1</span>)).dropna()
 daily_simp <span class="op">=</span> prices[ASSETS].pct_change().dropna()
 
-<span class="co"># Auditoría Fuera de Muestra (30-Abr-2020 al 10-Nov-2026: 1,641 sesiones = 78.36 meses)</span>
+<span class="co"># Validación Fuera de Muestra (30-Abr-2020 al 10-Nov-2026: 1,641 sesiones = 78.36 meses)</span>
 post_prices <span class="op">=</span> prices.loc[<span class="st">&quot;2020-04-30&quot;</span><span class="op">:</span>, ASSETS]
 rel_prices <span class="op">=</span> post_prices <span class="op">/</span> post_prices.iloc[<span class="dv">0</span>]
 bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> WEIGHTS_2020  <span class="co"># Buy &amp; Hold ($1.00 -&gt; $2.3135 USD)</span></code></pre></div>
@@ -1243,14 +1246,14 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
       <section id="sec-charts">
         <h2>5. Laboratorio Visual Interactivo del Modelo Monte Carlo (6 Gráficos Dinámicos)</h2>
         <p>
-          En sustitución de las vistas estáticas de alta varianza muestral del post original de 2020, desplegamos a continuación una suite interactiva de <strong>seis visualizaciones dinámicas en Plotly.js</strong> alimentadas con las 4,240 sesiones empíricas y las 10,000 trayectorias estocásticas auditadas. Utiliza los botones superiores de cada lienzo para conmutar escalas monetarias, procesos generadores de datos y regímenes de correlación.
+          En sustitución de las vistas estáticas de alta varianza muestral del post original de 2020, desplegamos a continuación una suite interactiva de <strong>seis visualizaciones dinámicas en Plotly.js</strong> alimentadas con las 4,240 sesiones empíricas y las 10,000 trayectorias estocásticas simuladas. Utiliza los botones superiores de cada lienzo para conmutar escalas monetarias, procesos generadores de datos y regímenes de correlación.
         </p>
 
         <!-- CHART 1: EX-POST REALITY AUDIT VS 2020 CONE -->
         <div class="plotly-card-box">
           <div class="plotly-card-header">
             <div>
-              <h3 class="plotly-card-title">Gráfico 5.1. Auditoría Fuera de Muestra (2020–2026) frente al Cono Estocástico Original de 120 Meses</h3>
+              <h3 class="plotly-card-title">Gráfico 5.1. Validación Fuera de Muestra (2020–2026) frente al Cono Estocástico Original de 120 Meses</h3>
               <p class="plotly-card-sub">Bandas teóricas P05–P95 proyectadas en abril de 2020 vs. trayectoria bursátil real verificada hasta noviembre de 2026 (Percentil 55.82%).</p>
             </div>
             <div class="chart-ctrl-group" role="group" aria-label="Escala monetaria del cono">
@@ -1457,16 +1460,16 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
            SECTION 7: OPERATIONAL PLAYBOOK FOR INSTITUTIONAL & WEALTH INVESTORS
            ===================================================================== -->
       <section id="sec-playbook">
-        <h2>7. Playbook Operativo para el Inversor Institucional y Patrimonial (Mandato de $1,000,000 USD)</h2>
+        <h2>7. Reglas Cuantitativas de Asignación de Capital y Gestión Patrimonial (Mandato de $1,000,000 USD)</h2>
         <p>
-          Una simulación estocástica institucional no tiene como fin contemplar curvas dispersas, sino <strong>transformar la distribución completa de probabilidades en reglas fiduciarias accionables de capitalización, presupuesto de riesgo y retiro sostenible</strong>. Tomando como motor rector el modelo más conservador en colas extremas —<strong>Salto-Difusión de Merton acoplado vía Cholesky</strong> (<span class="m-inline">&lambda;&#770; = 1.96</span> saltos adversos/año con severidad media <span class="m-inline"><i>&mu;&#770;</i><sub><i>J</i></sub> = &minus;4.25%</span>)— estructuramos cuatro directrices cuantitativas directas:
+          Una simulación estocástica multivariante no tiene como fin contemplar curvas dispersas, sino <strong>transformar la distribución completa de probabilidades en reglas fiduciarias accionables de capitalización, presupuesto de riesgo y retiro sostenible</strong>. Tomando como motor rector el modelo más conservador en colas extremas —<strong>Salto-Difusión de Merton acoplado vía Cholesky</strong> (<span class="m-inline">&lambda;&#770; = 1.96</span> saltos adversos/año con severidad media <span class="m-inline"><i>&mu;&#770;</i><sub><i>J</i></sub> = &minus;4.25%</span>)— estructuramos cuatro directrices cuantitativas directas:
         </p>
 
         <div class="exec-playbook-grid">
           <div class="exec-playbook-card">
             <h4>1. Goal-Based Investing: Capital Requerido para Alcanzar $1,000,000 USD en 10 Años</h4>
             <p>
-              Un error frecuente en banca privada consiste en descontar una meta patrimonial <span class="m-inline"><i>K</i> = $1,000,000 USD</span> usando el retorno medio esperado (<span class="m-inline"><i>W</i><sub>0</sub> = <i>K</i> / &#120124;[<i>M</i><sub>120</sub>] = $157,584 USD</span>). Debido a la asimetría positiva log-normal, ese cálculo ingenuo fracasa en <strong>más del 56% de los escenarios futuros</strong>. Para garantizar alcanzar <strong>$1,000,000 USD al 95% de confianza institucional</strong> (cubriendo incluso el percentil 5% adverso de saltos de Merton), el capital inicial requerido hoy sobre el <strong>Portafolio Tangente 2026 es exactamente $450,907 USD</strong> ($292,426 USD al 80% de confianza; $583,540 USD si se utiliza el perfil defensivo 2020).
+              Un error frecuente en banca privada consiste en descontar una meta patrimonial <span class="m-inline"><i>K</i> = $1,000,000 USD</span> usando el retorno medio esperado (<span class="m-inline"><i>W</i><sub>0</sub> = <i>K</i> / &#120124;[<i>M</i><sub>120</sub>] = $157,584 USD</span>). Debido a la asimetría positiva log-normal, ese cálculo ingenuo fracasa en <strong>más del 56% de los escenarios futuros</strong>. Para garantizar alcanzar <strong>$1,000,000 USD al 95% de nivel de confianza estadístico</strong> (cubriendo incluso el percentil 5% adverso de saltos de Merton), el capital inicial requerido hoy sobre el <strong>Portafolio Tangente 2026 es exactamente $450,907 USD</strong> ($292,426 USD al 80% de confianza; $583,540 USD si se utiliza el perfil defensivo 2020).
             </p>
           </div>
 
@@ -1480,14 +1483,14 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
           <div class="exec-playbook-card amber">
             <h4>3. Presupuesto Fiduciario de Riesgo y Reserva de Liquidez vía CVaR<sub>99%</sub></h4>
             <p>
-              Para evitar liquidaciones emocionales o llamadas de margen en medio de un episodio de saltos correlacionados, el comité de inversión debe dimensionar su tolerancia sobre el <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong> y el percentil 95% del <em>Maximum Drawdown</em>. En un mandato de <strong>$1,000,000 USD</strong> sobre el Tangente 2026, el <span class="m-inline">VaR<sub>99%</sub></span> mensual es <strong>-10.43% (-$104,342 USD)</strong> y el <span class="m-inline">CVaR<sub>99%</sub></span> a 1 año asciende a <strong>-25.47% (-$254,731 USD)</strong>, con un drawdown intertemporal P95 de <strong>-40.13%</strong> (frente a -37.92% en la cartera defensiva 2020).
+              Para prevenir liquidaciones forzadas en mínimos cíclicos o llamadas de margen en medio de un episodio de saltos correlacionados, el comité de inversión debe dimensionar su tolerancia sobre el <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong> y el percentil 95% del <em>Maximum Drawdown</em>. En un mandato de <strong>$1,000,000 USD</strong> sobre el Tangente 2026, el <span class="m-inline">VaR<sub>99%</sub></span> mensual es <strong>-10.43% (-$104,342 USD)</strong> y el <span class="m-inline">CVaR<sub>99%</sub></span> a 1 año asciende a <strong>-25.47% (-$254,731 USD)</strong>, con un drawdown intertemporal P95 de <strong>-40.13%</strong> (frente a -37.92% en la cartera defensiva 2020).
             </p>
           </div>
 
           <div class="exec-playbook-card purple">
             <h4>4. Gobernanza de Deriva de Pesos: Buy &amp; Hold vs. Banda de Rebalanceo</h4>
             <p>
-              Nuestra auditoría multivariante demuestra que dejar correr el <strong>Portafolio Tangente 2026 en modo <em>Buy &amp; Hold</em></strong> sin rebalancear durante 10 años eleva ligeramente la mediana terminal ($56,613 vs. $54,538 USD por $10k), pero provoca una <strong>concentración peligrosa de riesgo sectorial</strong>: el bloque tecnológico y de pagos (<code>MSFT + MA</code>) deriva desde su óptimo de <strong>46.07% hasta absorber el 61.52% del portafolio</strong>. Se recomienda una <strong>regla institucional de bandas de tolerancia de &plusmn;3.5 puntos porcentuales</strong> o rebalanceo mensual/trimestral sistemático.
+              La estimación multivariante demuestra que dejar correr el <strong>Portafolio Tangente 2026 en modo <em>Buy &amp; Hold</em></strong> sin rebalancear durante 10 años eleva ligeramente la mediana terminal ($56,613 vs. $54,538 USD por $10k), pero provoca una <strong>concentración peligrosa de riesgo sectorial</strong>: el bloque tecnológico y de pagos (<code>MSFT + MA</code>) deriva desde su óptimo de <strong>46.07% hasta absorber el 61.52% del portafolio</strong>. Se recomienda una <strong>regla sistemática de bandas de tolerancia de &plusmn;3.5 puntos porcentuales</strong> o rebalanceo mensual/trimestral sistemático.
             </p>
           </div>
         </div>
@@ -1508,7 +1511,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
             </thead>
             <tbody>
               <tr>
-                <td><strong>4.0% Anual (Conservador Institucional)</strong></td>
+                <td><strong>4.0% Anual (Conservador Sistemático)</strong></td>
                 <td>$3,333 USD / mes</td>
                 <td><span class="badge-num emerald">100.00%</span></td>
                 <td>98.86%</td>
@@ -1566,9 +1569,9 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
            SECTION 8: 5-MODEL STOCHASTIC TOURNAMENT & EXECUTIVE SYNTHESIS
            ===================================================================== -->
       <section id="sec-torneo">
-        <h2>8. Torneo de los 5 Modelos Estocásticos a 10 Años (2026–2036) y Síntesis Ejecutiva</h2>
+        <h2>8. Evaluación Comparativa de las 5 Especificaciones Estocásticas a 10 Años (2026–2036) y Conclusiones Econométricas</h2>
         <p>
-          La Tabla 8.1 consolida el torneo comparativo completo ejecutado sobre un capital base estandarizado de <strong><span class="m-inline"><i>W</i><sub>0</sub> = $10,000.00 USD</span></strong> a un horizonte de <strong>10 años (<span class="m-inline"><i>H</i> = 2,520</span> sesiones bursátiles / 120 meses, noviembre 2026 – noviembre 2036)</strong> con <span class="m-inline"><i>M</i> = 10,000</span> trayectorias por especificación, contrastando tanto el <strong>Nuevo Portafolio Tangente Óptimo 2026</strong> como la asignación histórica del <strong>Portafolio Defensivo 2020</strong>:
+          La Tabla 8.1 consolida la evaluación comparativa completa ejecutado sobre un capital base estandarizado de <strong><span class="m-inline"><i>W</i><sub>0</sub> = $10,000.00 USD</span></strong> a un horizonte de <strong>10 años (<span class="m-inline"><i>H</i> = 2,520</span> sesiones bursátiles / 120 meses, noviembre 2026 – noviembre 2036)</strong> con <span class="m-inline"><i>M</i> = 10,000</span> trayectorias por especificación, contrastando tanto el <strong>Nuevo Portafolio Tangente Óptimo 2026</strong> como la asignación histórica del <strong>Portafolio Defensivo 2020</strong>:
         </p>
 
         <div class="quant-table-wrap">
@@ -1699,12 +1702,12 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
 
         <!-- EXEC-SYNTHESIS-START -->
         <div class="callout-quant">
-          <h4>Síntesis Ejecutiva de la Investigación</h4>
+          <h4>Conclusiones Econométricas y Financieras</h4>
           <p style="margin-bottom:0.7rem !important;">
-            <strong>1. Validación Fuera de Muestra y Corrección Rigurosa del Sesgo de Itô:</strong> La auditoría empírica de <strong>1,641 sesiones reales (abril 2020 – noviembre 2026)</strong> confirma que el Portafolio Tangente original transformó <strong>$10,000 USD en $23,380.72 USD (+133.81%, Sharpe 0.863, Máx. Drawdown -12.92%)</strong>, convergiendo en el <strong>Percentil 55.82%</strong> del cono estocástico de 2020. Al mismo tiempo, demostramos analítica y computacionalmente que el esquema univariado discreto de 2020 subestima la mediana de riqueza a 10 años en <strong>-$10,209 USD sobre el Portafolio 2026 ($44,329 vs. $54,538 USD)</strong> y oculta casi <strong>10 puntos porcentuales de riesgo de caída intrames</strong>.
+            <strong>1. Validación Fuera de Muestra y Corrección Rigurosa del Sesgo de Itô:</strong> La evaluación fuera de muestra de <strong>1,641 sesiones reales (abril 2020 – noviembre 2026)</strong> confirma que el Portafolio Tangente original transformó <strong>$10,000 USD en $23,380.72 USD (+133.81%, Sharpe 0.863, Máx. Drawdown -12.92%)</strong>, convergiendo en el <strong>Percentil 55.82%</strong> del cono estocástico de 2020. Al mismo tiempo, demostramos analítica y computacionalmente que el esquema univariado discreto de 2020 subestima la mediana de riqueza a 10 años en <strong>-$10,209 USD sobre el Portafolio 2026 ($44,329 vs. $54,538 USD)</strong> y oculta casi <strong>10 puntos porcentuales de riesgo de caída intrames</strong>.
           </p>
           <p>
-            <strong>2. Superioridad del Acoplamiento Cholesky + Salto-Difusión de Merton para Decisiones Fiduciarias:</strong> Mientras que los cuatro motores continuos y semiparamétricos correctamente especificados (GBM-Cholesky, <i>t</i>-Student Multivariante con <span class="m-inline"><i>&nu;&#770;</i> = 3.937</span>, Salto-Difusión de Merton y Block Bootstrap) convergen con extraordinaria coherencia en una <strong>riqueza mediana proyectada de $54,054 a $54,715 USD por cada $10,000 USD (CAGR mediano de ~18.45%)</strong>, únicamente el motor <strong>Salto-Difusión de Merton con Variables Antitéticas (-80.26% de varianza)</strong> captura simultáneamente la cola de estrés intertemporal (<strong><span class="m-inline">CVaR<sub>95%</sub> = $18,236 USD</span>; P95 Máx. Drawdown de -40.13%</strong>), permitiendo dimensionar con rigor institucional reservas de capital por objetivos (<strong>$450,907 USD hoy para asegurar $1,000,000 USD al 95% de confianza</strong>) y tasas óptimas de retiro indexado (<strong>5.0% anual con 94.66% de preservación real</strong>).
+            <strong>2. Superioridad del Acoplamiento Cholesky + Salto-Difusión de Merton para Decisiones Fiduciarias:</strong> Mientras que los cuatro motores continuos y semiparamétricos correctamente especificados (GBM-Cholesky, <i>t</i>-Student Multivariante con <span class="m-inline"><i>&nu;&#770;</i> = 3.937</span>, Salto-Difusión de Merton y Block Bootstrap) convergen con extraordinaria coherencia en una <strong>riqueza mediana proyectada de $54,054 a $54,715 USD por cada $10,000 USD (CAGR mediano de ~18.45%)</strong>, únicamente el motor <strong>Salto-Difusión de Merton con Variables Antitéticas (-80.26% de varianza)</strong> captura simultáneamente la cola de estrés intertemporal (<strong><span class="m-inline">CVaR<sub>95%</sub> = $18,236 USD</span>; P95 Máx. Drawdown de -40.13%</strong>), permitiendo dimensionar con rigor econométrico reservas de capital por objetivos (<strong>$450,907 USD hoy para asegurar $1,000,000 USD al 95% de confianza</strong>) y tasas óptimas de retiro indexado (<strong>5.0% anual con 94.66% de preservación real</strong>).
           </p>
         </div>
         <!-- EXEC-SYNTHESIS-END -->
@@ -1737,95 +1740,228 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
 
       <hr />
       <span style="font-size: medium;"><br /></span>
-      <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<br /><span style="color: #475569; font-size: 0.92em;">Publicado: Noviembre de 2026</span></span><br />
+      <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br /><span data-jbz-mail-text="1">Canal de correo protegido</span><br /><span style="color: #475569; font-size: 0.92em;">Publicado: Noviembre de 2026</span></span><br />
       <br />
       <div style="text-align: left;">
-        <a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img alt="Simulación Estocástica de Monte Carlo Multivariante en Python - Licencia Creative Commons 4.0" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a>
+        <a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img class="cc-badge" alt="Simulación Estocástica de Monte Carlo Multivariante en Python - Licencia Creative Commons 4.0" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a>
         <span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
       </div>
       <br />
       <hr />
 
       <!-- RELATED-CAROUSEL-START -->
-      <section class="pc-section" aria-label="Otros trabajos del portafolio">
+                  <section class="pc-section" aria-label="Otros trabajos del portafolio">
         <div class="pc-header">
           <div>
             <span class="pc-kicker">Sigue explorando</span>
             <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
           </div>
           <div class="pc-controls">
+            <span class="pc-page-badge">1–4 de 18</span>
             <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
             <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
           </div>
         </div>
         <div class="pc-viewport" id="carouselViewport">
           <div class="pc-track" id="carouselTrack">
-            <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-              <div class="pc-media">
-                <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo en RStudio (2020)" class="pc-img" loading="lazy" decoding="async" />
-                <span class="pc-num">TRABAJO #10</span>
-                <span class="pc-cat">Monte Carlo RStudio (2020)</span>
-              </div>
-              <div class="pc-body">
-                <h4 class="pc-title">Simulación Estocástica de Monte Carlo en la Gestión de Carteras (Post Original 2020)</h4>
-                <div class="pc-meta"><span class="pc-tags">RStudio · tidyquant</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-              </div>
-            </a>
-            <a href="volatilidad-garch-var-cvar-python.html" class="pc-card">
-              <div class="pc-media">
-                <img src="imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp" alt="Modelización de Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python" class="pc-img" loading="lazy" decoding="async" />
-                <span class="pc-num">TRABAJO #15</span>
-                <span class="pc-cat">EGARCH &amp; CVaR Python</span>
-              </div>
-              <div class="pc-body">
-                <h4 class="pc-title">Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR) en Python (2014–2026)</h4>
-                <div class="pc-meta"><span class="pc-tags">Python · Skewed-t</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-              </div>
-            </a>
-            <a href="deep-portfolio-lstm-python.html" class="pc-card">
-              <div class="pc-media">
-                <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
-                <span class="pc-num">TRABAJO #14</span>
-                <span class="pc-cat">Deep Learning LSTM</span>
-              </div>
-              <div class="pc-body">
-                <h4 class="pc-title">Deep Portfolio Optimization con Redes Neuronales LSTM en Python (2020–2026)</h4>
-                <div class="pc-meta"><span class="pc-tags">PyTorch · Markowitz</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-              </div>
-            </a>
-            <a href="proyecto4.html" class="pc-card">
-              <div class="pc-media">
-                <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-                <span class="pc-num">TRABAJO #4</span>
-                <span class="pc-cat">Teoría de Portafolios</span>
-              </div>
-              <div class="pc-body">
-                <h4 class="pc-title">Portafolio Eficiente y Portafolio Tangente de Markowitz (RStudio 2020)</h4>
-                <div class="pc-meta"><span class="pc-tags">Markowitz · S&amp;P 500</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-              </div>
-            </a>
-            <a href="EvaluacionProyecto.html" class="pc-card">
-              <div class="pc-media">
-                <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
-                <span class="pc-num">TRABAJO #5</span>
-                <span class="pc-cat">Evaluación de Proyectos</span>
-              </div>
-              <div class="pc-body">
-                <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión: Global Nutrition España</h4>
-                <div class="pc-meta"><span class="pc-tags">CAPEX · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-              </div>
-            </a>
-            <a href="power-bi.html" class="pc-card">
-              <div class="pc-media">
-                <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp" alt="Power BI Business Intelligence" class="pc-img" loading="lazy" decoding="async" />
-                <span class="pc-num">TRABAJO #11</span>
-                <span class="pc-cat">Business Intelligence</span>
-              </div>
-              <div class="pc-body">
-                <h4 class="pc-title">Power BI: Inteligencia de Negocios y Visualización Ejecutiva de Datos</h4>
-                <div class="pc-meta"><span class="pc-tags">Power BI · Dashboards</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-              </div>
-            </a>
+          <a href="bot-trading-python/index.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-19-bot-trading-cripto-python.webp?v=20261121w" alt="Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #19</span>
+              <span class="pc-cat">Python · 4 Bots</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · GARCH · MLP</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-vectores-autoregresivos-en-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-18-var-granger-rstudio.webp?v=20261121b" alt="Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #18</span>
+              <span class="pc-cat">RStudio · vars</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">R 4.4+ · urca · IRF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="vectores-autorregresivos-var-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-17-var-granger-spillover-python.webp?v=20261121b" alt="Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #17</span>
+              <span class="pc-cat">Python · VAR(8)</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Johansen · GFEVD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="volatilidad-garch-var-cvar-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-15-volatilidad-egarch-var-cvar-bitcoin-python.webp?v=20261121b" alt="Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR)" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #15</span>
+              <span class="pc-cat">EGARCH &amp; CVaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Volatilidad Asimétrica GARCH, VaR y Expected Shortfall (CVaR)</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Skewed-t</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="deep-portfolio-lstm-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp?v=20261121b" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #14</span>
+              <span class="pc-cat">Deep Learning LSTM</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Deep Portfolio Optimization con Redes Neuronales LSTM en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">PyTorch · Markowitz</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-medias-moviles-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp?v=20261121b" alt="Análisis Técnico Cuantitativo del Bitcoin en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #13</span>
+              <span class="pc-cat">Análisis Técnico</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis Técnico Cuantitativo del Bitcoin en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">quantmod · Bollinger · MACD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp?v=20261121b" alt="Análisis de Procesos de Negocio y Minería de Datos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #12</span>
+              <span class="pc-cat">Process Mining</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis de Procesos de Negocio y Minería de Datos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">bupaR · Event Logs</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="power-bi.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp?v=20261121b" alt="Implementación de Business Intelligence y Modelado Analítico" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #11</span>
+              <span class="pc-cat">Business Intelligence</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Implementación de Business Intelligence y Modelado Analítico</h4>
+              <div class="pc-meta"><span class="pc-tags">Power BI · KPIs Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp?v=20261121b" alt="Modelización Estocástica de Carteras con Monte Carlo en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #10</span>
+              <span class="pc-cat">Monte Carlo R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Carteras con Monte Carlo en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">Monte Carlo · Frontera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp?v=20261121b" alt="Pronósticos Econométricos con Prophet para Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #9</span>
+              <span class="pc-cat">Prophet RStudio</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Pronósticos Econométricos con Prophet para Bitcoin y Ether</h4>
+              <div class="pc-meta"><span class="pc-tags">Prophet · Criptoactivos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="powermap.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp?v=20261121b" alt="Sistema de Información Geográfica (SIG) y Analítica 3D" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #8</span>
+              <span class="pc-cat">SIG Geoespacial</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Sistema de Información Geográfica (SIG) y Analítica 3D</h4>
+              <div class="pc-meta"><span class="pc-tags">Power Map · Geoespacial</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto7.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp?v=20261121b" alt="Exploración Econométrica de Datos Macroeconómicos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #7</span>
+              <span class="pc-cat">Macroeconomía</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Exploración Econométrica de Datos Macroeconómicos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">WDI · Regresión Lineal</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Dashboard.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp?v=20261121b" alt="Cuadro de Mando Financiero y Suite Interactiva FP&amp;A" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #6</span>
+              <span class="pc-cat">FP&amp;A Suite</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Cuadro de Mando Financiero y Suite Interactiva FP&amp;A</h4>
+              <div class="pc-meta"><span class="pc-tags">FP&amp;A · EBITDA · FCF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="EvaluacionProyecto.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp?v=20261121b" alt="Formulación y Evaluación Financiera de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #5</span>
+              <span class="pc-cat">CAPEX &amp; VAN/TIR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Formulación y Evaluación Financiera de Proyectos de Inversión</h4>
+              <div class="pc-meta"><span class="pc-tags">CAPEX · WACC · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto4.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp?v=20261121b" alt="Optimización de Portafolios y Frontera Eficiente de Markowitz" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #4</span>
+              <span class="pc-cat">Markowitz R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Optimización de Portafolios y Frontera Eficiente de Markowitz</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · Ratio Sharpe</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto3.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp?v=20261121b" alt="Aprendizaje Automático (Machine Learning) Financiero en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #3</span>
+              <span class="pc-cat">Machine Learning</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Aprendizaje Automático (Machine Learning) Financiero en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">tidymodels · Series</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Proyecto2.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp?v=20261121b" alt="Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #2</span>
+              <span class="pc-cat">eGARCH &amp; VaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo</h4>
+              <div class="pc-meta"><span class="pc-tags">Bitcoin · rugarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelo-ventas.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp?v=20261121b" alt="Modelo Econométrico de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #1</span>
+              <span class="pc-cat">Series SARIMA</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelo Econométrico de Pronósticos para Ventas en Volumen</h4>
+              <div class="pc-meta"><span class="pc-tags">SARIMA · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
           </div>
         </div>
       </section>
@@ -1909,7 +2045,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
         <span class="exec-cta-eyebrow">Ecosistema Profesional · Jesús Benjamín Zerpa</span>
         <h3 class="exec-cta-title">¿Deseas implementar modelos estocásticos de riesgo o planificación financiera en tu empresa?</h3>
         <p class="exec-cta-desc">
-          <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, comités de inversión y gerencias financieras en la estructuración de presupuestos maestros, simulación Monte Carlo de flujos de caja / CAPEX y cuadros de mando en Python, R y Power BI.
+          <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, comités de inversión y gerencias financieras en la estructuración de presupuestos maestros, simulación Monte Carlo de flujos de caja / CAPEX, Implementación de Business Intelligence y modelos econométricos en Python y R.
         </p>
       </div>
       <div class="exec-cta-actions">
@@ -1937,7 +2073,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
           </p>
           <div class="footer-license-box">
             <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
-              <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
+              <img class="cc-badge" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
             </a>
             <span>Contenido bajo <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
           </div>
@@ -1947,7 +2083,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
           <h4 class="footer-col-title">Navegación</h4>
           <ul class="footer-links-list">
             <li><a href="index.html">Inicio</a></li>
-            <li><a href="index.html#trabajos">Catálogo de 16 Modelos</a></li>
+            <li><a href="index.html#trabajos">Catálogo de 18 Estudios</a></li>
             <li><a href="acercade.html">Trayectoria Profesional</a></li>
             <li><a href="https://jesusbezerpa.github.io/" target="_blank" rel="noopener noreferrer">Consultoría &amp; Servicios</a></li>
             <li><a href="https://jesusbzerpa.github.io/" target="_blank" rel="noopener noreferrer">CV Ejecutivo Web</a></li>
@@ -1961,7 +2097,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
           <ul class="footer-links-list">
             <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
             <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
-            <li><a href="mailto:jesuszerpaeconomia@gmail.com">jesuszerpaeconomia@gmail.com</a></li>
+            <li><a href="formulario.html" data-jbz-mail="text">Contacto directo</a></li>
             <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Telegram @jesusbz21</a></li>
           </ul>
         </div>
@@ -2047,14 +2183,14 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                 x: c1.cone_dates, y: sc(c1.p50),
                 name: 'Mediana Teórica Cono 2020 (P50)',
                 type: 'scatter', mode: 'lines',
-                line: { color: '#64748b', width: 2.2, dash: 'dash' },
+                line: { color: '#C7D2E3', width: 2.2, dash: 'dash' },
                 hovertemplate: '<b>Mediana Cono 2020</b>: ' + fmtHover + '<extra></extra>'
               },
               {
                 x: c1.real_dates, y: sc(c1.real_sp500),
                 name: 'Benchmark Real S&P 500 (^GSPC)',
                 type: 'scatter', mode: 'lines',
-                line: { color: '#f59e0b', width: 2.3 },
+                line: { color: '#B8955A', width: 2.3 },
                 hovertemplate: '<b>S&P 500 Real</b>: ' + fmtHover + '<extra></extra>'
               },
               {
@@ -2068,36 +2204,36 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                 x: c1.real_dates, y: sc(c1.real_rebal),
                 name: 'Real Tangente 2020 (Rebalanceo Mensual · P55.8%)',
                 type: 'scatter', mode: 'lines',
-                line: { color: '#091e42', width: 3.3 },
+                line: { color: '#D9C29A', width: 3.3 },
                 hovertemplate: '<b>Real Rebalanceado</b>: ' + fmtHover + '<extra></extra>'
               }
             ];
 
             Plotly.react('chartExPostCone', traces, {
               height: 455,
-              font: { family: fontFamily, color: '#1e293b' },
+              font: { family: fontFamily, color: '#FFFFFF' },
               margin: { l: 72, r: 28, t: 38, b: 50 },
-              paper_bgcolor: '#ffffff',
-              plot_bgcolor: '#f8fafc',
+              paper_bgcolor: '#0B1B33',
+              plot_bgcolor: '#102342',
               hovermode: 'x unified',
               shapes: [
                 {
                   type: 'line', x0: '2026-10-31', x1: '2026-10-31', y0: 0, y1: 1, yref: 'paper',
-                  line: { color: '#dc2626', width: 1.8, dash: 'dashdot' }
+                  line: { color: '#F43F5E', width: 1.9, dash: 'dashdot' }
                 }
               ],
               annotations: [
                 {
                   x: '2026-10-31', y: 0.96, yref: 'paper',
-                  text: 'Corte Auditado Nov-2026 (P55.82%)',
+                  text: 'Corte Muestral Nov-2026 (P55.82%)',
                   showarrow: true, arrowhead: 2, ax: -95, ay: -18,
-                  bgcolor: '#eff6ff', bordercolor: '#2563eb', font: { size: 11, color: '#1e3a8a' }
+                  bgcolor: 'rgba(11, 27, 51, 0.92)', bordercolor: '#38BDF8', font: { size: 11, color: '#E0F2FE' }
                 }
               ],
-              xaxis: { title: 'Horizonte Original de 120 Meses (Abril 2020 – Abril 2030)', gridcolor: '#e2e8f0' },
+              xaxis: { title: 'Horizonte Original de 120 Meses (Abril 2020 – Abril 2030)', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
               yaxis: {
                 title: mult === 1 ? 'Crecimiento Compuesto ($1.00 USD Base 2020)' : 'Valoración Patrimonial ($10,000 USD Iniciales)',
-                tickprefix: '$', gridcolor: '#e2e8f0'
+                tickprefix: '$', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)'
               },
               legend: { orientation: 'h', y: 1.15, x: 0, font: { size: 11 } }
             }, plotConfig);
@@ -2143,30 +2279,30 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                 },
                 {
                   x: dates, y: bExt.p95,
-                  name: 'Percentil 95% Institucional ($134,986)',
+                  name: 'Percentil 95% Superior ($134,986)',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#2563eb', width: 2.0, dash: 'dot' },
+                  line: { color: '#38BDF8', width: 2.0, dash: 'dot' },
                   hovertemplate: '<b>Percentil 95%</b>: $%{y:,.0f} USD<extra></extra>'
                 },
                 {
                   x: dates, y: bExt.med_traj,
                   name: 'Trayectoria Mediana Representativa ($54,715)',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#091e42', width: 3.2 },
+                  line: { color: '#D9C29A', width: 3.2 },
                   hovertemplate: '<b>Trayectoria Mediana</b>: $%{y:,.0f} USD<extra></extra>'
                 },
                 {
                   x: dates, y: bExt.p05,
                   name: 'Percentil 5% VaR 95% ($22,178)',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#f59e0b', width: 2.0, dash: 'dot' },
+                  line: { color: '#B8955A', width: 2.0, dash: 'dot' },
                   hovertemplate: '<b>Percentil 5%</b>: $%{y:,.0f} USD<extra></extra>'
                 },
                 {
                   x: dates, y: bExt.min_traj,
                   name: 'Trayectoria Mínima Extrema ($7,320)',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#ef4444', width: 2.5 },
+                  line: { color: '#F43F5E', width: 2.5 },
                   hovertemplate: '<b>Mínimo Extremo</b>: $%{y:,.0f} USD<extra></extra>'
                 }
               );
@@ -2197,7 +2333,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                   name: 'Banda 90% (P05–P95)',
                   type: 'scatter', mode: 'lines',
                   fill: 'tonexty', fillcolor: 'rgba(37, 99, 235, 0.11)',
-                  line: { color: '#ef4444', width: 2.0, dash: 'dot' },
+                  line: { color: '#F43F5E', width: 2.0, dash: 'dot' },
                   hovertemplate: '<b>Percentil 5% (VaR 95%)</b>: $%{y:,.0f} USD<extra></extra>'
                 },
                 {
@@ -2220,14 +2356,14 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                   x: dates, y: bundle.mean,
                   name: 'Esperanza Matemática E[W_t]',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#2563eb', width: 2.4, dash: 'dash' },
+                  line: { color: '#38BDF8', width: 2.4, dash: 'dash' },
                   hovertemplate: '<b>Media Esperada</b>: $%{y:,.0f} USD<extra></extra>'
                 },
                 {
                   x: dates, y: bundle.p50,
                   name: 'Mediana Estocástica P50 (' + labelModel.split('(')[0].trim() + ')',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#091e42', width: 3.3 },
+                  line: { color: '#D9C29A', width: 3.3 },
                   hovertemplate: '<b>Mediana P50</b>: $%{y:,.0f} USD<extra></extra>'
                 }
               );
@@ -2235,16 +2371,16 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
 
             Plotly.react('chartForwardPaths', traces, {
               height: 465,
-              font: { family: fontFamily, color: '#1e293b' },
+              font: { family: fontFamily, color: '#FFFFFF' },
               margin: { l: 75, r: 28, t: 38, b: 50 },
-              paper_bgcolor: '#ffffff',
-              plot_bgcolor: '#f8fafc',
+              paper_bgcolor: '#0B1B33',
+              plot_bgcolor: '#102342',
               hovermode: 'x unified',
-              xaxis: { title: 'Horizonte de Proyección Estocástica a 120 Meses (Noviembre 2026 – Noviembre 2036)', gridcolor: '#e2e8f0' },
+              xaxis: { title: 'Horizonte de Proyección Estocástica a 120 Meses (Noviembre 2026 – Noviembre 2036)', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
               yaxis: {
                 title: mode === 'extremes' ? 'Riqueza Proyectada en Escala Logarítmica ($ USD)' : 'Riqueza Acumulada del Portafolio ($10,000 USD Base)',
                 type: mode === 'extremes' ? 'log' : 'linear',
-                tickprefix: '$', gridcolor: '#e2e8f0'
+                tickprefix: '$', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)'
               },
               legend: { orientation: 'h', y: 1.15, x: 0, font: { size: 11 } }
             }, plotConfig);
@@ -2278,7 +2414,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                 x: xGrid, y: yJd26,
                 name: 'Salto-Difusión Merton (Tangente 2026)',
                 type: 'bar',
-                marker: { color: 'rgba(37, 99, 235, 0.45)', line: { color: '#1d4ed8', width: 1.0 } },
+                marker: { color: 'rgba(56, 189, 248, 0.42)', line: { color: '#38BDF8', width: 1.0 } },
                 hovertemplate: isWealth
                   ? '<b>W_120 ≈ $%{x:,.0f} USD</b><br>Probabilidad: %{y:.2f}%<extra></extra>'
                   : '<b>CAGR ≈ %{x:.2f}%</b><br>Probabilidad: %{y:.2f}%<extra></extra>'
@@ -2287,7 +2423,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                 x: xGrid, y: yGbm26,
                 name: 'GBM Multivariante Cholesky (Tangente 2026)',
                 type: 'scatter', mode: 'lines',
-                line: { color: '#091e42', width: 2.8 },
+                line: { color: '#D9C29A', width: 2.8 },
                 hovertemplate: '<b>GBM 2026</b>: %{y:.2f}%<extra></extra>'
               },
               {
@@ -2300,28 +2436,28 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
             ];
 
             const shapes = isWealth ? [
-              { type: 'line', x0: c3.markers_jd26.cvar95, x1: c3.markers_jd26.cvar95, y0: 0, y1: 1, yref: 'paper', line: { color: '#dc2626', width: 2.0, dash: 'dot' } },
-              { type: 'line', x0: c3.markers_jd26.p05, x1: c3.markers_jd26.p05, y0: 0, y1: 1, yref: 'paper', line: { color: '#f59e0b', width: 2.0, dash: 'dash' } },
-              { type: 'line', x0: c3.markers_jd26.median, x1: c3.markers_jd26.median, y0: 0, y1: 1, yref: 'paper', line: { color: '#091e42', width: 2.3 } }
+              { type: 'line', x0: c3.markers_jd26.cvar95, x1: c3.markers_jd26.cvar95, y0: 0, y1: 1, yref: 'paper', line: { color: '#F43F5E', width: 2.1, dash: 'dot' } },
+              { type: 'line', x0: c3.markers_jd26.p05, x1: c3.markers_jd26.p05, y0: 0, y1: 1, yref: 'paper', line: { color: '#B8955A', width: 2.0, dash: 'dash' } },
+              { type: 'line', x0: c3.markers_jd26.median, x1: c3.markers_jd26.median, y0: 0, y1: 1, yref: 'paper', line: { color: '#D9C29A', width: 2.4 } }
             ] : [
-              { type: 'line', x0: c3.markers_cagr_jd26.p05, x1: c3.markers_cagr_jd26.p05, y0: 0, y1: 1, yref: 'paper', line: { color: '#f59e0b', width: 2.0, dash: 'dash' } },
-              { type: 'line', x0: c3.markers_cagr_jd26.median, x1: c3.markers_cagr_jd26.median, y0: 0, y1: 1, yref: 'paper', line: { color: '#091e42', width: 2.3 } }
+              { type: 'line', x0: c3.markers_cagr_jd26.p05, x1: c3.markers_cagr_jd26.p05, y0: 0, y1: 1, yref: 'paper', line: { color: '#B8955A', width: 2.0, dash: 'dash' } },
+              { type: 'line', x0: c3.markers_cagr_jd26.median, x1: c3.markers_cagr_jd26.median, y0: 0, y1: 1, yref: 'paper', line: { color: '#D9C29A', width: 2.4 } }
             ];
 
             const annotations = isWealth ? [
-              { x: c3.markers_jd26.cvar95, y: 0.92, yref: 'paper', text: 'CVaR 95%: $18,236', showarrow: false, bgcolor: '#fee2e2', font: { size: 10.5, color: '#991b1b' } },
-              { x: c3.markers_jd26.median, y: 0.96, yref: 'paper', text: 'Mediana Merton: $54,715', showarrow: false, bgcolor: '#dbeafe', font: { size: 11, color: '#1e3a8a' } }
+              { x: c3.markers_jd26.cvar95, y: 0.92, yref: 'paper', text: 'CVaR 95%: $18,236', showarrow: false, bgcolor: 'rgba(11, 27, 51, 0.92)', bordercolor: '#F43F5E', font: { size: 10.5, color: '#FECDD3' } },
+              { x: c3.markers_jd26.median, y: 0.96, yref: 'paper', text: 'Mediana Merton: $54,715', showarrow: false, bgcolor: 'rgba(11, 27, 51, 0.92)', bordercolor: '#D9C29A', font: { size: 11, color: '#D9C29A' } }
             ] : [
-              { x: c3.markers_cagr_jd26.p05, y: 0.90, yref: 'paper', text: 'P05 CAGR: ' + c3.markers_cagr_jd26.p05 + '%', showarrow: false, bgcolor: '#fef3c7', font: { size: 10.5, color: '#92400e' } },
-              { x: c3.markers_cagr_jd26.median, y: 0.96, yref: 'paper', text: 'CAGR Mediano: ' + c3.markers_cagr_jd26.median + '%', showarrow: false, bgcolor: '#dbeafe', font: { size: 11, color: '#1e3a8a' } }
+              { x: c3.markers_cagr_jd26.p05, y: 0.90, yref: 'paper', text: 'P05 CAGR: ' + c3.markers_cagr_jd26.p05 + '%', showarrow: false, bgcolor: 'rgba(11, 27, 51, 0.92)', bordercolor: '#B8955A', font: { size: 10.5, color: '#FDE68A' } },
+              { x: c3.markers_cagr_jd26.median, y: 0.96, yref: 'paper', text: 'CAGR Mediano: ' + c3.markers_cagr_jd26.median + '%', showarrow: false, bgcolor: 'rgba(11, 27, 51, 0.92)', bordercolor: '#D9C29A', font: { size: 11, color: '#D9C29A' } }
             ];
 
             Plotly.react('chartTerminalDist', traces, {
               height: 440,
-              font: { family: fontFamily, color: '#1e293b' },
+              font: { family: fontFamily, color: '#FFFFFF' },
               margin: { l: 68, r: 28, t: 36, b: 50 },
-              paper_bgcolor: '#ffffff',
-              plot_bgcolor: '#f8fafc',
+              paper_bgcolor: '#0B1B33',
+              plot_bgcolor: '#102342',
               barmode: 'overlay',
               hovermode: 'x unified',
               shapes: shapes,
@@ -2330,9 +2466,9 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                 title: isWealth ? 'Riqueza Terminal al Mes 120 ($ USD sobre $10,000 Iniciales)' : 'Tasa de Crecimiento Anual Compuesto a 10 Años — CAGR (%)',
                 tickprefix: isWealth ? '$' : '',
                 ticksuffix: isWealth ? '' : '%',
-                gridcolor: '#e2e8f0'
+                gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)'
               },
-              yaxis: { title: 'Masa de Probabilidad por Intervalo (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+              yaxis: { title: 'Masa de Probabilidad por Intervalo (%)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
               legend: { orientation: 'h', y: 1.14, x: 0, font: { size: 11 } }
             }, plotConfig);
           } catch (err) {
@@ -2363,7 +2499,7 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
               marker: {
                 size: 5.5,
                 color: c4.cloud_sharpe,
-                colorscale: 'Viridis',
+                colorscale: [[0, '#102342'], [0.35, '#1D4ED8'], [0.7, '#38BDF8'], [1, '#B8955A']],
                 opacity: 0.68,
                 colorbar: { title: 'Sharpe', thickness: 14, len: 0.78 }
               },
@@ -2374,14 +2510,14 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
               x: c4.ef_vol, y: c4.ef_ret,
               name: 'Frontera Eficiente Exacta SLSQP (Long-Only)',
               type: 'scatter', mode: 'lines',
-              line: { color: '#091e42', width: 3.2 },
+              line: { color: '#D9C29A', width: 3.2 },
               hovertemplate: '<b>Frontera SLSQP</b><br>Vol: %{x:.2f}% | Ret: %{y:.2f}%<extra></extra>'
             },
             {
               x: cmlX, y: cmlY,
               name: 'Línea del Mercado de Capitales (R_f = 2.50%)',
               type: 'scatter', mode: 'lines',
-              line: { color: '#2563eb', width: 2.0, dash: 'dash' },
+              line: { color: '#38BDF8', width: 2.0, dash: 'dash' },
               hovertemplate: '<b>CML</b>: Vol %{x:.1f}% &rarr; Ret %{y:.2f}%<extra></extra>'
             },
             {
@@ -2390,8 +2526,8 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
               name: '6 Acciones Individuales S&P 500',
               type: 'scatter', mode: 'markers+text',
               textposition: 'top center',
-              textfont: { size: 11, color: '#0f172a', family: fontFamily },
-              marker: { size: 10, color: '#dc2626', symbol: 'diamond', line: { color: '#ffffff', width: 1.5 } },
+              textfont: { size: 11, color: '#FFFFFF', family: fontFamily },
+              marker: { size: 10, color: '#F43F5E', symbol: 'diamond', line: { color: '#FFFFFF', width: 1.5 } },
               hovertemplate: '<b>%{text}</b><br>Volatilidad: %{x:.2f}%<br>Retorno Anual: %{y:.2f}%<extra></extra>'
             },
             {
@@ -2405,27 +2541,27 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
               x: [sp.tangent_2020.vol_pct], y: [sp.tangent_2020.ret_pct],
               name: 'Portafolio Defensivo 2020 (Sharpe 0.853)',
               type: 'scatter', mode: 'markers',
-              marker: { size: 14, color: '#f59e0b', symbol: 'square', line: { color: '#78350f', width: 2 } },
+              marker: { size: 14, color: '#B8955A', symbol: 'square', line: { color: '#D9C29A', width: 2 } },
               hovertemplate: '<b>Pesos Originales 2020</b><br>Vol: %{x:.2f}% | Ret: %{y:.2f}% | Sharpe: 0.853<extra></extra>'
             },
             {
               x: [sp.tangent_2026.vol_pct], y: [sp.tangent_2026.ret_pct],
               name: 'Óptimo Tangente 2026 (Sharpe 0.978)',
               type: 'scatter', mode: 'markers',
-              marker: { size: 17, color: '#2563eb', symbol: 'star', line: { color: '#ffffff', width: 2 } },
+              marker: { size: 17, color: '#38BDF8', symbol: 'star', line: { color: '#FFFFFF', width: 2 } },
               hovertemplate: '<b>Portafolio Tangente Óptimo 2026</b><br>Vol: %{x:.2f}% | Ret: %{y:.2f}% | Sharpe: 0.978<extra></extra>'
             }
           ];
 
           Plotly.newPlot('chartMarkowitzMC', frontierTraces, {
             height: 465,
-            font: { family: fontFamily, color: '#1e293b' },
+            font: { family: fontFamily, color: '#FFFFFF' },
             margin: { l: 65, r: 40, t: 38, b: 50 },
-            paper_bgcolor: '#ffffff',
-            plot_bgcolor: '#f8fafc',
+            paper_bgcolor: '#0B1B33',
+            plot_bgcolor: '#102342',
             hovermode: 'closest',
-            xaxis: { title: 'Volatilidad Anualizada del Portafolio σ_p (%)', range: [11.5, 28.5], ticksuffix: '%', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Retorno Esperado Anualizado E[R_p] (%)', range: [7.5, 25.2], ticksuffix: '%', gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Volatilidad Anualizada del Portafolio σ_p (%)', range: [11.5, 28.5], ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+            yaxis: { title: 'Retorno Esperado Anualizado E[R_p] (%)', range: [7.5, 25.2], ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
             legend: { orientation: 'h', y: 1.15, x: 0, font: { size: 10.8 } }
           }, plotConfig);
         } catch (err) {
@@ -2444,14 +2580,14 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                   x: c5.mdd_x, y: c5.mdd_jd26,
                   name: 'Salto-Difusión Merton 2026 (Mediana -25.68% | P95 -40.13%)',
                   type: 'bar',
-                  marker: { color: 'rgba(220, 38, 38, 0.42)', line: { color: '#b91c1c', width: 1.0 } },
+                  marker: { color: 'rgba(244, 63, 94, 0.45)', line: { color: '#F43F5E', width: 1.0 } },
                   hovertemplate: '<b>Máx. Drawdown ≈ %{x:.1f}%</b><br>Frecuencia Merton 2026: %{y:.2f}%<extra></extra>'
                 },
                 {
                   x: c5.mdd_x, y: c5.mdd_gbm20,
                   name: 'GBM Diario Cholesky Pesos 2020 (Mediana -21.14%)',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#2563eb', width: 2.7 },
+                  line: { color: '#38BDF8', width: 2.7 },
                   hovertemplate: '<b>GBM Diario 2020</b>: %{y:.2f}%<extra></extra>'
                 },
                 {
@@ -2465,14 +2601,14 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
 
               Plotly.react('chartDrawdownConv', mddTraces, {
                 height: 435,
-                font: { family: fontFamily, color: '#1e293b' },
+                font: { family: fontFamily, color: '#FFFFFF' },
                 margin: { l: 65, r: 28, t: 36, b: 50 },
-                paper_bgcolor: '#ffffff',
-                plot_bgcolor: '#f8fafc',
+                paper_bgcolor: '#0B1B33',
+                plot_bgcolor: '#102342',
                 barmode: 'overlay',
                 hovermode: 'x unified',
-                xaxis: { title: 'Caída Máxima Desde Máximo Previo en 10 Años — Maximum Drawdown (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
-                yaxis: { title: 'Probabilidad Estocástica (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+                xaxis: { title: 'Caída Máxima Desde Máximo Previo en 10 Años — Maximum Drawdown (%)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+                yaxis: { title: 'Probabilidad Estocástica (%)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
                 legend: { orientation: 'h', y: 1.14, x: 0, font: { size: 11 } }
               }, plotConfig);
             } else {
@@ -2496,34 +2632,34 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
                   x: c5.conv_m, y: c5.conv_std,
                   name: 'Estimador Monte Carlo Estándar i.i.d.',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#f59e0b', width: 2.2 },
+                  line: { color: '#B8955A', width: 2.2 },
                   hovertemplate: '<b>MC Estándar (M=%{x})</b>: $%{y:,.0f} USD<extra></extra>'
                 },
                 {
                   x: c5.conv_m, y: c5.conv_ant,
                   name: 'Estimador con Variables Antitéticas (-80.26% Varianza)',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#2563eb', width: 3.1 },
+                  line: { color: '#38BDF8', width: 3.1 },
                   hovertemplate: '<b>MC Antitético (M=%{x})</b>: $%{y:,.0f} USD<extra></extra>'
                 },
                 {
                   x: [50, 10000], y: [c5.conv_true, c5.conv_true],
                   name: 'Esperanza Analítica Exacta ($' + c5.conv_true.toLocaleString() + ')',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#091e42', width: 2.0, dash: 'dash' },
+                  line: { color: '#B8955A', width: 2.2, dash: 'dash' },
                   hoverinfo: 'skip'
                 }
               ];
 
               Plotly.react('chartDrawdownConv', convTraces, {
                 height: 435,
-                font: { family: fontFamily, color: '#1e293b' },
+                font: { family: fontFamily, color: '#FFFFFF' },
                 margin: { l: 74, r: 28, t: 36, b: 50 },
-                paper_bgcolor: '#ffffff',
-                plot_bgcolor: '#f8fafc',
+                paper_bgcolor: '#0B1B33',
+                plot_bgcolor: '#102342',
                 hovermode: 'x unified',
-                xaxis: { title: 'Número de Trayectorias Simuladas M (Escala Logarítmica: 50 a 10,000)', type: 'log', gridcolor: '#e2e8f0' },
-                yaxis: { title: 'Media Estimada de Riqueza Terminal E[W_120] ($ USD)', tickprefix: '$', gridcolor: '#e2e8f0' },
+                xaxis: { title: 'Número de Trayectorias Simuladas M (Escala Logarítmica: 50 a 10,000)', type: 'log', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+                yaxis: { title: 'Media Estimada de Riqueza Terminal E[W_120] ($ USD)', tickprefix: '$', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
                 legend: { orientation: 'h', y: 1.15, x: 0, font: { size: 10.8 } }
               }, plotConfig);
             }
@@ -2568,24 +2704,24 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
               y: c6.labels,
               text: textGrid,
               texttemplate: '%{text}',
-              textfont: { size: 12.5, family: fontFamily },
+              textfont: { size: 12.5, color: '#FFFFFF', family: fontFamily },
               type: 'heatmap',
               zmin: zMin,
               zmax: zMax,
               colorscale: matMode === 'chol'
-                ? [[0, '#f8fafc'], [0.35, '#bfdbfe'], [0.7, '#2563eb'], [1, '#091e42']]
-                : [[0, '#eff6ff'], [0.45, '#93c5fd'], [0.75, '#2563eb'], [1, '#091e42']],
+                ? [[0, '#0B1B33'], [0.35, '#163259'], [0.70, '#1D4ED8'], [1, '#8B6B35']]
+                : [[0, '#0B1B33'], [0.40, '#163259'], [0.75, '#1D4ED8'], [1, '#0284C7']],
               colorbar: { title: matMode === 'chol' ? 'L_ij (%)' : 'ρ_ij', ticksuffix: suffix },
               hovertemplate: '<b>Fila %{y} × Columna %{x}</b><br>Valor: %{text}<extra></extra>'
             }];
 
             Plotly.react('chartCorrCholesky', heatTrace, {
               height: 430,
-              title: { text: titleText, font: { size: 13.5, color: '#091e42', family: fontFamily } },
-              font: { family: fontFamily, color: '#1e293b' },
+              title: { text: titleText, font: { size: 13.5, color: '#D9C29A', family: fontFamily } },
+              font: { family: fontFamily, color: '#FFFFFF' },
               margin: { l: 70, r: 40, t: 52, b: 48 },
-              paper_bgcolor: '#ffffff',
-              plot_bgcolor: '#ffffff',
+              paper_bgcolor: '#0B1B33',
+              plot_bgcolor: '#102342',
               yaxis: { autorange: 'reversed' }
             }, plotConfig);
           } catch (err) {
@@ -2610,6 +2746,6 @@ bh_curve <span class="op">=</span> rel_prices.values <span class="op">@</span> W
   </script>
 
   <!-- Corporate Portfolio JS (Code Copy Buttons, Moving Carousel, Scroll Top, Navigation, Copilot Assistant) -->
-  <script src="js/futuristic-app.js?v=20261114f"></script>
+  <script src="js/futuristic-app.js?v=20261123a"></script>
 </body>
 </html>

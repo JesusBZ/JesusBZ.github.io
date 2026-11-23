@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class MultiAssetMarkowitzModel:
     """
-    Modelo de Asignación Estructural de Capital Institucional.
+    Modelo de Asignación Estructural de Capital Cuantitativo.
     Implementa la Teoría de Media-Varianza de Markowitz repotenciada con 
     limpieza de covarianza de Ledoit-Wolf (Shrinkage) y restricciones sectoriales.
     """
@@ -101,6 +101,6 @@ class MultiAssetMarkowitzModel:
             }
             
         return {
-            "portfolio_value_audited": current_portfolio_value,
+            "portfolio_value_verified": current_portfolio_value,
             "allocations": allocation_report
         }

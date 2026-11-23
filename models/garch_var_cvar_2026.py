@@ -1,7 +1,7 @@
 """
 =========================================================================================
 MODELIZACIÓN DE VOLATILIDAD ASIMÉTRICA GARCH, VALOR EN RIESGO (VaR) Y EXPECTED SHORTFALL
-(CVaR) EN PYTHON: TRANSICIÓN DE RÉGIMEN INSTITUCIONAL DEL BITCOIN (2014 -> 2026)
+(CVaR) EN PYTHON: TRANSICIÓN DE RÉGIMEN CUANTITATIVO DEL BITCOIN (2014 -> 2026)
 Evolución Cuantitativa del Estudio Original en RStudio (Mayo 2020 -> Octubre 2026)
 Autor: Jesús Benjamín Zerpa | Economista & Quantitative Data Scientist
 Sitio Web: https://jesusbz.github.io/volatilidad-garch-var-cvar-python.html
@@ -15,7 +15,7 @@ from arch import arch_model
 from scipy import stats
 from statsmodels.stats.diagnostic import acorr_ljungbox, het_arch
 
-# 1. Parámetros Globales de Auditoría Institucional
+# 1. Parámetros Globales de Estimación Cuantitativa
 TICKER = "BTC-USD"
 START_DATE = "2014-09-17"
 END_DATE = "2026-10-30"
@@ -176,7 +176,7 @@ def compute_trading_and_risk_execution_rules(
       1. Volatility Targeting Weight: w_t = min(1.0, sigma_target / sigma_{anual, t})
       2. Capital Asignado por Presupuesto de Cola (CVaR_99): E_max = L_max / |CVaR_{99, t}|
       3. Stop-Loss Dinámico Condicional al 99%: SL_t = VaR_{99, t} (%)
-      4. Apalancamiento Máximo Institucional en Derivados: Lev_max = (1 - m_mant) / (kappa * |CVaR_{99, t}|)
+      4. Apalancamiento Máximo Ajustado por Riesgo en Derivados: Lev_max = (1 - m_mant) / (kappa * |CVaR_{99, t}|)
     """
     exec_df = risk_df.copy()
     cvar_dec = (exec_df["CVaR_99"].abs() / 100.0).clip(lower=1e-4)
@@ -199,8 +199,8 @@ if __name__ == "__main__":
     bt99 = kupiec_christoffersen_backtest(eval_df["Return_Pct"], eval_df["VaR_99"], alpha=0.01)
     last_row = exec_df.iloc[-1]
 
-    print("=== RESUMEN DE AUDITORÍA ECONOMÉTRICA Y EJECUCIÓN CUANTITATIVA (2014-2026) ===")
-    print(f"Observaciones auditadas : {len(df)} días ({df.index[0].date()} -> {df.index[-1].date()})")
+    print("=== RESUMEN DE ESTIMACIÓN ECONOMÉTRICA Y EJECUCIÓN CUANTITATIVA (2014-2026) ===")
+    print(f"Observaciones muestrales : {len(df)} días ({df.index[0].date()} -> {df.index[-1].date()})")
     print(f"Modelo Óptimo (AIC/MLE) : AR(1)-EGARCH(2,1) con Distribución Skewed-t de Hansen")
     print(f"Log-Verosimilitud       : {best_fit.loglikelihood:.2f} | AIC: {best_fit.aic:.2f}")
     print(f"Violaciones VaR 99%     : {bt99['violations']} / {bt99['obs']} ({bt99['empirical_rate_pct']:.3f}%)")

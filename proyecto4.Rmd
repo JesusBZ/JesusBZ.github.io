@@ -135,7 +135,44 @@ Supuestos del modelo:</span></h3>
 </span></div>
 </div>
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE}
-library(tseries)
+library(quantmod)
+library(timeSeries)
+# Paleta Corporativa Unificada (Curriculum.pdf — Executive Navy & Champagne Gold)
+jbz_cv_palette <- c(
+  navy = "#0B1B33", plot_navy = "#102342", elev_navy = "#163259",
+  cobalt = "#1D4ED8", sky = "#38BDF8", gold = "#B8955A",
+  gold_soft = "#D9C29A", emerald = "#10B981", rose = "#F43F5E",
+  mist = "#C7D2E3", white = "#FFFFFF"
+)
+jbz_series_colors <- c("#38BDF8", "#B8955A", "#10B981", "#F43F5E", "#60A5FA", "#D9C29A", "#2DD4BF")
+
+theme_jbz_cv <- function(base_size = 12) {
+  ggplot2::theme_minimal(base_size = base_size) +
+    ggplot2::theme(
+      plot.background   = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      panel.background  = ggplot2::element_rect(fill = "#102342", colour = NA),
+      panel.grid.major  = ggplot2::element_line(colour = "#1E3A5F", linewidth = 0.35),
+      panel.grid.minor  = ggplot2::element_blank(),
+      text              = ggplot2::element_text(colour = "#FFFFFF"),
+      axis.text         = ggplot2::element_text(colour = "#C7D2E3"),
+      axis.title        = ggplot2::element_text(colour = "#D9C29A", face = "bold"),
+      plot.title        = ggplot2::element_text(colour = "#FFFFFF", face = "bold"),
+      plot.subtitle     = ggplot2::element_text(colour = "#C7D2E3"),
+      legend.background = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      legend.text       = ggplot2::element_text(colour = "#FFFFFF")
+    )
+}
+
+jbz_plotly_cv <- function(p) {
+  plotly::layout(
+    p,
+    paper_bgcolor = "#0B1B33",
+    plot_bgcolor  = "#102342",
+    font  = list(color = "#FFFFFF", family = "Plus Jakarta Sans, Inter, sans-serif"),
+    xaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3")),
+    yaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3"))
+  )
+}
 library(fPortfolio)
 library(knitr)
 library(kableExtra)
@@ -145,53 +182,39 @@ library(kableExtra)
 <div style="text-align: justify;">
 <span style="font-size: large;">A continuación se armarán los datos de cada serie temporal utilizando la paquetería de portfolio y se graficarán.&nbsp;</span></div>
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-Indice<- get.hist.quote(instrument = "^GSPC", 
-                        start=as.Date("2010-01-04"), 
-                        end=as.Date("2020-04-30"), quote = "AdjClose")
-plot(Indice, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico del Índice S&P 500 [2010-2020]") 
+Indice <- quantmod::getSymbols("^GSPC", src = "yahoo", from = "2010-01-04", to = "2020-04-30", auto.assign = FALSE) |> quantmod::Ad()
+plot(Indice, col="#38BDF8", xlab="Fecha", ylab="AdjClose"); title(main="Histórico del Índice S&P 500 [2010-2020]") 
 summary(Indice)
 ```
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-MSFT<- get.hist.quote(instrument = "MSFT", 
-                      start=as.Date("2010-01-04"), 
-                      end=as.Date("2020-04-30"), quote = "AdjClose")
-plot(MSFT, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Microsoft Corporation [2010-2020]")
+MSFT <- quantmod::getSymbols("MSFT", src = "yahoo", from = "2010-01-04", to = "2020-04-30", auto.assign = FALSE) |> quantmod::Ad()
+plot(MSFT, col="#38BDF8", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Microsoft Corporation [2010-2020]")
 ```
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-JNJ<- get.hist.quote(instrument = "JNJ", 
-                     start=as.Date("2010-01-04"), 
-                     end=as.Date("2020-04-30"), quote = "AdjClose")
-plot(JNJ, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Johnson & Johnson [2010-2020]")
+JNJ <- quantmod::getSymbols("JNJ", src = "yahoo", from = "2010-01-04", to = "2020-04-30", auto.assign = FALSE) |> quantmod::Ad()
+plot(JNJ, col="#38BDF8", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Johnson & Johnson [2010-2020]")
 ```
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-MA<- get.hist.quote(instrument = "MA", 
-                      start=as.Date("2010-01-04"), 
-                      end=as.Date("2020-04-30"), quote = "AdjClose")
-plot(MA, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Mastercard Incorporated [2010-2020]")
+MA <- quantmod::getSymbols("MA", src = "yahoo", from = "2010-01-04", to = "2020-04-30", auto.assign = FALSE) |> quantmod::Ad()
+plot(MA, col="#38BDF8", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Mastercard Incorporated [2010-2020]")
 ```
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-PEP<- get.hist.quote(instrument = "PEP", 
-                     start=as.Date("2010-01-04"), 
-                     end=as.Date("2020-04-30"), quote = "AdjClose")
-plot(PEP, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de PepsiCo Inc. [2010-2020]")
+PEP <- quantmod::getSymbols("PEP", src = "yahoo", from = "2010-01-04", to = "2020-04-30", auto.assign = FALSE) |> quantmod::Ad()
+plot(PEP, col="#38BDF8", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de PepsiCo Inc. [2010-2020]")
 ```
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-WMT<- get.hist.quote(instrument = "WMT", 
-                     start=as.Date("2010-01-04"), 
-                     end=as.Date("2020-04-30"), quote = "AdjClose")
-plot(WMT, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Walmart Corporate [2010-2020]")
+WMT <- quantmod::getSymbols("WMT", src = "yahoo", from = "2010-01-04", to = "2020-04-30", auto.assign = FALSE) |> quantmod::Ad()
+plot(WMT, col="#38BDF8", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de Walmart Corporate [2010-2020]")
 ```
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-MCD<- get.hist.quote(instrument = "MCD", 
-                     start=as.Date("2010-01-04"), 
-                     end=as.Date("2020-04-30"), quote = "AdjClose")
-plot(MCD, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de McDonald's Corporation [2010-2020]")
+MCD <- quantmod::getSymbols("MCD", src = "yahoo", from = "2010-01-04", to = "2020-04-30", auto.assign = FALSE) |> quantmod::Ad()
+plot(MCD, col="#38BDF8", xlab="Fecha", ylab="AdjClose"); title(main="Histórico de McDonald's Corporation [2010-2020]")
 ```
 <div style="text-align: justify;">
 <span style="font-size: large;"><br /></span>
@@ -201,7 +224,7 @@ plot(MCD, col="deepskyblue", xlab="Fecha", ylab="AdjClose"); title(main="Histór
 CarteraInv <- merge(MSFT,JNJ,MA,PEP,WMT,MCD, all = FALSE) 
 names(CarteraInv)
 names(CarteraInv)<-c("MSFT","JNJ","MA", "PEP", "WMT","MCD")
-plot(CarteraInv, main=" ", col="deepskyblue", xlab="Fecha")
+plot(CarteraInv, main=" ", col="#38BDF8", xlab="Fecha")
 title(main="Histórico de Cartera")
 ```
 <div style="text-align: justify;">
@@ -216,7 +239,7 @@ title(main="Histórico de Cartera")
 RetornoIndice<-diff(log(Indice))
 head(RetornoIndice,10)
 
-plot(RetornoIndice, main=" ", col="deepskyblue", xlab="Fecha", ylab="Rendimientos")
+plot(RetornoIndice, main=" ", col="#38BDF8", xlab="Fecha", ylab="Rendimientos")
 title(main="Rendimientos del Indice S&P 500")
 
 ```
@@ -227,7 +250,7 @@ head(Rendimientos,10)
 ```
 
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-plot(Rendimientos, main=" ", col="deepskyblue", xlab="Fecha")
+plot(Rendimientos, main=" ", col="#38BDF8", xlab="Fecha")
 title(main="Rendimientos de la Cartera")
 summary(Rendimientos)
 ```
@@ -403,7 +426,7 @@ monteCarloPoints(Frontera, mCsteps=2000, col="#0098D5", cex=0.001)
 <div style="text-align: justify;">
 <br /></div>
 ```{r message=FALSE, warning=FALSE, paged.print=TRUE}
-col <- qualiPalette(ncol(Rendimientos), "Pastel1")
+col <- c("#38BDF8", "#B8955A", "#10B981", "#F43F5E", "#60A5FA", "#D9C29A")
 weightsPlot(Frontera, col=col)
 ```
 

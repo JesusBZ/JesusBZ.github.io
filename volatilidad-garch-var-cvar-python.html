@@ -4,7 +4,9 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
 
   <title>Volatilidad EGARCH, VaR y CVaR Bitcoin en Python | Jesús Benjamín Zerpa</title>
   <!-- SEO:START -->
@@ -60,8 +62,7 @@
                        "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
                        "url":  "https://jesusbzerpa.github.io/",
                        "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
-                       "telephone":  "+58 424 148 78 70",
+"telephone":  "+58 424 148 78 70",
                        "worksFor":  {
                                         "@type":  "Organization",
                                         "name":  "Consorcio Credicard"
@@ -120,7 +121,7 @@
                        "dependencies":  "Python 3.11, arch, SciPy, Statsmodels, Pandas, Plotly",
                        "datePublished":  "2026-10-30",
                        "dateModified":  "2026-11-14",
-                       "alternativeHeadline":  "Transición de Régimen hacia los ETFs Institucionales, Interpretación Econométrica MLE, Reglas de Trading Cuantitativo y Backtesting de Kupiec y Christoffersen",
+                       "alternativeHeadline":  "Cambio de Régimen Estadístico tras los ETFs Spot Regulados, Interpretación Econométrica MLE, Reglas de Trading Cuantitativo y Backtesting de Kupiec y Christoffersen",
                        "isBasedOn":  "https://jesusbz.github.io/Proyecto2.html",
                        "author":  {
                                       "@id":  "https://jesusbzerpa.github.io/#person"
@@ -207,11 +208,14 @@
   <!-- SEO:END -->
 
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg?v=20261115a" />
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/jbz-favicon-32.png?v=20261115a" />
+  <link rel="shortcut icon" href="favicon.ico?v=20261115a" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="imagenes/jbz-apple-touch-icon.png?v=20261115a" />
 
   <!-- Corporate Stylesheets -->
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114f" />
-  <link rel="stylesheet" href="css/post-enhancement.css?v=20261114c" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261121s" />
+  <link rel="stylesheet" href="css/post-enhancement.css?v=20261122a" />
 
   <!-- Local Plotly.js Interactive Financial Charting Engine -->
   <script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
@@ -258,7 +262,7 @@
 
   <style>
     .quant-study-wrap {
-      max-width: 1120px;
+      max-width: 1272px;
       margin: 28px auto 60px auto;
       padding: 0 20px;
     }
@@ -275,14 +279,14 @@
       }
     }
     .study-hero-panel {
-      background: linear-gradient(135deg, #091e42 0%, #0f172a 55%, #1e3a8a 100%);
+      background: linear-gradient(135deg, #0B1B33 0%, #102342 58%, #163259 100%);
       color: #ffffff;
       border-radius: 14px;
       padding: 2.4rem 2.5rem;
       margin-bottom: 2.25rem;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(59, 130, 246, 0.3);
+      border: 1px solid rgba(184, 149, 90, 0.42);
       box-shadow: 0 14px 34px -6px rgba(9, 30, 66, 0.35);
     }
     .study-hero-badges {
@@ -375,7 +379,7 @@
     }
     .btn-study-action.outline {
       background: rgba(255, 255, 255, 0.08);
-      color: #f8fafc !important;
+      color: #FFFFFF !important;
       border: 1px solid rgba(255, 255, 255, 0.22);
     }
     .btn-study-action.outline:hover {
@@ -399,7 +403,7 @@
       }
     }
     .kpi-exec-box {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 1.2rem 1.25rem;
@@ -411,7 +415,7 @@
       box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.08);
     }
     .kpi-exec-box.highlight-lstm {
-      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      background: linear-gradient(180deg, #F4F6FA 0%, #EFF6FF 100%);
       border: 2px solid #2563eb;
     }
     .kpi-exec-tag {
@@ -429,7 +433,7 @@
     .kpi-exec-val {
       font-size: 1.65rem;
       font-weight: 900;
-      color: #091e42;
+      color: #0B1B33;
       line-height: 1.2;
       display: block;
     }
@@ -456,9 +460,9 @@
       margin-top: 0.45rem;
     }
     .toc-executive-box {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #cbd5e1;
-      border-left: 4px solid #0052cc;
+      border-left: 4px solid #1D4ED8;
       border-radius: 10px;
       padding: 1.25rem 1.5rem;
       margin-bottom: 2.25rem;
@@ -468,7 +472,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: #091e42;
+      color: #0B1B33;
       margin-bottom: 0.65rem;
       display: flex;
       align-items: center;
@@ -496,7 +500,7 @@
       gap: 0.4rem;
     }
     .toc-grid-list li a:hover {
-      color: #0052cc !important;
+      color: #1D4ED8 !important;
     }
     .quant-table-wrap {
       overflow-x: auto;
@@ -512,7 +516,7 @@
       background: #ffffff;
     }
     .quant-table thead tr {
-      background: #091e42;
+      background: #0B1B33;
       color: #ffffff;
       text-align: left;
     }
@@ -532,7 +536,7 @@
       vertical-align: middle;
     }
     .quant-table tbody tr:hover {
-      background: #f8fafc;
+      background: #F4F6FA;
     }
     .quant-table tbody tr.row-winner {
       background: #eff6ff;
@@ -565,12 +569,13 @@
       color: #991b1b;
     }
     .plotly-card-box {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
+      background: #0B1B33;
+      border: 1px solid rgba(184, 149, 90, 0.38);
+      border-top: 3px solid #B8955A;
       border-radius: 14px;
       padding: 1.25rem 1.25rem 0.85rem 1.25rem;
       margin: 1.85rem 0 2.35rem 0;
-      box-shadow: 0 8px 25px -5px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 12px 32px rgba(11, 27, 51, 0.22);
     }
     .plotly-card-header {
       display: flex;
@@ -580,31 +585,31 @@
       gap: 0.8rem;
       padding-bottom: 0.85rem;
       margin-bottom: 0.65rem;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid rgba(199, 210, 227, 0.18);
     }
     .plotly-card-title {
       font-size: 1.08rem;
       font-weight: 800;
-      color: #091e42;
+      color: #FFFFFF;
       margin: 0 !important;
     }
     .plotly-card-sub {
       font-size: 0.83rem !important;
-      color: #64748b !important;
+      color: #C7D2E3 !important;
       margin: 0.15rem 0 0 0 !important;
     }
     .chart-ctrl-group {
       display: inline-flex;
-      background: #f1f5f9;
+      background: #102342;
       padding: 0.22rem;
       border-radius: 8px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid rgba(184, 149, 90, 0.35);
       gap: 0.2rem;
     }
     .chart-ctrl-btn {
       border: none;
       background: transparent;
-      color: #475569;
+      color: #C7D2E3;
       font-size: 0.78rem;
       font-weight: 700;
       padding: 0.35rem 0.7rem;
@@ -613,9 +618,10 @@
       transition: all 0.15s ease;
     }
     .chart-ctrl-btn.active {
-      background: #0052cc;
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(0, 82, 204, 0.25);
+      background: #1D4ED8;
+      color: #FFFFFF;
+      border: 1px solid #B8955A;
+      box-shadow: 0 2px 8px rgba(29, 78, 216, 0.35);
     }
     .plotly-canvas {
       width: 100%;
@@ -625,8 +631,8 @@
       position: relative;
     }
     .callout-quant {
-      background: #f8fafc;
-      border-left: 4px solid #0052cc;
+      background: #F4F6FA;
+      border-left: 4px solid #1D4ED8;
       border-radius: 0 10px 10px 0;
       padding: 1.15rem 1.35rem;
       margin: 1.5rem 0;
@@ -642,7 +648,7 @@
       margin-top: 0 !important;
       margin-bottom: 0.45rem !important;
       font-size: 1.02rem !important;
-      color: #091e42 !important;
+      color: #0B1B33 !important;
     }
     .callout-quant p {
       margin-bottom: 0 !important;
@@ -651,9 +657,9 @@
 
     /* Native Academic HTML5/CSS3 Mathematical Typography */
     .math-block-card {
-      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      background: linear-gradient(180deg, #F4F6FA 0%, #FFFFFF 100%);
       border: 1px solid #cbd5e1;
-      border-left: 4px solid #1e3a8a;
+      border-left: 4px solid #B8955A;
       border-radius: 10px;
       padding: 1.15rem 1.5rem;
       margin: 1.25rem 0;
@@ -768,7 +774,7 @@
       }
     }
     .exec-playbook-card {
-      background: #f8fafc;
+      background: #F4F6FA;
       border: 1px solid #cbd5e1;
       border-top: 4px solid #1d4ed8;
       border-radius: 12px;
@@ -779,14 +785,14 @@
       border-top-color: #059669;
     }
     .exec-playbook-card.amber {
-      border-top-color: #d97706;
+      border-top-color: #B8955A;
     }
     .exec-playbook-card.purple {
       border-top-color: #4f46e5;
     }
     .exec-playbook-card h4 {
       margin: 0 0 0.55rem 0 !important;
-      color: #091e42 !important;
+      color: #0B1B33 !important;
       font-size: 1.03rem !important;
       font-weight: 800 !important;
     }
@@ -840,7 +846,7 @@
             <svg viewBox="0 0 581 512"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9H239.4v208.3c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5h26.6c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg>
           </a>
           <!-- Email -->
-          <a href="mailto:jesuszerpaeconomia@gmail.com" class="social-icon-btn" title="Correo Electrónico">
+          <a href="formulario.html" data-jbz-mail="link" class="social-icon-btn" title="Correo Electrónico">
             <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>
@@ -849,9 +855,6 @@
       <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
-      <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa">
-        <img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" />
-      </a>
     </div>
 
     <div id="mobileNavDrawer" class="mobile-nav-drawer">
@@ -882,7 +885,7 @@
         </div>
         <h1>Modelización de Volatilidad Asimétrica GARCH, Valor en Riesgo (VaR) y Expected Shortfall (CVaR) del Bitcoin en Python (2014–2026)</h1>
         <p>
-          Actualización econométrica al <strong>2026</strong> de la investigación original publicada en <strong>mayo de 2020</strong> (<a href="Proyecto2.html" style="color: #93c5fd !important; text-decoration: underline;">Modelización de la Volatilidad y VaR del Bitcoin en RStudio</a>). Se auditan <strong>4,425 sesiones diarias</strong> de <code>BTC-USD</code> para cuantificar el cambio estructural de microestructura tras la aprobación de los <strong>ETFs institucionales Spot (2024–2026)</strong>, contrastando por Máxima Verosimilitud (MLE) las familias <strong>sGARCH, EGARCH(2,1) y GJR-GARCH</strong> bajo innovaciones <strong>Skewed Student-<em>t</em> de Hansen</strong>, e integrando el estándar regulatorio de <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong>, los contrastes de <strong>Kupiec y Christoffersen</strong> y reglas sistemáticas de <strong>Volatility Targeting, Position Sizing y Stop-Loss condicional</strong>.
+          Actualización econométrica al <strong>2026</strong> de la investigación original publicada en <strong>mayo de 2020</strong> (<a href="Proyecto2.html" style="color: #93c5fd !important; text-decoration: underline;">Modelización de la Volatilidad y VaR del Bitcoin en RStudio</a>). Se auditan <strong>4,425 sesiones diarias</strong> de <code>BTC-USD</code> para cuantificar el cambio estructural de microestructura tras la aprobación de los <strong>ETFs Spot regulados (2024–2026)</strong>, contrastando por Máxima Verosimilitud (MLE) las familias <strong>sGARCH, EGARCH(2,1) y GJR-GARCH</strong> bajo innovaciones <strong>Skewed Student-<em>t</em> de Hansen</strong>, e integrando el estándar regulatorio de <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong>, los contrastes de <strong>Kupiec y Christoffersen</strong> y reglas sistemáticas de <strong>Volatility Targeting, Position Sizing y Stop-Loss condicional</strong>.
         </p>
         <div class="study-meta-bar">
           <div>
@@ -909,7 +912,7 @@
       <!-- EXECUTIVE KPI GRID -->
       <div class="kpi-exec-grid">
         <div class="kpi-exec-box">
-          <span class="kpi-exec-tag">Muestra Auditada (2014–2026)</span>
+          <span class="kpi-exec-tag">Muestra Verificada (2014–2026)</span>
           <span class="kpi-exec-val">4,425 Días</span>
           <span class="kpi-exec-sub blue">+2,464 sesiones post-2020</span>
           <span class="kpi-exec-meta">Curtosis muestral: 15.02 | Asimetría: -0.704</span>
@@ -937,18 +940,18 @@
       <!-- TABLE OF CONTENTS -->
       <div class="toc-executive-box">
         <div class="toc-executive-title">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0052cc" stroke-width="2.3"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.3"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           <span>Estructura del Estudio Econométrico y Operativo</span>
         </div>
         <ul class="toc-grid-list">
           <li><a href="#sec-linea-base">1. Línea Base del Modelo Original en RStudio (Mayo 2020)</a></li>
-          <li><a href="#sec-regimenes">2. Auditoría de Transición de Régimen y Microestructura ETF (2014–2026)</a></li>
+          <li><a href="#sec-regimenes">2. Análisis Econométrico de Cambio de Régimen y Microestructura ETF (2014–2026)</a></li>
           <li><a href="#sec-teoria">3. Especificación Econométrica: EGARCH, GJR-GARCH, Skewed-t y CVaR</a></li>
           <li><a href="#sec-python">4. Proceso Completo de Modelado e Implementación en Python</a></li>
           <li><a href="#sec-visualizaciones">5. Laboratorio Visual Interactivo (5 Gráficos Dinámicos Plotly 2026)</a></li>
           <li><a href="#sec-interpretacion">6. Interpretación Econométrica de Parámetros MLE y Microestructura</a></li>
           <li><a href="#sec-aplicacion-inversor">7. Uso Operativo para el Inversor: Position Sizing, Stop-Loss y Opciones</a></li>
-          <li><a href="#sec-conclusiones">8. Torneo Econométrico, Backtesting de Kupiec/Christoffersen y Síntesis</a></li>
+          <li><a href="#sec-conclusiones">8. Contraste Econométrico MLE, Backtesting de Kupiec/Christoffersen y Síntesis</a></li>
         </ul>
       </div>
 
@@ -1015,7 +1018,7 @@
         <div class="callout-quant">
           <h4>Fundamento Econométrico de la Reestimación 2014–2026</h4>
           <p>
-            Seis semanas después del cierre muestral del documento original (30 de enero de 2020), el mercado experimentó el choque sistémico de liquidez de marzo de 2020 (donde <code>BTC-USD</code> registró un retorno logarítmico continuo de <strong>-46.47%</strong> en la sesión del 12 de marzo de 2020), seguido por el ciclo de contracción monetaria de la Reserva Federal en 2022 y un cambio estructural en la microestructura del activo: la aprobación de los <strong>ETFs Spot Institucionales por la SEC el 11 de enero de 2024</strong>. Esta actualización en <strong>Python</strong> expande la muestra a <strong>4,425 observaciones diarias hasta el 29 de octubre de 2026</strong>, introduce la densidad <strong>Skewed Student-<em>t</em> de Hansen (1994)</strong>, implementa el <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong> bajo normativa de Basilea III/IV (FRTB) y formaliza las reglas cuantitativas de ejecución para gestión de carteras y mesas de trading.
+            Seis semanas después del cierre muestral del documento original (30 de enero de 2020), el mercado experimentó el choque sistémico de liquidez de marzo de 2020 (donde <code>BTC-USD</code> registró un retorno logarítmico continuo de <strong>-46.47%</strong> en la sesión del 12 de marzo de 2020), seguido por el ciclo de contracción monetaria de la Reserva Federal en 2022 y un cambio estructural en la microestructura del activo: la aprobación de los <strong>ETFs Spot Cotizados por la SEC el 11 de enero de 2024</strong>. Esta actualización en <strong>Python</strong> expande la muestra a <strong>4,425 observaciones diarias hasta el 29 de octubre de 2026</strong>, introduce la densidad <strong>Skewed Student-<em>t</em> de Hansen (1994)</strong>, implementa el <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong> bajo normativa de Basilea III/IV (FRTB) y formaliza las reglas cuantitativas de ejecución para gestión de carteras y mesas de trading.
           </p>
         </div>
       </section>
@@ -1024,14 +1027,14 @@
            SECCIÓN 2: TRANSICIÓN DE RÉGIMEN ESTRUCTURAL (2014–2026)
            ===================================================================== -->
       <section id="sec-regimenes">
-        <h2>2. Auditoría Empírica de Transición de Régimen: De la Microestructura Retail a los ETFs Institucionales (2014–2026)</h2>
+        <h2>2. Análisis Econométrico de Cambio de Régimen: De la Microestructura Minorista a los ETFs Spot Cotizados (2014–2026)</h2>
         <p>
           El análisis de la serie de retornos logarítmicos continuos en escala porcentual <span class="m-inline"><i>r<sub>t</sub></i> = 100 &times; ln(<i>P<sub>t</sub></i> / <i>P</i><sub><i>t</i>&minus;1</sub>)</span> entre septiembre de 2014 y octubre de 2026 permite identificar <strong>tres regímenes de volatilidad y liquidez</strong> gobernados por cambios en la composición de los participantes del mercado:
         </p>
         <ol>
-          <li><strong>Régimen I — Microestructura Retail y Fragmentación de Liquidez (Septiembre 2014 – Enero 2020, <span class="m-inline"><i>N</i> = 1,961</span> días):</strong> Etapa dominada por flujo minorista, ausencia de cámaras de compensación institucionales y amplios diferenciales <em>bid-ask</em>, registrando una volatilidad anualizada de <strong>73.47%</strong> (<span class="m-inline"><i>&sigma;</i><sub>diaria</sub> = 3.845%</span>) y un cuantil empírico al 1% de <strong>-10.58%</strong>.</li>
+          <li><strong>Régimen I — Microestructura Retail y Fragmentación de Liquidez (Septiembre 2014 – Enero 2020, <span class="m-inline"><i>N</i> = 1,961</span> días):</strong> Etapa dominada por flujo minorista, ausencia de cámaras de compensación centralizadas y amplios diferenciales <em>bid-ask</em>, registrando una volatilidad anualizada de <strong>73.47%</strong> (<span class="m-inline"><i>&sigma;</i><sub>diaria</sub> = 3.845%</span>) y un cuantil empírico al 1% de <strong>-10.58%</strong>.</li>
           <li><strong>Régimen II — Integración Macrofinanciera, Choque Pandémico y Ciclo Restrictivo Fed (Febrero 2020 – Enero 2024, <span class="m-inline"><i>N</i> = 1,441</span> días):</strong> Fase de alta sensibilidad al factor de liquidez global y tasas reales de descuento, caracterizada por cascadas de liquidación en futuros perpetuos apalancados que elevaron la <strong>curtosis muestral hasta 25.55</strong> y profundizaron la asimetría negativa hasta <strong>-1.595</strong>.</li>
-          <li><strong>Régimen III — Institucionalización vía ETFs Spot y Arbitraje de Creadores de Mercado (Enero 2024 – Octubre 2026, <span class="m-inline"><i>N</i> = 1,023</span> días):</strong> La incorporación de vehículos institucionales (<em>BlackRock IBIT, Fidelity FBTC</em>) y la intervención sistemática de <em>Authorized Participants (APs)</em> mediante arbitraje continuo entre la cesta Spot y el mercado secundario de ETFs comprimieron la volatilidad anualizada hasta <strong>46.88%</strong> (<span class="m-inline"><i>&sigma;</i><sub>diaria</sub> = 2.454%</span>), lo que representa una contracción estructural de <strong>-26.59 puntos porcentuales</strong> frente al Régimen I y de <strong>-21.09 puntos porcentuales</strong> respecto al Régimen II.</li>
+          <li><strong>Régimen III — Integración en Mercados Regulados vía ETFs Spot y Arbitraje de Creadores de Mercado (Enero 2024 – Octubre 2026, <span class="m-inline"><i>N</i> = 1,023</span> días):</strong> La incorporación de vehículos bursátiles regulados (<em>BlackRock IBIT, Fidelity FBTC</em>) y la intervención sistemática de <em>Authorized Participants (APs)</em> mediante arbitraje continuo entre la cesta Spot y el mercado secundario de ETFs comprimieron la volatilidad anualizada hasta <strong>46.88%</strong> (<span class="m-inline"><i>&sigma;</i><sub>diaria</sub> = 2.454%</span>), lo que representa una contracción estructural de <strong>-26.59 puntos porcentuales</strong> frente al Régimen I y de <strong>-21.09 puntos porcentuales</strong> respecto al Régimen II.</li>
         </ol>
 
         <div class="quant-table-wrap">
@@ -1084,7 +1087,7 @@
                 <td><strong>-6.51%</strong></td>
               </tr>
               <tr class="row-winner">
-                <td><strong>Muestra Completa Auditada (2014–2026)</strong></td>
+                <td><strong>Muestra Completa Verificada (2014–2026)</strong></td>
                 <td><strong>4,425</strong></td>
                 <td><strong>+0.1161%</strong></td>
                 <td><strong>3.473%</strong></td>
@@ -1105,7 +1108,7 @@
       <section id="sec-teoria">
         <h2>3. Especificación Econométrica: Modelos GARCH Asimétricos, Distribución Skewed Student-t de Hansen y Expected Shortfall (CVaR)</h2>
         <p>
-          Sea <span class="m-inline"><i>r<sub>t</sub></i> = 100 &times; ln(<i>P<sub>t</sub></i> / <i>P</i><sub><i>t</i>&minus;1</sub>)</span> el retorno logarítmico continuo en la sesión <span class="m-inline"><i>t</i></span>. Para filtrar la autocorrelación serial de primer orden inducida por fricciones de microestructura (rebote <em>bid-ask</em> y ejecución fraccionada de órdenes institucionales), el proceso generador de datos se descompone en una ecuación de media condicional autorregresiva <span class="m-inline">AR(1)</span> y una innovación heterocedástica multiplicativa:
+          Sea <span class="m-inline"><i>r<sub>t</sub></i> = 100 &times; ln(<i>P<sub>t</sub></i> / <i>P</i><sub><i>t</i>&minus;1</sub>)</span> el retorno logarítmico continuo en la sesión <span class="m-inline"><i>t</i></span>. Para filtrar la autocorrelación serial de primer orden inducida por fricciones de microestructura (rebote <em>bid-ask</em> y ejecución fraccionada de órdenes algorítmicas de bloque), el proceso generador de datos se descompone en una ecuación de media condicional autorregresiva <span class="m-inline">AR(1)</span> y una innovación heterocedástica multiplicativa:
         </p>
 
         <div class="math-block-card">
@@ -1118,7 +1121,7 @@
         </div>
 
         <p>
-          donde <span class="m-inline"><i>&sigma;</i><sub><i>t</i></sub><sup>2</sup> = Var(<i>r<sub>t</sub></i> &mid; &#8497;<sub><i>t</i>&minus;1</sub>)</span> denota la varianza condicional respecto al conjunto de información disponible hasta el cierre previo <span class="m-inline">&#8497;<sub><i>t</i>&minus;1</sub></span> y <span class="m-inline"><i>z<sub>t</sub></i> = <i>&varepsilon;<sub>t</sub></i> / <i>&sigma;<sub>t</sub></i></span> representa la innovación estandarizada con esperanza nula y varianza unitaria. A continuación se formulan las tres estructuras de varianza condicional que compiten en el torneo econométrico:
+          donde <span class="m-inline"><i>&sigma;</i><sub><i>t</i></sub><sup>2</sup> = Var(<i>r<sub>t</sub></i> &mid; &#8497;<sub><i>t</i>&minus;1</sub>)</span> denota la varianza condicional respecto al conjunto de información disponible hasta el cierre previo <span class="m-inline">&#8497;<sub><i>t</i>&minus;1</sub></span> y <span class="m-inline"><i>z<sub>t</sub></i> = <i>&varepsilon;<sub>t</sub></i> / <i>&sigma;<sub>t</sub></i></span> representa la innovación estandarizada con esperanza nula y varianza unitaria. A continuación se formulan las tres estructuras de varianza condicional que se contrastan mediante Máxima Verosimilitud (MLE):
         </p>
 
         <h3>3.1. Especificación GARCH Simétrica Estándar — sGARCH(1,1) (Bollerslev, 1986)</h3>
@@ -1245,12 +1248,12 @@ adf_stat, adf_p, _, _, _, _ <span class="op">=</span> <span class="dt">adfuller<
 jb_stat, jb_p <span class="op">=</span> <span class="dt">stats</span>.<span class="dt">jarque_bera</span>(r)
 arch_stat, arch_p, _, _ <span class="op">=</span> <span class="fu">het_arch</span>(r, nlags<span class="op">=</span><span class="dv">10</span>)
 
-<span class="fu">print</span>(<span class="st">f&quot;Observaciones auditadas : {len(r)} sesiones diarias&quot;</span>)
+<span class="fu">print</span>(<span class="st">f&quot;Observaciones muestrales : {len(r)} sesiones diarias&quot;</span>)
 <span class="fu">print</span>(<span class="st">f&quot;Test ADF Estacionariedad: Estadístico = {adf_stat:.4f} (p-valor = {adf_p:.4e})&quot;</span>)
 <span class="fu">print</span>(<span class="st">f&quot;Test Jarque-Bera Normal : Estadístico = {jb_stat:.2f} (p-valor = {jb_p:.4e})&quot;</span>)
 <span class="fu">print</span>(<span class="st">f&quot;Test ARCH-LM(10) Engle  : Estadístico = {arch_stat:.2f} (p-valor = {arch_p:.4e})&quot;</span>)</code></pre></div>
 
-        <h3>Paso 4.2. Estimación por Máxima Verosimilitud (MLE) del Torneo GARCH Simétrico y Asimétrico</h3>
+        <h3>Paso 4.2. Estimación por Máxima Verosimilitud (MLE) de las Especificaciones GARCH Simétricas y Asimétricas</h3>
         <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">from</span> arch <span class="kw">import</span> <span class="dt">arch_model</span>
 
 <span class="co"># Especificación de las 5 familias competidoras con ecuación de media condicional AR(1)</span>
@@ -1337,7 +1340,7 @@ fits <span class="op">=</span> {}
     <span class="co"># 3. Stop-Loss dinámico condicional al 99% de confianza (filtrado de ruido estocástico)</span>
     signals[<span class="st">&quot;Adaptive_StopLoss_99_Pct&quot;</span>] <span class="op">=</span> var_99_pct
 
-    <span class="co"># 4. Apalancamiento institucional máximo seguro en perpetuos/futuros sin riesgo de cascada</span>
+    <span class="co"># 4. Apalancamiento cuantitativo máximo seguro en perpetuos/futuros sin riesgo de cascada</span>
     signals[<span class="st">&quot;Max_Safe_Leverage_x&quot;</span>] <span class="op">=</span> (<span class="fl">1.0</span> <span class="op">-</span> maint_margin) <span class="op">/</span> (safety_kappa <span class="op">*</span> cvar_dec)
     <span class="cf">return</span> signals</code></pre></div>
       </section>
@@ -1371,7 +1374,7 @@ fits <span class="op">=</span> {}
         <div class="plotly-card-box">
           <div class="plotly-card-header">
             <div>
-              <h3 class="plotly-card-title">Gráfico Dinámico 2. Backtesting Institucional de Valor en Riesgo (VaR 99%) y Expected Shortfall (CVaR 99%, 2020–2026)</h3>
+              <h3 class="plotly-card-title">Gráfico Dinámico 2. Backtesting Estadístico de Valor en Riesgo (VaR 99%) y Expected Shortfall (CVaR 99%, 2020–2026)</h3>
               <p class="plotly-card-sub">Evaluación fuera de la muestra original (2,464 sesiones): 21 excedencias en EGARCH(2,1) Skewed-t (0.852%, Zona Verde) frente a 41 en sGARCH Normal</p>
             </div>
           </div>
@@ -1482,7 +1485,7 @@ fits <span class="op">=</span> {}
                 <td>0.043672</td>
                 <td>&minus;3.6185</td>
                 <td>0.0003</td>
-                <td>Amortiguamiento oscilatorio en <span class="m-inline"><i>t</i>+2</span>: absorción institucional del libro de órdenes tras el choque inicial (efecto neto <span class="m-inline">+0.2116</span>)</td>
+                <td>Amortiguamiento oscilatorio en <span class="m-inline"><i>t</i>+2</span>: absorción de liquidez profunda del libro de órdenes tras el choque inicial (efecto neto <span class="m-inline">+0.2116</span>)</td>
               </tr>
               <tr>
                 <td><strong>Asimetría Direccional</strong></td>
@@ -1543,7 +1546,7 @@ fits <span class="op">=</span> {}
             <strong>Reversión a la Media de Corto Plazo en Retornos (<span class="m-inline"><i>&phi;&#770;</i><sub>1</sub> = &minus;0.0521, <i>t</i> = &minus;40.25</span>):</strong> El signo negativo y estadísticamente significativo del término autorregresivo indica que aproximadamente el <strong>5.21% de cualquier impulso direccional diario se corrige en la sesión inmediata siguiente</strong>. En la microestructura de libros de órdenes electrónicos (<em>Central Limit Order Books</em>), este fenómeno obedece a la reposición de liquidez por parte de creadores de mercado (<em>market makers</em>) y a la toma táctica de beneficios tras barridos agresivos de liquidez.
           </li>
           <li>
-            <strong>Estructura de Impacto de Dos Rezagos (<span class="m-inline"><i>&alpha;&#770;</i><sub>1</sub> = +0.3696</span> vs. <span class="m-inline"><i>&alpha;&#770;</i><sub>2</sub> = &minus;0.1580</span>):</strong> A diferencia de un modelo <span class="m-inline">EGARCH(1,1)</span> convencional, la inclusión del segundo rezago captura una dinámica de <strong>sobrerreacción y amortiguamiento</strong>. Cuando ocurre un choque de magnitud superior a lo normal en <span class="m-inline"><i>t</i>&minus;1</span>, la log-varianza se expande con una elasticidad de <span class="m-inline">+0.3696</span>; sin embargo, en la sesión <span class="m-inline"><i>t</i>&minus;2</span> opera un coeficiente corrector de <span class="m-inline">&minus;0.1580</span> que frena el crecimiento exponencial descontrolado de la volatilidad a medida que los participantes institucionales arbitran la dislocación inicial, dejando un efecto multiplicador neto de <span class="m-inline"><i>&alpha;&#770;</i><sub>1</sub> + <i>&alpha;&#770;</i><sub>2</sub> = +0.2116</span>.
+            <strong>Estructura de Impacto de Dos Rezagos (<span class="m-inline"><i>&alpha;&#770;</i><sub>1</sub> = +0.3696</span> vs. <span class="m-inline"><i>&alpha;&#770;</i><sub>2</sub> = &minus;0.1580</span>):</strong> A diferencia de un modelo <span class="m-inline">EGARCH(1,1)</span> convencional, la inclusión del segundo rezago captura una dinámica de <strong>sobrerreacción y amortiguamiento</strong>. Cuando ocurre un choque de magnitud superior a lo normal en <span class="m-inline"><i>t</i>&minus;1</span>, la log-varianza se expande con una elasticidad de <span class="m-inline">+0.3696</span>; sin embargo, en la sesión <span class="m-inline"><i>t</i>&minus;2</span> opera un coeficiente corrector de <span class="m-inline">&minus;0.1580</span> que frena el crecimiento exponencial descontrolado de la volatilidad a medida que los creadores de mercado y arbitrajistas arbitran la dislocación inicial, dejando un efecto multiplicador neto de <span class="m-inline"><i>&alpha;&#770;</i><sub>1</sub> + <i>&alpha;&#770;</i><sub>2</sub> = +0.2116</span>.
           </li>
           <li>
             <strong>Persistencia Autorregresiva (<span class="m-inline"><i>&beta;&#770;</i><sub>1</sub> = 0.991357</span>) y Cálculo de la Vida Media del Choque (<em>Volatility Half-Life</em>):</strong> Dado que <span class="m-inline">|<i>&beta;&#770;</i><sub>1</sub>| = 0.991357 &lt; 1</span>, el proceso log-varianza es estrictamente estacionario en covarianza y converge hacia una volatilidad incondicional de equilibrio. La velocidad de disipación de un choque de volatilidad se cuantifica mediante la <strong>Vida Media (<em>Half-Life</em>)</strong>, definida como el número de sesiones bursátiles necesarias para que el exceso de log-varianza se reduzca exactamente al 50%:
@@ -1565,7 +1568,7 @@ fits <span class="op">=</span> {}
            SECCIÓN 7: USO OPERATIVO PARA EL INVERSOR Y TRADING CUANTITATIVO
            ===================================================================== -->
       <section id="sec-aplicacion-inversor">
-        <h2>7. Aplicaciones Operativas para el Inversor Institucional, Trading Cuantitativo y Gestión de Riesgo de Tesorería</h2>
+        <h2>7. Aplicaciones Cuantitativas en Dimensionamiento de Posiciones, Cobertura y Riesgo de Tesorería</h2>
         <p>
           Un modelo econométrico de volatilidad condicional no constituye un ejercicio meramente descriptivo; en la gestión cuantitativa de carteras y en las mesas de ejecución (<em>Quantitative Trading Desks</em>), las series diarias pronosticadas <span class="m-inline"><i>&sigma;&#770;</i><sub><i>t</i>+1&mid;<i>t</i></sub></span>, <span class="m-inline">VaR<sub>99%,<i>t</i>+1</sub></span> y <span class="m-inline">CVaR<sub>99%,<i>t</i>+1</sub></span> funcionan como <strong>insumos directos de control de capital, dimensionamiento de órdenes, calibración de niveles de invalidación (<em>stop-loss</em>) y arbitraje de derivados</strong>. A continuación se formalizan las cinco aplicaciones operativas del modelo tomando como referencia empírica el cierre del <strong>29 de octubre de 2026</strong> (<span class="m-inline"><i>&sigma;&#770;</i><sub>diaria</sub> = 1.863%</span>, <span class="m-inline"><i>&sigma;&#770;</i><sub>anual</sub> = 35.59%</span>, <span class="m-inline">VaR<sub>99%</sub> = &minus;4.600%</span> y <span class="m-inline">CVaR<sub>99%</sub> = &minus;6.961%</span>):
         </p>
@@ -1575,7 +1578,7 @@ fits <span class="op">=</span> {}
           <div class="exec-playbook-card">
             <h4>7.1. Volatility Targeting y Position Sizing Dinámico</h4>
             <p>
-              En lugar de mantener una asignación estática de capital que expone el portafolio a fluctuaciones abruptas de varianza, el inversor institucional ajusta diariamente el peso porcentual asignado al activo (<span class="m-inline"><i>w<sub>t</sub></i></span>) de forma inversamente proporcional a la volatilidad condicional pronosticada por el modelo <span class="m-inline">EGARCH(2,1)</span> para mantener constante una volatilidad objetivo anualizada (<span class="m-inline"><i>&sigma;</i><sub>target</sub></span>):
+              En lugar de mantener una asignación estática de capital que expone el portafolio a fluctuaciones abruptas de varianza, el gestor cuantitativo ajusta diariamente el peso porcentual asignado al activo (<span class="m-inline"><i>w<sub>t</sub></i></span>) de forma inversamente proporcional a la volatilidad condicional pronosticada por el modelo <span class="m-inline">EGARCH(2,1)</span> para mantener constante una volatilidad objetivo anualizada (<span class="m-inline"><i>&sigma;</i><sub>target</sub></span>):
             </p>
             <div class="math-block-card" style="padding: 0.75rem 1rem; margin: 0.75rem 0;">
               <div class="eq-formula" style="font-size: 1.02rem;">
@@ -1615,7 +1618,7 @@ fits <span class="op">=</span> {}
               </div>
             </div>
             <p>
-              <strong>Ejecución Numérica (29-Oct-2026):</strong> Al 95% de confianza (<span class="m-inline">VaR<sub>95%</sub></span>), el <em>stop-loss</em> táctico para operaciones de <em>swing trading</em> se sitúa en <strong>-2.785%</strong> desde el cierre; al 99% de confianza institucional (<span class="m-inline">VaR<sub>99%</sub></span>), se ubica en <strong>-4.600%</strong>. Una perforación de este nivel confirma con 99% de probabilidad estadística que el movimiento no es ruido gaussiano sino un cambio de flujo direccional.
+              <strong>Ejecución Numérica (29-Oct-2026):</strong> Al 95% de confianza (<span class="m-inline">VaR<sub>95%</sub></span>), el <em>stop-loss</em> táctico para operaciones de <em>swing trading</em> se sitúa en <strong>-2.785%</strong> desde el cierre; al 99% de nivel de confianza estadístico (<span class="m-inline">VaR<sub>99%</sub></span>), se ubica en <strong>-4.600%</strong>. Una perforación de este nivel confirma con 99% de probabilidad estadística que el movimiento no es ruido gaussiano sino un cambio de flujo direccional.
             </p>
           </div>
 
@@ -1623,7 +1626,7 @@ fits <span class="op">=</span> {}
           <div class="exec-playbook-card purple">
             <h4>7.4. Control de Apalancamiento en Futuros Perpetuos y Margen</h4>
             <p>
-              En la operatoria con contratos futuros y perpetuos (CME, Deribit, Binance Institutional), el riesgo crítico es la liquidación forzosa ante un evento de cola. Definiendo <span class="m-inline"><i>m</i><sub>mant</sub></span> como la tasa de margen de mantenimiento (típicamente 0.50%) y <span class="m-inline">&kappa; &ge; 3</span> como el factor institucional de cobertura frente a pérdidas extremas consecutivas, el apalancamiento efectivo máximo (<span class="m-inline"><i>L</i><sub>máx,<i>t</i></sub></span>) se acota mediante:
+              En la operatoria con contratos futuros y perpetuos (CME, Deribit, Binance Institutional), el riesgo crítico es la liquidación forzosa ante un evento de cola. Definiendo <span class="m-inline"><i>m</i><sub>mant</sub></span> como la tasa de margen de mantenimiento (típicamente 0.50%) y <span class="m-inline">&kappa; &ge; 3</span> como el factor prudencial de cobertura estadística frente a pérdidas extremas consecutivas, el apalancamiento efectivo máximo (<span class="m-inline"><i>L</i><sub>máx,<i>t</i></sub></span>) se acota mediante:
             </p>
             <div class="math-block-card" style="padding: 0.75rem 1rem; margin: 0.75rem 0;">
               <div class="eq-formula" style="font-size: 1.02rem;">
@@ -1631,7 +1634,7 @@ fits <span class="op">=</span> {}
               </div>
             </div>
             <p>
-              <strong>Ejecución Numérica (29-Oct-2026):</strong> Con <span class="m-inline">|CVaR<sub>99%</sub>| = 0.06961</span> y <span class="m-inline"><i>m</i><sub>mant</sub> = 0.005</span>, el apalancamiento de liquidación teórica en una sola sesión extrema es <span class="m-inline">14.29&times;</span>; aplicando el factor prudencial institucional <span class="m-inline">&kappa; = 3</span>, el apalancamiento máximo seguro hoy es <strong>4.76&times;</strong>, debiendo reducirse por debajo de <strong>1.80&times;</strong> cuando la volatilidad anualizada supere el umbral del 80%.
+              <strong>Ejecución Numérica (29-Oct-2026):</strong> Con <span class="m-inline">|CVaR<sub>99%</sub>| = 0.06961</span> y <span class="m-inline"><i>m</i><sub>mant</sub> = 0.005</span>, el apalancamiento de liquidación teórica en una sola sesión extrema es <span class="m-inline">14.29&times;</span>; aplicando el factor prudencial de cobertura <span class="m-inline">&kappa; = 3</span>, el apalancamiento máximo seguro hoy es <strong>4.76&times;</strong>, debiendo reducirse por debajo de <strong>1.80&times;</strong> cuando la volatilidad anualizada supere el umbral del 80%.
             </p>
           </div>
         </div>
@@ -1651,7 +1654,7 @@ fits <span class="op">=</span> {}
 
         <h3>7.6. Matriz Operativa de Decisión Cuantitativa por Régimen de Volatilidad Condicional</h3>
         <p>
-          En la <strong>Tabla 7.1</strong> se sintetiza el protocolo parametrizado de actuación para un portafolio institucional de <strong>$1,000,000 USD</strong> (con objetivo de volatilidad <span class="m-inline"><i>&sigma;</i><sub>target</sub> = 20%</span> anual y presupuesto diario de cola <span class="m-inline"><i>L</i><sub>máx</sub> = $25,000 USD</span>) en función del nivel de volatilidad condicional registrado por el filtro <span class="m-inline">AR(1)-EGARCH(2,1) Skewed-t</span>:
+          En la <strong>Tabla 7.1</strong> se sintetiza el protocolo parametrizado de actuación para un portafolio diversificado de <strong>$1,000,000 USD</strong> (con objetivo de volatilidad <span class="m-inline"><i>&sigma;</i><sub>target</sub> = 20%</span> anual y presupuesto diario de cola <span class="m-inline"><i>L</i><sub>máx</sub> = $25,000 USD</span>) en función del nivel de volatilidad condicional registrado por el filtro <span class="m-inline">AR(1)-EGARCH(2,1) Skewed-t</span>:
         </p>
 
         <div class="quant-table-wrap">
@@ -1669,7 +1672,7 @@ fits <span class="op">=</span> {}
             </thead>
             <tbody>
               <tr class="row-winner">
-                <td><strong>1. Compresión Institucional [Estado Actual 29-Oct-2026]</strong></td>
+                <td><strong>1. Compresión de Varianza Condicional [Estado Actual 29-Oct-2026]</strong></td>
                 <td><span class="badge-num emerald">&lt; 40% (Actual: 35.59% / 1.86% d)</span></td>
                 <td><strong>50.0% – 56.2% ($561,961)</strong></td>
                 <td><strong>&minus;4.60%</strong></td>
@@ -1713,9 +1716,9 @@ fits <span class="op">=</span> {}
            SECCIÓN 8: TABLA MAESTRA DEL TORNEO ECONOMÉTRICO Y CONCLUSIONES
            ===================================================================== -->
       <section id="sec-conclusiones">
-        <h2>8. Torneo Econométrico MLE, Backtesting Regulatorio de Kupiec y Christoffersen y Síntesis</h2>
+        <h2>8. Contraste Econométrico MLE, Backtesting Estadístico de Kupiec y Christoffersen y Síntesis</h2>
         <p>
-          En la <strong>Tabla 8.1</strong> se consolidan los resultados del torneo econométrico por Máxima Verosimilitud (MLE), los criterios de selección de información (AIC y BIC) y los contrastes de especificación sobre los residuos estandarizados para las cinco estructuras competitivas evaluadas sobre las <strong>4,425 sesiones diarias (2014–2026)</strong>:
+          En la <strong>Tabla 8.1</strong> se consolidan los resultados de la estimación comparativa por Máxima Verosimilitud (MLE), los criterios de selección de información (AIC y BIC) y los contrastes de especificación sobre los residuos estandarizados para las cinco estructuras competitivas evaluadas sobre las <strong>4,425 sesiones diarias (2014–2026)</strong>:
         </p>
 
         <div class="quant-table-wrap">
@@ -1794,14 +1797,14 @@ fits <span class="op">=</span> {}
         </div>
 
         <p>
-          Asimismo, en la <strong>Tabla 8.2</strong> se detallan las pruebas de <strong>Backtesting Regulatorio de Valor en Riesgo (<span class="m-inline">VaR<sub>99%</sub></span>)</strong> y el requerimiento diario de reserva de liquidez bajo <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong> para una posición institucional de <strong>$1,000,000.00 USD</strong> en la ventana posterior al estudio original (31 de enero de 2020 al 29 de octubre de 2026, <span class="m-inline"><i>T</i> = 2,464</span> sesiones):
+          Asimismo, en la <strong>Tabla 8.2</strong> se detallan las pruebas de <strong>Backtesting Regulatorio de Valor en Riesgo (<span class="m-inline">VaR<sub>99%</sub></span>)</strong> y el requerimiento diario de reserva de liquidez bajo <strong>Expected Shortfall (<span class="m-inline">CVaR<sub>99%</sub></span>)</strong> para una cartera de referencia de <strong>$1,000,000.00 USD</strong> en la ventana posterior al estudio original (31 de enero de 2020 al 29 de octubre de 2026, <span class="m-inline"><i>T</i> = 2,464</span> sesiones):
         </p>
 
         <div class="quant-table-wrap">
           <table class="quant-table">
             <thead>
               <tr>
-                <th>Modelo Auditado (2020–2026)</th>
+                <th>Especificación Evaluada (2020–2026)</th>
                 <th>Violaciones VaR 99% (Esp: 24.6)</th>
                 <th>Tasa Empírica 99%</th>
                 <th>Test Kupiec <span class="m-inline"><i>LR</i><sub>uc</sub></span> (<span class="m-inline"><i>p</i></span>-val)</th>
@@ -1904,106 +1907,228 @@ fits <span class="op">=</span> {}
 
       <hr />
       <span style="font-size: medium;"><br /></span>
-      <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br />JesusZerpaEconomia@Gmail.Com<br /><span style="color: #475569; font-size: 0.92em;">Publicado: Octubre de 2026</span></span><br />
+      <span style="font-size: medium;">Por:<br />Jesús Benjamín Zerpa<br /><b>Economista </b><br /><span data-jbz-mail-text="1">Canal de correo protegido</span><br /><span style="color: #475569; font-size: 0.92em;">Publicado: Octubre de 2026</span></span><br />
       <br />
       <div style="text-align: left;">
-        <a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img alt="Modelización de Volatilidad Asimétrica GARCH, VaR y CVaR en Python - Licencia Creative Commons 4.0" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a>
+        <a href="https://i.creativecommons.org/l/by/4.0/88x31.png" imageanchor="1" style="clear: left; display: inline !important; float: left; margin-bottom: 1em; margin-right: 1em;"><img class="cc-badge" alt="Modelización de Volatilidad Asimétrica GARCH, VaR y CVaR en Python - Licencia Creative Commons 4.0" border="0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" decoding="async" loading="lazy" /></a>
         <span style="font-size: medium;">Excepto donde se indique lo contrario, el contenido de esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/">licencia de Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
       </div>
       <br />
       <hr />
 
       <!-- RELATED-CAROUSEL-START -->
-      <section class="pc-section" aria-label="Otros trabajos del portafolio">
+                  <section class="pc-section" aria-label="Otros trabajos del portafolio">
         <div class="pc-header">
           <div>
             <span class="pc-kicker">Sigue explorando</span>
             <h3 class="pc-heading">Otros Trabajos del Portafolio</h3>
           </div>
           <div class="pc-controls">
+            <span class="pc-page-badge">1–4 de 18</span>
             <button type="button" id="carouselScrollPrev" class="pc-nav" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
             <button type="button" id="carouselScrollNext" class="pc-nav" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
           </div>
         </div>
         <div class="pc-viewport" id="carouselViewport">
           <div class="pc-track" id="carouselTrack">
-        <a href="Proyecto2.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp" alt="Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #2</span>
-            <span class="pc-cat">Volatilidad &amp; VaR (2020)</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelización de la volatilidad y Valor en Riesgo (VaR) del Bitcoin (RStudio 2020)</h4>
-            <div class="pc-meta"><span class="pc-tags">Bitcoin · eGARCH</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="deep-portfolio-lstm-python.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #14</span>
-            <span class="pc-cat">Deep Learning LSTM</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Deep Portfolio Optimization con Redes Neuronales LSTM en Python (2020–2026)</h4>
-            <div class="pc-meta"><span class="pc-tags">PyTorch · Markowitz</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto4.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp" alt="Portafolio de Fronteras Eficientes Markowitz" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #4</span>
-            <span class="pc-cat">Teoría de Portafolios</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Portafolio de Fronteras Eficientes Markowitz (Post Original 2020)</h4>
-            <div class="pc-meta"><span class="pc-tags">Markowitz · Gestión de Cartera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelo-ventas.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp" alt="Modelo de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #1</span>
-            <span class="pc-cat">Series Temporales</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Modelo de Pronósticos para Ventas en Volumen</h4>
-            <div class="pc-meta"><span class="pc-tags">RStudio · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="proyecto3.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp" alt="Aprendizaje Automático (Machine Learning)" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #3</span>
-            <span class="pc-cat">Machine Learning</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Aprendizaje Automático (Machine Learning)</h4>
-            <div class="pc-meta"><span class="pc-tags">Machine Learning · RStudio</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="EvaluacionProyecto.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp" alt="Evaluación y Formulación de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #5</span>
-            <span class="pc-cat">Evaluación de Proyectos</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Evaluación y Formulación de Proyectos de Inversión</h4>
-            <div class="pc-meta"><span class="pc-tags">Evaluación de Proyectos · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
-        <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
-          <div class="pc-media">
-            <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp" alt="Simulación Monte Carlo" class="pc-img" loading="lazy" decoding="async" />
-            <span class="pc-num">TRABAJO #10</span>
-            <span class="pc-cat">Simulación Monte Carlo</span>
-          </div>
-          <div class="pc-body">
-            <h4 class="pc-title">Simulación Monte Carlo</h4>
-            <div class="pc-meta"><span class="pc-tags">Monte Carlo · Gestión de Carteras</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
-          </div>
-        </a>
+          <a href="bot-trading-python/index.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-19-bot-trading-cripto-python.webp?v=20261121w" alt="Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #19</span>
+              <span class="pc-cat">Python · 4 Bots</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · GARCH · MLP</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-vectores-autoregresivos-en-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-18-var-granger-rstudio.webp?v=20261121b" alt="Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #18</span>
+              <span class="pc-cat">RStudio · vars</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Econométrica VAR(p) y Causalidad de Granger en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">R 4.4+ · urca · IRF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="vectores-autorregresivos-var-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-17-var-granger-spillover-python.webp?v=20261121b" alt="Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #17</span>
+              <span class="pc-cat">Python · VAR(8)</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Vectores Autorregresivos VAR(8), Granger y Diebold-Yilmaz en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Johansen · GFEVD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="simulacion-monte-carlo-portafolios-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-16-monte-carlo-cholesky-merton-python.webp?v=20261121b" alt="Modelización Estocástica de Monte Carlo Multivariante en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #16</span>
+              <span class="pc-cat">Monte Carlo Python</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Monte Carlo Multivariante en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">Python · Cholesky · Merton</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="deep-portfolio-lstm-python.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-14-deep-portfolio-lstm-pytorch-python.webp?v=20261121b" alt="Deep Portfolio Optimization con Redes Neuronales LSTM en Python" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #14</span>
+              <span class="pc-cat">Deep Learning LSTM</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Deep Portfolio Optimization con Redes Neuronales LSTM en Python</h4>
+              <div class="pc-meta"><span class="pc-tags">PyTorch · Markowitz</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="trading-medias-moviles-rstudio.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-13-analisis-tecnico-bitcoin-quantmod-rstudio.webp?v=20261121b" alt="Análisis Técnico Cuantitativo del Bitcoin en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #13</span>
+              <span class="pc-cat">Análisis Técnico</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis Técnico Cuantitativo del Bitcoin en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">quantmod · Bollinger · MACD</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="analisis-de-procesos-comerciales-data-mining.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-12-process-mining-data-mining-bupar-rstudio.webp?v=20261121b" alt="Análisis de Procesos de Negocio y Minería de Datos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #12</span>
+              <span class="pc-cat">Process Mining</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Análisis de Procesos de Negocio y Minería de Datos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">bupaR · Event Logs</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="power-bi.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-11-power-bi-inteligencia-negocios-dashboards.webp?v=20261121b" alt="Implementación de Business Intelligence y Modelado Analítico" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #11</span>
+              <span class="pc-cat">Business Intelligence</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Implementación de Business Intelligence y Modelado Analítico</h4>
+              <div class="pc-meta"><span class="pc-tags">Power BI · KPIs Financieros</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelizacion-monte-carlo-portafolios.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-10-simulacion-monte-carlo-carteras-rstudio.webp?v=20261121b" alt="Modelización Estocástica de Carteras con Monte Carlo en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #10</span>
+              <span class="pc-cat">Monte Carlo R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización Estocástica de Carteras con Monte Carlo en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">Monte Carlo · Frontera</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="bitcoin-ether-pronosticos-con-prophet.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-09-pronosticos-bitcoin-ether-prophet-rstudio.webp?v=20261121b" alt="Pronósticos Econométricos con Prophet para Bitcoin y Ether" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #9</span>
+              <span class="pc-cat">Prophet RStudio</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Pronósticos Econométricos con Prophet para Bitcoin y Ether</h4>
+              <div class="pc-meta"><span class="pc-tags">Prophet · Criptoactivos</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="powermap.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-08-sistema-geografico-sig-powermap-3d.webp?v=20261121b" alt="Sistema de Información Geográfica (SIG) y Analítica 3D" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #8</span>
+              <span class="pc-cat">SIG Geoespacial</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Sistema de Información Geográfica (SIG) y Analítica 3D</h4>
+              <div class="pc-meta"><span class="pc-tags">Power Map · Geoespacial</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto7.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-07-exploracion-macroeconomica-wdi-rstudio.webp?v=20261121b" alt="Exploración Econométrica de Datos Macroeconómicos en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #7</span>
+              <span class="pc-cat">Macroeconomía</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Exploración Econométrica de Datos Macroeconómicos en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">WDI · Regresión Lineal</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Dashboard.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-06-financial-dashboard-kpis-vba.webp?v=20261121b" alt="Cuadro de Mando Financiero y Suite Interactiva FP&amp;A" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #6</span>
+              <span class="pc-cat">FP&amp;A Suite</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Cuadro de Mando Financiero y Suite Interactiva FP&amp;A</h4>
+              <div class="pc-meta"><span class="pc-tags">FP&amp;A · EBITDA · FCF</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="EvaluacionProyecto.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-05-evaluacion-proyectos-inversion-capex.webp?v=20261121b" alt="Formulación y Evaluación Financiera de Proyectos de Inversión" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #5</span>
+              <span class="pc-cat">CAPEX &amp; VAN/TIR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Formulación y Evaluación Financiera de Proyectos de Inversión</h4>
+              <div class="pc-meta"><span class="pc-tags">CAPEX · WACC · VAN &amp; TIR</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto4.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-04-portafolio-tangente-markowitz-rstudio.webp?v=20261121b" alt="Optimización de Portafolios y Frontera Eficiente de Markowitz" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #4</span>
+              <span class="pc-cat">Markowitz R</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Optimización de Portafolios y Frontera Eficiente de Markowitz</h4>
+              <div class="pc-meta"><span class="pc-tags">Markowitz · Ratio Sharpe</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="proyecto3.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-03-machine-learning-tidymodels-rstudio.webp?v=20261121b" alt="Aprendizaje Automático (Machine Learning) Financiero en RStudio" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #3</span>
+              <span class="pc-cat">Machine Learning</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Aprendizaje Automático (Machine Learning) Financiero en RStudio</h4>
+              <div class="pc-meta"><span class="pc-tags">tidymodels · Series</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="Proyecto2.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-02-volatilidad-var-bitcoin-egarch-rstudio.webp?v=20261121b" alt="Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #2</span>
+              <span class="pc-cat">eGARCH &amp; VaR</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelización de Volatilidad Asimétrica eGARCH y Valor en Riesgo</h4>
+              <div class="pc-meta"><span class="pc-tags">Bitcoin · rugarch</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
+          <a href="modelo-ventas.html" class="pc-card">
+            <div class="pc-media">
+              <img src="imagenes/cards/post-01-pronostico-ventas-sarima-rstudio.webp?v=20261121b" alt="Modelo Econométrico de Pronósticos para Ventas en Volumen" class="pc-img" loading="lazy" decoding="async" />
+              <span class="pc-num">TRABAJO #1</span>
+              <span class="pc-cat">Series SARIMA</span>
+            </div>
+            <div class="pc-body">
+              <h4 class="pc-title">Modelo Econométrico de Pronósticos para Ventas en Volumen</h4>
+              <div class="pc-meta"><span class="pc-tags">SARIMA · Forecast</span><span class="pc-go">Ver trabajo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span></div>
+            </div>
+          </a>
           </div>
         </div>
       </section>
@@ -2090,7 +2215,7 @@ fits <span class="op">=</span> {}
       <span class="exec-cta-eyebrow">Ecosistema Profesional · Jesús Benjamín Zerpa</span>
       <h3 class="exec-cta-title">¿Deseas implementar modelos cuantitativos o planificación financiera en tu empresa?</h3>
       <p class="exec-cta-desc">
-        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, cuadros de mando en Power BI y modelos predictivos en Python y R.
+        <strong>Jesús Benjamín Zerpa</strong> acompaña a juntas directivas, gerencias financieras y proyectos de inversión en la estructuración de presupuestos maestros, Implementación de Business Intelligence y modelos econométricos y predictivos en Python y R.
       </p>
     </div>
     <div class="exec-cta-actions">
@@ -2117,7 +2242,7 @@ fits <span class="op">=</span> {}
           </p>
           <div class="footer-license-box">
             <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
-              <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
+              <img class="cc-badge" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
             </a>
             <span>Contenido bajo <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
           </div>
@@ -2141,7 +2266,7 @@ fits <span class="op">=</span> {}
           <ul class="footer-links-list">
             <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
             <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
-            <li><a href="mailto:jesuszerpaeconomia@gmail.com">jesuszerpaeconomia@gmail.com</a></li>
+            <li><a href="formulario.html" data-jbz-mail="text">Contacto directo</a></li>
             <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Telegram @jesusbz21</a></li>
           </ul>
         </div>
@@ -2186,7 +2311,7 @@ fits <span class="op">=</span> {}
             let shapes = [
               {
                 type: 'line', x0: '2020-01-30', x1: '2020-01-30', y0: 0, y1: 1, yref: 'paper',
-                line: { color: '#64748b', width: 1.5, dash: 'dash' }
+                line: { color: '#C7D2E3', width: 1.5, dash: 'dash' }
               },
               {
                 type: 'line', x0: '2024-01-11', x1: '2024-01-11', y0: 0, y1: 1, yref: 'paper',
@@ -2197,12 +2322,12 @@ fits <span class="op">=</span> {}
               {
                 x: '2020-01-30', y: 0.96, yref: 'paper', text: 'Corte Estudio 2020 (RStudio)',
                 showarrow: false, xanchor: 'right', xshift: -6,
-                font: { size: 11, color: '#475569', weight: 'bold' }, bgcolor: 'rgba(255,255,255,0.85)'
+                font: { size: 11, color: '#C7D2E3', weight: 'bold' }, bgcolor: 'rgba(11, 27, 51, 0.90)', bordercolor: '#B8955A'
               },
               {
                 x: '2024-01-11', y: 0.96, yref: 'paper', text: 'Aprobación ETFs Spot SEC (Ene-2024)',
                 showarrow: false, xanchor: 'left', xshift: 6,
-                font: { size: 11, color: '#047857', weight: 'bold' }, bgcolor: 'rgba(236,253,245,0.92)'
+                font: { size: 11, color: '#6EE7B7', weight: 'bold' }, bgcolor: 'rgba(11, 27, 51, 0.90)', bordercolor: '#10B981'
               }
             ];
 
@@ -2215,7 +2340,7 @@ fits <span class="op">=</span> {}
                   name: 'AR(1)-EGARCH(2,1) Skewed-t (Óptimo 2026: 35.59%)',
                   type: 'scatter', mode: 'lines',
                   fill: 'tozeroy', fillcolor: 'rgba(37, 99, 235, 0.10)',
-                  line: { color: '#2563eb', width: 2.3 },
+                  line: { color: '#38BDF8', width: 2.3 },
                   hovertemplate: '<b>EGARCH(2,1) Skewed-t</b>: %{y:.2f}% anual<extra></extra>'
                 },
                 {
@@ -2231,7 +2356,7 @@ fits <span class="op">=</span> {}
                   y: DATA.chart1.vol_norm_ann,
                   name: 'AR(1)-sGARCH(1,1) Normal (39.22%)',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#f59e0b', width: 1.5, dash: 'dot' },
+                  line: { color: '#B8955A', width: 1.6, dash: 'dot' },
                   hovertemplate: '<b>sGARCH(1,1) Normal</b>: %{y:.2f}% anual<extra></extra>'
                 }
               ];
@@ -2244,7 +2369,7 @@ fits <span class="op">=</span> {}
                   name: 'Volatilidad Diaria EGARCH(2,1) Skewed-t (Actual: 1.863%)',
                   type: 'scatter', mode: 'lines',
                   fill: 'tozeroy', fillcolor: 'rgba(37, 99, 235, 0.12)',
-                  line: { color: '#1d4ed8', width: 2.3 },
+                  line: { color: '#60A5FA', width: 2.3 },
                   hovertemplate: '<b>σ_t Diaria EGARCH(2,1)</b>: %{y:.3f}%<extra></extra>'
                 }
               ];
@@ -2257,7 +2382,7 @@ fits <span class="op">=</span> {}
                   y: DATA.chart1.close,
                   name: 'Precio de Cierre BTC-USD (Escala Log)',
                   type: 'scatter', mode: 'lines',
-                  line: { color: '#091e42', width: 2.5 },
+                  line: { color: '#D9C29A', width: 2.6 },
                   hovertemplate: '<b>BTC-USD</b>: $%{y:,.2f} USD<extra></extra>'
                 }
               ];
@@ -2265,15 +2390,15 @@ fits <span class="op">=</span> {}
 
             Plotly.react('chartVolRegimes', traces, {
               height: 460,
-              font: { family: fontFamily, color: '#1e293b' },
+              font: { family: fontFamily, color: '#FFFFFF' },
               margin: { l: 65, r: 28, t: 36, b: 48 },
-              paper_bgcolor: '#ffffff',
-              plot_bgcolor: '#f8fafc',
+              paper_bgcolor: '#0B1B33',
+              plot_bgcolor: '#102342',
               hovermode: 'x unified',
               shapes: shapes,
               annotations: annotations,
-              xaxis: { title: 'Horizonte Histórico y Regímenes de Mercado (2014–2026)', gridcolor: '#e2e8f0' },
-              yaxis: { title: yTitle, type: yType, gridcolor: '#e2e8f0' },
+              xaxis: { title: 'Horizonte Histórico y Regímenes de Mercado (2014–2026)', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+              yaxis: { title: yTitle, type: yType, gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
               legend: { orientation: 'h', y: 1.13, x: 0 }
             }, plotConfig);
           } catch (err) {
@@ -2317,7 +2442,7 @@ fits <span class="op">=</span> {}
               y: DATA.chart2.ret,
               name: 'Retorno Diario BTC-USD (%)',
               type: 'scatter', mode: 'lines',
-              line: { color: 'rgba(100, 116, 139, 0.55)', width: 1.2 },
+              line: { color: 'rgba(199, 210, 227, 0.45)', width: 1.2 },
               hovertemplate: '<b>Retorno BTC</b>: %{y:.2f}%<extra></extra>'
             },
             {
@@ -2325,7 +2450,7 @@ fits <span class="op">=</span> {}
               y: DATA.chart2.var99_norm,
               name: 'VaR 99% sGARCH-Normal (41 violaciones — Rechazado)',
               type: 'scatter', mode: 'lines',
-              line: { color: '#f59e0b', width: 1.6, dash: 'dot' },
+              line: { color: '#B8955A', width: 1.7, dash: 'dot' },
               hovertemplate: '<b>VaR 99% Normal</b>: %{y:.2f}%<extra></extra>'
             },
             {
@@ -2333,7 +2458,7 @@ fits <span class="op">=</span> {}
               y: DATA.chart2.var99_egarch,
               name: 'VaR 99% EGARCH(2,1) Skewed-t (21 violaciones — 0.852%)',
               type: 'scatter', mode: 'lines',
-              line: { color: '#2563eb', width: 2.2 },
+              line: { color: '#38BDF8', width: 2.2 },
               hovertemplate: '<b>VaR 99% EGARCH Skewed-t</b>: %{y:.2f}%<extra></extra>'
             },
             {
@@ -2341,7 +2466,7 @@ fits <span class="op">=</span> {}
               y: DATA.chart2.cvar99_egarch,
               name: 'Expected Shortfall (CVaR 99%) EGARCH Skewed-t (-6.96%)',
               type: 'scatter', mode: 'lines',
-              line: { color: '#dc2626', width: 1.9, dash: 'dash' },
+              line: { color: '#F43F5E', width: 2.0, dash: 'dash' },
               hovertemplate: '<b>CVaR 99% (Expected Shortfall)</b>: %{y:.2f}%<extra></extra>'
             },
             {
@@ -2349,20 +2474,20 @@ fits <span class="op">=</span> {}
               y: DATA.chart2.breach_rets,
               name: 'Excedencias VaR 99% (21 Eventos de Cola)',
               type: 'scatter', mode: 'markers',
-              marker: { color: '#dc2626', size: 8, symbol: 'circle-open-dot', line: { width: 2, color: '#991b1b' } },
+              marker: { color: '#F43F5E', size: 8, symbol: 'circle-open-dot', line: { width: 2, color: '#FDA4AF' } },
               hovertemplate: '<b>Excedencia VaR 99%</b><br>Fecha: %{x}<br>Pérdida Realizada: %{y:.2f}%<extra></extra>'
             }
           ];
 
           Plotly.newPlot('chartVaRBacktest', btTraces, {
             height: 460,
-            font: { family: fontFamily, color: '#1e293b' },
+            font: { family: fontFamily, color: '#FFFFFF' },
             margin: { l: 65, r: 28, t: 36, b: 48 },
-            paper_bgcolor: '#ffffff',
-            plot_bgcolor: '#f8fafc',
+            paper_bgcolor: '#0B1B33',
+            plot_bgcolor: '#102342',
             hovermode: 'x unified',
-            xaxis: { title: 'Ventana de Evaluación Fuera de Muestra Original (Enero 2020 – Octubre 2026)', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Retorno Diario y Umbrales de Pérdida (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Ventana de Evaluación Fuera de Muestra Original (Enero 2020 – Octubre 2026)', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+            yaxis: { title: 'Retorno Diario y Umbrales de Pérdida (%)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
             legend: { orientation: 'h', y: 1.14, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2379,7 +2504,7 @@ fits <span class="op">=</span> {}
               y: DATA.chart3.nic_egarch_vol,
               name: 'EGARCH(2,1) Asimétrico (Respuesta Exponencial)',
               type: 'scatter', mode: 'lines',
-              line: { color: '#2563eb', width: 3.0 },
+              line: { color: '#38BDF8', width: 3.0 },
               hovertemplate: '<b>Choque z_{t-1}: %{x:.2f}σ</b><br>σ_t EGARCH: %{y:.2f}%<extra></extra>'
             },
             {
@@ -2395,23 +2520,23 @@ fits <span class="op">=</span> {}
               y: DATA.chart3.nic_sgarch_vol,
               name: 'sGARCH(1,1) Clásico (Parábola Simétrica)',
               type: 'scatter', mode: 'lines',
-              line: { color: '#f59e0b', width: 2.2, dash: 'dash' },
+              line: { color: '#B8955A', width: 2.3, dash: 'dash' },
               hovertemplate: '<b>Choque z_{t-1}: %{x:.2f}σ</b><br>σ_t sGARCH Simétrico: %{y:.2f}%<extra></extra>'
             }
           ];
 
           Plotly.newPlot('chartNewsImpact', nicTraces, {
             height: 430,
-            font: { family: fontFamily, color: '#1e293b' },
+            font: { family: fontFamily, color: '#FFFFFF' },
             margin: { l: 65, r: 28, t: 32, b: 50 },
-            paper_bgcolor: '#ffffff',
-            plot_bgcolor: '#f8fafc',
+            paper_bgcolor: '#0B1B33',
+            plot_bgcolor: '#102342',
             hovermode: 'x unified',
             shapes: [
               { type: 'line', x0: 0, x1: 0, y0: 0, y1: 1, yref: 'paper', line: { color: '#94a3b8', width: 1.5, dash: 'dot' } }
             ],
-            xaxis: { title: 'Magnitud del Choque Estandarizado Previo (z_{t-1} = ε_{t-1} / σ_{t-1})', ticksuffix: 'σ', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Volatilidad Condicional Resultante σ_t (%)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Magnitud del Choque Estandarizado Previo (z_{t-1} = ε_{t-1} / σ_{t-1})', ticksuffix: 'σ', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+            yaxis: { title: 'Volatilidad Condicional Resultante σ_t (%)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
             legend: { orientation: 'h', y: 1.12, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2429,7 +2554,7 @@ fits <span class="op">=</span> {}
                 y: DATA.chart4.emp_density,
                 name: 'Densidad Empírica Residuos z_t (4,425 días)',
                 type: 'bar',
-                marker: { color: 'rgba(148, 163, 184, 0.45)', line: { color: '#64748b', width: 1 } },
+                marker: { color: 'rgba(199, 210, 227, 0.35)', line: { color: '#C7D2E3', width: 1 } },
                 hovertemplate: '<b>z_t = %{x:.2f}σ</b><br>Densidad Empírica: %{y:.4f}<extra></extra>'
               },
               {
@@ -2437,7 +2562,7 @@ fits <span class="op">=</span> {}
                 y: DATA.chart4.skewt_density,
                 name: 'Distribución Skewed Student-t de Hansen (η = 2.77)',
                 type: 'scatter', mode: 'lines',
-                line: { color: '#2563eb', width: 3.0 },
+                line: { color: '#38BDF8', width: 3.0 },
                 hovertemplate: '<b>Skewed Student-t</b>: %{y:.4f}<extra></extra>'
               },
               {
@@ -2445,24 +2570,24 @@ fits <span class="op">=</span> {}
                 y: DATA.chart4.norm_density,
                 name: 'Distribución Normal Estándar N(0,1)',
                 type: 'scatter', mode: 'lines',
-                line: { color: '#ef4444', width: 2.2, dash: 'dash' },
+                line: { color: '#F43F5E', width: 2.3, dash: 'dash' },
                 hovertemplate: '<b>Normal N(0,1)</b>: %{y:.5f}<extra></extra>'
               }
             ];
 
             Plotly.react('chartTailDensity', densTraces, {
               height: 430,
-              font: { family: fontFamily, color: '#1e293b' },
+              font: { family: fontFamily, color: '#FFFFFF' },
               margin: { l: 65, r: 28, t: 32, b: 50 },
-              paper_bgcolor: '#ffffff',
-              plot_bgcolor: '#f8fafc',
+              paper_bgcolor: '#0B1B33',
+              plot_bgcolor: '#102342',
               barmode: 'overlay',
               hovermode: 'x unified',
-              xaxis: { title: 'Innovación Estandarizada (z_t = ε_t / σ_t)', ticksuffix: 'σ', gridcolor: '#e2e8f0' },
+              xaxis: { title: 'Innovación Estandarizada (z_t = ε_t / σ_t)', ticksuffix: 'σ', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
               yaxis: {
                 title: scaleType === 'log' ? 'Log-Densidad f(z_t) (Zoom en Colas Pesadas)' : 'Densidad de Probabilidad f(z_t)',
                 type: scaleType,
-                gridcolor: '#e2e8f0'
+                gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)'
               },
               legend: { orientation: 'h', y: 1.12, x: 0 }
             }, plotConfig);
@@ -2532,20 +2657,20 @@ fits <span class="op">=</span> {}
               y: DATA.chart5.p50,
               name: 'Trayectoria Mediana Bootstrap EGARCH(2,1)',
               type: 'scatter', mode: 'lines',
-              line: { color: '#091e42', width: 3.0 },
+              line: { color: '#D9C29A', width: 3.1 },
               hovertemplate: '<b>Mediana Proyectada</b>: %{y:.2f}% anual<extra></extra>'
             }
           ];
 
           Plotly.newPlot('chartBootstrapCone', coneTraces, {
             height: 410,
-            font: { family: fontFamily, color: '#1e293b' },
+            font: { family: fontFamily, color: '#FFFFFF' },
             margin: { l: 65, r: 28, t: 32, b: 48 },
-            paper_bgcolor: '#ffffff',
-            plot_bgcolor: '#f8fafc',
+            paper_bgcolor: '#0B1B33',
+            plot_bgcolor: '#102342',
             hovermode: 'x unified',
-            xaxis: { title: 'Horizonte de Proyección Forward-Looking (30-Oct-2026 al 27-Ene-2027)', gridcolor: '#e2e8f0' },
-            yaxis: { title: 'Volatilidad Anualizada Proyectada (σ_{T+h} %)', ticksuffix: '%', gridcolor: '#e2e8f0' },
+            xaxis: { title: 'Horizonte de Proyección Forward-Looking (30-Oct-2026 al 27-Ene-2027)', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
+            yaxis: { title: 'Volatilidad Anualizada Proyectada (σ_{T+h} %)', ticksuffix: '%', gridcolor: 'rgba(199, 210, 227, 0.14)', zerolinecolor: 'rgba(184, 149, 90, 0.42)' },
             legend: { orientation: 'h', y: 1.13, x: 0 }
           }, plotConfig);
         } catch (err) {
@@ -2562,6 +2687,6 @@ fits <span class="op">=</span> {}
   </script>
 
   <!-- Corporate Portfolio JS (Code Copy Buttons, Moving Carousel, Scroll Top, Navigation, Copilot Assistant) -->
-  <script src="js/futuristic-app.js?v=20261114f"></script>
+  <script src="js/futuristic-app.js?v=20261123a"></script>
 </body>
 </html>

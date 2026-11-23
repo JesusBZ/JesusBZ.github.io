@@ -45,7 +45,7 @@ title: " "
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Sistemas de recomendación</span></h3>
 <div style="text-align: justify;">
-<span style="font-size: large;">Los sistemas de recomendación ahora se usan ampliamente entre los minoristas en línea. El modelo predictivo de comportamiento del consumidor es ahora un foco central de muchas organizaciones y se considera esencial para competir. Empresas como Amazon y Macy's crearon sus propios modelos de minería de datos patentados para pronosticar la demanda y mejorar la experiencia del cliente en todos los puntos de contacto. Netflix ofreció un premio de un millón de dólares por un algoritmo que aumentaría significativamente la precisión de su sistema de recomendación. El modelo ganador mejoró la precisión de las recomendaciones en más del 8%.</span></div>
+<span style="font-size: large;">Los sistemas de recomendación ahora se usan ampliamente entre los minoristas en línea. El modelo predictivo de comportamiento del consumidor es ahora un foco central de muchas organizaciones y se considera esencial para competir. Empresas como Amazon y Macy's crearon sus propios modelos de minería de datos patentados para pronosticar la demanda y mejorar la experiencia del cliente en todos los puntos de contacto. Netflix ofreció un premio de un millón de dólares por un algoritmo que aumentaría significativamente la precisión de su sistema de recomendación. La especificación óptima seleccionada incrementó la precisión de las recomendaciones en más del 8%.</span></div>
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Análisis de los sentimientos</span></h3>
 <div style="text-align: justify;">
@@ -133,6 +133,43 @@ title: " "
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 library(bupaR)
+library(processmapR)
+# Paleta Corporativa Unificada (Curriculum.pdf — Executive Navy & Champagne Gold)
+jbz_cv_palette <- c(
+  navy = "#0B1B33", plot_navy = "#102342", elev_navy = "#163259",
+  cobalt = "#1D4ED8", sky = "#38BDF8", gold = "#B8955A",
+  gold_soft = "#D9C29A", emerald = "#10B981", rose = "#F43F5E",
+  mist = "#C7D2E3", white = "#FFFFFF"
+)
+jbz_series_colors <- c("#38BDF8", "#B8955A", "#10B981", "#F43F5E", "#60A5FA", "#D9C29A", "#2DD4BF")
+
+theme_jbz_cv <- function(base_size = 12) {
+  ggplot2::theme_minimal(base_size = base_size) +
+    ggplot2::theme(
+      plot.background   = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      panel.background  = ggplot2::element_rect(fill = "#102342", colour = NA),
+      panel.grid.major  = ggplot2::element_line(colour = "#1E3A5F", linewidth = 0.35),
+      panel.grid.minor  = ggplot2::element_blank(),
+      text              = ggplot2::element_text(colour = "#FFFFFF"),
+      axis.text         = ggplot2::element_text(colour = "#C7D2E3"),
+      axis.title        = ggplot2::element_text(colour = "#D9C29A", face = "bold"),
+      plot.title        = ggplot2::element_text(colour = "#FFFFFF", face = "bold"),
+      plot.subtitle     = ggplot2::element_text(colour = "#C7D2E3"),
+      legend.background = ggplot2::element_rect(fill = "#0B1B33", colour = NA),
+      legend.text       = ggplot2::element_text(colour = "#FFFFFF")
+    )
+}
+
+jbz_plotly_cv <- function(p) {
+  plotly::layout(
+    p,
+    paper_bgcolor = "#0B1B33",
+    plot_bgcolor  = "#102342",
+    font  = list(color = "#FFFFFF", family = "Plus Jakarta Sans, Inter, sans-serif"),
+    xaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3")),
+    yaxis = list(gridcolor = "rgba(199,210,227,0.14)", tickfont = list(color = "#C7D2E3"))
+  )
+}
 library(eventdataR)
 library(edeaR)
 library(processanimateR)
@@ -200,7 +237,7 @@ summary(mi_log)
 <span style="font-size: large;">A continuación se realizarán llamados para obtener información de las frecuencias absolutas y relativas.&nbsp;</span></div>
 </div><br>
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-x=end_activities(mi_log, level_of_analysis="resource")    
+x=end_activities(mi_log, level = "resource")    
 plot(x)
 ```
 
@@ -211,7 +248,7 @@ activity_presence(mi_log)
 ```
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
-x=end_activities(mi_log, level_of_analysis="resource")    
+x=end_activities(mi_log, level = "resource")    
 plot(x)
 ```
 <br><div>
@@ -274,14 +311,14 @@ patients %>%
 <h3 style="text-align: justify;">
 <span style="font-size: large;">Animación del Mapa de Procesos</span></h3><br>
 ```{r}
-animate_process(patients, mapping = token_aes(color = token_scale("red")))
+animate_process(patients, mapping = token_aes(color = token_scale("#B8955A")))
 ```
 
 ```{r}
 animate_process(patients, mode = "relative", jitter = 10, legend = "color",
   mapping = token_aes(color = token_scale("employee", 
     scale = "ordinal", 
-    range = RColorBrewer::brewer.pal(7, "Paired"))))
+    range = jbz_series_colors)))
 ```
 <br>
 <h3 style="text-align: justify;">

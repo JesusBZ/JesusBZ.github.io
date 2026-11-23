@@ -52,7 +52,7 @@ Modelo de pronóstico para Ventas en Volumen</span></h2>
 </h2>
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(readxl)
-Ventas_unidades_Fao_2014_2019 <- read_excel("C:/Users/Personal/Desktop/Modelo en R/Arima manufactura/Ventas unidades Fao 2014 2019.xlsx")
+Ventas_unidades_Fao_2014_2019 <- read_excel(file.path("data", "ventas_unidades_fao_2014_2019.xlsx"))
 datax<-Ventas_unidades_Fao_2014_2019 
 ```
 
@@ -311,7 +311,7 @@ check_res(md1)
 <span style="font-size: large;"><div style="text-align: justify;">
 <br /></div>
 <div style="text-align: justify;">
-Para finalizar con el enfoque tradicional se realizarán los pronósticos para 12 meses del modelo SARIMA con intérvalos de confianza del 80% y 95%.</div>
+Para finalizar con el enfoque tradicional se realizarán los pronósticos para 12 meses del modelo SARIMA con intervalos de confianza del 80% y 95%.</div>
 </span><br />
 <h3>
 <span style="font-size: large;">Pronósticos del modelo SARIMA</span></h3>

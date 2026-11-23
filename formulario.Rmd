@@ -59,15 +59,17 @@ textarea {
 </style>
 </head> 
   <body>
-<form name="contactform" method="post" action="https://app.99inbound.com/api/e/hB5ewb94" target="_blank">    
+<form name="contactform" method="post" action="#secure-contact" novalidate>    
   <input name="name" type="text" class="feedback-input" placeholder="Nombre" required />   
   <input name="email" type="text" class="feedback-input" placeholder="Email" required/>
-<input name="phone" type="text" class="feedback-input" placeholder="Telefono" required/>
+  <input name="phone" type="text" class="feedback-input" placeholder="Telefono" required/>
   <textarea name="text" class="feedback-input" placeholder="Mensaje" required></textarea>
-  <input name="buttom"type="submit" value="ENVIAR"/>
-<div style="position: absolute; left: -5000px;">
-  <input type="checkbox" name="bluetooth_magenta_argyle_rhino" value="1" tabindex="-1" autocomplete="no">
+  <div style="position: absolute; left: -9999px;" aria-hidden="true">
+    <input type="text" name="website_url" value="" tabindex="-1" autocomplete="off">
+    <input type="text" name="company_fax" value="" tabindex="-1" autocomplete="off">
+    <input type="checkbox" name="bluetooth_magenta_argyle_rhino" value="1" tabindex="-1" autocomplete="off">
+  </div>
+  <input name="buttom" type="submit" value="ENVIAR"/>
 </form>
-</div>
  </body>
 </html>

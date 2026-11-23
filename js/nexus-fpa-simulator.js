@@ -1327,7 +1327,7 @@
       <div class="cm-kpi-card"><div class="cm-kpi-lbl">Valor Corte Actual</div><div class="cm-kpi-val" style="color:#0B1B33;">${fN(latestR)}</div><div class="cm-kpi-sub">${M} ${A} S${S}</div></div>
       <div class="cm-kpi-card"><div class="cm-kpi-lbl">Meta Presupuestada</div><div class="cm-kpi-val">${fN(latestM)}</div><div class="cm-kpi-sub">Referencia S${S}</div></div>
       <div class="cm-kpi-card"><div class="cm-kpi-lbl">Cumplimiento</div><div class="cm-kpi-val">${((latestR / (latestM || 1)) * 100).toFixed(1)}%</div><div class="cm-kpi-sub">Desviación: ${fN(latestR - latestM)}</div></div>
-      <div class="cm-kpi-card"><div class="cm-kpi-lbl">Meses Auditados</div><div class="cm-kpi-val">${labels.length}</div><div class="cm-kpi-sub">Serie ${A}</div></div>
+      <div class="cm-kpi-card"><div class="cm-kpi-lbl">Meses Analizados</div><div class="cm-kpi-val">${labels.length}</div><div class="cm-kpi-sub">Serie ${A}</div></div>
     `;
     document.getElementById('cm-body').innerHTML = `
       <div class="cm-panel">
@@ -1353,7 +1353,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     4. SLIDE-OVER DRAWER DE LÍNEA DE NEGOCIO & AUDITORÍA Z-MAD
+     4. SLIDE-OVER DRAWER DE LÍNEA DE NEGOCIO & CONTROL ESTADÍSTICO Z-MAD
      ═══════════════════════════════════════════════════════════════ */
   function openDrawer(lineCode) {
     if (!global.LN.includes(lineCode)) return;
@@ -1419,7 +1419,7 @@
     const tot = Number(sum.total || 0);
     const crit = Number(sum.critical || 0);
     el.className = `db-health-pill ${crit > 0 ? 'crit' : (tot === 0 ? 'healthy' : '')}`;
-    el.innerHTML = `${_ico(crit > 0 ? 'alert-octagon' : (tot > 0 ? 'alert-triangle' : 'shield-check'), 13)} <span>Auditoría BD: ${tot} hallazgos</span>`;
+    el.innerHTML = `${_ico(crit > 0 ? 'alert-octagon' : (tot > 0 ? 'alert-triangle' : 'shield-check'), 13)} <span>Validación BD: ${tot} hallazgos</span>`;
   }
 
   function openAuditModal() {
@@ -1487,7 +1487,7 @@
     rows.forEach(it => lines.push([it.severity, it.category, `${it.sheet}!${it.cell}`, it.period, it.line, it.message, it.formulaOrValue, it.expectedHint].map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(',')));
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' }));
-    a.download = 'Nexus_FPA_Auditoria_Z_MAD.csv';
+    a.download = 'Nexus_FPA_Control_Estadistico_Z_MAD.csv';
     a.click();
   }
 
@@ -1689,6 +1689,7 @@
   global.__cmHandleCsvUpload = function (inputEl, lineCode) {
     const file = inputEl?.files?.[0];
     if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { if (typeof global.showToast === 'function') global.showToast('El archivo supera el límite de seguridad de 2 MB'); return; }
     const reader = new FileReader();
     reader.onload = ev => {
       const text = String(ev.target?.result || '').trim();

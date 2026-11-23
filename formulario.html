@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; object-src 'none'; base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()">
   <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
   <title>Contacto | Jesús Benjamín Zerpa — Economista y Científico de Datos</title>
@@ -52,8 +54,7 @@
                        "jobTitle":  "Economista Senior, Gerente de Planificación Financiera (FP\u0026A) \u0026 Científico de Datos",
                        "url":  "https://jesusbzerpa.github.io/",
                        "image":  "https://jesusbz.github.io/imagenes/jesus-zerpa-profile.jpg",
-                       "email":  "mailto:JesusZerpaEconomia@Gmail.Com",
-                       "telephone":  "+58 424 148 78 70",
+"telephone":  "+58 424 148 78 70",
                        "worksFor":  {
                                         "@type":  "Organization",
                                         "name":  "Consorcio Credicard"
@@ -134,10 +135,13 @@
   <!-- Open Graph / Meta Cards -->
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="imagenes/jbz-favicon.svg?v=20261115a" />
+  <link rel="icon" type="image/png" sizes="32x32" href="imagenes/jbz-favicon-32.png?v=20261115a" />
+  <link rel="shortcut icon" href="favicon.ico?v=20261115a" type="image/x-icon" />
+  <link rel="apple-touch-icon" sizes="180x180" href="imagenes/jbz-apple-touch-icon.png?v=20261115a" />
 
   <!-- Design System CSS -->
-  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261114f" />
+  <link rel="stylesheet" href="css/futuristic-corporate.css?v=20261121s" />
 
   <!-- Google Analytics 4 (Unified Cross-Domain Ecosystem + Clean URL Bar) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9M6MYPFL3M"></script>
@@ -467,9 +471,9 @@
     .btn-supreme-submit {
       margin-top: 0.75rem;
       width: 100%;
-      background: linear-gradient(135deg, #0052cc 0%, #0747a6 100%);
+      background: linear-gradient(135deg, #0B1B33 0%, #1D4ED8 100%);
       color: #ffffff;
-      border: none;
+      border: 1px solid rgba(184, 149, 90, 0.45);
       border-radius: var(--radius-md);
       padding: 0.95rem 1.75rem;
       font-size: 1.05rem;
@@ -480,14 +484,14 @@
       align-items: center;
       justify-content: center;
       gap: 0.65rem;
-      box-shadow: 0 8px 20px -3px rgba(0, 82, 204, 0.35);
+      box-shadow: 0 8px 20px -3px rgba(11, 27, 51, 0.32);
       transition: all var(--transition-fast);
     }
 
     .btn-supreme-submit:hover {
-      background: linear-gradient(135deg, #0747a6 0%, #003882 100%);
+      background: linear-gradient(135deg, #163259 0%, #1E40AF 100%);
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px -4px rgba(0, 82, 204, 0.45);
+      box-shadow: 0 12px 25px -4px rgba(29, 78, 216, 0.42);
     }
 
     .btn-supreme-submit:active {
@@ -630,7 +634,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
           </a>
           <!-- Email -->
-          <a href="mailto:jesuszerpaeconomia@gmail.com" class="social-icon-btn" title="Correo Electrónico">
+          <a href="formulario.html" data-jbz-mail="link" class="social-icon-btn" title="Correo Electrónico">
             <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>
@@ -640,9 +644,6 @@
       <button id="mobileNavToggle" class="mobile-toggle-btn" aria-label="Abrir Menú" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
-      <a href="index.html" class="jbz-nav-logo" title="Jesús Benjamín Zerpa — Inicio" aria-label="Logo JBZ Jesús Benjamín Zerpa">
-        <img src="imagenes/jbz-logo.svg" alt="JBZ · Jesús Benjamín Zerpa" decoding="async" />
-      </a>
     </div>
 
     <!-- Mobile Drawer -->
@@ -685,7 +686,7 @@
         <div>
           <h2 class="dossier-header-title">Canales de Contacto Directo</h2>
           <p class="dossier-header-desc">
-            Para consultas institucionales, oportunidades de consultoría cuantitativa o revisión de modelos econométricos, puedes contactarme directamente a través de las siguientes vías:
+            Para consultas corporativas, oportunidades de consultoría cuantitativa o revisión de modelos econométricos, puedes contactarme directamente a través de las siguientes vías:
           </p>
         </div>
 
@@ -702,13 +703,13 @@
           </a>
 
           <!-- Email -->
-          <a href="mailto:jesuszerpaeconomia@gmail.com" class="channel-item" title="Enviar correo">
+          <a href="formulario.html" data-jbz-mail="link" class="channel-item" title="Enviar correo">
             <div class="channel-icon">
               <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
             </div>
             <div class="channel-content">
               <div class="channel-label">Correo Electrónico</div>
-              <div class="channel-val">jesuszerpaeconomia@gmail.com</div>
+              <div class="channel-val" data-jbz-mail-text="1">Canal de correo protegido</div>
             </div>
           </a>
 
@@ -764,7 +765,7 @@
           Completa el formulario para estructurar los requerimientos iniciales de tu organización o proyecto.
         </p>
 
-        <form id="supremeContactForm" class="supreme-form" name="contactform" method="post" action="https://app.99inbound.com/api/e/hB5ewb94">
+        <form id="supremeContactForm" class="supreme-form" name="contactform" method="post" action="#secure-contact" novalidate data-jbz-shield-managed="1">
           
           <!-- Name Field -->
           <div class="form-group-field">
@@ -774,7 +775,7 @@
             </label>
             <div class="input-with-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <input id="contact_name" name="name" type="text" class="supreme-input" placeholder="Ej. Carlos Mendoza" required autocomplete="name" />
+              <input id="contact_name" name="name" type="text" class="supreme-input" placeholder="Ej. Carlos Mendoza" maxlength="120" required autocomplete="name" />
             </div>
           </div>
 
@@ -788,7 +789,7 @@
               </label>
               <div class="input-with-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                <input id="contact_email" name="email" type="email" class="supreme-input" placeholder="nombre@empresa.com" required autocomplete="email" />
+                <input id="contact_email" name="email" type="email" class="supreme-input" placeholder="nombre@empresa.com" maxlength="120" required autocomplete="email" />
               </div>
             </div>
 
@@ -800,7 +801,7 @@
               </label>
               <div class="input-with-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <input id="contact_phone" name="phone" type="tel" class="supreme-input" placeholder="+58 424 148 78 70" required autocomplete="tel" />
+                <input id="contact_phone" name="phone" type="tel" class="supreme-input" placeholder="+58 424 148 78 70" maxlength="24" required autocomplete="tel" />
               </div>
             </div>
           </div>
@@ -811,26 +812,31 @@
               <span>Mensaje o Descripción del Proyecto</span>
               <span class="req">*</span>
             </label>
-            <textarea id="contact_message" name="text" class="supreme-textarea" placeholder="Describe los antecedentes del caso, variables clave, objetivos esperados o el cronograma propuesto..." required></textarea>
+            <textarea id="contact_message" name="text" class="supreme-textarea" placeholder="Describe los antecedentes del caso, variables clave, objetivos esperados o el cronograma propuesto (sin enlaces externos)..." maxlength="2000" required></textarea>
           </div>
 
-          <!-- Honeypot anti-spam field -->
-          <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <!-- Multi-Field Honeypot Anti-Bot Traps -->
+          <div data-jbz-hp-wrap="1" style="position: absolute; left: -9999px; top: -9999px; height: 0; width: 0; overflow: hidden; opacity: 0;" aria-hidden="true">
+            <input type="text" name="website_url" value="" tabindex="-1" autocomplete="off" aria-label="Sitio web" />
+            <input type="text" name="company_fax" value="" tabindex="-1" autocomplete="off" aria-label="Fax" />
             <input type="checkbox" name="bluetooth_magenta_argyle_rhino" value="1" tabindex="-1" autocomplete="off" />
           </div>
+
+          <!-- Human Anti-Bot Verification Challenge Slot -->
+          <div data-jbz-challenge-slot="1"></div>
 
           <!-- Feedback Banner -->
           <div id="formFeedbackBanner" class="form-feedback-alert" role="status" aria-live="polite"></div>
 
           <!-- Submit Button -->
           <button id="contactSubmitBtn" type="submit" class="btn-supreme-submit">
-            <span>Enviar Mensaje</span>
+            <span>Enviar Mensaje Verificado</span>
             <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </button>
 
           <div class="form-security-footer">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-            Envío cifrado y protegido contra correo no deseado.
+            Protegido con Firewall Anti-Bot, Prueba SHA-256 y Bloqueo Anti-Phishing.
           </div>
 
         </form>
@@ -851,7 +857,7 @@
           </p>
           <div class="footer-license-box">
             <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
-              <img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
+              <img class="cc-badge" src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Licencia Creative Commons" width="88" height="31" decoding="async" loading="lazy" />
             </a>
             <span>Contenido bajo <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">Licencia Creative Commons Reconocimiento 4.0 Internacional</a>.</span>
           </div>
@@ -875,7 +881,7 @@
           <ul class="footer-links-list">
             <li><a href="https://www.linkedin.com/in/jes%C3%BAs-zerpa-807646129/" target="_blank" rel="noopener noreferrer">Perfil LinkedIn</a></li>
             <li><a href="https://github.com/JesusBZ" target="_blank" rel="noopener noreferrer">Repositorio GitHub</a></li>
-            <li><a href="mailto:jesuszerpaeconomia@gmail.com">jesuszerpaeconomia@gmail.com</a></li>
+            <li><a href="formulario.html" data-jbz-mail="text">Contacto directo</a></li>
             <li><a href="https://t.me/jesusbz21" target="_blank" rel="noopener noreferrer">Telegram @jesusbz21</a></li>
           </ul>
         </div>
@@ -894,77 +900,75 @@
   </button>
 
   <!-- Futuristic App JS & AI Copilot Integration -->
-  <script src="js/futuristic-app.js?v=20261114f"></script>
+  <script src="js/futuristic-app.js?v=20261123a"></script>
 
   <script>
     (function () {
-      var form = document.getElementById('supremeContactForm');
-      var btn = document.getElementById('contactSubmitBtn');
-      var banner = document.getElementById('formFeedbackBanner');
-      if (!form || !btn || !banner) return;
+      function bindSupremeContactShield() {
+        var form = document.getElementById('supremeContactForm');
+        var btn = document.getElementById('contactSubmitBtn');
+        var banner = document.getElementById('formFeedbackBanner');
+        var shield = window.JBZSecurityShield;
+        if (!form || !btn || !banner || !shield) return;
 
-      var defaultBtnHtml = btn.innerHTML;
+        var defaultBtnHtml = btn.innerHTML;
+        shield.mountChallengeWidget(form);
 
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        banner.className = 'form-feedback-alert';
-        banner.textContent = '';
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          banner.className = 'form-feedback-alert';
+          banner.textContent = '';
 
-        var nameVal = (document.getElementById('contact_name').value || '').trim();
-        var emailVal = (document.getElementById('contact_email').value || '').trim();
-        var phoneVal = (document.getElementById('contact_phone').value || '').trim();
-        var msgVal = (document.getElementById('contact_message').value || '').trim();
-        var honeypotEl = form.querySelector('input[name="bluetooth_magenta_argyle_rhino"]');
+          var nameVal = (document.getElementById('contact_name').value || '').trim();
+          var emailVal = (document.getElementById('contact_email').value || '').trim();
+          var phoneVal = (document.getElementById('contact_phone').value || '').trim();
+          var msgVal = (document.getElementById('contact_message').value || '').trim();
 
-        var params = new URLSearchParams();
-        params.append('name', nameVal);
-        params.append('email', emailVal);
-        params.append('phone', phoneVal);
-        params.append('text', msgVal);
-        params.append('buttom', 'ENVIAR');
-        if (honeypotEl && honeypotEl.checked) {
-          params.append('bluetooth_magenta_argyle_rhino', '1');
-        }
+          btn.disabled = true;
+          btn.innerHTML = '<span>Validando seguridad y enviando...</span>';
 
-        btn.disabled = true;
-        btn.innerHTML = '<span>Enviando mensaje...</span>';
+          try {
+            var res = await shield.dispatchProtectedContact(form, {
+              name: nameVal,
+              email: emailVal,
+              phone: phoneVal,
+              message: msgVal,
+              source: 'formulario.html'
+            }, e);
 
-        fetch(form.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept': 'application/json'
-          },
-          body: params.toString()
-        })
-          .then(function (res) {
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            return res.json();
-          })
-          .then(function (data) {
-            var replyText = (data && data.submission_text)
-              ? String(data.submission_text)
-              : 'Gracias por contactarme, pronto le responderé.';
-            banner.className = 'form-feedback-alert visible success';
-            banner.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-            var textDiv = document.createElement('div');
-            var strongEl = document.createElement('strong');
-            strongEl.textContent = 'Mensaje enviado con éxito: ';
-            textDiv.appendChild(strongEl);
-            textDiv.appendChild(document.createTextNode(replyText));
-            banner.appendChild(textDiv);
-            form.reset();
-          })
-          .catch(function () {
+            if (res && res.ok) {
+              banner.className = 'form-feedback-alert visible success';
+              banner.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+              var textDiv = document.createElement('div');
+              var strongEl = document.createElement('strong');
+              strongEl.textContent = 'Mensaje verificado y enviado con éxito: ';
+              textDiv.appendChild(strongEl);
+              textDiv.appendChild(document.createTextNode(res.message || 'Gracias por contactarme, pronto le responderé.'));
+              banner.appendChild(textDiv);
+              form.reset();
+            } else {
+              banner.className = 'form-feedback-alert visible error';
+              var errDiv = document.createElement('div');
+              errDiv.textContent = (res && res.error) ? res.error : 'Verifica los campos del formulario.';
+              banner.appendChild(errDiv);
+            }
+          } catch (err) {
             banner.className = 'form-feedback-alert visible error';
-            banner.innerHTML =
-              '<div>No se pudo conectar en este instante con el servidor de formularios. Puedes enviar tu consulta directamente por <a href="https://wa.me/584241487870" target="_blank" rel="noopener noreferrer" style="color:#991b1b;text-decoration:underline;">WhatsApp (+58 424 148 78 70)</a> o a <a href="mailto:jesuszerpaeconomia@gmail.com" style="color:#991b1b;text-decoration:underline;">jesuszerpaeconomia@gmail.com</a>.</div>';
-          })
-          .finally(function () {
+            var fbDiv = document.createElement('div');
+            fbDiv.textContent = 'No se pudo conectar en este instante con el servidor de formularios. Puedes escribir directamente por WhatsApp (+58 424 148 78 70).';
+            banner.appendChild(fbDiv);
+          } finally {
             btn.disabled = false;
             btn.innerHTML = defaultBtnHtml;
-          });
-      });
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindSupremeContactShield);
+      } else {
+        bindSupremeContactShield();
+      }
     })();
   </script>
 </body>

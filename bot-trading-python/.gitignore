@@ -1,0 +1,23 @@
+# Secrets and environment files (NEVER COMMIT)
+.env
+.env.*
+*.env
+*.key
+*.pem
+*.p12
+*.pfx
+*secret*
+*credentials*
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Temporary atomic dumps
+*.tmp
+*.json.tmp

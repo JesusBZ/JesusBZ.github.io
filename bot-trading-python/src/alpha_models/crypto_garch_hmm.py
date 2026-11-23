@@ -5,13 +5,13 @@ from arch import arch_model
 from hmmlearn.hmm import GaussianHMM
 from typing import Tuple, List
 
-# Configuración del logger para auditoría en el servidor
+# Configuración del logger para validación estadística en el servidor
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 class CryptoGarchHmmModel:
     """
-    Modelo Alpha Híbrido de Grado Institucional.
+    Modelo Alpha Híbrido de Especificación Cuantitativa.
     Combina Hidden Markov Models (ML) para detección de régimen macro,
     GJR-GARCH con distribución Skew-t para filtrado de volatilidad asimétrica,
     y Canales de Donchian para la ejecución de Momentum.
@@ -46,7 +46,7 @@ class CryptoGarchHmmModel:
         
         for asset in assets:
             try:
-                # Modelo asimétrico institucional con colas pesadas
+                # Modelo asimétrico condicional con colas pesadas
                 model = arch_model(returns[asset] * 100, vol='Garch', p=1, o=1, q=1, dist='skewt')
                 res = model.fit(disp='off')
                 garch_vol[asset] = res.conditional_volatility / 100
@@ -60,7 +60,7 @@ class CryptoGarchHmmModel:
     def compute_signals(self, close_prices: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """
         Procesa el histórico completo y genera las matrices de señales filtradas.
-        Útil para auditorías locales o recalibraciones semanales.
+        Útil para validaciones estadísticas locales o recalibraciones semanales.
         """
         assets = close_prices.columns.tolist()
         returns = np.log(close_prices / close_prices.shift(1)).dropna()
@@ -72,12 +72,12 @@ class CryptoGarchHmmModel:
         hmm_block_mask = pd.DataFrame(
             np.repeat(hmm_block.values.reshape(-1, 1), len(assets), axis=1),
             index=returns.index, columns=assets
-        ).reindex(close_prices.index, method='ffill').fillna(True)
+        ).reindex(close_prices.index).ffill().fillna(True)
         
         # 2. Capa de Sofisticación Matemática (GJR-GARCH)
         garch_vol = self._calculate_garch_volatility(returns, assets)
         vol_threshold = garch_vol.rolling(window=self.rolling_vol_window, min_periods=20).quantile(self.pct_threshold)
-        garch_filter = (garch_vol < vol_threshold).reindex(close_prices.index, method='ffill').fillna(False)
+        garch_filter = (garch_vol < vol_threshold).reindex(close_prices.index).ffill().fillna(False)
         
         # 3. Capa de Momentum (Donchian)
         upper_band = close_prices.rolling(window=self.donchian_window).max()

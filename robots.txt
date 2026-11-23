@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /.env
 Disallow: /scratch/
 Disallow: /_site/
 Disallow: /_header.html
