@@ -412,7 +412,8 @@ class TestQuantBotsRules(unittest.TestCase):
             if p["coin"] != "USDT" and p["units"] > 0:
                 self.assertIsNotNone(p["sl_price"])
                 self.assertIsNotNone(p["tp_price"])
-                self.assertLess(p["sl_price"], p["entry_price"])
+                self.assertLess(p["sl_price"], max(p["entry_price"], p["market_price"]) * 1.0001)
+                self.assertLess(p["sl_price"], p["tp_price"])
                 self.assertGreater(p["tp_price"], p["entry_price"])
 
     def test_17_render_http_health_head_and_cors_suite_endpoint(self):

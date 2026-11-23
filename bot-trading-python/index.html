@@ -1285,7 +1285,7 @@
         <div class="kpi-exec-box emerald" id="kpiCardBotA">
           <span class="kpi-exec-tag">Bot A &bull; Microtrading Intradía</span>
           <span class="kpi-exec-val" id="kpiHeroBotA">$1,000.00</span>
-          <span class="kpi-exec-meta" id="kpiHeroBotAMeta">EMA 9/21/55 + ADX 1H &ge; 18 + ATR &ge; 0.38%: SL 1.55x, Parcial 45% (1.65x) y TP 3.10x ATR.</span>
+          <span class="kpi-exec-meta" id="kpiHeroBotAMeta">EMA 9/21/55 + ADX 1H &ge; 20 + ATR &ge; 0.42%: SL 1.55x, Parcial 45% (1.40x) y TP 3.10x ATR.</span>
         </div>
         <div class="kpi-exec-box" id="kpiCardBotB">
           <span class="kpi-exec-tag">Bot B &bull; Decisión Diaria (1D)</span>
@@ -1623,10 +1623,10 @@
         <div class="dossier-grid">
           <div class="dossier-card da">
             <h4>BOT A &bull; Microtrading Intradía por Impulso Técnico y Volumen (15m / 1H)</h4>
-            <div class="dossier-formula">Entrada: EMA<sub>9</sub> &gt; EMA<sub>21</sub> &and; ADX<sub>1H</sub> &ge; 18 &and; ATR/P &ge; 0.38% &and; ROC<sub>10</sub> &gt; 0.35% &and; Vol &ge; 1.08&middot;SMA<sub>20</sub></div>
+            <div class="dossier-formula">Entrada: EMA<sub>9</sub> &gt; EMA<sub>21</sub> &and; ADX<sub>1H</sub> &ge; 20 &and; ATR/P &ge; 0.42% &and; ROC<sub>10</sub> &gt; 0.35% &and; Vol &ge; 1.08&middot;SMA<sub>20</sub></div>
             <ul class="dossier-list">
-              <li><strong>Regla de Entrada Intradía (960 velas 15m):</strong> Activa compras cuando convergen alineación rápida (EMA<sub>9</sub> &gt; EMA<sub>21</sub> sobre régimen 1H), fuerza tendencial <code>ADX<sub>1H</sub> &ge; 18</code>, rango de volatilidad <code>ATR/Precio &ge; 0.38%</code> (evitando rangos muertos donde la comisión erosiona el margen), expansión del histograma <code>MACD(12,26,9)</code>, Momentum <code>ROC(10) &gt; 0.35%</code>, <code>RSI(14)</code> en [48, 70] y volumen <code>&ge; 1.08&times; SMA<sub>20</sub></code>, o ante recuperación confirmada de la banda inferior de Bollinger (<code>%B</code> con <code>Vol &ge; 1.25&times;</code>).</li>
-              <li><strong>Estrategia de Salida Causal y Control Estricto:</strong> Ejecuta con tarifa <em>Maker Limit</em> (0.04%) limitando el riesgo máximo al <strong>0.85% del capital</strong> ($8.50 por orden), fijando <code>SL = P<sub>0</sub> &minus; 1.55&middot;ATR<sub>14</sub></code>, <strong>toma parcial del 45% en <code>+1.65&middot;ATR<sub>14</sub></code></strong> y objetivo final <code>TP = P<sub>0</sub> + 3.10&middot;ATR<sub>14</sub></code> (ratio 2:1). El <em>trailing stop</em> se evalúa estrictamente contra bandas pre-barra (sin falsos stops intra-barra), activándose en <code>+1.25&middot;ATR<sub>14</sub></code> con piso neto de <strong>+0.55%</strong>, más corte diario de &minus;2.00%.</li>
+              <li><strong>Regla de Entrada Intradía (960 velas 15m):</strong> Activa compras cuando convergen alineación rápida (EMA<sub>9</sub> &gt; EMA<sub>21</sub> sobre régimen 1H), fuerza tendencial <code>ADX<sub>1H</sub> &ge; 20</code>, rango de volatilidad <code>ATR/Precio &ge; 0.42%</code> (evitando rangos muertos donde la comisión erosiona el margen), expansión del histograma <code>MACD(12,26,9)</code>, Momentum <code>ROC(10) &gt; 0.35%</code>, <code>RSI(14)</code> en [48, 70] y volumen <code>&ge; 1.08&times; SMA<sub>20</sub></code>, o ante recuperación confirmada de la banda inferior de Bollinger (<code>%B</code> con <code>Vol &ge; 1.25&times;</code>).</li>
+              <li><strong>Estrategia de Salida Causal y Control Estricto:</strong> Ejecuta con tarifa <em>Maker Limit</em> (0.04%) limitando el riesgo máximo al <strong>0.85% del capital</strong> ($8.50 por orden), fijando <code>SL = P<sub>0</sub> &minus; 1.55&middot;ATR<sub>14</sub></code>, <strong>toma parcial del 45% en <code>+1.40&middot;ATR<sub>14</sub></code></strong> y objetivo final <code>TP = P<sub>0</sub> + 3.10&middot;ATR<sub>14</sub></code> (ratio 2:1). El <em>trailing stop</em> se evalúa estrictamente contra bandas pre-barra (sin falsos stops intra-barra), activándose en <code>+1.05&middot;ATR<sub>14</sub></code> (distancia <code>1.10&middot;ATR<sub>14</sub></code>) con piso neto de <strong>+0.55%</strong>, más corte diario de &minus;2.00%.</li>
             </ul>
           </div>
 
@@ -2238,6 +2238,25 @@
         if (!data || typeof data !== 'object' || !data.algo_bots || !data.ledger_chain) {
           throw new Error('Invalid suite payload');
         }
+        var btSessions = (data.backtest_5y && Number(data.backtest_5y.total_sessions)) || 0;
+        if (isRemote && btSessions < 1500) {
+          // Si el servicio remoto aún está compilando la versión nueva y devuelve ventana parcial (<1500 sesiones),
+          // hidratar de inmediato con el paquete certificado completo de GitHub Pages sin perder las 1,614+ sesiones 5Y.
+          return fetch('quant_crypto_suite.json?v=' + Date.now(), { cache: 'no-store' })
+            .then(function(rs) { return rs.json(); })
+            .then(function(staticSuite) {
+              if (staticSuite && staticSuite.backtest_5y && Number(staticSuite.backtest_5y.total_sessions || 0) >= 1500) {
+                render24x7Connected = false;
+                return staticSuite;
+              }
+              render24x7Connected = isRemote;
+              return data;
+            })
+            .catch(function() {
+              render24x7Connected = isRemote;
+              return data;
+            });
+        }
         render24x7Connected = isRemote;
         return data;
       });
@@ -2454,8 +2473,9 @@
               var atrTrail = Number(pos.atr || smTrail.atr14 || (curPx * 0.012));
               if (b.id === 'bot_a' && !pos.atr && smTrail.atr14) atrTrail = Number(smTrail.atr14) * 0.45;
               var floorMult = (b.id === 'bot_a') ? 1.0055 : 1.0065;
-              var trailDist = (b.id === 'bot_a') ? 1.25 : 1.30;
-              if (atrTrail > 0 && curPx > Number(pos.entry_price) + 1.25 * atrTrail) {
+              var trailDist = (b.id === 'bot_a') ? 1.10 : 1.30;
+              var actMult = (b.id === 'bot_a') ? 1.05 : 1.25;
+              if (atrTrail > 0 && curPx > Number(pos.entry_price) + actMult * atrTrail) {
                 var raisedSl = Math.max(
                   Number(pos.sl_price || 0),
                   Number(pos.entry_price) * floorMult,
@@ -2698,7 +2718,7 @@
     function refreshLive4hCandlesFromExchange(coin) {
       if (!coin || LIVE_4H_REFRESHED[coin]) return;
       LIVE_4H_REFRESHED[coin] = true;
-      fetch('https://www.okx.com/api/v5/market/candles?instId=' + encodeURIComponent(coin + '-USDT') + '&bar=4H&limit=140')
+      fetch('https://www.okx.com/api/v5/market/candles?instId=' + encodeURIComponent(coin + '-USDT') + '&bar=4H&limit=175')
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(payload) {
           if (!payload || !payload.data || payload.data.length < 60 || !SUITE || !SUITE.market_candles_4h) return;
@@ -2763,8 +2783,24 @@
           var macdSig = calcEmaArr(macdLine, 9).map(function(v) { return Number(v.toFixed(3)); });
           var macdHist = macdLine.map(function(v, idx) { return Number((v - macdSig[idx]).toFixed(3)); });
 
-          var cut = Math.max(0, closes.length - 110);
-          var prevRsi = (SUITE.market_candles_4h[coin] && SUITE.market_candles_4h[coin].rsi14) || [];
+          var rsiArr = [];
+          var avgGain = 0;
+          var avgLoss = 0;
+          for (var rIdx = 0; rIdx < closes.length; rIdx++) {
+            if (rIdx === 0) {
+              rsiArr.push(50.0);
+            } else {
+              var chgR = closes[rIdx] - closes[rIdx - 1];
+              var gn = chgR > 0 ? chgR : 0;
+              var ls = chgR < 0 ? -chgR : 0;
+              avgGain = rIdx === 1 ? gn : ((avgGain * 13.0 + gn) / 14.0);
+              avgLoss = rIdx === 1 ? ls : ((avgLoss * 13.0 + ls) / 14.0);
+              var rsVal = avgGain / (avgLoss + 1e-9);
+              rsiArr.push(Number((100.0 - (100.0 / (1.0 + rsVal))).toFixed(1)));
+            }
+          }
+
+          var cut = Math.max(0, closes.length - 135);
           SUITE.market_candles_4h[coin] = {
             times: times.slice(cut),
             open: opens.slice(cut),
@@ -2785,7 +2821,7 @@
             macd_line: macdLine.slice(cut),
             macd_signal: macdSig.slice(cut),
             macd_hist: macdHist.slice(cut),
-            rsi14: prevRsi
+            rsi14: rsiArr.slice(cut)
           };
           if (selectedSigCoin === coin) {
             renderBotTradeSignalsChart();
@@ -3100,6 +3136,11 @@
       if (bt5yHorizon === '1Y') startIdx = Math.max(0, totalPts - 122);
       else if (bt5yHorizon === '3Y') startIdx = Math.max(0, totalPts - 365);
 
+      var sub5y = document.getElementById('lblBt5ySub');
+      if (sub5y && bt.period_start && bt.period_end) {
+        sub5y.textContent = 'Ventana completa fuera de muestra (' + bt.period_start + ' → ' + bt.period_end + ' · ' + Number(bt.total_sessions || 0).toLocaleString('en-US') + ' sesiones · comisión 10 bps)';
+      }
+
       var dSlice = bt.dates.slice(startIdx);
       var src = bt5yMode === 'dd' ? bt.drawdown_curves : bt.wealth_curves;
 
@@ -3154,7 +3195,10 @@
 
     function renderBacktest5YTable() {
       var bt = SUITE.backtest_5y;
-      var order = ['markowitz', 'gjr_garch', 'monte_carlo', 'deep_nn', 'equal_basket'];
+      var activeSorted = ['markowitz', 'gjr_garch', 'monte_carlo', 'deep_nn'].sort(function(a, b) {
+        return Number((bt.metrics[b] && bt.metrics[b].final_usd) || 0) - Number((bt.metrics[a] && bt.metrics[a].final_usd) || 0);
+      });
+      var order = activeSorted.concat(['equal_basket']);
       var tb = document.getElementById('tbBacktest5yMetrics');
       if (!tb) return;
       tb.innerHTML = order.map(function(k, idx) {
@@ -3303,7 +3347,7 @@
       if (!bots) return;
 
       var metaCfg = [
-        { k: 'bot_a', color: '#10B981', width: 2.9, shortLbl: 'BOT A · Microtrading Técnico (1H)' },
+        { k: 'bot_a', color: '#10B981', width: 2.9, shortLbl: 'BOT A · Microtrading Técnico (15m/1H)' },
         { k: 'bot_b', color: '#38BDF8', width: 2.9, shortLbl: 'BOT B · Decisión Diaria (1D)' },
         { k: 'bot_c', color: '#D9C29A', width: 2.9, shortLbl: 'BOT C · Largos y Futuros (SWAP)' },
         { k: 'bot_d', color: '#A78BFA', width: 2.8, shortLbl: 'BOT D · Red Neuronal MLP + ATR' }
@@ -4248,7 +4292,7 @@
           if (p.sl_price) parts.push('SL: ' + fmtPx(p.sl_price));
           if (p.tp_price) parts.push('TP: ' + fmtPx(p.tp_price));
           if (p.funding_8h_pct != null) parts.push('Funding 8h: ' + (p.funding_8h_pct >= 0 ? '+' : '') + Number(p.funding_8h_pct).toFixed(4) + '%');
-          if (!parts.length) parts.push('Salida Chandelier 2.1x ATR · Rebalanceo 00:00 UTC');
+          if (!parts.length) parts.push('Salida Chandelier 2.30x ATR · Rebalanceo 00:00 UTC');
           ctrlTxt = parts.join(' · ');
         }
 
@@ -4698,6 +4742,12 @@
         if (!fresh || !fresh.meta || !SUITE || !SUITE.meta) return;
         if (fresh.meta.generated_utc === SUITE.meta.generated_utc) return;
         SUITE.meta = fresh.meta;
+        if (fresh.backtest_5y && Number(fresh.backtest_5y.total_sessions || 0) >= 1500) {
+          SUITE.backtest_5y = fresh.backtest_5y;
+          renderBacktest5YChart();
+          renderBacktest5YTable();
+          renderMonteCarloFrontier();
+        }
         SUITE.algo_bots = fresh.algo_bots;
         SUITE.ledger_chain = fresh.ledger_chain;
         SUITE.signal_matrix_now = fresh.signal_matrix_now;

@@ -154,13 +154,13 @@ class BotAConfig:
     daily_circuit_breaker_pct: float = -0.020
     sl_atr_mult: float = 1.55
     tp_atr_mult: float = 3.10
-    trail_activate_atr: float = 1.25
-    trail_dist_atr: float = 1.25
+    trail_activate_atr: float = 1.05
+    trail_dist_atr: float = 1.10
     trail_floor_mult: float = 1.0055
-    partial_tp_atr: float = 1.65
+    partial_tp_atr: float = 1.40
     partial_tp_frac: float = 0.45
-    min_atr_pct: float = 0.0038
-    min_adx_1h_trend: float = 18.0
+    min_atr_pct: float = 0.0042
+    min_adx_1h_trend: float = 20.0
     min_vol_rel_trend: float = 1.08
     min_vol_rel_rebound: float = 1.25
     min_order_usd: float = 48.0
@@ -214,10 +214,10 @@ def step_bot_a_microtrading(
     """
     Ejecuta un paso intradía (15m con filtro 1H) de BOT A respetando:
       - Límite máximo de pérdida diaria (-2.00% desde apertura diaria UTC)
-      - Filtro mínimo de rango ATR/Precio (>= 0.38%) y fuerza tendencial ADX 1H (>= 18)
+      - Filtro mínimo de rango ATR/Precio (>= 0.42%) y fuerza tendencial ADX 1H (>= 20)
       - Dimensionamiento por paridad ATR (riesgo máx. <= 0.85% patrimonio, tope 24%/par, máx. 68% total)
-      - Salidas estrictamente causales (sin fuga intra-barra): SL 1.55x ATR, Toma Parcial 45% (1.65x ATR),
-        Trailing Stop dinámico (+0.55% piso neto) tras +1.25x ATR y TP objetivo 3.10x ATR (ratio 2:1)
+      - Salidas estrictamente causales (sin fuga intra-barra): SL 1.55x ATR, Toma Parcial 45% (1.40x ATR),
+        Trailing Stop dinámico (+0.55% piso neto) tras +1.05x ATR y TP objetivo 3.10x ATR (ratio 2:1)
     """
     entry_fee_map = state.setdefault("entry_fee", {c: 0.0 for c in coins})
     partial_map = state.setdefault("partial_taken", {c: False for c in coins})

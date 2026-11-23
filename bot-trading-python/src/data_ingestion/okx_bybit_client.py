@@ -9,7 +9,9 @@ import json
 import logging
 import math
 import ssl
+import threading
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -77,6 +79,9 @@ class MultiExchangeCryptoOracle:
         self.kucoin_base = kucoin_base.rstrip("/")
         self.timeout_sec = timeout_sec
         self._ssl_ctx = _build_hardened_ssl_context()
+        self._okx_hist_lock = threading.Lock()
+        self._last_okx_hist_ts = 0.0
+        self._bybit_blocked = False
         self._headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) QuantPortfolioEngine/3.0",
             "Accept": "application/json",
@@ -84,57 +89,121 @@ class MultiExchangeCryptoOracle:
 
     def _get_json(self, url: str) -> Any:
         parsed = urllib.parse.urlsplit(url)
-        if parsed.scheme.lower() != "https" or (parsed.hostname or "").lower() not in ALLOWED_EXCHANGE_HOSTS:
+        host_low = (parsed.hostname or "").lower()
+        if parsed.scheme.lower() != "https" or host_low not in ALLOWED_EXCHANGE_HOSTS:
             raise ValueError(f"Blocked untrusted exchange host or insecure scheme: {parsed.netloc}")
-        req = urllib.request.Request(url, headers=self._headers)
-        with urllib.request.urlopen(req, timeout=self.timeout_sec, context=self._ssl_ctx) as resp:
-            raw = resp.read(MAX_RESPONSE_BYTES + 1)
-            if len(raw) > MAX_RESPONSE_BYTES:
-                raise ValueError("Upstream JSON payload exceeds 8MB safety cap")
-            return json.loads(raw.decode("utf-8"))
+        if host_low == "api.bybit.com" and self._bybit_blocked:
+            raise RuntimeError("Bybit endpoint skipped due to upstream regional HTTP 403")
+
+        is_okx_hist = (host_low == "www.okx.com") and ("history-candles" in parsed.path)
+        last_err: Exception = RuntimeError("Empty request state")
+        for attempt in range(3):
+            if is_okx_hist:
+                with self._okx_hist_lock:
+                    now_m = time.monotonic()
+                    wait_s = 0.12 - (now_m - self._last_okx_hist_ts)
+                    if wait_s > 0.0:
+                        time.sleep(wait_s)
+                    self._last_okx_hist_ts = time.monotonic()
+            try:
+                req = urllib.request.Request(url, headers=self._headers)
+                with urllib.request.urlopen(req, timeout=self.timeout_sec, context=self._ssl_ctx) as resp:
+                    raw = resp.read(MAX_RESPONSE_BYTES + 1)
+                    if len(raw) > MAX_RESPONSE_BYTES:
+                        raise ValueError("Upstream JSON payload exceeds 8MB safety cap")
+                    return json.loads(raw.decode("utf-8"))
+            except urllib.error.HTTPError as http_err:
+                last_err = http_err
+                if host_low == "api.bybit.com" and http_err.code == 403:
+                    self._bybit_blocked = True
+                    raise
+                if http_err.code in (429, 500, 502, 503, 504) and attempt < 2:
+                    time.sleep(0.45 * (2 ** attempt))
+                    continue
+                raise
+            except Exception as exc:
+                last_err = exc
+                if attempt < 2:
+                    time.sleep(0.35 * (2 ** attempt))
+                    continue
+                raise
+        raise last_err
+
+    def _fetch_kucoin_candles(self, coin: str, kc_type: str, start_s: int, end_s: int) -> List[Tuple[int, float, float, float, float, float]]:
+        params = urllib.parse.urlencode({
+            "type": kc_type,
+            "symbol": f"{coin}-USDT",
+            "startAt": int(start_s),
+            "endAt": int(end_s),
+        })
+        payload = self._get_json(f"{self.kucoin_base}/api/v1/market/candles?{params}")
+        data = payload.get("data") or []
+        out: List[Tuple[int, float, float, float, float, float]] = []
+        for r in data:
+            # KuCoin devuelve: [time_sec, open, close, high, low, volume, turnover]
+            o_px = float(r[1])
+            c_px = float(r[2])
+            h_px = max(float(r[3]), o_px, c_px)
+            l_px = min(float(r[4]), o_px, c_px)
+            out.append((int(r[0]) * 1000, o_px, h_px, l_px, c_px, float(r[5])))
+        return out
 
     def _fetch_single_coin_5y(self, coin: str, target: int) -> Tuple[str, pd.DataFrame]:
-        rows_parsed = []
-        # Intento 1: Bybit v5 paginado rápido (alta velocidad, 2 llamadas por moneda)
-        try:
-            end_ms = None
-            rem = target
-            collected = []
-            while rem > 0:
-                lim = min(1000, rem)
-                params = {"category": "spot", "symbol": f"{coin}USDT", "interval": "D", "limit": lim}
-                if end_ms is not None:
-                    params["end"] = end_ms
-                q = urllib.parse.urlencode(params)
-                payload = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}")
-                lst = payload.get("result", {}).get("list", [])
-                if not lst:
-                    break
-                collected.extend(lst)
-                oldest_ms = int(lst[-1][0])
-                end_ms = oldest_ms - 1
-                rem -= len(lst)
-                if len(lst) < lim:
-                    break
+        rows_by_day: Dict[pd.Timestamp, Tuple[int, float, float, float, float, float]] = {}
 
-            if len(collected) >= 300:
-                for r in collected:
-                    rows_parsed.append((
-                        int(r[0]),
-                        float(r[1]),
-                        float(r[2]),
-                        float(r[3]),
-                        float(r[4]),
-                        float(r[5]),
-                    ))
-        except Exception as exc:
-            logger.warning("Aviso en serie 5Y Bybit para %s (%s). Conmutando a OKX v5...", coin, exc)
+        def _ingest(rows_list: List[Tuple[int, float, float, float, float, float]], overwrite: bool) -> None:
+            for tup in rows_list:
+                day_ts = pd.Timestamp(tup[0], unit="ms", tz="UTC").tz_localize(None).normalize()
+                if overwrite or day_ts not in rows_by_day:
+                    rows_by_day[day_ts] = tup
 
-        if len(rows_parsed) < target - 60:
+        # Fuente 1: Bybit v5 paginado rápido (cuando la región IP lo permite)
+        if not self._bybit_blocked:
             try:
-                after_ms = min((r[0] for r in rows_parsed), default=None)
+                end_ms = None
+                rem = target
+                collected: List[Tuple[int, float, float, float, float, float]] = []
+                while rem > 0:
+                    lim = min(1000, rem)
+                    params = {"category": "spot", "symbol": f"{coin}USDT", "interval": "D", "limit": lim}
+                    if end_ms is not None:
+                        params["end"] = end_ms
+                    q = urllib.parse.urlencode(params)
+                    payload = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}")
+                    lst = payload.get("result", {}).get("list", [])
+                    if not lst:
+                        break
+                    for r in lst:
+                        collected.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
+                    oldest_ms = int(lst[-1][0])
+                    end_ms = oldest_ms - 1
+                    rem -= len(lst)
+                    if len(lst) < lim:
+                        break
+                if len(collected) >= 300:
+                    _ingest(collected, overwrite=True)
+            except Exception as exc:
+                logger.warning("Aviso en serie 5Y Bybit para %s (%s). Usando KuCoin/OKX...", coin, exc)
+
+        # Fuente 2: KuCoin API v1 (1,500 velas/llamada sin bloqueo regional en Render)
+        if len(rows_by_day) < 1700:
+            try:
+                now_s = int(time.time())
+                start_anchor = int(datetime(2022, 3, 10, tzinfo=timezone.utc).timestamp())
+                kc_recent = self._fetch_kucoin_candles(coin, "1day", now_s - 1450 * 86400, now_s)
+                kc_older = self._fetch_kucoin_candles(coin, "1day", start_anchor, now_s - 1450 * 86400)
+                if len(rows_by_day) == 0:
+                    _ingest(kc_older + kc_recent, overwrite=True)
+                else:
+                    _ingest(kc_older + kc_recent, overwrite=False)
+            except Exception as exc_kc:
+                logger.warning("Aviso en serie 5Y KuCoin para %s: %s", coin, exc_kc)
+
+        if len(rows_by_day) < target - 20:
+            try:
+                after_ms = min((v[0] for v in rows_by_day.values()), default=None)
                 loops = 0
-                while len(rows_parsed) < target and loops < 20:
+                while len(rows_by_day) < target and loops < 22:
                     loops += 1
                     params = {"instId": f"{coin}-USDT", "bar": "1D", "limit": 100}
                     if after_ms is not None:
@@ -144,33 +213,31 @@ class MultiExchangeCryptoOracle:
                     data = payload.get("data", [])
                     if not data:
                         break
-                    for r in data:
-                        rows_parsed.append((
-                            int(r[0]),
-                            float(r[1]),
-                            float(r[2]),
-                            float(r[3]),
-                            float(r[4]),
-                            float(r[5]),
-                        ))
+                    _ingest(
+                        [(int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])) for r in data],
+                        overwrite=False,
+                    )
                     after_ms = int(data[-1][0])
             except Exception as exc2:
                 logger.warning("Complemento OKX 5Y en %s: %s", coin, exc2)
 
-        if not rows_parsed:
-            raise RuntimeError(f"No se pudo recuperar histórico para {coin}")
+        if not rows_by_day:
+            raise RuntimeError(f"No se pudo recuperar histórico 5Y para {coin}")
 
-        df = pd.DataFrame(rows_parsed, columns=["ts_ms", "open", "high", "low", "close", "volume"])
-        df["date"] = pd.to_datetime(df["ts_ms"], unit="ms", utc=True).dt.tz_convert(None).dt.normalize()
-        df = df.sort_values("ts_ms").drop_duplicates(subset=["date"], keep="last").set_index("date")
-        return coin, df[["open", "high", "low", "close", "volume"]].tail(target)
+        sorted_days = sorted(rows_by_day.keys())[-target:]
+        df = pd.DataFrame(
+            [rows_by_day[d][1:] for d in sorted_days],
+            index=pd.DatetimeIndex(sorted_days, name="date"),
+            columns=["open", "high", "low", "close", "volume"],
+        )
+        return coin, df
 
-    def fetch_5y_daily_ohlcv(self, coins: List[str], days: int = 1825) -> Dict[str, pd.DataFrame]:
+    def fetch_5y_daily_ohlcv(self, coins: List[str], days: int = 1940) -> Dict[str, pd.DataFrame]:
         """
-        Descarga concurrentemente 5 años completos (1,825 sesiones diarias) de velas OHLCV reales por moneda
-        usando Bybit V5 Spot Kline + OKX API v5 history-candles como respaldo primario.
+        Descarga concurrentemente >= 1,935 sesiones diarias reales por moneda (garantizando 1,825 sesiones
+        fuera de muestra = 5.00 años exactos tras calentamiento) sin bloqueos 403/429 en Render.
         """
-        target = max(365, min(2000, int(days)))
+        target = max(365, min(2200, int(days)))
         ohlcv_map: Dict[str, pd.DataFrame] = {}
         with concurrent.futures.ThreadPoolExecutor(max_workers=min(8, max(1, len(coins)))) as pool:
             futs = [pool.submit(self._fetch_single_coin_5y, coin, target) for coin in coins]
@@ -181,30 +248,46 @@ class MultiExchangeCryptoOracle:
 
     def _fetch_single_coin_intraday(self, coin: str, bar: str, lim: int) -> Tuple[str, pd.DataFrame]:
         bybit_bar_map = {"5m": "5", "15m": "15", "1H": "60", "4H": "240"}
-        parsed: List[Tuple[int, float, float, float, float, float]] = []
+        kucoin_bar_map = {"5m": ("5min", 300), "15m": ("15min", 900), "1H": ("1hour", 3600), "4H": ("4hour", 14400)}
+        rows_by_dt: Dict[pd.Timestamp, Tuple[float, float, float, float, float]] = {}
 
-        # Para ventanas > 300 velas, Bybit v5 devuelve hasta 1,000 velas en 1 sola llamada HTTPS
-        if lim > 300:
+        def _put_rows(items: List[Tuple[int, float, float, float, float, float]], overwrite: bool) -> None:
+            for ts_ms, o_v, h_v, l_v, c_v, v_v in items:
+                dt_k = pd.Timestamp(ts_ms, unit="ms", tz="UTC").tz_localize(None)
+                if overwrite or dt_k not in rows_by_dt:
+                    rows_by_dt[dt_k] = (o_v, h_v, l_v, c_v, v_v)
+
+        # 1) Intento primario rápido Bybit v5 (hasta 1,000 barras en 1 llamada)
+        if not self._bybit_blocked:
             try:
                 b_int = bybit_bar_map.get(bar, "60")
                 q = urllib.parse.urlencode({"category": "spot", "symbol": f"{coin}USDT", "interval": b_int, "limit": lim})
                 lst = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}").get("result", {}).get("list", [])
-                for r in lst:
-                    parsed.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
+                _put_rows([(int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])) for r in lst], overwrite=True)
             except Exception:
-                parsed = []
+                pass
 
-        # OKX v5 primario (para <= 300) o paginado de respaldo si Bybit no devolvió suficientes velas
-        if len(parsed) < max(120, lim // 2):
-            okx_rows: List[Tuple[int, float, float, float, float, float]] = []
+        # 2) Si Bybit está bloqueado en Render (403) o devolvió menos de lim, usar KuCoin v1 (serie homogénea hasta 1,500 barras en 1 llamada)
+        if len(rows_by_dt) < lim - 25 and bar in kucoin_bar_map:
             try:
-                after_ms = None
+                kc_t, sec_step = kucoin_bar_map[bar]
+                now_s = int(time.time())
+                kc_rows = self._fetch_kucoin_candles(coin, kc_t, now_s - (lim + 20) * sec_step, now_s)
+                if len(kc_rows) > len(rows_by_dt):
+                    rows_by_dt.clear()
+                    _put_rows(kc_rows, overwrite=True)
+            except Exception:
+                pass
+
+        # 3) Respaldo paginado con limitador de tasa en OKX únicamente si Bybit y KuCoin no entregaron serie completa
+        if len(rows_by_dt) < max(120, lim // 2):
+            try:
+                after_ms = int(min(rows_by_dt.keys()).timestamp() * 1000) if rows_by_dt else None
                 loops = 0
                 max_loops = max(1, (lim + 299) // 300)
-                while len(okx_rows) < lim and loops < max_loops:
+                while len(rows_by_dt) < lim and loops < max_loops:
                     loops += 1
-                    chunk_lim = min(300, lim - len(okx_rows))
-                    params = {"instId": f"{coin}-USDT", "bar": bar, "limit": chunk_lim}
+                    params = {"instId": f"{coin}-USDT", "bar": bar, "limit": 300}
                     endpoint = "/api/v5/market/candles" if after_ms is None else "/api/v5/market/history-candles"
                     if after_ms is not None:
                         params["after"] = after_ms
@@ -212,25 +295,21 @@ class MultiExchangeCryptoOracle:
                     data = self._get_json(f"{self.okx_base}{endpoint}?{q}").get("data", [])
                     if not data:
                         break
-                    for r in data:
-                        okx_rows.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
+                    _put_rows([(int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])) for r in data], overwrite=False)
                     after_ms = int(data[-1][0])
             except Exception:
                 pass
-            if len(okx_rows) > len(parsed):
-                parsed = okx_rows
 
-        if not parsed:
-            b_int = bybit_bar_map.get(bar, "60")
-            q = urllib.parse.urlencode({"category": "spot", "symbol": f"{coin}USDT", "interval": b_int, "limit": min(1000, lim)})
-            lst = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}").get("result", {}).get("list", [])
-            for r in lst:
-                parsed.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
+        if not rows_by_dt:
+            raise RuntimeError(f"Sin datos intradía ({bar}) para {coin}")
 
-        df = pd.DataFrame(parsed, columns=["ts_ms", "open", "high", "low", "close", "volume"])
-        df["dt"] = pd.to_datetime(df["ts_ms"], unit="ms", utc=True).dt.tz_convert(None)
-        df = df.sort_values("dt").drop_duplicates(subset=["dt"], keep="last").set_index("dt")
-        return coin, df[["open", "high", "low", "close", "volume"]].tail(lim)
+        sorted_dts = sorted(rows_by_dt.keys())[-lim:]
+        df = pd.DataFrame(
+            [rows_by_dt[dt_k] for dt_k in sorted_dts],
+            index=pd.DatetimeIndex(sorted_dts, name="dt"),
+            columns=["open", "high", "low", "close", "volume"],
+        )
+        return coin, df
 
     def fetch_intraday_ohlcv(self, coins: List[str], bar: str = "1H", limit: int = 300) -> Dict[str, pd.DataFrame]:
         """

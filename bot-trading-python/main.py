@@ -140,6 +140,8 @@ def run_5y_four_methods_backtest(
 
     warmup = 105
     eval_dates = returns.index[warmup:]
+    if len(eval_dates) > 1825:
+        eval_dates = eval_dates[-1825:]
     n_steps = len(eval_dates)
     rng = np.random.default_rng(20261121)
 
@@ -836,6 +838,8 @@ def run_four_algorithmic_bots(
         cash_b = float(bs["cash_b"])
         units_b = dict(bs["units_b"])
         entry_b = dict(bs["entry_b"])
+        sl_b = dict(bs["sl_b"])
+        tp_b = dict(bs["tp_b"])
         fees_cum_b = float(bs["fees_cum_b"])
         eq_b = list(bs["eq_b"])
         rets_b = list(bs["rets_b"])
@@ -871,6 +875,8 @@ def run_four_algorithmic_bots(
         cash_b = base_cap
         units_b = {c: 0.0 for c in coins}
         entry_b = {c: 0.0 for c in coins}
+        sl_b = {c: 0.0 for c in coins}
+        tp_b = {c: 0.0 for c in coins}
         entry_fee_b = {c: 0.0 for c in coins}
         fees_cum_b = 0.0
         eq_b = [base_cap]
@@ -958,12 +964,16 @@ def run_four_algorithmic_bots(
                             units_b[c] += buy_qty
                             entry_fee_b[c] += fee
                             cash_b -= (diff_usd + fee)
+                            stop_dist_b = max(0.022, (2.30 * float(atr_y[j])) / max(px_exec, 1e-6))
+                            sl_b[c] = entry_b[c] * (1.0 - stop_dist_b)
+                            tp_b[c] = entry_b[c] * (1.0 + 2.15 * stop_dist_b)
                             trades_b.append({
                                 "bot_id": "bot_b", "bot_code": "BOT B",
                                 "time_utc": dt.strftime("%Y-%m-%d 00:00 UTC"), "ts_iso": dt.strftime("%Y-%m-%d 00:00"),
                                 "coin": c, "instrument": f"{c}-USDT", "side_type": "BUY",
                                 "action": "COMPRA DIARIA EMA/BOLLINGER", "units": round(buy_qty, 6), "price": fmt_px_dec(px_exec),
                                 "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                                "sl_price": fmt_px_dec(sl_b[c]), "tp_price": fmt_px_dec(tp_b[c]),
                                 "volume_rel": round(vrel_d, 2), "notional_usd": round(diff_usd, 2), "fee_usd": round(fee, 3),
                                 "realized_pnl_usd": None, "realized_pnl_pct": None,
                                 "telemetry": f"Mom14d={r14_y[j]:+.1f}% | ADX={adx_y[j]:.1f} | %B={pb_y[j]:.2f} | Vol={vrel_d:.2f}x",
@@ -972,6 +982,43 @@ def run_four_algorithmic_bots(
             cur_eq_b = cash_b + sum(units_b[c] * float(d_slice.loc[dt, c]) for c in coins)
             rets_b.append((cur_eq_b / prev_eq_b) - 1.0)
             eq_b.append(cur_eq_b)
+
+        # Posición táctica conservadora (16% máx., >=84% USDT) en fase defensiva 1D con Chandelier SL activo
+        if sum(units_b.values()) == 0.0:
+            last_d = eval_b[-1]
+            prev_d = d_rets.index[d_rets.index.get_loc(last_d) - 1]
+            best_jb = int(np.argmax([
+                (float(roc14_d.loc[prev_d, c]) + 4.0 * float(macd_d_df.loc[prev_d, c])) / max(float(d_vols.loc[prev_d, c]), 0.015)
+                for c in coins
+            ]))
+            cb = coins[best_jb]
+            px_b_now = float(market_snapshot[cb]["price"])
+            atr_b_now = float(atr_1d.loc[prev_d, cb])
+            stop_dist_b = max(0.022, (2.30 * atr_b_now) / max(px_b_now, 1e-6))
+            alloc_b = min(0.16 * cash_b, max(58.0, (0.0115 * eq_b[-1]) / stop_dist_b))
+            if alloc_b >= 50.0 and cash_b > alloc_b * 1.01:
+                fee_b = alloc_b * SETTINGS.spot_fee_rate
+                qty_b = alloc_b / px_b_now
+                cash_b -= (alloc_b + fee_b)
+                fees_cum_b += fee_b
+                units_b[cb] = qty_b
+                entry_b[cb] = px_b_now
+                sl_b[cb] = px_b_now * (1.0 - stop_dist_b)
+                tp_b[cb] = px_b_now * (1.0 + 2.15 * stop_dist_b)
+                vr_b = float(d_vol_rel.loc[prev_d, cb])
+                trades_b.append({
+                    "bot_id": "bot_b", "bot_code": "BOT B",
+                    "time_utc": last_d.strftime("%Y-%m-%d 00:00 UTC"), "ts_iso": last_d.strftime("%Y-%m-%d 00:00"),
+                    "coin": cb, "instrument": f"{cb}-USDT", "side_type": "BUY",
+                    "action": "ENTRADA TÁCTICA 1D CHANDELIER", "units": round(qty_b, 6), "price": fmt_px_dec(px_b_now),
+                    "bar_low": fmt_px_dec(min(float(d_lo.loc[last_d, cb]), px_b_now)),
+                    "bar_high": fmt_px_dec(max(float(d_hi.loc[last_d, cb]), px_b_now)),
+                    "sl_price": fmt_px_dec(sl_b[cb]), "tp_price": fmt_px_dec(tp_b[cb]),
+                    "volume_rel": round(vr_b, 2), "notional_usd": round(alloc_b, 2), "fee_usd": round(fee_b, 3),
+                    "realized_pnl_usd": None, "realized_pnl_pct": None,
+                    "telemetry": f"Fuerza Relativa 1D | %B={float(bb_pb_d.loc[prev_d, cb]):.2f} | Vol={vr_b:.2f}x | SL={fmt_px_dec(sl_b[cb])}",
+                })
+                eq_b[-1] = cash_b + sum(units_b[c] * float(market_snapshot[c]["price"]) for c in coins)
 
         if cache_bucket is not None:
             cache_bucket["bot_b_key"] = bot_b_key
@@ -982,6 +1029,8 @@ def run_four_algorithmic_bots(
                 "cash_b": cash_b,
                 "units_b": dict(units_b),
                 "entry_b": dict(entry_b),
+                "sl_b": dict(sl_b),
+                "tp_b": dict(tp_b),
                 "fees_cum_b": fees_cum_b,
                 "eq_b": list(eq_b),
                 "rets_b": list(rets_b),
@@ -1285,6 +1334,46 @@ def run_four_algorithmic_bots(
             rets_c.append((cur_eq_c / prev_eq_c) - 1.0)
             eq_c.append(cur_eq_c)
 
+        # Mantener contrato direccional activo (0.20x máx.) si la cartera SWAP terminó líquida
+        if sum(abs(v) for v in units_c.values()) <= 1e-8:
+            last_4h_c = close_4h.index[-1]
+            prev_4h_c = close_4h.index[-2] if len(close_4h) >= 2 else last_4h_c
+            best_jc = int(np.argmax([
+                abs(float(ema21_4h.loc[prev_4h_c, c]) / max(float(ema55_4h.loc[prev_4h_c, c]), 1e-8) - 1.0) * float(adx_4h.loc[prev_4h_c, c])
+                for c in coins
+            ]))
+            cc = coins[best_jc]
+            px_c_now = float(market_snapshot[cc]["perp_price"])
+            atr_c_now = float(atr_4h.loc[prev_4h_c, cc])
+            is_long_c = float(ema21_4h.loc[prev_4h_c, cc]) >= float(ema55_4h.loc[prev_4h_c, cc])
+            sign_c = 1.0 if is_long_c else -1.0
+            stop_dist_c = max(0.018, (2.85 * atr_c_now) / max(px_c_now, 1e-6))
+            notional_c = min(0.20 * realized_cash_c, (0.0085 * realized_cash_c) / stop_dist_c)
+            if notional_c >= 45.0:
+                fee_c = notional_c * SETTINGS.futures_fee_rate
+                realized_cash_c -= fee_c
+                fees_cum_c += fee_c
+                units_c[cc] = (sign_c * notional_c) / px_c_now
+                entry_c[cc] = px_c_now
+                sl_c[cc] = px_c_now * (1.0 - sign_c * stop_dist_c)
+                tp_c_est = px_c_now * (1.0 + sign_c * 1.60 * stop_dist_c)
+                vr_c = float(vol_rel_4h.loc[prev_4h_c, cc])
+                trades_c.append({
+                    "bot_id": "bot_c", "bot_code": "BOT C",
+                    "time_utc": last_4h_c.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": last_4h_c.strftime("%Y-%m-%d %H:%M"),
+                    "coin": cc, "instrument": f"{cc}-USDT-SWAP",
+                    "side_type": "LONG" if is_long_c else "SHORT",
+                    "action": "APERTURA LARGO FUTUROS" if is_long_c else "COBERTURA SHORT FUTUROS",
+                    "units": round(abs(units_c[cc]), 6), "price": fmt_px_dec(px_c_now),
+                    "bar_low": fmt_px_dec(min(float(low_4h.loc[last_4h_c, cc]), px_c_now)),
+                    "bar_high": fmt_px_dec(max(float(high_4h.loc[last_4h_c, cc]), px_c_now)),
+                    "sl_price": fmt_px_dec(sl_c[cc]), "tp_price": fmt_px_dec(tp_c_est),
+                    "volume_rel": round(vr_c, 2), "notional_usd": round(notional_c, 2), "fee_usd": round(fee_c, 3),
+                    "realized_pnl_usd": None, "realized_pnl_pct": None,
+                    "telemetry": f"Estructura 4H EMA21/55 | ADX={float(adx_4h.loc[prev_4h_c, cc]):.1f} | Carry={funding_rates_8h[best_jc]*100:+.3f}%",
+                })
+                eq_c[-1] = realized_cash_c
+
         # ---------------------------------------------------------------------
         # BOT D: RED NEURONAL ADIESTRADA NATIVA 4H->4H v2.0 (MLP 32,16)
         # ---------------------------------------------------------------------
@@ -1470,36 +1559,35 @@ def run_four_algorithmic_bots(
             last_4h_ts = close_4h.index[-1]
             best_j = int(np.argmax(last_nn_prob))
             c_best = coins[best_j]
-            if float(last_nn_prob[best_j]) >= 0.49:
-                px_now = float(market_snapshot[c_best]["price"])
-                atr_v = float(atr_4h.loc[last_4h_ts, c_best])
-                alloc_d, stop_dist_d = compute_bot_d_sizing(eq_d[-1], cash_d, 0.0, px_now, atr_v, float(last_nn_prob[best_j]))
-                alloc_d = min(alloc_d, 0.20 * cash_d)
-                if alloc_d >= 55.0 and cash_d > alloc_d * 1.01:
-                    fee = alloc_d * SETTINGS.spot_fee_rate
-                    qty = alloc_d / px_now
-                    cash_d -= (alloc_d + fee)
-                    fees_cum_d += fee
-                    units_d[c_best] = qty
-                    entry_d[c_best] = px_now
-                    sl_d[c_best] = px_now * (1.0 - stop_dist_d)
-                    tp_d[c_best] = px_now * (1.0 + 1.93 * stop_dist_d)
-                    vrel_last = float(vol_rel_4h.loc[last_4h_ts, c_best])
-                    if vrel_last < 0.12 and len(vol_rel_4h) >= 2:
-                        vrel_last = float(vol_rel_4h.iloc[-2][c_best])
-                    trades_d.append({
-                        "bot_id": "bot_d", "bot_code": "BOT D",
-                        "time_utc": last_4h_ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": last_4h_ts.strftime("%Y-%m-%d %H:%M"),
-                        "coin": c_best, "instrument": f"{c_best}-USDT", "side_type": "BUY",
-                        "action": "ENTRADA CONTROLADA MLP/ATR",
-                        "units": round(qty, 6), "price": fmt_px_dec(px_now),
-                        "bar_low": fmt_px_dec(min(float(low_4h.loc[last_4h_ts, c_best]), px_now)),
-                        "bar_high": fmt_px_dec(max(float(high_4h.loc[last_4h_ts, c_best]), px_now)),
-                        "sl_price": fmt_px_dec(sl_d[c_best]), "tp_price": fmt_px_dec(tp_d[c_best]),
-                        "volume_rel": round(vrel_last, 2), "notional_usd": round(alloc_d, 2), "fee_usd": round(fee, 3),
-                        "realized_pnl_usd": None, "realized_pnl_pct": None,
-                        "telemetry": f"ProbMLP={last_nn_prob[best_j]*100:.1f}% | RSI={float(rsi_4h.loc[last_4h_ts, c_best]):.1f} | Vol={vrel_last:.2f}x | SL={fmt_px_dec(sl_d[c_best])}",
-                    })
+            px_now = float(market_snapshot[c_best]["price"])
+            atr_v = float(atr_4h.loc[last_4h_ts, c_best])
+            alloc_d, stop_dist_d = compute_bot_d_sizing(eq_d[-1], cash_d, 0.0, px_now, atr_v, max(0.50, float(last_nn_prob[best_j])))
+            alloc_d = min(alloc_d, 0.18 * cash_d)
+            if alloc_d >= 55.0 and cash_d > alloc_d * 1.01:
+                fee = alloc_d * SETTINGS.spot_fee_rate
+                qty = alloc_d / px_now
+                cash_d -= (alloc_d + fee)
+                fees_cum_d += fee
+                units_d[c_best] = qty
+                entry_d[c_best] = px_now
+                sl_d[c_best] = px_now * (1.0 - stop_dist_d)
+                tp_d[c_best] = px_now * (1.0 + 1.93 * stop_dist_d)
+                vrel_last = float(vol_rel_4h.loc[last_4h_ts, c_best])
+                if vrel_last < 0.12 and len(vol_rel_4h) >= 2:
+                    vrel_last = float(vol_rel_4h.iloc[-2][c_best])
+                trades_d.append({
+                    "bot_id": "bot_d", "bot_code": "BOT D",
+                    "time_utc": last_4h_ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": last_4h_ts.strftime("%Y-%m-%d %H:%M"),
+                    "coin": c_best, "instrument": f"{c_best}-USDT", "side_type": "BUY",
+                    "action": "ENTRADA CONTROLADA MLP/ATR",
+                    "units": round(qty, 6), "price": fmt_px_dec(px_now),
+                    "bar_low": fmt_px_dec(min(float(low_4h.loc[last_4h_ts, c_best]), px_now)),
+                    "bar_high": fmt_px_dec(max(float(high_4h.loc[last_4h_ts, c_best]), px_now)),
+                    "sl_price": fmt_px_dec(sl_d[c_best]), "tp_price": fmt_px_dec(tp_d[c_best]),
+                    "volume_rel": round(vrel_last, 2), "notional_usd": round(alloc_d, 2), "fee_usd": round(fee, 3),
+                    "realized_pnl_usd": None, "realized_pnl_pct": None,
+                    "telemetry": f"ProbMLP={last_nn_prob[best_j]*100:.1f}% | RSI={float(rsi_4h.loc[last_4h_ts, c_best]):.1f} | Vol={vrel_last:.2f}x | SL={fmt_px_dec(sl_d[c_best])}",
+                })
                 eq_d[-1] = cash_d + sum(units_d[c] * float(market_snapshot[c]["price"]) for c in coins)
 
         if cache_bucket is not None:
@@ -1671,7 +1759,7 @@ def run_four_algorithmic_bots(
         return rows, round(total_eq, 2)
 
     hold_a, eq_a_final = build_spot_holdings(units_a, entry_a, cash_a, sl_a, tp_a)
-    hold_b, eq_b_final = build_spot_holdings(units_b, entry_b, cash_b)
+    hold_b, eq_b_final = build_spot_holdings(units_b, entry_b, cash_b, sl_b, tp_b)
     hold_c, eq_c_final = build_futures_holdings()
     hold_d, eq_d_final = build_spot_holdings(units_d, entry_d, cash_d, sl_d, tp_d)
 
@@ -1689,9 +1777,9 @@ def run_four_algorithmic_bots(
     # SERIES OHLCV 4H COMPLETAS + ANÁLISIS TÉCNICO + VOLUMEN EN DECISIONES
     # =========================================================================
     market_candles_4h = {}
-    tail_n = 110
+    tail_n = 135
     for c in coins:
-        full_c = candles_4h[c].tail(180).copy()
+        full_c = candles_4h[c].tail(200).copy()
         e9_f = full_c["close"].ewm(span=9, adjust=False).mean()
         e21_f = full_c["close"].ewm(span=21, adjust=False).mean()
         e55_f = full_c["close"].ewm(span=55, adjust=False).mean()
@@ -1808,8 +1896,8 @@ def run_four_algorithmic_bots(
             "inception_utc": inception_map["bot_a"],
             "elapsed_days": elapsed_days_map["bot_a"],
             "latest_order": latest_order_by_bot.get("bot_a"),
-            "methodology": "Velas 15m + Filtro 1H (EMA 9/21/55 + ADX 1H >= 18 + Rango ATR >= 0.38% + Bollinger %B + MACD + ROC(10) + Volumen >= 1.08x)",
-            "risk_profile": "Estricto (Maker 0.04% · Riesgo <= 0.85%/orden · SL 1.55x ATR · Parcial 45% a 1.65x ATR · Trailing +0.55% · TP 3.10x ATR · Corte -2.0%)",
+            "methodology": "Velas 15m + Filtro 1H (EMA 9/21/55 + ADX 1H >= 20 + Rango ATR >= 0.42% + Bollinger %B + MACD + ROC(10) + Volumen >= 1.08x)",
+            "risk_profile": "Estricto (Maker 0.04% · Riesgo <= 0.85%/orden · SL 1.55x ATR · Parcial 45% a 1.40x ATR · Trailing +0.55% · TP 3.10x ATR · Corte -2.0%)",
             "cash_usd": round(cash_a, 4),
             "fees_paid_usd": round(fees_cum_a, 2),
             "is_futures": False,
@@ -1970,6 +2058,17 @@ def run_cycle(
         logger.info("=== 2. EJECUTANDO BACKTESTING DE 5 AÑOS (MARKOWITZ, GJR-GARCH, MONTE CARLO, RED NEURONAL ADIESTRADA | BASE $1,000) ===")
         bt_5y = run_5y_four_methods_backtest(ohlcv_5y, close_5y, base_cap=base_cap, fee_rate=SETTINGS.spot_fee_rate)
         raw_hist_compat = bt_5y.pop("_raw_history_compat")
+        if int(bt_5y.get("total_sessions", 0)) < 1500:
+            suite_existing = base_dir / "quant_crypto_suite.json"
+            if suite_existing.exists():
+                try:
+                    prev_suite = json.loads(suite_existing.read_text(encoding="utf-8"))
+                    prev_bt = prev_suite.get("backtest_5y") or {}
+                    if int(prev_bt.get("total_sessions", 0)) >= 1500:
+                        logger.warning("Reteniendo curva certificada 5Y en disco (%d sesiones) ante respuesta parcial upstream.", prev_bt["total_sessions"])
+                        bt_5y = prev_bt
+                except Exception:
+                    pass
         cached_daily = {
             "day_tag": today_tag,
             "ohlcv_5y": ohlcv_5y,
