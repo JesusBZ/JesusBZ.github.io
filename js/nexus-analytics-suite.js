@@ -165,6 +165,27 @@
     return Math.round(v).toLocaleString('en-US');
   }
 
+  var SHORT_UNIT_NAMES = {
+    'Mercancía General & Hogar': 'Mercancía General',
+    'Salud, Farmacia & Óptica': 'Salud & Farmacia',
+    'Walmart eCommerce & Pickup': 'Walmart eCommerce',
+    "Sam's Club (Mayorista)": "Sam's Club",
+    'Walmart Connect & Marketplace': 'Walmart Connect'
+  };
+
+  function shortUnitLabel(name) {
+    if (SHORT_UNIT_NAMES[name]) return SHORT_UNIT_NAMES[name];
+    var s = String(name || '');
+    return s.length > 22 ? (s.slice(0, 20) + '...') : s;
+  }
+
+  var SVG_ICONS = {
+    sun: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
+    moon: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+  };
+
   function fmtPct(v, plus) {
     if (!isFinite(v)) return '0.0%';
     var p = (v * 100).toFixed(1) + '%';
@@ -336,7 +357,7 @@
       var html = '<button type="button" class="nx-pill ' + (state.filters.unit === 'ALL' ? 'active' : '') + '" data-unit="ALL">Todas (' + units.length + ')</button>';
       units.forEach(function (u) {
         var act = state.filters.unit === u ? 'active' : '';
-        html += '<button type="button" class="nx-pill ' + act + '" data-unit="' + esc(u) + '">' + esc(u) + '</button>';
+        html += '<button type="button" class="nx-pill ' + act + '" data-unit="' + esc(u) + '" title="' + esc(u) + '">' + esc(shortUnitLabel(u)) + '</button>';
       });
       pillBox.innerHTML = html;
       pillBox.querySelectorAll('.nx-pill').forEach(function (btn) {
@@ -351,8 +372,8 @@
     var dsBadge = document.getElementById('activeDatasetLabel');
     if (dsBadge) {
       dsBadge.textContent = state.datasetKey === 'CUSTOM'
-        ? ('CSV Propio: ' + (state.customName || 'Dataset Usuario'))
-        : DATASETS_META[state.datasetKey].name;
+        ? ('CSV Local: ' + (state.customName || 'Dataset Usuario'))
+        : ('Caso Paramétrico: ' + DATASETS_META[state.datasetKey].name);
     }
   }
 
@@ -460,30 +481,28 @@
     var f = state.filters;
     var chips = [];
     if (f.year !== 'ALL') chips.push(['Año', f.year, 'year']);
-    if (f.quarter !== 'ALL') chips.push(['Trimestre', f.quarter, 'quarter']);
-    if (f.unit !== 'ALL') chips.push(['Unidad', f.unit, 'unit']);
+    if (f.quarter !== 'ALL') chips.push(['Trim.', f.quarter, 'quarter']);
+    if (f.unit !== 'ALL') chips.push(['Unidad', shortUnitLabel(f.unit), 'unit']);
     if (f.region !== 'ALL') chips.push(['Región', f.region, 'region']);
-    if (f.segment !== 'ALL') chips.push(['Segmento', f.segment, 'segment']);
+    if (f.segment !== 'ALL') chips.push(['Segm.', f.segment, 'segment']);
 
-    var left = '<span><strong>Cross-Filter Interactivo:</strong> Haz clic en cualquier barra, región, burbuja o fila para filtrar todo el dashboard · <code>' + filteredCount.toLocaleString() + '</code> registros activos</span>';
     if (chips.length > 0) {
-      left = '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><strong>Filtros Activos:</strong>' +
+      box.innerHTML = '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">' +
         chips.map(function (c) {
           return '<span class="nx-filter-chip">' + esc(c[0]) + ': ' + esc(c[1]) + '</span>';
         }).join('') +
-        ' <span style="font-family:var(--font-mono);">(' + filteredCount.toLocaleString() + ' reg.)</span></div>';
+        '<span style="font-family:var(--font-mono);">(' + filteredCount.toLocaleString() + ' reg.)</span></div>' +
+        '<button type="button" class="nx-reset-btn" id="btnClearFilters">' + SVG_ICONS.close + '<span>Limpiar Filtros</span></button>';
+    } else {
+      box.innerHTML = '<span style="font-family:var(--font-mono);">Registros: <strong>' + filteredCount.toLocaleString() + '</strong> &middot; <span style="color:var(--gold);">Sin filtros restrictivos (100%)</span></span>';
     }
-    var right = chips.length > 0
-      ? '<button type="button" class="nx-reset-btn" id="btnClearFilters">✕ Limpiar Filtros</button>'
-      : '<span style="font-family:var(--font-mono);color:var(--gold);">Sin filtros restrictivos (Vista Consolidada 100%)</span>';
 
-    box.innerHTML = left + right;
     var btn = document.getElementById('btnClearFilters');
     if (btn) {
       btn.addEventListener('click', function () {
         state.filters = { year: 'ALL', quarter: 'ALL', region: 'ALL', segment: 'ALL', unit: 'ALL' };
         refreshAll();
-        showToast('Filtros cruzados restablecidos');
+        showToast('Filtros dimensionales restablecidos');
       });
     }
 
@@ -503,13 +522,19 @@
     var byMonth = groupByKey(recs, 'ym').sort(function (a, b) { return a.key.localeCompare(b.key); });
     var zSeries = computeZMadSeries(byMonth.map(function (m) { return m.revReal; }));
     var anomalies = zSeries.filter(function (z) { return Math.abs(z) > state.lab.zThresh; }).length;
-    var healthScore = Math.max(45, Math.min(99, Math.round(88 + (agg.attainment - 1) * 45 - anomalies * 3)));
+    var pctInControl = byMonth.length > 0 ? ((byMonth.length - anomalies) / byMonth.length) : 1;
+
+    var byUnitKpi = groupByKey(recs, 'unit');
+    var hhi = Math.round(byUnitKpi.reduce(function (acc, u) {
+      var s = agg.revReal > 0 ? u.revReal / agg.revReal : 0;
+      return acc + s * s * 10000;
+    }, 0));
 
     var gapRev = agg.revReal - agg.revBudget;
     var gapEbitda = agg.ebitdaReal - agg.ebitdaBudget;
 
     setKpi('kpiRevVal', fmtMoney(agg.revReal, true),
-      '<span class="' + (gapRev >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (gapRev >= 0 ? '▲ ' : '▼ ') + fmtMoney(gapRev, true) + ' vs Ppto</span>' +
+      '<span class="' + (gapRev >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (gapRev >= 0 ? '+' : '') + fmtMoney(gapRev, true) + ' vs Ppto</span>' +
       '<span>Ppto: ' + fmtMoney(agg.revBudget, true) + '</span>');
 
     setKpi('kpiEbitdaVal', fmtMoney(agg.ebitdaReal, true),
@@ -517,20 +542,20 @@
       '<span>' + (gapEbitda >= 0 ? '+' : '') + fmtMoney(gapEbitda, true) + '</span>');
 
     setKpi('kpiFcfVal', fmtMoney(agg.fcfReal, true),
-      '<span class="delta-pos">Conversión ' + fmtPct(agg.ebitdaReal > 0 ? agg.fcfReal / agg.ebitdaReal : 0) + '</span>' +
+      '<span class="delta-pos">Conv. ' + fmtPct(agg.ebitdaReal > 0 ? agg.fcfReal / agg.ebitdaReal : 0) + '</span>' +
       '<span>FCF/Ing: ' + fmtPct(agg.fcfMargin) + '</span>');
 
     setKpi('kpiAttVal', fmtPct(agg.attainment),
-      '<span class="' + (agg.attainment >= 1 ? 'delta-pos' : 'delta-neg') + '">' + (agg.attainment >= 1 ? 'En Meta Superior' : 'Bajo Meta') + '</span>' +
+      '<span class="' + (agg.attainment >= 1 ? 'delta-pos' : 'delta-neg') + '">' + (agg.attainment >= 1 ? 'Sobre Presupuesto' : 'Brecha Negativa') + '</span>' +
       '<span>Bruto: ' + fmtPct(agg.grossMargin) + '</span>');
 
     setKpi('kpiQtyVal', fmtNum(agg.qty),
       '<span class="delta-neu">Tarifa $/Q: $' + agg.avgPrice.toFixed(2) + '</span>' +
       '<span>vs ' + fmtNum(agg.qtyBgt) + '</span>');
 
-    setKpi('kpiHealthVal', healthScore + ' / 100',
-      '<span class="' + (anomalies === 0 ? 'delta-pos' : 'delta-neu') + '">' + anomalies + ' alertas Z-MAD</span>' +
-      '<span>' + byMonth.length + ' meses</span>');
+    setKpi('kpiHealthVal', fmtPct(pctInControl),
+      '<span class="' + (anomalies === 0 ? 'delta-pos' : 'delta-neu') + '">Atípicos |Z|&gt;' + state.lab.zThresh + ': ' + anomalies + '</span>' +
+      '<span>HHI: ' + hhi + '</span>');
   }
 
   function setKpi(id, valTxt, subHtml) {
@@ -545,9 +570,9 @@
       paper_bgcolor: pal.paper,
       plot_bgcolor: pal.plot,
       font: { family: 'Plus Jakarta Sans, Inter, sans-serif', color: pal.sub, size: 11.5 },
-      margin: { t: 28, r: 24, b: 48, l: 58 },
-      hoverlabel: { bgcolor: pal.card, bordercolor: pal.goldBright, font: { color: pal.text, family: 'JetBrains Mono, monospace', size: 11.5 } },
-      legend: { orientation: 'h', x: 0, y: 1.13, bgcolor: 'transparent', font: { color: pal.text, size: 11 } },
+      margin: { t: 38, r: 22, b: 44, l: 60 },
+      hoverlabel: { bgcolor: pal.card, bordercolor: pal.goldBright, font: { color: pal.text, family: 'JetBrains Mono, monospace', size: 11 } },
+      legend: { orientation: 'h', x: 0, y: 1.15, bgcolor: 'transparent', font: { color: pal.text, size: 11 } },
       xaxis: { gridcolor: pal.grid, zerolinecolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 }, automargin: true },
       yaxis: { gridcolor: pal.grid, zerolinecolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 }, automargin: true }
     }, extra || {});
@@ -555,8 +580,100 @@
 
   var PLOT_CFG = { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['lasso2d', 'select2d'] };
 
+  function placeDeconflictedBubbleAnnotations(unitStats, xMin, xMax, yMin, yMax, pal) {
+    var W = 520, H = 220;
+    var items = unitStats.map(function (u) {
+      var x = u.attainment * 100;
+      var y = u.ebitdaMargin * 100;
+      var px = ((x - xMin) / Math.max(0.01, xMax - xMin)) * W;
+      var py = (1 - (y - yMin) / Math.max(0.01, yMax - yMin)) * H;
+      return { u: u, x: x, y: y, px: px, py: py, lbl: shortUnitLabel(u.key) };
+    }).sort(function (a, b) { return a.y - b.y; });
+
+    var placedBoxes = [];
+    var candidates = [
+      { ax: 32, ay: -6, anchor: 'left' },
+      { ax: -32, ay: -6, anchor: 'right' },
+      { ax: 38, ay: -28, anchor: 'left' },
+      { ax: -38, ay: -28, anchor: 'right' },
+      { ax: 38, ay: 26, anchor: 'left' },
+      { ax: -38, ay: 26, anchor: 'right' },
+      { ax: 48, ay: -52, anchor: 'left' },
+      { ax: -48, ay: -52, anchor: 'right' },
+      { ax: 48, ay: 52, anchor: 'left' },
+      { ax: -48, ay: 52, anchor: 'right' },
+      { ax: 0, ay: -42, anchor: 'center' },
+      { ax: 0, ay: 42, anchor: 'center' }
+    ];
+
+    return items.map(function (item) {
+      var bw = item.lbl.length * 6.4 + 12;
+      var bh = 18;
+      var best = candidates[0];
+      var bestScore = Infinity;
+
+      for (var ci = 0; ci < candidates.length; ci++) {
+        var c = candidates[ci];
+        var tx = item.px + c.ax;
+        var ty = item.py + c.ay;
+        var left = c.anchor === 'left' ? tx : (c.anchor === 'right' ? tx - bw : tx - bw / 2);
+        var right = left + bw;
+        var top = ty - bh / 2;
+        var bot = top + bh;
+
+        var penalty = 0;
+        if (left < 6) penalty += (6 - left) * 40;
+        if (right > W - 6) penalty += (right - (W - 6)) * 40;
+        if (top < 6) penalty += (6 - top) * 40;
+        if (bot > H - 6) penalty += (bot - (H - 6)) * 40;
+
+        for (var pi = 0; pi < placedBoxes.length; pi++) {
+          var pb = placedBoxes[pi];
+          var ox = Math.max(0, Math.min(right, pb.right) - Math.max(left, pb.left) + 6);
+          var oy = Math.max(0, Math.min(bot, pb.bot) - Math.max(top, pb.top) + 4);
+          if (ox > 0 && oy > 0) penalty += (ox * oy) + 1200;
+        }
+        for (var bi = 0; bi < items.length; bi++) {
+          var other = items[bi];
+          if (other.px >= left - 14 && other.px <= right + 14 && other.py >= top - 14 && other.py <= bot + 14) {
+            penalty += 500;
+          }
+        }
+        penalty += Math.abs(c.ax) * 0.25 + Math.abs(c.ay) * 0.35;
+        if (penalty < bestScore) {
+          bestScore = penalty;
+          best = c;
+        }
+      }
+
+      var ftx = item.px + best.ax;
+      var fty = item.py + best.ay;
+      var fLeft = best.anchor === 'left' ? ftx : (best.anchor === 'right' ? ftx - bw : ftx - bw / 2);
+      placedBoxes.push({ left: fLeft, right: fLeft + bw, top: fty - bh / 2, bot: fty + bh / 2 });
+
+      return {
+        x: item.x,
+        y: item.y,
+        text: item.lbl,
+        showarrow: true,
+        arrowhead: 0,
+        arrowwidth: 1,
+        arrowcolor: pal.muted,
+        ax: best.ax,
+        ay: best.ay,
+        xanchor: best.anchor,
+        yanchor: 'middle',
+        bgcolor: pal.paper,
+        bordercolor: pal.grid,
+        borderwidth: 1,
+        borderpad: 2,
+        font: { color: pal.text, size: 10.5 }
+      };
+    });
+  }
+
   // ============================================================================
-  // TAB 1: RESUMEN EJECUTIVO & CROSS-FILTER BI
+  // TAB 1: RESUMEN EJECUTIVO Y FILTRADO BIDIRECCIONAL
   // ============================================================================
   function renderTabBi(recs) {
     var pal = getPalette();
@@ -570,14 +687,23 @@
 
     Plotly.react('cBiTrend', [
       { x: xMo, y: yBgt, name: 'Presupuesto ($)', type: 'scatter', mode: 'lines', line: { color: pal.muted, width: 2, dash: 'dot' } },
-      { x: xMo, y: yRev, name: 'Ingresos Reales ($)', type: 'scatter', mode: 'lines+markers', line: { color: pal.sky, width: 2.8 }, marker: { size: 5.5, color: pal.sky }, fill: 'tozeroy', fillcolor: 'rgba(56,189,248,0.10)' },
+      { x: xMo, y: yRev, name: 'Ingresos Netos ($)', type: 'scatter', mode: 'lines+markers', line: { color: pal.sky, width: 2.6 }, marker: { size: 5, color: pal.sky }, fill: 'tozeroy', fillcolor: 'rgba(56,189,248,0.10)' },
       { x: xMo, y: yEbitda, name: 'EBITDA Operativo ($)', type: 'bar', marker: { color: pal.goldBright, opacity: 0.78 } }
-    ], baseLayout(pal, { height: 325, barmode: 'overlay' }), PLOT_CFG);
+    ], baseLayout(pal, {
+      height: 315,
+      barmode: 'overlay',
+      margin: { t: 40, r: 18, b: 40, l: 60 },
+      legend: { orientation: 'h', x: 0, y: 1.15, bgcolor: 'transparent', font: { color: pal.text, size: 11 } },
+      xaxis: { nticks: 10, tickangle: 0, gridcolor: pal.grid, zerolinecolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 }, automargin: true },
+      yaxis: { tickprefix: '$', gridcolor: pal.grid, zerolinecolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 }, automargin: true }
+    }), PLOT_CFG);
 
-    // 2. Business Units Ranking (Click bar -> Cross-Filter Unit!)
+    // 2. Business Units Ranking (Click bar -> Cross-Filter Unit)
     var recsForUnits = getFilteredRecords('unit');
     var byUnit = groupByKey(recsForUnits, 'unit').sort(function (a, b) { return a.revReal - b.revReal; });
     var uNames = byUnit.map(function (u) { return u.key; });
+    var uShortNames = uNames.map(shortUnitLabel);
+    var maxUnitX = Math.max.apply(null, byUnit.map(function (u) { return Math.max(u.revReal, u.revBudget); }).concat([1]));
     var uColors = uNames.map(function (nm) {
       if (state.filters.unit === 'ALL') return pal.sky;
       return state.filters.unit === nm ? pal.goldBright : 'rgba(148,163,184,0.32)';
@@ -586,53 +712,84 @@
     var gdUnits = document.getElementById('cBiUnits');
     Plotly.react(gdUnits, [
       {
-        y: uNames,
+        y: uShortNames,
+        customdata: uNames,
         x: byUnit.map(function (u) { return Math.round(u.revBudget); }),
         name: 'Presupuesto',
         type: 'bar',
         orientation: 'h',
+        hovertemplate: '<b>%{customdata}</b><br>Presupuesto: $%{x:,.0f}<extra></extra>',
         marker: { color: 'rgba(148,163,184,0.28)' }
       },
       {
-        y: uNames,
+        y: uShortNames,
+        customdata: uNames,
         x: byUnit.map(function (u) { return Math.round(u.revReal); }),
-        name: 'Ingreso Real (Clic filtra)',
+        name: 'Ejecución Real',
         type: 'bar',
         orientation: 'h',
+        hovertemplate: '<b>%{customdata}</b><br>Ingreso Real: $%{x:,.0f} (%{text})<extra></extra>',
         marker: { color: uColors, line: { color: pal.goldBright, width: 1 } },
         text: byUnit.map(function (u) { return fmtPct(u.ebitdaMargin) + ' EBITDA'; }),
-        textposition: 'auto'
+        textposition: 'outside',
+        cliponaxis: false,
+        textfont: { color: pal.text, size: 10.5, family: 'JetBrains Mono, monospace' }
       }
-    ], baseLayout(pal, { height: 325, barmode: 'overlay', margin: { t: 28, r: 22, b: 42, l: 138 } }), PLOT_CFG);
+    ], baseLayout(pal, {
+      height: 315,
+      barmode: 'overlay',
+      margin: { t: 44, r: 68, b: 36, l: 148 },
+      legend: { orientation: 'h', x: -0.48, y: 1.14, bgcolor: 'transparent', font: { color: pal.text, size: 10.5 } },
+      xaxis: { range: [0, maxUnitX * 1.28], tickprefix: '$', gridcolor: pal.grid, zerolinecolor: pal.grid, tickfont: { color: pal.sub, size: 10 }, automargin: true },
+      yaxis: { gridcolor: pal.grid, tickfont: { color: pal.text, size: 10.5 }, automargin: false }
+    }), PLOT_CFG);
 
     if (gdUnits && !gdUnits.__boundClick) {
       gdUnits.__boundClick = true;
       gdUnits.on('plotly_click', function (ev) {
         if (ev && ev.points && ev.points[0]) {
-          var clickedUnit = ev.points[0].y;
+          var clickedUnit = ev.points[0].customdata || ev.points[0].y;
           state.filters.unit = (state.filters.unit === clickedUnit) ? 'ALL' : clickedUnit;
           refreshAll();
-          showToast(state.filters.unit === 'ALL' ? 'Filtro de unidad liberado' : ('Filtrado por Unidad: ' + clickedUnit));
+          showToast(state.filters.unit === 'ALL' ? 'Filtro por unidad restablecido' : ('Unidad seleccionada: ' + clickedUnit));
         }
       });
     }
 
-    // 3. Regional & Segment Breakdown (Click slice/bar -> Cross-Filter Region!)
+    // 3. Regional & Segment Breakdown (Zero Label/Legend Overlap)
     var recsForReg = getFilteredRecords('region');
     var byReg = groupByKey(recsForReg, 'region').sort(function (a, b) { return b.revReal - a.revReal; });
+    var totalRegRev = byReg.reduce(function (acc, r) { return acc + r.revReal; }, 0);
+    var donutColors = state.theme === 'light'
+      ? ['#0284c7', '#9a7432', '#059669', '#4f46e5']
+      : ['#0ea5e9', '#B8955A', '#10b981', '#6366f1'];
     var gdReg = document.getElementById('cBiRegions');
     Plotly.react(gdReg, [
       {
         labels: byReg.map(function (r) { return r.key; }),
         values: byReg.map(function (r) { return Math.round(r.revReal); }),
         type: 'pie',
-        hole: 0.54,
-        marker: { colors: [pal.sky, pal.goldBright, pal.emerald, pal.indigo], line: { color: pal.paper, width: 2 } },
-        textinfo: 'label+percent',
-        textfont: { color: pal.text, size: 11 },
+        domain: { x: [0.0, 0.52], y: [0.04, 0.96] },
+        hole: 0.60,
+        sort: false,
+        marker: { colors: donutColors, line: { color: pal.paper, width: 2 } },
+        textinfo: 'percent',
+        textposition: 'inside',
+        insidetextorientation: 'horizontal',
+        textfont: { color: '#ffffff', size: 11.5, family: 'JetBrains Mono, monospace' },
+        hovertemplate: '<b>%{label}</b><br>Ingresos: $%{value:,.0f} (%{percent})<extra></extra>',
         pull: byReg.map(function (r) { return state.filters.region === r.key ? 0.08 : 0; })
       }
-    ], baseLayout(pal, { height: 320, showlegend: true, margin: { t: 26, r: 20, b: 26, l: 20 } }), PLOT_CFG);
+    ], baseLayout(pal, {
+      height: 315,
+      showlegend: true,
+      legend: { orientation: 'v', x: 0.56, y: 0.5, yanchor: 'middle', xanchor: 'left', bgcolor: 'transparent', font: { color: pal.text, size: 11 } },
+      margin: { t: 20, r: 16, b: 20, l: 12 },
+      annotations: [
+        { x: 0.26, y: 0.54, text: '<b>' + fmtMoney(totalRegRev, true) + '</b>', showarrow: false, font: { color: pal.text, size: 14.5, family: 'JetBrains Mono, monospace' } },
+        { x: 0.26, y: 0.43, text: 'Ingresos', showarrow: false, font: { color: pal.muted, size: 10.5 } }
+      ]
+    }), PLOT_CFG);
 
     if (gdReg && !gdReg.__boundClick) {
       gdReg.__boundClick = true;
@@ -641,60 +798,72 @@
           var clickedReg = ev.points[0].label;
           state.filters.region = (state.filters.region === clickedReg) ? 'ALL' : clickedReg;
           refreshAll();
-          showToast(state.filters.region === 'ALL' ? 'Filtro regional liberado' : ('Filtrado por Región: ' + clickedReg));
+          showToast(state.filters.region === 'ALL' ? 'Filtro regional restablecido' : ('Región seleccionada: ' + clickedReg));
         }
       });
     }
 
-    // 4. Strategic Quadrant Bubble Matrix (Attainment % vs EBITDA Margin % x Revenue Size)
+    // 4. Strategic Quadrant Bubble Matrix (Deconflicted Callout Annotations)
     var unitStats = groupByKey(recsForUnits, 'unit');
+    var totalUnitsAgg = aggregateRecords(recsForUnits);
+    var avgMarginPct = +(totalUnitsAgg.ebitdaMargin * 100).toFixed(2);
     var maxRev = Math.max.apply(null, unitStats.map(function (u) { return u.revReal; }).concat([1]));
+    var xs = unitStats.map(function (u) { return +(u.attainment * 100).toFixed(2); });
+    var ys = unitStats.map(function (u) { return +(u.ebitdaMargin * 100).toFixed(2); });
+    var xMin = Math.floor(Math.min.apply(null, xs.concat([95])) - 2.4);
+    var xMax = Math.ceil(Math.max.apply(null, xs.concat([100.5])) + 2.4);
+    var yMin = Math.max(0, Math.floor(Math.min.apply(null, ys.concat([8])) - 6));
+    var yMax = Math.ceil(Math.max.apply(null, ys.concat([20])) + 7.5);
+    var bubAnnots = placeDeconflictedBubbleAnnotations(unitStats, xMin, xMax, yMin, yMax, pal);
+
     var gdBub = document.getElementById('cBiBubble');
     Plotly.react(gdBub, [
       {
-        x: unitStats.map(function (u) { return +(u.attainment * 100).toFixed(2); }),
-        y: unitStats.map(function (u) { return +(u.ebitdaMargin * 100).toFixed(2); }),
-        text: unitStats.map(function (u) { return u.key; }),
-        customdata: unitStats.map(function (u) { return fmtMoney(u.revReal, true); }),
-        mode: 'markers+text',
-        textposition: 'top center',
-        textfont: { color: pal.text, size: 11 },
+        x: xs,
+        y: ys,
+        customdata: unitStats.map(function (u) { return u.key; }),
+        text: unitStats.map(function (u) { return fmtMoney(u.revReal, true); }),
+        mode: 'markers',
         type: 'scatter',
-        name: 'Unidades (Clic filtra)',
-        hovertemplate: '<b>%{text}</b><br>Cumplimiento: %{x:.1f}%<br>Margen EBITDA: %{y:.1f}%<br>Ingresos: %{customdata}<extra></extra>',
+        name: 'Unidades',
+        hovertemplate: '<b>%{customdata}</b><br>Cumplimiento: %{x:.1f}%<br>Margen EBITDA: %{y:.1f}%<br>Ingresos: %{text}<extra></extra>',
         marker: {
-          size: unitStats.map(function (u) { return Math.max(18, Math.round(46 * Math.sqrt(u.revReal / maxRev))); }),
+          size: unitStats.map(function (u) { return Math.max(15, Math.round(36 * Math.sqrt(u.revReal / maxRev))); }),
           color: unitStats.map(function (u, i) {
             if (state.filters.unit !== 'ALL' && state.filters.unit !== u.key) return 'rgba(148,163,184,0.28)';
             return pal.series[i % pal.series.length];
           }),
-          opacity: 0.88,
-          line: { color: pal.goldBright, width: 1.8 }
+          opacity: 0.90,
+          line: { color: pal.goldBright, width: 1.6 }
         }
       }
     ], baseLayout(pal, {
-      height: 320,
+      height: 315,
       showlegend: false,
-      xaxis: { title: 'Cumplimiento Presupuestario (%)', gridcolor: pal.grid, zeroline: false, tickfont: { color: pal.sub } },
-      yaxis: { title: 'Margen EBITDA (%)', gridcolor: pal.grid, zeroline: false, tickfont: { color: pal.sub } },
+      margin: { t: 24, r: 24, b: 46, l: 56 },
+      xaxis: { title: 'Cumplimiento Presupuestario (%)', range: [xMin, xMax], gridcolor: pal.grid, zeroline: false, tickfont: { color: pal.sub, size: 10.5 } },
+      yaxis: { title: 'Margen EBITDA (%)', range: [yMin, yMax], gridcolor: pal.grid, zeroline: false, tickfont: { color: pal.sub, size: 10.5 } },
       shapes: [
-        { type: 'line', x0: 100, x1: 100, y0: 0, y1: 1, yref: 'paper', line: { color: pal.goldBright, width: 1.3, dash: 'dash' } }
-      ]
+        { type: 'line', x0: 100, x1: 100, y0: 0, y1: 1, yref: 'paper', line: { color: pal.goldBright, width: 1.3, dash: 'dash' } },
+        { type: 'line', x0: 0, x1: 1, xref: 'paper', y0: avgMarginPct, y1: avgMarginPct, line: { color: pal.muted, width: 1.1, dash: 'dot' } }
+      ],
+      annotations: bubAnnots
     }), PLOT_CFG);
 
     if (gdBub && !gdBub.__boundClick) {
       gdBub.__boundClick = true;
       gdBub.on('plotly_click', function (ev) {
-        if (ev && ev.points && ev.points[0] && ev.points[0].text) {
-          var cu = ev.points[0].text;
+        if (ev && ev.points && ev.points[0]) {
+          var cu = ev.points[0].customdata;
+          if (!cu) return;
           state.filters.unit = (state.filters.unit === cu) ? 'ALL' : cu;
           refreshAll();
-          showToast(state.filters.unit === 'ALL' ? 'Filtro liberado' : ('Filtrado por Unidad: ' + cu));
+          showToast(state.filters.unit === 'ALL' ? 'Filtro por unidad restablecido' : ('Unidad seleccionada: ' + cu));
         }
       });
     }
 
-    renderBiTable(unitStats, aggregateRecords(recsForUnits));
+    renderBiTable(unitStats, totalUnitsAgg);
   }
 
   function renderBiTable(unitRows, totalAgg) {
@@ -709,10 +878,14 @@
     var tfoot = document.getElementById('tfBiUnits');
     if (!tbody || !tfoot) return;
 
+    var totalDQ = 0;
+    var totalDP = 0;
     tbody.innerHTML = sorted.map(function (u) {
       var gap = u.revReal - u.revBudget;
       var dQ = (u.qty - u.qtyBgt) * u.avgPriceBgt;
       var dP = (u.avgPrice - u.avgPriceBgt) * u.qty;
+      totalDQ += dQ;
+      totalDP += dP;
       var share = totalAgg.revReal > 0 ? u.revReal / totalAgg.revReal : 0;
       var barCol = u.attainment >= 1 ? 'var(--emerald)' : (u.attainment >= 0.93 ? 'var(--gold)' : 'var(--rose)');
       var selCls = state.filters.unit === u.key ? 'selected-row' : '';
@@ -750,7 +923,8 @@
       '<td>' + fmtMoney(totalAgg.revBudget) + '</td>' +
       '<td class="' + (tGap >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (tGap >= 0 ? '+' : '') + fmtMoney(tGap) + '</td>' +
       '<td>' + fmtPct(totalAgg.attainment) + '</td>' +
-      '<td>—</td><td>—</td>' +
+      '<td class="' + (totalDQ >= 0 ? 'delta-pos' : 'delta-neg') + '">' + fmtMoney(totalDQ, true) + '</td>' +
+      '<td class="' + (totalDP >= 0 ? 'delta-pos' : 'delta-neg') + '">' + fmtMoney(totalDP, true) + '</td>' +
       '<td>' + fmtMoney(totalAgg.ebitdaReal) + '</td>' +
       '<td>' + fmtPct(totalAgg.ebitdaMargin) + '</td>' +
       '<td>' + fmtMoney(totalAgg.fcfReal) + '</td>' +
@@ -770,7 +944,7 @@
       type: 'waterfall',
       orientation: 'v',
       measure: ['absolute', 'relative', 'total', 'relative', 'total', 'relative', 'total', 'relative', 'total'],
-      x: ['Ingresos Brutos', 'Descuentos Com.', 'Ingresos Netos', 'Costo COGS', 'Utilidad Bruta', 'Gastos OPEX', 'EBITDA', 'Impuestos & CAPEX', 'Flujo Caja Libre'],
+      x: ['Ingresos<br>Brutos', 'Descuentos<br>Com.', 'Ingresos<br>Netos', 'Costo<br>COGS', 'Utilidad<br>Bruta', 'Gastos<br>OPEX', 'EBITDA', 'Impuestos<br>& CAPEX', 'Flujo Caja<br>Libre'],
       y: [
         Math.round(a.revGross),
         -Math.round(a.discountAmt),
@@ -782,23 +956,44 @@
         -Math.round(a.taxCapex),
         0
       ],
+      text: [
+        fmtMoney(a.revGross, true),
+        fmtMoney(-a.discountAmt, true),
+        fmtMoney(a.revReal, true),
+        fmtMoney(-a.cogsReal, true),
+        fmtMoney(a.grossReal, true),
+        fmtMoney(-a.opexReal, true),
+        fmtMoney(a.ebitdaReal, true),
+        fmtMoney(-a.taxCapex, true),
+        fmtMoney(a.fcfReal, true)
+      ],
+      textposition: 'outside',
+      cliponaxis: false,
+      textfont: { color: pal.text, size: 10, family: 'JetBrains Mono, monospace' },
       connector: { line: { color: pal.goldBright, width: 1.2, dash: 'dot' } },
       increasing: { marker: { color: pal.emerald } },
       decreasing: { marker: { color: pal.rose } },
       totals: { marker: { color: pal.sky, line: { color: pal.goldBright, width: 1.5 } } }
-    }], baseLayout(pal, { height: 350, showlegend: false, margin: { t: 26, r: 22, b: 78, l: 64 } }), PLOT_CFG);
+    }], baseLayout(pal, {
+      height: 365,
+      showlegend: false,
+      margin: { t: 42, r: 20, b: 58, l: 64 },
+      xaxis: { tickangle: 0, gridcolor: pal.grid, tickfont: { color: pal.sub, size: 10 }, automargin: true },
+      yaxis: { range: [0, a.revGross * 1.18], tickprefix: '$', gridcolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 }, automargin: true }
+    }), PLOT_CFG);
 
     // 2. EBITDA Variance Bridge (Ppto -> ΔVolumen -> ΔPrecio -> ΔCOGS -> ΔOPEX -> EBITDA Real)
     var dVol = (a.qty - a.qtyBgt) * a.avgPriceBgt;
     var dPrice = (a.revReal - a.revBudget) - dVol;
     var dCogs = -(a.cogsReal - a.cogsBudget);
     var dOpex = -(a.opexReal - a.opexBudget);
+    var bridgeMax = Math.max(a.ebitdaBudget, a.ebitdaReal, a.ebitdaBudget + Math.max(0, dVol) + Math.max(0, dPrice)) * 1.18;
 
     Plotly.react('cPnlBridge', [{
       type: 'waterfall',
       orientation: 'v',
       measure: ['absolute', 'relative', 'relative', 'relative', 'relative', 'total'],
-      x: ['EBITDA Ppto', 'Efecto Volumen (ΔQ)', 'Efecto Tarifa (ΔP)', 'Variación COGS', 'Variación OPEX', 'EBITDA Real'],
+      x: ['EBITDA<br>Presupuesto', 'Efecto<br>Volumen (ΔQ)', 'Efecto<br>Tarifa (ΔP)', 'Variación<br>COGS', 'Variación<br>OPEX', 'EBITDA<br>Real'],
       y: [
         Math.round(a.ebitdaBudget),
         Math.round(dVol),
@@ -807,11 +1002,28 @@
         Math.round(dOpex),
         0
       ],
+      text: [
+        fmtMoney(a.ebitdaBudget, true),
+        (dVol >= 0 ? '+' : '') + fmtMoney(dVol, true),
+        (dPrice >= 0 ? '+' : '') + fmtMoney(dPrice, true),
+        (dCogs >= 0 ? '+' : '') + fmtMoney(dCogs, true),
+        (dOpex >= 0 ? '+' : '') + fmtMoney(dOpex, true),
+        fmtMoney(a.ebitdaReal, true)
+      ],
+      textposition: 'outside',
+      cliponaxis: false,
+      textfont: { color: pal.text, size: 10, family: 'JetBrains Mono, monospace' },
       connector: { line: { color: pal.goldBright, width: 1.2 } },
       increasing: { marker: { color: pal.emerald } },
       decreasing: { marker: { color: pal.rose } },
       totals: { marker: { color: pal.goldBright } }
-    }], baseLayout(pal, { height: 350, showlegend: false, margin: { t: 26, r: 22, b: 78, l: 64 } }), PLOT_CFG);
+    }], baseLayout(pal, {
+      height: 365,
+      showlegend: false,
+      margin: { t: 42, r: 20, b: 58, l: 64 },
+      xaxis: { tickangle: 0, gridcolor: pal.grid, tickfont: { color: pal.sub, size: 10 }, automargin: true },
+      yaxis: { range: [0, Math.max(10, bridgeMax)], tickprefix: '$', gridcolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 }, automargin: true }
+    }), PLOT_CFG);
 
     // 3. 4-Level Corporate P&L Matrix
     var rows = [
@@ -823,8 +1035,8 @@
       { lvl: 3, sub: false, name: '(-) Inversión Comercial, Marketing & Adquisición', real: -a.mktSpend, bgt: -a.opexBudget * 0.30 },
       { lvl: 3, sub: false, name: '(-) Gastos Operativos I+D, Tecnología & Administración (SG&A)', real: -(a.opexReal - a.mktSpend), bgt: -a.opexBudget * 0.70 },
       { lvl: 3, sub: true, name: '(=) NIVEL 3 · EBITDA OPERATIVO', real: a.ebitdaReal, bgt: a.ebitdaBudget },
-      { lvl: 4, sub: false, name: '(-) Impuesto Corporativo Estimado & CAPEX de Mantenimiento', real: -a.taxCapex, bgt: -(Math.max(0, a.ebitdaBudget * 0.24) + a.revBudget * 0.045) },
-      { lvl: 4, sub: true, name: '(=) NIVEL 4 · FLUJO DE CAJA LIBRE (FREE CASH FLOW)', real: a.fcfReal, bgt: a.ebitdaBudget - (Math.max(0, a.ebitdaBudget * 0.24) + a.revBudget * 0.045) }
+      { lvl: 4, sub: false, name: '(-) Impuesto Corporativo Estimado & CAPEX de Mantenimiento', real: -a.taxCapex, bgt: -(Math.max(0, a.ebitdaBudget * 0.24) + a.revBudget * 0.026) },
+      { lvl: 4, sub: true, name: '(=) NIVEL 4 · FLUJO DE CAJA LIBRE (FREE CASH FLOW)', real: a.fcfReal, bgt: a.ebitdaBudget - (Math.max(0, a.ebitdaBudget * 0.24) + a.revBudget * 0.026) }
     ];
 
     var tb = document.getElementById('tbPnl4Levels');
@@ -965,7 +1177,7 @@
       { x: xHist, y: fitted, name: 'Ajuste Holt-Winters', type: 'scatter', mode: 'lines', line: { color: pal.emerald, width: 1.6, dash: 'dot' } },
       { x: xFut, y: yFutMid, name: 'Pronóstico (+' + horizon + 'm)', type: 'scatter', mode: 'lines+markers', line: { color: pal.goldBright, width: 2.8 }, marker: { size: 5.5, color: pal.goldBright } },
       { x: anomX, y: anomY, text: anomTxt, name: 'Anomalías Z-MAD', type: 'scatter', mode: 'markers', marker: { symbol: 'diamond', size: 11, color: pal.rose, line: { color: '#ffffff', width: 1.5 } } }
-    ], baseLayout(pal, { height: 360 }), PLOT_CFG);
+    ], baseLayout(pal, { height: 360, margin: { t: 42, r: 20, b: 44, l: 64 }, legend: { orientation: 'h', x: 0, y: 1.14, bgcolor: 'transparent', font: { color: pal.text, size: 11 } } }), PLOT_CFG);
 
     // 2. Pearson Correlation Matrix 6x6 across Monthly Observations
     var corrLabels = ['Volumen Q', 'Tarifa $/Q', 'Descuento %', 'Marketing $', 'Ingresos $', 'EBITDA $'];
@@ -1006,8 +1218,9 @@
 
     Plotly.react('cLabCorr', [{
       z: zMat, x: corrLabels, y: corrLabels, type: 'heatmap', zmin: -1, zmax: 1,
+      colorbar: { tickfont: { color: pal.sub, size: 10 }, thickness: 12 },
       colorscale: [[0, '#f43f5e'], [0.5, pal.plot], [0.78, '#38bdf8'], [1, '#B8955A']]
-    }], baseLayout(pal, { height: 340, annotations: annots, margin: { t: 22, r: 20, b: 64, l: 92 } }), PLOT_CFG);
+    }], baseLayout(pal, { height: 340, annotations: annots, margin: { t: 28, r: 20, b: 64, l: 96 } }), PLOT_CFG);
 
     // 3. OLS Regression: Operating Leverage (Ingresos Mensuales -> EBITDA Mensual)
     var xReg = vectors[4];
@@ -1041,15 +1254,17 @@
       }
     ], baseLayout(pal, {
       height: 340,
-      xaxis: { title: 'Ingresos Netos Mensuales ($)', gridcolor: pal.grid, tickfont: { color: pal.sub } },
-      yaxis: { title: 'EBITDA Mensual ($)', gridcolor: pal.grid, tickfont: { color: pal.sub } }
+      margin: { t: 40, r: 22, b: 48, l: 64 },
+      legend: { orientation: 'h', x: 0, y: 1.15, bgcolor: 'transparent', font: { color: pal.text, size: 11 } },
+      xaxis: { title: 'Ingresos Netos Mensuales ($)', tickprefix: '$', gridcolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 } },
+      yaxis: { title: 'EBITDA Mensual ($)', tickprefix: '$', gridcolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 } }
     }), PLOT_CFG);
   }
 
   // ============================================================================
-  // TAB 4: SIMULADOR WHAT-IF EN PANTALLA, TORNADO & MONTE CARLO (2,000 RUTAS)
+  // TAB 4: ANÁLISIS DE SENSIBILIDAD, TORNADO & MONTE CARLO (2,000 ITERACIONES)
   // ============================================================================
-  function evalScenario(baseAgg, dQ, dP, elast, dCogs, dOpex, waccPct) {
+  function evalScenario(baseAgg, dQ, dP, elast, dCogs, dOpex, waccPct, nMonths) {
     // Demand elasticity response to price change: Q_eff = Q * (1 + dQ) * (1 + elast * dP)
     var qMult = Math.max(0.2, (1 + dQ) * (1 + elast * dP));
     var pMult = Math.max(0.2, 1 + dP);
@@ -1057,12 +1272,12 @@
     var simCogs = baseAgg.cogsReal * qMult * (1 + dCogs);
     var simOpex = baseAgg.opexReal * (1 + dOpex);
     var simEbitda = simRev - simCogs - simOpex;
-    var simTaxCapex = Math.max(0, simEbitda * 0.24) + simRev * 0.045;
+    var simTaxCapex = Math.max(0, simEbitda * 0.24) + simRev * 0.026;
     var simFcf = simEbitda - simTaxCapex;
 
     // Annualize FCF based on distinct months in filtered slice and compute 5Y Operating NPV
     var wacc = Math.max(0.03, waccPct / 100);
-    var annualFcf = simFcf;
+    var annualFcf = simFcf * (12 / Math.max(1, nMonths || 12));
     var npv5y = 0;
     for (var yr = 1; yr <= 5; yr++) {
       npv5y += (annualFcf * Math.pow(1.04, yr - 1)) / Math.pow(1 + wacc, yr);
@@ -1079,9 +1294,10 @@
   function renderTabWhatIf(recs) {
     var pal = getPalette();
     var base = aggregateRecords(recs);
+    var nMonths = Math.max(1, groupByKey(recs, 'ym').length);
     var w = state.whatIf;
 
-    var sim = evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc);
+    var sim = evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc, nMonths);
     var dEb = sim.ebitda - base.ebitdaReal;
 
     // 1. Monte Carlo Stochastic Simulation (2,000 iterations) around simulated scenario
@@ -1094,7 +1310,7 @@
       var sP = (w.dP / 100) + 0.042 * randNorm(rng);
       var sC = (w.dCogs / 100) + 0.048 * randNorm(rng);
       var sO = (w.dOpex / 100) + 0.038 * randNorm(rng);
-      var rSim = evalScenario(base, sQ, sP, w.elast, sC, sO, w.wacc);
+      var rSim = evalScenario(base, sQ, sP, w.elast, sC, sO, w.wacc, nMonths);
       mcEbitda[i] = rSim.ebitda;
       if (rSim.ebitda >= base.ebitdaBudget) beatTarget++;
     }
@@ -1108,22 +1324,22 @@
     // Update Simulated KPIs strip
     setKpi('simKpiRev', fmtMoney(sim.rev, true), '<span class="' + (sim.rev >= base.revReal ? 'delta-pos' : 'delta-neg') + '">Base: ' + fmtMoney(base.revReal, true) + '</span>');
     setKpi('simKpiEbitda', fmtMoney(sim.ebitda, true), '<span class="' + (dEb >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (dEb >= 0 ? '+' : '') + fmtMoney(dEb, true) + ' (' + fmtPct(sim.margin) + ')</span>');
-    setKpi('simKpiNpv', fmtMoney(sim.npv5y, true), '<span class="delta-neu">WACC ' + w.wacc.toFixed(1) + '% · 5 Años</span>');
+    setKpi('simKpiNpv', fmtMoney(sim.npv5y, true), '<span class="delta-neu">WACC ' + w.wacc.toFixed(1) + '% &middot; Base Anual (' + nMonths + 'M)</span>');
     setKpi('simKpiVar', fmtMoney(p05, true), '<span class="delta-neg">CVaR 95%: ' + fmtMoney(cvar95, true) + '</span>');
-    setKpi('simKpiProb', fmtPct(probBeat), '<span class="' + (probBeat >= 0.5 ? 'delta-pos' : 'delta-neg') + '">vs Meta Ppto (' + fmtMoney(base.ebitdaBudget, true) + ')</span>');
+    setKpi('simKpiProb', fmtPct(probBeat), '<span class="' + (probBeat >= 0.5 ? 'delta-pos' : 'delta-neg') + '">vs Ppto (' + fmtMoney(base.ebitdaBudget, true) + ')</span>');
 
     // 2. Tornado Chart (±10% swing sensitivity around current state)
     var levers = [
-      { label: 'Precio / Tarifa (±10%)', lo: evalScenario(base, w.dQ / 100, w.dP / 100 - 0.10, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc).ebitda - sim.ebitda, hi: evalScenario(base, w.dQ / 100, w.dP / 100 + 0.10, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc).ebitda - sim.ebitda },
-      { label: 'Volumen Q (±10%)', lo: evalScenario(base, w.dQ / 100 - 0.10, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc).ebitda - sim.ebitda, hi: evalScenario(base, w.dQ / 100 + 0.10, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc).ebitda - sim.ebitda },
-      { label: 'Costo Directo COGS (∓10%)', lo: evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100 + 0.10, w.dOpex / 100, w.wacc).ebitda - sim.ebitda, hi: evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100 - 0.10, w.dOpex / 100, w.wacc).ebitda - sim.ebitda },
-      { label: 'Gastos OPEX (∓10%)', lo: evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100 + 0.10, w.wacc).ebitda - sim.ebitda, hi: evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100 - 0.10, w.wacc).ebitda - sim.ebitda }
+      { label: 'Precio / Tarifa (±10%)', lo: evalScenario(base, w.dQ / 100, w.dP / 100 - 0.10, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc, nMonths).ebitda - sim.ebitda, hi: evalScenario(base, w.dQ / 100, w.dP / 100 + 0.10, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc, nMonths).ebitda - sim.ebitda },
+      { label: 'Volumen Q (±10%)', lo: evalScenario(base, w.dQ / 100 - 0.10, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc, nMonths).ebitda - sim.ebitda, hi: evalScenario(base, w.dQ / 100 + 0.10, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100, w.wacc, nMonths).ebitda - sim.ebitda },
+      { label: 'Costo Directo COGS (∓10%)', lo: evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100 + 0.10, w.dOpex / 100, w.wacc, nMonths).ebitda - sim.ebitda, hi: evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100 - 0.10, w.dOpex / 100, w.wacc, nMonths).ebitda - sim.ebitda },
+      { label: 'Gastos OPEX (∓10%)', lo: evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100 + 0.10, w.wacc, nMonths).ebitda - sim.ebitda, hi: evalScenario(base, w.dQ / 100, w.dP / 100, w.elast, w.dCogs / 100, w.dOpex / 100 - 0.10, w.wacc, nMonths).ebitda - sim.ebitda }
     ].sort(function (a, b) { return (Math.abs(a.hi - a.lo)) - (Math.abs(b.hi - b.lo)); });
 
     Plotly.react('cSimTornado', [
       { y: levers.map(function (l) { return l.label; }), x: levers.map(function (l) { return Math.round(l.lo); }), name: 'Escenario Adverso', type: 'bar', orientation: 'h', marker: { color: pal.rose } },
       { y: levers.map(function (l) { return l.label; }), x: levers.map(function (l) { return Math.round(l.hi); }), name: 'Escenario Favorable', type: 'bar', orientation: 'h', marker: { color: pal.emerald } }
-    ], baseLayout(pal, { height: 310, barmode: 'relative', margin: { t: 28, r: 24, b: 44, l: 165 } }), PLOT_CFG);
+    ], baseLayout(pal, { height: 310, barmode: 'relative', margin: { t: 40, r: 24, b: 44, l: 165 }, legend: { orientation: 'h', x: 0, y: 1.15, bgcolor: 'transparent', font: { color: pal.text, size: 11 } } }), PLOT_CFG);
 
     // 3. Monte Carlo Distribution Histogram
     Plotly.react('cSimMonteCarlo', [
@@ -1137,17 +1353,18 @@
     ], baseLayout(pal, {
       height: 310,
       showlegend: false,
-      xaxis: { title: 'EBITDA Simulado ($)', gridcolor: pal.grid, tickfont: { color: pal.sub } },
-      yaxis: { title: 'Frecuencia', gridcolor: pal.grid, tickfont: { color: pal.sub } },
+      margin: { t: 40, r: 24, b: 48, l: 58 },
+      xaxis: { title: 'EBITDA Simulado ($)', tickprefix: '$', gridcolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 } },
+      yaxis: { title: 'Frecuencia', gridcolor: pal.grid, tickfont: { color: pal.sub, size: 10.5 } },
       shapes: [
         { type: 'line', x0: p05, x1: p05, y0: 0, y1: 1, yref: 'paper', line: { color: pal.rose, width: 2.2, dash: 'dash' } },
         { type: 'line', x0: p50, x1: p50, y0: 0, y1: 1, yref: 'paper', line: { color: pal.goldBright, width: 2.6 } },
         { type: 'line', x0: p90, x1: p90, y0: 0, y1: 1, yref: 'paper', line: { color: pal.emerald, width: 2.2, dash: 'dot' } }
       ],
       annotations: [
-        { x: p05, y: 0.94, yref: 'paper', text: 'VaR 95%: ' + fmtMoney(p05, true), showarrow: false, xanchor: 'right', font: { color: pal.rose, size: 10.5 } },
-        { x: p50, y: 0.98, yref: 'paper', text: 'P50: ' + fmtMoney(p50, true), showarrow: false, font: { color: pal.goldBright, size: 11 } },
-        { x: p90, y: 0.94, yref: 'paper', text: 'P90: ' + fmtMoney(p90, true), showarrow: false, xanchor: 'left', font: { color: pal.emerald, size: 10.5 } }
+        { x: p05, y: 0.96, yref: 'paper', text: 'VaR 95%: ' + fmtMoney(p05, true), showarrow: false, xanchor: 'right', bgcolor: pal.paper, borderpad: 2, font: { color: pal.rose, size: 10.5 } },
+        { x: p50, y: 0.84, yref: 'paper', text: 'P50: ' + fmtMoney(p50, true), showarrow: false, bgcolor: pal.paper, borderpad: 2, font: { color: pal.goldBright, size: 11 } },
+        { x: p90, y: 0.96, yref: 'paper', text: 'P90: ' + fmtMoney(p90, true), showarrow: false, xanchor: 'left', bgcolor: pal.paper, borderpad: 2, font: { color: pal.emerald, size: 10.5 } }
       ]
     }), PLOT_CFG);
   }
@@ -1198,7 +1415,7 @@
         '<td>' + fmtPct(g.ebitdaMargin) + '</td>' +
         '<td>' + fmtMoney(g.fcfReal) + '</td>' +
         '<td>' + fmtPct(share) + '</td>' +
-        '<td class="' + parClass + '">' + fmtPct(par) + (par <= 0.805 ? ' ★ Top 80%' : '') + '</td>' +
+        '<td class="' + parClass + '">' + fmtPct(par) + (par <= 0.805 ? ' (Top 80%)' : '') + '</td>' +
         '</tr>';
     }).join('');
   }
@@ -1276,7 +1493,7 @@
       }).join('');
       return '<div class="nx-field"><label class="nx-label" for="' + md.id + '">' + esc(md.label) + '</label>' +
         '<select class="nx-select" id="' + md.id + '">' + opts + '</select></div>';
-    }).join('') + '<div class="nx-field" style="justify-content:flex-end;"><button type="button" class="nx-btn nx-btn-gold" id="btnApplyCsvMap">✓ Inyectar CSV en Todo el Dashboard (' + rows.length.toLocaleString() + ' filas)</button></div>';
+    }).join('') + '<div class="nx-field" style="justify-content:flex-end;"><button type="button" class="nx-btn nx-btn-gold" id="btnApplyCsvMap">' + SVG_ICONS.check + '<span>Cargar Registros en el Tablero (' + rows.length.toLocaleString() + ' filas)</span></button></div>';
 
     document.getElementById('btnApplyCsvMap').addEventListener('click', applyMappedCsv);
   }
@@ -1326,14 +1543,14 @@
       if (!selDs.querySelector('option[value="CUSTOM"]')) {
         var opt = document.createElement('option');
         opt.value = 'CUSTOM';
-        opt.textContent = '📂 CSV Propio Cargado';
+        opt.textContent = 'CSV Local Cargado';
         selDs.appendChild(opt);
       }
       selDs.value = 'CUSTOM';
     }
     buildDataset();
     switchTab('view-bi');
-    showToast('¡Dataset CSV inyectado con éxito en las 5 vistas!');
+    showToast('Archivo CSV cargado en los 5 módulos analíticos');
   }
 
   function csvSafeText(s) {
@@ -1458,7 +1675,9 @@
       btnTheme.addEventListener('click', function () {
         state.theme = state.theme === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', state.theme);
-        btnTheme.textContent = state.theme === 'dark' ? '☀️ Modo Claro' : '🌙 Navy & Gold';
+        btnTheme.innerHTML = state.theme === 'dark'
+          ? (SVG_ICONS.sun + '<span>Modo Claro</span>')
+          : (SVG_ICONS.moon + '<span>Navy &amp; Gold</span>');
         refreshAll();
       });
     }
