@@ -238,4 +238,15 @@
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
+  <url>
+    <loc>https://jesusbz.github.io/bot-trading-python/</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.98</priority>
+    <image:image>
+      <image:loc>https://jesusbz.github.io/imagenes/cards/post-19-bot-trading-cripto-python.webp</image:loc>
+      <image:title>Suite Multi-Bot Cuantitativa de Trading Algorítmico 24/7 en Python con Cadena SHA-256 — Jesús Benjamín Zerpa</image:title>
+      <image:caption>Backtesting 5 años (Markowitz, GJR-GARCH, Monte Carlo, MLP) y 4 bots autónomos 24/7 con certificación criptográfica SHA-256 sobre OKX API v5 y Bybit API v5.</image:caption>
+    </image:image>
+  </url>
 </urlset>

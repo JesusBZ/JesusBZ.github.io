@@ -512,7 +512,7 @@
     title: 'Economista y Quantitative Data Scientist',
     summary: 'Profesional de finanzas con amplia experiencia (+15 años) en planificación financiera corporativa, presupuestos maestros y control de gestión en empresas de diversos sectores económicos. Cuenta con sólidas fortalezas en modelización econométrica avanzada, Deep Learning, Business Intelligence, Inteligencia Financiera (95%) y ciencia de datos reproducible en R y Python.',
     interests: 'Planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, simulación estocástica multivariante, Deep Learning (Redes Neuronales LSTM en PyTorch), Inteligencia Financiera y Business Intelligence.',
-    portfolio: 'El portafolio reúne 18 estudios técnicos y suites cuantitativas publicadas entre mayo de 2020 y noviembre de 2026 en Python (NumPy / SciPy / statsmodels / PyTorch / arch), RStudio (4.4+ / vars / urca / tidymodels), JavaScript/Chart.js, Excel/VBA y Microsoft Power BI, incluyendo el Simulador Nexus Quant FP&A en 5 módulos (FinancialDashboard.htm).'
+    portfolio: 'El portafolio reúne 19 estudios técnicos y suites cuantitativas publicadas entre mayo de 2020 y noviembre de 2026 en Python (NumPy / SciPy / statsmodels / PyTorch / arch), RStudio (4.4+ / vars / urca / tidymodels), JavaScript/Chart.js, Excel/VBA y Microsoft Power BI, incluyendo el Simulador Nexus Quant FP&A en 5 módulos (FinancialDashboard.htm) y la Suite Multi-Bot Cripto 24/7 en Render (bot-trading-python/#sec-certificacion).'
   };
 
   const _M_SHARD = Object.freeze([48, 82, 218, 25, 41, 77, 204, 30, 42, 86, 204, 15, 53, 89, 198, 1, 51, 86, 233, 11, 55, 86, 192, 0, 116, 84, 198, 1]);
@@ -569,6 +569,14 @@
   ];
 
   const PROJECTS = [
+    {
+      n: 19, title: 'Suite Multi-Bot Cuantitativa de Trading Algorítmico 24/7 en Python con Certificación Criptográfica SHA-256', file: 'bot-trading-python/#sec-certificacion', pubDate: 'Noviembre de 2026',
+      keys: ['bot de trading', 'bots de trading', 'multibot', 'multi-bot', 'sha-256', 'sec-certificacion', 'okx', 'bybit', 'trabajo 19', 'proyecto 19', 'estudio 19', 'trading algoritmico'],
+      summary: 'Plataforma cuantitativa en Python 3.11 desplegada 24/7 en Render con backtesting diario a 5 años ($1,000 USD base sobre BTC, ETH, SOL, BNB, XRP, ADA, AVAX y LINK) y 4 bots autónomos en tiempo real sobre OKX API v5 y Bybit API v5.',
+      methods: 'Markowitz Media-Varianza (SLSQP), GJR-GARCH(1,1,1) Skew-t + Vol-Target, Monte Carlo Min-CVaR 95% y red neuronal causal MLP(32,16) + control ATR; ejecución 24/7 de BOT A (15m/1H microtrading), BOT B (1D símplex/Chandelier), BOT C (4H Long/Short perpetuos) y BOT D (MLP causal con reserva >=25% USDT), verificada por bloque en navegador mediante SubtleCrypto SHA-256 (#sec-certificacion).',
+      results: 'Cadena criptográfica inmutable bloque a bloque desde el hash génesis hasta chain_root_sha256 con conciliación dual OKX/Bybit, cotas OHLC verificadas y control contable Mark-to-Market en los 4 algoritmos.',
+      tools: 'Python 3.11, NumPy, SciPy, scikit-learn, arch, OKX API v5, Bybit API v5, Plotly.js y WebCrypto SubtleCrypto SHA-256.'
+    },
     {
       n: 17, title: 'Vectores Autorregresivos VAR(8), Causalidad de Granger, Cointegración de Johansen y Conectividad Diebold-Yilmaz en Python (2010–2026)', file: 'vectores-autorregresivos-var-python.html', pubDate: 'Noviembre de 2026',
       keys: ['var(8)', 'var 8', 'vectores autorregresivos', 'granger', 'causalidad de granger', 'johansen', 'cointegracion', 'diebold', 'yilmaz', 'spillover', 'conectividad sistemica', 'girf', 'fevd', 'mcop-var', 'cobertura sistemica', 'trabajo 17', 'proyecto 17', 'estudio 17'],
@@ -1622,7 +1630,9 @@
       'tuendpoint', 'cualeselendpoint', 'urldelbackend',
       'overrideinstructions', 'disregardprevious', 'printyourinstructions', 'repeattheabove',
       'revelatusinstrucciones', 'muestratuprompt', 'showprompt', 'pretendyouare',
-      'documentcookie', 'localstorage', 'fromcharcode', 'eval('
+      'documentcookie', 'localstorage', 'fromcharcode', 'eval(',
+      'atob(', 'btoa(', 'fetch(', 'xmlhttprequest', 'denoenv', 'importmetaenv',
+      'renderadmintoken', 'inboundformendpoint', 'okxapikey', 'bybitapikey', 'webhook'
     ];
     if (blockedCompact.some(t => qc.includes(t))) return true;
     if (/<\s*(?:script|iframe|svg|object|embed)|javascript\s*:|vbscript\s*:|data\s*:\s*text\/html|on(?:error|load|click|mouseover)\s*=/i.test(raw || '')) return true;
@@ -1698,7 +1708,7 @@
       if (activeProj) {
         return `Bienvenido. Estás explorando el **Estudio #${activeProj.n}: ${activeProj.title}** de **${PROFILE.name}**. Puedo explicarte su metodología (${activeProj.tools}), sus resultados verificados o cómo aplicar este modelo en tu organización.`;
       }
-      return `Bienvenido. Soy el asistente virtual de **${PROFILE.name}**. Estoy aquí para acompañarte en tu recorrido por sus **18 estudios y suites cuantitativas** y compartir su amplia experiencia y sólidas fortalezas en **planificación financiera corporativa, presupuestos maestros, econometría avanzada, Ciencia de Datos, Deep Learning, Inteligencia Financiera y Business Intelligence**. ¿En qué puedo orientarte hoy?`;
+      return `Bienvenido. Soy el asistente virtual de **${PROFILE.name}**. Estoy aquí para acompañarte en tu recorrido por sus **19 estudios y suites cuantitativas** y compartir su amplia experiencia y sólidas fortalezas en **planificación financiera corporativa, presupuestos maestros, econometría avanzada, Ciencia de Datos, Deep Learning, Inteligencia Financiera y Business Intelligence**. ¿En qué puedo orientarte hoy?`;
     }
     if (hasAny(q, ['gracias', 'thank'])) {
       return 'Con mucho gusto. Sigo a tu disposición para acompañarte en tu recorrido por el portafolio o conectar con la consultoría de Jesús Benjamín Zerpa.';
@@ -1727,7 +1737,11 @@
     }
 
     if (hasAny(q, ['modelos python 2026', 'recientes en python', 'nuevos en python'])) {
-      return answerProjectList(PROJECTS.filter(p => [17, 16, 15, 14].includes(p.n)), 'Estos son los **4 estudios insignia más recientes (2026)** desarrollados íntegramente en **Python, Econometría Multivariante, Cálculo Estocástico y PyTorch**:');
+      return answerProjectList(PROJECTS.filter(p => [19, 17, 16, 15, 14].includes(p.n)), 'Estos son los **5 desarrollos insignias más recientes (2026)** desarrollados íntegramente en **Python, Trading Algorítmico 24/7, Econometría Multivariante, Cálculo Estocástico y PyTorch**:');
+    }
+
+    if (hasAny(q, ['bot de trading', 'bots de trading', 'multibot', 'multi-bot', 'sha-256', 'sec-certificacion', 'okx', 'bybit', 'trabajo 19', 'proyecto 19', 'estudio 19'])) {
+      return answerProject(PROJECTS.find(p => p.n === 19) || PROJECTS[0]);
     }
 
     if (hasAny(q, ['var(8)', 'var 8', 'vectores autorregresivos', 'diebold', 'yilmaz', 'spillover', 'johansen', 'granger', 'trabajo 17', 'estudio 17'])) {
@@ -1868,7 +1882,7 @@
       p.keys.forEach(k => { if (hasTerm(q, k)) s += k.includes(' ') ? 3 : 2; });
       if (hasTerm(q, p.title)) s += 4;
       if (activeProj && p.n === activeProj.n) s += 2;
-      if ([17, 16, 15, 14].includes(p.n)) s += 0.5;
+      if ([19, 17, 16, 15, 14].includes(p.n)) s += 0.5;
       return { p, s };
     }).sort((a, b) => b.s - a.s).slice(0, 4).map(x => x.p);
 
@@ -1882,8 +1896,8 @@
       : '';
 
     return activeHeader +
-      `PERFIL: ${PROFILE.name} — ${PROFILE.title} (+15 años de amplia experiencia y sólidas fortalezas en FP&A, Power BI 95%, Excel/VBA 98%/90%, R 95%, Python 92%; ${PROJECTS.length} estudios publicados + Suite Nexus Quant FP&A en 5 módulos en FinancialDashboard.htm).\n` +
-      `ECOSISTEMA: Portafolio ${CONTACT.portfolioSite} | Consultoría ${CONTACT.consultingSite} | CV Ejecutivo ${CONTACT.cvSite} | Contacto: ${CONTACT.phone}, ${CONTACT.email}.\n` +
+      `PERFIL: ${PROFILE.name} — ${PROFILE.title} (+15 años de amplia experiencia y sólidas fortalezas en FP&A, Power BI 95%, Excel/VBA 98%/90%, R 95%, Python 92%; ${PROJECTS.length} estudios publicados + Suite Nexus Quant FP&A en 5 módulos en FinancialDashboard.htm + Suite Multi-Bot Cripto 24/7 en bot-trading-python/#sec-certificacion).\n` +
+      `ECOSISTEMA: Portafolio ${CONTACT.portfolioSite} | Consultoría ${CONTACT.consultingSite} | CV Ejecutivo ${CONTACT.cvSite} | Contacto: ${CONTACT.phone}, canal protegido en formulario.html.\n` +
       careerBlock +
       `ESTUDIOS RELEVANTES A LA CONSULTA:\n${projectBlock}`;
   }
@@ -1902,6 +1916,51 @@
   }
 
   const _requestTimestamps = [];
+  const _AI_QUOTA_KEY = 'jbz_ai_quota_v1';
+  let _hasHumanAiGesture = false;
+  ['pointerdown', 'keydown', 'touchstart'].forEach(evtName => {
+    try {
+      window.addEventListener(evtName, (ev) => {
+        if (!ev || ev.isTrusted !== false) _hasHumanAiGesture = true;
+      }, { passive: true, capture: true });
+    } catch (e) {}
+  });
+
+  function _stripInvisibleChars(str) {
+    return String(str || '').replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/g, '');
+  }
+
+  function _isAutomatedBrowser() {
+    try {
+      return !!(
+        navigator.webdriver ||
+        window._phantom ||
+        window.__nightmare ||
+        window.callPhantom ||
+        window.domAutomation
+      );
+    } catch (e) {
+      return true;
+    }
+  }
+
+  function _consumeAiQuotaSlot() {
+    const now = Date.now();
+    while (_requestTimestamps.length && now - _requestTimestamps[0] > 60000) {
+      _requestTimestamps.shift();
+    }
+    if (_requestTimestamps.length >= 6) return false;
+    try {
+      let arr = JSON.parse(sessionStorage.getItem(_AI_QUOTA_KEY) || '[]');
+      if (!Array.isArray(arr)) arr = [];
+      arr = arr.filter(t => typeof t === 'number' && (now - t) < 900000);
+      if (arr.length >= 25) return false;
+      arr.push(now);
+      sessionStorage.setItem(_AI_QUOTA_KEY, JSON.stringify(arr));
+    } catch (e) {}
+    _requestTimestamps.push(now);
+    return true;
+  }
   const _responseCache = new Map();
   const _CACHE_STORAGE_KEY = 'jbz_ai_cache_v6_' + (window.location.hostname || 'local').replace(/[^a-z0-9]/gi, '_');
   const _CACHE_TTL_MS = 30 * 60 * 1000;
@@ -1980,13 +2039,17 @@
         mode: 'cors',
         credentials: 'omit',
         cache: 'no-store',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         referrerPolicy: 'no-referrer',
         body: JSON.stringify(payload),
         signal: ctrl.signal
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
+      const ctype = (res.headers.get('content-type') || '').toLowerCase();
+      if (!ctype.includes('application/json')) throw new Error('Tipo de respuesta inválido');
+      const rawText = await res.text();
+      if (!rawText || rawText.length > 18000) throw new Error('Tamaño de respuesta inválido');
+      const data = JSON.parse(rawText);
       if (!data || !data.text) throw new Error('Respuesta vacía');
       return sanitizeBotOutput(data.text);
     } finally {
@@ -1995,21 +2058,23 @@
   }
 
   async function askGemini(question, history) {
+    if (_isAutomatedBrowser() || !_hasHumanAiGesture) {
+      throw new Error('Modo local verificado');
+    }
     const candidates = resolveGatewayCandidates();
     if (!candidates.length) throw new Error('Origen no autorizado');
 
-    const now = Date.now();
-    while (_requestTimestamps.length && now - _requestTimestamps[0] > 60000) {
-      _requestTimestamps.shift();
-    }
-    if (_requestTimestamps.length >= 12) {
+    if (!_consumeAiQuotaSlot()) {
       throw new Error('Rate limit excedido');
     }
-    _requestTimestamps.push(now);
 
+    const cleanQuestion = _stripInvisibleChars(question).slice(0, 1800);
     const payload = {
-      message: buildGroundedPrompt(question.slice(0, 1800)),
-      history: (history || []).slice(-10).map(h => ({ role: h && h.role === 'bot' ? 'bot' : 'user', text: String((h && h.text) || '').slice(0, 1500) }))
+      message: buildGroundedPrompt(cleanQuestion),
+      history: (history || []).slice(-10).map(h => ({
+        role: h && h.role === 'bot' ? 'bot' : 'user',
+        text: _stripInvisibleChars(h && h.text).slice(0, 1500)
+      }))
     };
 
     let lastErr;
@@ -2061,7 +2126,7 @@
 
     const WELCOME = activeProj
       ? `Bienvenido. Estás revisando el **Estudio #${activeProj.n}: ${activeProj.title}** de **${PROFILE.name}**. Puedo explicarte su metodología (**${activeProj.tools}**), compararlo con los modelos Python 2026 o evaluar cómo adaptarlo a tu empresa.`
-      : `Bienvenido. Soy el asistente de IA de **${PROFILE.name}**. Puedo guiarte por sus **18 estudios y suites cuantitativas** (incluyendo el [Simulador Nexus Quant FP&A](FinancialDashboard.htm)), comparar metodologías o compartir su amplia experiencia y sólidas fortalezas. ¿Qué deseas explorar hoy?`;
+      : `Bienvenido. Soy el asistente de IA de **${PROFILE.name}**. Puedo guiarte por sus **19 estudios y suites cuantitativas** (incluyendo la Suite Multi-Bot Cripto 24/7 y el [Simulador Nexus Quant FP&A](FinancialDashboard.htm)), comparar metodologías o compartir su amplia experiencia y sólidas fortalezas. ¿Qué deseas explorar hoy?`;
 
     let chatHistory = [];
     let lastSendTime = 0;
