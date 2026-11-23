@@ -30,7 +30,7 @@ class QuantBotSettings:
     futures_fee_rate: float = 0.0005     # 0.05% comisión Taker Futuros Perpetuos
     history_days_5y: int = 1825          # 5 años exactos (365 * 5)
     max_http_response_bytes: int = 8 * 1024 * 1024
-    cycle_interval_sec: int = 60
+    cycle_interval_sec: int = 30
 
 
 SETTINGS = QuantBotSettings()

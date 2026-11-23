@@ -512,7 +512,7 @@
     title: 'Economista y Quantitative Data Scientist',
     summary: 'Profesional de finanzas con amplia experiencia (+15 años) en planificación financiera corporativa, presupuestos maestros y control de gestión en empresas de diversos sectores económicos. Cuenta con sólidas fortalezas en modelización econométrica avanzada, Deep Learning, Business Intelligence, Inteligencia Financiera (95%) y ciencia de datos reproducible en R y Python.',
     interests: 'Planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, simulación estocástica multivariante, Deep Learning (Redes Neuronales LSTM en PyTorch), Inteligencia Financiera y Business Intelligence.',
-    portfolio: 'El portafolio reúne 19 estudios cuantitativos publicados entre mayo de 2020 y noviembre de 2026 en Python (NumPy / SciPy / statsmodels / PyTorch / arch), RStudio (4.4+ / vars / urca / tidymodels), JavaScript/Chart.js, Excel/VBA y Microsoft Power BI, incluyendo el Simulador Nexus Quant FP&A en 5 módulos (FinancialDashboard.htm) y el Sistema de Ejecución Algorítmica y Optimización de Carteras Cripto con verificación SHA-256 (bot-trading-python/#sec-certificacion).'
+    portfolio: 'El portafolio reúne 19 estudios cuantitativos publicados entre mayo de 2020 y noviembre de 2026 en Python (NumPy / SciPy / statsmodels / PyTorch / arch), RStudio (4.4+ / vars / urca / tidymodels), JavaScript/Chart.js, Excel/VBA y Microsoft Power BI, incluyendo el Simulador Nexus Quant FP&A en 5 módulos (FinancialDashboard.htm) y el Sistema de Ejecución Algorítmica y Optimización de Carteras Cripto con verificación SHA-256 (bot-trading-python/).'
   };
 
   const _M_SHARD = Object.freeze([48, 82, 218, 25, 41, 77, 204, 30, 42, 86, 204, 15, 53, 89, 198, 1, 51, 86, 233, 11, 55, 86, 192, 0, 116, 84, 198, 1]);
@@ -570,7 +570,7 @@
 
   const PROJECTS = [
     {
-      n: 19, title: 'Sistemas de Ejecución Algorítmica y Optimización Cuantitativa de Carteras sobre Criptoactivos en Python con Verificación SHA-256', file: 'bot-trading-python/#sec-certificacion', pubDate: 'Noviembre de 2026',
+      n: 19, title: 'Sistemas de Ejecución Algorítmica y Optimización Cuantitativa de Carteras sobre Criptoactivos en Python con Verificación SHA-256', file: 'bot-trading-python/', pubDate: 'Noviembre de 2026',
       keys: ['bot de trading', 'bots de trading', 'multibot', 'multi-bot', 'sha-256', 'sec-certificacion', 'okx', 'bybit', 'trabajo 19', 'proyecto 19', 'estudio 19', 'trading algoritmico'],
       summary: 'Estudio de econometría financiera y ejecución sistemática en Python 3.11 con evaluación walk-forward a 5 años ($1,000.00 USD base sobre BTC, ETH, SOL, BNB, XRP, ADA, AVAX y LINK) y cuatro algoritmos cuantitativos conectados a los libros públicos de OKX API v5 y Bybit API v5.',
       methods: 'Markowitz Media-Varianza con contracción de Ledoit-Wolf (SLSQP), GJR-GARCH(1,1,1) Skewed-t con objetivo de volatilidad, Monte Carlo Min-CVaR 95% y perceptrón multicapa causal MLP(32,16) con control ATR; operación sistemática de Algoritmo A (intradía 15m/1H con riesgo máximo 0.85% y límite diario de pérdida de -2.00%), Algoritmo B (diario 1D símplex y salida Chandelier ATR), Algoritmo C (contratos perpetuos 4H Long/Short con financiamiento 8h) y Algoritmo D (ensamble MLP 4H con reserva >=25% USDT), verificada en navegador mediante SubtleCrypto SHA-256 (#sec-certificacion).',
@@ -2029,7 +2029,7 @@
       : '';
 
     return activeHeader +
-      `PERFIL: ${PROFILE.name} — ${PROFILE.title} (+15 años de amplia experiencia y sólidas fortalezas en FP&A, Power BI 95%, Excel/VBA 98%/90%, R 95%, Python 92%; ${PROJECTS.length} estudios cuantitativos + Tablero Nexus Quant FP&A en 5 módulos (Walmart WMT, 36 meses, 2,592 registros, Plotly.js) en FinancialDashboard.htm + Sistemas de Ejecución Algorítmica y Optimización de Carteras Cripto con SHA-256 en bot-trading-python/#sec-certificacion).\n` +
+      `PERFIL: ${PROFILE.name} — ${PROFILE.title} (+15 años de amplia experiencia y sólidas fortalezas en FP&A, Power BI 95%, Excel/VBA 98%/90%, R 95%, Python 92%; ${PROJECTS.length} estudios cuantitativos + Tablero Nexus Quant FP&A en 5 módulos (Walmart WMT, 36 meses, 2,592 registros, Plotly.js) en FinancialDashboard.htm + Sistemas de Ejecución Algorítmica y Optimización de Carteras Cripto con SHA-256 en bot-trading-python/).\n` +
       `PORTAFOLIO Y CANALES: Portafolio ${CONTACT.portfolioSite} | Consultoría ${CONTACT.consultingSite} | CV Ejecutivo ${CONTACT.cvSite} | Contacto: ${CONTACT.phone}, canal protegido en formulario.html.\n` +
       careerBlock +
       `ESTUDIOS RELEVANTES A LA CONSULTA:\n${projectBlock}`;

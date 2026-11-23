@@ -146,16 +146,21 @@ def calc_metrics(equity: np.ndarray, period_rets: np.ndarray, periods_per_year: 
 
 @dataclass(frozen=True)
 class BotAConfig:
-    fee_rate: float = 0.0008
+    fee_rate: float = 0.0004
     max_risk_per_trade_pct: float = 0.0085
     max_position_weight: float = 0.24
     max_total_invested: float = 0.68
     max_open_positions: int = 3
     daily_circuit_breaker_pct: float = -0.020
-    sl_atr_mult: float = 1.35
-    tp_atr_mult: float = 2.45
-    trail_activate_atr: float = 0.95
-    trail_dist_atr: float = 1.15
+    sl_atr_mult: float = 1.55
+    tp_atr_mult: float = 3.10
+    trail_activate_atr: float = 1.25
+    trail_dist_atr: float = 1.25
+    trail_floor_mult: float = 1.0055
+    partial_tp_atr: float = 1.65
+    partial_tp_frac: float = 0.45
+    min_atr_pct: float = 0.0038
+    min_adx_1h_trend: float = 18.0
     min_vol_rel_trend: float = 1.08
     min_vol_rel_rebound: float = 1.25
     min_order_usd: float = 48.0
@@ -166,6 +171,8 @@ def init_bot_a_state(coins: List[str], base_cap: float = 1000.0) -> Dict[str, An
         "cash_usd": float(base_cap),
         "units": {c: 0.0 for c in coins},
         "entry": {c: 0.0 for c in coins},
+        "entry_fee": {c: 0.0 for c in coins},
+        "partial_taken": {c: False for c in coins},
         "peak": {c: 0.0 for c in coins},
         "sl": {c: 0.0 for c in coins},
         "tp": {c: 0.0 for c in coins},
@@ -202,13 +209,18 @@ def step_bot_a_microtrading(
     vrel_prev: Dict[str, float],
     breadth_1h: float,
     cfg: BotAConfig = BotAConfig(),
+    adx_1h_prev: Optional[Dict[str, float]] = None,
 ) -> None:
     """
     Ejecuta un paso intradía (15m con filtro 1H) de BOT A respetando:
       - Límite máximo de pérdida diaria (-2.00% desde apertura diaria UTC)
+      - Filtro mínimo de rango ATR/Precio (>= 0.38%) y fuerza tendencial ADX 1H (>= 18)
       - Dimensionamiento por paridad ATR (riesgo máx. <= 0.85% patrimonio, tope 24%/par, máx. 68% total)
-      - Trailing Stop dinámico a equilibrio y seguimiento de pico, TP y salida por cruce inverso EMA 9/21
+      - Salidas estrictamente causales (sin fuga intra-barra): SL 1.55x ATR, Toma Parcial 45% (1.65x ATR),
+        Trailing Stop dinámico (+0.55% piso neto) tras +1.25x ATR y TP objetivo 3.10x ATR (ratio 2:1)
     """
+    entry_fee_map = state.setdefault("entry_fee", {c: 0.0 for c in coins})
+    partial_map = state.setdefault("partial_taken", {c: False for c in coins})
     prev_eq = state["eq_curve"][-1]
     if state["cur_day"] != ts.date():
         state["cur_day"] = ts.date()
@@ -225,8 +237,10 @@ def step_bot_a_microtrading(
                 px_exec = float(np.clip(float(bar_close_cur[c]), b_lo, b_hi))
                 gross = qty * px_exec
                 fee = gross * cfg.fee_rate
-                pnl_u = gross - fee - (qty * state["entry"][c])
-                pnl_p = ((px_exec / max(state["entry"][c], 1e-8)) - 1.0) * 100.0 - (cfg.fee_rate * 100.0)
+                ent_fee = float(entry_fee_map.get(c, 0.0))
+                pnl_u = gross - fee - (qty * state["entry"][c]) - ent_fee
+                fee_legs = 2.0 if ent_fee > 0.0 else 1.0
+                pnl_p = ((px_exec / max(state["entry"][c], 1e-8)) - 1.0) * 100.0 - (fee_legs * cfg.fee_rate * 100.0)
                 state["cash_usd"] += gross - fee
                 state["fees_cum"] += fee
                 state["trades"].append({
@@ -244,6 +258,8 @@ def step_bot_a_microtrading(
                 state["units"][c] = 0.0
                 state["sl"][c] = 0.0
                 state["tp"][c] = 0.0
+                entry_fee_map[c] = 0.0
+                partial_map[c] = False
         cur_eq = state["cash_usd"] + sum(state["units"][c] * float(bar_close_cur[c]) for c in coins)
         state["rets"].append((cur_eq / prev_eq) - 1.0)
         state["eq_curve"].append(cur_eq)
@@ -268,24 +284,19 @@ def step_bot_a_microtrading(
 
         qty = state["units"][c]
         if qty > 0.0:
-            state["peak"][c] = max(state["peak"][c], b_hi)
-            if state["peak"][c] >= state["entry"][c] + cfg.trail_activate_atr * atr_v:
-                state["sl"][c] = max(
-                    state["sl"][c],
-                    state["entry"][c] * 1.002,
-                    state["peak"][c] - cfg.trail_dist_atr * atr_v,
-                )
-
-            ema_cross_exit = (e9 < e21 * 0.9988) and (mh < 0.0) and (px_prev > state["entry"][c] * 1.003)
+            # 1) Evaluar salidas contra bandas pre-barra (estrictamente causal: nunca actualiza SL y detiene en la misma barra)
+            ema_cross_exit = (e9 < e21 * 0.9980) and (mh < 0.0) and (px_prev > state["entry"][c] * 1.006)
             if b_lo <= state["sl"][c]:
                 px_exec = float(np.clip(state["sl"][c], b_lo, b_hi))
                 gross = qty * px_exec
                 fee = gross * cfg.fee_rate
-                pnl_u = gross - fee - (qty * state["entry"][c])
-                pnl_p = ((px_exec / max(state["entry"][c], 1e-8)) - 1.0) * 100.0 - (cfg.fee_rate * 100.0)
+                ent_fee = float(entry_fee_map.get(c, 0.0))
+                pnl_u = gross - fee - (qty * state["entry"][c]) - ent_fee
+                fee_legs = 2.0 if ent_fee > 0.0 else 1.0
+                pnl_p = ((px_exec / max(state["entry"][c], 1e-8)) - 1.0) * 100.0 - (fee_legs * cfg.fee_rate * 100.0)
                 state["cash_usd"] += gross - fee
                 state["fees_cum"] += fee
-                act_lbl = "TOMA TRAILING ATR" if px_exec > state["entry"][c] else "SALIDA STOP-LOSS (1.35x ATR)"
+                act_lbl = "TOMA TRAILING ATR" if px_exec > state["entry"][c] else f"SALIDA STOP-LOSS ({cfg.sl_atr_mult:.2f}x ATR)"
                 state["trades"].append({
                     "bot_id": "bot_a", "bot_code": "BOT A",
                     "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
@@ -299,16 +310,20 @@ def step_bot_a_microtrading(
                 state["units"][c] = 0.0
                 state["sl"][c] = 0.0
                 state["tp"][c] = 0.0
+                entry_fee_map[c] = 0.0
+                partial_map[c] = False
             elif b_hi >= state["tp"][c] or ema_cross_exit:
                 px_target = state["tp"][c] if b_hi >= state["tp"][c] else px_prev
                 px_exec = float(np.clip(px_target, b_lo, b_hi))
                 gross = qty * px_exec
                 fee = gross * cfg.fee_rate
-                pnl_u = gross - fee - (qty * state["entry"][c])
-                pnl_p = ((px_exec / max(state["entry"][c], 1e-8)) - 1.0) * 100.0 - (cfg.fee_rate * 100.0)
+                ent_fee = float(entry_fee_map.get(c, 0.0))
+                pnl_u = gross - fee - (qty * state["entry"][c]) - ent_fee
+                fee_legs = 2.0 if ent_fee > 0.0 else 1.0
+                pnl_p = ((px_exec / max(state["entry"][c], 1e-8)) - 1.0) * 100.0 - (fee_legs * cfg.fee_rate * 100.0)
                 state["cash_usd"] += gross - fee
                 state["fees_cum"] += fee
-                act_lbl = "TOMA DE BENEFICIO (2.45x ATR)" if b_hi >= state["tp"][c] else "SALIDA CRUCE EMA 9/21"
+                act_lbl = f"TOMA DE BENEFICIO ({cfg.tp_atr_mult:.2f}x ATR)" if b_hi >= state["tp"][c] else "SALIDA CRUCE EMA 9/21"
                 state["trades"].append({
                     "bot_id": "bot_a", "bot_code": "BOT A",
                     "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
@@ -322,11 +337,57 @@ def step_bot_a_microtrading(
                 state["units"][c] = 0.0
                 state["sl"][c] = 0.0
                 state["tp"][c] = 0.0
+                entry_fee_map[c] = 0.0
+                partial_map[c] = False
+            else:
+                # 2) Toma parcial 45% al alcanzar +1.65x ATR dejando correr 55% con piso protegido
+                part_target = state["entry"][c] + cfg.partial_tp_atr * atr_v
+                if (not partial_map.get(c, False)) and (b_hi >= part_target) and (qty * part_target >= 95.0):
+                    qty_part = qty * cfg.partial_tp_frac
+                    px_part = float(np.clip(part_target, b_lo, b_hi))
+                    gross_p = qty_part * px_part
+                    fee_p = gross_p * cfg.fee_rate
+                    ent_fee_part = float(entry_fee_map.get(c, 0.0)) * cfg.partial_tp_frac
+                    pnl_u_p = gross_p - fee_p - (qty_part * state["entry"][c]) - ent_fee_part
+                    fee_legs_p = 2.0 if ent_fee_part > 0.0 else 1.0
+                    pnl_p_p = ((px_part / max(state["entry"][c], 1e-8)) - 1.0) * 100.0 - (fee_legs_p * cfg.fee_rate * 100.0)
+                    state["cash_usd"] += gross_p - fee_p
+                    state["fees_cum"] += fee_p
+                    state["units"][c] = qty - qty_part
+                    entry_fee_map[c] = max(0.0, float(entry_fee_map.get(c, 0.0)) - ent_fee_part)
+                    partial_map[c] = True
+                    state["sl"][c] = max(state["sl"][c], state["entry"][c] * cfg.trail_floor_mult)
+                    state["trades"].append({
+                        "bot_id": "bot_a", "bot_code": "BOT A",
+                        "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
+                        "coin": c, "instrument": f"{c}-USDT", "side_type": "SELL",
+                        "action": f"TOMA PARCIAL 45% ({cfg.partial_tp_atr:.2f}x ATR)",
+                        "units": round(qty_part, 6), "price": fmt_px_dec(px_part),
+                        "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                        "volume_rel": round(vrel, 2), "notional_usd": round(gross_p, 2), "fee_usd": round(fee_p, 3),
+                        "realized_pnl_usd": round(pnl_u_p, 2), "realized_pnl_pct": round(pnl_p_p, 2),
+                        "telemetry": f"Parcial 45% | SL Protegido={fmt_px_dec(state['sl'][c])} | Vol={vrel:.2f}x",
+                    })
+
+                # 3) Actualizar pico y trailing stop al cierre de la barra para las velas siguientes
+                state["peak"][c] = max(state["peak"][c], b_hi)
+                if state["peak"][c] >= state["entry"][c] + cfg.trail_activate_atr * atr_v:
+                    state["sl"][c] = max(
+                        state["sl"][c],
+                        state["entry"][c] * cfg.trail_floor_mult,
+                        state["peak"][c] - cfg.trail_dist_atr * atr_v,
+                    )
         else:
+            atr_pct = atr_v / max(px_prev, 1e-8)
+            vol_edge_ok = atr_pct >= cfg.min_atr_pct
+            adx_1h_val = float(adx_1h_prev.get(c, 22.0)) if adx_1h_prev is not None else 22.0
+            adx_ok = adx_1h_val >= cfg.min_adx_1h_trend
             bull_candle = px_prev > float(bar_open_prev[c])
             htf_ok = (breadth_1h >= 0.375) or (e21_1h >= e55_1h * 0.995)
             setup_trend = (
-                htf_ok
+                vol_edge_ok
+                and adx_ok
+                and htf_ok
                 and bull_candle
                 and (px_prev > e9 > e21)
                 and (roc10 > 0.35)
@@ -336,7 +397,8 @@ def step_bot_a_microtrading(
                 and (vrel >= cfg.min_vol_rel_trend)
             )
             setup_bb_reclaim = (
-                (pbp < 0.14)
+                vol_edge_ok
+                and (pbp < 0.14)
                 and (pb > 0.22)
                 and bull_candle
                 and (mh > mhp)
@@ -350,7 +412,7 @@ def step_bot_a_microtrading(
             eq_est = state["cash_usd"] + invested_now
             inv_ratio = invested_now / max(eq_est, 1.0)
             if (setup_trend or setup_bb_reclaim) and open_count < cfg.max_open_positions and inv_ratio < cfg.max_total_invested:
-                stop_dist_pct = max(0.0075, (cfg.sl_atr_mult * atr_v) / max(px_prev, 1e-6))
+                stop_dist_pct = max(0.0085, (cfg.sl_atr_mult * atr_v) / max(px_prev, 1e-6))
                 risk_w = cfg.max_risk_per_trade_pct / stop_dist_pct
                 rem_w = max(0.0, cfg.max_total_invested - inv_ratio)
                 target_w = min(cfg.max_position_weight, risk_w, rem_w)
@@ -363,9 +425,11 @@ def step_bot_a_microtrading(
                     state["fees_cum"] += fee
                     state["units"][c] = qty_new
                     state["entry"][c] = px_exec
+                    entry_fee_map[c] = fee
+                    partial_map[c] = False
                     state["peak"][c] = px_exec
                     state["sl"][c] = px_exec * (1.0 - stop_dist_pct)
-                    tp_ratio = (cfg.tp_atr_mult / cfg.sl_atr_mult) if setup_trend else 1.55
+                    tp_ratio = (cfg.tp_atr_mult / cfg.sl_atr_mult) if setup_trend else 1.75
                     state["tp"][c] = px_exec * (1.0 + tp_ratio * stop_dist_pct)
                     act_in = "COMPRA IMPULSO 15M/VOLUMEN" if setup_trend else "COMPRA REBOTE BOLLINGER 15M"
                     state["trades"].append({
@@ -377,7 +441,7 @@ def step_bot_a_microtrading(
                         "sl_price": fmt_px_dec(state["sl"][c]), "tp_price": fmt_px_dec(state["tp"][c]),
                         "volume_rel": round(vrel, 2), "notional_usd": round(alloc_usd, 2), "fee_usd": round(fee, 3),
                         "realized_pnl_usd": None, "realized_pnl_pct": None,
-                        "telemetry": f"EMA9>21 | %B={pb:.2f} | Mom={roc10:+.1f}% | Vol={vrel:.2f}x | SL={fmt_px_dec(state['sl'][c])}",
+                        "telemetry": f"EMA9>21 | ATR={atr_pct*100:.2f}% | ADX1H={adx_1h_val:.0f} | Vol={vrel:.2f}x | SL={fmt_px_dec(state['sl'][c])}",
                     })
 
     cur_eq = state["cash_usd"] + sum(state["units"][c] * float(bar_close_cur[c]) for c in coins)
@@ -402,8 +466,10 @@ def step_bot_b_daily(
     coins: List[str],
     max_asset_weight: float = 0.34,
     chandelier_mult: float = 2.1,
+    prev_w: Optional[np.ndarray] = None,
+    turnover_penalty: float = 0.06,
 ) -> Tuple[np.ndarray, np.ndarray, bool]:
-    """Calcula vector de pesos diarios de BOT B con Markowitz/GARCH y salida Chandelier ATR."""
+    """Calcula vector de pesos diarios de BOT B con Markowitz/GARCH, penalización L1 proporcional de rotación y salida Chandelier ATR."""
     n_assets = len(coins)
     btc_j = coins.index("BTC") if "BTC" in coins else 0
     macro_b = bool((px_y[btc_j] > e50_y[btc_j]) or (float(np.mean(px_y > s20_y)) >= 0.375))
@@ -420,9 +486,25 @@ def step_bot_b_daily(
             / np.maximum(vol_y, 0.014),
             -0.01,
         )
+        prev_arr = np.asarray(prev_w, dtype=float) if prev_w is not None else None
+        prev_norm: Optional[np.ndarray] = None
+        if prev_arr is not None and float(np.sum(prev_arr)) > 0.05:
+            prev_norm = np.clip(prev_arr / float(np.sum(prev_arr)), 0.0, max_asset_weight)
+            s_p = float(np.sum(prev_norm))
+            prev_norm = (prev_norm / s_p) if s_p > 1e-6 else None
+        x0 = prev_norm.copy() if prev_norm is not None else (np.ones(n_assets) / n_assets)
+        sr_ref = abs(float(np.dot(raw_mu, x0)) / (float(np.sqrt(max(1e-12, x0.T @ cov_lw @ x0))) + 1e-6))
+        pen_scale = max(1.0, sr_ref) * float(turnover_penalty)
+
+        def _obj_b(x: np.ndarray) -> float:
+            sr = float(np.dot(raw_mu, x)) / (float(np.sqrt(max(1e-12, x.T @ cov_lw @ x))) + 1e-6)
+            if prev_norm is not None and pen_scale > 0.0:
+                sr -= pen_scale * float(np.sum(np.sqrt((x - prev_norm) ** 2 + 1e-6)))
+            return -sr
+
         res_b = sco.minimize(
-            lambda x: -float(np.dot(raw_mu, x)) / (float(np.sqrt(max(1e-12, x.T @ cov_lw @ x))) + 1e-6),
-            np.ones(n_assets) / n_assets,
+            _obj_b,
+            x0,
             method="SLSQP",
             bounds=tuple((0.0, max_asset_weight) for _ in range(n_assets)),
             constraints=({"type": "eq", "fun": lambda x: np.sum(x) - 1.0},),
@@ -458,17 +540,31 @@ def step_bot_c_futures(
     mdi_v: np.ndarray,
     atr_v: np.ndarray,
     max_gross_leverage: float = 1.05,
+    funding_8h: Optional[np.ndarray] = None,
+    prev_wc: Optional[np.ndarray] = None,
 ) -> np.ndarray:
-    """Calcula pesos direccionales (Largos > 0 y Cortos < 0) de BOT C con tope de apalancamiento bruto <= 1.05x."""
+    """Calcula pesos direccionales (Largos > 0 y Cortos < 0) de BOT C con carry 8h, histéresis y tope bruto <= 1.05x."""
     n_assets = len(px_v)
     wc = np.zeros(n_assets)
     dir_scores = np.zeros(n_assets)
+    fund_arr = np.asarray(funding_8h, dtype=float) if funding_8h is not None else None
+    prev_arr = np.asarray(prev_wc, dtype=float) if prev_wc is not None else None
     for j in range(n_assets):
         atr_pct = max(0.012, atr_v[j] / max(px_v[j], 1e-6))
         if (px_v[j] > e21_v[j] > e55_v[j]) and (r24_v[j] > 1.2) and (pdi_v[j] > mdi_v[j]) and (pb_v[j] > 0.52):
-            dir_scores[j] = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
+            score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
+            if fund_arr is not None:
+                score += float(np.clip(-fund_arr[j] * 180.0, -0.35, 0.35))
+            if prev_arr is not None and prev_arr[j] > 0.04:
+                score += 0.35
+            dir_scores[j] = score
         elif (px_v[j] < e21_v[j] < e55_v[j]) and (r24_v[j] < -1.2) and (mdi_v[j] > pdi_v[j]) and (pb_v[j] < 0.48) and (adx_v[j] > 19.0):
-            dir_scores[j] = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
+            score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
+            if fund_arr is not None:
+                score -= float(np.clip(fund_arr[j] * 180.0, -0.35, 0.35))
+            if prev_arr is not None and prev_arr[j] < -0.04:
+                score -= 0.35
+            dir_scores[j] = score
 
     pos_idx = np.argsort(dir_scores)[::-1]
     neg_idx = np.argsort(dir_scores)
@@ -544,13 +640,38 @@ def fit_causal_mlp_ensemble(
     yc_train: np.ndarray,
     seed: int = 101,
 ) -> Tuple[StandardScaler, MLPRegressor, MLPClassifier]:
-    """Entrena el ensamble MLP(32,16) regularizado L2 exclusivamente sobre ventana pasada."""
+    """Entrena el ensamble MLP(32,16) regularizado L2 con parada temprana causal exclusivamente sobre ventana pasada."""
     scaler = StandardScaler()
     Xs = scaler.fit_transform(np.asarray(X_train, dtype=float))
-    reg = MLPRegressor(hidden_layer_sizes=(32, 16), activation="tanh", alpha=3.0, max_iter=220, random_state=seed)
-    clf = MLPClassifier(hidden_layer_sizes=(32, 16), activation="tanh", alpha=2.5, max_iter=220, random_state=seed)
-    reg.fit(Xs, np.asarray(yr_train, dtype=float))
-    clf.fit(Xs, np.asarray(yc_train, dtype=int))
+    yr_arr = np.asarray(yr_train, dtype=float)
+    yc_arr = np.asarray(yc_train, dtype=int)
+    uniq_cls = np.unique(yc_arr)
+    min_cls = int(np.min(np.bincount(yc_arr))) if len(uniq_cls) >= 2 and np.min(uniq_cls) >= 0 else 0
+    use_es = len(Xs) >= 160 and min_cls >= 12
+    reg = MLPRegressor(
+        hidden_layer_sizes=(32, 16),
+        activation="tanh",
+        alpha=3.0,
+        learning_rate_init=0.003,
+        max_iter=600,
+        early_stopping=use_es,
+        validation_fraction=0.15 if use_es else 0.1,
+        n_iter_no_change=16,
+        random_state=seed,
+    )
+    clf = MLPClassifier(
+        hidden_layer_sizes=(32, 16),
+        activation="tanh",
+        alpha=2.5,
+        learning_rate_init=0.003,
+        max_iter=600,
+        early_stopping=use_es,
+        validation_fraction=0.15 if use_es else 0.1,
+        n_iter_no_change=16,
+        random_state=seed,
+    )
+    reg.fit(Xs, yr_arr)
+    clf.fit(Xs, yc_arr)
     return scaler, reg, clf
 
 
@@ -603,8 +724,8 @@ def evaluate_bot_d_exit_decision(
     Retorna: (debe_salir, etiqueta_accion, px_ejecucion, nuevo_sl)
     """
     new_sl = float(sl_price)
-    if peak_price >= entry_price + 1.1 * atr_14:
-        new_sl = max(new_sl, entry_price * 1.002, peak_price - 1.30 * atr_14)
+    if peak_price >= entry_price + 1.25 * atr_14:
+        new_sl = max(new_sl, entry_price * 1.0065, peak_price - 1.30 * atr_14)
 
     if low_bar <= new_sl:
         px_exec = float(np.clip(new_sl, low_bar, high_bar))

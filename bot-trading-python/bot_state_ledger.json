@@ -1,41 +1,41 @@
 {
   "first_recorded_utc": "2026-11-22T11:47:50Z",
-  "last_sync_utc": "2026-11-23T12:43:50Z",
-  "execution_cycles": 467,
-  "chain_root_sha256": "f61769203e15835bb787692a43c7f61849f2b6dcca463f1aa0065c9394d8c468",
-  "total_certified_orders": 82,
+  "last_sync_utc": "2026-11-23T21:01:34Z",
+  "execution_cycles": 705,
+  "chain_root_sha256": "1f1cfd27b700e004b18b31bf442745c6e8b774d2f4d94983f55b6777e7ac8e4d",
+  "total_certified_orders": 78,
   "bots": {
     "bot_a": {
       "code": "BOT A",
       "timeframe": "Intrad\u00eda 15m / Filtro 1H",
-      "inception_utc": "2026-11-20 17:00 UTC",
-      "final_usd": 1000.06,
-      "net_pnl_usd": 0.06,
-      "total_orders": 21
+      "inception_utc": "2026-11-14 04:30 UTC",
+      "final_usd": 1001.4,
+      "net_pnl_usd": 1.4,
+      "total_orders": 56
     },
     "bot_b": {
       "code": "BOT B",
       "timeframe": "Cierre Diario 1D (00:00 UTC)",
       "inception_utc": "2026-05-28 00:00 UTC",
-      "final_usd": 1008.34,
-      "net_pnl_usd": 8.34,
-      "total_orders": 223
+      "final_usd": 1045.03,
+      "net_pnl_usd": 45.03,
+      "total_orders": 138
     },
     "bot_c": {
       "code": "BOT C",
       "timeframe": "Contratos SWAP 4H + Carry 8H",
       "inception_utc": "2026-10-09 20:00 UTC",
-      "final_usd": 1039.7,
-      "net_pnl_usd": 39.7,
-      "total_orders": 165
+      "final_usd": 1035.32,
+      "net_pnl_usd": 35.32,
+      "total_orders": 164
     },
     "bot_d": {
       "code": "BOT D",
       "timeframe": "Inferencia 4H \u00b7 MLP(32, 16) + Control ATR",
       "inception_utc": "2026-10-09 20:00 UTC",
-      "final_usd": 980.83,
-      "net_pnl_usd": -19.17,
-      "total_orders": 13
+      "final_usd": 1000.24,
+      "net_pnl_usd": 0.24,
+      "total_orders": 4
     }
   }
 }

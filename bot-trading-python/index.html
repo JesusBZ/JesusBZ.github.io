@@ -26,7 +26,7 @@
   <meta property="og:image" content="https://jesusbz.github.io/imagenes/cards/post-19-bot-trading-cripto-python.webp" />
   <meta property="og:image:alt" content="Optimización Cuantitativa de Carteras Cripto y Cuatro Algoritmos Sistemáticos en Python por Jesús Benjamín Zerpa" />
   <meta property="article:published_time" content="2026-11-21T00:00:00Z" />
-  <meta property="article:modified_time" content="2026-11-21T00:00:00Z" />
+  <meta property="article:modified_time" content="2026-11-23T20:54:00Z" />
   <meta property="article:author" content="https://jesusbz.github.io/acercade.html" />
   <meta property="article:section" content="Trading Algorítmico Cuantitativo y Econometría Financiera en Python" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -60,7 +60,7 @@
         "proficiencyLevel": "Expert",
         "dependencies": "Python 3.11, arch, SciPy, scikit-learn, NumPy, Pandas, Plotly, Web Crypto SHA-256",
         "datePublished": "2026-11-21",
-        "dateModified": "2026-11-21",
+        "dateModified": "2026-11-23",
         "author": { "@id": "https://jesusbzerpa.github.io/#person" },
         "publisher": { "@id": "https://jesusbzerpa.github.io/#person" }
       }
@@ -1275,27 +1275,27 @@
         <div class="kpi-exec-box emerald">
           <span class="kpi-exec-tag">Mayor Patrimonio Ajustado 5Y</span>
           <span class="kpi-exec-val" id="kpiBest5yVal">$2,530.23</span>
-          <span class="kpi-exec-meta" id="kpiBest5yMeta">Markowitz SLSQP (+153.02%) y GJR-GARCH (+150.24%, Sharpe 0.69) sobre base de $1,000.00 USD.</span>
+          <span class="kpi-exec-meta" id="kpiBest5yMeta">Markowitz SLSQP (+153.02%) y GJR-GARCH (+150.07%, Sharpe 0.69) sobre base de $1,000.00 USD.</span>
         </div>
         <div class="kpi-exec-box">
           <span class="kpi-exec-tag">Compresión de Caída Máxima 5Y</span>
-          <span class="kpi-exec-val" id="kpiMinDd5yVal">-38.89%</span>
+          <span class="kpi-exec-val" id="kpiMinDd5yVal">-37.08%</span>
           <span class="kpi-exec-meta" id="kpiMinDd5yMeta">Red Neuronal Adiestrada MLP(32,16) + Control ATR frente a -68.60% en la canasta pasiva.</span>
         </div>
         <div class="kpi-exec-box emerald" id="kpiCardBotA">
           <span class="kpi-exec-tag">Bot A &bull; Microtrading Intradía</span>
           <span class="kpi-exec-val" id="kpiHeroBotA">$1,000.00</span>
-          <span class="kpi-exec-meta" id="kpiHeroBotAMeta">EMA 9/21/55 + Bollinger %B + Momentum + Volumen: SL 1.4x ATR y TP 2.6x ATR.</span>
+          <span class="kpi-exec-meta" id="kpiHeroBotAMeta">EMA 9/21/55 + ADX 1H &ge; 18 + ATR &ge; 0.38%: SL 1.55x, Parcial 45% (1.65x) y TP 3.10x ATR.</span>
         </div>
         <div class="kpi-exec-box" id="kpiCardBotB">
           <span class="kpi-exec-tag">Bot B &bull; Decisión Diaria (1D)</span>
           <span class="kpi-exec-val" id="kpiHeroBotB">$1,000.00</span>
-          <span class="kpi-exec-meta" id="kpiHeroBotBMeta">Canal SMA 20 / EMA 50 + MACD + ADX + Markowitz/GARCH con salida Chandelier ATR.</span>
+          <span class="kpi-exec-meta" id="kpiHeroBotBMeta">Canal SMA 20 / EMA 50 + Markowitz/GARCH con penalización L1 y salida Chandelier 2.30x ATR.</span>
         </div>
         <div class="kpi-exec-box gold" id="kpiCardBotCD">
           <span class="kpi-exec-tag">Bot C (Futuros) &amp; Bot D (MLP)</span>
           <span class="kpi-exec-val" id="kpiHeroBotCD">$1,000 vs $1,000</span>
-          <span class="kpi-exec-meta" id="kpiHeroBotCDMeta">Largos/Futuros SWAP y Red Neuronal MLP adiestrada con triple regla de salida ATR.</span>
+          <span class="kpi-exec-meta" id="kpiHeroBotCDMeta">SWAP 4H (SL 2.85x ATR + Delta + Carry 8h) y MLP nativo 4H&rarr;4H con triple salida ATR.</span>
         </div>
       </div>
 
@@ -1623,37 +1623,37 @@
         <div class="dossier-grid">
           <div class="dossier-card da">
             <h4>BOT A &bull; Microtrading Intradía por Impulso Técnico y Volumen (15m / 1H)</h4>
-            <div class="dossier-formula">Entrada: EMA<sub>9</sub> &gt; EMA<sub>21</sub> &and; ROC<sub>10</sub> &gt; 0.45% &and; MACD<sub>H</sub> &gt; 0 &and; Vol &ge; 1.05&middot;SMA<sub>20</sub>(Vol)</div>
+            <div class="dossier-formula">Entrada: EMA<sub>9</sub> &gt; EMA<sub>21</sub> &and; ADX<sub>1H</sub> &ge; 18 &and; ATR/P &ge; 0.38% &and; ROC<sub>10</sub> &gt; 0.35% &and; Vol &ge; 1.08&middot;SMA<sub>20</sub></div>
             <ul class="dossier-list">
-              <li><strong>Regla de Entrada Intradía:</strong> Activa compras cuando convergen la alineación de medias móviles rápidas (EMA<sub>9</sub> &gt; EMA<sub>21</sub> sobre soporte EMA<sub>55</sub>), expansión positiva del histograma <code>MACD(12,26,9)</code>, Momentum <code>ROC(10)</code> positivo, <code>RSI(14)</code> en el intervalo [48, 68] y volumen negociado superior a su media móvil de 20 períodos, o ante recuperación confirmada de la banda inferior de Bollinger (<code>%B</code>).</li>
-              <li><strong>Estrategia de Salida y Control Estricto:</strong> Limita la pérdida máxima al <strong>0.85% del capital</strong> ($8.50 por operación), fijando <code>SL = P<sub>0</sub> &minus; 1.4&middot;ATR<sub>14</sub></code>, <code>TP = P<sub>0</sub> + 2.6&middot;ATR<sub>14</sub></code>, <em>trailing stop</em> automático a punto de equilibrio en <code>+1.0&middot;ATR<sub>14</sub></code>, cierre por cruce inverso EMA<sub>9</sub> &lt; EMA<sub>21</sub> y límite máximo de pérdida diaria de &minus;2.00% con suspensión automática de nuevas aperturas.</li>
+              <li><strong>Regla de Entrada Intradía (960 velas 15m):</strong> Activa compras cuando convergen alineación rápida (EMA<sub>9</sub> &gt; EMA<sub>21</sub> sobre régimen 1H), fuerza tendencial <code>ADX<sub>1H</sub> &ge; 18</code>, rango de volatilidad <code>ATR/Precio &ge; 0.38%</code> (evitando rangos muertos donde la comisión erosiona el margen), expansión del histograma <code>MACD(12,26,9)</code>, Momentum <code>ROC(10) &gt; 0.35%</code>, <code>RSI(14)</code> en [48, 70] y volumen <code>&ge; 1.08&times; SMA<sub>20</sub></code>, o ante recuperación confirmada de la banda inferior de Bollinger (<code>%B</code> con <code>Vol &ge; 1.25&times;</code>).</li>
+              <li><strong>Estrategia de Salida Causal y Control Estricto:</strong> Ejecuta con tarifa <em>Maker Limit</em> (0.04%) limitando el riesgo máximo al <strong>0.85% del capital</strong> ($8.50 por orden), fijando <code>SL = P<sub>0</sub> &minus; 1.55&middot;ATR<sub>14</sub></code>, <strong>toma parcial del 45% en <code>+1.65&middot;ATR<sub>14</sub></code></strong> y objetivo final <code>TP = P<sub>0</sub> + 3.10&middot;ATR<sub>14</sub></code> (ratio 2:1). El <em>trailing stop</em> se evalúa estrictamente contra bandas pre-barra (sin falsos stops intra-barra), activándose en <code>+1.25&middot;ATR<sub>14</sub></code> con piso neto de <strong>+0.55%</strong>, más corte diario de &minus;2.00%.</li>
             </ul>
           </div>
 
           <div class="dossier-card db">
             <h4>BOT B &bull; Decisión Sistemática de Compra y Venta Diaria (Cierre 1D &bull; 00:00 UTC)</h4>
-            <div class="dossier-formula">Canal: P<sub>t</sub> &gt; SMA<sub>20</sub> (%B &gt; 0.52) &and; EMA<sub>12</sub> &gt; EMA<sub>26</sub> &and; ROC<sub>14d</sub> &gt; 0.5%, &nbsp; w* = SLSQP(&Sigma;&#770;<sub>LW</sub>, &sigma;&#770;<sub>GARCH</sub>)</div>
+            <div class="dossier-formula">Canal: P<sub>t</sub> &gt; SMA<sub>20</sub> (%B &gt; 0.52) &and; EMA<sub>12</sub> &gt; EMA<sub>26</sub> &and; ROC<sub>14d</sub> &gt; 0.5%, &nbsp; w* = SLSQP(&Sigma;&#770;<sub>LW</sub>, &sigma;&#770;<sub>GARCH</sub>, &lambda;<sub>L1</sub>)</div>
             <ul class="dossier-list">
-              <li><strong>Regla de Decisión Diaria:</strong> Evalúa una sola vez al día (00:00 UTC) la estructura macro del mercado y selecciona activos situados en el semicanal superior de Bollinger (<code>%B &gt; 0.52</code>), con cruce alcista <code>EMA 12 &gt; EMA 26</code>, Momentum de 14 días positivo y fuerza direccional <code>ADX(14)</code>, asignando pesos óptimos mediante Markowitz <code>SLSQP</code> y volatilidad condicional <code>GJR-GARCH(1,1,1)</code> (tope 34% por moneda).</li>
-              <li><strong>Estrategia de Salida Chandelier ATR:</strong> Ejecuta liquidación inmediata hacia reserva <code>USDT</code> cuando el cierre diario perfora <code>Máximo<sub>15d</sub> &minus; 2.1&middot;ATR<sub>14</sub></code> o pierde la media central de Bollinger (<code>SMA 20</code>), protegiendo las ganancias acumuladas ante cambios de ciclo.</li>
+              <li><strong>Regla de Decisión Diaria con Histéresis L1:</strong> Evalúa una sola vez al día (00:00 UTC) la estructura macro del mercado y selecciona activos en el semicanal superior de Bollinger (<code>%B &gt; 0.52</code>), con <code>EMA 12 &gt; EMA 26</code>, Momentum de 14 días positivo y <code>ADX(14)</code>. Asigna pesos óptimos mediante Markowitz <code>SLSQP</code> con volatilidad condicional <code>GJR-GARCH(1,1,1)</code>, <strong>penalización proporcional L1 de rotación</strong>, banda de histéresis <code>&ge; 16%</code> y orden mínima de <strong>$65 USD</strong> (tope 34% por moneda) para comprimir costos de transacción.</li>
+              <li><strong>Estrategia de Salida Chandelier ATR:</strong> Ejecuta liquidación completa e inmediata hacia reserva <code>USDT</code> cuando el cierre diario perfora <code>Máximo<sub>15d</sub> &minus; 2.30&middot;ATR<sub>14</sub></code> o pierde la media central de Bollinger (<code>SMA 20</code>), protegiendo el capital acumulado ante reversiones de ciclo.</li>
             </ul>
           </div>
 
           <div class="dossier-card dc">
             <h4>BOT C &bull; Estrategia Posicional de Largos y Contratos a Futuros (4H SWAP)</h4>
-            <div class="dossier-formula">Largo: P<sub>t</sub> &gt; EMA<sub>21</sub> &gt; EMA<sub>55</sub> &and; +DI &gt; &minus;DI &nbsp;|&nbsp; Corto: P<sub>t</sub> &lt; EMA<sub>21</sub> &lt; EMA<sub>55</sub> &and; &minus;DI &gt; +DI</div>
+            <div class="dossier-formula">Largo: P<sub>t</sub> &gt; EMA<sub>21</sub> &gt; EMA<sub>55</sub> &and; +DI &gt; &minus;DI &nbsp;|&nbsp; Corto: P<sub>t</sub> &lt; EMA<sub>21</sub> &lt; EMA<sub>55</sub> &and; &minus;DI &gt; +DI + Carry<sub>8h</sub></div>
             <ul class="dossier-list">
-              <li><strong>Regla Direccional Dual en Perpetuos:</strong> Opera contratos perpetuos <code>*-USDT-SWAP</code> abriendo posiciones largas cuando se confirma estructura tendencial <code>EMA 21 &gt; EMA 55</code>, <code>Bollinger %B &gt; 0.52</code>, Momentum <code>ROC(24) &gt; +1.2%</code> y <code>+DI &gt; &minus;DI</code>; y activa coberturas cortas (<code>SHORT</code>) ante rupturas bajistas confirmadas con <code>ADX(14) &gt; 19</code>, incorporando el flujo real de tasas de financiamiento cada 8h.</li>
-              <li><strong>Gestión de Margen y Salida:</strong> Restringe el apalancamiento bruto total a <code>&le; 1.05&times;</code> (colateral libre &ge; 35% <code>USDT</code>), con objetivos <code>TP = 3.6&middot;ATR<sub>14</sub></code>, <code>SL = 2.0&middot;ATR<sub>14</sub></code> y cierre por reversión estructural de <code>EMA 21</code>.</li>
+              <li><strong>Regla Direccional Dual, Carry 8h y Rebalanceo Delta:</strong> Opera contratos perpetuos <code>*-USDT-SWAP</code> abriendo largos con <code>EMA 21 &gt; EMA 55</code>, <code>%B &gt; 0.52</code>, <code>ROC(24) &gt; +1.2%</code> y <code>+DI &gt; &minus;DI</code>, y coberturas cortas (<code>SHORT</code>) con <code>ADX(14) &gt; 19</code>. Integra el <strong>carry de financiamiento 8h</strong> en la puntuación, aplica histéresis de permanencia y ejecuta <strong>rebalanceo delta</strong> (ajusta solo el diferencial &ge; $75 sin cerrar ni reabrir posiciones vigentes).</li>
+              <li><strong>Protección en Cada Vela 4H y Gestión de Margen:</strong> Restringe el apalancamiento bruto total a <code>&le; 1.05&times;</code> (colateral libre &ge; 35% <code>USDT</code>), evaluando en <strong>cada vela 4H</strong> un corte protector <code>SL = 2.85&middot;ATR<sub>14</sub></code>, <em>trailing stop</em> <code>1.85&middot;ATR<sub>14</sub></code> tras <code>+2.40&middot;ATR<sub>14</sub></code>, enfriamiento de <strong>12 horas</strong> tras salida por stop y objetivo <code>TP = 3.60&middot;ATR<sub>14</sub></code>.</li>
             </ul>
           </div>
 
           <div class="dossier-card dd">
             <h4>BOT D &bull; Red Neuronal Profunda Adiestrada con Estrategia de Salida y Riesgos (4H MLP)</h4>
-            <div class="dossier-formula">P&#770;(Alza<sub>t+3</sub>) = MLP<sub>(32,16),tanh,L2</sub>( EMA<sub>9/21</sub>, EMA<sub>21/55</sub>, %B, BW%, ROC<sub>12,24</sub>, MACD<sub>H</sub>, RSI<sub>14</sub>, %K, VolRel )</div>
+            <div class="dossier-formula">P&#770;(Alza<sub>t+3</sub>) = MLP<sub>(32,16),tanh,L2,ES</sub>( EMA<sub>9/21</sub>, EMA<sub>21/55</sub>, %B, BW%, ROC<sub>12,24</sub>, MACD<sub>H</sub>, RSI<sub>14</sub>, %K<sub>4H</sub>, VolRel )</div>
             <ul class="dossier-list">
-              <li><strong>Adiestramiento Supervisado Walk-Forward:</strong> Combina un regresor y un clasificador perceptrón multicapa regularizados (<code>L2</code>) entrenados causalmente sobre diez indicadores de Análisis Técnico y volumen relativo, autorizando entradas solo cuando la probabilidad neuronal supera el umbral calibrado junto con confirmación de <code>EMA 9</code>, giro de <code>MACD</code> y participación de volumen.</li>
-              <li><strong>Triple Protocolo de Salida y Paridad ATR:</strong> Dimensiona cada posición arriesgando como máximo el <strong>1.05% del patrimonio</strong> (tope 25% por activo y reserva mínima del 25% en <code>USDT</code>), aplicando tres salidas determinísticas: (1) <code>Stop-Loss 1.45&middot;ATR<sub>14</sub></code> con <em>trailing</em> dinámico a <code>1.30&middot;ATR<sub>14</sub></code>, (2) <code>Take-Profit</code> escalonado por régimen y (3) cierre inmediato ante caída de probabilidad neuronal bajo 45%.</li>
+              <li><strong>Adiestramiento Nativo 4H&rarr;4H con Parada Temprana:</strong> Combina un regresor y un clasificador perceptrón multicapa regularizados (<code>L2</code> + <code>early_stopping</code>, cero advertencias de convergencia) entrenados causalmente en <strong>velas nativas 4H</strong> sobre las diez variables técnicas reales incluyendo estocástico <code>%K<sub>4H</sub></code>, reentrenando en ventana móvil cada 60 barras y bloqueando compras contra tendencias bajistas profundas (<code>EMA 21 &lt; 0.975&middot;EMA 55</code>).</li>
+              <li><strong>Triple Protocolo Causal de Salida y Paridad ATR:</strong> Dimensiona cada posición arriesgando máximo el <strong>1.05% del patrimonio</strong> (tope 25% por activo y reserva permanente &ge; 25% en <code>USDT</code>), evaluando contra bandas pre-barra tres salidas determinísticas: (1) <code>Stop-Loss 1.45&middot;ATR<sub>14</sub></code> con <em>trailing</em> <code>1.30&middot;ATR<sub>14</sub></code> tras <code>+1.25&middot;ATR<sub>14</sub></code> y piso neto de <strong>+0.65%</strong>, (2) <code>Take-Profit</code> escalonado y (3) salida inmediata ante caída de probabilidad neuronal bajo 45%.</li>
             </ul>
           </div>
         </div>
@@ -1779,19 +1779,19 @@
           <div class="exec-playbook-card emerald">
             <h4>1. Dominancia a 5 Años: Markowitz SLSQP, GJR-GARCH y Min-CVaR</h4>
             <p>
-              En cinco años fuera de muestra sobre base de <strong>$1,000.00 USD</strong>, <strong>Markowitz SLSQP con contracción de Ledoit-Wolf</strong> (<strong>$2,530.23</strong>, <strong>+153.02%</strong>), <strong>GJR-GARCH(1,1,1) Skew-t</strong> (<strong>$2,502.37</strong>, Ratio de Sharpe <strong>0.69</strong>) y <strong>Monte Carlo Min-CVaR 95%</strong> (<strong>$2,267.77</strong>, <strong>+126.78%</strong>) superan ampliamente a la canasta pasiva (<strong>$1,839.06</strong>, caída de <strong>-68.60%</strong>).
+              En cinco años fuera de muestra sobre base de <strong>$1,000.00 USD</strong>, <strong>Markowitz SLSQP con contracción de Ledoit-Wolf</strong> (<strong>$2,530.23</strong>, <strong>+153.02%</strong>), <strong>GJR-GARCH(1,1,1) Skew-t</strong> (<strong>$2,500.75</strong>, Ratio de Sharpe <strong>0.69</strong>) y <strong>Monte Carlo Min-CVaR 95%</strong> (<strong>$2,267.77</strong>, <strong>+126.78%</strong>) superan ampliamente a la canasta pasiva (<strong>$1,874.55</strong>, caída de <strong>-68.60%</strong>).
             </p>
           </div>
           <div class="exec-playbook-card">
             <h4>2. Red Neuronal Adiestrada MLP con Salida y Control ATR</h4>
             <p>
-              La regularización <code>L2</code> junto con dimensionamiento por paridad de <strong>ATR(14)</strong> y triple protocolo de salida (<em>Stop-Loss</em>, <em>Trailing ATR</em> y corte por giro de probabilidad neuronal) convierte a la <strong>Red Neuronal Adiestrada MLP</strong> en la arquitectura de menor caída máxima a 5 años (<strong>-38.89%</strong>) y protege el capital del <strong>Bot D</strong> ante cambios abruptos de régimen.
+              La regularización <code>L2</code> con parada temprana (<em>early stopping</em>), el entrenamiento nativo <code>4H&rarr;4H</code> y el triple protocolo de salida por <strong>ATR(14)</strong> convierten a la <strong>Red Neuronal Adiestrada MLP</strong> en la arquitectura de menor caída máxima a 5 años (<strong>-37.08%</strong>, <strong>+71.55%</strong> neto) y resguardan el capital del <strong>Bot D</strong> ante cambios abruptos de régimen.
             </p>
           </div>
           <div class="exec-playbook-card amber">
             <h4>3. Especialización por Horizonte: Microtrading, Diario y Futuros</h4>
             <p>
-              Cada algoritmo captura una fuente distinta de alfa técnico: <strong>Bot A</strong> opera impulsos y rebotes intradía confirmados por medias móviles, Bollinger y volumen; <strong>Bot B (1D)</strong> filtra el ruido mediante canal diario y salida <em>Chandelier ATR</em>; y <strong>Bot C (SWAP)</strong> combina largos posicionales y coberturas cortas perpetuas con captura de financiamiento.
+              Cada algoritmo captura una fuente distinta de alfa técnico: <strong>Bot A</strong> opera impulsos <code>15m/1H</code> con filtro <code>ADX</code>, toma parcial 45% y trailing causal; <strong>Bot B (1D)</strong> comprime la rotación con penalización <code>L1</code> y salida <em>Chandelier 2.30&times; ATR</em>; y <strong>Bot C (SWAP)</strong> combina largos y coberturas cortas perpetuas con rebalanceo delta, carry 8h y protección cada vela 4H.
             </p>
           </div>
           <div class="exec-playbook-card crimson">
@@ -2375,7 +2375,7 @@
       var txtEl = document.getElementById('ruleTestsStatusText');
       if (txtEl && SUITE) {
         var rts = SUITE.rule_tests_summary || {};
-        var nCases = Number(rts.total_test_cases || 16);
+        var nCases = Number(rts.total_test_cases || 23);
         var shaOk = rts.chain_integrity_verified ? 'SHA-256 íntegra' : 'SHA-256 pendiente';
         var ohlcOk = rts.ohlc_bounds_verified ? 'OHLCV verificados' : 'OHLCV en revisión';
         var mlpOk = rts.causal_mlp_verified ? 'MLP causal sin fuga futura' : 'MLP en validación';
@@ -2448,16 +2448,18 @@
             var curPx = q ? Number(q.price) : Number(pos.market_price);
             pos.market_price = fmtPxNum(curPx);
 
-            // Ajuste dinámico de Trailing Stop ATR cuando Bot A o Bot D supera +0.95*ATR sobre entrada
+            // Ajuste dinámico de Trailing Stop ATR v2.0 cuando Bot A o Bot D supera +1.25*ATR sobre entrada
             if ((b.id === 'bot_a' || b.id === 'bot_d') && pos.units > 0 && Number(pos.entry_price) > 0) {
               var smTrail = (SUITE.signal_matrix_now && SUITE.signal_matrix_now[pos.coin]) || {};
               var atrTrail = Number(pos.atr || smTrail.atr14 || (curPx * 0.012));
               if (b.id === 'bot_a' && !pos.atr && smTrail.atr14) atrTrail = Number(smTrail.atr14) * 0.45;
-              if (atrTrail > 0 && curPx > Number(pos.entry_price) + 0.95 * atrTrail) {
+              var floorMult = (b.id === 'bot_a') ? 1.0055 : 1.0065;
+              var trailDist = (b.id === 'bot_a') ? 1.25 : 1.30;
+              if (atrTrail > 0 && curPx > Number(pos.entry_price) + 1.25 * atrTrail) {
                 var raisedSl = Math.max(
                   Number(pos.sl_price || 0),
-                  Number(pos.entry_price) * 1.002,
-                  curPx - 1.2 * atrTrail
+                  Number(pos.entry_price) * floorMult,
+                  curPx - trailDist * atrTrail
                 );
                 if (raisedSl < curPx * 0.997 && raisedSl > Number(pos.sl_price || 0)) {
                   pos.sl_price = fmtPxNum(raisedSl);
@@ -2540,9 +2542,10 @@
       var qty = Math.abs(Number(posObj.units));
       if (qty <= 1e-8) return;
       var gross = qty * execPx;
-      var fee = gross * 0.0008;
+      var feeRate = (botObj.id === 'bot_a') ? 0.0004 : (botObj.is_futures ? 0.0005 : 0.0010);
+      var fee = gross * feeRate;
       var pnlUsd = gross - fee - (qty * Number(posObj.entry_price));
-      var pnlPct = (((execPx / Number(posObj.entry_price)) - 1.0) * 100.0) - 0.08;
+      var pnlPct = (((execPx / Number(posObj.entry_price)) - 1.0) * 100.0) - (2.0 * feeRate * 100.0);
 
       botObj.cash_usd = Number(botObj.cash_usd || 0) + gross - fee;
       botObj.fees_paid_usd = Number((Number(botObj.fees_paid_usd || 0) + fee).toFixed(2));
@@ -4764,12 +4767,12 @@
             if (op0) ensureReal1mTapeLoaded(op0.coin, !!(data.algo_bots[bk] && data.algo_bots[bk].is_futures));
           });
 
-          // Activar flujo continuo WebSocket + ventana deslizante en tiempo real (1.5s) + conciliación dual OKX / Bybit (5s) + sincronización backend (60s)
+          // Activar flujo continuo WebSocket + ventana deslizante en tiempo real (1.5s) + conciliación dual OKX / Bybit (5s) + sincronización backend v2.0 (30s)
           connectOkxPublicWebSocket();
           syncDualExchangeBooksRest();
           setInterval(advanceRealtimeSlidingWindow, 1500);
           setInterval(syncDualExchangeBooksRest, 5000);
-          setInterval(syncBackendSuiteCycle, 60000);
+          setInterval(syncBackendSuiteCycle, 30000);
         });
     }
 

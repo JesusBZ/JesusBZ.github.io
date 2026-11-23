@@ -1,5 +1,5 @@
 """
-Suite de Pruebas Automatizadas de las Reglas Cuantitativas y Ciberseguridad (20 verificaciones determinísticas):
+Suite de Pruebas Automatizadas de las Reglas Cuantitativas y Ciberseguridad (23 verificaciones determinísticas):
   - Indicadores técnicos libres de NaN y dentro de rangos matemáticos
   - Reglas de BOT A (paridad ATR <= 0.85%, tope 24%, filtro volumen, trailing ATR y límite máximo de pérdida diaria -2.0%)
   - Reglas de BOT B (restricción símplex <= 34%/activo y salida Chandelier ATR a USDT)
@@ -635,6 +635,128 @@ class TestQuantBotsRules(unittest.TestCase):
         finally:
             httpd_ok.shutdown()
             httpd_ok.server_close()
+
+    def test_21_bot_a_no_same_bar_stop_partial_tp_and_vol_adx_gates(self):
+        coins = ["BTC"]
+        cfg = BotAConfig()
+        st = init_bot_a_state(coins, base_cap=1000.0)
+        st["units"]["BTC"] = 2.0
+        st["entry"]["BTC"] = 100.0
+        st["entry_fee"]["BTC"] = 200.0 * cfg.fee_rate
+        st["peak"]["BTC"] = 100.0
+        st["sl"]["BTC"] = 96.9
+        st["tp"]["BTC"] = 106.2
+        st["cash_usd"] = 800.0 - st["entry_fee"]["BTC"]
+
+        # Barra volátil que toca +1.30x ATR (102.6) pero también baja a 100.1 (> SL pre-barra 96.9):
+        # NO debe disparar falso stop intra-barra sobre el trailing recién activado.
+        step_bot_a_microtrading(
+            state=st, ts=pd.Timestamp("2026-11-22 10:15"), coins=coins,
+            bar_open_prev={"BTC": 100.0}, bar_close_prev={"BTC": 101.0},
+            bar_close_cur={"BTC": 101.8}, bar_low_cur={"BTC": 100.1}, bar_high_cur={"BTC": 102.6},
+            atr_prev={"BTC": 2.0}, ema9_prev={"BTC": 101.0}, ema21_prev={"BTC": 100.3},
+            ema21_1h_prev={"BTC": 101.0}, ema55_1h_prev={"BTC": 99.0},
+            roc10_prev={"BTC": 1.1}, mh_prev={"BTC": 0.15}, mh_prev2={"BTC": 0.10},
+            pb_prev={"BTC": 0.70}, pb_prev2={"BTC": 0.62}, rsi_prev={"BTC": 60.0},
+            vrel_prev={"BTC": 1.30}, breadth_1h=0.625, cfg=cfg, adx_1h_prev={"BTC": 24.0},
+        )
+        self.assertEqual(st["units"]["BTC"], 2.0)
+        self.assertGreaterEqual(st["sl"]["BTC"], 100.55 - 1e-6)
+
+        # Siguiente barra alcanza +1.65x ATR (103.3): ejecuta TOMA PARCIAL 45% dejando 55% abierto
+        step_bot_a_microtrading(
+            state=st, ts=pd.Timestamp("2026-11-22 10:30"), coins=coins,
+            bar_open_prev={"BTC": 101.0}, bar_close_prev={"BTC": 101.8},
+            bar_close_cur={"BTC": 103.4}, bar_low_cur={"BTC": 101.5}, bar_high_cur={"BTC": 103.6},
+            atr_prev={"BTC": 2.0}, ema9_prev={"BTC": 101.4}, ema21_prev={"BTC": 100.5},
+            ema21_1h_prev={"BTC": 101.0}, ema55_1h_prev={"BTC": 99.0},
+            roc10_prev={"BTC": 1.6}, mh_prev={"BTC": 0.22}, mh_prev2={"BTC": 0.15},
+            pb_prev={"BTC": 0.78}, pb_prev2={"BTC": 0.70}, rsi_prev={"BTC": 63.0},
+            vrel_prev={"BTC": 1.40}, breadth_1h=0.625, cfg=cfg, adx_1h_prev={"BTC": 25.0},
+        )
+        self.assertAlmostEqual(st["units"]["BTC"], 1.10, places=5)
+        self.assertTrue(st["partial_taken"]["BTC"])
+        self.assertIn("TOMA PARCIAL 45%", st["trades"][-1]["action"])
+        self.assertGreater(st["trades"][-1]["realized_pnl_usd"], 0.0)
+
+        # Filtro de rango muerto ATR (< 0.38%) y ADX 1H débil (< 18) bloquea entrada en ruido
+        st_flat = init_bot_a_state(coins, base_cap=1000.0)
+        step_bot_a_microtrading(
+            state=st_flat, ts=pd.Timestamp("2026-11-22 10:45"), coins=coins,
+            bar_open_prev={"BTC": 100.0}, bar_close_prev={"BTC": 100.5},
+            bar_close_cur={"BTC": 100.8}, bar_low_cur={"BTC": 100.2}, bar_high_cur={"BTC": 101.0},
+            atr_prev={"BTC": 0.20},  # 0.20% < 0.38% min_atr_pct
+            ema9_prev={"BTC": 100.3}, ema21_prev={"BTC": 100.1},
+            ema21_1h_prev={"BTC": 100.2}, ema55_1h_prev={"BTC": 99.5},
+            roc10_prev={"BTC": 0.9}, mh_prev={"BTC": 0.12}, mh_prev2={"BTC": 0.06},
+            pb_prev={"BTC": 0.70}, pb_prev2={"BTC": 0.60}, rsi_prev={"BTC": 58.0},
+            vrel_prev={"BTC": 1.60}, breadth_1h=0.75, cfg=cfg, adx_1h_prev={"BTC": 26.0},
+        )
+        self.assertEqual(st_flat["units"]["BTC"], 0.0)
+
+    def test_22_bot_b_l1_turnover_penalty_and_bot_c_funding_carry(self):
+        coins = ["BTC", "ETH", "SOL", "BNB"]
+        cov = np.eye(4) * 0.0004
+        prev_w = np.array([0.30, 0.25, 0.15, 0.10])
+        common_b = dict(
+            px_y=np.array([105.0, 55.0, 22.0, 310.0]),
+            s20_y=np.array([100.0, 52.0, 20.0, 300.0]),
+            e12_y=np.array([104.0, 54.0, 21.5, 308.0]),
+            e26_y=np.array([101.0, 52.5, 20.5, 301.0]),
+            e50_y=np.array([98.0, 50.0, 19.5, 295.0]),
+            r14_y=np.array([3.5, 5.2, 8.8, 7.4]),
+            mh_y=np.array([0.4, 0.6, 1.3, 1.0]),
+            pb_y=np.array([0.70, 0.75, 0.88, 0.82]),
+            atr_y=np.array([2.0, 1.1, 0.6, 5.0]),
+            pk15_y=np.array([106.0, 55.5, 22.4, 312.0]),
+            adx_y=np.array([24.0, 27.0, 35.0, 31.0]),
+            vol_y=np.array([0.02, 0.024, 0.028, 0.022]),
+            cov_lw=cov,
+            coins=coins,
+            chandelier_mult=2.30,
+        )
+        wb_free, _, _ = step_bot_b_daily(**common_b, prev_w=None, turnover_penalty=0.0)
+        wb_pen, _, _ = step_bot_b_daily(**common_b, prev_w=prev_w, turnover_penalty=0.15)
+        self.assertLessEqual(float(np.sum(np.abs(wb_pen - prev_w))), float(np.sum(np.abs(wb_free - prev_w))) + 1e-4)
+        self.assertTrue(np.all(wb_pen <= 0.34 + 1e-6))
+
+        # Bot C respeta carry de funding 8h manteniendo apalancamiento bruto <= 1.05x
+        wc_carry = step_bot_c_futures(
+            px_v=np.array([110.0, 108.0, 105.0, 80.0, 75.0, 70.0]),
+            e21_v=np.array([105.0, 104.0, 102.0, 85.0, 80.0, 74.0]),
+            e55_v=np.array([100.0, 100.0, 99.0, 90.0, 86.0, 80.0]),
+            r24_v=np.array([8.0, 7.0, 6.0, -7.5, -6.5, -5.5]),
+            mh_v=np.array([0.8, 0.7, 0.6, -0.7, -0.6, -0.5]),
+            pb_v=np.array([0.85, 0.82, 0.78, 0.18, 0.22, 0.25]),
+            adx_v=np.array([32.0, 28.0, 25.0, 30.0, 27.0, 24.0]),
+            pdi_v=np.array([30.0, 29.0, 28.0, 12.0, 14.0, 15.0]),
+            mdi_v=np.array([14.0, 15.0, 16.0, 29.0, 28.0, 26.0]),
+            atr_v=np.array([1.5, 1.4, 1.4, 1.2, 1.1, 1.0]),
+            max_gross_leverage=1.05,
+            funding_8h=np.array([-0.0004, 0.0002, 0.0001, 0.0005, 0.0003, -0.0002]),
+        )
+        self.assertLessEqual(float(np.sum(np.abs(wc_carry))), 1.05 + 1e-6)
+        self.assertTrue(np.any(wc_carry > 0.0))
+        self.assertTrue(np.any(wc_carry < 0.0))
+
+    def test_23_bot_d_mlp_early_stopping_zero_convergence_warnings(self):
+        import warnings
+        from sklearn.exceptions import ConvergenceWarning
+
+        rng = np.random.default_rng(19)
+        X_train = rng.normal(0.0, 1.0, size=(320, 10))
+        yr_train = 0.008 * X_train[:, 0] - 0.004 * X_train[:, 2] + rng.normal(0.0, 0.006, size=320)
+        yc_train = (yr_train > 0.002).astype(int)
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always", ConvergenceWarning)
+            scaler, reg, clf = fit_causal_mlp_ensemble(X_train, yr_train, yc_train, seed=101)
+        conv_warns = [w for w in caught if issubclass(w.category, ConvergenceWarning)]
+        self.assertEqual(len(conv_warns), 0, msg=f"ConvergenceWarning inesperado: {conv_warns}")
+        self.assertTrue(clf.early_stopping)
+        self.assertTrue(reg.early_stopping)
+        p = float(clf.predict_proba(scaler.transform(X_train[:1]))[0, 1])
+        self.assertGreaterEqual(p, 0.0)
+        self.assertLessEqual(p, 1.0)
 
 
 if __name__ == "__main__":

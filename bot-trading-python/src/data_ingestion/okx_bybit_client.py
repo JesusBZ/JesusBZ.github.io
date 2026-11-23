@@ -4,6 +4,7 @@ Oráculo Multi-Exchange 100% Gratuito ($0.00, sin suscripción ni claves de pago
   2) Secundaria: Bybit API v5 (Spot, Klines multianuales y Futuros Lineales)
   3) Terciaria: Kraken / KuCoin REST API
 """
+import concurrent.futures
 import json
 import logging
 import math
@@ -12,7 +13,7 @@ import time
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 import pandas as pd
 
@@ -92,43 +93,58 @@ class MultiExchangeCryptoOracle:
                 raise ValueError("Upstream JSON payload exceeds 8MB safety cap")
             return json.loads(raw.decode("utf-8"))
 
-    def fetch_5y_daily_ohlcv(self, coins: List[str], days: int = 1825) -> Dict[str, pd.DataFrame]:
-        """
-        Descarga 5 años completos (1,825 sesiones diarias) de velas OHLCV reales por moneda
-        usando Bybit V5 Spot Kline (1000 velas por llamada) + OKX API v5 history-candles como
-        validación/respaldo primario sin costo ni clave privada.
-        """
-        ohlcv_map: Dict[str, pd.DataFrame] = {}
-        target = max(365, min(2000, int(days)))
+    def _fetch_single_coin_5y(self, coin: str, target: int) -> Tuple[str, pd.DataFrame]:
+        rows_parsed = []
+        # Intento 1: Bybit v5 paginado rápido (alta velocidad, 2 llamadas por moneda)
+        try:
+            end_ms = None
+            rem = target
+            collected = []
+            while rem > 0:
+                lim = min(1000, rem)
+                params = {"category": "spot", "symbol": f"{coin}USDT", "interval": "D", "limit": lim}
+                if end_ms is not None:
+                    params["end"] = end_ms
+                q = urllib.parse.urlencode(params)
+                payload = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}")
+                lst = payload.get("result", {}).get("list", [])
+                if not lst:
+                    break
+                collected.extend(lst)
+                oldest_ms = int(lst[-1][0])
+                end_ms = oldest_ms - 1
+                rem -= len(lst)
+                if len(lst) < lim:
+                    break
 
-        for coin in coins:
-            rows_parsed = []
-            # Intento 1: OKX v5 + Bybit v5 paginado rápido (alta velocidad, 2 llamadas por moneda)
+            if len(collected) >= 300:
+                for r in collected:
+                    rows_parsed.append((
+                        int(r[0]),
+                        float(r[1]),
+                        float(r[2]),
+                        float(r[3]),
+                        float(r[4]),
+                        float(r[5]),
+                    ))
+        except Exception as exc:
+            logger.warning("Aviso en serie 5Y Bybit para %s (%s). Conmutando a OKX v5...", coin, exc)
+
+        if len(rows_parsed) < target - 60:
             try:
-                end_ms = None
-                rem = target
-                collected = []
-                while rem > 0:
-                    lim = min(1000, rem)
-                    params = {"category": "spot", "symbol": f"{coin}USDT", "interval": "D", "limit": lim}
-                    if end_ms is not None:
-                        params["end"] = end_ms
+                after_ms = min((r[0] for r in rows_parsed), default=None)
+                loops = 0
+                while len(rows_parsed) < target and loops < 20:
+                    loops += 1
+                    params = {"instId": f"{coin}-USDT", "bar": "1D", "limit": 100}
+                    if after_ms is not None:
+                        params["after"] = after_ms
                     q = urllib.parse.urlencode(params)
-                    payload = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}")
-                    lst = payload.get("result", {}).get("list", [])
-                    if not lst:
+                    payload = self._get_json(f"{self.okx_base}/api/v5/market/history-candles?{q}")
+                    data = payload.get("data", [])
+                    if not data:
                         break
-                    # Bybit devuelve orden descendente [startTime, open, high, low, close, volume, turnover]
-                    collected.extend(lst)
-                    oldest_ms = int(lst[-1][0])
-                    end_ms = oldest_ms - 1
-                    rem -= len(lst)
-                    if len(lst) < lim:
-                        break
-                    time.sleep(0.05)
-
-                if len(collected) >= 300:
-                    for r in collected:
+                    for r in data:
                         rows_parsed.append((
                             int(r[0]),
                             float(r[1]),
@@ -137,82 +153,102 @@ class MultiExchangeCryptoOracle:
                             float(r[4]),
                             float(r[5]),
                         ))
-            except Exception as exc:
-                logger.warning("Aviso en serie 5Y Bybit para %s (%s). Conmutando a OKX v5...", coin, exc)
+                    after_ms = int(data[-1][0])
+            except Exception as exc2:
+                logger.warning("Complemento OKX 5Y en %s: %s", coin, exc2)
 
-            # Si faltan velas antiguas para completar 5 años (algunos pares listados más tarde en un exchange),
-            # complementar hacia atrás con OKX API v5 history-candles o KuCoin 1day!
-            if len(rows_parsed) < target - 60:
-                try:
-                    after_ms = min((r[0] for r in rows_parsed), default=None)
-                    loops = 0
-                    while len(rows_parsed) < target and loops < 20:
-                        loops += 1
-                        params = {"instId": f"{coin}-USDT", "bar": "1D", "limit": 100}
-                        if after_ms is not None:
-                            params["after"] = after_ms
-                        q = urllib.parse.urlencode(params)
-                        payload = self._get_json(f"{self.okx_base}/api/v5/market/history-candles?{q}")
-                        data = payload.get("data", [])
-                        if not data:
-                            break
-                        for r in data:
-                            rows_parsed.append((
-                                int(r[0]),
-                                float(r[1]),
-                                float(r[2]),
-                                float(r[3]),
-                                float(r[4]),
-                                float(r[5]),
-                            ))
-                        after_ms = int(data[-1][0])
-                        time.sleep(0.05)
-                except Exception as exc2:
-                    logger.warning("Complemento OKX 5Y en %s: %s", coin, exc2)
+        if not rows_parsed:
+            raise RuntimeError(f"No se pudo recuperar histórico para {coin}")
 
-            if not rows_parsed:
-                raise RuntimeError(f"No se pudo recuperar histórico para {coin}")
+        df = pd.DataFrame(rows_parsed, columns=["ts_ms", "open", "high", "low", "close", "volume"])
+        df["date"] = pd.to_datetime(df["ts_ms"], unit="ms", utc=True).dt.tz_convert(None).dt.normalize()
+        df = df.sort_values("ts_ms").drop_duplicates(subset=["date"], keep="last").set_index("date")
+        return coin, df[["open", "high", "low", "close", "volume"]].tail(target)
 
-            df = pd.DataFrame(rows_parsed, columns=["ts_ms", "open", "high", "low", "close", "volume"])
-            df["date"] = pd.to_datetime(df["ts_ms"], unit="ms", utc=True).dt.tz_convert(None).dt.normalize()
-            df = df.sort_values("ts_ms").drop_duplicates(subset=["date"], keep="last").set_index("date")
-            ohlcv_map[coin] = df[["open", "high", "low", "close", "volume"]].tail(target)
-
-        return ohlcv_map
-
-    def fetch_intraday_ohlcv(self, coins: List[str], bar: str = "1H", limit: int = 240) -> Dict[str, pd.DataFrame]:
+    def fetch_5y_daily_ohlcv(self, coins: List[str], days: int = 1825) -> Dict[str, pd.DataFrame]:
         """
-        Descarga velas intradía reales desde OKX API v5 (/api/v5/market/candles, bar='15m'|'1H'|'4H')
-        con respaldo automático en Bybit API v5.
+        Descarga concurrentemente 5 años completos (1,825 sesiones diarias) de velas OHLCV reales por moneda
+        usando Bybit V5 Spot Kline + OKX API v5 history-candles como respaldo primario.
         """
-        out: Dict[str, pd.DataFrame] = {}
-        bybit_bar_map = {"15m": "15", "1H": "60", "4H": "240"}
-        lim = max(60, min(300, int(limit)))
+        target = max(365, min(2000, int(days)))
+        ohlcv_map: Dict[str, pd.DataFrame] = {}
+        with concurrent.futures.ThreadPoolExecutor(max_workers=min(8, max(1, len(coins)))) as pool:
+            futs = [pool.submit(self._fetch_single_coin_5y, coin, target) for coin in coins]
+            for fut in futs:
+                c, df = fut.result()
+                ohlcv_map[c] = df
+        return {c: ohlcv_map[c] for c in coins}
 
-        for coin in coins:
-            parsed = []
+    def _fetch_single_coin_intraday(self, coin: str, bar: str, lim: int) -> Tuple[str, pd.DataFrame]:
+        bybit_bar_map = {"5m": "5", "15m": "15", "1H": "60", "4H": "240"}
+        parsed: List[Tuple[int, float, float, float, float, float]] = []
+
+        # Para ventanas > 300 velas, Bybit v5 devuelve hasta 1,000 velas en 1 sola llamada HTTPS
+        if lim > 300:
             try:
-                q = urllib.parse.urlencode({"instId": f"{coin}-USDT", "bar": bar, "limit": lim})
-                data = self._get_json(f"{self.okx_base}/api/v5/market/candles?{q}").get("data", [])
-                for r in data:
-                    parsed.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
-            except Exception:
                 b_int = bybit_bar_map.get(bar, "60")
                 q = urllib.parse.urlencode({"category": "spot", "symbol": f"{coin}USDT", "interval": b_int, "limit": lim})
                 lst = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}").get("result", {}).get("list", [])
                 for r in lst:
                     parsed.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
+            except Exception:
+                parsed = []
 
-            df = pd.DataFrame(parsed, columns=["ts_ms", "open", "high", "low", "close", "volume"])
-            df["dt"] = pd.to_datetime(df["ts_ms"], unit="ms", utc=True).dt.tz_convert(None)
-            df = df.sort_values("dt").drop_duplicates(subset=["dt"], keep="last").set_index("dt")
-            out[coin] = df[["open", "high", "low", "close", "volume"]]
-            time.sleep(0.04)
-        return out
+        # OKX v5 primario (para <= 300) o paginado de respaldo si Bybit no devolvió suficientes velas
+        if len(parsed) < max(120, lim // 2):
+            okx_rows: List[Tuple[int, float, float, float, float, float]] = []
+            try:
+                after_ms = None
+                loops = 0
+                max_loops = max(1, (lim + 299) // 300)
+                while len(okx_rows) < lim and loops < max_loops:
+                    loops += 1
+                    chunk_lim = min(300, lim - len(okx_rows))
+                    params = {"instId": f"{coin}-USDT", "bar": bar, "limit": chunk_lim}
+                    endpoint = "/api/v5/market/candles" if after_ms is None else "/api/v5/market/history-candles"
+                    if after_ms is not None:
+                        params["after"] = after_ms
+                    q = urllib.parse.urlencode(params)
+                    data = self._get_json(f"{self.okx_base}{endpoint}?{q}").get("data", [])
+                    if not data:
+                        break
+                    for r in data:
+                        okx_rows.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
+                    after_ms = int(data[-1][0])
+            except Exception:
+                pass
+            if len(okx_rows) > len(parsed):
+                parsed = okx_rows
+
+        if not parsed:
+            b_int = bybit_bar_map.get(bar, "60")
+            q = urllib.parse.urlencode({"category": "spot", "symbol": f"{coin}USDT", "interval": b_int, "limit": min(1000, lim)})
+            lst = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}").get("result", {}).get("list", [])
+            for r in lst:
+                parsed.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
+
+        df = pd.DataFrame(parsed, columns=["ts_ms", "open", "high", "low", "close", "volume"])
+        df["dt"] = pd.to_datetime(df["ts_ms"], unit="ms", utc=True).dt.tz_convert(None)
+        df = df.sort_values("dt").drop_duplicates(subset=["dt"], keep="last").set_index("dt")
+        return coin, df[["open", "high", "low", "close", "volume"]].tail(lim)
+
+    def fetch_intraday_ohlcv(self, coins: List[str], bar: str = "1H", limit: int = 300) -> Dict[str, pd.DataFrame]:
+        """
+        Descarga concurrentemente velas intradía reales (hasta 1,000 velas por par) desde
+        OKX API v5 y Bybit API v5 con conmutación automática.
+        """
+        lim = max(60, min(1000, int(limit)))
+        out: Dict[str, pd.DataFrame] = {}
+        with concurrent.futures.ThreadPoolExecutor(max_workers=min(8, max(1, len(coins)))) as pool:
+            futs = [pool.submit(self._fetch_single_coin_intraday, coin, bar, lim) for coin in coins]
+            for fut in futs:
+                c, df = fut.result()
+                out[c] = df
+        return {c: out[c] for c in coins}
 
     def fetch_live_spot_and_futures(self, coins: List[str]) -> Dict[str, Dict[str, Any]]:
         """
-        Obtiene simultáneamente desde OKX API v5 y Bybit API v5:
+        Obtiene concurrentemente desde OKX API v5 y Bybit API v5:
           - Cotización Spot actual (last, bid, ask, open24h, high24h, low24h, cambio 24h % y $, volumen USD 24h)
           - Conciliación cruzada de precios entre libros independientes (OKX v5 vs Bybit v5)
           - Cotización de Contratos Perpetuos (SWAP) y Tasa de Financiamiento (Funding Rate 8h)
@@ -223,56 +259,67 @@ class MultiExchangeCryptoOracle:
         funding_map = {}
         bybit_ref_map = {}
 
-        try:
-            b_spot_all = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=spot").get("result", {}).get("list", [])
-            for d in b_spot_all:
-                sym = d.get("symbol", "")
-                if sym.endswith("USDT"):
-                    bybit_ref_map[sym[:-4]] = float(d.get("lastPrice") or 0.0)
-        except Exception:
-            bybit_ref_map = {}
+        def _fetch_bybit_ref():
+            res = {}
+            try:
+                b_spot_all = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=spot").get("result", {}).get("list", [])
+                for d in b_spot_all:
+                    sym = d.get("symbol", "")
+                    if sym.endswith("USDT"):
+                        res[sym[:-4]] = float(d.get("lastPrice") or 0.0)
+            except Exception:
+                pass
+            return res
 
-        try:
-            spot_raw = self._get_json(f"{self.okx_base}/api/v5/market/tickers?instType=SPOT").get("data", [])
-            spot_map = {d["instId"]: d for d in spot_raw}
-            swap_raw = self._get_json(f"{self.okx_base}/api/v5/market/tickers?instType=SWAP").get("data", [])
-            swap_map = {d["instId"]: d for d in swap_raw}
-            source_used = "OKX API v5"
-        except Exception as exc:
-            logger.warning("Conmutando consulta primaria a Bybit API v5 (%s)", exc)
-            b_spot = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=spot").get("result", {}).get("list", [])
-            b_lin = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=linear").get("result", {}).get("list", [])
-            for d in b_spot:
-                sym = d["symbol"]
-                if sym.endswith("USDT"):
-                    c = sym[:-4]
-                    spot_map[f"{c}-USDT"] = {
-                        "last": d.get("lastPrice", 0),
-                        "open24h": d.get("prevPrice24h", 0),
-                        "high24h": d.get("highPrice24h", 0),
-                        "low24h": d.get("lowPrice24h", 0),
-                        "bidPx": d.get("bid1Price", 0),
-                        "askPx": d.get("ask1Price", 0),
-                        "volCcy24h": d.get("turnover24h", 0),
-                    }
-            for d in b_lin:
-                sym = d["symbol"]
-                if sym.endswith("USDT"):
-                    c = sym[:-4]
-                    swap_map[f"{c}-USDT-SWAP"] = {"last": d.get("lastPrice", 0)}
-                    funding_map[c] = float(d.get("fundingRate") or 0.0)
-            source_used = "Bybit API v5"
+        def _fetch_okx_fr(c_sym: str) -> Tuple[str, float]:
+            try:
+                fr_data = self._get_json(f"{self.okx_base}/api/v5/public/funding-rate?instId={c_sym}-USDT-SWAP").get("data", [])
+                if fr_data:
+                    return c_sym, float(fr_data[0].get("fundingRate") or 0.0)
+            except Exception:
+                pass
+            return c_sym, 0.0001
 
-        # Consultar funding rate puntual en OKX si venimos de OKX
-        if source_used == "OKX API v5":
-            for c in coins:
-                try:
-                    fr_data = self._get_json(f"{self.okx_base}/api/v5/public/funding-rate?instId={c}-USDT-SWAP").get("data", [])
-                    if fr_data:
-                        funding_map[c] = float(fr_data[0].get("fundingRate") or 0.0)
-                except Exception:
-                    funding_map[c] = 0.0001
-                time.sleep(0.03)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=12) as pool:
+            fut_bybit_ref = pool.submit(_fetch_bybit_ref)
+            fut_okx_spot = pool.submit(self._get_json, f"{self.okx_base}/api/v5/market/tickers?instType=SPOT")
+            fut_okx_swap = pool.submit(self._get_json, f"{self.okx_base}/api/v5/market/tickers?instType=SWAP")
+            fut_frs = [pool.submit(_fetch_okx_fr, c) for c in coins]
+
+            bybit_ref_map = fut_bybit_ref.result()
+            try:
+                spot_raw = fut_okx_spot.result().get("data", [])
+                spot_map = {d["instId"]: d for d in spot_raw}
+                swap_raw = fut_okx_swap.result().get("data", [])
+                swap_map = {d["instId"]: d for d in swap_raw}
+                source_used = "OKX API v5"
+                for f_fr in fut_frs:
+                    c_sym, fr_val = f_fr.result()
+                    funding_map[c_sym] = fr_val
+            except Exception as exc:
+                logger.warning("Conmutando consulta primaria a Bybit API v5 (%s)", exc)
+                b_spot = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=spot").get("result", {}).get("list", [])
+                b_lin = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=linear").get("result", {}).get("list", [])
+                for d in b_spot:
+                    sym = d["symbol"]
+                    if sym.endswith("USDT"):
+                        c = sym[:-4]
+                        spot_map[f"{c}-USDT"] = {
+                            "last": d.get("lastPrice", 0),
+                            "open24h": d.get("prevPrice24h", 0),
+                            "high24h": d.get("highPrice24h", 0),
+                            "low24h": d.get("lowPrice24h", 0),
+                            "bidPx": d.get("bid1Price", 0),
+                            "askPx": d.get("ask1Price", 0),
+                            "volCcy24h": d.get("turnover24h", 0),
+                        }
+                for d in b_lin:
+                    sym = d["symbol"]
+                    if sym.endswith("USDT"):
+                        c = sym[:-4]
+                        swap_map[f"{c}-USDT-SWAP"] = {"last": d.get("lastPrice", 0)}
+                        funding_map[c] = float(d.get("fundingRate") or 0.0)
+                source_used = "Bybit API v5"
 
         result: Dict[str, Dict[str, Any]] = {}
         for c in coins:
