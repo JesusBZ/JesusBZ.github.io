@@ -512,7 +512,7 @@
     title: 'Economista y Quantitative Data Scientist',
     summary: 'Profesional de finanzas con amplia experiencia (+15 años) en planificación financiera corporativa, presupuestos maestros y control de gestión en empresas de diversos sectores económicos. Cuenta con sólidas fortalezas en modelización econométrica avanzada, Deep Learning, Business Intelligence, Inteligencia Financiera (95%) y ciencia de datos reproducible en R y Python.',
     interests: 'Planificación financiera corporativa, presupuestos maestros, modelización econométrica avanzada, simulación estocástica multivariante, Deep Learning (Redes Neuronales LSTM en PyTorch), Inteligencia Financiera y Business Intelligence.',
-    portfolio: 'El portafolio reúne 19 estudios técnicos y suites cuantitativas publicadas entre mayo de 2020 y noviembre de 2026 en Python (NumPy / SciPy / statsmodels / PyTorch / arch), RStudio (4.4+ / vars / urca / tidymodels), JavaScript/Chart.js, Excel/VBA y Microsoft Power BI, incluyendo el Simulador Nexus Quant FP&A en 5 módulos (FinancialDashboard.htm) y la Suite Multi-Bot Cripto 24/7 en Render (bot-trading-python/#sec-certificacion).'
+    portfolio: 'El portafolio reúne 19 estudios cuantitativos publicados entre mayo de 2020 y noviembre de 2026 en Python (NumPy / SciPy / statsmodels / PyTorch / arch), RStudio (4.4+ / vars / urca / tidymodels), JavaScript/Chart.js, Excel/VBA y Microsoft Power BI, incluyendo el Simulador Nexus Quant FP&A en 5 módulos (FinancialDashboard.htm) y el Sistema de Ejecución Algorítmica y Optimización de Carteras Cripto con verificación SHA-256 (bot-trading-python/#sec-certificacion).'
   };
 
   const _M_SHARD = Object.freeze([48, 82, 218, 25, 41, 77, 204, 30, 42, 86, 204, 15, 53, 89, 198, 1, 51, 86, 233, 11, 55, 86, 192, 0, 116, 84, 198, 1]);
@@ -570,11 +570,11 @@
 
   const PROJECTS = [
     {
-      n: 19, title: 'Suite Multi-Bot Cuantitativa de Trading Algorítmico 24/7 en Python con Certificación Criptográfica SHA-256', file: 'bot-trading-python/#sec-certificacion', pubDate: 'Noviembre de 2026',
+      n: 19, title: 'Sistemas de Ejecución Algorítmica y Optimización Cuantitativa de Carteras sobre Criptoactivos en Python con Verificación SHA-256', file: 'bot-trading-python/#sec-certificacion', pubDate: 'Noviembre de 2026',
       keys: ['bot de trading', 'bots de trading', 'multibot', 'multi-bot', 'sha-256', 'sec-certificacion', 'okx', 'bybit', 'trabajo 19', 'proyecto 19', 'estudio 19', 'trading algoritmico'],
-      summary: 'Plataforma cuantitativa en Python 3.11 desplegada 24/7 en Render con backtesting diario a 5 años ($1,000 USD base sobre BTC, ETH, SOL, BNB, XRP, ADA, AVAX y LINK) y 4 bots autónomos en tiempo real sobre OKX API v5 y Bybit API v5.',
-      methods: 'Markowitz Media-Varianza (SLSQP), GJR-GARCH(1,1,1) Skew-t + Vol-Target, Monte Carlo Min-CVaR 95% y red neuronal causal MLP(32,16) + control ATR; ejecución 24/7 de BOT A (15m/1H microtrading), BOT B (1D símplex/Chandelier), BOT C (4H Long/Short perpetuos) y BOT D (MLP causal con reserva >=25% USDT), verificada por bloque en navegador mediante SubtleCrypto SHA-256 (#sec-certificacion).',
-      results: 'Cadena criptográfica inmutable bloque a bloque desde el hash génesis hasta chain_root_sha256 con conciliación dual OKX/Bybit, cotas OHLC verificadas y control contable Mark-to-Market en los 4 algoritmos.',
+      summary: 'Estudio de econometría financiera y ejecución sistemática en Python 3.11 con evaluación walk-forward a 5 años ($1,000.00 USD base sobre BTC, ETH, SOL, BNB, XRP, ADA, AVAX y LINK) y cuatro algoritmos cuantitativos conectados a los libros públicos de OKX API v5 y Bybit API v5.',
+      methods: 'Markowitz Media-Varianza con contracción de Ledoit-Wolf (SLSQP), GJR-GARCH(1,1,1) Skewed-t con objetivo de volatilidad, Monte Carlo Min-CVaR 95% y perceptrón multicapa causal MLP(32,16) con control ATR; operación sistemática de Algoritmo A (intradía 15m/1H con riesgo máximo 0.85% y límite diario de pérdida de -2.00%), Algoritmo B (diario 1D símplex y salida Chandelier ATR), Algoritmo C (contratos perpetuos 4H Long/Short con financiamiento 8h) y Algoritmo D (ensamble MLP 4H con reserva >=25% USDT), verificada en navegador mediante SubtleCrypto SHA-256 (#sec-certificacion).',
+      results: 'Encadenamiento secuencial de firmas SHA-256 desde el bloque génesis hasta chain_root_sha256, conciliación inter-mercado Bid/Ask entre OKX y Bybit, cotas reales OHLC verificadas e identidad contable Mark-to-Market exacta en las cuatro carteras.',
       tools: 'Python 3.11, NumPy, SciPy, scikit-learn, arch, OKX API v5, Bybit API v5, Plotly.js y WebCrypto SubtleCrypto SHA-256.'
     },
     {
@@ -768,13 +768,13 @@
 
   const BOT_TRADING_SUITE_PROJECT = {
     n: 19,
-    title: 'Sistemas de Trading Algorítmico y Optimización Cuantitativa de Carteras Cripto: Backtesting 5Y y 4 Algoritmos Especializados',
+    title: 'Sistemas de Ejecución Algorítmica y Optimización Cuantitativa de Carteras sobre Criptoactivos en Python',
     file: 'bot-trading-python/index.html',
     pubDate: 'Noviembre de 2026',
     keys: ['bot', 'bots', 'microtrading', 'futuros perpetuos', 'okx', 'bybit', 'canasta cripto', 'trading algoritmico', 'sha256', 'bollinger'],
-    summary: 'Evaluación econométrica y algorítmica fuera de muestra de 5 años sobre una canasta de 8 criptoactivos (BTC, ETH, SOL, BNB, XRP, ADA, AVAX, LINK) con base de $1,000.00 USD comparando Markowitz SLSQP, GJR-GARCH(1,1,1) Skew-t, Monte Carlo Min-CVaR 95% y Red Neuronal MLP adiestrada con gestión de riesgos, junto con un sistema continuo de 4 algoritmos especializados con valoración Mark-to-Market y cadena de verificación criptográfica SHA-256 ($1,000 USD base cada uno).',
-    methods: 'Optimización Media-Varianza SLSQP con contracción de Ledoit-Wolf, volatilidad condicional GJR-GARCH(1,1,1) Skewed-t, Expected Shortfall Min-CVaR 95%, ensamble neuronal MLP(32,16) con salida Chandelier ATR, y 4 arquitecturas definidas: Bot A (Microtrading EMA 9/21/55 + Bollinger + Momentum + Volumen + ATR), Bot B (Decisión Diaria 1D SMA20/EMA50 + MACD + ADX + GARCH), Bot C (Largos y Futuros Perpetuos SWAP + Carry 8h) y Bot D (Red Neuronal Adiestrada sobre 10 indicadores técnicos con triple regla de salida y paridad de riesgo ATR).',
-    results: 'Combina alto crecimiento compuesto fuera de muestra en el backtesting de 5 años con compresión sustancial del Max Drawdown frente al -68.60% pasivo, e integra evaluación multipanel de velas OHLC, medias móviles, Bandas de Bollinger, Momentum/MACD y barras de volumen en cada decisión de compra y venta.',
+    summary: 'Evaluación econométrica y algorítmica fuera de muestra a cinco años sobre una canasta líquida de ocho criptoactivos (BTC, ETH, SOL, BNB, XRP, ADA, AVAX, LINK) con capital base de $1,000.00 USD comparando Markowitz SLSQP, GJR-GARCH(1,1,1) Skew-t, Monte Carlo Min-CVaR 95% y perceptrón multicapa MLP(32,16) con gestión de riesgos, junto con cuatro algoritmos sistemáticos con valoración Mark-to-Market y verificación criptográfica SHA-256 ($1,000.00 USD base cada cartera).',
+    methods: 'Optimización Media-Varianza SLSQP con contracción de Ledoit-Wolf, volatilidad condicional GJR-GARCH(1,1,1) Skewed-t, Expected Shortfall Min-CVaR 95%, ensamble neuronal MLP(32,16) con salida Chandelier ATR y cuatro especificaciones operativas: Algoritmo A (intradía EMA 9/21/55, Bollinger, Momentum, volumen y límite de pérdida diaria de -2.00%), Algoritmo B (decisión diaria 1D SMA20/EMA50 + MACD + ADX + GARCH), Algoritmo C (contratos perpetuos SWAP Long/Short + Carry 8h) y Algoritmo D (ensamble neuronal sobre diez indicadores técnicos con triple regla de salida y paridad de riesgo ATR).',
+    results: 'Combina alto rendimiento compuesto fuera de muestra en la evaluación a cinco años con compresión sustancial de la caída máxima frente al -68.60% pasivo, e integra un panel técnico multipanel de velas OHLC, medias móviles, Bandas de Bollinger, Momentum/MACD y barras de volumen en cada ejecución.',
     tools: 'Python 3.11+, arch, SciPy, scikit-learn (MLPRegressor/MLPClassifier), NumPy, Pandas, Plotly.js, Web Crypto SHA-256, OKX API v5 & Bybit API v5.'
   };
 
@@ -1012,7 +1012,7 @@
   }
 
   function answerContact() {
-    return `**Ecosistema Oficial y Canales de Contacto de ${PROFILE.name}:**\n\n` +
+    return `**Portafolio y Canales Profesionales de ${PROFILE.name}:**\n\n` +
       `- **WhatsApp Directo:** [${CONTACT.phone}](${CONTACT.whatsapp})\n` +
       `- **Correo electrónico:** [${CONTACT.email}](mailto:${CONTACT.email})\n` +
       `- **Consultoría & Servicios Corporativos:** [jesusbezerpa.github.io](${CONTACT.consultingSite})\n` +
@@ -1042,10 +1042,10 @@
   }
 
   function answerTourGuide() {
-    return `Con mucho gusto te acompaño en tu recorrido por el ecosistema digital de **${PROFILE.name}**:\n\n` +
+    return `Con mucho gusto te acompaño en tu recorrido por el portafolio y canales profesionales de **${PROFILE.name}**:\n\n` +
       `- **Portafolio Cuantitativo (esta web):** En [Trabajos](index.html#trabajos) dispones de buscador instantáneo y filtros por *Python & Deep Learning*, *Trading & Criptomonedas*, *Machine Learning*, *Series Temporales*, *Finanzas & Presupuesto* y *Business Intelligence*.\n` +
-      `- **Simulador Corporativo FP&A:** Prueba la suite interactiva en vivo [Nexus Quant FP&A](FinancialDashboard.htm) sin inicio de sesión.\n` +
-      `- **Trayectoria en el Portafolio:** En [Acerca de](acercade.html) revisas la evolución de sus 18 estudios y suites (2020–2026) y su carrera directiva.\n` +
+      `- **Simulador Corporativo FP&A:** Explora el simulador interactivo [Nexus Quant FP&A](FinancialDashboard.htm) sin inicio de sesión.\n` +
+      `- **Trayectoria en el Portafolio:** En [Acerca de](acercade.html) revisas la evolución de sus 19 estudios cuantitativos (2020–2026) y su carrera directiva.\n` +
       `- **Firma de Consultoría B2B:** En [jesusbezerpa.github.io](${CONTACT.consultingSite}) conoces sus 4 servicios empresariales y red de aliados.\n` +
       `- **Currículum Ejecutivo (CV):** En [jesusbzerpa.github.io](${CONTACT.cvSite}) accedes a sus indicadores ejecutivos, referencias y CV en PDF.`;
   }
@@ -1067,7 +1067,7 @@
         `- **Agendar una reunión diagnóstica** escribiendo *"Agendar reunión"*`;
     }
     return `Estoy aquí para apoyarte durante tu recorrido por el portafolio de **${PROFILE.name}**. Puedo orientarte con precisión sobre:\n\n` +
-      `- Sus **18 estudios y suites cuantitativas** en Python (VAR(8)/Diebold-Yilmaz, Monte Carlo Cholesky/Merton, PyTorch LSTM, EGARCH/CVaR), RStudio, Power BI y el [Simulador FP&A](FinancialDashboard.htm)\n` +
+      `- Sus **19 estudios cuantitativos** en Python (Ejecución Algorítmica Cripto con SHA-256, VAR(8)/Diebold-Yilmaz, Monte Carlo Cholesky/Merton, PyTorch LSTM, EGARCH/CVaR), RStudio, Power BI y el [Simulador FP&A](FinancialDashboard.htm)\n` +
       `- **Comparativas técnicas y aplicación corporativa** para casos de tu empresa\n` +
       `- Sus **servicios de consultoría B2B** en [jesusbezerpa.github.io](${CONTACT.consultingSite}) y **CV Ejecutivo** en [jesusbzerpa.github.io](${CONTACT.cvSite})\n` +
       `- **Coordinar una sesión diagnóstica** escribiendo *"Agendar reunión"* o por [WhatsApp](${CONTACT.whatsapp}).`;
@@ -1708,7 +1708,7 @@
       if (activeProj) {
         return `Bienvenido. Estás explorando el **Estudio #${activeProj.n}: ${activeProj.title}** de **${PROFILE.name}**. Puedo explicarte su metodología (${activeProj.tools}), sus resultados verificados o cómo aplicar este modelo en tu organización.`;
       }
-      return `Bienvenido. Soy el asistente virtual de **${PROFILE.name}**. Estoy aquí para acompañarte en tu recorrido por sus **19 estudios y suites cuantitativas** y compartir su amplia experiencia y sólidas fortalezas en **planificación financiera corporativa, presupuestos maestros, econometría avanzada, Ciencia de Datos, Deep Learning, Inteligencia Financiera y Business Intelligence**. ¿En qué puedo orientarte hoy?`;
+      return `Bienvenido. Soy el asistente técnico de **${PROFILE.name}**. Estoy aquí para acompañarte en tu recorrido por sus **19 estudios cuantitativos** y compartir su amplia experiencia y sólidas fortalezas en **planificación financiera corporativa, presupuestos maestros, econometría avanzada, Ciencia de Datos, Deep Learning, Inteligencia Financiera y Business Intelligence**. ¿En qué puedo orientarte hoy?`;
     }
     if (hasAny(q, ['gracias', 'thank'])) {
       return 'Con mucho gusto. Sigo a tu disposición para acompañarte en tu recorrido por el portafolio o conectar con la consultoría de Jesús Benjamín Zerpa.';
@@ -1737,7 +1737,7 @@
     }
 
     if (hasAny(q, ['modelos python 2026', 'recientes en python', 'nuevos en python'])) {
-      return answerProjectList(PROJECTS.filter(p => [19, 17, 16, 15, 14].includes(p.n)), 'Estos son los **5 desarrollos insignias más recientes (2026)** desarrollados íntegramente en **Python, Trading Algorítmico 24/7, Econometría Multivariante, Cálculo Estocástico y PyTorch**:');
+      return answerProjectList(PROJECTS.filter(p => [19, 17, 16, 15, 14].includes(p.n)), 'Estos son los **5 estudios cuantitativos más recientes (2026)** desarrollados en **Python: Ejecución Algorítmica Cripto, Econometría Multivariante, Cálculo Estocástico, Riesgo de Cola GARCH y PyTorch**:');
     }
 
     if (hasAny(q, ['bot de trading', 'bots de trading', 'multibot', 'multi-bot', 'sha-256', 'sec-certificacion', 'okx', 'bybit', 'trabajo 19', 'proyecto 19', 'estudio 19'])) {
@@ -1832,7 +1832,7 @@
       return `### Aplicación Corporativa para tu Organización\n\n` +
         `A partir de tu planteamiento, los modelos más afines de **${PROFILE.name}** son:\n` +
         picks.map(p => `- **#${p.n} — ${p.title}**: ${p.results} · ${projectLink(p)}`).join('\n') +
-        `\n\n- **Simulador en vivo FP&A:** Explora [Nexus Quant FP&A](FinancialDashboard.htm) para descomposición Precio-Volumen y Nowcast Bayesiano.\n` +
+        `\n\n- **Simulador interactivo FP&A:** Explora [Nexus Quant FP&A](FinancialDashboard.htm) para descomposición Precio-Volumen y Nowcast Bayesiano.\n` +
         `- **Implementación B2B:** Escribe **"Agendar reunión"** para pautar una sesión diagnóstica o visita [jesusbezerpa.github.io](${CONTACT.consultingSite}).`;
     }
 
@@ -1896,8 +1896,8 @@
       : '';
 
     return activeHeader +
-      `PERFIL: ${PROFILE.name} — ${PROFILE.title} (+15 años de amplia experiencia y sólidas fortalezas en FP&A, Power BI 95%, Excel/VBA 98%/90%, R 95%, Python 92%; ${PROJECTS.length} estudios publicados + Suite Nexus Quant FP&A en 5 módulos en FinancialDashboard.htm + Suite Multi-Bot Cripto 24/7 en bot-trading-python/#sec-certificacion).\n` +
-      `ECOSISTEMA: Portafolio ${CONTACT.portfolioSite} | Consultoría ${CONTACT.consultingSite} | CV Ejecutivo ${CONTACT.cvSite} | Contacto: ${CONTACT.phone}, canal protegido en formulario.html.\n` +
+      `PERFIL: ${PROFILE.name} — ${PROFILE.title} (+15 años de amplia experiencia y sólidas fortalezas en FP&A, Power BI 95%, Excel/VBA 98%/90%, R 95%, Python 92%; ${PROJECTS.length} estudios cuantitativos + Simulador Nexus Quant FP&A en 5 módulos en FinancialDashboard.htm + Sistemas de Ejecución Algorítmica y Optimización de Carteras Cripto con SHA-256 en bot-trading-python/#sec-certificacion).\n` +
+      `PORTAFOLIO Y CANALES: Portafolio ${CONTACT.portfolioSite} | Consultoría ${CONTACT.consultingSite} | CV Ejecutivo ${CONTACT.cvSite} | Contacto: ${CONTACT.phone}, canal protegido en formulario.html.\n` +
       careerBlock +
       `ESTUDIOS RELEVANTES A LA CONSULTA:\n${projectBlock}`;
   }
@@ -2126,7 +2126,7 @@
 
     const WELCOME = activeProj
       ? `Bienvenido. Estás revisando el **Estudio #${activeProj.n}: ${activeProj.title}** de **${PROFILE.name}**. Puedo explicarte su metodología (**${activeProj.tools}**), compararlo con los modelos Python 2026 o evaluar cómo adaptarlo a tu empresa.`
-      : `Bienvenido. Soy el asistente de IA de **${PROFILE.name}**. Puedo guiarte por sus **19 estudios y suites cuantitativas** (incluyendo la Suite Multi-Bot Cripto 24/7 y el [Simulador Nexus Quant FP&A](FinancialDashboard.htm)), comparar metodologías o compartir su amplia experiencia y sólidas fortalezas. ¿Qué deseas explorar hoy?`;
+      : `Bienvenido. Soy el asistente técnico de **${PROFILE.name}**. Puedo guiarte por sus **19 estudios cuantitativos** (incluyendo los Sistemas de Ejecución Algorítmica Cripto con SHA-256 y el [Simulador Nexus Quant FP&A](FinancialDashboard.htm)), comparar metodologías o compartir su amplia experiencia y sólidas fortalezas. ¿Qué deseas explorar hoy?`;
 
     let chatHistory = [];
     let lastSendTime = 0;

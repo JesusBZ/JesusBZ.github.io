@@ -1,7 +1,7 @@
 """
 Suite de Pruebas Automatizadas de las Reglas Cuantitativas y Ciberseguridad (20 verificaciones determinísticas):
   - Indicadores técnicos libres de NaN y dentro de rangos matemáticos
-  - Reglas de BOT A (paridad ATR <= 0.85%, tope 24%, filtro volumen, trailing ATR y cortacircuitos -2.0%)
+  - Reglas de BOT A (paridad ATR <= 0.85%, tope 24%, filtro volumen, trailing ATR y límite máximo de pérdida diaria -2.0%)
   - Reglas de BOT B (restricción símplex <= 34%/activo y salida Chandelier ATR a USDT)
   - Reglas de BOT C (contabilidad simétrica Long/Short, financiamiento 8h y apalancamiento bruto <= 1.05x)
   - Reglas de BOT D (entrenamiento MLP strictly causal sin fuga futura, reserva >= 25% y triple salida)

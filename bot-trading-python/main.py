@@ -6,7 +6,7 @@ Motor Cuantitativo Integral de Trading Algorítmico y Optimización de Carteras 
       3) Optimización Estocástica de Monte Carlo por Mínimo Expected Shortfall (Min-CVaR 95%)
       4) Red Neuronal Profunda Adiestrada (Ensamble MLP(32, 16) Regularizado con Estrategia de Salida y Gestión de Riesgos)
       + Referencia Pasiva: Canasta Equiponderada (1/8)
-  - Módulo II: Sistema Autónomo de 4 Algoritmos Especializados con Estrategias Definidas, Contabilidad Exacta
+  - Módulo II: Sistema Determinístico de 4 Algoritmos Especializados con Estrategias Definidas, Contabilidad Exacta
       por Unidades y Cadena Criptográfica SHA-256 ($1,000.00 USD de base cada uno):
       A) BOT A — Microtrading Intradía (15m/1H: Cruce EMA 9/21 + Bollinger %B + Momentum ROC + Volumen + Salida ATR)
       B) BOT B — Decisión Sistemática Diaria (1D: Canal SMA20/EMA50 + MACD + ADX + Markowitz/GARCH + Chandelier Exit)
@@ -572,7 +572,7 @@ def run_four_algorithmic_bots(
     ema55_1h_aligned = ema55_1h.reindex(close_15m.index, method="ffill").bfill()
     breadth_1h_aligned = breadth_1h_series.reindex(close_15m.index, method="ffill").bfill()
 
-    # Indicadores 4H para BOT C, BOT D y Estación Multipanel 4H
+    # Indicadores 4H para BOT C, BOT D y Panel Técnico Multipanel 4H
     close_4h = pd.DataFrame({c: candles_4h[c]["close"] for c in coins}).ffill().dropna()
     open_4h = pd.DataFrame({c: candles_4h[c]["open"] for c in coins}).reindex(close_4h.index).ffill()
     high_4h = pd.DataFrame({c: candles_4h[c]["high"] for c in coins}).reindex(close_4h.index).ffill()
@@ -1332,7 +1332,7 @@ def run_four_algorithmic_bots(
             "rsi14": [round(float(x), 1) for x in rsi14_f.tail(tail_n).values],
         }
 
-    # Matriz actual de indicadores de Análisis Técnico con bases inmutables para actualización en JS
+    # Matriz actual de indicadores de Análisis Técnico con bases ancladas para actualización en JS
     signal_matrix_now = {}
     last_4h = close_4h.index[-1]
     for j, c in enumerate(coins):
@@ -1648,7 +1648,7 @@ def run_cycle(
     for _, m in cached_daily["bt_5y"]["metrics"].items():
         logger.info("  %-48s -> Final: $%7.2f (%+6.2f%%) | Sharpe: %5.2f | MaxDD: %6.2f%%", m["label"], m["final_usd"], m["total_return_pct"], m["sharpe"], m["max_drawdown_pct"])
 
-    logger.info("=== RESUMEN 4 ALGORITMOS AUTÓNOMOS (BASE $1,000.00 USD CADA UNO | ÓRDENES CERTIFICADAS: %d | CICLO #%d) ===", algo_pack["ledger_chain"]["total_certified_orders"], ledger_state["execution_cycles"])
+    logger.info("=== RESUMEN 4 ALGORITMOS SISTEMÁTICOS (BASE $1,000.00 USD CADA UNO | ÓRDENES CERTIFICADAS: %d | CICLO #%d) ===", algo_pack["ledger_chain"]["total_certified_orders"], ledger_state["execution_cycles"])
     for _, bv in algo_pack["bots"].items():
         st = bv["stats"]
         te = bv["trade_eval"]
@@ -2151,7 +2151,7 @@ def main():
     cached_daily = run_cycle(base_dir, oracle, coins, base_cap, cached_daily=None, vault_config=vault_cfg)
     if args.daemon_intraday:
         interval_sec = max(30, int(args.interval))
-        logger.info("Modo servicio continuo 24/7 activo (%s): sincronización intradía cada %ds.", vault_cfg.execution_mode.upper(), interval_sec)
+        logger.info("Modo servicio de ejecución continua activo (%s): sincronización intradía cada %ds.", vault_cfg.execution_mode.upper(), interval_sec)
         while not stop_event.is_set():
             if stop_event.wait(interval_sec):
                 break

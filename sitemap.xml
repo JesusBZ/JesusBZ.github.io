@@ -30,8 +30,8 @@
     <priority>0.95</priority>
     <image:image>
       <image:loc>https://jesusbz.github.io/imagenes/cards/post-06-financial-dashboard-kpis-vba.webp</image:loc>
-      <image:title>Financial Dashboard y Simulador FP&amp;A Interactivo — Jesús Benjamín Zerpa (Jesús Zerpa)</image:title>
-      <image:caption>Suite interactiva de inteligencia financiera corporativa FP&amp;A, Nowcast Bayesiano P10-P90 y control Z-MAD por Jesús Benjamín Zerpa (Jesús Zerpa).</image:caption>
+      <image:title>Financial Dashboard y Simulador FP&amp;A Interactivo — Jesús Benjamín Zerpa</image:title>
+      <image:caption>Simulador cuantitativo interactivo de inteligencia financiera corporativa FP&amp;A, Nowcast Bayesiano P10-P90 y control Z-MAD por Jesús Benjamín Zerpa.</image:caption>
     </image:image>
   </url>
   <url>
@@ -245,8 +245,8 @@
     <priority>0.98</priority>
     <image:image>
       <image:loc>https://jesusbz.github.io/imagenes/cards/post-19-bot-trading-cripto-python.webp</image:loc>
-      <image:title>Suite Multi-Bot Cuantitativa de Trading Algorítmico 24/7 en Python con Cadena SHA-256 — Jesús Benjamín Zerpa</image:title>
-      <image:caption>Backtesting 5 años (Markowitz, GJR-GARCH, Monte Carlo, MLP) y 4 bots autónomos 24/7 con certificación criptográfica SHA-256 sobre OKX API v5 y Bybit API v5.</image:caption>
+      <image:title>Sistemas de Ejecución Algorítmica y Optimización Cuantitativa de Carteras Cripto en Python — Jesús Benjamín Zerpa</image:title>
+      <image:caption>Evaluación walk-forward a 5 años (Markowitz SLSQP, GJR-GARCH, Min-CVaR 95%, MLP) y cuatro algoritmos sistemáticos con verificación criptográfica SHA-256 sobre OKX API v5 y Bybit API v5.</image:caption>
     </image:image>
   </url>
 </urlset>

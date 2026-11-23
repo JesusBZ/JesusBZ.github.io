@@ -205,7 +205,7 @@ def step_bot_a_microtrading(
 ) -> None:
     """
     Ejecuta un paso intradía (15m con filtro 1H) de BOT A respetando:
-      - Cortacircuitos diario (-2.00% desde ancla diaria UTC)
+      - Límite máximo de pérdida diaria (-2.00% desde apertura diaria UTC)
       - Dimensionamiento por paridad ATR (riesgo máx. <= 0.85% patrimonio, tope 24%/par, máx. 68% total)
       - Trailing Stop dinámico a equilibrio y seguimiento de pico, TP y salida por cruce inverso EMA 9/21
     """
