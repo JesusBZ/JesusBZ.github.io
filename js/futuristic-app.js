@@ -1255,10 +1255,119 @@
     });
   }
 
+  function _ensureAntibotStyles() {
+    if (document.getElementById('jbz-antibot-style-v2')) return;
+    const style = document.createElement('style');
+    style.id = 'jbz-antibot-style-v2';
+    style.textContent = `
+      .jbz-antibot-wrap { margin: 0.45rem 0 0.6rem; width: 100%; max-width: 340px; box-sizing: border-box; }
+      .copilot-scheduler-card .jbz-antibot-wrap { margin: 0.1rem 0; max-width: 100%; }
+      .jbz-antibot-box {
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-left: 3px solid #0B1B33;
+        border-radius: 6px;
+        padding: 5px 10px;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        flex-wrap: nowrap;
+        box-sizing: border-box;
+      }
+      .copilot-scheduler-card .jbz-antibot-box { padding: 4px 8px; min-height: 34px; }
+      .jbz-antibot-main { display: inline-flex; align-items: center; gap: 5px; min-width: 0; }
+      .jbz-antibot-icon { display: inline-flex; align-items: center; justify-content: center; color: #0B1B33; flex-shrink: 0; }
+      .jbz-antibot-lbl { font-size: 11.5px; font-weight: 600; color: #475569; white-space: nowrap; line-height: 1.2; letter-spacing: 0.01em; }
+      .jbz-antibot-box label.jbz-antibot-prompt {
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
+        font-size: 12.5px !important;
+        font-weight: 700 !important;
+        color: #0B1B33 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+        display: inline !important;
+      }
+      .jbz-antibot-ctrl { display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; }
+      .jbz-antibot-box input.jbz-antibot-input {
+        width: 48px !important;
+        min-width: 48px !important;
+        max-width: 48px !important;
+        height: 26px !important;
+        min-height: 26px !important;
+        padding: 0 4px !important;
+        margin: 0 !important;
+        border: 1px solid #94a3b8 !important;
+        border-radius: 5px !important;
+        font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+        font-size: 12.5px !important;
+        font-weight: 700 !important;
+        color: #0B1B33 !important;
+        background: #ffffff !important;
+        text-align: center !important;
+        outline: none !important;
+        box-shadow: none !important;
+        box-sizing: border-box !important;
+      }
+      .jbz-antibot-box input.jbz-antibot-input:focus {
+        border-color: #1d4ed8 !important;
+        box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.14) !important;
+      }
+      .jbz-antibot-box button.jbz-antibot-refresh {
+        width: 26px !important;
+        min-width: 26px !important;
+        height: 26px !important;
+        min-height: 26px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 5px !important;
+        color: #475569 !important;
+        cursor: pointer !important;
+        box-sizing: border-box !important;
+        transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+      }
+      .jbz-antibot-box button.jbz-antibot-refresh:hover {
+        border-color: #0B1B33 !important;
+        color: #0B1B33 !important;
+        background: #f1f5f9 !important;
+      }
+      .jbz-sr-only {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+      .jbz-antibot-err {
+        font-size: 11px;
+        font-weight: 600;
+        color: #b91c1c;
+        display: none;
+        margin-top: 4px;
+        line-height: 1.3;
+      }
+      .jbz-antibot-err.visible { display: block; }
+    `;
+    (document.head || document.documentElement).appendChild(style);
+  }
+
   function mountChallengeWidget(formEl) {
     if (!formEl) return null;
     if (_shieldFormStates.has(formEl)) return _shieldFormStates.get(formEl);
 
+    _ensureAntibotStyles();
     _ensureHiddenHoneypots(formEl);
 
     const state = {
@@ -1279,7 +1388,7 @@
       state.b = Math.floor(3 + Math.random() * 9);
       state.expectedSum = state.a + state.b;
       if (state.promptEl) {
-        state.promptEl.textContent = `¿Cuánto es ${state.a} + ${state.b}? *`;
+        state.promptEl.textContent = `${state.a} + ${state.b} =`;
       }
       if (state.inputEl) state.inputEl.value = '';
       if (state.errEl) {
@@ -1294,7 +1403,10 @@
       slot.setAttribute('data-jbz-challenge-slot', '1');
       const feedback = formEl.querySelector('#formFeedbackBanner, .form-feedback-alert');
       const submitBtn = formEl.querySelector('button[type="submit"], input[type="submit"]');
-      const anchor = feedback || submitBtn;
+      let anchor = feedback || submitBtn;
+      while (anchor && anchor.parentNode && anchor.parentNode !== formEl) {
+        anchor = anchor.parentNode;
+      }
       if (anchor && anchor.parentNode === formEl) {
         formEl.insertBefore(slot, anchor);
       } else {
@@ -1304,15 +1416,21 @@
 
     const uid = 'jbz_ab_' + Math.random().toString(36).slice(2, 8);
     slot.innerHTML = `
-      <div class="jbz-antibot-box">
-        <div class="jbz-antibot-hdr">
-          <span>Verificación Humana Anti-Bot</span>
-          <span class="jbz-antibot-badge">PoW SHA-256 + Firewall</span>
-        </div>
-        <div class="jbz-antibot-row">
-          <label class="jbz-antibot-prompt" for="${uid}" data-jbz-ab-prompt></label>
-          <input id="${uid}" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" class="jbz-antibot-input" placeholder="Resp." autocomplete="off" required />
-          <button type="button" class="jbz-antibot-refresh" title="Generar otra suma">Cambiar</button>
+      <div class="jbz-antibot-wrap">
+        <div class="jbz-antibot-box" role="group" aria-label="Verificación Humana Anti-Bot">
+          <div class="jbz-antibot-main">
+            <span class="jbz-antibot-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </span>
+            <span class="jbz-antibot-lbl">Verificación<span class="jbz-sr-only"> Humana Anti-Bot</span>:</span>
+            <label class="jbz-antibot-prompt" for="${uid}" data-jbz-ab-prompt></label>
+          </div>
+          <div class="jbz-antibot-ctrl">
+            <input id="${uid}" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" class="jbz-antibot-input" placeholder="?" aria-label="Resultado numérico de verificación" autocomplete="off" required />
+            <button type="button" class="jbz-antibot-refresh" title="Generar otra operación" aria-label="Generar otra operación">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </button>
+          </div>
         </div>
         <div class="jbz-antibot-err" data-jbz-ab-err></div>
       </div>
