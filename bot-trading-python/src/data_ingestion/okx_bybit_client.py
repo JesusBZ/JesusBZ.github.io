@@ -82,6 +82,7 @@ class MultiExchangeCryptoOracle:
         self._okx_hist_lock = threading.Lock()
         self._last_okx_hist_ts = 0.0
         self._bybit_blocked = False
+        self._prev_oi_usd: Dict[str, float] = {}
         self._headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) QuantPortfolioEngine/3.0",
             "Accept": "application/json",
@@ -336,6 +337,7 @@ class MultiExchangeCryptoOracle:
         spot_map = {}
         swap_map = {}
         funding_map = {}
+        oi_map: Dict[str, float] = {}
         bybit_ref_map = {}
 
         def _fetch_bybit_ref():
@@ -350,6 +352,18 @@ class MultiExchangeCryptoOracle:
                 pass
             return res
 
+        def _fetch_okx_oi() -> Dict[str, float]:
+            oi_res: Dict[str, float] = {}
+            try:
+                oi_raw = self._get_json(f"{self.okx_base}/api/v5/public/open-interest?instType=SWAP").get("data", [])
+                for item in oi_raw:
+                    inst_id = item.get("instId")
+                    if inst_id:
+                        oi_res[inst_id] = _safe_finite_float(item.get("oiUsd"), 0.0)
+            except Exception:
+                pass
+            return oi_res
+
         def _fetch_okx_fr(c_sym: str) -> Tuple[str, float]:
             try:
                 fr_data = self._get_json(f"{self.okx_base}/api/v5/public/funding-rate?instId={c_sym}-USDT-SWAP").get("data", [])
@@ -359,13 +373,18 @@ class MultiExchangeCryptoOracle:
                 pass
             return c_sym, 0.0001
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=12) as pool:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=13) as pool:
             fut_bybit_ref = pool.submit(_fetch_bybit_ref)
             fut_okx_spot = pool.submit(self._get_json, f"{self.okx_base}/api/v5/market/tickers?instType=SPOT")
             fut_okx_swap = pool.submit(self._get_json, f"{self.okx_base}/api/v5/market/tickers?instType=SWAP")
+            fut_okx_oi = pool.submit(_fetch_okx_oi)
             fut_frs = [pool.submit(_fetch_okx_fr, c) for c in coins]
 
             bybit_ref_map = fut_bybit_ref.result()
+            try:
+                oi_map = fut_okx_oi.result()
+            except Exception:
+                oi_map = {}
             try:
                 spot_raw = fut_okx_spot.result().get("data", [])
                 spot_map = {d["instId"]: d for d in spot_raw}
@@ -398,6 +417,9 @@ class MultiExchangeCryptoOracle:
                         c = sym[:-4]
                         swap_map[f"{c}-USDT-SWAP"] = {"last": d.get("lastPrice", 0)}
                         funding_map[c] = float(d.get("fundingRate") or 0.0)
+                        oi_val = _safe_finite_float(d.get("openInterestValue"), 0.0)
+                        if oi_val > 0:
+                            oi_map[f"{c}-USDT-SWAP"] = oi_val
                 source_used = "Bybit API v5"
 
         result: Dict[str, Dict[str, Any]] = {}
@@ -419,6 +441,12 @@ class MultiExchangeCryptoOracle:
             bybit_px = _safe_finite_float(bybit_ref_map.get(c), last) or last
             cross_ex_bps = (abs(last - bybit_px) / last * 10000.0) if last > 0 else 0.0
             spread_bps = ((ask - bid) / last * 10000.0) if (last > 0 and ask >= bid > 0) else 0.8
+            oi_usd = _safe_finite_float(oi_map.get(f"{c}-USDT-SWAP"), 0.0)
+            prev_oi = self._prev_oi_usd.get(c, oi_usd) or oi_usd
+            oi_chg_pct = ((oi_usd / prev_oi) - 1.0) * 100.0 if prev_oi > 0 else 0.0
+            if oi_usd > 0:
+                self._prev_oi_usd[c] = oi_usd
+            oi_vol_ratio = (oi_usd / max(vol_usd, 1.0)) if (oi_usd > 0 and vol_usd > 0) else 0.35
 
             result[c] = {
                 "coin": c,
@@ -440,6 +468,9 @@ class MultiExchangeCryptoOracle:
                 "basis_bps": round(basis_bps, 2),
                 "funding_rate_8h_pct": round(fr_8h * 100.0, 4),
                 "funding_annual_pct": round(fr_8h * 3.0 * 365.0 * 100.0, 2),
+                "open_interest_usd": round(oi_usd, 0),
+                "oi_change_cycle_pct": round(oi_chg_pct, 3),
+                "oi_vol_ratio": round(oi_vol_ratio, 3),
                 "source": source_used,
                 "timestamp_utc": now_utc,
             }

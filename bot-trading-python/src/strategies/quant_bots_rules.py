@@ -15,6 +15,9 @@ import numpy as np
 import pandas as pd
 import scipy.optimize as sco
 from arch import arch_model
+from sklearn.ensemble import HistGradientBoostingClassifier, HistGradientBoostingRegressor
+from sklearn.linear_model import LogisticRegression
+from sklearn.mixture import GaussianMixture
 from sklearn.neural_network import MLPClassifier, MLPRegressor
 from sklearn.preprocessing import StandardScaler
 
@@ -69,6 +72,60 @@ def calc_adx_di(df: pd.DataFrame, window: int = 14) -> Tuple[pd.Series, pd.Serie
     dx = 100.0 * (plus_di - minus_di).abs() / (plus_di + minus_di + 1e-9)
     adx = dx.ewm(alpha=1.0 / window, adjust=False).mean().fillna(20.0)
     return adx, plus_di, minus_di
+
+
+def calc_obv_slope(close_s: pd.Series, vol_s: pd.Series, window: int = 14) -> pd.Series:
+    """Calcula la pendiente normalizada causal del On-Balance Volume (OBV) en [-1.0, +1.0]."""
+    diff_c = close_s.diff().fillna(0.0)
+    dir_sign = np.where(diff_c > 0.0, 1.0, np.where(diff_c < 0.0, -1.0, 0.0))
+    vols = vol_s.fillna(0.0).clip(lower=0.0)
+    obv = pd.Series(dir_sign * vols.values, index=close_s.index).cumsum()
+    vol_win = vols.rolling(window, min_periods=3).sum() + 1e-9
+    return ((obv - obv.shift(window).fillna(0.0)) / vol_win).fillna(0.0).clip(-1.0, 1.0)
+
+
+def calc_structure_and_btc_metrics(
+    close_df: pd.DataFrame,
+    high_df: pd.DataFrame,
+    low_df: pd.DataFrame,
+    btc_col: str = "BTC",
+    window: int = 20,
+) -> Dict[str, pd.DataFrame]:
+    """Calcula distancia a EMA 200, posición en canal máximo-mínimo, aceleración RSI(7-21) y relación con BTC."""
+    anchor = btc_col if btc_col in close_df.columns else close_df.columns[0]
+    ema200 = close_df.ewm(span=200, min_periods=20, adjust=False).mean().bfill().clip(lower=1e-8)
+    ema200_dist = ((close_df / ema200) - 1.0).fillna(0.0).clip(-0.60, 1.20)
+    hi_w = high_df.rolling(window, min_periods=3).max().bfill()
+    lo_w = low_df.rolling(window, min_periods=3).min().bfill()
+    range_pos = ((close_df - lo_w) / (hi_w - lo_w).clip(lower=1e-8)).fillna(0.5).clip(0.0, 1.0)
+    rsi_accel = pd.DataFrame(
+        {c: (calc_rsi(close_df[c], 7) - calc_rsi(close_df[c], 21)) / 50.0 for c in close_df.columns},
+        index=close_df.index,
+    ).fillna(0.0).clip(-1.0, 1.0)
+    rets = close_df.pct_change().fillna(0.0)
+    roc12 = close_df.pct_change(12).fillna(0.0)
+    btc_corr = pd.DataFrame(
+        {
+            c: (
+                pd.Series(1.0, index=close_df.index)
+                if c == anchor
+                else rets[c].rolling(24, min_periods=6).corr(rets[anchor]).fillna(0.6).clip(-1.0, 1.0)
+            )
+            for c in close_df.columns
+        },
+        index=close_df.index,
+    )
+    btc_rel = pd.DataFrame(
+        {c: (roc12[c] - roc12[anchor]).fillna(0.0).clip(-0.50, 0.50) for c in close_df.columns},
+        index=close_df.index,
+    )
+    return {
+        "ema200_dist": ema200_dist,
+        "range_pos": range_pos,
+        "rsi_accel": rsi_accel,
+        "btc_corr": btc_corr,
+        "btc_rel": btc_rel,
+    }
 
 
 def compute_macd_pct(close_s: pd.Series) -> Tuple[pd.Series, pd.Series, pd.Series]:
@@ -147,7 +204,7 @@ def calc_metrics(equity: np.ndarray, period_rets: np.ndarray, periods_per_year: 
 @dataclass(frozen=True)
 class BotAConfig:
     fee_rate: float = 0.0004
-    max_risk_per_trade_pct: float = 0.0085
+    max_risk_per_trade_pct: float = 0.0050
     max_position_weight: float = 0.24
     max_total_invested: float = 0.68
     max_open_positions: int = 3
@@ -163,7 +220,70 @@ class BotAConfig:
     min_adx_1h_trend: float = 20.0
     min_vol_rel_trend: float = 1.08
     min_vol_rel_rebound: float = 1.25
-    min_order_usd: float = 48.0
+    min_order_usd: float = 45.0
+
+
+@dataclass(frozen=True)
+class RiskGatekeeperConfig:
+    base_risk_per_trade_pct: float = 0.0050
+    daily_loss_limit_pct: float = -0.020
+    kill_switch_drawdown_pct: float = -0.085
+    max_spread_bps: float = 12.0
+    max_cross_exchange_bps: float = 45.0
+    min_net_rr_ratio: float = 1.50
+
+
+def evaluate_risk_gatekeeper(
+    equity_curve: List[float],
+    day_anchor_eq: float,
+    current_invested_ratio: float,
+    max_invested_ratio: float,
+    spread_bps: float = 1.0,
+    cross_exchange_bps: float = 2.0,
+    regime_info: Optional[Dict[str, Any]] = None,
+    rr_ratio: float = 2.0,
+    cfg: RiskGatekeeperConfig = RiskGatekeeperConfig(),
+) -> Dict[str, Any]:
+    """
+    Módulo independiente de Inteligencia de Capital y Riesgo (Nivel 3) con autoridad de veto:
+      1) Kill Switch ante caída desde máximo histórico (<= -8.50%)
+      2) Límite máximo de pérdida diaria (<= -2.00%)
+      3) Filtro de liquidez / spread Bid-Ask (<= 12 bps)
+      4) Verificación de consistencia entre libros OKX/Bybit (<= 45 bps)
+      5) Tope de exposición simultánea y relación riesgo-beneficio mínima (>= 1.50)
+    """
+    eq_arr = np.asarray(equity_curve, dtype=float) if equity_curve else np.array([1000.0])
+    cur_eq = float(eq_arr[-1])
+    peak_eq = float(np.max(eq_arr))
+    current_dd = (cur_eq - peak_eq) / max(peak_eq, 1e-6)
+    daily_pnl = (cur_eq - float(day_anchor_eq)) / max(float(day_anchor_eq), 1e-6)
+
+    risk_mult = float((regime_info or {}).get("risk_multiplier", 1.0))
+    sl_buf = float((regime_info or {}).get("sl_atr_buffer", 1.0))
+    eff_risk = float(np.clip(cfg.base_risk_per_trade_pct * risk_mult, 0.0020, 0.0060))
+
+    veto_code: Optional[str] = None
+    if current_dd <= cfg.kill_switch_drawdown_pct:
+        veto_code = "KILL_SWITCH_DRAWDOWN"
+    elif daily_pnl <= cfg.daily_loss_limit_pct:
+        veto_code = "DAILY_LOSS_LIMIT"
+    elif float(spread_bps) > cfg.max_spread_bps:
+        veto_code = "LIQUIDITY_SPREAD_HIGH"
+    elif float(cross_exchange_bps) > cfg.max_cross_exchange_bps:
+        veto_code = "ORACLE_DIVERGENCE"
+    elif float(current_invested_ratio) >= float(max_invested_ratio) - 1e-4:
+        veto_code = "EXPOSURE_CAP_REACHED"
+    elif float(rr_ratio) < cfg.min_net_rr_ratio:
+        veto_code = "RR_BELOW_MINIMUM"
+
+    return {
+        "approved": veto_code is None,
+        "veto_code": veto_code,
+        "effective_risk_pct": round(eff_risk, 6),
+        "sl_buffer_mult": round(sl_buf, 3),
+        "current_dd_pct": round(current_dd * 100.0, 2),
+        "daily_pnl_pct": round(daily_pnl * 100.0, 2),
+    }
 
 
 def init_bot_a_state(coins: List[str], base_cap: float = 1000.0) -> Dict[str, Any]:
@@ -210,12 +330,17 @@ def step_bot_a_microtrading(
     breadth_1h: float,
     cfg: BotAConfig = BotAConfig(),
     adx_1h_prev: Optional[Dict[str, float]] = None,
+    obv_prev: Optional[Dict[str, float]] = None,
+    ema200_dist_prev: Optional[Dict[str, float]] = None,
+    regime_code: Optional[str] = None,
+    spread_bps_map: Optional[Dict[str, float]] = None,
+    risk_mult: float = 1.0,
 ) -> None:
     """
     Ejecuta un paso intradía (15m con filtro 1H) de BOT A respetando:
       - Límite máximo de pérdida diaria (-2.00% desde apertura diaria UTC)
-      - Filtro mínimo de rango ATR/Precio (>= 0.42%) y fuerza tendencial ADX 1H (>= 20)
-      - Dimensionamiento por paridad ATR (riesgo máx. <= 0.85% patrimonio, tope 24%/par, máx. 68% total)
+      - Filtro mínimo de rango ATR/Precio (>= 0.42%), ADX 1H (>= 20), liquidez Bid-Ask y régimen de mercado
+      - Dimensionamiento por paridad ATR (riesgo máx. <= 0.50% modulado por régimen, tope 24%/par, máx. 68% total)
       - Salidas estrictamente causales (sin fuga intra-barra): SL 1.55x ATR, Toma Parcial 45% (1.40x ATR),
         Trailing Stop dinámico (+0.55% piso neto) tras +1.05x ATR y TP objetivo 3.10x ATR (ratio 2:1)
     """
@@ -384,8 +509,14 @@ def step_bot_a_microtrading(
             adx_ok = adx_1h_val >= cfg.min_adx_1h_trend
             bull_candle = px_prev > float(bar_open_prev[c])
             htf_ok = (breadth_1h >= 0.375) or (e21_1h >= e55_1h * 0.995)
+            obv_val = float(obv_prev.get(c, 0.0)) if obv_prev is not None else 0.0
+            e200_d = float(ema200_dist_prev.get(c, 0.0)) if ema200_dist_prev is not None else 0.0
+            spread_ok = (float(spread_bps_map.get(c, 1.0)) <= 12.0) if spread_bps_map is not None else True
+            allow_trend = (regime_code not in ("TENDENCIA_BAJISTA", "MERCADO_LATERAL")) if regime_code else True
             setup_trend = (
-                vol_edge_ok
+                spread_ok
+                and allow_trend
+                and vol_edge_ok
                 and adx_ok
                 and htf_ok
                 and bull_candle
@@ -395,9 +526,12 @@ def step_bot_a_microtrading(
                 and (48.0 <= rv <= 70.0)
                 and (0.50 <= pb <= 0.90)
                 and (vrel >= cfg.min_vol_rel_trend)
+                and (obv_val >= -0.08)
+                and (e200_d <= 0.35)
             )
             setup_bb_reclaim = (
-                vol_edge_ok
+                spread_ok
+                and vol_edge_ok
                 and (pbp < 0.14)
                 and (pb > 0.22)
                 and bull_candle
@@ -405,6 +539,7 @@ def step_bot_a_microtrading(
                 and (px_prev > e9 * 0.996)
                 and (rv < 46.0)
                 and (vrel >= cfg.min_vol_rel_rebound)
+                and (obv_val >= -0.18)
             )
 
             open_count = sum(1 for k in coins if state["units"][k] > 0.0)
@@ -412,11 +547,13 @@ def step_bot_a_microtrading(
             eq_est = state["cash_usd"] + invested_now
             inv_ratio = invested_now / max(eq_est, 1.0)
             if (setup_trend or setup_bb_reclaim) and open_count < cfg.max_open_positions and inv_ratio < cfg.max_total_invested:
-                stop_dist_pct = max(0.0085, (cfg.sl_atr_mult * atr_v) / max(px_prev, 1e-6))
-                risk_w = cfg.max_risk_per_trade_pct / stop_dist_pct
+                sl_buf = 1.15 if regime_code == "ALTA_VOLATILIDAD" else 1.00
+                eff_risk_pct = float(np.clip(cfg.max_risk_per_trade_pct * float(risk_mult), 0.0022, 0.0065))
+                stop_dist_pct = max(0.0085, (cfg.sl_atr_mult * sl_buf * atr_v) / max(px_prev, 1e-6))
+                risk_w = eff_risk_pct / stop_dist_pct
                 rem_w = max(0.0, cfg.max_total_invested - inv_ratio)
                 target_w = min(cfg.max_position_weight, risk_w, rem_w)
-                alloc_usd = min(target_w * eq_est, (cfg.max_risk_per_trade_pct * eq_est) / stop_dist_pct)
+                alloc_usd = min(target_w * eq_est, (eff_risk_pct * eq_est) / stop_dist_pct)
                 if alloc_usd >= cfg.min_order_usd and state["cash_usd"] >= alloc_usd * (1.0 + cfg.fee_rate * 2.0):
                     px_exec = float(np.clip(px_prev, b_lo, b_hi))
                     fee = alloc_usd * cfg.fee_rate
@@ -429,9 +566,10 @@ def step_bot_a_microtrading(
                     partial_map[c] = False
                     state["peak"][c] = px_exec
                     state["sl"][c] = px_exec * (1.0 - stop_dist_pct)
-                    tp_ratio = (cfg.tp_atr_mult / cfg.sl_atr_mult) if setup_trend else 1.75
+                    tp_ratio = (cfg.tp_atr_mult / (cfg.sl_atr_mult * sl_buf)) if setup_trend else 1.75
                     state["tp"][c] = px_exec * (1.0 + tp_ratio * stop_dist_pct)
                     act_in = "COMPRA IMPULSO 15M/VOLUMEN" if setup_trend else "COMPRA REBOTE BOLLINGER 15M"
+                    reg_tag = f" | Reg={regime_code}" if regime_code else ""
                     state["trades"].append({
                         "bot_id": "bot_a", "bot_code": "BOT A",
                         "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
@@ -441,7 +579,7 @@ def step_bot_a_microtrading(
                         "sl_price": fmt_px_dec(state["sl"][c]), "tp_price": fmt_px_dec(state["tp"][c]),
                         "volume_rel": round(vrel, 2), "notional_usd": round(alloc_usd, 2), "fee_usd": round(fee, 3),
                         "realized_pnl_usd": None, "realized_pnl_pct": None,
-                        "telemetry": f"EMA9>21 | ATR={atr_pct*100:.2f}% | ADX1H={adx_1h_val:.0f} | Vol={vrel:.2f}x | SL={fmt_px_dec(state['sl'][c])}",
+                        "telemetry": f"EMA9>21 | ATR={atr_pct*100:.2f}% | ADX1H={adx_1h_val:.0f} | OBV={obv_val:+.2f} | Vol={vrel:.2f}x{reg_tag}",
                     })
 
     cur_eq = state["cash_usd"] + sum(state["units"][c] * float(bar_close_cur[c]) for c in coins)
@@ -468,8 +606,11 @@ def step_bot_b_daily(
     chandelier_mult: float = 2.1,
     prev_w: Optional[np.ndarray] = None,
     turnover_penalty: float = 0.06,
+    obv_y: Optional[np.ndarray] = None,
+    btc_rel_y: Optional[np.ndarray] = None,
+    regime_code: Optional[str] = None,
 ) -> Tuple[np.ndarray, np.ndarray, bool]:
-    """Calcula vector de pesos diarios de BOT B con Markowitz/GARCH, penalización L1 proporcional de rotación y salida Chandelier ATR."""
+    """Calcula vector de pesos diarios de BOT B con Markowitz/GARCH, penalización L1, OBV/BTC rel, régimen GMM y salida Chandelier ATR."""
     n_assets = len(coins)
     btc_j = coins.index("BTC") if "BTC" in coins else 0
     macro_b = bool((px_y[btc_j] > e50_y[btc_j]) or (float(np.mean(px_y > s20_y)) >= 0.375))
@@ -477,12 +618,23 @@ def step_bot_b_daily(
     bull_b = macro_b & (px_y > s20_y) & (e12_y > e26_y) & (r14_y > 0.5) & (pb_y > 0.52) & chandelier_b
     breadth_b = float(np.mean(bull_b))
 
+    regime_exp_cap = {
+        "TENDENCIA_ALCISTA": 0.92,
+        "MERCADO_LATERAL": 0.55,
+        "ALTA_VOLATILIDAD": 0.38,
+        "TENDENCIA_BAJISTA": 0.24,
+    }.get(regime_code or "", 0.92)
+
     if np.any(bull_b):
+        obv_mult = np.clip(1.0 + 0.35 * np.asarray(obv_y, dtype=float), 0.70, 1.35) if obv_y is not None else 1.0
+        rel_mult = np.clip(1.0 + 1.15 * np.asarray(btc_rel_y, dtype=float), 0.75, 1.35) if btc_rel_y is not None else 1.0
         raw_mu = np.where(
             bull_b,
             (0.55 * np.maximum(0.0, r14_y / 100.0) + 0.45 * np.maximum(0.0, mh_y / 10.0) + 0.008)
             * np.where(px_y > e50_y, 1.25, 0.90)
             * np.clip(adx_y / 20.0, 0.80, 1.45)
+            * obv_mult
+            * rel_mult
             / np.maximum(vol_y, 0.014),
             -0.01,
         )
@@ -512,13 +664,13 @@ def step_bot_b_daily(
         )
         wb = np.clip(res_b.x if res_b.success else np.ones(n_assets) / n_assets, 0.0, max_asset_weight) * bull_b
         if np.sum(wb) > 1e-6:
-            wb = (wb / np.sum(wb)) * min(0.92, 0.42 + 0.55 * breadth_b)
+            wb = (wb / np.sum(wb)) * min(regime_exp_cap, 0.42 + 0.55 * breadth_b)
         else:
             wb = np.zeros(n_assets)
     else:
         oversold_b = np.where((pb_y < 0.16) & (mh_y > -0.8))[0]
         wb = np.zeros(n_assets)
-        if len(oversold_b) > 0:
+        if len(oversold_b) > 0 and regime_code != "ALTA_VOLATILIDAD":
             wb[oversold_b[0]] = min(0.12, max_asset_weight)
 
     wb = np.clip(wb, 0.0, max_asset_weight)
@@ -542,26 +694,42 @@ def step_bot_c_futures(
     max_gross_leverage: float = 1.05,
     funding_8h: Optional[np.ndarray] = None,
     prev_wc: Optional[np.ndarray] = None,
+    oi_vol_ratio: Optional[np.ndarray] = None,
+    obv_v: Optional[np.ndarray] = None,
+    regime_code: Optional[str] = None,
+    risk_per_leg: float = 0.0085,
 ) -> np.ndarray:
-    """Calcula pesos direccionales (Largos > 0 y Cortos < 0) de BOT C con carry 8h, histéresis y tope bruto <= 1.05x."""
+    """Calcula pesos direccionales (Largos > 0 y Cortos < 0) de BOT C con carry 8h, Open Interest, OBV, régimen GMM y tope <= 1.05x."""
     n_assets = len(px_v)
     wc = np.zeros(n_assets)
     dir_scores = np.zeros(n_assets)
     fund_arr = np.asarray(funding_8h, dtype=float) if funding_8h is not None else None
     prev_arr = np.asarray(prev_wc, dtype=float) if prev_wc is not None else None
+    oi_arr = np.asarray(oi_vol_ratio, dtype=float) if oi_vol_ratio is not None else None
+    obv_arr = np.asarray(obv_v, dtype=float) if obv_v is not None else None
+
+    min_score_thr = 0.30 if regime_code == "MERCADO_LATERAL" else 0.25
+    leg_risk_mult = {"ALTA_VOLATILIDAD": 0.80, "MERCADO_LATERAL": 0.90}.get(regime_code or "", 1.0)
+    eff_leg_risk = float(risk_per_leg) * leg_risk_mult
+
     for j in range(n_assets):
         atr_pct = max(0.012, atr_v[j] / max(px_v[j], 1e-6))
+        oi_bonus = 0.12 if (oi_arr is not None and 0.20 <= oi_arr[j] <= 6.50) else 0.0
         if (px_v[j] > e21_v[j] > e55_v[j]) and (r24_v[j] > 1.2) and (pdi_v[j] > mdi_v[j]) and (pb_v[j] > 0.52):
-            score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
+            score = ((r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)) + oi_bonus
             if fund_arr is not None:
                 score += float(np.clip(-fund_arr[j] * 180.0, -0.35, 0.35))
+            if obv_arr is not None:
+                score += float(np.clip(obv_arr[j] * 0.12, -0.08, 0.08))
             if prev_arr is not None and prev_arr[j] > 0.04:
                 score += 0.35
             dir_scores[j] = score
         elif (px_v[j] < e21_v[j] < e55_v[j]) and (r24_v[j] < -1.2) and (mdi_v[j] > pdi_v[j]) and (pb_v[j] < 0.48) and (adx_v[j] > 19.0):
-            score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
+            score = ((r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)) - oi_bonus
             if fund_arr is not None:
                 score -= float(np.clip(fund_arr[j] * 180.0, -0.35, 0.35))
+            if obv_arr is not None:
+                score += float(np.clip(obv_arr[j] * 0.12, -0.08, 0.08))
             if prev_arr is not None and prev_arr[j] < -0.04:
                 score -= 0.35
             dir_scores[j] = score
@@ -569,13 +737,13 @@ def step_bot_c_futures(
     pos_idx = np.argsort(dir_scores)[::-1]
     neg_idx = np.argsort(dir_scores)
     for j in pos_idx[:3]:
-        if dir_scores[j] > 0.25:
+        if dir_scores[j] > min_score_thr:
             atr_pct = max(0.012, atr_v[j] / max(px_v[j], 1e-6))
-            wc[j] = min(0.26, 0.0085 / atr_pct)
+            wc[j] = min(0.26, eff_leg_risk / atr_pct)
     for j in neg_idx[:3]:
-        if dir_scores[j] < -0.25:
+        if dir_scores[j] < -min_score_thr:
             atr_pct = max(0.012, atr_v[j] / max(px_v[j], 1e-6))
-            wc[j] = -min(0.24, 0.0080 / atr_pct)
+            wc[j] = -min(0.24, (eff_leg_risk * 0.94) / atr_pct)
 
     gross_lev = float(np.sum(np.abs(wc)))
     if gross_lev > max_gross_leverage:
@@ -616,11 +784,16 @@ def extract_ta_features_row(
     rsi_df: pd.DataFrame,
     stoch_df: pd.DataFrame,
     vol_rel_df: pd.DataFrame,
+    obv_slope_df: Optional[pd.DataFrame] = None,
+    ema200_dist_df: Optional[pd.DataFrame] = None,
+    range_pos_df: Optional[pd.DataFrame] = None,
+    btc_rel_df: Optional[pd.DataFrame] = None,
+    rsi_accel_df: Optional[pd.DataFrame] = None,
 ) -> List[float]:
     e9_i = float(ema9_df.iloc[idx_pos][coin_sym])
     e21_i = float(ema21_df.iloc[idx_pos][coin_sym])
     e55_i = float(ema55_df.iloc[idx_pos][coin_sym])
-    return [
+    base = [
         (e9_i / max(e21_i, 1e-8)) - 1.0,
         (e21_i / max(e55_i, 1e-8)) - 1.0,
         float(bb_pctb_df.iloc[idx_pos][coin_sym]) - 0.5,
@@ -632,6 +805,210 @@ def extract_ta_features_row(
         (float(stoch_df.iloc[idx_pos][coin_sym]) - 50.0) / 50.0,
         float(vol_rel_df.iloc[idx_pos][coin_sym]) - 1.0,
     ]
+    if (
+        obv_slope_df is not None
+        and ema200_dist_df is not None
+        and range_pos_df is not None
+        and btc_rel_df is not None
+        and rsi_accel_df is not None
+    ):
+        base.extend([
+            float(obv_slope_df.iloc[idx_pos][coin_sym]),
+            float(ema200_dist_df.iloc[idx_pos][coin_sym]),
+            float(range_pos_df.iloc[idx_pos][coin_sym]) - 0.5,
+            float(btc_rel_df.iloc[idx_pos][coin_sym]),
+            float(rsi_accel_df.iloc[idx_pos][coin_sym]),
+        ])
+    return base
+
+
+def compute_triple_barrier_labels(
+    close_df: pd.DataFrame,
+    high_df: pd.DataFrame,
+    low_df: pd.DataFrame,
+    atr_df: pd.DataFrame,
+    horizon: int = 4,
+    tp_atr_mult: float = 1.80,
+    sl_atr_mult: float = 1.40,
+    roundtrip_fee: float = 0.0020,
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Etiquetado causal de Triple Barrera (Fase 2):
+      - Clase 2 (ALCISTA): alcanza Take-Profit ATR antes que Stop-Loss y neto de comisiones
+      - Clase 0 (BAJISTA): alcanza Stop-Loss ATR primero o cae bajo -0.45% neto
+      - Clase 1 (LATERAL): rango estrecho sin expectativa positiva suficiente (enseña a esperar)
+    Las últimas `horizon` filas quedan estrictamente en NaN para impedir fuga de información futura.
+    """
+    h_steps = max(1, int(horizon))
+    labels = pd.DataFrame(np.nan, index=close_df.index, columns=close_df.columns, dtype=float)
+    net_rets = pd.DataFrame(np.nan, index=close_df.index, columns=close_df.columns, dtype=float)
+    n_rows = len(close_df)
+    if n_rows <= h_steps:
+        return labels, net_rets
+
+    c_mat = close_df.values
+    h_mat = high_df.values
+    l_mat = low_df.values
+    a_mat = atr_df.values
+    out_lbl = np.full_like(c_mat, np.nan, dtype=float)
+    out_ret = np.full_like(c_mat, np.nan, dtype=float)
+
+    for j in range(c_mat.shape[1]):
+        for i in range(0, n_rows - h_steps):
+            p0 = float(c_mat[i, j])
+            atr0 = max(1e-9, float(a_mat[i, j]))
+            if not (np.isfinite(p0) and p0 > 0.0 and np.isfinite(atr0)):
+                continue
+            up_pct = max(2.2 * roundtrip_fee, (tp_atr_mult * atr0) / p0)
+            dn_pct = max(0.010, (sl_atr_mult * atr0) / p0)
+            ub = p0 * (1.0 + up_pct)
+            lb = p0 * (1.0 - dn_pct)
+            hit_cls: Optional[int] = None
+            hit_ret: float = 0.0
+            for k in range(i + 1, i + h_steps + 1):
+                lo_k = float(l_mat[k, j])
+                hi_k = float(h_k := h_mat[k, j])
+                _ = h_k
+                if lo_k <= lb:
+                    hit_cls = 0
+                    hit_ret = -dn_pct - roundtrip_fee
+                    break
+                if hi_k >= ub:
+                    hit_cls = 2
+                    hit_ret = up_pct - roundtrip_fee
+                    break
+            if hit_cls is None:
+                c_end = float(c_mat[i + h_steps, j])
+                net_end = ((c_end / p0) - 1.0) - roundtrip_fee
+                hit_ret = net_end
+                if net_end > 0.0045:
+                    hit_cls = 2
+                elif net_end < -0.0045:
+                    hit_cls = 0
+                else:
+                    hit_cls = 1
+            out_lbl[i, j] = float(hit_cls)
+            out_ret[i, j] = float(np.clip(hit_ret, -0.12, 0.12))
+
+    labels.iloc[:, :] = out_lbl
+    net_rets.iloc[:, :] = out_ret
+    return labels, net_rets
+
+
+def detect_market_regimes_gmm(
+    close_df: pd.DataFrame,
+    adx_df: pd.DataFrame,
+    btc_col: str = "BTC",
+    seed: int = 42,
+) -> Dict[str, Any]:
+    """
+    Detector Causal de 4 Regímenes de Mercado con GaussianMixture (GMM):
+      - TENDENCIA_ALCISTA
+      - MERCADO_LATERAL
+      - TENDENCIA_BAJISTA
+      - ALTA_VOLATILIDAD
+    Ajusta únicamente hasta t-1 (cuando hay >= 25 filas) y clasifica determinísticamente sin fuga futura.
+    """
+    anchor = btc_col if btc_col in close_df.columns else close_df.columns[0]
+    btc_s = close_df[anchor].clip(lower=1e-8)
+    btc_e50 = btc_s.ewm(span=50, min_periods=5, adjust=False).mean().clip(lower=1e-8)
+    btc_roc12 = btc_s.pct_change(12).fillna(0.0)
+    f_trend = ((btc_s / btc_e50) - 1.0).fillna(0.0) + 0.55 * btc_roc12
+
+    e50_all = close_df.ewm(span=50, min_periods=5, adjust=False).mean().clip(lower=1e-8)
+    f_breadth = (close_df > e50_all).mean(axis=1).fillna(0.5) - 0.5
+    rets = close_df.pct_change().fillna(0.0)
+    cross_vol = rets.rolling(18, min_periods=4).std().mean(axis=1).fillna(0.015).clip(lower=1e-5)
+    f_adx = (adx_df.reindex(close_df.index).ffill().fillna(20.0).mean(axis=1) / 25.0).clip(0.2, 3.0)
+
+    feat_mat = np.column_stack([
+        f_trend.values,
+        f_breadth.values,
+        cross_vol.values * 100.0,
+        f_adx.values,
+    ])
+    n_rows = len(feat_mat)
+    fit_end = max(12, n_rows - 1) if n_rows >= 25 else n_rows
+    scaler = StandardScaler()
+    X_fit = scaler.fit_transform(feat_mat[:fit_end])
+    X_all = scaler.transform(feat_mat)
+
+    n_comp = min(4, max(2, len(np.unique(X_fit, axis=0))))
+    gmm = GaussianMixture(n_components=n_comp, covariance_type="diag", reg_covar=1e-4, max_iter=180, random_state=seed)
+    gmm.fit(X_fit)
+    posteriors = gmm.predict_proba(X_all)
+
+    raw_centers = scaler.inverse_transform(gmm.means_)
+    comp_to_code: Dict[int, str] = {}
+    remaining = list(range(n_comp))
+    if len(remaining) == 4:
+        hv_idx = max(remaining, key=lambda k: raw_centers[k, 2])
+        comp_to_code[hv_idx] = "ALTA_VOLATILIDAD"
+        remaining.remove(hv_idx)
+        bull_idx = max(remaining, key=lambda k: raw_centers[k, 0] + 0.35 * raw_centers[k, 1])
+        comp_to_code[bull_idx] = "TENDENCIA_ALCISTA"
+        remaining.remove(bull_idx)
+        bear_idx = min(remaining, key=lambda k: raw_centers[k, 0] + 0.35 * raw_centers[k, 1])
+        comp_to_code[bear_idx] = "TENDENCIA_BAJISTA"
+        remaining.remove(bear_idx)
+        comp_to_code[remaining[0]] = "MERCADO_LATERAL"
+    else:
+        for k in remaining:
+            if raw_centers[k, 0] > 0.01:
+                comp_to_code[k] = "TENDENCIA_ALCISTA"
+            elif raw_centers[k, 0] < -0.01:
+                comp_to_code[k] = "TENDENCIA_BAJISTA"
+            else:
+                comp_to_code[k] = "MERCADO_LATERAL"
+
+    meta_map = {
+        "TENDENCIA_ALCISTA": ("Tendencia Alcista", 1.00, 1.00),
+        "MERCADO_LATERAL": ("Mercado Lateral", 0.75, 1.00),
+        "TENDENCIA_BAJISTA": ("Tendencia Bajista", 0.60, 1.08),
+        "ALTA_VOLATILIDAD": ("Alta Volatilidad", 0.50, 1.20),
+    }
+
+    med_vol = float(np.median(cross_vol.values[:fit_end])) if fit_end > 0 else float(cross_vol.iloc[-1])
+    codes_out: List[str] = []
+    for i in range(n_rows):
+        best_c = int(np.argmax(posteriors[i]))
+        code_i = comp_to_code.get(best_c, "MERCADO_LATERAL")
+        if float(cross_vol.iloc[i]) >= max(0.032, 1.85 * med_vol):
+            code_i = "ALTA_VOLATILIDAD"
+        codes_out.append(code_i)
+
+    last_p = posteriors[-1]
+    reg_probs = {k: 0.0 for k in meta_map}
+    for comp_i, code_str in comp_to_code.items():
+        reg_probs[code_str] += float(last_p[comp_i])
+    cur_code = codes_out[-1]
+    if cur_code == "ALTA_VOLATILIDAD" and reg_probs["ALTA_VOLATILIDAD"] < 0.45:
+        reg_probs["ALTA_VOLATILIDAD"] = max(reg_probs["ALTA_VOLATILIDAD"], 0.58)
+    s_prob = sum(reg_probs.values()) or 1.0
+    reg_probs = {k: round(v / s_prob, 4) for k, v in reg_probs.items()}
+
+    lbl, r_mult, sl_buf = meta_map[cur_code]
+    return {
+        "current_regime": {
+            "code": cur_code,
+            "label": lbl,
+            "probabilities": reg_probs,
+            "risk_multiplier": r_mult,
+            "sl_atr_buffer": sl_buf,
+            "cross_vol_pct": round(float(cross_vol.iloc[-1]) * 100.0, 2),
+        },
+        "regime_codes_series": pd.Series(codes_out, index=close_df.index),
+    }
+
+
+def _align_proba_3class(clf: Any, X_in: np.ndarray) -> np.ndarray:
+    raw_p = clf.predict_proba(X_in)
+    out = np.full((len(X_in), 3), 1e-6, dtype=float)
+    for col_i, cls_val in enumerate(getattr(clf, "classes_", [])):
+        c_int = int(cls_val)
+        if 0 <= c_int <= 2:
+            out[:, c_int] = raw_p[:, col_i]
+    return out / np.sum(out, axis=1, keepdims=True)
 
 
 def fit_causal_mlp_ensemble(
@@ -675,6 +1052,165 @@ def fit_causal_mlp_ensemble(
     return scaler, reg, clf
 
 
+def fit_supervised_3class_ensemble(
+    X_seq: np.ndarray,
+    y_cls3_seq: np.ndarray,
+    y_ret_seq: np.ndarray,
+    purge_samples: int = 32,
+    seed: int = 101,
+) -> Dict[str, Any]:
+    """
+    Entrena el Ensemble Supervisado de 3 Probabilidades (Bajista=0, Lateral=1, Alcista=2)
+    mediante validación cronológica con brecha de purga anti-solapamiento:
+      - HistGradientBoostingClassifier & Regressor (algoritmo LightGBM nativo)
+      - MLPClassifier(32, 16) regularizado L2
+      - LogisticRegression L2 calibrada
+    """
+    X_arr = np.asarray(X_seq, dtype=float)
+    yc_arr = np.clip(np.asarray(y_cls3_seq, dtype=int), 0, 2)
+    yr_arr = np.asarray(y_ret_seq, dtype=float)
+    n_tot = len(X_arr)
+    split_tr = max(36, int(n_tot * 0.74))
+    gap = min(max(4, int(purge_samples)), max(4, (n_tot - split_tr) // 3))
+    val_start = min(n_tot - 10, split_tr + gap) if n_tot >= 60 else split_tr
+
+    X_tr, yc_tr, yr_tr = X_arr[:split_tr], yc_arr[:split_tr], yr_arr[:split_tr]
+    X_val, yc_val, yr_val = X_arr[val_start:], yc_arr[val_start:], yr_arr[val_start:]
+    if len(X_val) < 6:
+        X_val, yc_val, yr_val = X_tr[-12:], yc_tr[-12:], yr_tr[-12:]
+
+    scaler = StandardScaler()
+    Xs_tr = scaler.fit_transform(X_tr)
+
+    hgb_clf = HistGradientBoostingClassifier(
+        max_depth=4, learning_rate=0.045, max_iter=105,
+        min_samples_leaf=max(5, min(20, len(X_tr) // 16)),
+        l2_regularization=2.5, random_state=seed,
+    )
+    hgb_reg = HistGradientBoostingRegressor(
+        max_depth=3, learning_rate=0.04, max_iter=95,
+        min_samples_leaf=max(5, min(20, len(X_tr) // 16)),
+        l2_regularization=3.0, random_state=seed,
+    )
+    mlp_clf = MLPClassifier(
+        hidden_layer_sizes=(32, 16), activation="tanh", alpha=3.2,
+        learning_rate_init=0.003, tol=1e-3, max_iter=550, early_stopping=False, random_state=seed,
+    )
+    log_clf = LogisticRegression(C=0.40, tol=1e-3, max_iter=500, random_state=seed)
+
+    hgb_clf.fit(X_tr, yc_tr)
+    hgb_reg.fit(X_tr, yr_tr)
+    mlp_clf.fit(Xs_tr, yc_tr)
+    log_clf.fit(Xs_tr, yc_tr)
+
+    bundle = {
+        "scaler": scaler,
+        "hgb_clf": hgb_clf,
+        "hgb_reg": hgb_reg,
+        "mlp_clf": mlp_clf,
+        "log_clf": log_clf,
+        "version": 1,
+        "train_samples": int(len(X_tr)),
+        "purged_gap": int(max(0, val_start - split_tr)),
+        "val_samples": int(len(X_val)),
+        "trained_bar": "",
+    }
+    val_pred = predict_supervised_3class_ensemble(bundle, X_val)
+    p_mat = np.column_stack([val_pred["prob_bear"], val_pred["prob_flat"], val_pred["prob_bull"]])
+    y_oh = np.eye(3)[yc_val]
+    brier = float(np.mean(np.sum((p_mat - y_oh) ** 2, axis=1)))
+    top_q = float(np.quantile(val_pred["prob_bull"], 0.75)) if len(val_pred["prob_bull"]) >= 4 else 0.5
+    sel_rets = yr_val[val_pred["prob_bull"] >= top_q]
+    oos_exp = float(np.mean(sel_rets) * 100.0) if len(sel_rets) > 0 else float(np.mean(yr_val) * 100.0)
+    bundle["oos_brier_score"] = round(brier, 4)
+    bundle["oos_expectancy_pct"] = round(oos_exp, 3)
+    return bundle
+
+
+def predict_supervised_3class_ensemble(
+    bundle: Dict[str, Any],
+    X_rows: np.ndarray,
+    regime_probs: Optional[Dict[str, float]] = None,
+) -> Dict[str, np.ndarray]:
+    """Combina HistGradientBoosting + MLP + Regresión Logística + Prior de Régimen GMM en 3 probabilidades que suman 1.0."""
+    X_arr = np.asarray(X_rows, dtype=float)
+    Xs = bundle["scaler"].transform(X_arr)
+    p_hgb = _align_proba_3class(bundle["hgb_clf"], X_arr)
+    p_mlp = _align_proba_3class(bundle["mlp_clf"], Xs)
+    p_log = _align_proba_3class(bundle["log_clf"], Xs)
+    pred_ret = np.asarray(bundle["hgb_reg"].predict(X_arr), dtype=float)
+
+    if regime_probs:
+        p_alc = float(regime_probs.get("TENDENCIA_ALCISTA", 0.25))
+        p_lat = float(regime_probs.get("MERCADO_LATERAL", 0.45))
+        p_baj = float(regime_probs.get("TENDENCIA_BAJISTA", 0.15))
+        p_vol = float(regime_probs.get("ALTA_VOLATILIDAD", 0.15))
+        prior_vec = (
+            p_alc * np.array([0.15, 0.25, 0.60])
+            + p_lat * np.array([0.20, 0.60, 0.20])
+            + p_baj * np.array([0.60, 0.25, 0.15])
+            + p_vol * np.array([0.35, 0.45, 0.20])
+        )
+        prior_vec = prior_vec / max(float(np.sum(prior_vec)), 1e-8)
+    else:
+        prior_vec = np.array([0.33, 0.34, 0.33])
+
+    prior_mat = np.tile(prior_vec, (len(X_arr), 1))
+    comb = 0.44 * p_hgb + 0.26 * p_mlp + 0.15 * p_log + 0.15 * prior_mat
+    comb = comb / np.sum(comb, axis=1, keepdims=True)
+    return {
+        "prob_bear": comb[:, 0],
+        "prob_flat": comb[:, 1],
+        "prob_bull": comb[:, 2],
+        "pred_net_ret": pred_ret,
+    }
+
+
+def govern_champion_challenger(
+    champion_bundle: Optional[Dict[str, Any]],
+    challenger_bundle: Dict[str, Any],
+    bar_tag: str,
+) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    """Política Campeón vs. Retador (Bloque 5): promueve el Retador solo si mejora o preserva métricas fuera de muestra."""
+    ch = dict(challenger_bundle)
+    ch["trained_bar"] = bar_tag
+    if champion_bundle is None:
+        ch["version"] = 1
+        decision = {
+            "promoted": True,
+            "active_version": 1,
+            "reason": "Inicialización Campeón v1 con validación cronológica purgada",
+            "bar_tag": bar_tag,
+        }
+        return ch, decision
+
+    champ_brier = float(champion_bundle.get("oos_brier_score", 1.0))
+    chall_brier = float(ch.get("oos_brier_score", 1.0))
+    champ_exp = float(champion_bundle.get("oos_expectancy_pct", -99.0))
+    chall_exp = float(ch.get("oos_expectancy_pct", -99.0))
+    promote = (chall_brier <= champ_brier + 0.012) and (chall_exp >= champ_exp - 0.08)
+    if promote:
+        new_ver = int(champion_bundle.get("version", 1)) + 1
+        ch["version"] = new_ver
+        decision = {
+            "promoted": True,
+            "active_version": new_ver,
+            "reason": f"Retador supera/iguala OOS (Brier {chall_brier:.4f}, Exp {chall_exp:+.3f}%)",
+            "bar_tag": bar_tag,
+        }
+        return ch, decision
+
+    retained = dict(champion_bundle)
+    cur_ver = int(retained.get("version", 1))
+    decision = {
+        "promoted": False,
+        "active_version": cur_ver,
+        "reason": f"Campeón v{cur_ver} retenido (Retador Brier {chall_brier:.4f} / Exp {chall_exp:+.3f}%)",
+        "bar_tag": bar_tag,
+    }
+    return retained, decision
+
+
 def compute_bot_d_sizing(
     equity_usd: float,
     cash_usd: float,
@@ -682,13 +1218,13 @@ def compute_bot_d_sizing(
     price_now: float,
     atr_14: float,
     prob_up: float,
-    max_risk_pct: float = 0.0105,
+    max_risk_pct: float = 0.0055,
     max_asset_weight: float = 0.25,
     min_cash_reserve_pct: float = 0.25,
 ) -> Tuple[float, float]:
     """
     Calcula (alloc_usd, stop_dist_pct) de BOT D garantizando:
-      - Riesgo máximo por operación <= 1.05% del patrimonio
+      - Riesgo máximo por operación <= max_risk_pct (0.55% base modulado por régimen)
       - Tope por activo <= 25% del patrimonio
       - Reserva mínima permanente >= 25% en USDT
     """

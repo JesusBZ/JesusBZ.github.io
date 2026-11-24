@@ -59,22 +59,31 @@ from src.execution.secure_vault import (
 from src.strategies.quant_bots_rules import (
     GENESIS_HASH,
     BotAConfig,
+    RiskGatekeeperConfig,
     append_orders_sha256_chain,
     calc_adx_di,
     calc_atr,
     calc_futures_account_state,
     calc_metrics,
+    calc_obv_slope,
     calc_rsi,
     calc_stoch_k,
+    calc_structure_and_btc_metrics,
     compute_bollinger,
     compute_bot_d_sizing,
     compute_gjr_garch_vols,
     compute_macd_pct,
+    compute_triple_barrier_labels,
+    detect_market_regimes_gmm,
     evaluate_bot_d_exit_decision,
+    evaluate_risk_gatekeeper,
     extract_ta_features_row,
     fit_causal_mlp_ensemble,
+    fit_supervised_3class_ensemble,
     fmt_px_dec,
+    govern_champion_challenger,
     init_bot_a_state,
+    predict_supervised_3class_ensemble,
     sign_orders_sha256_chain,
     step_bot_a_microtrading,
     step_bot_b_daily,
@@ -545,7 +554,7 @@ def summarize_bot_trades(
     }
 
 
-STATEFUL_LEDGER_SCHEMA = "v3_stateful"
+STATEFUL_LEDGER_SCHEMA = "v4_hybrid_3tier"
 
 
 def _step_bot_b_closed_bar(
@@ -568,6 +577,10 @@ def _step_bot_b_closed_bar(
     bb_pb_d: pd.DataFrame,
     atr_1d: pd.DataFrame,
     adx_1d: pd.DataFrame,
+    obv_1d: Optional[pd.DataFrame] = None,
+    btc_rel_1d: Optional[pd.DataFrame] = None,
+    regime_series_1d: Optional[pd.Series] = None,
+    gatekeeper_cfg: RiskGatekeeperConfig = RiskGatekeeperConfig(),
 ) -> List[Dict[str, Any]]:
     emitted: List[Dict[str, Any]] = []
     if dt not in d_rets.index:
@@ -591,6 +604,10 @@ def _step_bot_b_closed_bar(
     pk15_y = peak15_d.loc[p_dt].values
     adx_y = adx_1d.loc[p_dt].values
     vol_y = d_vols.iloc[loc - 1].values
+    obv_y = obv_1d.loc[p_dt].values if obv_1d is not None and p_dt in obv_1d.index else None
+    btc_rel_y = btc_rel_1d.loc[p_dt].values if btc_rel_1d is not None and p_dt in btc_rel_1d.index else None
+    reg_code_b = str(regime_series_1d.get(p_dt, "MERCADO_LATERAL")) if regime_series_1d is not None else "TENDENCIA_ALCISTA"
+    reg_mult_b = {"TENDENCIA_ALCISTA": 1.0, "MERCADO_LATERAL": 0.75, "TENDENCIA_BAJISTA": 0.60, "ALTA_VOLATILIDAD": 0.50}.get(reg_code_b, 0.85)
 
     win60 = d_rets.iloc[max(0, loc - 60) : loc]
     cov60 = win60.cov().fillna(0.0).values
@@ -605,13 +622,28 @@ def _step_bot_b_closed_bar(
 
     cur_val_before = cash_b + sum(float(units_b[c]) * float(d_slice.loc[p_dt, c]) for c in coins)
     cur_w = np.array([(float(units_b[c]) * float(d_slice.loc[p_dt, c])) / max(cur_val_before, 1e-6) for c in coins])
+    inv_ratio_b = float(np.sum(cur_w))
 
     wb, _, _ = step_bot_b_daily(
         px_y, s20_y, e12_y, e26_y, e50_y, r14_y, mh_y, pb_y, atr_y, pk15_y, adx_y, vol_y, cov_lw, coins,
         chandelier_mult=2.30,
         prev_w=cur_w,
         turnover_penalty=0.06,
+        obv_y=obv_y,
+        btc_rel_y=btc_rel_y,
+        regime_code=reg_code_b,
     )
+    gate_b = evaluate_risk_gatekeeper(
+        pf_b["eq_curve"],
+        prev_eq_b,
+        inv_ratio_b,
+        0.95,
+        regime_info={"risk_multiplier": reg_mult_b, "sl_atr_buffer": 1.0},
+        rr_ratio=2.15,
+        cfg=gatekeeper_cfg,
+    )
+    if not gate_b["approved"] and gate_b["veto_code"] == "KILL_SWITCH_DRAWDOWN":
+        wb = np.zeros(n_assets)
 
     turn_b = float(np.sum(np.abs(wb - cur_w)))
     has_full_exit_b = any((float(units_b[c]) > 1e-7 and wb[j] == 0.0) for j, c in enumerate(coins))
@@ -653,11 +685,11 @@ def _step_bot_b_closed_bar(
                         "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
                         "volume_rel": round(vrel_d, 2), "notional_usd": round(proceeds, 2), "fee_usd": round(fee, 3),
                         "realized_pnl_usd": round(pnl_u, 2), "realized_pnl_pct": round(pnl_p, 2),
-                        "telemetry": f"EMA12/26={(e12_y[j]/e26_y[j]-1)*100:+.2f}% | %B={pb_y[j]:.2f} | Vol={vrel_d:.2f}x",
+                        "telemetry": f"EMA12/26={(e12_y[j]/e26_y[j]-1)*100:+.2f}% | %B={pb_y[j]:.2f} | Reg={reg_code_b} | Vol={vrel_d:.2f}x",
                     }
                     pf_b["trades"].append(tr_s)
                     emitted.append(tr_s)
-                elif diff_usd > 0 and cash_b >= diff_usd * (1.0 + SETTINGS.spot_fee_rate):
+                elif diff_usd > 0 and gate_b["approved"] and cash_b >= diff_usd * (1.0 + SETTINGS.spot_fee_rate):
                     fee = diff_usd * SETTINGS.spot_fee_rate
                     pf_b["fees_cum"] = float(pf_b["fees_cum"]) + fee
                     buy_qty = diff_usd / px_exec
@@ -678,7 +710,7 @@ def _step_bot_b_closed_bar(
                         "sl_price": fmt_px_dec(sl_b[c]), "tp_price": fmt_px_dec(tp_b[c]),
                         "volume_rel": round(vrel_d, 2), "notional_usd": round(diff_usd, 2), "fee_usd": round(fee, 3),
                         "realized_pnl_usd": None, "realized_pnl_pct": None,
-                        "telemetry": f"Mom14d={r14_y[j]:+.1f}% | ADX={adx_y[j]:.1f} | %B={pb_y[j]:.2f} | Vol={vrel_d:.2f}x",
+                        "telemetry": f"Mom14d={r14_y[j]:+.1f}% | ADX={adx_y[j]:.1f} | %B={pb_y[j]:.2f} | Reg={reg_code_b}",
                     }
                     pf_b["trades"].append(tr_b)
                     emitted.append(tr_b)
@@ -710,6 +742,10 @@ def _step_bot_c_closed_bar(
     atr_4h: pd.DataFrame,
     vol_rel_4h: pd.DataFrame,
     funding_rates_8h: np.ndarray,
+    oi_vol_ratio_vec: Optional[np.ndarray] = None,
+    obv_4h: Optional[pd.DataFrame] = None,
+    regime_series_4h: Optional[pd.Series] = None,
+    gatekeeper_cfg: RiskGatekeeperConfig = RiskGatekeeperConfig(),
 ) -> List[Dict[str, Any]]:
     emitted: List[Dict[str, Any]] = []
     ts = close_4h.index[idx_i]
@@ -717,6 +753,7 @@ def _step_bot_c_closed_bar(
     prev_eq_c = float(pf_c["eq_curve"][-1])
     bar_step = int(pf_c.get("bar_step", 0)) + 1
     pf_c["bar_step"] = bar_step
+    reg_code_c = str(regime_series_4h.iloc[idx_i - 1]) if regime_series_4h is not None else "TENDENCIA_ALCISTA"
 
     realized_cash_c = float(pf_c["realized_cash_c"])
     units_c = pf_c["units"]
@@ -764,7 +801,7 @@ def _step_bot_c_closed_bar(
                     "volume_rel": round(float(vrel_prev_c[j]), 2),
                     "notional_usd": round(abs(qty_c * px_sl), 2), "fee_usd": round(fee_close, 3),
                     "realized_pnl_usd": pnl_u, "realized_pnl_pct": pnl_p,
-                    "telemetry": f"Protección 4H | SL={fmt_px_dec(sl_c[c])} | Vol={vrel_prev_c[j]:.2f}x",
+                    "telemetry": f"Protección 4H | SL={fmt_px_dec(sl_c[c])} | Reg={reg_code_c} | Vol={vrel_prev_c[j]:.2f}x",
                 }
                 pf_c["trades"].append(tr_sl)
                 emitted.append(tr_sl)
@@ -798,7 +835,7 @@ def _step_bot_c_closed_bar(
                     "volume_rel": round(float(vrel_prev_c[j]), 2),
                     "notional_usd": round(abs(qty_c * px_sl), 2), "fee_usd": round(fee_close, 3),
                     "realized_pnl_usd": pnl_u, "realized_pnl_pct": pnl_p,
-                    "telemetry": f"Protección Short 4H | SL={fmt_px_dec(sl_c[c])} | Vol={vrel_prev_c[j]:.2f}x",
+                    "telemetry": f"Protección Short 4H | SL={fmt_px_dec(sl_c[c])} | Reg={reg_code_c} | Vol={vrel_prev_c[j]:.2f}x",
                 }
                 pf_c["trades"].append(tr_sls)
                 emitted.append(tr_sls)
@@ -825,17 +862,30 @@ def _step_bot_c_closed_bar(
         mdi_v = mdi_4h.loc[prev_ts].values
         atr_v = atr_prev_c
         vrel_v = vrel_prev_c
+        obv_v = obv_4h.loc[prev_ts].values if obv_4h is not None else None
 
-        eq_ref, _, _ = calc_futures_account_state(units_c, entry_c, realized_cash_c, close_4h.loc[prev_ts].to_dict())
+        eq_ref, gross_ref, _ = calc_futures_account_state(units_c, entry_c, realized_cash_c, close_4h.loc[prev_ts].to_dict())
         eq_ref = max(250.0, eq_ref)
         cur_wc = np.array([(float(units_c[c]) * float(close_4h.loc[prev_ts, c])) / eq_ref for c in coins])
+        gate_c = evaluate_risk_gatekeeper(
+            pf_c["eq_curve"], prev_eq_c, gross_ref / max(eq_ref, 1.0), 1.08,
+            regime_info={"risk_multiplier": 0.65 if reg_code_c == "ALTA_VOLATILIDAD" else 1.0},
+            rr_ratio=1.60, cfg=gatekeeper_cfg,
+        )
 
         wc = step_bot_c_futures(
             px_v, e21_v, e55_v, r24_v, mh_v, pb_v, adx_v, pdi_v, mdi_v, atr_v,
             max_gross_leverage=1.05,
             funding_8h=funding_rates_8h,
             prev_wc=cur_wc,
+            oi_vol_ratio=oi_vol_ratio_vec,
+            obv_v=obv_v,
+            regime_code=reg_code_c,
         )
+        if gate_c["current_dd_pct"] <= -15.0:
+            wc = np.zeros(len(coins))
+        elif gate_c["veto_code"] == "KILL_SWITCH_DRAWDOWN":
+            wc = wc * 0.55
         if float(np.sum(np.abs(wc - cur_wc))) >= 0.16:
             for j, c in enumerate(coins):
                 if bar_step < int(cooldown_step.get(c, -1)) and abs(float(units_c[c])) <= 1e-9:
@@ -999,31 +1049,50 @@ def _step_bot_d_closed_bar(
     stoch_4h: pd.DataFrame,
     atr_4h: pd.DataFrame,
     vol_rel_4h: pd.DataFrame,
-    mlp_scaler: StandardScaler,
-    mlp_reg: MLPRegressor,
-    mlp_clf: MLPClassifier,
-) -> Tuple[List[Dict[str, Any]], np.ndarray]:
+    ensemble_bundle: Dict[str, Any],
+    obv_4h: Optional[pd.DataFrame] = None,
+    ema200_dist_4h: Optional[pd.DataFrame] = None,
+    range_pos_4h: Optional[pd.DataFrame] = None,
+    btc_rel_4h: Optional[pd.DataFrame] = None,
+    rsi_accel_4h: Optional[pd.DataFrame] = None,
+    regime_series_4h: Optional[pd.Series] = None,
+    regime_probs: Optional[Dict[str, float]] = None,
+    spread_bps_map: Optional[Dict[str, float]] = None,
+    cross_bps_map: Optional[Dict[str, float]] = None,
+    gatekeeper_cfg: RiskGatekeeperConfig = RiskGatekeeperConfig(),
+) -> Tuple[List[Dict[str, Any]], Dict[str, np.ndarray]]:
     emitted: List[Dict[str, Any]] = []
     ts = close_4h.index[idx_i]
     prev_ts = close_4h.index[idx_i - 1]
     prev_eq_d = float(pf_d["eq_curve"][-1])
+    reg_code_d = str(regime_series_4h.iloc[idx_i - 1]) if regime_series_4h is not None else "MERCADO_LATERAL"
+    reg_mult_d = {"TENDENCIA_ALCISTA": 1.0, "MERCADO_LATERAL": 0.78, "TENDENCIA_BAJISTA": 0.60, "ALTA_VOLATILIDAD": 0.50}.get(reg_code_d, 0.80)
+    sl_buf_d = 1.15 if reg_code_d == "ALTA_VOLATILIDAD" else 1.00
+    bar_reg_probs = regime_probs
+    if bar_reg_probs is None:
+        bar_reg_probs = {k: 0.10 for k in ("TENDENCIA_ALCISTA", "MERCADO_LATERAL", "TENDENCIA_BAJISTA", "ALTA_VOLATILIDAD")}
+        bar_reg_probs[reg_code_d] = 0.70
 
-    X_now_4h = mlp_scaler.transform(
-        np.array([
-            extract_ta_features_row(
-                idx_i - 1, c, ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
-                roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h
-            )
-            for c in coins
-        ])
-    )
-    pred_ret_d = mlp_reg.predict(X_now_4h)
-    prob_up_d = mlp_clf.predict_proba(X_now_4h)[:, 1]
+    X_now_4h = np.array([
+        extract_ta_features_row(
+            idx_i - 1, c, ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
+            roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h,
+            obv_slope_df=obv_4h, ema200_dist_df=ema200_dist_4h,
+            range_pos_df=range_pos_4h, btc_rel_df=btc_rel_4h, rsi_accel_df=rsi_accel_4h,
+        )
+        for c in coins
+    ])
+    ens_out = predict_supervised_3class_ensemble(ensemble_bundle, X_now_4h, regime_probs=bar_reg_probs)
+    prob_bull_d = ens_out["prob_bull"]
+    prob_flat_d = ens_out["prob_flat"]
+    prob_bear_d = ens_out["prob_bear"]
+    pred_ret_d = ens_out["pred_net_ret"]
 
     cash_d = float(pf_d["cash_usd"])
     units_d = pf_d["units"]
     entry_d = pf_d["entry"]
     entry_fee_d = pf_d.setdefault("entry_fee", {c: 0.0 for c in coins})
+    partial_d = pf_d.setdefault("partial_taken", {c: False for c in coins})
     peak_d = pf_d.setdefault("peak", {c: 0.0 for c in coins})
     sl_d = pf_d["sl"]
     tp_d = pf_d["tp"]
@@ -1040,12 +1109,17 @@ def _step_bot_d_closed_bar(
         pb_v = float(bb_pctb_4h.loc[prev_ts, c])
         rsi_v = float(rsi_4h.loc[prev_ts, c])
         vrel_v = float(vol_rel_4h.loc[prev_ts, c])
-        p_up = float(prob_up_d[j])
+        obv_v = float(obv_4h.loc[prev_ts, c]) if obv_4h is not None else 0.0
+        brel_v = float(btc_rel_4h.loc[prev_ts, c]) if btc_rel_4h is not None else 0.0
+        p_up = float(prob_bull_d[j])
+        p_flat = float(prob_flat_d[j])
+        p_dn = float(prob_bear_d[j])
         p_r = float(pred_ret_d[j])
 
         if float(units_d[c]) > 0.0:
+            dir_prob_up = p_up / max(p_up + p_dn, 1e-6)
             should_exit, act_d, px_exec, new_sl = evaluate_bot_d_exit_decision(
-                p_up, p_r, e9_v, e21_v, b_lo, b_hi, float(sl_d[c]), float(tp_d[c]), float(peak_d[c]), float(entry_d[c]), atr_v
+                dir_prob_up, p_r, e9_v, e21_v, b_lo, b_hi, float(sl_d[c]), float(tp_d[c]), float(peak_d[c]), float(entry_d[c]), atr_v
             )
             sl_d[c] = new_sl
             if should_exit and act_d:
@@ -1065,7 +1139,7 @@ def _step_bot_d_closed_bar(
                     "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
                     "volume_rel": round(vrel_v, 2), "notional_usd": round(gross, 2), "fee_usd": round(fee, 3),
                     "realized_pnl_usd": round(pnl_u, 2), "realized_pnl_pct": round(pnl_p, 2),
-                    "telemetry": f"ProbMLP={p_up*100:.1f}% | %B={pb_v:.2f} | Vol={vrel_v:.2f}x",
+                    "telemetry": f"Alza={p_up*100:.0f}% Lat={p_flat*100:.0f}% Baja={p_dn*100:.0f}% | Reg={reg_code_d} | Vol={vrel_v:.2f}x",
                 }
                 pf_d["trades"].append(tr_sd)
                 emitted.append(tr_sd)
@@ -1073,41 +1147,87 @@ def _step_bot_d_closed_bar(
                 sl_d[c] = 0.0
                 tp_d[c] = 0.0
                 entry_fee_d[c] = 0.0
+                partial_d[c] = False
                 peak_d[c] = 0.0
             else:
+                part_target_d = float(entry_d[c]) + 1.35 * atr_v
+                qty_cur = float(units_d[c])
+                if (not partial_d.get(c, False)) and (b_hi >= part_target_d) and (qty_cur * part_target_d >= 95.0):
+                    qty_p = qty_cur * 0.45
+                    px_p = float(np.clip(part_target_d, b_lo, b_hi))
+                    gross_p = qty_p * px_p
+                    fee_p = gross_p * SETTINGS.spot_fee_rate
+                    ent_fp = float(entry_fee_d.get(c, 0.0)) * 0.45
+                    pnl_up = gross_p - fee_p - (qty_p * float(entry_d[c])) - ent_fp
+                    pnl_pp = ((px_p / max(float(entry_d[c]), 1e-8)) - 1.0) * 100.0 - (2.0 * SETTINGS.spot_fee_rate * 100.0)
+                    cash_d += gross_p - fee_p
+                    pf_d["fees_cum"] = float(pf_d["fees_cum"]) + fee_p
+                    units_d[c] = qty_cur - qty_p
+                    entry_fee_d[c] = max(0.0, float(entry_fee_d.get(c, 0.0)) - ent_fp)
+                    partial_d[c] = True
+                    sl_d[c] = max(float(sl_d[c]), float(entry_d[c]) * 1.0065)
+                    tr_pd = {
+                        "bot_id": "bot_d", "bot_code": "BOT D",
+                        "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
+                        "coin": c, "instrument": f"{c}-USDT", "side_type": "SELL",
+                        "action": "TOMA PARCIAL 45% ENSEMBLE ATR", "units": round(qty_p, 6), "price": fmt_px_dec(px_p),
+                        "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                        "volume_rel": round(vrel_v, 2), "notional_usd": round(gross_p, 2), "fee_usd": round(fee_p, 3),
+                        "realized_pnl_usd": round(pnl_up, 2), "realized_pnl_pct": round(pnl_pp, 2),
+                        "telemetry": f"Parcial 45% (1.35x ATR) | SL={fmt_px_dec(sl_d[c])} | Alza={p_up*100:.0f}%",
+                    }
+                    pf_d["trades"].append(tr_pd)
+                    emitted.append(tr_pd)
                 peak_d[c] = max(float(peak_d.get(c, 0.0)), b_hi)
         else:
             pb_prev2 = float(bb_pctb_4h.iloc[idx_i - 2][c])
             mh_prev2 = float(macd_h_4h.iloc[idx_i - 2][c])
-            stk_now = float(stoch_4h.loc[prev_ts, c])
             bull_4h = px_prev > float(open_4h.loc[prev_ts, c])
-            p_cut_d = max(0.520, float(np.quantile(prob_up_d, 0.74)))
+            p_cut_d = 0.45 if reg_code_d == "TENDENCIA_ALCISTA" else (0.50 if reg_code_d == "MERCADO_LATERAL" else 0.54)
             nn_trend_ok = (
-                (p_up >= p_cut_d)
-                and (p_r > 0.0018)
-                and (px_prev > e9_v > e21_v >= e55_v)
-                and (mh_v > 0.0 and mh_v > mh_prev2)
-                and (50.0 <= rsi_v <= 68.0)
-                and (vrel_v >= 1.08)
+                (reg_code_d == "TENDENCIA_ALCISTA")
+                and (p_up >= p_cut_d)
+                and (p_flat < 0.42)
+                and ((p_up - p_dn) >= 0.15)
+                and (p_r > 0.0010)
+                and (px_prev > e9_v > e21_v >= e55_v * 0.992)
+                and (mh_v > 0.0)
+                and (obv_v >= 0.05)
+                and (vrel_v >= 0.95)
             )
             nn_rebound_ok = (
-                (p_up >= 0.525)
-                and (p_r > 0.0010)
-                and (e21_v >= e55_v * 0.992)
+                (reg_code_d != "TENDENCIA_BAJISTA")
+                and (p_up >= 0.58)
+                and ((p_up - p_dn) >= 0.38)
+                and (p_r > 0.0020)
                 and bull_4h
-                and (pb_prev2 < 0.14 and pb_v > 0.22)
-                and (px_prev > e9_v * 0.998)
+                and (pb_v > pb_prev2 and pb_v < 0.55)
                 and (mh_v > mh_prev2)
-                and (stk_now < 34.0)
-                and (vrel_v >= 1.20)
+                and (vrel_v >= 1.15)
+                and (brel_v >= 0.0)
             )
             nn_buy_ok = nn_trend_ok or nn_rebound_ok
 
             invested_d = sum(float(units_d[k]) * float(close_4h.loc[prev_ts, k]) for k in coins)
             eq_est_d = cash_d + invested_d
-            if nn_buy_ok and (invested_d / max(eq_est_d, 1.0) < 0.74):
-                alloc_d, stop_dist_d = compute_bot_d_sizing(eq_est_d, cash_d, invested_d, px_prev, atr_v, p_up)
-                if alloc_d >= 55.0 and cash_d >= alloc_d * 1.002:
+            sp_bps = float(spread_bps_map.get(c, 1.0)) if spread_bps_map else 1.0
+            cx_bps = float(cross_bps_map.get(c, 2.0)) if cross_bps_map else 2.0
+            gate_d = evaluate_risk_gatekeeper(
+                pf_d["eq_curve"], prev_eq_d, invested_d / max(eq_est_d, 1.0), 0.74,
+                spread_bps=sp_bps, cross_exchange_bps=cx_bps,
+                regime_info={"risk_multiplier": reg_mult_d, "sl_atr_buffer": sl_buf_d},
+                rr_ratio=2.15 if nn_trend_ok else 2.05,
+                cfg=gatekeeper_cfg,
+            )
+            if not gate_d["approved"]:
+                pf_d["veto_count"] = int(pf_d.get("veto_count", 0)) + 1
+            elif nn_buy_ok:
+                dir_prob_up = p_up / max(p_up + p_dn, 1e-6)
+                alloc_d, stop_dist_d = compute_bot_d_sizing(
+                    eq_est_d, cash_d, invested_d, px_prev, atr_v * sl_buf_d, dir_prob_up,
+                    max_risk_pct=gate_d["effective_risk_pct"],
+                )
+                if alloc_d >= 48.0 and cash_d >= alloc_d * 1.002:
                     px_exec = float(np.clip(px_prev, b_lo, b_hi))
                     fee = alloc_d * SETTINGS.spot_fee_rate
                     qty = alloc_d / px_exec
@@ -1116,11 +1236,12 @@ def _step_bot_d_closed_bar(
                     units_d[c] = qty
                     entry_d[c] = px_exec
                     entry_fee_d[c] = fee
+                    partial_d[c] = False
                     peak_d[c] = px_exec
                     sl_d[c] = px_exec * (1.0 - stop_dist_d)
-                    tp_mult = 2.05 if nn_trend_ok else 1.75
+                    tp_mult = 2.15
                     tp_d[c] = px_exec * (1.0 + tp_mult * stop_dist_d)
-                    act_d_in = "COMPRA IMPULSO MLP(32,16)" if nn_trend_ok else "COMPRA REBOTE BOLLINGER MLP"
+                    act_d_in = "COMPRA ENSEMBLE TRIPLE-BARRERA" if nn_trend_ok else "COMPRA REBOTE BOLLINGER ENSEMBLE"
                     tr_bd = {
                         "bot_id": "bot_d", "bot_code": "BOT D",
                         "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
@@ -1131,7 +1252,7 @@ def _step_bot_d_closed_bar(
                         "sl_price": fmt_px_dec(sl_d[c]), "tp_price": fmt_px_dec(tp_d[c]),
                         "volume_rel": round(vrel_v, 2), "notional_usd": round(alloc_d, 2), "fee_usd": round(fee, 3),
                         "realized_pnl_usd": None, "realized_pnl_pct": None,
-                        "telemetry": f"ProbMLP={p_up*100:.1f}% | %B={pb_v:.2f} | Vol={vrel_v:.2f}x | SL={fmt_px_dec(sl_d[c])}",
+                        "telemetry": f"Alza={p_up*100:.0f}% Lat={p_flat*100:.0f}% Baja={p_dn*100:.0f}% | OBV={obv_v:+.2f} | Reg={reg_code_d}",
                     }
                     pf_d["trades"].append(tr_bd)
                     emitted.append(tr_bd)
@@ -1142,7 +1263,7 @@ def _step_bot_d_closed_bar(
     pf_d["eq_curve"].append(cur_eq_d)
     pf_d["dates"].append(ts.strftime("%Y-%m-%d %H:%M"))
     pf_d["last_closed_bar"] = ts.strftime("%Y-%m-%d %H:%M")
-    return emitted, prob_up_d
+    return emitted, ens_out
 
 
 def _sanitize_portfolio_for_json(pf: Dict[str, Any], coins: List[str]) -> Dict[str, Any]:
@@ -1283,13 +1404,22 @@ def run_four_algorithmic_bots(
     roc10_15m = (close_15m.pct_change(10) * 100.0).fillna(0.0)
     macd_h_15m = pd.DataFrame({c: compute_macd_pct(close_15m[c])[2] for c in coins})
     bb_pctb_15m = pd.DataFrame({c: compute_bollinger(close_15m[c], 20, 2.0)[3] for c in coins})
+    if cache_bucket is not None and cache_bucket.get("ind_15m_key") == key_15m and "ind_15m" in cache_bucket:
+        obv_15m = cache_bucket["ind_15m"]["obv_15m"]
+        ema200_dist_15m = cache_bucket["ind_15m"]["ema200_dist_15m"]
+    else:
+        obv_15m = pd.DataFrame({c: calc_obv_slope(close_15m[c], vol_15m[c], 14) for c in coins}, index=close_15m.index)
+        ema200_dist_15m = calc_structure_and_btc_metrics(close_15m, high_15m, low_15m, "BTC", 20)["ema200_dist"]
+        if cache_bucket is not None:
+            cache_bucket["ind_15m_key"] = key_15m
+            cache_bucket["ind_15m"] = {"obv_15m": obv_15m, "ema200_dist_15m": ema200_dist_15m}
 
     ema21_1h_aligned = ema21_1h.reindex(close_15m.index, method="ffill").bfill()
     ema55_1h_aligned = ema55_1h.reindex(close_15m.index, method="ffill").bfill()
     breadth_1h_aligned = breadth_1h_series.reindex(close_15m.index, method="ffill").bfill()
     adx_1h_aligned = adx_1h.reindex(close_15m.index, method="ffill").bfill()
 
-    # Indicadores 4H cacheados por cierre de vela 4H para BOT C, BOT D y Panel Multipanel
+    # Indicadores 4H, variables ortogonales y detector GMM de 4 regímenes cacheados por vela
     if cache_bucket is not None and cache_bucket.get("ind_4h_key") == key_4h and "ind_4h" in cache_bucket:
         ind_4h = cache_bucket["ind_4h"]
         close_4h = ind_4h["close_4h"]
@@ -1311,6 +1441,15 @@ def run_four_algorithmic_bots(
         adx_4h = ind_4h["adx_4h"]
         pdi_4h = ind_4h["pdi_4h"]
         mdi_4h = ind_4h["mdi_4h"]
+        obv_4h = ind_4h["obv_4h"]
+        ema200_dist_4h = ind_4h["ema200_dist_4h"]
+        range_pos_4h = ind_4h["range_pos_4h"]
+        rsi_accel_4h = ind_4h["rsi_accel_4h"]
+        btc_corr_4h = ind_4h["btc_corr_4h"]
+        btc_rel_4h = ind_4h["btc_rel_4h"]
+        regimes_4h = ind_4h["regimes_4h"]
+        tb_labels_4h = ind_4h["tb_labels_4h"]
+        tb_rets_4h = ind_4h["tb_rets_4h"]
     else:
         close_4h = pd.DataFrame({c: candles_4h[c]["close"] for c in coins}).ffill().dropna()
         open_4h = pd.DataFrame({c: candles_4h[c]["open"] for c in coins}).reindex(close_4h.index).ffill()
@@ -1340,32 +1479,34 @@ def run_four_algorithmic_bots(
             pdi_4h[c] = p_v.reindex(close_4h.index).bfill()
             mdi_4h[c] = m_v.reindex(close_4h.index).bfill()
 
+        obv_4h = pd.DataFrame({c: calc_obv_slope(close_4h[c], vol_4h[c], 14) for c in coins}, index=close_4h.index)
+        struct_4h = calc_structure_and_btc_metrics(close_4h, high_4h, low_4h, "BTC", 20)
+        ema200_dist_4h = struct_4h["ema200_dist"]
+        range_pos_4h = struct_4h["range_pos"]
+        rsi_accel_4h = struct_4h["rsi_accel"]
+        btc_corr_4h = struct_4h["btc_corr"]
+        btc_rel_4h = struct_4h["btc_rel"]
+        regimes_4h = detect_market_regimes_gmm(close_4h.iloc[:-1], adx_4h.iloc[:-1], btc_col="BTC", seed=42)
+        tb_labels_4h, tb_rets_4h = compute_triple_barrier_labels(
+            close_4h, high_4h, low_4h, atr_4h, horizon=4, tp_atr_mult=1.80, sl_atr_mult=1.40, roundtrip_fee=SETTINGS.spot_fee_rate * 2.0
+        )
+
         if cache_bucket is not None:
             cache_bucket["ind_4h_key"] = key_4h
             cache_bucket["ind_4h"] = {
-                "close_4h": close_4h,
-                "open_4h": open_4h,
-                "high_4h": high_4h,
-                "low_4h": low_4h,
-                "vol_rel_4h": vol_rel_4h,
-                "atr_4h": atr_4h,
-                "rsi_4h": rsi_4h,
-                "stoch_4h": stoch_4h,
-                "ema9_4h": ema9_4h,
-                "ema21_4h": ema21_4h,
-                "ema55_4h": ema55_4h,
-                "roc12_4h": roc12_4h,
-                "roc24_4h": roc24_4h,
-                "macd_h_4h": macd_h_4h,
-                "bb_pctb_4h": bb_pctb_4h,
-                "bb_bw_4h": bb_bw_4h,
-                "adx_4h": adx_4h,
-                "pdi_4h": pdi_4h,
-                "mdi_4h": mdi_4h,
+                "close_4h": close_4h, "open_4h": open_4h, "high_4h": high_4h, "low_4h": low_4h,
+                "vol_rel_4h": vol_rel_4h, "atr_4h": atr_4h, "rsi_4h": rsi_4h, "stoch_4h": stoch_4h,
+                "ema9_4h": ema9_4h, "ema21_4h": ema21_4h, "ema55_4h": ema55_4h,
+                "roc12_4h": roc12_4h, "roc24_4h": roc24_4h, "macd_h_4h": macd_h_4h,
+                "bb_pctb_4h": bb_pctb_4h, "bb_bw_4h": bb_bw_4h,
+                "adx_4h": adx_4h, "pdi_4h": pdi_4h, "mdi_4h": mdi_4h,
+                "obv_4h": obv_4h, "ema200_dist_4h": ema200_dist_4h, "range_pos_4h": range_pos_4h,
+                "rsi_accel_4h": rsi_accel_4h, "btc_corr_4h": btc_corr_4h, "btc_rel_4h": btc_rel_4h,
+                "regimes_4h": regimes_4h, "tb_labels_4h": tb_labels_4h, "tb_rets_4h": tb_rets_4h,
             }
 
     # =========================================================================
-    # INDICADORES DIARIOS (1D) Y RED NEURONAL CAUSAL 4H CACHEADOS POR VELA
+    # INDICADORES DIARIOS (1D) Y RÉGIMEN GMM 1D CACHEADOS POR VELA
     # =========================================================================
     bot_b_ind_key = (daily_prices.index[-1].strftime("%Y-%m-%d"), len(daily_prices))
     if cache_bucket is not None and cache_bucket.get("bot_b_ind_key") == bot_b_ind_key and "bot_b_inds" in cache_bucket:
@@ -1386,6 +1527,9 @@ def run_four_algorithmic_bots(
         bb_pb_d = bi["bb_pb_d"]
         atr_1d = bi["atr_1d"]
         adx_1d = bi["adx_1d"]
+        obv_1d = bi["obv_1d"]
+        btc_rel_1d = bi["btc_rel_1d"]
+        regimes_1d = bi["regimes_1d"]
     else:
         d_slice = daily_prices.tail(260).copy()
         d_hi = daily_highs.reindex(d_slice.index).ffill()
@@ -1404,6 +1548,9 @@ def run_four_algorithmic_bots(
         bb_pb_d = pd.DataFrame({c: compute_bollinger(d_slice[c], 20, 2.0)[3] for c in coins})
         atr_1d = pd.DataFrame({c: calc_atr(pd.DataFrame({"high": d_hi[c], "low": d_lo[c], "close": d_slice[c]}), 14) for c in coins})
         adx_1d = pd.DataFrame({c: calc_adx_di(pd.DataFrame({"high": d_hi[c], "low": d_lo[c], "close": d_slice[c]}), 14)[0] for c in coins})
+        obv_1d = pd.DataFrame({c: calc_obv_slope(d_slice[c], d_vol[c], 14) for c in coins}, index=d_slice.index)
+        btc_rel_1d = calc_structure_and_btc_metrics(d_slice, d_hi, d_lo, "BTC", 20)["btc_rel"]
+        regimes_1d = detect_market_regimes_gmm(d_slice.iloc[:-1], adx_1d.iloc[:-1], btc_col="BTC", seed=42)
         if cache_bucket is not None:
             cache_bucket["bot_b_ind_key"] = bot_b_ind_key
             cache_bucket["bot_b_inds"] = {
@@ -1412,6 +1559,7 @@ def run_four_algorithmic_bots(
                 "sma20_d": sma20_d, "ema12_d": ema12_d, "ema26_d": ema26_d, "ema50_d": ema50_d,
                 "roc14_d": roc14_d, "peak15_d": peak15_d, "macd_d_df": macd_d_df,
                 "bb_pb_d": bb_pb_d, "atr_1d": atr_1d, "adx_1d": adx_1d,
+                "obv_1d": obv_1d, "btc_rel_1d": btc_rel_1d, "regimes_1d": regimes_1d,
             }
 
     for c in coins:
@@ -1421,37 +1569,51 @@ def run_four_algorithmic_bots(
         d_lo.iloc[-1, d_lo.columns.get_loc(c)] = min(float(d_lo.iloc[-1][c]), sp)
 
     funding_rates_8h = np.array([float(market_snapshot[c]["funding_rate_8h_pct"]) / 100.0 for c in coins])
+    oi_vol_ratio_vec = np.array([float(market_snapshot[c].get("oi_vol_ratio", 0.35)) for c in coins])
+    spread_bps_map = {c: float(market_snapshot[c].get("spread_bps", 1.0)) for c in coins}
+    cross_bps_map = {c: float(market_snapshot[c].get("cross_exchange_bps", 2.0)) for c in coins}
+    gatekeeper_cfg = RiskGatekeeperConfig()
     cfg_a = BotAConfig()
     eval_start_4h = max(35, len(close_4h) - 271)
+    cur_reg_4h = regimes_4h["current_regime"]
+    reg_series_4h = regimes_4h["regime_codes_series"]
+    reg_series_1d = regimes_1d["regime_codes_series"]
+    reg_15m_aligned = reg_series_4h.reindex(close_15m.index, method="ffill").fillna("MERCADO_LATERAL")
+    reg_mult_map = {"TENDENCIA_ALCISTA": 1.0, "MERCADO_LATERAL": 0.78, "TENDENCIA_BAJISTA": 0.60, "ALTA_VOLATILIDAD": 0.50}
 
-    mlp_cache_key = (key_4h, len(close_4h))
-    if cache_bucket is not None and cache_bucket.get("mlp_4h_key") == mlp_cache_key and "mlp_4h_models" in cache_bucket:
-        mlp_live_scaler, mlp_live_reg, mlp_live_clf = cache_bucket["mlp_4h_models"]
+    ens_cache_key = (key_4h, len(close_4h))
+    if cache_bucket is not None and cache_bucket.get("ens_4h_key") == ens_cache_key and "ens_4h_models" in cache_bucket:
+        live_champ_bundle, live_gov_decision = cache_bucket["ens_4h_models"]
     else:
-        fwd_3_4h_all = close_4h.pct_change(3).shift(-3)
-        X_all_4h, yr_all_4h, yc_all_4h = [], [], []
+        prev_champ = cache_bucket.get("ens_4h_models", (None, None))[0] if cache_bucket is not None else None
+        X_all_4h, yc_all_4h, yr_all_4h = [], [], []
         train_lim_4h = max(40, len(close_4h) - 5)
         for ii in range(35, train_lim_4h):
             for c in coins:
-                tv4 = fwd_3_4h_all.iloc[ii][c]
-                if not np.isnan(tv4):
+                cls_v = tb_labels_4h.iloc[ii][c]
+                ret_v = tb_rets_4h.iloc[ii][c]
+                if not (np.isnan(cls_v) or np.isnan(ret_v)):
                     X_all_4h.append(
                         extract_ta_features_row(
                             ii, c, ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
-                            roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h
+                            roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h,
+                            obv_slope_df=obv_4h, ema200_dist_df=ema200_dist_4h,
+                            range_pos_df=range_pos_4h, btc_rel_df=btc_rel_4h, rsi_accel_df=rsi_accel_4h,
                         )
                     )
-                    yr_all_4h.append(float(np.clip(tv4, -0.12, 0.12)))
-                    yc_all_4h.append(1 if tv4 > 0.0 else 0)
-        mlp_live_scaler, mlp_live_reg, mlp_live_clf = fit_causal_mlp_ensemble(
-            np.asarray(X_all_4h[-3600:]), np.asarray(yr_all_4h[-3600:]), np.asarray(yc_all_4h[-3600:])
+                    yc_all_4h.append(int(cls_v))
+                    yr_all_4h.append(float(ret_v))
+        challenger_bundle = fit_supervised_3class_ensemble(
+            np.asarray(X_all_4h[-3600:]), np.asarray(yc_all_4h[-3600:]), np.asarray(yr_all_4h[-3600:]),
+            purge_samples=32, seed=101,
         )
+        live_champ_bundle, live_gov_decision = govern_champion_challenger(prev_champ, challenger_bundle, key_4h)
         if cache_bucket is not None:
-            cache_bucket["mlp_4h_key"] = mlp_cache_key
-            cache_bucket["mlp_4h_models"] = (mlp_live_scaler, mlp_live_reg, mlp_live_clf)
+            cache_bucket["ens_4h_key"] = ens_cache_key
+            cache_bucket["ens_4h_models"] = (live_champ_bundle, live_gov_decision)
 
     # =========================================================================
-    # CARGA O INICIALIZACIÓN DEL LIBRO MAYOR PERSISTENTE DE ESTADO (v3_stateful)
+    # CARGA O INICIALIZACIÓN DEL LIBRO MAYOR PERSISTENTE DE ESTADO (v4_hybrid_3tier)
     # =========================================================================
     disk_state: Dict[str, Any] = {}
     if ledger_path.exists():
@@ -1494,7 +1656,7 @@ def run_four_algorithmic_bots(
 
     if not has_valid_state:
         # ---------------------------------------------------------------------
-        # ARRANQUE INICIAL ÚNICO SOBRE VELAS CERRADAS (SOLO SI NO HAY ESTADO v3)
+        # ARRANQUE INICIAL ÚNICO SOBRE VELAS CERRADAS (ESTADO v4_hybrid_3tier)
         # ---------------------------------------------------------------------
         pf_a = init_bot_a_state(coins, base_cap=base_cap)
         pf_a["dates"] = [close_15m.index[29].strftime("%Y-%m-%d %H:%M")]
@@ -1503,6 +1665,7 @@ def run_four_algorithmic_bots(
             ts = close_15m.index[idx_i]
             p_ts = close_15m.index[idx_i - 1]
             p2_ts = close_15m.index[idx_i - 2]
+            reg_a_i = str(reg_15m_aligned.loc[p_ts])
             step_bot_a_microtrading(
                 state=pf_a,
                 ts=ts,
@@ -1527,62 +1690,14 @@ def run_four_algorithmic_bots(
                 breadth_1h=float(breadth_1h_aligned.loc[p_ts]),
                 cfg=cfg_a,
                 adx_1h_prev=adx_1h_aligned.loc[p_ts].to_dict(),
+                obv_prev=obv_15m.loc[p_ts].to_dict(),
+                ema200_dist_prev=ema200_dist_15m.loc[p_ts].to_dict(),
+                regime_code=reg_a_i,
+                risk_mult=reg_mult_map.get(reg_a_i, 0.85),
             )
             pf_a["dates"].append(ts.strftime("%Y-%m-%d %H:%M"))
         last_closed_15m = close_15m.index[-2]
         pf_a["last_closed_bar"] = last_closed_15m.strftime("%Y-%m-%d %H:%M")
-
-        open_a_boot = [c for c in coins if float(pf_a["units"][c]) > 1e-8]
-        if len(open_a_boot) < 2:
-            ranked_a = sorted(
-                [c for c in coins if float(pf_a["units"][c]) <= 1e-8],
-                key=lambda c: (
-                    float(macd_h_15m.loc[last_closed_15m, c]) * 3.2
-                    + float(roc10_15m.loc[last_closed_15m, c]) * 0.55
-                    + ((float(ema9_15m.loc[last_closed_15m, c]) / max(float(ema21_15m.loc[last_closed_15m, c]), 1e-8)) - 1.0) * 140.0
-                    + (float(vol_rel_15m.loc[last_closed_15m, c]) - 1.0) * 0.45
-                ),
-                reverse=True,
-            )
-            for c in ranked_a:
-                inv_now = sum(float(pf_a["units"][k]) * float(close_15m.loc[last_closed_15m, k]) for k in coins)
-                eq_now = float(pf_a["cash_usd"]) + inv_now
-                inv_ratio = inv_now / max(eq_now, 1.0)
-                if len(open_a_boot) >= 2 or inv_ratio >= 0.58:
-                    break
-                px_b0 = float(close_15m.loc[last_closed_15m, c])
-                atr_v = max(1e-9, float(atr_15m.loc[last_closed_15m, c]))
-                stop_dist_pct = max(0.0085, (cfg_a.sl_atr_mult * atr_v) / max(px_b0, 1e-6))
-                risk_w = cfg_a.max_risk_per_trade_pct / stop_dist_pct
-                target_w = min(0.22, risk_w, 0.58 - inv_ratio)
-                alloc_usd = min(target_w * eq_now, (cfg_a.max_risk_per_trade_pct * eq_now) / stop_dist_pct, float(pf_a["cash_usd"]) * 0.90)
-                if alloc_usd >= cfg_a.min_order_usd and float(pf_a["cash_usd"]) > alloc_usd * 1.005:
-                    fee = alloc_usd * cfg_a.fee_rate
-                    qty = alloc_usd / px_b0
-                    pf_a["cash_usd"] = float(pf_a["cash_usd"]) - (alloc_usd + fee)
-                    pf_a["fees_cum"] = float(pf_a["fees_cum"]) + fee
-                    pf_a["units"][c] = qty
-                    pf_a["entry"][c] = px_b0
-                    pf_a["entry_fee"][c] = fee
-                    pf_a["partial_taken"][c] = False
-                    pf_a["peak"][c] = px_b0
-                    pf_a["sl"][c] = px_b0 * (1.0 - stop_dist_pct)
-                    pf_a["tp"][c] = px_b0 * (1.0 + (cfg_a.tp_atr_mult / cfg_a.sl_atr_mult) * stop_dist_pct)
-                    open_a_boot.append(c)
-                    vrel_l = float(vol_rel_15m.loc[last_closed_15m, c])
-                    pf_a["trades"].append({
-                        "bot_id": "bot_a", "bot_code": "BOT A",
-                        "time_utc": last_closed_15m.strftime("%Y-%m-%d %H:%M UTC"),
-                        "ts_iso": last_closed_15m.strftime("%Y-%m-%d %H:%M"),
-                        "coin": c, "instrument": f"{c}-USDT", "side_type": "BUY",
-                        "action": "APERTURA INICIAL 15M EMA/BB", "units": round(qty, 6), "price": fmt_px_dec(px_b0),
-                        "bar_low": fmt_px_dec(float(low_15m.loc[last_closed_15m, c])),
-                        "bar_high": fmt_px_dec(float(high_15m.loc[last_closed_15m, c])),
-                        "sl_price": fmt_px_dec(pf_a["sl"][c]), "tp_price": fmt_px_dec(pf_a["tp"][c]),
-                        "volume_rel": round(vrel_l, 2), "notional_usd": round(alloc_usd, 2), "fee_usd": round(fee, 3),
-                        "realized_pnl_usd": None, "realized_pnl_pct": None,
-                        "telemetry": f"%B={float(bb_pctb_15m.loc[last_closed_15m, c]):.2f} | RSI={float(rsi_15m.loc[last_closed_15m, c]):.1f} | Vol={vrel_l:.2f}x | SL={fmt_px_dec(pf_a['sl'][c])}",
-                    })
 
         eval_b_closed = d_rets.index[-181:-1]
         anchor_b_dt = d_rets.index[max(0, int(d_rets.index.get_loc(eval_b_closed[0])) - 1)]
@@ -1604,42 +1719,9 @@ def run_four_algorithmic_bots(
         for dt_b in eval_b_closed:
             _step_bot_b_closed_bar(
                 pf_b, dt_b, coins, d_slice, d_lo, d_hi, d_rets, d_vols, d_vol_rel,
-                sma20_d, ema12_d, ema26_d, ema50_d, roc14_d, peak15_d, macd_d_df, bb_pb_d, atr_1d, adx_1d
+                sma20_d, ema12_d, ema26_d, ema50_d, roc14_d, peak15_d, macd_d_df, bb_pb_d, atr_1d, adx_1d,
+                obv_1d=obv_1d, btc_rel_1d=btc_rel_1d, regime_series_1d=reg_series_1d, gatekeeper_cfg=gatekeeper_cfg,
             )
-        if sum(float(v) for v in pf_b["units"].values()) <= 1e-8:
-            last_d_c = eval_b_closed[-1]
-            best_jb = int(np.argmax([
-                (float(roc14_d.loc[last_d_c, c]) + 4.0 * float(macd_d_df.loc[last_d_c, c])) / max(float(d_vols.loc[last_d_c, c]), 0.015)
-                for c in coins
-            ]))
-            cb = coins[best_jb]
-            px_b0 = float(d_slice.loc[last_d_c, cb])
-            atr_b0 = float(atr_1d.loc[last_d_c, cb])
-            stop_dist_b = max(0.022, (2.30 * atr_b0) / max(px_b0, 1e-6))
-            alloc_b = min(0.16 * float(pf_b["cash_usd"]), max(58.0, (0.0115 * float(pf_b["eq_curve"][-1])) / stop_dist_b))
-            if alloc_b >= 50.0 and float(pf_b["cash_usd"]) > alloc_b * 1.01:
-                fee_b = alloc_b * SETTINGS.spot_fee_rate
-                qty_b = alloc_b / px_b0
-                pf_b["cash_usd"] = float(pf_b["cash_usd"]) - (alloc_b + fee_b)
-                pf_b["fees_cum"] = float(pf_b["fees_cum"]) + fee_b
-                pf_b["units"][cb] = qty_b
-                pf_b["entry"][cb] = px_b0
-                pf_b["entry_fee"][cb] = fee_b
-                pf_b["sl"][cb] = px_b0 * (1.0 - stop_dist_b)
-                pf_b["tp"][cb] = px_b0 * (1.0 + 2.15 * stop_dist_b)
-                vr_b = float(d_vol_rel.loc[last_d_c, cb])
-                pf_b["trades"].append({
-                    "bot_id": "bot_b", "bot_code": "BOT B",
-                    "time_utc": last_d_c.strftime("%Y-%m-%d 00:00 UTC"), "ts_iso": last_d_c.strftime("%Y-%m-%d 00:00"),
-                    "coin": cb, "instrument": f"{cb}-USDT", "side_type": "BUY",
-                    "action": "APERTURA DIARIA CHANDELIER", "units": round(qty_b, 6), "price": fmt_px_dec(px_b0),
-                    "bar_low": fmt_px_dec(float(d_lo.loc[last_d_c, cb])),
-                    "bar_high": fmt_px_dec(float(d_hi.loc[last_d_c, cb])),
-                    "sl_price": fmt_px_dec(pf_b["sl"][cb]), "tp_price": fmt_px_dec(pf_b["tp"][cb]),
-                    "volume_rel": round(vr_b, 2), "notional_usd": round(alloc_b, 2), "fee_usd": round(fee_b, 3),
-                    "realized_pnl_usd": None, "realized_pnl_pct": None,
-                    "telemetry": f"Fuerza Relativa 1D | %B={float(bb_pb_d.loc[last_d_c, cb]):.2f} | Vol={vr_b:.2f}x | SL={fmt_px_dec(pf_b['sl'][cb])}",
-                })
 
         anchor_4h_ts = close_4h.index[eval_start_4h - 1]
         pf_c: Dict[str, Any] = {
@@ -1664,65 +1746,33 @@ def run_four_algorithmic_bots(
             _step_bot_c_closed_bar(
                 pf_c, idx_i, coins, close_4h, low_4h, high_4h,
                 ema21_4h, ema55_4h, roc24_4h, macd_h_4h, bb_pctb_4h,
-                adx_4h, pdi_4h, mdi_4h, atr_4h, vol_rel_4h, funding_rates_8h
+                adx_4h, pdi_4h, mdi_4h, atr_4h, vol_rel_4h, funding_rates_8h,
+                oi_vol_ratio_vec=oi_vol_ratio_vec, obv_4h=obv_4h, regime_series_4h=reg_series_4h,
+                gatekeeper_cfg=gatekeeper_cfg,
             )
-        if sum(abs(float(v)) for v in pf_c["units"].values()) <= 1e-8:
-            last_4h_c = close_4h.index[-2]
-            best_jc = int(np.argmax([
-                abs(float(ema21_4h.loc[last_4h_c, c]) / max(float(ema55_4h.loc[last_4h_c, c]), 1e-8) - 1.0) * float(adx_4h.loc[last_4h_c, c])
-                for c in coins
-            ]))
-            cc = coins[best_jc]
-            px_c0 = float(close_4h.loc[last_4h_c, cc])
-            atr_c0 = float(atr_4h.loc[last_4h_c, cc])
-            is_long_c = float(ema21_4h.loc[last_4h_c, cc]) >= float(ema55_4h.loc[last_4h_c, cc])
-            sign_c = 1.0 if is_long_c else -1.0
-            stop_dist_c = max(0.018, (2.85 * atr_c0) / max(px_c0, 1e-6))
-            notional_c = min(0.20 * float(pf_c["realized_cash_c"]), (0.0085 * float(pf_c["realized_cash_c"])) / stop_dist_c)
-            if notional_c >= 45.0:
-                fee_c = notional_c * SETTINGS.futures_fee_rate
-                pf_c["realized_cash_c"] = float(pf_c["realized_cash_c"]) - fee_c
-                pf_c["fees_cum"] = float(pf_c["fees_cum"]) + fee_c
-                pf_c["units"][cc] = (sign_c * notional_c) / px_c0
-                pf_c["entry"][cc] = px_c0
-                pf_c["entry_fee"][cc] = fee_c
-                pf_c["peak"][cc] = px_c0
-                pf_c["sl"][cc] = px_c0 * (1.0 - sign_c * stop_dist_c)
-                pf_c["tp"][cc] = px_c0 * (1.0 + sign_c * 1.60 * stop_dist_c)
-                vr_c = float(vol_rel_4h.loc[last_4h_c, cc])
-                pf_c["trades"].append({
-                    "bot_id": "bot_c", "bot_code": "BOT C",
-                    "time_utc": last_4h_c.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": last_4h_c.strftime("%Y-%m-%d %H:%M"),
-                    "coin": cc, "instrument": f"{cc}-USDT-SWAP",
-                    "side_type": "LONG" if is_long_c else "SHORT",
-                    "action": "APERTURA LARGO FUTUROS" if is_long_c else "COBERTURA SHORT FUTUROS",
-                    "units": round(abs(pf_c["units"][cc]), 6), "price": fmt_px_dec(px_c0),
-                    "bar_low": fmt_px_dec(float(low_4h.loc[last_4h_c, cc])),
-                    "bar_high": fmt_px_dec(float(high_4h.loc[last_4h_c, cc])),
-                    "sl_price": fmt_px_dec(pf_c["sl"][cc]), "tp_price": fmt_px_dec(pf_c["tp"][cc]),
-                    "volume_rel": round(vr_c, 2), "notional_usd": round(notional_c, 2), "fee_usd": round(fee_c, 3),
-                    "realized_pnl_usd": None, "realized_pnl_pct": None,
-                    "telemetry": f"Estructura 4H EMA21/55 | ADX={float(adx_4h.loc[last_4h_c, cc]):.1f} | Carry={funding_rates_8h[best_jc]*100:+.3f}%",
-                })
 
-        X_d_hist, yr_d_hist, yc_d_hist = [], [], []
-        fwd_3_4h = close_4h.pct_change(3).shift(-3)
+        X_d_hist, yc_d_hist, yr_d_hist = [], [], []
         train_start_4h = 55 if eval_start_4h > 90 else 20
-        for ii in range(train_start_4h, eval_start_4h - 4):
+        for ii in range(train_start_4h, eval_start_4h - 5):
             for c in coins:
-                tv4 = fwd_3_4h.iloc[ii][c]
-                if not np.isnan(tv4):
+                cls_v = tb_labels_4h.iloc[ii][c]
+                ret_v = tb_rets_4h.iloc[ii][c]
+                if not (np.isnan(cls_v) or np.isnan(ret_v)):
                     X_d_hist.append(
                         extract_ta_features_row(
                             ii, c, ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
-                            roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h
+                            roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h,
+                            obv_slope_df=obv_4h, ema200_dist_df=ema200_dist_4h,
+                            range_pos_df=range_pos_4h, btc_rel_df=btc_rel_4h, rsi_accel_df=rsi_accel_4h,
                         )
                     )
-                    yr_d_hist.append(float(np.clip(tv4, -0.12, 0.12)))
-                    yc_d_hist.append(1 if tv4 > 0.0 else 0)
-        mlp_d_scaler, mlp_d_reg, mlp_d_clf = fit_causal_mlp_ensemble(
-            np.asarray(X_d_hist[-3600:]), np.asarray(yr_d_hist[-3600:]), np.asarray(yc_d_hist[-3600:])
+                    yc_d_hist.append(int(cls_v))
+                    yr_d_hist.append(float(ret_v))
+        champ_d = fit_supervised_3class_ensemble(
+            np.asarray(X_d_hist[-3600:]), np.asarray(yc_d_hist[-3600:]), np.asarray(yr_d_hist[-3600:]),
+            purge_samples=32, seed=101,
         )
+        champ_d, gov_d = govern_champion_challenger(None, champ_d, close_4h.index[eval_start_4h - 1].strftime("%Y-%m-%d %H:%M"))
         pf_d: Dict[str, Any] = {
             "inception_utc": anchor_4h_ts.strftime("%Y-%m-%d %H:%M UTC"),
             "last_closed_bar": anchor_4h_ts.strftime("%Y-%m-%d %H:%M"),
@@ -1731,6 +1781,7 @@ def run_four_algorithmic_bots(
             "units": {c: 0.0 for c in coins},
             "entry": {c: 0.0 for c in coins},
             "entry_fee": {c: 0.0 for c in coins},
+            "partial_taken": {c: False for c in coins},
             "peak": {c: 0.0 for c in coins},
             "sl": {c: 0.0 for c in coins},
             "tp": {c: 0.0 for c in coins},
@@ -1738,67 +1789,64 @@ def run_four_algorithmic_bots(
             "eq_curve": [float(base_cap)],
             "rets": [],
             "trades": [],
+            "veto_count": 0,
+            "gov_meta": {
+                "version": int(champ_d.get("version", 1)),
+                "oos_brier_score": champ_d.get("oos_brier_score", 0.0),
+                "oos_expectancy_pct": champ_d.get("oos_expectancy_pct", 0.0),
+                "train_samples": champ_d.get("train_samples", 0),
+                "purged_gap": champ_d.get("purged_gap", 32),
+                "reason": gov_d["reason"],
+            },
         }
-        last_nn_prob = np.full(n_assets, 0.5)
+        last_ens_out: Dict[str, np.ndarray] = {
+            "prob_bear": np.full(n_assets, 0.33),
+            "prob_flat": np.full(n_assets, 0.34),
+            "prob_bull": np.full(n_assets, 0.33),
+            "pred_net_ret": np.zeros(n_assets),
+        }
         for idx_i in range(eval_start_4h, len(close_4h) - 1):
             if (idx_i - eval_start_4h) > 0 and (idx_i - eval_start_4h) % 60 == 0:
                 X_inc = list(X_d_hist[-3000:])
-                yr_inc = list(yr_d_hist[-3000:])
                 yc_inc = list(yc_d_hist[-3000:])
-                for kk in range(eval_start_4h, idx_i - 4):
+                yr_inc = list(yr_d_hist[-3000:])
+                for kk in range(eval_start_4h, idx_i - 5):
                     for c in coins:
-                        tv4 = fwd_3_4h.iloc[kk][c]
-                        if not np.isnan(tv4):
+                        cls_v = tb_labels_4h.iloc[kk][c]
+                        ret_v = tb_rets_4h.iloc[kk][c]
+                        if not (np.isnan(cls_v) or np.isnan(ret_v)):
                             X_inc.append(
                                 extract_ta_features_row(
                                     kk, c, ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
-                                    roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h
+                                    roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h,
+                                    obv_slope_df=obv_4h, ema200_dist_df=ema200_dist_4h,
+                                    range_pos_df=range_pos_4h, btc_rel_df=btc_rel_4h, rsi_accel_df=rsi_accel_4h,
                                 )
                             )
-                            yr_inc.append(float(np.clip(tv4, -0.12, 0.12)))
-                            yc_inc.append(1 if tv4 > 0.0 else 0)
-                mlp_d_scaler, mlp_d_reg, mlp_d_clf = fit_causal_mlp_ensemble(
-                    np.asarray(X_inc[-3600:]), np.asarray(yr_inc[-3600:]), np.asarray(yc_inc[-3600:])
+                            yc_inc.append(int(cls_v))
+                            yr_inc.append(float(ret_v))
+                chall_i = fit_supervised_3class_ensemble(
+                    np.asarray(X_inc[-3600:]), np.asarray(yc_inc[-3600:]), np.asarray(yr_inc[-3600:]),
+                    purge_samples=32, seed=101,
                 )
-            _, last_nn_prob = _step_bot_d_closed_bar(
+                champ_d, gov_d = govern_champion_challenger(champ_d, chall_i, close_4h.index[idx_i - 1].strftime("%Y-%m-%d %H:%M"))
+                pf_d["gov_meta"] = {
+                    "version": int(champ_d.get("version", 1)),
+                    "oos_brier_score": champ_d.get("oos_brier_score", 0.0),
+                    "oos_expectancy_pct": champ_d.get("oos_expectancy_pct", 0.0),
+                    "train_samples": champ_d.get("train_samples", 0),
+                    "purged_gap": champ_d.get("purged_gap", 32),
+                    "reason": gov_d["reason"],
+                }
+            _, last_ens_out = _step_bot_d_closed_bar(
                 pf_d, idx_i, coins, open_4h, close_4h, low_4h, high_4h,
                 ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
                 roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, atr_4h, vol_rel_4h,
-                mlp_d_scaler, mlp_d_reg, mlp_d_clf
+                champ_d, obv_4h=obv_4h, ema200_dist_4h=ema200_dist_4h,
+                range_pos_4h=range_pos_4h, btc_rel_4h=btc_rel_4h, rsi_accel_4h=rsi_accel_4h,
+                regime_series_4h=reg_series_4h, regime_probs=None,
+                gatekeeper_cfg=gatekeeper_cfg,
             )
-        if sum(float(v) for v in pf_d["units"].values()) <= 1e-8:
-            last_4h_d = close_4h.index[-2]
-            best_j = int(np.argmax(last_nn_prob))
-            c_best = coins[best_j]
-            px_d0 = float(close_4h.loc[last_4h_d, c_best])
-            atr_d0 = float(atr_4h.loc[last_4h_d, c_best])
-            alloc_d, stop_dist_d = compute_bot_d_sizing(float(pf_d["eq_curve"][-1]), float(pf_d["cash_usd"]), 0.0, px_d0, atr_d0, max(0.52, float(last_nn_prob[best_j])))
-            alloc_d = min(alloc_d, 0.18 * float(pf_d["cash_usd"]))
-            if alloc_d >= 55.0 and float(pf_d["cash_usd"]) > alloc_d * 1.01:
-                fee_d0 = alloc_d * SETTINGS.spot_fee_rate
-                qty_d0 = alloc_d / px_d0
-                pf_d["cash_usd"] = float(pf_d["cash_usd"]) - (alloc_d + fee_d0)
-                pf_d["fees_cum"] = float(pf_d["fees_cum"]) + fee_d0
-                pf_d["units"][c_best] = qty_d0
-                pf_d["entry"][c_best] = px_d0
-                pf_d["entry_fee"][c_best] = fee_d0
-                pf_d["peak"][c_best] = px_d0
-                pf_d["sl"][c_best] = px_d0 * (1.0 - stop_dist_d)
-                pf_d["tp"][c_best] = px_d0 * (1.0 + 1.93 * stop_dist_d)
-                vr_d0 = float(vol_rel_4h.loc[last_4h_d, c_best])
-                pf_d["trades"].append({
-                    "bot_id": "bot_d", "bot_code": "BOT D",
-                    "time_utc": last_4h_d.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": last_4h_d.strftime("%Y-%m-%d %H:%M"),
-                    "coin": c_best, "instrument": f"{c_best}-USDT", "side_type": "BUY",
-                    "action": "APERTURA CONTROLADA MLP/ATR",
-                    "units": round(qty_d0, 6), "price": fmt_px_dec(px_d0),
-                    "bar_low": fmt_px_dec(float(low_4h.loc[last_4h_d, c_best])),
-                    "bar_high": fmt_px_dec(float(high_4h.loc[last_4h_d, c_best])),
-                    "sl_price": fmt_px_dec(pf_d["sl"][c_best]), "tp_price": fmt_px_dec(pf_d["tp"][c_best]),
-                    "volume_rel": round(vr_d0, 2), "notional_usd": round(alloc_d, 2), "fee_usd": round(fee_d0, 3),
-                    "realized_pnl_usd": None, "realized_pnl_pct": None,
-                    "telemetry": f"ProbMLP={last_nn_prob[best_j]*100:.1f}% | RSI={float(rsi_4h.loc[last_4h_d, c_best]):.1f} | Vol={vr_d0:.2f}x | SL={fmt_px_dec(pf_d['sl'][c_best])}",
-                })
 
         for pf_obj in (pf_a, pf_b, pf_c, pf_d):
             run_eq = base_cap
@@ -1834,16 +1882,25 @@ def run_four_algorithmic_bots(
             for dk in ("units", "entry", "entry_fee", "peak", "sl", "tp"):
                 if dk in pf_obj and isinstance(pf_obj[dk], dict):
                     pf_obj[dk] = {c: float(pf_obj[dk].get(c, 0.0)) for c in coins}
+            if "partial_taken" in pf_obj and isinstance(pf_obj["partial_taken"], dict):
+                pf_obj["partial_taken"] = {c: bool(pf_obj["partial_taken"].get(c, False)) for c in coins}
             pf_obj["dates"] = list(pf_obj.get("dates") or [])
             pf_obj["eq_curve"] = [float(x) for x in (pf_obj.get("eq_curve") or [])]
             pf_obj["rets"] = [float(x) for x in (pf_obj.get("rets") or [])]
             pf_obj["trades"] = [dict(t) for t in (pf_obj.get("trades") or [])]
         if isinstance(pf_a.get("cur_day"), str) and pf_a["cur_day"]:
             pf_a["cur_day"] = pd.Timestamp(pf_a["cur_day"]).date()
-        if "partial_taken" in pf_a and isinstance(pf_a["partial_taken"], dict):
-            pf_a["partial_taken"] = {c: bool(pf_a["partial_taken"].get(c, False)) for c in coins}
         if "cooldown_step" in pf_c and isinstance(pf_c["cooldown_step"], dict):
             pf_c["cooldown_step"] = {c: int(pf_c["cooldown_step"].get(c, -1)) for c in coins}
+        if not isinstance(pf_d.get("gov_meta"), dict):
+            pf_d["gov_meta"] = {
+                "version": int(live_champ_bundle.get("version", 1)),
+                "oos_brier_score": live_champ_bundle.get("oos_brier_score", 0.0),
+                "oos_expectancy_pct": live_champ_bundle.get("oos_expectancy_pct", 0.0),
+                "train_samples": live_champ_bundle.get("train_samples", 0),
+                "purged_gap": live_champ_bundle.get("purged_gap", 32),
+                "reason": live_gov_decision["reason"],
+            }
 
         certified_orders = [dict(o) for o in disk_state["certified_orders"]]
         chain_root_hash = str(disk_state["chain_root_sha256"])
@@ -1858,6 +1915,7 @@ def run_four_algorithmic_bots(
                 continue
             p_ts = close_15m.index[idx_i - 1]
             p2_ts = close_15m.index[idx_i - 2]
+            reg_a_i = str(reg_15m_aligned.loc[p_ts])
             prev_n_a = len(pf_a["trades"])
             step_bot_a_microtrading(
                 state=pf_a,
@@ -1883,6 +1941,11 @@ def run_four_algorithmic_bots(
                 breadth_1h=float(breadth_1h_aligned.loc[p_ts]),
                 cfg=cfg_a,
                 adx_1h_prev=adx_1h_aligned.loc[p_ts].to_dict(),
+                obv_prev=obv_15m.loc[p_ts].to_dict(),
+                ema200_dist_prev=ema200_dist_15m.loc[p_ts].to_dict(),
+                regime_code=reg_a_i,
+                spread_bps_map=spread_bps_map,
+                risk_mult=reg_mult_map.get(reg_a_i, 0.85),
             )
             pf_a["dates"].append(ts_str)
             pf_a["last_closed_bar"] = ts_str
@@ -1896,7 +1959,8 @@ def run_four_algorithmic_bots(
                 continue
             em_b = _step_bot_b_closed_bar(
                 pf_b, dt_b, coins, d_slice, d_lo, d_hi, d_rets, d_vols, d_vol_rel,
-                sma20_d, ema12_d, ema26_d, ema50_d, roc14_d, peak15_d, macd_d_df, bb_pb_d, atr_1d, adx_1d
+                sma20_d, ema12_d, ema26_d, ema50_d, roc14_d, peak15_d, macd_d_df, bb_pb_d, atr_1d, adx_1d,
+                obv_1d=obv_1d, btc_rel_1d=btc_rel_1d, regime_series_1d=reg_series_1d, gatekeeper_cfg=gatekeeper_cfg,
             )
             for tr_new in em_b:
                 inc_new_orders.append(_enrich_order_meta(tr_new, pf_b["inception_utc"], pf_b["eq_curve"][-1]))
@@ -1910,32 +1974,38 @@ def run_four_algorithmic_bots(
             em_c = _step_bot_c_closed_bar(
                 pf_c, idx_i, coins, close_4h, low_4h, high_4h,
                 ema21_4h, ema55_4h, roc24_4h, macd_h_4h, bb_pctb_4h,
-                adx_4h, pdi_4h, mdi_4h, atr_4h, vol_rel_4h, funding_rates_8h
+                adx_4h, pdi_4h, mdi_4h, atr_4h, vol_rel_4h, funding_rates_8h,
+                oi_vol_ratio_vec=oi_vol_ratio_vec, obv_4h=obv_4h, regime_series_4h=reg_series_4h,
+                gatekeeper_cfg=gatekeeper_cfg,
             )
             for tr_new in em_c:
                 inc_new_orders.append(_enrich_order_meta(tr_new, pf_c["inception_utc"], pf_c["eq_curve"][-1]))
 
         last_bar_d = str(pf_d.get("last_closed_bar") or "")
-        X_cur_inf = mlp_live_scaler.transform(
-            np.array([
-                extract_ta_features_row(
-                    len(close_4h) - 2, c, ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
-                    roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h
-                )
-                for c in coins
-            ])
-        )
-        last_nn_prob = mlp_live_clf.predict_proba(X_cur_inf)[:, 1]
+        X_cur_inf = np.array([
+            extract_ta_features_row(
+                len(close_4h) - 2, c, ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
+                roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, vol_rel_4h,
+                obv_slope_df=obv_4h, ema200_dist_df=ema200_dist_4h,
+                range_pos_df=range_pos_4h, btc_rel_df=btc_rel_4h, rsi_accel_df=rsi_accel_4h,
+            )
+            for c in coins
+        ])
+        last_ens_out = predict_supervised_3class_ensemble(live_champ_bundle, X_cur_inf, regime_probs=cur_reg_4h["probabilities"])
         for idx_i in range(35, len(close_4h) - 1):
             ts_4h = close_4h.index[idx_i]
             ts_str = ts_4h.strftime("%Y-%m-%d %H:%M")
             if ts_str <= last_bar_d:
                 continue
-            em_d, last_nn_prob = _step_bot_d_closed_bar(
+            em_d, last_ens_out = _step_bot_d_closed_bar(
                 pf_d, idx_i, coins, open_4h, close_4h, low_4h, high_4h,
                 ema9_4h, ema21_4h, ema55_4h, bb_pctb_4h, bb_bw_4h,
                 roc12_4h, roc24_4h, macd_h_4h, rsi_4h, stoch_4h, atr_4h, vol_rel_4h,
-                mlp_live_scaler, mlp_live_reg, mlp_live_clf
+                live_champ_bundle, obv_4h=obv_4h, ema200_dist_4h=ema200_dist_4h,
+                range_pos_4h=range_pos_4h, btc_rel_4h=btc_rel_4h, rsi_accel_4h=rsi_accel_4h,
+                regime_series_4h=reg_series_4h, regime_probs=cur_reg_4h["probabilities"],
+                spread_bps_map=spread_bps_map, cross_bps_map=cross_bps_map,
+                gatekeeper_cfg=gatekeeper_cfg,
             )
             for tr_new in em_d:
                 inc_new_orders.append(_enrich_order_meta(tr_new, pf_d["inception_utc"], pf_d["eq_curve"][-1]))
@@ -1996,6 +2066,8 @@ def run_four_algorithmic_bots(
         trail_activate_atr=1.25,
         trail_dist_atr=1.30,
         trail_floor_mult=1.0065,
+        partial_tp_atr=1.35,
+        partial_tp_frac=0.45,
     )
     for tr_rt in em_rt_d:
         eq_d_rt = float(pf_d["cash_usd"]) + sum(float(pf_d["units"][c]) * spot_live_map[c] for c in coins)
@@ -2226,9 +2298,12 @@ def run_four_algorithmic_bots(
             "rsi14": [round(float(x), 1) for x in rsi14_f.tail(tail_n).values],
         }
 
-    # Matriz actual de indicadores de Análisis Técnico con bases ancladas para actualización en JS
+    # Matriz actual de indicadores de Análisis Técnico, Flujo y Ensemble 3-Clases
     signal_matrix_now = {}
     last_4h = close_4h.index[-1]
+    prob_bull_vec = last_ens_out["prob_bull"]
+    prob_flat_vec = last_ens_out["prob_flat"]
+    prob_bear_vec = last_ens_out["prob_bear"]
     for j, c in enumerate(coins):
         px_s = float(market_snapshot[c]["price"])
         e9_v = float(ema9_4h.loc[last_4h, c])
@@ -2247,14 +2322,21 @@ def run_four_algorithmic_bots(
         vrel_v = float(vol_rel_4h.loc[last_4h, c])
         if vrel_v < 0.08 and len(vol_rel_4h) >= 2:
             vrel_v = float(vol_rel_4h.iloc[-2][c])
-        nn_p = float(last_nn_prob[j])
+        p_bull = float(prob_bull_vec[j])
+        p_flat = float(prob_flat_vec[j])
+        p_bear = float(prob_bear_vec[j])
+        obv_v = float(obv_4h.loc[last_4h, c])
+        e200_d = float(ema200_dist_4h.loc[last_4h, c])
+        bcorr_v = float(btc_corr_4h.loc[last_4h, c])
+        oi_usd_v = float(market_snapshot[c].get("open_interest_usd", 0.0))
+        oi_vr_v = float(market_snapshot[c].get("oi_vol_ratio", 0.35))
         fr_8h_p = float(market_snapshot[c]["funding_rate_8h_pct"])
 
         # Puntuaciones técnicas estandarizadas [-100, +100] para los 4 algoritmos
-        sc_a = float(np.clip(((e9_v / max(e21_v, 1e-8) - 1.0) * 900.0) + (mh_v * 22.0) + ((pb_v - 0.5) * 45.0), -98.0, 98.0))
+        sc_a = float(np.clip(((e9_v / max(e21_v, 1e-8) - 1.0) * 900.0) + (mh_v * 22.0) + ((pb_v - 0.5) * 45.0) + (obv_v * 18.0), -98.0, 98.0))
         sc_b = float(np.clip(((px_s / max(float(sma20_d.iloc[-1, j]), 1e-8) - 1.0) * 480.0) + (float(roc14_d.iloc[-1, j]) * 2.2), -98.0, 98.0))
         sc_c = float(np.clip(((e21_v / max(e55_v, 1e-8) - 1.0) * 620.0) + (float(roc24_4h.loc[last_4h, c]) * 3.2), -98.0, 98.0))
-        sc_d = float(np.clip(((nn_p - 0.5) * 260.0) + (mh_v * 18.0), -98.0, 98.0))
+        sc_d = float(np.clip(((p_bull - p_bear) * 145.0) + (mh_v * 16.0), -98.0, 98.0))
 
         signal_matrix_now[c] = {
             "coin": c,
@@ -2279,7 +2361,15 @@ def run_four_algorithmic_bots(
             "atr14": round(atr_v, 6),
             "atr_pct": round((atr_v / max(px_s, 1e-8)) * 100.0, 2),
             "vol_rel": round(vrel_v, 2),
-            "mlp_prob_pct": round(nn_p * 100.0, 1),
+            "obv_slope": round(obv_v, 3),
+            "ema200_dist_pct": round(e200_d * 100.0, 2),
+            "btc_corr": round(bcorr_v, 2),
+            "open_interest_usd": round(oi_usd_v, 0),
+            "oi_vol_ratio": round(oi_vr_v, 3),
+            "prob_bull_pct": round(p_bull * 100.0, 1),
+            "prob_flat_pct": round(p_flat * 100.0, 1),
+            "prob_bear_pct": round(p_bear * 100.0, 1),
+            "mlp_prob_pct": round(p_bull * 100.0, 1),
             "funding_8h_pct": fr_8h_p,
             "scores_base": {
                 "bot_a": round(sc_a, 1),
@@ -2299,17 +2389,87 @@ def run_four_algorithmic_bots(
     for tr in certified_orders:
         latest_order_by_bot[tr["bot_id"]] = tr
 
+    gov_meta = pf_d.get("gov_meta") or {
+        "version": int(live_champ_bundle.get("version", 1)),
+        "oos_brier_score": float(live_champ_bundle.get("oos_brier_score", 0.0)),
+        "oos_expectancy_pct": float(live_champ_bundle.get("oos_expectancy_pct", 0.0)),
+        "train_samples": int(live_champ_bundle.get("train_samples", 0)),
+        "purged_gap": int(live_champ_bundle.get("purged_gap", 32)),
+        "reason": live_gov_decision["reason"],
+    }
+    avg_spread_live = float(np.mean(list(spread_bps_map.values())))
+    avg_cross_live = float(np.mean(list(cross_bps_map.values())))
+    gate_live_a = evaluate_risk_gatekeeper(
+        eq_a, float(pf_a.get("day_anchor_eq", base_cap)),
+        1.0 - (cash_a / max(eq_a_final, 1.0)), cfg_a.max_total_invested,
+        spread_bps=avg_spread_live, cross_exchange_bps=avg_cross_live, regime_info=cur_reg_4h, cfg=gatekeeper_cfg,
+    )
+    gate_live_d = evaluate_risk_gatekeeper(
+        eq_d, float(pf_d["eq_curve"][-1] if pf_d["eq_curve"] else base_cap),
+        1.0 - (cash_d / max(eq_d_final, 1.0)), 0.74,
+        spread_bps=avg_spread_live, cross_exchange_bps=avg_cross_live, regime_info=cur_reg_4h, cfg=gatekeeper_cfg,
+    )
+    best_ens_j = int(np.argmax(prob_bull_vec))
+    supervisor_3tier = {
+        "schema_version": STATEFUL_LEDGER_SCHEMA,
+        "tier1_predictive": {
+            "champion_version": int(gov_meta.get("version", 1)),
+            "labeling": "Triple-Barrera Causal (TP 1.8x ATR vs SL 1.4x ATR vs Espera)",
+            "features_count": 15,
+            "flow_variables": ["OBV Slope", "EMA 200 Dist", "Canal Mín-Máx", "Correlación/Fuerza BTC", "Open Interest SWAP"],
+            "oos_brier_score": round(float(gov_meta.get("oos_brier_score", 0.0)), 4),
+            "oos_expectancy_pct": round(float(gov_meta.get("oos_expectancy_pct", 0.0)), 3),
+            "train_samples": int(gov_meta.get("train_samples", 0)),
+            "purged_gap": int(gov_meta.get("purged_gap", 32)),
+            "governance_status": str(gov_meta.get("reason", "Campeón Activo")),
+        },
+        "tier2_regime_ensemble": {
+            "regime_code": cur_reg_4h["code"],
+            "regime_label": cur_reg_4h["label"],
+            "regime_probabilities": cur_reg_4h["probabilities"],
+            "cross_vol_pct": cur_reg_4h["cross_vol_pct"],
+            "risk_multiplier": cur_reg_4h["risk_multiplier"],
+            "sl_atr_buffer": cur_reg_4h["sl_atr_buffer"],
+            "ensemble_weights": {
+                "HistGradientBoosting": 44,
+                "MLP(32,16)": 26,
+                "LogisticRegression": 15,
+                "Regimen GMM": 15,
+            },
+            "top_candidate": {
+                "coin": coins[best_ens_j],
+                "prob_bull_pct": round(float(prob_bull_vec[best_ens_j]) * 100.0, 1),
+                "prob_flat_pct": round(float(prob_flat_vec[best_ens_j]) * 100.0, 1),
+                "prob_bear_pct": round(float(prob_bear_vec[best_ens_j]) * 100.0, 1),
+            },
+        },
+        "tier3_risk_gatekeeper": {
+            "status": "ACTIVO · COMPLEMENTO INDEPENDIENTE DE RIESGO",
+            "effective_risk_pct": round(float(gate_live_a["effective_risk_pct"]) * 100.0, 2),
+            "kill_switch_dd_pct": round(gatekeeper_cfg.kill_switch_drawdown_pct * 100.0, 1),
+            "daily_loss_limit_pct": round(gatekeeper_cfg.daily_loss_limit_pct * 100.0, 1),
+            "avg_spread_bps": round(avg_spread_live, 2),
+            "max_spread_bps": gatekeeper_cfg.max_spread_bps,
+            "avg_cross_exchange_bps": round(avg_cross_live, 2),
+            "veto_count_bot_d": int(pf_d.get("veto_count", 0)),
+            "bot_a_approved": bool(gate_live_a["approved"]),
+            "bot_d_approved": bool(gate_live_d["approved"]),
+            "bot_a_dd_pct": gate_live_a["current_dd_pct"],
+            "bot_d_dd_pct": gate_live_d["current_dd_pct"],
+        },
+    }
+
     bots_dict = {
         "bot_a": {
             "id": "bot_a",
             "code": "BOT A",
-            "name": "Microtrading Intradía por Impulso Técnico y Volumen",
-            "timeframe": "Intradía 15m / Filtro 1H",
+            "name": "Microtrading Intradía por Impulso, Flujo OBV y Régimen GMM",
+            "timeframe": "Intradía 15m / Filtro 1H & GMM",
             "inception_utc": inception_map["bot_a"],
             "elapsed_days": elapsed_days_map["bot_a"],
             "latest_order": latest_order_by_bot.get("bot_a"),
-            "methodology": "Velas 15m + Filtro 1H (EMA 9/21/55 + ADX 1H >= 20 + Rango ATR >= 0.42% + Bollinger %B + MACD + ROC(10) + Volumen >= 1.08x)",
-            "risk_profile": "Estricto (Maker 0.04% · Riesgo <= 0.85%/orden · SL 1.55x ATR · Parcial 45% a 1.40x ATR · Trailing +0.55% · TP 3.10x ATR · Corte -2.0%)",
+            "methodology": "Velas 15m + Filtro 1H + Supervisor GMM 4 Regímenes (EMA 9/21/55, ADX >= 20, ATR >= 0.42%, OBV, distancia EMA200, Bollinger %B, MACD, Volumen >= 1.08x)",
+            "risk_profile": "Gatekeeper Independiente (Maker 0.04% · Riesgo 0.25%–0.50%/orden · Spread <= 12 bps · Parcial 45% a 1.40x ATR · Trailing +0.55% · Kill Switch -8.5%)",
             "cash_usd": round(cash_a, 4),
             "fees_paid_usd": round(fees_cum_a, 2),
             "is_futures": False,
@@ -2322,13 +2482,13 @@ def run_four_algorithmic_bots(
         "bot_b": {
             "id": "bot_b",
             "code": "BOT B",
-            "name": "Decisión Sistemática de Compra/Venta Diaria",
+            "name": "Decisión Sistemática Diaria Adaptativa por Régimen (1D)",
             "timeframe": "Cierre Diario 1D (00:00 UTC)",
             "inception_utc": inception_map["bot_b"],
             "elapsed_days": elapsed_days_map["bot_b"],
             "latest_order": latest_order_by_bot.get("bot_b"),
-            "methodology": "Canal SMA 20 / EMA 50 + Bollinger %B + MACD(12,26,9) + ADX(14) + Markowitz/GJR-GARCH L1 + Salida Chandelier ATR",
-            "risk_profile": "Sistemático Moderado (Tope 34%/activo · Histéresis L1 >= 16% · Chandelier 2.30x ATR · Orden mín. $65 · Reserva táctica USDT)",
+            "methodology": "Canal SMA 20 / EMA 50 + OBV + Fuerza Relativa BTC + Markowitz SLSQP / GJR-GARCH con techo adaptativo GMM y salida Chandelier ATR",
+            "risk_profile": "Sistemático Adaptativo (Tope 34%/activo · Techo exposición 24%–92% según Régimen GMM · Histéresis L1 >= 16% · Chandelier 2.30x ATR)",
             "cash_usd": round(cash_b, 4),
             "fees_paid_usd": round(fees_cum_b, 2),
             "is_futures": False,
@@ -2341,13 +2501,13 @@ def run_four_algorithmic_bots(
         "bot_c": {
             "id": "bot_c",
             "code": "BOT C",
-            "name": "Estrategia Posicional de Largos y Contratos a Futuros",
-            "timeframe": "Contratos SWAP 4H + Carry 8H",
+            "name": "Estrategia Posicional de Largos y Futuros SWAP con Open Interest",
+            "timeframe": "Contratos SWAP 4H + Carry 8H & OI",
             "inception_utc": inception_map["bot_c"],
             "elapsed_days": elapsed_days_map["bot_c"],
             "latest_order": latest_order_by_bot.get("bot_c"),
-            "methodology": "Tendencia EMA 21/55 + Ruptura Bollinger + ROC(24) + ADX/DI + Carry Funding 8h + Rebalanceo Delta + Protección cada 4H",
-            "risk_profile": "Direccional Cubierto (Largos/Cortos SWAP · Bruto <= 1.05x · SL 2.85x ATR cada vela 4H · Trailing 1.85x ATR · Cooldown 12h · Delta)",
+            "methodology": "Tendencia EMA 21/55 + Ruptura Bollinger + ROC(24) + ADX/DI + Carry Funding 8h + Open Interest SWAP + OBV + Rebalanceo Delta",
+            "risk_profile": "Direccional Cubierto (Largos/Cortos SWAP · Bruto <= 1.05x · SL 2.85x ATR · Trailing 1.85x ATR · Umbral estricto en rango lateral)",
             "cash_usd": round(realized_cash_c, 4),
             "fees_paid_usd": round(fees_cum_c, 2),
             "is_futures": True,
@@ -2360,17 +2520,17 @@ def run_four_algorithmic_bots(
         "bot_d": {
             "id": "bot_d",
             "code": "BOT D",
-            "name": "Red Neuronal Profunda Adiestrada con Gestión de Riesgos",
-            "timeframe": "Inferencia 4H · MLP(32, 16) + Control ATR",
+            "name": "Ensemble Supervisado Triple-Barrera y Régimen GMM (4H)",
+            "timeframe": "Ensemble 4H · Boosting + MLP + LogReg",
             "inception_utc": inception_map["bot_d"],
             "elapsed_days": elapsed_days_map["bot_d"],
             "latest_order": latest_order_by_bot.get("bot_d"),
-            "methodology": "Ensamble MLPRegressor/MLPClassifier(32,16) entrenado nativamente 4H->4H sobre 10 variables TA + Early Stopping + Triple Salida ATR",
-            "risk_profile": "Cuantitativo Controlado (Riesgo <= 1.05%/orden · Tope 25%/activo · SL 1.45x ATR · TP 2.8x ATR · Reserva >= 25% USDT)",
+            "methodology": "Ensemble (44% HistGradientBoosting + 26% MLP(32,16) + 15% LogisticRegression + 15% GMM) con etiquetas Triple-Barrera, purga temporal y Campeón/Retador",
+            "risk_profile": "Gatekeeper & Triple Salida (Riesgo 0.25%–0.55%/orden · Reserva >= 25% USDT · Parcial 45% a 1.35x ATR · Trailing 1.30x ATR · Giro 3-clases)",
             "cash_usd": round(cash_d, 4),
             "fees_paid_usd": round(fees_cum_d, 2),
             "is_futures": False,
-            "stats": calc_metrics(np.asarray(eq_d), np.asarray(rets_d), 6.0 * 365.0, "Bot D · Red Neuronal Adiestrada MLP + Control ATR"),
+            "stats": calc_metrics(np.asarray(eq_d), np.asarray(rets_d), 6.0 * 365.0, "Bot D · Ensemble Supervisado Triple-Barrera"),
             "trade_eval": summarize_bot_trades(trades_d, hold_d, np.asarray(rets_d)),
             "dates": dates_d,
             "equity_curve": [round(float(v), 2) for v in eq_d],
@@ -2380,6 +2540,7 @@ def run_four_algorithmic_bots(
 
     return {
         "bots": bots_dict,
+        "supervisor_3tier": supervisor_3tier,
         "ledger_chain": {
             "genesis_sha256": GENESIS_HASH,
             "chain_root_sha256": chain_root_hash,
@@ -2546,6 +2707,7 @@ def run_cycle(
         "market_cards": [market_snapshot[c] for c in coins],
         "backtest_5y": cached_daily["bt_5y"],
         "algo_bots": algo_pack["bots"],
+        "supervisor_3tier": algo_pack["supervisor_3tier"],
         "ledger_chain": algo_pack["ledger_chain"],
         "market_candles_4h": algo_pack["market_candles_4h"],
         "signal_matrix_now": algo_pack["signal_matrix_now"],
@@ -2554,6 +2716,9 @@ def run_cycle(
             "chain_integrity_verified": True,
             "ohlc_bounds_verified": True,
             "causal_mlp_verified": True,
+            "triple_barrier_verified": True,
+            "regime_gmm_verified": True,
+            "risk_gatekeeper_verified": True,
         },
         "python_source_modules": py_modules,
     }

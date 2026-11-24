@@ -667,6 +667,93 @@
     }
 
     /* =========================================================================
+       PANEL SUPERVISOR DE ARQUITECTURA HÍBRIDA DE 3 CAPAS (v4_hybrid_3tier)
+       ========================================================================= */
+    .hybrid-3tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.05rem;
+      margin: 1.25rem 0 1.45rem 0;
+    }
+    @media (max-width: 980px) { .hybrid-3tier-grid { grid-template-columns: 1fr; } }
+
+    .tier-sup-card {
+      background: #0D1E3A;
+      border: 1px solid rgba(217, 194, 154, 0.28);
+      border-top: 3px solid #D9C29A;
+      border-radius: 14px;
+      padding: 1.05rem 1.15rem;
+      color: #F8FAFC;
+      box-shadow: 0 10px 24px rgba(11, 27, 51, 0.14);
+    }
+    .tier-sup-card.t1 { border-top-color: #38BDF8; }
+    .tier-sup-card.t2 { border-top-color: #A78BFA; }
+    .tier-sup-card.t3 { border-top-color: #10B981; }
+
+    .tier-sup-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+    }
+    .tier-sup-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      color: #D9C29A;
+    }
+    .tier-sup-card.t1 .tier-sup-badge { color: #38BDF8; }
+    .tier-sup-card.t2 .tier-sup-badge { color: #A78BFA; }
+    .tier-sup-card.t3 .tier-sup-badge { color: #6EE7B7; }
+
+    .tier-sup-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 0 0 0.65rem 0;
+      line-height: 1.3;
+    }
+    .tier-sup-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.55rem;
+      margin-bottom: 0.7rem;
+      padding: 0.55rem 0.65rem;
+      background: rgba(11, 27, 51, 0.65);
+      border: 1px solid rgba(226, 232, 240, 0.14);
+      border-radius: 10px;
+    }
+    .tier-sup-kpi-row .tk-lbl {
+      display: block;
+      font-size: 0.66rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #E2E8F0;
+      opacity: 0.78;
+    }
+    .tier-sup-kpi-row .tk-val {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 0.12rem;
+    }
+    .tier-sup-list {
+      margin: 0;
+      padding-left: 1rem;
+      font-size: 0.77rem;
+      line-height: 1.48;
+      color: #E2E8F0;
+    }
+    .tier-sup-list li { margin-bottom: 0.28rem; }
+
+    /* =========================================================================
        TARJETAS Y DOSSIERS CUANTITATIVOS DE LOS 4 ALGORITMOS ($1,000 BASE C/U)
        ========================================================================= */
     .bots-4-grid {
@@ -1421,6 +1508,9 @@
           Para contrastar empíricamente el impacto de la microestructura de ejecución, la frecuencia de muestreo, la neutralización direccional mediante derivados perpetuos y la imposición de límites cuantitativos de pérdida, operan de manera simultánea <strong>cuatro algoritmos independientes</strong>, cada uno dotado de un capital inicial exacto de <strong>$1,000.00 USD</strong>. Su valoración patrimonial (<em>Mark-to-Market</em>), indicadores econométricos y distancias a umbrales de ejecución se recalculan continuamente conforme varían las cotizaciones reales en los libros de <strong>OKX</strong> y <strong>Bybit</strong>. Selecciona cualquiera de las cuatro tarjetas para focalizar su cartera activa:
         </p>
 
+        <!-- PANEL SUPERVISOR DE ARQUITECTURA HÍBRIDA DE 3 CAPAS (v4_hybrid_3tier) -->
+        <div class="hybrid-3tier-grid" id="hybridSupervisorPanel" aria-label="Arquitectura supervisora cuantitativa de tres capas"></div>
+
         <!-- TARJETAS INTERACTIVAS DE LOS 4 ALGORITMOS -->
         <div class="bots-4-grid" id="algoBotsCardsGrid"></div>
 
@@ -1623,38 +1713,38 @@
 
         <div class="dossier-grid">
           <div class="dossier-card da">
-            <h4>BOT A &bull; Microtrading Intradía por Impulso Técnico y Volumen (15m / 1H)</h4>
-            <div class="dossier-formula">Entrada: EMA<sub>9</sub> &gt; EMA<sub>21</sub> &and; ADX<sub>1H</sub> &ge; 20 &and; ATR/P &ge; 0.42% &and; ROC<sub>10</sub> &gt; 0.35% &and; Vol &ge; 1.08&middot;SMA<sub>20</sub></div>
+            <h4>BOT A &bull; Microtrading Intradía por Impulso, Flujo OBV y Régimen GMM (15m / 1H)</h4>
+            <div class="dossier-formula">Entrada: EMA<sub>9</sub> &gt; EMA<sub>21</sub> &and; EMA<sub>200</sub> &and; ADX<sub>1H</sub> &ge; 20 &and; OBV &ge; 0 &and; Vol &ge; 1.08&middot;SMA<sub>20</sub></div>
             <ul class="dossier-list">
-              <li><strong>Regla de Entrada Intradía (960 velas 15m):</strong> Activa compras cuando convergen alineación rápida (EMA<sub>9</sub> &gt; EMA<sub>21</sub> sobre régimen 1H), fuerza tendencial <code>ADX<sub>1H</sub> &ge; 20</code>, rango de volatilidad <code>ATR/Precio &ge; 0.42%</code> (evitando rangos muertos donde la comisión erosiona el margen), expansión del histograma <code>MACD(12,26,9)</code>, Momentum <code>ROC(10) &gt; 0.35%</code>, <code>RSI(14)</code> en [48, 70] y volumen <code>&ge; 1.08&times; SMA<sub>20</sub></code>, o ante recuperación confirmada de la banda inferior de Bollinger (<code>%B</code> con <code>Vol &ge; 1.25&times;</code>).</li>
-              <li><strong>Estrategia de Salida Causal y Control Estricto:</strong> Ejecuta con tarifa <em>Maker Limit</em> (0.04%) limitando el riesgo máximo al <strong>0.85% del capital</strong> ($8.50 por orden), fijando <code>SL = P<sub>0</sub> &minus; 1.55&middot;ATR<sub>14</sub></code>, <strong>toma parcial del 45% en <code>+1.40&middot;ATR<sub>14</sub></code></strong> y objetivo final <code>TP = P<sub>0</sub> + 3.10&middot;ATR<sub>14</sub></code> (ratio 2:1). El <em>trailing stop</em> se evalúa estrictamente contra bandas pre-barra (sin falsos stops intra-barra), activándose en <code>+1.05&middot;ATR<sub>14</sub></code> (distancia <code>1.10&middot;ATR<sub>14</sub></code>) con piso neto de <strong>+0.55%</strong>, más corte diario de &minus;2.00%.</li>
+              <li><strong>Regla de Entrada Intradía (960 velas 15m):</strong> Activa compras cuando convergen alineación rápida (EMA<sub>9</sub> &gt; EMA<sub>21</sub> sobre régimen 1H y soporte estructural <code>EMA<sub>200</sub></code>), fuerza tendencial <code>ADX<sub>1H</sub> &ge; 20</code>, rango de volatilidad <code>ATR/Precio &ge; 0.42%</code>, pendiente positiva de flujo <strong>OBV</strong>, expansión <code>MACD(12,26,9)</code>, Momentum <code>ROC(10) &gt; 0.35%</code>, <code>RSI(14)</code> en [48, 70] y volumen <code>&ge; 1.08&times; SMA<sub>20</sub></code>, o ante recuperación confirmada de Bollinger (<code>%B</code> con <code>Vol &ge; 1.25&times;</code>).</li>
+              <li><strong>Guardián Independiente y Salida Causal:</strong> Ejecuta con tarifa <em>Maker Limit</em> (0.04%) modulando el riesgo base del <strong>0.50%</strong> (banda efectiva <strong>0.25%–0.55%</strong> según régimen GMM) con filtro de liquidez <code>spread &le; 12 bps</code>, fijando <code>SL = P<sub>0</sub> &minus; 1.55&middot;ATR<sub>14</sub></code>, <strong>toma parcial del 45% en <code>+1.40&middot;ATR<sub>14</sub></code></strong> y objetivo <code>TP = P<sub>0</sub> + 3.10&middot;ATR<sub>14</sub></code>, más corte diario de &minus;2.00% y <em>Kill Switch</em> en &minus;8.50%.</li>
             </ul>
           </div>
 
           <div class="dossier-card db">
-            <h4>BOT B &bull; Decisión Sistemática de Compra y Venta Diaria (Cierre 1D &bull; 00:00 UTC)</h4>
-            <div class="dossier-formula">Canal: P<sub>t</sub> &gt; SMA<sub>20</sub> (%B &gt; 0.52) &and; EMA<sub>12</sub> &gt; EMA<sub>26</sub> &and; ROC<sub>14d</sub> &gt; 0.5%, &nbsp; w* = SLSQP(&Sigma;&#770;<sub>LW</sub>, &sigma;&#770;<sub>GARCH</sub>, &lambda;<sub>L1</sub>)</div>
+            <h4>BOT B &bull; Decisión Sistemática Diaria Adaptativa por Régimen (1D &bull; 00:00 UTC)</h4>
+            <div class="dossier-formula">Canal: P<sub>t</sub> &gt; SMA<sub>20</sub> (%B &gt; 0.52) &and; OBV + Rel<sub>BTC</sub>, &nbsp; w* = SLSQP(&Sigma;&#770;<sub>LW</sub>, &sigma;&#770;<sub>GARCH</sub>, &lambda;<sub>L1</sub>) &cap; Tope<sub>GMM</sub></div>
             <ul class="dossier-list">
-              <li><strong>Regla de Decisión Diaria con Histéresis L1:</strong> Evalúa una sola vez al día (00:00 UTC) la estructura macro del mercado y selecciona activos en el semicanal superior de Bollinger (<code>%B &gt; 0.52</code>), con <code>EMA 12 &gt; EMA 26</code>, Momentum de 14 días positivo y <code>ADX(14)</code>. Asigna pesos óptimos mediante Markowitz <code>SLSQP</code> con volatilidad condicional <code>GJR-GARCH(1,1,1)</code>, <strong>penalización proporcional L1 de rotación</strong>, banda de histéresis <code>&ge; 16%</code> y orden mínima de <strong>$65 USD</strong> (tope 34% por moneda) para comprimir costos de transacción.</li>
-              <li><strong>Estrategia de Salida Chandelier ATR:</strong> Ejecuta liquidación completa e inmediata hacia reserva <code>USDT</code> cuando el cierre diario perfora <code>Máximo<sub>15d</sub> &minus; 2.30&middot;ATR<sub>14</sub></code> o pierde la media central de Bollinger (<code>SMA 20</code>), protegiendo el capital acumulado ante reversiones de ciclo.</li>
+              <li><strong>Regla Diaria Adaptativa con Histéresis L1:</strong> Evalúa diariamente (00:00 UTC) la estructura macro, ponderando activos en el semicanal superior (<code>%B &gt; 0.52</code>, <code>EMA 12 &gt; EMA 26</code>, <code>ROC<sub>14d</sub> &gt; 0.5%</code>) mediante Markowitz <code>SLSQP</code> + <code>GJR-GARCH(1,1,1)</code> enriquecidos con flujo <strong>OBV</strong> y fuerza relativa frente a <strong>BTC</strong>. Ajusta el tope máximo de exposición bruta según el régimen GMM (<strong>92%</strong> Alcista, <strong>55%</strong> Lateral, <strong>38%</strong> Alta Volatilidad, <strong>24%</strong> Bajista) con banda de histéresis <code>&ge; 16%</code> y orden mínima de <strong>$65 USD</strong>.</li>
+              <li><strong>Estrategia de Salida Chandelier ATR:</strong> Ejecuta liquidación completa e inmediata hacia reserva <code>USDT</code> cuando el cierre diario perfora <code>Máximo<sub>15d</sub> &minus; 2.30&middot;ATR<sub>14</sub></code> o pierde la media central de Bollinger (<code>SMA 20</code>), protegiendo el patrimonio acumulado ante reversiones de ciclo.</li>
             </ul>
           </div>
 
           <div class="dossier-card dc">
-            <h4>BOT C &bull; Estrategia Posicional de Largos y Contratos a Futuros (4H SWAP)</h4>
-            <div class="dossier-formula">Largo: P<sub>t</sub> &gt; EMA<sub>21</sub> &gt; EMA<sub>55</sub> &and; +DI &gt; &minus;DI &nbsp;|&nbsp; Corto: P<sub>t</sub> &lt; EMA<sub>21</sub> &lt; EMA<sub>55</sub> &and; &minus;DI &gt; +DI + Carry<sub>8h</sub></div>
+            <h4>BOT C &bull; Estrategia Posicional de Largos y Futuros SWAP con Open Interest (4H)</h4>
+            <div class="dossier-formula">Largo/Corto: EMA<sub>21/55</sub> &and; &plusmn;DI + Carry<sub>8h</sub> + Ratio(OI/Vol) + OBV &nbsp;|&nbsp; Desapalancamiento Gradual DD</div>
             <ul class="dossier-list">
-              <li><strong>Regla Direccional Dual, Carry 8h y Rebalanceo Delta:</strong> Opera contratos perpetuos <code>*-USDT-SWAP</code> abriendo largos con <code>EMA 21 &gt; EMA 55</code>, <code>%B &gt; 0.52</code>, <code>ROC(24) &gt; +1.2%</code> y <code>+DI &gt; &minus;DI</code>, y coberturas cortas (<code>SHORT</code>) con <code>ADX(14) &gt; 19</code>. Integra el <strong>carry de financiamiento 8h</strong> en la puntuación, aplica histéresis de permanencia y ejecuta <strong>rebalanceo delta</strong> (ajusta solo el diferencial &ge; $75 sin cerrar ni reabrir posiciones vigentes).</li>
-              <li><strong>Protección en Cada Vela 4H y Gestión de Margen:</strong> Restringe el apalancamiento bruto total a <code>&le; 1.05&times;</code> (colateral libre &ge; 35% <code>USDT</code>), evaluando en <strong>cada vela 4H</strong> un corte protector <code>SL = 2.85&middot;ATR<sub>14</sub></code>, <em>trailing stop</em> <code>1.85&middot;ATR<sub>14</sub></code> tras <code>+2.40&middot;ATR<sub>14</sub></code>, enfriamiento de <strong>12 horas</strong> tras salida por stop y objetivo <code>TP = 3.60&middot;ATR<sub>14</sub></code>.</li>
+              <li><strong>Regla Direccional Dual, Open Interest y Carry 8h:</strong> Opera contratos perpetuos <code>*-USDT-SWAP</code> combinando estructura <code>EMA 21 / 55</code>, <code>%B</code>, <code>ROC(24)</code>, <code>ADX(14) &gt; 19</code>, flujo acumulado <strong>OBV</strong>, carry de financiamiento cada <code>8h</code> y confirmación de <strong>Open Interest SWAP / Volumen</strong> desde libros públicos OKX/Bybit, ejecutando <strong>rebalanceo delta</strong> para ajustes <code>&ge; $75</code>.</li>
+              <li><strong>Reducción Progresiva de Riesgo y Cortes 4H:</strong> Mantiene apalancamiento bruto <code>&le; 1.05&times;</code>, reduce exposición a <code>0.55&times;</code> ante drawdowns de &minus;8.5% (corte total a &minus;15%) y evalúa en cada vela 4H <code>SL = 2.85&middot;ATR<sub>14</sub></code>, <em>trailing</em> <code>1.85&middot;ATR<sub>14</sub></code> tras <code>+2.40&middot;ATR<sub>14</sub></code>, enfriamiento de 12 horas y objetivo <code>TP = 3.60&middot;ATR<sub>14</sub></code>.</li>
             </ul>
           </div>
 
           <div class="dossier-card dd">
-            <h4>BOT D &bull; Red Neuronal Profunda Adiestrada con Estrategia de Salida y Riesgos (4H MLP)</h4>
-            <div class="dossier-formula">P&#770;(Alza<sub>t+3</sub>) = MLP<sub>(32,16),tanh,L2,ES</sub>( EMA<sub>9/21</sub>, EMA<sub>21/55</sub>, %B, BW%, ROC<sub>12,24</sub>, MACD<sub>H</sub>, RSI<sub>14</sub>, %K<sub>4H</sub>, VolRel )</div>
+            <h4>BOT D &bull; Ensemble Supervisado Triple-Barrera y Régimen GMM (4H &bull; 3-Clases)</h4>
+            <div class="dossier-formula">P&#770;(Alza | Lateral | Baja) = 0.44&middot;HGB + 0.26&middot;MLP + 0.15&middot;LogReg + 0.15&middot;GMM(15 Vars Causal)</div>
             <ul class="dossier-list">
-              <li><strong>Adiestramiento Nativo 4H&rarr;4H con Parada Temprana:</strong> Combina un regresor y un clasificador perceptrón multicapa regularizados (<code>L2</code> + <code>early_stopping</code>, cero advertencias de convergencia) entrenados causalmente en <strong>velas nativas 4H</strong> sobre las diez variables técnicas reales incluyendo estocástico <code>%K<sub>4H</sub></code>, reentrenando en ventana móvil cada 60 barras y bloqueando compras contra tendencias bajistas profundas (<code>EMA 21 &lt; 0.975&middot;EMA 55</code>).</li>
-              <li><strong>Triple Protocolo Causal de Salida y Paridad ATR:</strong> Dimensiona cada posición arriesgando máximo el <strong>1.05% del patrimonio</strong> (tope 25% por activo y reserva permanente &ge; 25% en <code>USDT</code>), evaluando contra bandas pre-barra tres salidas determinísticas: (1) <code>Stop-Loss 1.45&middot;ATR<sub>14</sub></code> con <em>trailing</em> <code>1.30&middot;ATR<sub>14</sub></code> tras <code>+1.25&middot;ATR<sub>14</sub></code> y piso neto de <strong>+0.65%</strong>, (2) <code>Take-Profit</code> escalonado y (3) salida inmediata ante caída de probabilidad neuronal bajo 45%.</li>
+              <li><strong>Etiquetado Triple-Barrera, Purga Temporal y Gobernanza Campeón/Retador:</strong> Combina <strong>HistGradientBoosting (44%)</strong>, <strong>MLP(32,16) (26%)</strong>, <strong>Regresión Logística (15%)</strong> y <strong>Régimen GMM (15%)</strong> entrenados causalmente sobre <strong>15 variables ortogonales</strong> (EMAs, <code>EMA 200</code>, Bollinger, ROC, MACD, RSI y su aceleración, Estocástico <code>%K</code>, <code>OBV</code>, canal mín-máx, correlación/fuerza relativa frente a <strong>BTC</strong> y volumen) con etiquetas <strong>Triple-Barrera</strong> (<code>TP 1.80&middot;ATR</code> vs <code>SL 1.40&middot;ATR</code> vs <code>Espera</code>), purga de 32 muestras y reevaluación cada 60 velas 4H.</li>
+              <li><strong>Guardián Independiente de Capital y Salidas ATR:</strong> Valida cada orden bajo el módulo <code>RiskGatekeeper</code> (riesgo efectivo <strong>0.25%–0.55%</strong>, divergencia OKX/Bybit <code>&le; 45 bps</code>, spread <code>&le; 12 bps</code>, Kill Switch &minus;8.5%), exigiendo confirmación de fuerza relativa frente a <strong>BTC</strong> y volumen en rebotes para evitar cuchillos en caída, con toma parcial <code>45%</code> a <code>1.35&middot;ATR</code> y <em>trailing</em> causal.</li>
             </ul>
           </div>
         </div>
@@ -3346,10 +3436,80 @@
             btn.classList.toggle('active', btn.getAttribute('data-rtmode') === rtSlidingMode);
           });
           updateHeroAndAlgorithmCards();
+          renderHybridSupervisorPanel();
           renderBotActivePositions(selectedBotKey);
           renderLatestOpsAndSlidingMonitor();
         });
       });
+    }
+
+    function renderHybridSupervisorPanel() {
+      var box = document.getElementById('hybridSupervisorPanel');
+      if (!box || !SUITE) return;
+      var sup = SUITE.supervisor_3tier || {};
+      var t1 = sup.tier1_predictive || {};
+      var t2 = sup.tier2_regime_ensemble || {};
+      var t3 = sup.tier3_risk_gatekeeper || {};
+      var regP = t2.regime_probabilities || {};
+      var topC = t2.top_candidate || {};
+      var pBull = Number(topC.prob_bull_pct != null ? topC.prob_bull_pct : 33.3);
+      var pFlat = Number(topC.prob_flat_pct != null ? topC.prob_flat_pct : 33.4);
+      var pBear = Number(topC.prob_bear_pct != null ? topC.prob_bear_pct : 33.3);
+      var regCode = String(t2.regime_code || 'MERCADO_LATERAL');
+      var regLabel = String(t2.regime_label || 'Mercado Lateral');
+      var regColor = regCode === 'TENDENCIA_ALCISTA' ? '#6EE7B7' : (regCode === 'ALTA_VOLATILIDAD' ? '#F43F5E' : (regCode === 'TENDENCIA_BAJISTA' ? '#F43F5E' : '#D9C29A'));
+
+      box.innerHTML =
+        '<div class="tier-sup-card t1">' +
+          '<div class="tier-sup-hdr">' +
+            '<span class="tier-sup-badge">Capa 1 &middot; Datos y Etiquetado</span>' +
+            '<span class="tier-sup-badge" style="color:#FFFFFF;">Campeón v' + esc(String(t1.champion_version || 1)) + '</span>' +
+          '</div>' +
+          '<h4 class="tier-sup-title">Inteligencia Predictiva Triple-Barrera &amp; Flujo</h4>' +
+          '<div class="tier-sup-kpi-row">' +
+            '<div><span class="tk-lbl">Variables Ortogonales</span><span class="tk-val">' + esc(String(t1.features_count || 15)) + ' Causal</span></div>' +
+            '<div><span class="tk-lbl">Brier OOS / Purga</span><span class="tk-val">' + Number(t1.oos_brier_score || 0.22).toFixed(3) + ' &middot; ' + esc(String(t1.purged_gap || 32)) + '</span></div>' +
+          '</div>' +
+          '<ul class="tier-sup-list">' +
+            '<li><strong>Etiqueta:</strong> ' + esc(t1.labeling || 'Triple-Barrera Causal (TP 1.8x ATR vs SL 1.4x ATR vs Espera)') + '</li>' +
+            '<li><strong>Flujo y Estructura:</strong> ' + esc((t1.flow_variables || ['OBV Slope', 'EMA 200 Dist', 'Canal Mín-Máx', 'Relación BTC', 'Open Interest SWAP']).join(' · ')) + '</li>' +
+            '<li><strong>Expectativa OOS:</strong> ' + Number(t1.oos_expectancy_pct || 0).toFixed(3) + '% &middot; ' + esc(t1.governance_status || 'Campeón Activo') + ' (' + esc(String(t1.train_samples || 0)) + ' muestras)</li>' +
+          '</ul>' +
+        '</div>' +
+
+        '<div class="tier-sup-card t2">' +
+          '<div class="tier-sup-hdr">' +
+            '<span class="tier-sup-badge">Capa 2 &middot; Regímenes &amp; ML</span>' +
+            '<span class="tier-sup-badge" style="color:' + regColor + ';">' + esc(regLabel) + '</span>' +
+          '</div>' +
+          '<h4 class="tier-sup-title">Detector GMM (4 Regímenes) &amp; Ensemble 3-Clases</h4>' +
+          '<div class="tier-sup-kpi-row">' +
+            '<div><span class="tk-lbl">Multiplicador / SL ATR</span><span class="tk-val">' + Number(t2.risk_multiplier || 0.78).toFixed(2) + '&times; &middot; ' + Number(t2.sl_atr_buffer || 1.00).toFixed(2) + '&times;</span></div>' +
+            '<div><span class="tk-lbl">Líder ' + esc(topC.coin || 'BTC') + ' (Alza/Lat/Baja)</span><span class="tk-val">' + pBull.toFixed(0) + '% / ' + pFlat.toFixed(0) + '% / ' + pBear.toFixed(0) + '%</span></div>' +
+          '</div>' +
+          '<ul class="tier-sup-list">' +
+            '<li><strong>Pesos Ensemble:</strong> 44% HistGradientBoosting &middot; 26% MLP(32,16) &middot; 15% Regresión Logística &middot; 15% Régimen GMM</li>' +
+            '<li><strong>Prob. Regímenes:</strong> Alcista ' + (Number(regP.TENDENCIA_ALCISTA || 0) * 100).toFixed(0) + '% &middot; Lateral ' + (Number(regP.MERCADO_LATERAL || 0) * 100).toFixed(0) + '% &middot; Bajista ' + (Number(regP.TENDENCIA_BAJISTA || 0) * 100).toFixed(0) + '% &middot; Alta Vol ' + (Number(regP.ALTA_VOLATILIDAD || 0) * 100).toFixed(0) + '%</li>' +
+            '<li><strong>Volatilidad Transversal:</strong> ' + Number(t2.cross_vol_pct || 0).toFixed(2) + '% &middot; Estado: ' + esc(regCode) + '</li>' +
+          '</ul>' +
+        '</div>' +
+
+        '<div class="tier-sup-card t3">' +
+          '<div class="tier-sup-hdr">' +
+            '<span class="tier-sup-badge">Capa 3 &middot; Guardián de Riesgo</span>' +
+            '<span class="tier-sup-badge" style="color:#6EE7B7;">Autoridad de Veto</span>' +
+          '</div>' +
+          '<h4 class="tier-sup-title">Guardián Independiente de Capital y Liquidez</h4>' +
+          '<div class="tier-sup-kpi-row">' +
+            '<div><span class="tk-lbl">Riesgo Efectivo / Orden</span><span class="tk-val">' + Number(t3.effective_risk_pct || 0.50).toFixed(2) + '% (0.25%–0.55%)</span></div>' +
+            '<div><span class="tk-lbl">Kill Switch / Diario</span><span class="tk-val">' + Number(t3.kill_switch_dd_pct || -8.5).toFixed(1) + '% / ' + Number(t3.daily_loss_limit_pct || -2.0).toFixed(1) + '%</span></div>' +
+          '</div>' +
+          '<ul class="tier-sup-list">' +
+            '<li><strong>Filtro de Liquidez:</strong> Spread medio ' + Number(t3.avg_spread_bps || 0.8).toFixed(2) + ' bps (&le; ' + Number(t3.max_spread_bps || 12).toFixed(0) + ' bps) &middot; Divergencia OKX/Bybit ' + Number(t3.avg_cross_exchange_bps || 1.2).toFixed(2) + ' bps</li>' +
+            '<li><strong>Control Bot A / Bot D:</strong> Bot A ' + (t3.bot_a_approved !== false ? 'AUTORIZADO' : 'VETADO') + ' (' + Number(t3.bot_a_dd_pct || 0).toFixed(2) + '%) &middot; Bot D ' + (t3.bot_d_approved !== false ? 'AUTORIZADO' : 'VETADO') + ' (' + Number(t3.bot_d_dd_pct || 0).toFixed(2) + '%)</li>' +
+            '<li><strong>Vetos Preventivos Bot D:</strong> ' + esc(String(t3.veto_count_bot_d || 0)) + ' bloqueos ejecutados por riesgo/liquidez o drawdown</li>' +
+          '</ul>' +
+        '</div>';
     }
 
     // Gráfica Dinámica 3: Patrimonio MTM / Eficiencia Compra-Venta / Dispersión por Orden
@@ -3361,7 +3521,7 @@
         { k: 'bot_a', color: '#10B981', width: 2.9, shortLbl: 'BOT A · Microtrading Técnico (15m/1H)' },
         { k: 'bot_b', color: '#38BDF8', width: 2.9, shortLbl: 'BOT B · Decisión Diaria (1D)' },
         { k: 'bot_c', color: '#D9C29A', width: 2.9, shortLbl: 'BOT C · Largos y Futuros (SWAP)' },
-        { k: 'bot_d', color: '#A78BFA', width: 2.8, shortLbl: 'BOT D · Red Neuronal MLP + ATR' }
+        { k: 'bot_d', color: '#A78BFA', width: 2.8, shortLbl: 'BOT D · Ensemble Triple-Barrera (4H)' }
       ];
 
       if (botEvalView === 'efficiency') {
@@ -3508,6 +3668,10 @@
       var atrPctNow = Number(sm.atr_pct || 0);
       var volRelNow = Number(sm.vol_rel != null ? sm.vol_rel : 1.0);
       var mlpProbNow = Number(sm.mlp_prob_pct != null ? sm.mlp_prob_pct : 50.0);
+      var obvNow = Number(sm.obv_slope != null ? sm.obv_slope : 0);
+      var pBullNow = Number(sm.prob_bull_pct != null ? sm.prob_bull_pct : mlpProbNow);
+      var pFlatNow = Number(sm.prob_flat_pct != null ? sm.prob_flat_pct : Math.max(0, 100 - mlpProbNow) * 0.5);
+      var pBearNow = Number(sm.prob_bear_pct != null ? sm.prob_bear_pct : Math.max(0, 100 - mlpProbNow) * 0.5);
 
       // Poblar Cinta Superior de Indicadores de Análisis Técnico (#taLiveStrip)
       var taBox = document.getElementById('taLiveStrip');
@@ -3552,8 +3716,8 @@
           },
           {
             cls: volRelNow >= 1.05 ? 'emerald' : 'gold',
-            lbl: '8. Volumen Relativo & Red MLP',
-            val: 'Vol: ' + volRelNow.toFixed(2) + 'x SMA(20) · MLP: ' + mlpProbNow.toFixed(1) + '%'
+            lbl: '8. Flujo OBV & Ensemble 3-Clases',
+            val: 'Vol: ' + volRelNow.toFixed(2) + 'x · OBV: ' + (obvNow >= 0 ? '+' : '') + obvNow.toFixed(2) + ' · Alza ' + pBullNow.toFixed(0) + '% / Lat ' + pFlatNow.toFixed(0) + '% / Baja ' + pBearNow.toFixed(0) + '%'
           }
         ];
         taBox.innerHTML = pills.map(function(p) {
@@ -4764,8 +4928,10 @@
         SUITE.market_candles_4h = fresh.market_candles_4h;
         SUITE.rule_tests_summary = fresh.rule_tests_summary;
         if (fresh.python_source_modules) SUITE.python_source_modules = fresh.python_source_modules;
+        if (fresh.supervisor_3tier) SUITE.supervisor_3tier = fresh.supervisor_3tier;
         recalculateAllBotsMarkToMarket();
         updateHeroAndAlgorithmCards();
+        renderHybridSupervisorPanel();
         renderBotsInceptionEvolutionTable();
         renderFourBotsPerfChart();
         renderBotTradeSignalsChart();
@@ -4806,6 +4972,7 @@
           recalculateAllBotsMarkToMarket();
           renderMovingCryptoCards('Libros Públicos OKX API v5 & Bybit API v5');
           updateHeroAndAlgorithmCards();
+          renderHybridSupervisorPanel();
           renderBotsInceptionEvolutionTable();
           renderBacktest5YChart();
           renderBacktest5YTable();

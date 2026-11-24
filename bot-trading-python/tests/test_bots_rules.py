@@ -1,10 +1,10 @@
 """
-Suite de Pruebas Automatizadas de las Reglas Cuantitativas y Ciberseguridad (25 verificaciones determinísticas):
-  - Indicadores técnicos libres de NaN y dentro de rangos matemáticos
-  - Reglas de BOT A (paridad ATR <= 0.85%, tope 24%, filtro volumen, trailing ATR y límite máximo de pérdida diaria -2.0%)
-  - Reglas de BOT B (restricción símplex <= 34%/activo y salida Chandelier ATR a USDT)
-  - Reglas de BOT C (contabilidad simétrica Long/Short, financiamiento 8h y apalancamiento bruto <= 1.05x)
-  - Reglas de BOT D (entrenamiento MLP strictly causal sin fuga futura, reserva >= 25% y triple salida)
+Suite de Pruebas Automatizadas de las Reglas Cuantitativas y Ciberseguridad (30 verificaciones determinísticas):
+  - Indicadores técnicos libres de NaN y dentro de rangos matemáticos (incluyendo OBV Slope y métricas BTC)
+  - Reglas de BOT A (paridad ATR modulado por régimen, tope 24%, filtro volumen, trailing ATR y límite máximo de pérdida diaria -2.0%)
+  - Reglas de BOT B (restricción símplex <= 34%/activo, tope GMM y salida Chandelier ATR a USDT)
+  - Reglas de BOT C (contabilidad simétrica Long/Short, financiamiento 8h, Open Interest y desapalancamiento progresivo)
+  - Reglas de BOT D y Supervisor Híbrido (Triple-Barrera causal, GMM 4 Regímenes, Ensemble 3-Clases con purga, Campeón/Retador y Guardián de Riesgo)
   - Integridad criptográfica SHA-256 y detección ante alteraciones + contrato RFC-8259 de JSON
   - Servidor HTTP blindado (/health GET/HEAD, CORS estricto, compresión GZIP, bóveda Zero-Trust y firewall POST /api/contact)
 """
@@ -30,18 +30,28 @@ if str(BOT_DIR) not in sys.path:
 from src.strategies.quant_bots_rules import (  # noqa: E402
     GENESIS_HASH,
     BotAConfig,
+    RiskGatekeeperConfig,
     append_orders_sha256_chain,
     calc_adx_di,
     calc_atr,
     calc_futures_account_state,
+    calc_obv_slope,
     calc_rsi,
     calc_stoch_k,
+    calc_structure_and_btc_metrics,
     compute_bollinger,
     compute_bot_d_sizing,
     compute_macd_pct,
+    compute_triple_barrier_labels,
+    detect_market_regimes_gmm,
     evaluate_bot_d_exit_decision,
+    evaluate_risk_gatekeeper,
+    extract_ta_features_row,
     fit_causal_mlp_ensemble,
+    fit_supervised_3class_ensemble,
+    govern_champion_challenger,
     init_bot_a_state,
+    predict_supervised_3class_ensemble,
     sign_orders_sha256_chain,
     step_bot_a_microtrading,
     step_bot_b_daily,
@@ -874,6 +884,263 @@ class TestQuantBotsRules(unittest.TestCase):
         self.assertEqual(em_fut[0]["action"], "TOMA BENEFICIO SHORT SWAP")
         self.assertEqual(pf_fut["units"]["ETH"], 0.0)
         self.assertGreater(em_fut[0]["realized_pnl_usd"], 12.0)
+
+    def test_26_triple_barrier_labeling_and_no_future_leakage(self) -> None:
+        df_b = _sample_ohlcv(70, drift=0.004, seed=7)
+        df_e = _sample_ohlcv(70, drift=-0.002, seed=9)
+        close_df = pd.DataFrame({"BTC": df_b["close"], "ETH": df_e["close"]})
+        high_df = pd.DataFrame({"BTC": df_b["high"], "ETH": df_e["high"]})
+        low_df = pd.DataFrame({"BTC": df_b["low"], "ETH": df_e["low"]})
+        atr_df = pd.DataFrame({
+            "BTC": calc_atr(df_b, 14),
+            "ETH": calc_atr(df_e, 14),
+        })
+        horizon = 4
+        lbl1, ret1 = compute_triple_barrier_labels(
+            close_df, high_df, low_df, atr_df,
+            horizon=horizon, tp_atr_mult=1.80, sl_atr_mult=1.40, roundtrip_fee=0.0020,
+        )
+        self.assertTrue(lbl1.iloc[-horizon:].isna().all().all())
+        valid_lbls = set(lbl1.iloc[:-horizon].stack().unique().tolist())
+        self.assertTrue(valid_lbls.issubset({0.0, 1.0, 2.0}))
+        self.assertFalse(ret1.iloc[:-horizon].isna().any().any())
+
+        close_mod = close_df.copy()
+        high_mod = high_df.copy()
+        low_mod = low_df.copy()
+        close_mod.iloc[50:] *= 1.35
+        high_mod.iloc[50:] *= 1.40
+        low_mod.iloc[50:] *= 0.85
+        lbl2, ret2 = compute_triple_barrier_labels(
+            close_mod, high_mod, low_mod, atr_df,
+            horizon=horizon, tp_atr_mult=1.80, sl_atr_mult=1.40, roundtrip_fee=0.0020,
+        )
+        pd.testing.assert_frame_equal(lbl1.iloc[:44], lbl2.iloc[:44])
+        pd.testing.assert_frame_equal(ret1.iloc[:44], ret2.iloc[:44])
+
+    def test_27_gmm_four_market_regimes_classification(self) -> None:
+        rng = np.random.default_rng(123)
+        r_bull = np.full(60, 0.008) + rng.normal(0.0, 0.004, 60)
+        r_flat = rng.normal(0.0, 0.002, 60)
+        r_bear = np.full(60, -0.007) + rng.normal(0.0, 0.004, 60)
+        r_hv = rng.normal(0.0, 0.055, 60)
+        rets_btc = np.concatenate([r_bull, r_flat, r_bear, r_hv])
+        idx = pd.date_range("2026-01-01", periods=len(rets_btc), freq="4h")
+        c_btc = 100.0 * np.cumprod(1.0 + rets_btc)
+        c_eth = 50.0 * np.cumprod(1.0 + 0.9 * rets_btc + rng.normal(0.0, 0.005, len(rets_btc)))
+        c_sol = 20.0 * np.cumprod(1.0 + 1.1 * rets_btc + rng.normal(0.0, 0.006, len(rets_btc)))
+        close_df = pd.DataFrame({"BTC": c_btc, "ETH": c_eth, "SOL": c_sol}, index=idx)
+        adx_dict = {}
+        for col in close_df.columns:
+            s = close_df[col]
+            oh = pd.DataFrame({"high": s * 1.006, "low": s * 0.994, "close": s}, index=idx)
+            adx_dict[col] = calc_adx_di(oh, 14)[0]
+        adx_df = pd.DataFrame(adx_dict, index=idx).bfill()
+
+        res = detect_market_regimes_gmm(close_df, adx_df, btc_col="BTC", seed=42)
+        cur = res["current_regime"]
+        valid_codes = {"TENDENCIA_ALCISTA", "MERCADO_LATERAL", "TENDENCIA_BAJISTA", "ALTA_VOLATILIDAD"}
+        self.assertIn(cur["code"], valid_codes)
+        self.assertAlmostEqual(sum(cur["probabilities"].values()), 1.0, places=3)
+        self.assertEqual(cur["code"], "ALTA_VOLATILIDAD")
+        self.assertLessEqual(cur["risk_multiplier"], 0.55)
+        self.assertGreaterEqual(cur["sl_atr_buffer"], 1.15)
+
+    def test_28_supervised_3class_ensemble_purged_split_and_champion_challenger(self) -> None:
+        import warnings
+        from sklearn.exceptions import ConvergenceWarning
+
+        n_bars = 260
+        df_b = _sample_ohlcv(n_bars, drift=0.0025, seed=31)
+        df_e = _sample_ohlcv(n_bars, drift=-0.001, seed=37)
+        close_df = pd.DataFrame({"BTC": df_b["close"], "ETH": df_e["close"]})
+        high_df = pd.DataFrame({"BTC": df_b["high"], "ETH": df_e["high"]})
+        low_df = pd.DataFrame({"BTC": df_b["low"], "ETH": df_e["low"]})
+        vol_df = pd.DataFrame({"BTC": df_b["volume"], "ETH": df_e["volume"]})
+        vrel_df = vol_df / (vol_df.rolling(20, min_periods=5).mean() + 1e-9)
+        atr_df = pd.DataFrame({"BTC": calc_atr(df_b, 14), "ETH": calc_atr(df_e, 14)})
+        rsi_df = pd.DataFrame({c: calc_rsi(close_df[c], 14) for c in close_df.columns}).bfill()
+        stoch_df = pd.DataFrame({"BTC": calc_stoch_k(df_b, 14, 3), "ETH": calc_stoch_k(df_e, 14, 3)}).bfill()
+        ema9 = close_df.ewm(span=9, adjust=False).mean()
+        ema21 = close_df.ewm(span=21, adjust=False).mean()
+        ema55 = close_df.ewm(span=55, adjust=False).mean()
+        roc12 = (close_df.pct_change(12) * 100.0).fillna(0.0)
+        roc24 = (close_df.pct_change(24) * 100.0).fillna(0.0)
+        macd_h = pd.DataFrame({c: compute_macd_pct(close_df[c])[2] for c in close_df.columns})
+        bb_pb = pd.DataFrame({c: compute_bollinger(close_df[c], 20, 2.0)[3] for c in close_df.columns})
+        bb_bw = pd.DataFrame({c: compute_bollinger(close_df[c], 20, 2.0)[4] for c in close_df.columns})
+        obv_df = pd.DataFrame({c: calc_obv_slope(close_df[c], vol_df[c], 14) for c in close_df.columns})
+        st = calc_structure_and_btc_metrics(close_df, high_df, low_df, "BTC", 20)
+        lbl_df, ret_df = compute_triple_barrier_labels(close_df, high_df, low_df, atr_df, horizon=4)
+
+        X_rows, yc_rows, yr_rows = [], [], []
+        for ii in range(30, n_bars - 5):
+            for c in ("BTC", "ETH"):
+                if not np.isnan(lbl_df.iloc[ii][c]):
+                    row = extract_ta_features_row(
+                        ii, c, ema9, ema21, ema55, bb_pb, bb_bw, roc12, roc24, macd_h,
+                        rsi_df, stoch_df, vrel_df,
+                        obv_slope_df=obv_df, ema200_dist_df=st["ema200_dist"],
+                        range_pos_df=st["range_pos"], btc_rel_df=st["btc_rel"], rsi_accel_df=st["rsi_accel"],
+                    )
+                    self.assertEqual(len(row), 15)
+                    self.assertTrue(np.all(np.isfinite(row)))
+                    X_rows.append(row)
+                    yc_rows.append(int(lbl_df.iloc[ii][c]))
+                    yr_rows.append(float(ret_df.iloc[ii][c]))
+
+        with warnings.catch_warnings(record=True) as rec_w:
+            warnings.simplefilter("always", ConvergenceWarning)
+            bundle = fit_supervised_3class_ensemble(np.asarray(X_rows), np.asarray(yc_rows), np.asarray(yr_rows), purge_samples=32, seed=101)
+            conv_w = [w for w in rec_w if issubclass(w.category, ConvergenceWarning)]
+            self.assertEqual(len(conv_w), 0)
+
+        self.assertGreater(bundle["purged_gap"], 0)
+        pred = predict_supervised_3class_ensemble(
+            bundle, np.asarray(X_rows[-6:]),
+            regime_probs={"TENDENCIA_ALCISTA": 0.55, "MERCADO_LATERAL": 0.25, "TENDENCIA_BAJISTA": 0.10, "ALTA_VOLATILIDAD": 0.10},
+        )
+        p_sums = pred["prob_bear"] + pred["prob_flat"] + pred["prob_bull"]
+        for s_val in p_sums:
+            self.assertAlmostEqual(float(s_val), 1.0, places=5)
+
+        champ1, dec1 = govern_champion_challenger(None, bundle, "2026-11-24 04:00")
+        self.assertTrue(dec1["promoted"])
+        self.assertEqual(dec1["active_version"], 1)
+
+        better = dict(champ1)
+        better["oos_brier_score"] = max(0.01, float(champ1["oos_brier_score"]) - 0.02)
+        better["oos_expectancy_pct"] = float(champ1["oos_expectancy_pct"]) + 0.10
+        champ2, dec2 = govern_champion_challenger(champ1, better, "2026-11-24 08:00")
+        self.assertTrue(dec2["promoted"])
+        self.assertEqual(dec2["active_version"], 2)
+
+        worse = dict(champ2)
+        worse["oos_brier_score"] = 0.95
+        worse["oos_expectancy_pct"] = -5.0
+        champ3, dec3 = govern_champion_challenger(champ2, worse, "2026-11-24 12:00")
+        self.assertFalse(dec3["promoted"])
+        self.assertEqual(dec3["active_version"], 2)
+        self.assertEqual(champ3["version"], 2)
+
+    def test_29_independent_risk_gatekeeper_veto_authority_and_kill_switch(self) -> None:
+        cfg = RiskGatekeeperConfig()
+        ok = evaluate_risk_gatekeeper(
+            [1000.0, 1005.0], 1000.0, 0.20, 0.70,
+            spread_bps=2.5, cross_exchange_bps=4.0,
+            regime_info={"risk_multiplier": 0.80, "sl_atr_buffer": 1.05},
+            rr_ratio=2.10, cfg=cfg,
+        )
+        self.assertTrue(ok["approved"])
+        self.assertIsNone(ok["veto_code"])
+        self.assertGreaterEqual(ok["effective_risk_pct"], 0.0025)
+        self.assertLessEqual(ok["effective_risk_pct"], 0.0055)
+
+        v_ks = evaluate_risk_gatekeeper([1000.0, 910.0], 920.0, 0.10, 0.70, cfg=cfg)
+        self.assertFalse(v_ks["approved"])
+        self.assertEqual(v_ks["veto_code"], "KILL_SWITCH_DRAWDOWN")
+
+        v_day = evaluate_risk_gatekeeper([1000.0, 978.0], 1000.0, 0.10, 0.70, cfg=cfg)
+        self.assertFalse(v_day["approved"])
+        self.assertEqual(v_day["veto_code"], "DAILY_LOSS_LIMIT")
+
+        v_sp = evaluate_risk_gatekeeper([1000.0, 1002.0], 1000.0, 0.10, 0.70, spread_bps=15.0, cfg=cfg)
+        self.assertEqual(v_sp["veto_code"], "LIQUIDITY_SPREAD_HIGH")
+
+        v_cx = evaluate_risk_gatekeeper([1000.0, 1002.0], 1000.0, 0.10, 0.70, cross_exchange_bps=52.0, cfg=cfg)
+        self.assertEqual(v_cx["veto_code"], "ORACLE_DIVERGENCE")
+
+        v_cap = evaluate_risk_gatekeeper([1000.0, 1002.0], 1000.0, 0.70, 0.68, cfg=cfg)
+        self.assertEqual(v_cap["veto_code"], "EXPOSURE_CAP_REACHED")
+
+        v_rr = evaluate_risk_gatekeeper([1000.0, 1002.0], 1000.0, 0.10, 0.70, rr_ratio=1.20, cfg=cfg)
+        self.assertEqual(v_rr["veto_code"], "RR_BELOW_MINIMUM")
+
+    def test_30_stress_scenarios_flash_crash_and_sideways_capital_preservation(self) -> None:
+        coins = ["BTC", "ETH"]
+        cfg_a = BotAConfig()
+        gk_cfg = RiskGatekeeperConfig()
+
+        # Escenario A: Desplome abrupto (-28%) con spread amplio y OBV negativo
+        st_crash = init_bot_a_state(coins, 1000.0)
+        px = 100.0
+        for step_i in range(8):
+            ts_c = pd.Timestamp("2026-11-20 00:00") + pd.Timedelta(minutes=15 * step_i)
+            nxt = px * 0.96
+            step_bot_a_microtrading(
+                st_crash, ts_c, coins,
+                bar_open_prev={"BTC": px * 1.01, "ETH": px * 0.505},
+                bar_close_prev={"BTC": px, "ETH": px * 0.5},
+                bar_close_cur={"BTC": nxt, "ETH": nxt * 0.5},
+                bar_low_cur={"BTC": nxt * 0.985, "ETH": nxt * 0.49},
+                bar_high_cur={"BTC": px, "ETH": px * 0.5},
+                atr_prev={"BTC": px * 0.03, "ETH": px * 0.015},
+                ema9_prev={"BTC": px * 1.02, "ETH": px * 0.51},
+                ema21_prev={"BTC": px * 1.05, "ETH": px * 0.53},
+                ema21_1h_prev={"BTC": px * 1.06, "ETH": px * 0.54},
+                ema55_1h_prev={"BTC": px * 1.08, "ETH": px * 0.55},
+                roc10_prev={"BTC": -4.0, "ETH": -4.5},
+                mh_prev={"BTC": -0.5, "ETH": -0.6},
+                mh_prev2={"BTC": -0.3, "ETH": -0.4},
+                pb_prev={"BTC": 0.12, "ETH": 0.10},
+                pb_prev2={"BTC": 0.20, "ETH": 0.18},
+                rsi_prev={"BTC": 24.0, "ETH": 22.0},
+                vrel_prev={"BTC": 2.4, "ETH": 2.5},
+                breadth_1h=0.0,
+                cfg=cfg_a,
+                adx_1h_prev={"BTC": 34.0, "ETH": 35.0},
+                obv_prev={"BTC": -0.65, "ETH": -0.70},
+                ema200_dist_prev={"BTC": -0.18, "ETH": -0.20},
+                regime_code="ALTA_VOLATILIDAD",
+                spread_bps_map={"BTC": 18.0, "ETH": 22.0},
+                risk_mult=0.50,
+            )
+            px = nxt
+
+        self.assertGreaterEqual(st_crash["eq_curve"][-1], 995.0)
+        self.assertEqual(len(st_crash["trades"]), 0)
+        gk_crash = evaluate_risk_gatekeeper([1000.0, 912.0], 950.0, 0.0, 0.74, spread_bps=2.0, cfg=gk_cfg)
+        self.assertFalse(gk_crash["approved"])
+        self.assertEqual(gk_crash["veto_code"], "KILL_SWITCH_DRAWDOWN")
+
+        # Escenario B: Rango lateral estrecho (+/- 0.15%) sin sobreoperación ni erosión de capital
+        st_flat = init_bot_a_state(coins, 1000.0)
+        for step_j in range(16):
+            ts_f = pd.Timestamp("2026-11-21 00:00") + pd.Timedelta(minutes=15 * step_j)
+            p_cur = 100.0 + (0.12 if step_j % 2 == 0 else -0.12)
+            step_bot_a_microtrading(
+                st_flat, ts_f, coins,
+                bar_open_prev={"BTC": 100.0, "ETH": 50.0},
+                bar_close_prev={"BTC": p_cur, "ETH": p_cur * 0.5},
+                bar_close_cur={"BTC": 100.0, "ETH": 50.0},
+                bar_low_cur={"BTC": 99.85, "ETH": 49.92},
+                bar_high_cur={"BTC": 100.15, "ETH": 50.08},
+                atr_prev={"BTC": 0.18, "ETH": 0.09},
+                ema9_prev={"BTC": 100.0, "ETH": 50.0},
+                ema21_prev={"BTC": 100.0, "ETH": 50.0},
+                ema21_1h_prev={"BTC": 100.0, "ETH": 50.0},
+                ema55_1h_prev={"BTC": 100.0, "ETH": 50.0},
+                roc10_prev={"BTC": 0.05, "ETH": 0.04},
+                mh_prev={"BTC": 0.0, "ETH": 0.0},
+                mh_prev2={"BTC": 0.0, "ETH": 0.0},
+                pb_prev={"BTC": 0.50, "ETH": 0.50},
+                pb_prev2={"BTC": 0.49, "ETH": 0.49},
+                rsi_prev={"BTC": 50.0, "ETH": 50.0},
+                vrel_prev={"BTC": 0.80, "ETH": 0.85},
+                breadth_1h=0.50,
+                cfg=cfg_a,
+                adx_1h_prev={"BTC": 14.0, "ETH": 13.5},
+                obv_prev={"BTC": 0.01, "ETH": 0.0},
+                ema200_dist_prev={"BTC": 0.0, "ETH": 0.0},
+                regime_code="MERCADO_LATERAL",
+                spread_bps_map={"BTC": 1.2, "ETH": 1.4},
+                risk_mult=0.75,
+            )
+        self.assertGreaterEqual(st_flat["cash_usd"], 995.0)
+        self.assertTrue(np.isfinite(st_flat["eq_curve"][-1]))
+        al_d, _ = compute_bot_d_sizing(1000.0, 1000.0, 0.0, 100.0, 1.5, 0.62, max_risk_pct=0.0050 * 0.75)
+        self.assertGreater(al_d, 0.0)
+        self.assertLessEqual(al_d, 250.0)
 
 
 if __name__ == "__main__":
