@@ -1205,6 +1205,7 @@ def _step_bot_d_closed_bar(
                 and (mh_v > mh_prev2)
                 and (vrel_v >= 1.15)
                 and (brel_v >= 0.0)
+                and (obv_v >= -0.15)
             )
             nn_buy_ok = nn_trend_ok or nn_rebound_ok
 
@@ -2127,6 +2128,14 @@ def run_four_algorithmic_bots(
     fees_cum_d = float(pf_d["fees_cum"])
     trades_d = pf_d["trades"]
 
+    pf_d["gov_meta"] = {
+        "version": int(live_champ_bundle.get("version", 1)),
+        "oos_brier_score": float(live_champ_bundle.get("oos_brier_score", 0.0)),
+        "oos_expectancy_pct": float(live_champ_bundle.get("oos_expectancy_pct", 0.0)),
+        "train_samples": int(live_champ_bundle.get("train_samples", 0)),
+        "purged_gap": int(live_champ_bundle.get("purged_gap", 32)),
+        "reason": str(live_gov_decision.get("reason", "Especificación Vigente Confirmada")),
+    }
     portfolios_serialized = {
         "bot_a": _sanitize_portfolio_for_json(pf_a, coins),
         "bot_b": _sanitize_portfolio_for_json(pf_b, coins),
@@ -2389,13 +2398,13 @@ def run_four_algorithmic_bots(
     for tr in certified_orders:
         latest_order_by_bot[tr["bot_id"]] = tr
 
-    gov_meta = pf_d.get("gov_meta") or {
+    gov_meta = {
         "version": int(live_champ_bundle.get("version", 1)),
         "oos_brier_score": float(live_champ_bundle.get("oos_brier_score", 0.0)),
         "oos_expectancy_pct": float(live_champ_bundle.get("oos_expectancy_pct", 0.0)),
         "train_samples": int(live_champ_bundle.get("train_samples", 0)),
         "purged_gap": int(live_champ_bundle.get("purged_gap", 32)),
-        "reason": live_gov_decision["reason"],
+        "reason": str(live_gov_decision.get("reason", "Especificación Vigente Confirmada")),
     }
     avg_spread_live = float(np.mean(list(spread_bps_map.values())))
     avg_cross_live = float(np.mean(list(cross_bps_map.values())))
@@ -2414,14 +2423,14 @@ def run_four_algorithmic_bots(
         "schema_version": STATEFUL_LEDGER_SCHEMA,
         "tier1_predictive": {
             "champion_version": int(gov_meta.get("version", 1)),
-            "labeling": "Triple-Barrera Causal (TP 1.8x ATR vs SL 1.4x ATR vs Espera)",
+            "labeling": "Triple-Barrera Neta de Costos (TP 1.80x ATR · SL 1.40x ATR · Banda Neutral, h=4)",
             "features_count": 15,
-            "flow_variables": ["OBV Slope", "EMA 200 Dist", "Canal Mín-Máx", "Correlación/Fuerza BTC", "Open Interest SWAP"],
+            "flow_variables": ["Pendiente OBV", "Distancia EMA200", "Posición Rango 20p", "Beta / Fuerza Relativa BTC", "Ratio Open Interest / Volumen SWAP"],
             "oos_brier_score": round(float(gov_meta.get("oos_brier_score", 0.0)), 4),
             "oos_expectancy_pct": round(float(gov_meta.get("oos_expectancy_pct", 0.0)), 3),
             "train_samples": int(gov_meta.get("train_samples", 0)),
             "purged_gap": int(gov_meta.get("purged_gap", 32)),
-            "governance_status": str(gov_meta.get("reason", "Campeón Activo")),
+            "governance_status": str(gov_meta.get("reason", "Especificación Vigente Confirmada")),
         },
         "tier2_regime_ensemble": {
             "regime_code": cur_reg_4h["code"],
@@ -2444,7 +2453,7 @@ def run_four_algorithmic_bots(
             },
         },
         "tier3_risk_gatekeeper": {
-            "status": "ACTIVO · COMPLEMENTO INDEPENDIENTE DE RIESGO",
+            "status": "ACTIVO · CONTROL PRE-EJECUCIÓN DE RIESGO Y LIQUIDEZ",
             "effective_risk_pct": round(float(gate_live_a["effective_risk_pct"]) * 100.0, 2),
             "kill_switch_dd_pct": round(gatekeeper_cfg.kill_switch_drawdown_pct * 100.0, 1),
             "daily_loss_limit_pct": round(gatekeeper_cfg.daily_loss_limit_pct * 100.0, 1),
@@ -2468,8 +2477,8 @@ def run_four_algorithmic_bots(
             "inception_utc": inception_map["bot_a"],
             "elapsed_days": elapsed_days_map["bot_a"],
             "latest_order": latest_order_by_bot.get("bot_a"),
-            "methodology": "Velas 15m + Filtro 1H + Supervisor GMM 4 Regímenes (EMA 9/21/55, ADX >= 20, ATR >= 0.42%, OBV, distancia EMA200, Bollinger %B, MACD, Volumen >= 1.08x)",
-            "risk_profile": "Gatekeeper Independiente (Maker 0.04% · Riesgo 0.25%–0.50%/orden · Spread <= 12 bps · Parcial 45% a 1.40x ATR · Trailing +0.55% · Kill Switch -8.5%)",
+            "methodology": "Velas 15m + Filtro 1H + Modelo GMM 4 Regímenes (EMA 9/21/55, ADX >= 20, ATR >= 0.42%, OBV, distancia EMA200, Bollinger %B, MACD, Volumen >= 1.08x)",
+            "risk_profile": "Presupuesto Dinámico de Riesgo (Maker 0.04% · Riesgo 0.25%–0.50%/orden · Spread <= 12 bps · Parcial 45% a 1.40x ATR · Trailing +0.55% · Límite DD -8.5%)",
             "cash_usd": round(cash_a, 4),
             "fees_paid_usd": round(fees_cum_a, 2),
             "is_futures": False,
@@ -2525,8 +2534,8 @@ def run_four_algorithmic_bots(
             "inception_utc": inception_map["bot_d"],
             "elapsed_days": elapsed_days_map["bot_d"],
             "latest_order": latest_order_by_bot.get("bot_d"),
-            "methodology": "Ensemble (44% HistGradientBoosting + 26% MLP(32,16) + 15% LogisticRegression + 15% GMM) con etiquetas Triple-Barrera, purga temporal y Campeón/Retador",
-            "risk_profile": "Gatekeeper & Triple Salida (Riesgo 0.25%–0.55%/orden · Reserva >= 25% USDT · Parcial 45% a 1.35x ATR · Trailing 1.30x ATR · Giro 3-clases)",
+            "methodology": "Ensamble Multiclase (44% HistGradientBoosting + 26% MLP(32,16) + 15% Logit L2 + 15% Prior GMM) con Triple-Barrera, purga temporal y validación OOS",
+            "risk_profile": "Control Pre-Ejecución de Capital y Salida Escalonada (Riesgo 0.25%–0.55%/orden · Reserva >= 25% USDT · Parcial 45% a 1.35x ATR · Trailing 1.30x ATR)",
             "cash_usd": round(cash_d, 4),
             "fees_paid_usd": round(fees_cum_d, 2),
             "is_futures": False,

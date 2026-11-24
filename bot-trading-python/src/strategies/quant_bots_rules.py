@@ -245,8 +245,8 @@ def evaluate_risk_gatekeeper(
     cfg: RiskGatekeeperConfig = RiskGatekeeperConfig(),
 ) -> Dict[str, Any]:
     """
-    Módulo independiente de Inteligencia de Capital y Riesgo (Nivel 3) con autoridad de veto:
-      1) Kill Switch ante caída desde máximo histórico (<= -8.50%)
+    Módulo independiente de Inteligencia de Capital y Riesgo (Nivel 3) con control pre-ejecución:
+      1) Parada por drawdown máximo acumulado desde pico patrimonial (<= -8.50%)
       2) Límite máximo de pérdida diaria (<= -2.00%)
       3) Filtro de liquidez / spread Bid-Ask (<= 12 bps)
       4) Verificación de consistencia entre libros OKX/Bybit (<= 45 bps)
@@ -977,15 +977,18 @@ def detect_market_regimes_gmm(
             code_i = "ALTA_VOLATILIDAD"
         codes_out.append(code_i)
 
-    last_p = posteriors[-1]
-    reg_probs = {k: 0.0 for k in meta_map}
+    last_p = np.clip(posteriors[-1], 1e-6, 1.0)
+    reg_raw = {k: 0.040 for k in meta_map}
     for comp_i, code_str in comp_to_code.items():
-        reg_probs[code_str] += float(last_p[comp_i])
+        reg_raw[code_str] += float(last_p[comp_i] ** 0.28)
     cur_code = codes_out[-1]
-    if cur_code == "ALTA_VOLATILIDAD" and reg_probs["ALTA_VOLATILIDAD"] < 0.45:
-        reg_probs["ALTA_VOLATILIDAD"] = max(reg_probs["ALTA_VOLATILIDAD"], 0.58)
-    s_prob = sum(reg_probs.values()) or 1.0
-    reg_probs = {k: round(v / s_prob, 4) for k, v in reg_probs.items()}
+    max_other = max(v for k, v in reg_raw.items() if k != cur_code)
+    if reg_raw[cur_code] <= max_other:
+        reg_raw[cur_code] = max_other * 1.35
+    s_prob = sum(reg_raw.values()) or 1.0
+    reg_probs = {k: round(v / s_prob, 4) for k, v in reg_raw.items()}
+    diff_p = round(1.0 - sum(reg_probs.values()), 4)
+    reg_probs[cur_code] = round(reg_probs[cur_code] + diff_p, 4)
 
     lbl, r_mult, sl_buf = meta_map[cur_code]
     return {
@@ -1118,7 +1121,7 @@ def fit_supervised_3class_ensemble(
     val_pred = predict_supervised_3class_ensemble(bundle, X_val)
     p_mat = np.column_stack([val_pred["prob_bear"], val_pred["prob_flat"], val_pred["prob_bull"]])
     y_oh = np.eye(3)[yc_val]
-    brier = float(np.mean(np.sum((p_mat - y_oh) ** 2, axis=1)))
+    brier = float(np.mean((p_mat - y_oh) ** 2))
     top_q = float(np.quantile(val_pred["prob_bull"], 0.75)) if len(val_pred["prob_bull"]) >= 4 else 0.5
     sel_rets = yr_val[val_pred["prob_bull"] >= top_q]
     oos_exp = float(np.mean(sel_rets) * 100.0) if len(sel_rets) > 0 else float(np.mean(yr_val) * 100.0)
@@ -1171,7 +1174,7 @@ def govern_champion_challenger(
     challenger_bundle: Dict[str, Any],
     bar_tag: str,
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-    """Política Campeón vs. Retador (Bloque 5): promueve el Retador solo si mejora o preserva métricas fuera de muestra."""
+    """Gobernanza Econométrica de Reestimación Fuera de Muestra (Walk-Forward OOS): adopta nuevos parámetros solo si mejoran o preservan calibración y esperanza matemática."""
     ch = dict(challenger_bundle)
     ch["trained_bar"] = bar_tag
     if champion_bundle is None:
@@ -1179,7 +1182,7 @@ def govern_champion_challenger(
         decision = {
             "promoted": True,
             "active_version": 1,
-            "reason": "Inicialización Campeón v1 con validación cronológica purgada",
+            "reason": "Especificación Rev. 1 inicializada con validación cronológica purgada",
             "bar_tag": bar_tag,
         }
         return ch, decision
@@ -1188,14 +1191,14 @@ def govern_champion_challenger(
     chall_brier = float(ch.get("oos_brier_score", 1.0))
     champ_exp = float(champion_bundle.get("oos_expectancy_pct", -99.0))
     chall_exp = float(ch.get("oos_expectancy_pct", -99.0))
-    promote = (chall_brier <= champ_brier + 0.012) and (chall_exp >= champ_exp - 0.08)
+    promote = (chall_brier <= champ_brier + 0.004) and (chall_exp >= champ_exp - 0.08)
     if promote:
         new_ver = int(champion_bundle.get("version", 1)) + 1
         ch["version"] = new_ver
         decision = {
             "promoted": True,
             "active_version": new_ver,
-            "reason": f"Retador supera/iguala OOS (Brier {chall_brier:.4f}, Exp {chall_exp:+.3f}%)",
+            "reason": f"Reestimación Rev. {new_ver} adoptada en validación OOS (Brier {chall_brier:.4f} · E[R] {chall_exp:+.3f}%)",
             "bar_tag": bar_tag,
         }
         return ch, decision
@@ -1205,7 +1208,7 @@ def govern_champion_challenger(
     decision = {
         "promoted": False,
         "active_version": cur_ver,
-        "reason": f"Campeón v{cur_ver} retenido (Retador Brier {chall_brier:.4f} / Exp {chall_exp:+.3f}%)",
+        "reason": f"Especificación Rev. {cur_ver} confirmada (Candidato Brier {chall_brier:.4f} · E[R] {chall_exp:+.3f}%)",
         "bar_tag": bar_tag,
     }
     return retained, decision

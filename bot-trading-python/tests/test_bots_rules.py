@@ -4,7 +4,7 @@ Suite de Pruebas Automatizadas de las Reglas Cuantitativas y Ciberseguridad (30 
   - Reglas de BOT A (paridad ATR modulado por régimen, tope 24%, filtro volumen, trailing ATR y límite máximo de pérdida diaria -2.0%)
   - Reglas de BOT B (restricción símplex <= 34%/activo, tope GMM y salida Chandelier ATR a USDT)
   - Reglas de BOT C (contabilidad simétrica Long/Short, financiamiento 8h, Open Interest y desapalancamiento progresivo)
-  - Reglas de BOT D y Supervisor Híbrido (Triple-Barrera causal, GMM 4 Regímenes, Ensemble 3-Clases con purga, Campeón/Retador y Guardián de Riesgo)
+  - Reglas de BOT D y Gobernanza Econométrica (Triple-Barrera causal, GMM 4 Regímenes, Ensemble 3-Clases con purga, reestimación OOS y Control Pre-Ejecución de Riesgo)
   - Integridad criptográfica SHA-256 y detección ante alteraciones + contrato RFC-8259 de JSON
   - Servidor HTTP blindado (/health GET/HEAD, CORS estricto, compresión GZIP, bóveda Zero-Trust y firewall POST /api/contact)
 """
