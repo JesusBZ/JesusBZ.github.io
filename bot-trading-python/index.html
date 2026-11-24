@@ -1589,6 +1589,7 @@
                 <button type="button" class="chart-ctrl-btn active" data-logside="ALL">Todas</button>
                 <button type="button" class="chart-ctrl-btn" data-logside="BUY">Compras / Long</button>
                 <button type="button" class="chart-ctrl-btn" data-logside="SELL">Ventas / Short / Cierre</button>
+                <button type="button" class="chart-ctrl-btn" data-logside="CLOSED">Cerradas (PnL)</button>
               </div>
             </div>
           </div>
@@ -2487,11 +2488,21 @@
               }
             }
 
-            // Evaluar disparo autónomo real de Stop-Loss o Take-Profit si el precio cruza la banda exacta
-            if (pos.units > 0 && pos.sl_price && curPx <= Number(pos.sl_price)) {
-              triggerAutonomousExecution(b, pos, curPx, 'SELL', 'EJECUCIÓN AUTOMÁTICA STOP-LOSS ATR');
-            } else if (pos.units > 0 && pos.tp_price && curPx >= Number(pos.tp_price)) {
-              triggerAutonomousExecution(b, pos, curPx, 'SELL', 'EJECUCIÓN AUTOMÁTICA TOMA DE BENEFICIO ATR');
+            // Si está conectado al servidor 24/7, solicitar sincronización inmediata del cierre persistente; en modo estático ejecutar localmente
+            if (pos.units > 0 && ((pos.sl_price && curPx <= Number(pos.sl_price)) || (pos.tp_price && curPx >= Number(pos.tp_price)))) {
+              if (render24x7Connected) {
+                if (!window.__jbzRtThresholdSyncPending) {
+                  window.__jbzRtThresholdSyncPending = true;
+                  setTimeout(function() {
+                    window.__jbzRtThresholdSyncPending = false;
+                    syncBackendSuiteCycle();
+                  }, 2500);
+                }
+              } else if (pos.sl_price && curPx <= Number(pos.sl_price)) {
+                triggerAutonomousExecution(b, pos, curPx, 'SELL', 'EJECUCIÓN AUTOMÁTICA STOP-LOSS ATR');
+              } else if (pos.tp_price && curPx >= Number(pos.tp_price)) {
+                triggerAutonomousExecution(b, pos, curPx, 'SELL', 'EJECUCIÓN AUTOMÁTICA TOMA DE BENEFICIO ATR');
+              }
             }
 
             pos.notional_usd = Number((pos.units * curPx).toFixed(2));
@@ -3929,15 +3940,12 @@
       if (!SUITE || !SUITE.algo_bots || !SUITE.algo_bots[botKey]) return null;
       var b = SUITE.algo_bots[botKey];
       var all = SUITE.ledger_chain && SUITE.ledger_chain.orders ? SUITE.ledger_chain.orders : [];
-      for (var j = 0; j < all.length; j++) {
-        if (all[j].bot_id === botKey && Number(all[j].units) > 0 && all[j].realized_pnl_usd == null) {
-          return all[j];
+      for (var i = 0; i < all.length; i++) {
+        if (all[i].bot_id === botKey && Number(all[i].units) > 0) {
+          return all[i];
         }
       }
       if (b.latest_order && Number(b.latest_order.units) > 0) return b.latest_order;
-      for (var i = 0; i < all.length; i++) {
-        if (all[i].bot_id === botKey) return all[i];
-      }
       return b.latest_order || null;
     }
 
@@ -4318,18 +4326,20 @@
       if (!tb) return;
 
       var allOrders = SUITE.ledger_chain.orders || [];
+      var closedCountAll = allOrders.filter(function(o) { return o.realized_pnl_usd != null; }).length;
       var filtered = allOrders.filter(function(o) {
         if (logBotFilter !== 'ALL' && o.bot_id !== logBotFilter) return false;
         if (logSideFilter === 'BUY' && !(o.side_type === 'BUY' || o.side_type === 'LONG')) return false;
         if (logSideFilter === 'SELL' && !(o.side_type === 'SELL' || o.side_type === 'SHORT' || o.side_type === 'CLOSE')) return false;
+        if (logSideFilter === 'CLOSED' && o.realized_pnl_usd == null) return false;
         return true;
       });
 
       if (sumEl) {
-        sumEl.textContent = 'Actualización continua en tiempo real (' + new Date().toISOString().slice(11, 19) + ' UTC · Tick #' + tickCounter + ') · Mostrando ' + Math.min(36, filtered.length) + ' de ' + filtered.length + ' órdenes (' + allOrders.length + ' firmadas con SHA-256)';
+        sumEl.textContent = 'Actualización continua en tiempo real (' + new Date().toISOString().slice(11, 19) + ' UTC · Tick #' + tickCounter + ') · Mostrando ' + Math.min(50, filtered.length) + ' de ' + filtered.length + ' órdenes (' + closedCountAll + ' cerradas con PnL realizado · ' + allOrders.length + ' firmadas en libro persistente SHA-256)';
       }
 
-      var rows = filtered.slice(0, 36);
+      var rows = filtered.slice(0, 50);
       if (!rows.length) {
         tb.innerHTML = '<tr><td colspan="7" style="text-align:center;">Sin registros bajo el filtro seleccionado.</td></tr>';
         return;
@@ -4822,7 +4832,7 @@
           syncDualExchangeBooksRest();
           setInterval(advanceRealtimeSlidingWindow, 1500);
           setInterval(syncDualExchangeBooksRest, 5000);
-          setInterval(syncBackendSuiteCycle, 30000);
+          setInterval(syncBackendSuiteCycle, 15000);
         });
     }
 

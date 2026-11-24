@@ -1,5 +1,5 @@
 """
-Suite de Pruebas Automatizadas de las Reglas Cuantitativas y Ciberseguridad (23 verificaciones determinísticas):
+Suite de Pruebas Automatizadas de las Reglas Cuantitativas y Ciberseguridad (25 verificaciones determinísticas):
   - Indicadores técnicos libres de NaN y dentro de rangos matemáticos
   - Reglas de BOT A (paridad ATR <= 0.85%, tope 24%, filtro volumen, trailing ATR y límite máximo de pérdida diaria -2.0%)
   - Reglas de BOT B (restricción símplex <= 34%/activo y salida Chandelier ATR a USDT)
@@ -30,6 +30,7 @@ if str(BOT_DIR) not in sys.path:
 from src.strategies.quant_bots_rules import (  # noqa: E402
     GENESIS_HASH,
     BotAConfig,
+    append_orders_sha256_chain,
     calc_adx_di,
     calc_atr,
     calc_futures_account_state,
@@ -45,6 +46,8 @@ from src.strategies.quant_bots_rules import (  # noqa: E402
     step_bot_a_microtrading,
     step_bot_b_daily,
     step_bot_c_futures,
+    step_realtime_futures_protections,
+    step_realtime_spot_protections,
     verify_orders_sha256_chain,
 )
 
@@ -397,10 +400,16 @@ class TestQuantBotsRules(unittest.TestCase):
         suite = json.loads((BOT_DIR / "quant_crypto_suite.json").read_text(encoding="utf-8"))
         bot_a = suite["algo_bots"]["bot_a"]
         active_coins = [p for p in bot_a["active_positions"] if p["coin"] != "USDT" and p["units"] > 0]
-        self.assertGreaterEqual(len(active_coins), 2, "BOT A debe mantener cartera diversificada activa (>=2 pares).")
+        usdt_rows = [p for p in bot_a["active_positions"] if p["coin"] == "USDT"]
+        self.assertEqual(len(usdt_rows), 1)
+        self.assertLessEqual(len(active_coins), 3)
         total_w = sum(float(p["weight_pct"]) for p in active_coins)
-        self.assertGreaterEqual(total_w, 35.0)
         self.assertLessEqual(total_w, 72.0)
+        self.assertGreaterEqual(float(usdt_rows[0]["weight_pct"]), 28.0)
+        for p in active_coins:
+            self.assertIsNotNone(p["sl_price"])
+            self.assertIsNotNone(p["tp_price"])
+            self.assertLess(float(p["sl_price"]), float(p["tp_price"]))
 
     def test_16_bot_d_reserve_and_protective_bands_in_generated_suite(self):
         suite = json.loads((BOT_DIR / "quant_crypto_suite.json").read_text(encoding="utf-8"))
@@ -758,6 +767,113 @@ class TestQuantBotsRules(unittest.TestCase):
         p = float(clf.predict_proba(scaler.transform(X_train[:1]))[0, 1])
         self.assertGreaterEqual(p, 0.0)
         self.assertLessEqual(p, 1.0)
+
+    def test_24_append_only_sha256_ledger_preserves_prior_orders(self):
+        initial = [
+            {
+                "bot_id": "bot_a", "time_utc": "2026-11-24 03:30 UTC",
+                "instrument": "AVAX-USDT", "side_type": "BUY",
+                "units": 30.0, "price": 6.753, "bar_low": 6.72, "bar_high": 6.79,
+            },
+            {
+                "bot_id": "bot_c", "time_utc": "2026-11-24 04:00 UTC",
+                "instrument": "BTC-USDT-SWAP", "side_type": "LONG",
+                "units": 0.004, "price": 61200.0, "bar_low": 61050.0, "bar_high": 61400.0,
+            },
+        ]
+        signed_init, root_init = sign_orders_sha256_chain(initial, GENESIS_HASH)
+        snap_ids = [o["tx_id"] for o in signed_init]
+        snap_hashes = [o["sha256"] for o in signed_init]
+
+        close_trade = [
+            {
+                "bot_id": "bot_a", "time_utc": "2026-11-24 04:32 UTC",
+                "instrument": "AVAX-USDT", "side_type": "SELL",
+                "units": 30.0, "price": 6.89, "bar_low": 6.75, "bar_high": 6.91,
+                "realized_pnl_usd": 3.95, "realized_pnl_pct": 1.95,
+            }
+        ]
+        extended, root_ext = append_orders_sha256_chain(signed_init, close_trade, GENESIS_HASH)
+        self.assertEqual(len(extended), 3)
+        self.assertEqual([o["tx_id"] for o in extended[:2]], snap_ids)
+        self.assertEqual([o["sha256"] for o in extended[:2]], snap_hashes)
+        self.assertEqual(extended[2]["tx_id"], "JBZ-A-0003")
+        self.assertEqual(extended[2]["prev_hash"], root_init)
+        ok, vh, vb, errs = verify_orders_sha256_chain(extended, GENESIS_HASH, root_ext)
+        self.assertTrue(ok, msg=f"Errores cadena aditiva: {errs}")
+        self.assertEqual(vh, 3)
+        self.assertEqual(vb, 3)
+
+    def test_25_realtime_spot_and_futures_protections_record_closes(self):
+        coins = ["BTC", "ETH"]
+        pf_spot = init_bot_a_state(coins, base_cap=1000.0)
+        pf_spot["cash_usd"] = 800.0
+        pf_spot["units"]["BTC"] = 2.0
+        pf_spot["entry"]["BTC"] = 100.0
+        pf_spot["entry_fee"]["BTC"] = 0.08
+        pf_spot["sl"]["BTC"] = 96.9
+        pf_spot["tp"]["BTC"] = 106.2
+
+        # 1) Toma parcial 45% en tiempo real al alcanzar +1.40x ATR (102.8)
+        em1 = step_realtime_spot_protections(
+            pf_spot, "bot_a", "BOT A", coins,
+            live_prices={"BTC": 103.0, "ETH": 50.0},
+            forming_lows={"BTC": 100.2, "ETH": 49.8},
+            forming_highs={"BTC": 103.1, "ETH": 50.2},
+            atr_map={"BTC": 2.0, "ETH": 1.0},
+            vrel_map={"BTC": 1.35, "ETH": 1.0},
+            now_time_utc="2026-11-24 06:12 UTC", now_ts_iso="2026-11-24 06:12",
+            fee_rate=0.0004, trail_activate_atr=1.05, trail_dist_atr=1.10,
+            partial_tp_atr=1.40, partial_tp_frac=0.45,
+        )
+        self.assertEqual(len(em1), 1)
+        self.assertIn("TOMA PARCIAL 45%", em1[0]["action"])
+        self.assertGreater(em1[0]["realized_pnl_usd"], 0.0)
+        self.assertAlmostEqual(pf_spot["units"]["BTC"], 1.10, places=5)
+        self.assertGreater(pf_spot["sl"]["BTC"], 100.0)
+
+        # 2) Cierre total restante al alcanzar TP (106.5 >= 106.2)
+        em2 = step_realtime_spot_protections(
+            pf_spot, "bot_a", "BOT A", coins,
+            live_prices={"BTC": 106.5, "ETH": 50.0},
+            forming_lows={"BTC": 102.5, "ETH": 49.8},
+            forming_highs={"BTC": 106.6, "ETH": 50.2},
+            atr_map={"BTC": 2.0, "ETH": 1.0},
+            vrel_map={"BTC": 1.50, "ETH": 1.0},
+            now_time_utc="2026-11-24 06:18 UTC", now_ts_iso="2026-11-24 06:18",
+            fee_rate=0.0004, trail_activate_atr=1.05, trail_dist_atr=1.10,
+            partial_tp_atr=1.40, partial_tp_frac=0.45,
+        )
+        self.assertEqual(len(em2), 1)
+        self.assertEqual(em2[0]["action"], "TOMA DE BENEFICIO ATR")
+        self.assertEqual(pf_spot["units"]["BTC"], 0.0)
+        self.assertGreater(pf_spot["cash_usd"], 1008.0)
+
+        # 3) Cierre en tiempo real de cobertura SHORT perpetua SWAP al alcanzar TP inferior
+        pf_fut = {
+            "realized_cash_c": 1000.0, "fees_cum": 0.0,
+            "units": {"BTC": 0.0, "ETH": -4.0},
+            "entry": {"BTC": 0.0, "ETH": 50.0},
+            "entry_fee": {"BTC": 0.0, "ETH": 0.10},
+            "sl": {"BTC": 0.0, "ETH": 52.5},
+            "tp": {"BTC": 0.0, "ETH": 47.0},
+            "peak": {"BTC": 0.0, "ETH": 50.0},
+            "trades": [],
+        }
+        em_fut = step_realtime_futures_protections(
+            pf_fut, coins,
+            perp_prices={"BTC": 100.0, "ETH": 46.8},
+            forming_lows={"BTC": 99.5, "ETH": 46.7},
+            forming_highs={"BTC": 100.5, "ETH": 50.1},
+            atr_map={"BTC": 2.0, "ETH": 1.0},
+            vrel_map={"BTC": 1.1, "ETH": 1.4},
+            now_time_utc="2026-11-24 06:21 UTC", now_ts_iso="2026-11-24 06:21",
+            fee_rate=0.0005,
+        )
+        self.assertEqual(len(em_fut), 1)
+        self.assertEqual(em_fut[0]["action"], "TOMA BENEFICIO SHORT SWAP")
+        self.assertEqual(pf_fut["units"]["ETH"], 0.0)
+        self.assertGreater(em_fut[0]["realized_pnl_usd"], 12.0)
 
 
 if __name__ == "__main__":

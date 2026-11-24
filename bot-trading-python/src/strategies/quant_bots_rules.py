@@ -752,6 +752,9 @@ def sign_orders_sha256_chain(
     prev_h = genesis_hash
     for seq_i, tr in enumerate(trades_chrono, start=1):
         tx_id = f"JBZ-{tr['bot_id'][-1].upper()}-{seq_i:04d}"
+        tr["price"] = fmt_px_dec(float(tr["price"]))
+        tr["bar_low"] = fmt_px_dec(min(float(tr["bar_low"]), float(tr["price"])))
+        tr["bar_high"] = fmt_px_dec(max(float(tr["bar_high"]), float(tr["price"])))
         canonical = (
             f"{prev_h}|{tx_id}|{tr['bot_id']}|{tr['time_utc']}|{tr['instrument']}|"
             f"{tr['side_type']}|{float(tr['units']):.6f}|{tr['price']}|{tr['bar_low']}|{tr['bar_high']}"
@@ -763,6 +766,304 @@ def sign_orders_sha256_chain(
         tr["sha256"] = digest
         prev_h = digest
     return trades_chrono, prev_h
+
+
+def append_orders_sha256_chain(
+    existing_chrono: List[Dict[str, Any]],
+    new_trades: List[Dict[str, Any]],
+    genesis_hash: str = GENESIS_HASH,
+) -> Tuple[List[Dict[str, Any]], str]:
+    """
+    Extiende de forma estrictamente aditiva (append-only) una cadena SHA-256 existente
+    conservando intactos los identificadores tx_id y firmas previas.
+    """
+    chain = [dict(o) for o in existing_chrono]
+    prev_h = str(chain[-1]["sha256"]) if chain else genesis_hash
+    next_seq = len(chain) + 1
+    for offset, raw_tr in enumerate(new_trades):
+        tr = dict(raw_tr)
+        seq_i = next_seq + offset
+        tx_id = f"JBZ-{tr['bot_id'][-1].upper()}-{seq_i:04d}"
+        px_f = fmt_px_dec(float(tr["price"]))
+        lo_f = fmt_px_dec(min(float(tr["bar_low"]), px_f))
+        hi_f = fmt_px_dec(max(float(tr["bar_high"]), px_f))
+        tr["price"] = px_f
+        tr["bar_low"] = lo_f
+        tr["bar_high"] = hi_f
+        canonical = (
+            f"{prev_h}|{tx_id}|{tr['bot_id']}|{tr['time_utc']}|{tr['instrument']}|"
+            f"{tr['side_type']}|{float(tr['units']):.6f}|{px_f}|{lo_f}|{hi_f}"
+        )
+        digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        tr["tx_id"] = tx_id
+        tr["prev_hash"] = prev_h
+        tr["canonical_payload"] = canonical
+        tr["sha256"] = digest
+        chain.append(tr)
+        prev_h = digest
+    return chain, prev_h
+
+
+def step_realtime_spot_protections(
+    pf: Dict[str, Any],
+    bot_id: str,
+    bot_code: str,
+    coins: List[str],
+    live_prices: Dict[str, float],
+    forming_lows: Dict[str, float],
+    forming_highs: Dict[str, float],
+    atr_map: Dict[str, float],
+    vrel_map: Dict[str, float],
+    now_time_utc: str,
+    now_ts_iso: str,
+    fee_rate: float,
+    trail_activate_atr: float = 0.0,
+    trail_dist_atr: float = 0.0,
+    trail_floor_mult: float = 1.0055,
+    partial_tp_atr: float = 0.0,
+    partial_tp_frac: float = 0.45,
+) -> List[Dict[str, Any]]:
+    """
+    Evalúa en tiempo real (cada ciclo de 30s) las cotizaciones actuales del libro Spot
+    frente a las bandas SL / TP / Toma Parcial / Trailing de las posiciones abiertas,
+    grabando de inmediato cualquier cierre parcial o total con su PnL realizado exacto.
+    """
+    emitted: List[Dict[str, Any]] = []
+    units = pf["units"]
+    entry = pf["entry"]
+    entry_fee = pf.setdefault("entry_fee", {c: 0.0 for c in coins})
+    partial_map = pf.setdefault("partial_taken", {c: False for c in coins})
+    peak_map = pf.setdefault("peak", {c: 0.0 for c in coins})
+    sl_map = pf["sl"]
+    tp_map = pf["tp"]
+
+    for c in coins:
+        qty = float(units.get(c, 0.0))
+        if qty <= 1e-8:
+            continue
+        px = float(live_prices[c])
+        if px <= 0.0:
+            continue
+        b_lo = min(float(forming_lows.get(c, px)), px)
+        b_hi = max(float(forming_highs.get(c, px)), px)
+        ep = float(entry.get(c, px))
+        sl_v = float(sl_map.get(c, 0.0))
+        tp_v = float(tp_map.get(c, 0.0))
+        atr_v = max(1e-9, float(atr_map.get(c, px * 0.01)))
+        vrel = float(vrel_map.get(c, 1.0))
+
+        if sl_v > 0.0 and px <= sl_v:
+            px_exec = fmt_px_dec(px)
+            gross = qty * px_exec
+            fee = gross * fee_rate
+            ent_f = float(entry_fee.get(c, 0.0))
+            pnl_u = gross - fee - (qty * ep) - ent_f
+            fee_legs = 2.0 if ent_f > 0.0 else 1.0
+            pnl_p = ((px_exec / max(ep, 1e-8)) - 1.0) * 100.0 - (fee_legs * fee_rate * 100.0)
+            pf["cash_usd"] = float(pf["cash_usd"]) + gross - fee
+            pf["fees_cum"] = float(pf["fees_cum"]) + fee
+            act_lbl = "TOMA TRAILING ATR" if px_exec > ep else "SALIDA STOP-LOSS ATR"
+            tr_out = {
+                "bot_id": bot_id, "bot_code": bot_code,
+                "time_utc": now_time_utc, "ts_iso": now_ts_iso,
+                "coin": c, "instrument": f"{c}-USDT", "side_type": "SELL",
+                "action": act_lbl, "units": round(qty, 6), "price": px_exec,
+                "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                "volume_rel": round(vrel, 2), "notional_usd": round(gross, 2), "fee_usd": round(fee, 3),
+                "realized_pnl_usd": round(pnl_u, 2), "realized_pnl_pct": round(pnl_p, 2),
+                "telemetry": f"Cierre Tiempo Real | Entrada={fmt_px_dec(ep)} | SL={fmt_px_dec(sl_v)} | Vol={vrel:.2f}x",
+            }
+            pf["trades"].append(tr_out)
+            emitted.append(tr_out)
+            units[c] = 0.0
+            sl_map[c] = 0.0
+            tp_map[c] = 0.0
+            peak_map[c] = 0.0
+            entry_fee[c] = 0.0
+            partial_map[c] = False
+        elif tp_v > 0.0 and px >= tp_v:
+            px_exec = fmt_px_dec(px)
+            gross = qty * px_exec
+            fee = gross * fee_rate
+            ent_f = float(entry_fee.get(c, 0.0))
+            pnl_u = gross - fee - (qty * ep) - ent_f
+            fee_legs = 2.0 if ent_f > 0.0 else 1.0
+            pnl_p = ((px_exec / max(ep, 1e-8)) - 1.0) * 100.0 - (fee_legs * fee_rate * 100.0)
+            pf["cash_usd"] = float(pf["cash_usd"]) + gross - fee
+            pf["fees_cum"] = float(pf["fees_cum"]) + fee
+            tr_out = {
+                "bot_id": bot_id, "bot_code": bot_code,
+                "time_utc": now_time_utc, "ts_iso": now_ts_iso,
+                "coin": c, "instrument": f"{c}-USDT", "side_type": "SELL",
+                "action": "TOMA DE BENEFICIO ATR", "units": round(qty, 6), "price": px_exec,
+                "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                "volume_rel": round(vrel, 2), "notional_usd": round(gross, 2), "fee_usd": round(fee, 3),
+                "realized_pnl_usd": round(pnl_u, 2), "realized_pnl_pct": round(pnl_p, 2),
+                "telemetry": f"Objetivo TP Alcanzado | Entrada={fmt_px_dec(ep)} | TP={fmt_px_dec(tp_v)} | Vol={vrel:.2f}x",
+            }
+            pf["trades"].append(tr_out)
+            emitted.append(tr_out)
+            units[c] = 0.0
+            sl_map[c] = 0.0
+            tp_map[c] = 0.0
+            peak_map[c] = 0.0
+            entry_fee[c] = 0.0
+            partial_map[c] = False
+        else:
+            if partial_tp_atr > 0.0 and (not partial_map.get(c, False)):
+                part_target = ep + partial_tp_atr * atr_v
+                if px >= part_target and (qty * px) >= 95.0:
+                    qty_part = qty * partial_tp_frac
+                    px_exec = fmt_px_dec(px)
+                    gross_p = qty_part * px_exec
+                    fee_p = gross_p * fee_rate
+                    ent_f_part = float(entry_fee.get(c, 0.0)) * partial_tp_frac
+                    pnl_u_p = gross_p - fee_p - (qty_part * ep) - ent_f_part
+                    fee_legs_p = 2.0 if ent_f_part > 0.0 else 1.0
+                    pnl_p_p = ((px_exec / max(ep, 1e-8)) - 1.0) * 100.0 - (fee_legs_p * fee_rate * 100.0)
+                    pf["cash_usd"] = float(pf["cash_usd"]) + gross_p - fee_p
+                    pf["fees_cum"] = float(pf["fees_cum"]) + fee_p
+                    units[c] = qty - qty_part
+                    entry_fee[c] = max(0.0, float(entry_fee.get(c, 0.0)) - ent_f_part)
+                    partial_map[c] = True
+                    sl_map[c] = max(sl_v, ep * trail_floor_mult)
+                    tr_part = {
+                        "bot_id": bot_id, "bot_code": bot_code,
+                        "time_utc": now_time_utc, "ts_iso": now_ts_iso,
+                        "coin": c, "instrument": f"{c}-USDT", "side_type": "SELL",
+                        "action": f"TOMA PARCIAL 45% ({partial_tp_atr:.2f}x ATR)",
+                        "units": round(qty_part, 6), "price": px_exec,
+                        "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                        "volume_rel": round(vrel, 2), "notional_usd": round(gross_p, 2), "fee_usd": round(fee_p, 3),
+                        "realized_pnl_usd": round(pnl_u_p, 2), "realized_pnl_pct": round(pnl_p_p, 2),
+                        "telemetry": f"Parcial Tiempo Real | SL Protegido={fmt_px_dec(sl_map[c])} | Vol={vrel:.2f}x",
+                    }
+                    pf["trades"].append(tr_part)
+                    emitted.append(tr_part)
+
+            peak_map[c] = max(float(peak_map.get(c, ep)), px)
+            if trail_activate_atr > 0.0 and peak_map[c] >= ep + trail_activate_atr * atr_v:
+                cand_sl = max(float(sl_map.get(c, 0.0)), ep * trail_floor_mult, peak_map[c] - trail_dist_atr * atr_v)
+                if cand_sl < px * 0.998:
+                    sl_map[c] = cand_sl
+
+    return emitted
+
+
+def step_realtime_futures_protections(
+    pf_c: Dict[str, Any],
+    coins: List[str],
+    perp_prices: Dict[str, float],
+    forming_lows: Dict[str, float],
+    forming_highs: Dict[str, float],
+    atr_map: Dict[str, float],
+    vrel_map: Dict[str, float],
+    now_time_utc: str,
+    now_ts_iso: str,
+    fee_rate: float,
+) -> List[Dict[str, Any]]:
+    """
+    Evalúa en tiempo real las cotizaciones perpetuas SWAP de BOT C (LONG y SHORT)
+    frente a sus niveles de SL, TP y Trailing ATR, grabando cierres inmediatos.
+    """
+    emitted: List[Dict[str, Any]] = []
+    units_c = pf_c["units"]
+    entry_c = pf_c["entry"]
+    entry_fee_c = pf_c.setdefault("entry_fee", {c: 0.0 for c in coins})
+    sl_c = pf_c["sl"]
+    tp_c = pf_c.setdefault("tp", {c: 0.0 for c in coins})
+    peak_c = pf_c.setdefault("peak", {c: 0.0 for c in coins})
+
+    for c in coins:
+        qty_c = float(units_c.get(c, 0.0))
+        if abs(qty_c) <= 1e-9:
+            continue
+        px = float(perp_prices[c])
+        if px <= 0.0:
+            continue
+        b_lo = min(float(forming_lows.get(c, px)), px)
+        b_hi = max(float(forming_highs.get(c, px)), px)
+        ep = float(entry_c.get(c, px))
+        sl_v = float(sl_c.get(c, 0.0))
+        tp_v = float(tp_c.get(c, 0.0))
+        atr_v = max(1e-9, float(atr_map.get(c, px * 0.015)))
+        vrel = float(vrel_map.get(c, 1.0))
+
+        if qty_c > 0.0:
+            hit_sl = sl_v > 0.0 and px <= sl_v
+            hit_tp = tp_v > 0.0 and px >= tp_v
+            if hit_sl or hit_tp:
+                px_exec = fmt_px_dec(px)
+                pnl_close = qty_c * (px_exec - ep)
+                fee_close = abs(qty_c * px_exec) * fee_rate
+                ent_f = float(entry_fee_c.get(c, 0.0))
+                pf_c["realized_cash_c"] = float(pf_c["realized_cash_c"]) + pnl_close - fee_close
+                pf_c["fees_cum"] = float(pf_c["fees_cum"]) + fee_close
+                pnl_u = round(pnl_close - fee_close - ent_f, 2)
+                pnl_p = round((((px_exec / max(ep, 1e-8)) - 1.0) * 100.0) - (2.0 * fee_rate * 100.0), 2)
+                lbl = "TOMA DE BENEFICIO SWAP ATR" if hit_tp else ("SALIDA TRAILING SWAP ATR" if px_exec > ep else "CORTE STOP-LOSS SWAP (2.85x ATR)")
+                tr_out = {
+                    "bot_id": "bot_c", "bot_code": "BOT C",
+                    "time_utc": now_time_utc, "ts_iso": now_ts_iso,
+                    "coin": c, "instrument": f"{c}-USDT-SWAP", "side_type": "CLOSE",
+                    "action": lbl, "units": round(abs(qty_c), 6), "price": px_exec,
+                    "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                    "volume_rel": round(vrel, 2), "notional_usd": round(abs(qty_c * px_exec), 2), "fee_usd": round(fee_close, 3),
+                    "realized_pnl_usd": pnl_u, "realized_pnl_pct": pnl_p,
+                    "telemetry": f"Cierre SWAP Tiempo Real | Entrada={fmt_px_dec(ep)} | Px={px_exec} | Vol={vrel:.2f}x",
+                }
+                pf_c["trades"].append(tr_out)
+                emitted.append(tr_out)
+                units_c[c] = 0.0
+                sl_c[c] = 0.0
+                tp_c[c] = 0.0
+                peak_c[c] = 0.0
+                entry_fee_c[c] = 0.0
+            else:
+                peak_c[c] = max(float(peak_c.get(c, ep)), px)
+                if peak_c[c] >= ep + 2.40 * atr_v:
+                    cand_sl = max(sl_v, ep * 1.004, peak_c[c] - 1.85 * atr_v)
+                    if cand_sl < px * 0.998:
+                        sl_c[c] = cand_sl
+        else:
+            hit_sl_s = sl_v > 0.0 and px >= sl_v
+            hit_tp_s = tp_v > 0.0 and px <= tp_v
+            if hit_sl_s or hit_tp_s:
+                px_exec = fmt_px_dec(px)
+                pnl_close = qty_c * (px_exec - ep)
+                fee_close = abs(qty_c * px_exec) * fee_rate
+                ent_f = float(entry_fee_c.get(c, 0.0))
+                pf_c["realized_cash_c"] = float(pf_c["realized_cash_c"]) + pnl_close - fee_close
+                pf_c["fees_cum"] = float(pf_c["fees_cum"]) + fee_close
+                pnl_u = round(pnl_close - fee_close - ent_f, 2)
+                pnl_p = round(((-1.0 * ((px_exec / max(ep, 1e-8)) - 1.0)) * 100.0) - (2.0 * fee_rate * 100.0), 2)
+                lbl = "TOMA BENEFICIO SHORT SWAP" if hit_tp_s else ("SALIDA TRAILING SHORT ATR" if px_exec < ep else "CORTE STOP-LOSS SHORT (2.85x ATR)")
+                tr_out = {
+                    "bot_id": "bot_c", "bot_code": "BOT C",
+                    "time_utc": now_time_utc, "ts_iso": now_ts_iso,
+                    "coin": c, "instrument": f"{c}-USDT-SWAP", "side_type": "CLOSE",
+                    "action": lbl, "units": round(abs(qty_c), 6), "price": px_exec,
+                    "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                    "volume_rel": round(vrel, 2), "notional_usd": round(abs(qty_c * px_exec), 2), "fee_usd": round(fee_close, 3),
+                    "realized_pnl_usd": pnl_u, "realized_pnl_pct": pnl_p,
+                    "telemetry": f"Cierre Short Tiempo Real | Entrada={fmt_px_dec(ep)} | Px={px_exec} | Vol={vrel:.2f}x",
+                }
+                pf_c["trades"].append(tr_out)
+                emitted.append(tr_out)
+                units_c[c] = 0.0
+                sl_c[c] = 0.0
+                tp_c[c] = 0.0
+                peak_c[c] = 0.0
+                entry_fee_c[c] = 0.0
+            else:
+                cur_pk = float(peak_c.get(c, ep))
+                peak_c[c] = min(cur_pk, px) if cur_pk > 0.0 else px
+                if peak_c[c] <= ep - 2.40 * atr_v:
+                    cand_sl = min(sl_v if sl_v > 0.0 else ep * 1.10, ep * 0.996, peak_c[c] + 1.85 * atr_v)
+                    if cand_sl > px * 1.002:
+                        sl_c[c] = cand_sl
+
+    return emitted
 
 
 def verify_orders_sha256_chain(
