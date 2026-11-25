@@ -203,7 +203,7 @@ def calc_metrics(equity: np.ndarray, period_rets: np.ndarray, periods_per_year: 
 
 @dataclass(frozen=True)
 class BotAConfig:
-    fee_rate: float = 0.0004
+    fee_rate: float = 0.0012
     max_risk_per_trade_pct: float = 0.0050
     max_position_weight: float = 0.24
     max_total_invested: float = 0.68
@@ -714,24 +714,30 @@ def step_bot_c_futures(
 
     for j in range(n_assets):
         atr_pct = max(0.012, atr_v[j] / max(px_v[j], 1e-6))
-        oi_bonus = 0.12 if (oi_arr is not None and 0.20 <= oi_arr[j] <= 6.50) else 0.0
+        oi_overheat = oi_arr is not None and oi_arr[j] > 6.50
         if (px_v[j] > e21_v[j] > e55_v[j]) and (r24_v[j] > 1.2) and (pdi_v[j] > mdi_v[j]) and (pb_v[j] > 0.52):
-            score = ((r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)) + oi_bonus
+            score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
             if fund_arr is not None:
                 score += float(np.clip(-fund_arr[j] * 180.0, -0.35, 0.35))
             if obv_arr is not None:
                 score += float(np.clip(obv_arr[j] * 0.12, -0.08, 0.08))
-            if prev_arr is not None and prev_arr[j] > 0.04:
+            has_long = prev_arr is not None and prev_arr[j] > 0.04
+            if has_long:
                 score += 0.35
+            if oi_overheat and not has_long:
+                score = 0.0
             dir_scores[j] = score
         elif (px_v[j] < e21_v[j] < e55_v[j]) and (r24_v[j] < -1.2) and (mdi_v[j] > pdi_v[j]) and (pb_v[j] < 0.48) and (adx_v[j] > 19.0):
-            score = ((r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)) - oi_bonus
+            score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
             if fund_arr is not None:
                 score -= float(np.clip(fund_arr[j] * 180.0, -0.35, 0.35))
             if obv_arr is not None:
                 score += float(np.clip(obv_arr[j] * 0.12, -0.08, 0.08))
-            if prev_arr is not None and prev_arr[j] < -0.04:
+            has_short = prev_arr is not None and prev_arr[j] < -0.04
+            if has_short:
                 score -= 0.35
+            if oi_overheat and not has_short:
+                score = 0.0
             dir_scores[j] = score
 
     pos_idx = np.argsort(dir_scores)[::-1]
@@ -942,16 +948,20 @@ def detect_market_regimes_gmm(
     comp_to_code: Dict[int, str] = {}
     remaining = list(range(n_comp))
     if len(remaining) == 4:
+        vol_sorted = sorted((float(raw_centers[k, 2]) for k in remaining), reverse=True)
         hv_idx = max(remaining, key=lambda k: raw_centers[k, 2])
-        comp_to_code[hv_idx] = "ALTA_VOLATILIDAD"
-        remaining.remove(hv_idx)
+        hv_is_extreme = vol_sorted[0] >= 2.0 and vol_sorted[0] >= 1.45 * max(vol_sorted[1], 1e-6)
+        if hv_is_extreme:
+            comp_to_code[hv_idx] = "ALTA_VOLATILIDAD"
+            remaining.remove(hv_idx)
         bull_idx = max(remaining, key=lambda k: raw_centers[k, 0] + 0.35 * raw_centers[k, 1])
         comp_to_code[bull_idx] = "TENDENCIA_ALCISTA"
         remaining.remove(bull_idx)
         bear_idx = min(remaining, key=lambda k: raw_centers[k, 0] + 0.35 * raw_centers[k, 1])
         comp_to_code[bear_idx] = "TENDENCIA_BAJISTA"
         remaining.remove(bear_idx)
-        comp_to_code[remaining[0]] = "MERCADO_LATERAL"
+        for k in remaining:
+            comp_to_code[k] = "MERCADO_LATERAL"
     else:
         for k in remaining:
             if raw_centers[k, 0] > 0.01:
@@ -969,11 +979,12 @@ def detect_market_regimes_gmm(
     }
 
     med_vol = float(np.median(cross_vol.values[:fit_end])) if fit_end > 0 else float(cross_vol.iloc[-1])
+    cv_q75 = cross_vol.rolling(180, min_periods=24).quantile(0.75).shift(1).fillna(med_vol)
     codes_out: List[str] = []
     for i in range(n_rows):
         best_c = int(np.argmax(posteriors[i]))
         code_i = comp_to_code.get(best_c, "MERCADO_LATERAL")
-        if float(cross_vol.iloc[i]) >= max(0.032, 1.85 * med_vol):
+        if float(cross_vol.iloc[i]) >= max(0.025, 1.35 * float(cv_q75.iloc[i])):
             code_i = "ALTA_VOLATILIDAD"
         codes_out.append(code_i)
 

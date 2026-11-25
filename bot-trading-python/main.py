@@ -105,6 +105,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.addFilter(SecretRedactingFilter())
 
+LAST_CYCLE_ERROR: str = ""
+
 
 def run_5y_four_methods_backtest(
     ohlcv_5y: Dict[str, pd.DataFrame],
@@ -1571,6 +1573,15 @@ def run_four_algorithmic_bots(
 
     funding_rates_8h = np.array([float(market_snapshot[c]["funding_rate_8h_pct"]) / 100.0 for c in coins])
     oi_vol_ratio_vec = np.array([float(market_snapshot[c].get("oi_vol_ratio", 0.35)) for c in coins])
+    funding_hist_raw = (cache_bucket or {}).get("funding_hist") or {}
+    funding_df_4h = pd.DataFrame(index=close_4h.index, columns=coins, dtype=float)
+    for j, c in enumerate(coins):
+        s_fr = funding_hist_raw.get(c)
+        if isinstance(s_fr, pd.Series) and len(s_fr) > 0:
+            aligned_fr = s_fr.reindex(close_4h.index.union(s_fr.index)).sort_index().ffill().reindex(close_4h.index)
+            funding_df_4h[c] = aligned_fr.fillna(float(funding_rates_8h[j]))
+        else:
+            funding_df_4h[c] = float(funding_rates_8h[j])
     spread_bps_map = {c: float(market_snapshot[c].get("spread_bps", 1.0)) for c in coins}
     cross_bps_map = {c: float(market_snapshot[c].get("cross_exchange_bps", 2.0)) for c in coins}
     gatekeeper_cfg = RiskGatekeeperConfig()
@@ -1743,12 +1754,15 @@ def run_four_algorithmic_bots(
             "rets": [],
             "trades": [],
         }
+        last_closed_c_idx = len(close_4h) - 2
         for idx_i in range(eval_start_4h, len(close_4h) - 1):
+            fr_vec_c = funding_rates_8h if idx_i == last_closed_c_idx else funding_df_4h.loc[close_4h.index[idx_i - 1]].values
+            oi_vec_c = oi_vol_ratio_vec if idx_i == last_closed_c_idx else None
             _step_bot_c_closed_bar(
                 pf_c, idx_i, coins, close_4h, low_4h, high_4h,
                 ema21_4h, ema55_4h, roc24_4h, macd_h_4h, bb_pctb_4h,
-                adx_4h, pdi_4h, mdi_4h, atr_4h, vol_rel_4h, funding_rates_8h,
-                oi_vol_ratio_vec=oi_vol_ratio_vec, obv_4h=obv_4h, regime_series_4h=reg_series_4h,
+                adx_4h, pdi_4h, mdi_4h, atr_4h, vol_rel_4h, fr_vec_c,
+                oi_vol_ratio_vec=oi_vec_c, obv_4h=obv_4h, regime_series_4h=reg_series_4h,
                 gatekeeper_cfg=gatekeeper_cfg,
             )
 
@@ -1967,16 +1981,19 @@ def run_four_algorithmic_bots(
                 inc_new_orders.append(_enrich_order_meta(tr_new, pf_b["inception_utc"], pf_b["eq_curve"][-1]))
 
         last_bar_c = str(pf_c.get("last_closed_bar") or "")
+        last_closed_c_idx = len(close_4h) - 2
         for idx_i in range(35, len(close_4h) - 1):
             ts_4h = close_4h.index[idx_i]
             ts_str = ts_4h.strftime("%Y-%m-%d %H:%M")
             if ts_str <= last_bar_c:
                 continue
+            fr_vec_c = funding_rates_8h if idx_i == last_closed_c_idx else funding_df_4h.loc[close_4h.index[idx_i - 1]].values
+            oi_vec_c = oi_vol_ratio_vec if idx_i == last_closed_c_idx else None
             em_c = _step_bot_c_closed_bar(
                 pf_c, idx_i, coins, close_4h, low_4h, high_4h,
                 ema21_4h, ema55_4h, roc24_4h, macd_h_4h, bb_pctb_4h,
-                adx_4h, pdi_4h, mdi_4h, atr_4h, vol_rel_4h, funding_rates_8h,
-                oi_vol_ratio_vec=oi_vol_ratio_vec, obv_4h=obv_4h, regime_series_4h=reg_series_4h,
+                adx_4h, pdi_4h, mdi_4h, atr_4h, vol_rel_4h, fr_vec_c,
+                oi_vol_ratio_vec=oi_vec_c, obv_4h=obv_4h, regime_series_4h=reg_series_4h,
                 gatekeeper_cfg=gatekeeper_cfg,
             )
             for tr_new in em_c:
@@ -2478,7 +2495,7 @@ def run_four_algorithmic_bots(
             "elapsed_days": elapsed_days_map["bot_a"],
             "latest_order": latest_order_by_bot.get("bot_a"),
             "methodology": "Velas 15m + Filtro 1H + Modelo GMM 4 Regímenes (EMA 9/21/55, ADX >= 20, ATR >= 0.42%, OBV, distancia EMA200, Bollinger %B, MACD, Volumen >= 1.08x)",
-            "risk_profile": "Presupuesto Dinámico de Riesgo (Maker 0.04% · Riesgo 0.25%–0.50%/orden · Spread <= 12 bps · Parcial 45% a 1.40x ATR · Trailing +0.55% · Límite DD -8.5%)",
+            "risk_profile": "Presupuesto Dinámico de Riesgo (Taker 0.10% + 2 bps slippage · Riesgo 0.25%–0.50%/orden · Spread <= 12 bps · Parcial 45% a 1.40x ATR · Trailing +0.55% · Límite DD -8.5%)",
             "cash_usd": round(cash_a, 4),
             "fees_paid_usd": round(fees_cum_a, 2),
             "is_futures": False,
@@ -2547,6 +2564,24 @@ def run_four_algorithmic_bots(
         },
     }
 
+    last_closed_a_str = str(pf_a.get("last_closed_bar") or "")
+    fresh_15m_flag = False
+    if last_closed_a_str:
+        try:
+            fresh_15m_flag = (now_utc - pd.Timestamp(last_closed_a_str, tz="UTC")).total_seconds() <= 2100.0
+        except Exception:
+            fresh_15m_flag = False
+    telemetry_obj = {
+        "intraday": dict(getattr(oracle, "last_intraday_meta", {}) or {}),
+        "bots_last_closed_bar": {
+            "bot_a": last_closed_a_str,
+            "bot_b": str(pf_b.get("last_closed_bar") or ""),
+            "bot_c": str(pf_c.get("last_closed_bar") or ""),
+            "bot_d": str(pf_d.get("last_closed_bar") or ""),
+        },
+        "fresh_15m": fresh_15m_flag,
+    }
+
     return {
         "bots": bots_dict,
         "supervisor_3tier": supervisor_3tier,
@@ -2560,6 +2595,7 @@ def run_four_algorithmic_bots(
         "portfolios_state": portfolios_serialized,
         "market_candles_4h": market_candles_4h,
         "signal_matrix_now": signal_matrix_now,
+        "telemetry": telemetry_obj,
     }
 
 
@@ -2589,6 +2625,8 @@ def _update_persistent_ledger_state(
     total_orders: int,
     certified_orders_chrono: List[Dict[str, Any]],
     portfolios_state: Dict[str, Any],
+    telemetry: Optional[Dict[str, Any]] = None,
+    last_cycle_error: str = "",
 ) -> Dict[str, Any]:
     state_path = base_dir / "bot_state_ledger.json"
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -2623,6 +2661,8 @@ def _update_persistent_ledger_state(
         "bots": bots_summary,
         "certified_orders": certified_orders_chrono,
         "portfolios": portfolios_state,
+        "telemetry": telemetry or {},
+        "last_cycle_error": str(last_cycle_error or ""),
     }
     _atomic_write_json(state_path, state_obj)
     return state_obj
@@ -2639,8 +2679,13 @@ def run_cycle(
     vault_cfg = vault_config or load_vault_config()
     today_tag = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     if cached_daily is None or cached_daily.get("day_tag") != today_tag:
-        logger.info("=== 1. DESCARGANDO HISTÓRICO DE 5 AÑOS DESDE OKX v5 / BYBIT v5 (%s) ===", ", ".join(coins))
+        logger.info("=== 1. DESCARGANDO HISTÓRICO DE 5 AÑOS DESDE KUCOIN / OKX v5 (%s) ===", ", ".join(coins))
         ohlcv_5y = oracle.fetch_5y_daily_ohlcv(coins, days=SETTINGS.history_days_5y)
+        try:
+            funding_hist = oracle.fetch_funding_history(coins, days=50)
+        except Exception as exc_fr:
+            logger.warning("Aviso descargando histórico funding 8h: %s", exc_fr)
+            funding_hist = {}
         close_5y = pd.DataFrame({c: ohlcv_5y[c]["close"] for c in coins}).sort_index().ffill().dropna()
         high_5y = pd.DataFrame({c: ohlcv_5y[c]["high"] for c in coins}).reindex(close_5y.index).ffill()
         low_5y = pd.DataFrame({c: ohlcv_5y[c]["low"] for c in coins}).reindex(close_5y.index).ffill()
@@ -2667,6 +2712,7 @@ def run_cycle(
             "low_5y": low_5y,
             "bt_5y": bt_5y,
             "raw_hist_compat": raw_hist_compat,
+            "funding_hist": funding_hist,
         }
 
     logger.info("=== 3. CONSULTANDO LIBROS SPOT, PERPETUOS SWAP Y FUNDING RATES (OKX v5 & BYBIT v5) ===")
@@ -2685,6 +2731,8 @@ def run_cycle(
         base_dir=base_dir,
     )
 
+    global LAST_CYCLE_ERROR
+    LAST_CYCLE_ERROR = ""
     ledger_state = _update_persistent_ledger_state(
         base_dir,
         algo_pack["bots"],
@@ -2692,6 +2740,8 @@ def run_cycle(
         algo_pack["ledger_chain"]["total_certified_orders"],
         algo_pack["certified_orders_chrono"],
         algo_pack["portfolios_state"],
+        telemetry=algo_pack.get("telemetry", {}),
+        last_cycle_error=LAST_CYCLE_ERROR,
     )
 
     py_modules = _load_python_source_modules(base_dir)
@@ -2706,7 +2756,7 @@ def run_cycle(
             "base_capital_usd": base_cap,
             "coins": coins,
             "coin_names": COIN_NAMES,
-            "primary_feed": "OKX API v5 · Bybit API v5 · Kraken REST",
+            "primary_feed": "KuCoin API v1 · OKX API v5 · Bybit API v5",
             "genesis_sha256": algo_pack["ledger_chain"]["genesis_sha256"],
             "chain_root_sha256": algo_pack["ledger_chain"]["chain_root_sha256"],
             "execution_cycles": ledger_state["execution_cycles"],
@@ -3077,6 +3127,8 @@ def start_suite_http_server(
                     "last_updated_utc": last_sync,
                     "chain_root_sha256": str(st.get("chain_root_sha256", "")),
                     "total_certified_orders": int(st.get("total_certified_orders", 0)),
+                    "telemetry": st.get("telemetry") or {},
+                    "last_cycle_error": LAST_CYCLE_ERROR or str(st.get("last_cycle_error") or ""),
                 }
                 body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
                 self._send_json_response(200, body, cors_origin, send_body=send_body)
@@ -3249,7 +3301,9 @@ def main():
             try:
                 cached_daily = run_cycle(base_dir, oracle, coins, base_cap, cached_daily=cached_daily, vault_config=vault_cfg)
             except Exception as exc:
-                logger.warning("Aviso en ciclo intradía (reintento en %ds): %s", interval_sec, scrub_secrets(str(exc)))
+                global LAST_CYCLE_ERROR
+                LAST_CYCLE_ERROR = scrub_secrets(str(exc))
+                logger.warning("Aviso en ciclo intradía (reintento en %ds): %s", interval_sec, LAST_CYCLE_ERROR)
 
     if httpd is not None and stop_event.is_set():
         httpd.server_close()

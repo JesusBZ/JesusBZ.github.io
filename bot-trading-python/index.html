@@ -1897,7 +1897,7 @@
             <div class="dossier-formula">Entrada: EMA<sub>9</sub> &gt; EMA<sub>21</sub> &and; EMA<sub>200</sub> &and; ADX<sub>1H</sub> &ge; 20 &and; OBV &ge; 0 &and; Vol &ge; 1.08&middot;SMA<sub>20</sub></div>
             <ul class="dossier-list">
               <li><strong>Regla de Entrada Intradía (960 velas 15m):</strong> Activa compras cuando convergen alineación rápida (EMA<sub>9</sub> &gt; EMA<sub>21</sub> sobre régimen 1H y soporte estructural <code>EMA<sub>200</sub></code>), fuerza tendencial <code>ADX<sub>1H</sub> &ge; 20</code>, rango de volatilidad <code>ATR/Precio &ge; 0.42%</code>, pendiente positiva de flujo <strong>OBV</strong>, expansión <code>MACD(12,26,9)</code>, Momentum <code>ROC(10) &gt; 0.35%</code>, <code>RSI(14)</code> en [48, 70] y volumen <code>&ge; 1.08&times; SMA<sub>20</sub></code>, o ante recuperación confirmada de Bollinger (<code>%B</code> con <code>Vol &ge; 1.25&times;</code>). Si ningún par satisface esperanza neta positiva, preserva el 100% del capital en liquidez <code>USDT</code>.</li>
-              <li><strong>Presupuesto de Riesgo y Salida Causal:</strong> Ejecuta con tarifa <em>Maker Limit</em> (0.04%) modulando el riesgo base del <strong>0.50%</strong> (banda efectiva <strong>0.25%–0.55%</strong> según régimen GMM) con filtro de liquidez <code>spread &le; 12 bps</code>, fijando <code>SL = P<sub>0</sub> &minus; 1.55&middot;ATR<sub>14</sub></code>, <strong>toma parcial del 45% en <code>+1.40&middot;ATR<sub>14</sub></code></strong> y objetivo <code>TP = P<sub>0</sub> + 3.10&middot;ATR<sub>14</sub></code>, más límite diario de &minus;2.00% y parada automática por drawdown acumulado en &minus;8.50%.</li>
+              <li><strong>Presupuesto de Riesgo y Salida Causal:</strong> Ejecuta con tarifa <em>Taker + Slippage</em> (0.12% por tramo = 0.10% taker + 2 bps) modulando el riesgo base del <strong>0.50%</strong> (banda efectiva <strong>0.25%–0.55%</strong> según régimen GMM) con filtro de liquidez <code>spread &le; 12 bps</code>, fijando <code>SL = P<sub>0</sub> &minus; 1.55&middot;ATR<sub>14</sub></code>, <strong>toma parcial del 45% en <code>+1.40&middot;ATR<sub>14</sub></code></strong> y objetivo <code>TP = P<sub>0</sub> + 3.10&middot;ATR<sub>14</sub></code>, más límite diario de &minus;2.00% y parada automática por drawdown acumulado en &minus;8.50%.</li>
             </ul>
           </div>
 
@@ -2843,7 +2843,7 @@
       var qty = Math.abs(Number(posObj.units));
       if (qty <= 1e-8) return;
       var gross = qty * execPx;
-      var feeRate = (botObj.id === 'bot_a') ? 0.0004 : (botObj.is_futures ? 0.0005 : 0.0010);
+      var feeRate = (botObj.id === 'bot_a') ? 0.0012 : (botObj.is_futures ? 0.0005 : 0.0010);
       var fee = gross * feeRate;
       var pnlUsd = gross - fee - (qty * Number(posObj.entry_price));
       var pnlPct = (((execPx / Number(posObj.entry_price)) - 1.0) * 100.0) - (2.0 * feeRate * 100.0);

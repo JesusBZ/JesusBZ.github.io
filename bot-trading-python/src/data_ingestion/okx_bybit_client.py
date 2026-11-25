@@ -83,6 +83,7 @@ class MultiExchangeCryptoOracle:
         self._last_okx_hist_ts = 0.0
         self._bybit_blocked = False
         self._prev_oi_usd: Dict[str, float] = {}
+        self.last_intraday_meta: Dict[str, Dict[str, Any]] = {}
         self._headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) QuantPortfolioEngine/3.0",
             "Accept": "application/json",
@@ -158,48 +159,17 @@ class MultiExchangeCryptoOracle:
                 if overwrite or day_ts not in rows_by_day:
                     rows_by_day[day_ts] = tup
 
-        # Fuente 1: Bybit v5 paginado rápido (cuando la región IP lo permite)
-        if not self._bybit_blocked:
-            try:
-                end_ms = None
-                rem = target
-                collected: List[Tuple[int, float, float, float, float, float]] = []
-                while rem > 0:
-                    lim = min(1000, rem)
-                    params = {"category": "spot", "symbol": f"{coin}USDT", "interval": "D", "limit": lim}
-                    if end_ms is not None:
-                        params["end"] = end_ms
-                    q = urllib.parse.urlencode(params)
-                    payload = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}")
-                    lst = payload.get("result", {}).get("list", [])
-                    if not lst:
-                        break
-                    for r in lst:
-                        collected.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
-                    oldest_ms = int(lst[-1][0])
-                    end_ms = oldest_ms - 1
-                    rem -= len(lst)
-                    if len(lst) < lim:
-                        break
-                if len(collected) >= 300:
-                    _ingest(collected, overwrite=True)
-            except Exception as exc:
-                logger.warning("Aviso en serie 5Y Bybit para %s (%s). Usando KuCoin/OKX...", coin, exc)
+        # Fuente 1: KuCoin API v1 (serie homogénea hasta 1,500 velas/llamada en local, CI y Render)
+        try:
+            now_s = int(time.time())
+            start_anchor = now_s - max(target + 30, 1980) * 86400
+            kc_recent = self._fetch_kucoin_candles(coin, "1day", now_s - 1450 * 86400, now_s)
+            kc_older = self._fetch_kucoin_candles(coin, "1day", start_anchor, now_s - 1450 * 86400)
+            _ingest(kc_older + kc_recent, overwrite=True)
+        except Exception as exc_kc:
+            logger.warning("Aviso en serie 5Y KuCoin para %s: %s", coin, exc_kc)
 
-        # Fuente 2: KuCoin API v1 (1,500 velas/llamada sin bloqueo regional en Render)
-        if len(rows_by_day) < 1700:
-            try:
-                now_s = int(time.time())
-                start_anchor = int(datetime(2022, 3, 10, tzinfo=timezone.utc).timestamp())
-                kc_recent = self._fetch_kucoin_candles(coin, "1day", now_s - 1450 * 86400, now_s)
-                kc_older = self._fetch_kucoin_candles(coin, "1day", start_anchor, now_s - 1450 * 86400)
-                if len(rows_by_day) == 0:
-                    _ingest(kc_older + kc_recent, overwrite=True)
-                else:
-                    _ingest(kc_older + kc_recent, overwrite=False)
-            except Exception as exc_kc:
-                logger.warning("Aviso en serie 5Y KuCoin para %s: %s", coin, exc_kc)
-
+        # Fuente 2: Respaldo OKX v5 si KuCoin no completó la historia esperada
         if len(rows_by_day) < target - 20:
             try:
                 after_ms = min((v[0] for v in rows_by_day.values()), default=None)
@@ -221,6 +191,34 @@ class MultiExchangeCryptoOracle:
                     after_ms = int(data[-1][0])
             except Exception as exc2:
                 logger.warning("Complemento OKX 5Y en %s: %s", coin, exc2)
+
+        # Fuente 3: Respaldo terciario Bybit v5 (solo si aún faltan sesiones y la región IP lo permite)
+        if len(rows_by_day) < target - 20 and not self._bybit_blocked:
+            try:
+                end_ms = None
+                rem = target
+                collected: List[Tuple[int, float, float, float, float, float]] = []
+                while rem > 0:
+                    lim = min(1000, rem)
+                    params = {"category": "spot", "symbol": f"{coin}USDT", "interval": "D", "limit": lim}
+                    if end_ms is not None:
+                        params["end"] = end_ms
+                    q = urllib.parse.urlencode(params)
+                    payload = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}")
+                    lst = payload.get("result", {}).get("list", [])
+                    if not lst:
+                        break
+                    for r in lst:
+                        collected.append((int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])))
+                    oldest_ms = int(lst[-1][0])
+                    end_ms = oldest_ms - 1
+                    rem -= len(lst)
+                    if len(lst) < lim:
+                        break
+                if collected:
+                    _ingest(collected, overwrite=False)
+            except Exception as exc:
+                logger.warning("Aviso en serie 5Y Bybit para %s: %s", coin, exc)
 
         if not rows_by_day:
             raise RuntimeError(f"No se pudo recuperar histórico 5Y para {coin}")
@@ -251,6 +249,7 @@ class MultiExchangeCryptoOracle:
         bybit_bar_map = {"5m": "5", "15m": "15", "1H": "60", "4H": "240"}
         kucoin_bar_map = {"5m": ("5min", 300), "15m": ("15min", 900), "1H": ("1hour", 3600), "4H": ("4hour", 14400)}
         rows_by_dt: Dict[pd.Timestamp, Tuple[float, float, float, float, float]] = {}
+        source_used = "desconocido"
 
         def _put_rows(items: List[Tuple[int, float, float, float, float, float]], overwrite: bool) -> None:
             for ts_ms, o_v, h_v, l_v, c_v, v_v in items:
@@ -258,31 +257,22 @@ class MultiExchangeCryptoOracle:
                 if overwrite or dt_k not in rows_by_dt:
                     rows_by_dt[dt_k] = (o_v, h_v, l_v, c_v, v_v)
 
-        # 1) Intento primario rápido Bybit v5 (hasta 1,000 barras en 1 llamada)
-        if not self._bybit_blocked:
-            try:
-                b_int = bybit_bar_map.get(bar, "60")
-                q = urllib.parse.urlencode({"category": "spot", "symbol": f"{coin}USDT", "interval": b_int, "limit": lim})
-                lst = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}").get("result", {}).get("list", [])
-                _put_rows([(int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])) for r in lst], overwrite=True)
-            except Exception:
-                pass
-
-        # 2) Si Bybit está bloqueado en Render (403) o devolvió menos de lim, usar KuCoin v1 (serie homogénea hasta 1,500 barras en 1 llamada)
-        if len(rows_by_dt) < lim - 25 and bar in kucoin_bar_map:
+        # 1) Fuente primaria determinista: KuCoin API v1 (idéntica en local, GitHub Actions y Render)
+        if bar in kucoin_bar_map:
             try:
                 kc_t, sec_step = kucoin_bar_map[bar]
                 now_s = int(time.time())
-                kc_rows = self._fetch_kucoin_candles(coin, kc_t, now_s - (lim + 20) * sec_step, now_s)
-                if len(kc_rows) > len(rows_by_dt):
-                    rows_by_dt.clear()
+                kc_rows = self._fetch_kucoin_candles(coin, kc_t, now_s - (lim + 24) * sec_step, now_s)
+                if kc_rows:
                     _put_rows(kc_rows, overwrite=True)
-            except Exception:
-                pass
+                    source_used = "KuCoin"
+            except Exception as exc_kc:
+                logger.warning("Fallo KuCoin intradía (%s %s): %s", coin, bar, exc_kc)
 
-        # 3) Respaldo paginado con limitador de tasa en OKX únicamente si Bybit y KuCoin no entregaron serie completa
+        # 2) Respaldo paginado OKX únicamente si KuCoin falló o entregó menos del mínimo útil
         if len(rows_by_dt) < max(120, lim // 2):
             try:
+                was_empty = len(rows_by_dt) == 0
                 after_ms = int(min(rows_by_dt.keys()).timestamp() * 1000) if rows_by_dt else None
                 loops = 0
                 max_loops = max(1, (lim + 299) // 300)
@@ -298,11 +288,37 @@ class MultiExchangeCryptoOracle:
                         break
                     _put_rows([(int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])) for r in data], overwrite=False)
                     after_ms = int(data[-1][0])
+                if rows_by_dt and was_empty:
+                    source_used = "OKX"
+                elif rows_by_dt and source_used == "KuCoin":
+                    source_used = "KuCoin+OKX"
+            except Exception:
+                pass
+
+        # 3) Respaldo terciario Bybit v5 únicamente si KuCoin+OKX siguen incompletos y Bybit está accesible
+        if len(rows_by_dt) < max(120, lim // 2) and not self._bybit_blocked:
+            try:
+                was_empty = len(rows_by_dt) == 0
+                b_int = bybit_bar_map.get(bar, "60")
+                q = urllib.parse.urlencode({"category": "spot", "symbol": f"{coin}USDT", "interval": b_int, "limit": lim})
+                lst = self._get_json(f"{self.bybit_base}/v5/market/kline?{q}").get("result", {}).get("list", [])
+                if lst:
+                    _put_rows([(int(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4]), float(r[5])) for r in lst], overwrite=was_empty)
+                    source_used = "Bybit" if was_empty else f"{source_used}+Bybit"
             except Exception:
                 pass
 
         if not rows_by_dt:
             raise RuntimeError(f"Sin datos intradía ({bar}) para {coin}")
+
+        # Guardia de barra en formación: asegurar siempre una fila final alineada al intervalo actual UTC
+        sec_step = kucoin_bar_map.get(bar, (bar, 3600))[1]
+        now_s = int(time.time())
+        floor_now = pd.Timestamp((now_s // sec_step) * sec_step, unit="s", tz="UTC").tz_localize(None)
+        last_dt = max(rows_by_dt.keys())
+        if last_dt < floor_now:
+            last_close = rows_by_dt[last_dt][3]
+            rows_by_dt[floor_now] = (last_close, last_close, last_close, last_close, 0.0)
 
         sorted_dts = sorted(rows_by_dt.keys())[-lim:]
         df = pd.DataFrame(
@@ -310,12 +326,13 @@ class MultiExchangeCryptoOracle:
             index=pd.DatetimeIndex(sorted_dts, name="dt"),
             columns=["open", "high", "low", "close", "volume"],
         )
+        df.attrs["source"] = source_used
         return coin, df
 
     def fetch_intraday_ohlcv(self, coins: List[str], bar: str = "1H", limit: int = 300) -> Dict[str, pd.DataFrame]:
         """
-        Descarga concurrentemente velas intradía reales (hasta 1,000 velas por par) desde
-        OKX API v5 y Bybit API v5 con conmutación automática.
+        Descarga concurrentemente velas intradía reales (hasta 1,000 velas por par) con fuente
+        primaria determinista KuCoin API v1 y conmutación automática a OKX/Bybit ante fallas.
         """
         lim = max(60, min(1000, int(limit)))
         out: Dict[str, pd.DataFrame] = {}
@@ -324,7 +341,62 @@ class MultiExchangeCryptoOracle:
             for fut in futs:
                 c, df = fut.result()
                 out[c] = df
-        return {c: out[c] for c in coins}
+        ordered = {c: out[c] for c in coins}
+        sources = sorted({str(df.attrs.get("source", "?")) for df in ordered.values()})
+        if len(sources) > 1:
+            logger.warning("Fuentes mixtas detectadas en velas %s: %s", bar, sources)
+        last_bars = [
+            (df.index[-2] if len(df) >= 2 else df.index[-1]).strftime("%Y-%m-%dT%H:%M:%SZ")
+            for df in ordered.values()
+            if len(df) > 0
+        ]
+        self.last_intraday_meta[bar] = {
+            "sources": sources,
+            "last_bar_utc": max(last_bars) if last_bars else "",
+            "bars_min": min((len(df) for df in ordered.values()), default=0),
+        }
+        return ordered
+
+    def fetch_funding_history(self, coins: List[str], days: int = 50) -> Dict[str, pd.Series]:
+        """Descarga serie histórica de funding rates 8h desde OKX API v5 (/api/v5/public/funding-rate-history)."""
+        cutoff_ms = int((time.time() - max(1, int(days)) * 86400) * 1000)
+
+        def _fetch_coin_fr(coin: str) -> Tuple[str, pd.Series]:
+            rows: Dict[pd.Timestamp, float] = {}
+            after_ms = None
+            for _ in range(4):
+                params: Dict[str, Any] = {"instId": f"{coin}-USDT-SWAP", "limit": 100}
+                if after_ms is not None:
+                    params["after"] = after_ms
+                q = urllib.parse.urlencode(params)
+                try:
+                    data = self._get_json(f"{self.okx_base}/api/v5/public/funding-rate-history?{q}").get("data", [])
+                except Exception:
+                    break
+                if not data:
+                    break
+                oldest_t = None
+                for item in data:
+                    ts_ms = int(item.get("fundingTime") or 0)
+                    if ts_ms <= 0:
+                        continue
+                    oldest_t = ts_ms if oldest_t is None else min(oldest_t, ts_ms)
+                    rate = _safe_finite_float(item.get("realizedRate") or item.get("fundingRate"), 0.0001)
+                    dt_k = pd.Timestamp(ts_ms, unit="ms", tz="UTC").tz_localize(None).floor("4h")
+                    rows[dt_k] = rate
+                if oldest_t is None or oldest_t <= cutoff_ms or len(data) < 95:
+                    break
+                after_ms = oldest_t
+            if not rows:
+                return coin, pd.Series(dtype=float)
+            s = pd.Series(rows).sort_index()
+            return coin, s[~s.index.duplicated(keep="last")]
+
+        out: Dict[str, pd.Series] = {}
+        with concurrent.futures.ThreadPoolExecutor(max_workers=min(4, max(1, len(coins)))) as pool:
+            for c, s in pool.map(_fetch_coin_fr, coins):
+                out[c] = s
+        return {c: out.get(c, pd.Series(dtype=float)) for c in coins}
 
     def fetch_live_spot_and_futures(self, coins: List[str]) -> Dict[str, Dict[str, Any]]:
         """
@@ -381,6 +453,20 @@ class MultiExchangeCryptoOracle:
             fut_frs = [pool.submit(_fetch_okx_fr, c) for c in coins]
 
             bybit_ref_map = fut_bybit_ref.result()
+            secondary_source = "Bybit v5" if bybit_ref_map else ""
+            if self._bybit_blocked or not bybit_ref_map:
+                try:
+                    kc_tickers = self._get_json(f"{self.kucoin_base}/api/v1/market/allTickers").get("data", {}).get("ticker", [])
+                    for item in kc_tickers:
+                        sym_kc = item.get("symbol", "")
+                        if sym_kc.endswith("-USDT"):
+                            px_kc = _safe_finite_float(item.get("last"), 0.0)
+                            if px_kc > 0:
+                                bybit_ref_map[sym_kc[:-5]] = px_kc
+                    if bybit_ref_map:
+                        secondary_source = "KuCoin L1"
+                except Exception:
+                    pass
             try:
                 oi_map = fut_okx_oi.result()
             except Exception:
@@ -472,6 +558,7 @@ class MultiExchangeCryptoOracle:
                 "oi_change_cycle_pct": round(oi_chg_pct, 3),
                 "oi_vol_ratio": round(oi_vol_ratio, 3),
                 "source": source_used,
+                "secondary_source": secondary_source or source_used,
                 "timestamp_utc": now_utc,
             }
         return result
