@@ -1243,6 +1243,63 @@ class TestQuantBotsRules(unittest.TestCase):
         self.assertIn("TOMA DE BENEFICIO SWAP", em_c[0]["action"])
         self.assertGreater(em_c[0]["realized_pnl_usd"], 0.0)
 
+    def test_33_zero_candle_lag_executes_just_closed_4h_signal(self) -> None:
+        from main import _step_bot_c_closed_bar
+
+        n_bars = 70
+        coins_t = ["BTC", "ETH"]
+        idx = pd.date_range("2026-11-10 00:00", periods=n_bars, freq="4h")
+        # Tendencia plana/estable y quiebre bajista limpio en las últimas 25 velas cerrando en index[-2]
+        prices = np.concatenate([np.full(45, 100.0), np.linspace(99.0, 78.0, n_bars - 45)])
+        prices[-1] = 78.0  # Vela actual recién abierta (index[-1])
+        df_4h = pd.DataFrame({
+            "open": prices * 1.005,
+            "high": prices * 1.010,
+            "low": prices * 0.990,
+            "close": prices,
+            "volume": np.full(n_bars, 1000.0),
+        }, index=idx)
+        cl = pd.DataFrame({c: prices for c in coins_t}, index=idx)
+        lo = pd.DataFrame({c: prices * 0.990 for c in coins_t}, index=idx)
+        hi = pd.DataFrame({c: prices * 1.010 for c in coins_t}, index=idx)
+        e21 = cl.ewm(span=21, adjust=False).mean()
+        e55 = cl.ewm(span=55, adjust=False).mean()
+        r24 = (cl.pct_change(24) * 100.0).fillna(0.0)
+        mh_s = compute_macd_pct(cl["BTC"])[2]
+        pb_s = compute_bollinger(cl["BTC"], 20, 2.0)[3]
+        adx_s, pdi_s, mdi_s = calc_adx_di(df_4h, 14)
+        atr_s = calc_atr(df_4h, 14).bfill()
+        mh = pd.DataFrame({c: mh_s for c in coins_t}, index=idx)
+        pb = pd.DataFrame({c: pb_s for c in coins_t}, index=idx)
+        adx = pd.DataFrame({c: adx_s.bfill() for c in coins_t}, index=idx)
+        pdi = pd.DataFrame({c: pdi_s.bfill() for c in coins_t}, index=idx)
+        mdi = pd.DataFrame({c: mdi_s.bfill() for c in coins_t}, index=idx)
+        atr = pd.DataFrame({c: atr_s for c in coins_t}, index=idx)
+        vr = pd.DataFrame({c: np.ones(n_bars) for c in coins_t}, index=idx)
+        obv = pd.DataFrame({c: np.full(n_bars, -0.30) for c in coins_t}, index=idx)
+        reg = pd.Series(["TENDENCIA_BAJISTA"] * n_bars, index=idx)
+
+        last_bar_c = idx[-2].strftime("%Y-%m-%d %H:%M")
+        pf_c = {
+            "bar_step": 1, "last_closed_bar": last_bar_c, "realized_cash_c": 1000.0, "fees_cum": 0.0,
+            "units": {c: 0.0 for c in coins_t}, "entry": {c: 0.0 for c in coins_t}, "entry_fee": {c: 0.0 for c in coins_t},
+            "sl": {c: 0.0 for c in coins_t}, "tp": {c: 0.0 for c in coins_t}, "peak": {c: 0.0 for c in coins_t},
+            "cooldown_step": {c: -1 for c in coins_t}, "dates": [last_bar_c],
+            "eq_curve": [1000.0], "rets": [], "trades": [],
+        }
+        emitted_new = []
+        for idx_i in range(35, len(cl)):
+            ts_str = cl.index[idx_i].strftime("%Y-%m-%d %H:%M")
+            if ts_str <= last_bar_c:
+                continue
+            emitted_new.extend(_step_bot_c_closed_bar(
+                pf_c, idx_i, coins_t, cl, lo, hi, e21, e55, r24, mh, pb, adx, pdi, mdi, atr, vr,
+                np.full(len(coins_t), 0.0001), obv_4h=obv, regime_series_4h=reg,
+            ))
+        self.assertTrue(len(emitted_new) >= 1)
+        self.assertEqual(emitted_new[0]["side_type"], "SHORT")
+        self.assertLess(pf_c["units"]["BTC"], 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()

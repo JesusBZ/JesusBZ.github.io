@@ -223,6 +223,12 @@ class MultiExchangeCryptoOracle:
         if not rows_by_day:
             raise RuntimeError(f"No se pudo recuperar histórico 5Y para {coin}")
 
+        today_utc = pd.Timestamp.now("UTC").tz_localize(None).normalize()
+        last_day = max(rows_by_day.keys())
+        if last_day < today_utc:
+            last_c = rows_by_day[last_day][4]
+            rows_by_day[today_utc] = (int(today_utc.timestamp() * 1000), last_c, last_c, last_c, last_c, 0.0)
+
         sorted_days = sorted(rows_by_day.keys())[-target:]
         df = pd.DataFrame(
             [rows_by_day[d][1:] for d in sorted_days],

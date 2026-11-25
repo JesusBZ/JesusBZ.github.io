@@ -1708,7 +1708,7 @@ def run_four_algorithmic_bots(
         pf_a = init_bot_a_state(coins, base_cap=base_cap)
         pf_a["dates"] = [close_15m.index[29].strftime("%Y-%m-%d %H:%M")]
         pf_a["inception_utc"] = close_15m.index[29].strftime("%Y-%m-%d %H:%M UTC")
-        for idx_i in range(30, len(close_15m) - 1):
+        for idx_i in range(30, len(close_15m)):
             ts = close_15m.index[idx_i]
             p_ts = close_15m.index[idx_i - 1]
             p2_ts = close_15m.index[idx_i - 2]
@@ -1743,10 +1743,10 @@ def run_four_algorithmic_bots(
                 risk_mult=reg_mult_map.get(reg_a_i, 0.85),
             )
             pf_a["dates"].append(ts.strftime("%Y-%m-%d %H:%M"))
-        last_closed_15m = close_15m.index[-2]
+        last_closed_15m = close_15m.index[-1]
         pf_a["last_closed_bar"] = last_closed_15m.strftime("%Y-%m-%d %H:%M")
 
-        eval_b_closed = d_rets.index[-181:-1]
+        eval_b_closed = d_rets.index[-180:]
         anchor_b_dt = d_rets.index[max(0, int(d_rets.index.get_loc(eval_b_closed[0])) - 1)]
         pf_b: Dict[str, Any] = {
             "inception_utc": f"{eval_b_closed[0].strftime('%Y-%m-%d')} 00:00 UTC",
@@ -1789,8 +1789,8 @@ def run_four_algorithmic_bots(
             "rets": [],
             "trades": [],
         }
-        last_closed_c_idx = len(close_4h) - 2
-        for idx_i in range(eval_start_4h, len(close_4h) - 1):
+        last_closed_c_idx = len(close_4h) - 1
+        for idx_i in range(eval_start_4h, len(close_4h)):
             fr_vec_c = funding_rates_8h if idx_i == last_closed_c_idx else funding_df_4h.loc[close_4h.index[idx_i - 1]].values
             oi_vec_c = oi_vol_ratio_vec if idx_i == last_closed_c_idx else None
             _step_bot_c_closed_bar(
@@ -1855,7 +1855,7 @@ def run_four_algorithmic_bots(
             "prob_bull": np.full(n_assets, 0.33),
             "pred_net_ret": np.zeros(n_assets),
         }
-        for idx_i in range(eval_start_4h, len(close_4h) - 1):
+        for idx_i in range(eval_start_4h, len(close_4h)):
             if (idx_i - eval_start_4h) > 0 and (idx_i - eval_start_4h) % 60 == 0:
                 X_inc = list(X_d_hist[-3000:])
                 yc_inc = list(yc_d_hist[-3000:])
@@ -1958,7 +1958,7 @@ def run_four_algorithmic_bots(
         inc_new_orders: List[Dict[str, Any]] = []
 
         last_bar_a = str(pf_a.get("last_closed_bar") or "")
-        for idx_i in range(30, len(close_15m) - 1):
+        for idx_i in range(30, len(close_15m)):
             ts = close_15m.index[idx_i]
             ts_str = ts.strftime("%Y-%m-%d %H:%M")
             if ts_str <= last_bar_a:
@@ -2003,7 +2003,7 @@ def run_four_algorithmic_bots(
                 inc_new_orders.append(_enrich_order_meta(tr_new, pf_a["inception_utc"], pf_a["eq_curve"][-1]))
 
         last_bar_b = str(pf_b.get("last_closed_bar") or "")
-        for dt_b in d_rets.index[:-1]:
+        for dt_b in d_rets.index:
             dt_str = dt_b.strftime("%Y-%m-%d")
             if dt_str <= last_bar_b:
                 continue
@@ -2016,8 +2016,8 @@ def run_four_algorithmic_bots(
                 inc_new_orders.append(_enrich_order_meta(tr_new, pf_b["inception_utc"], pf_b["eq_curve"][-1]))
 
         last_bar_c = str(pf_c.get("last_closed_bar") or "")
-        last_closed_c_idx = len(close_4h) - 2
-        for idx_i in range(35, len(close_4h) - 1):
+        last_closed_c_idx = len(close_4h) - 1
+        for idx_i in range(35, len(close_4h)):
             ts_4h = close_4h.index[idx_i]
             ts_str = ts_4h.strftime("%Y-%m-%d %H:%M")
             if ts_str <= last_bar_c:
@@ -2045,7 +2045,7 @@ def run_four_algorithmic_bots(
             for c in coins
         ])
         last_ens_out = predict_supervised_3class_ensemble(live_champ_bundle, X_cur_inf, regime_probs=cur_reg_4h["probabilities"])
-        for idx_i in range(35, len(close_4h) - 1):
+        for idx_i in range(35, len(close_4h)):
             ts_4h = close_4h.index[idx_i]
             ts_str = ts_4h.strftime("%Y-%m-%d %H:%M")
             if ts_str <= last_bar_d:
