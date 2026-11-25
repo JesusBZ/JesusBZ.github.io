@@ -168,10 +168,18 @@ def calc_metrics(equity: np.ndarray, period_rets: np.ndarray, periods_per_year: 
     cagr = ((equity[-1] / equity[0]) ** (1.0 / max(years, 0.08))) - 1.0
     ann_vol = float(np.std(period_rets, ddof=1) * np.sqrt(periods_per_year)) if n > 2 else 0.0
     rf_p = 0.04 / periods_per_year
-    sharpe = float(np.mean(period_rets - rf_p) / (np.std(period_rets, ddof=1) + 1e-9) * np.sqrt(periods_per_year))
-    neg = period_rets[period_rets < 0]
-    down_vol = float(np.std(neg, ddof=1) * np.sqrt(periods_per_year)) if len(neg) > 2 else 1e-6
-    sortino = float((cagr - 0.04) / max(down_vol, 1e-6))
+    std_r = float(np.std(period_rets, ddof=1)) if n > 1 else 0.0
+    if n < 2 or std_r < 1e-9:
+        sharpe = 0.0
+        sortino = 0.0
+    else:
+        sharpe = float(np.mean(period_rets - rf_p) / (std_r + 1e-9) * np.sqrt(periods_per_year))
+        neg = period_rets[period_rets < 0]
+        if len(neg) >= 2 and float(np.std(neg, ddof=1)) > 1e-9:
+            down_vol = float(np.std(neg, ddof=1) * np.sqrt(periods_per_year))
+            sortino = float((cagr - 0.04) / max(down_vol, 1e-6))
+        else:
+            sortino = sharpe
 
     peaks = np.maximum.accumulate(equity)
     dd = (equity - peaks) / peaks
@@ -209,18 +217,19 @@ class BotAConfig:
     max_total_invested: float = 0.68
     max_open_positions: int = 3
     daily_circuit_breaker_pct: float = -0.020
-    sl_atr_mult: float = 1.55
-    tp_atr_mult: float = 3.10
-    trail_activate_atr: float = 1.05
-    trail_dist_atr: float = 1.10
-    trail_floor_mult: float = 1.0055
-    partial_tp_atr: float = 1.40
+    sl_atr_mult: float = 2.00
+    tp_atr_mult: float = 3.50
+    trail_activate_atr: float = 1.20
+    trail_dist_atr: float = 1.35
+    trail_floor_mult: float = 1.0065
+    partial_tp_atr: float = 1.75
     partial_tp_frac: float = 0.45
-    min_atr_pct: float = 0.0042
+    min_atr_pct: float = 0.0060
     min_adx_1h_trend: float = 20.0
     min_vol_rel_trend: float = 1.08
     min_vol_rel_rebound: float = 1.25
     min_order_usd: float = 45.0
+    sl_cooldown_bars: int = 8
 
 
 @dataclass(frozen=True)
@@ -231,6 +240,80 @@ class RiskGatekeeperConfig:
     max_spread_bps: float = 12.0
     max_cross_exchange_bps: float = 45.0
     min_net_rr_ratio: float = 1.50
+    dd_lookback_bars: int = 540
+
+
+def advance_drawdown_guard_state(
+    pf_state: Dict[str, Any],
+    equity_curve: List[float],
+    dd_limit: float = -0.085,
+    cooldown_bars: int = 36,
+    lookback_bars: int = 540,
+    recovery_gain_pct: float = 0.030,
+    recovery_extra_loss_pct: float = -0.045,
+) -> Dict[str, Any]:
+    """
+    Gestiona de forma causal el freno por drawdown acumulado evitando bloqueos perpetuos en liquidez:
+      - Al perforar `dd_limit` sobre la ventana activa: activa enfriamiento por `cooldown_bars` barras (`scale=0.0`).
+      - Al concluir el enfriamiento: re-ancla referencia y pasa a modo recuperación (`scale=0.50`) con stop secundario `recovery_extra_loss_pct`.
+      - Al recuperar `recovery_gain_pct` desde el piso post-pausa (o marcar nuevo máximo de ventana): restablece escala normal (`scale=1.0`).
+    """
+    eq_arr = np.asarray(equity_curve, dtype=float) if equity_curve else np.array([1000.0])
+    cur_eq = float(eq_arr[-1])
+    cd_rem = int(pf_state.get("dd_cooldown_rem", 0) or 0)
+    rec_active = bool(pf_state.get("dd_recovery_active", False))
+    anchor_eq = float(pf_state.get("dd_anchor_eq", cur_eq) or cur_eq)
+    post_peak = float(pf_state.get("dd_post_halt_peak", cur_eq) or cur_eq)
+    bars_since = int(pf_state.get("dd_bars_since_halt", 0) or 0)
+
+    if cd_rem > 0:
+        cd_rem -= 1
+        bars_since += 1
+        pf_state["dd_cooldown_rem"] = cd_rem
+        pf_state["dd_bars_since_halt"] = bars_since
+        pf_state["dd_anchor_eq"] = cur_eq
+        pf_state["dd_post_halt_peak"] = cur_eq
+        if cd_rem > 0:
+            return {"halted": True, "recovery": False, "scale": 0.0, "active_dd_pct": 0.0, "veto_code": "KILL_SWITCH_COOLDOWN"}
+        pf_state["dd_recovery_active"] = True
+        pf_state["dd_bars_since_halt"] = 1
+        return {"halted": False, "recovery": True, "scale": 0.50, "active_dd_pct": 0.0, "veto_code": None}
+
+    if rec_active:
+        bars_since += 1
+        post_peak = max(post_peak, cur_eq)
+        pf_state["dd_bars_since_halt"] = bars_since
+        pf_state["dd_post_halt_peak"] = post_peak
+        rec_dd = (cur_eq - post_peak) / max(post_peak, 1e-6)
+        if rec_dd <= recovery_extra_loss_pct:
+            pf_state["dd_cooldown_rem"] = max(1, int(cooldown_bars))
+            pf_state["dd_recovery_active"] = False
+            pf_state["dd_anchor_eq"] = cur_eq
+            pf_state["dd_post_halt_peak"] = cur_eq
+            pf_state["dd_bars_since_halt"] = 1
+            return {"halted": True, "recovery": False, "scale": 0.0, "active_dd_pct": round(rec_dd * 100.0, 2), "veto_code": "KILL_SWITCH_DRAWDOWN"}
+        win_full = float(np.max(eq_arr[-min(len(eq_arr), max(2, lookback_bars)):]))
+        if cur_eq >= anchor_eq * (1.0 + recovery_gain_pct) or cur_eq >= win_full:
+            pf_state["dd_recovery_active"] = False
+            return {"halted": False, "recovery": False, "scale": 1.0, "active_dd_pct": round(rec_dd * 100.0, 2), "veto_code": None}
+        return {"halted": False, "recovery": True, "scale": 0.50, "active_dd_pct": round(rec_dd * 100.0, 2), "veto_code": None}
+
+    if bars_since > 0:
+        bars_since += 1
+        pf_state["dd_bars_since_halt"] = bars_since
+        eff_win = min(len(eq_arr), max(2, lookback_bars), bars_since)
+    else:
+        eff_win = min(len(eq_arr), max(2, lookback_bars))
+    peak_eq = float(np.max(eq_arr[-max(1, eff_win):]))
+    cur_dd = (cur_eq - peak_eq) / max(peak_eq, 1e-6)
+    if cur_dd <= dd_limit:
+        pf_state["dd_cooldown_rem"] = max(1, int(cooldown_bars))
+        pf_state["dd_recovery_active"] = False
+        pf_state["dd_anchor_eq"] = cur_eq
+        pf_state["dd_post_halt_peak"] = cur_eq
+        pf_state["dd_bars_since_halt"] = 1
+        return {"halted": True, "recovery": False, "scale": 0.0, "active_dd_pct": round(cur_dd * 100.0, 2), "veto_code": "KILL_SWITCH_DRAWDOWN"}
+    return {"halted": False, "recovery": False, "scale": 1.0, "active_dd_pct": round(cur_dd * 100.0, 2), "veto_code": None}
 
 
 def evaluate_risk_gatekeeper(
@@ -243,46 +326,58 @@ def evaluate_risk_gatekeeper(
     regime_info: Optional[Dict[str, Any]] = None,
     rr_ratio: float = 2.0,
     cfg: RiskGatekeeperConfig = RiskGatekeeperConfig(),
+    dd_guard: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """
     Módulo independiente de Inteligencia de Capital y Riesgo (Nivel 3) con control pre-ejecución:
-      1) Parada por drawdown máximo acumulado desde pico patrimonial (<= -8.50%)
+      1) Parada por drawdown máximo acumulado en ventana activa (<= -8.50%) con enfriamiento y reentrada 0.50x
       2) Límite máximo de pérdida diaria (<= -2.00%)
       3) Filtro de liquidez / spread Bid-Ask (<= 12 bps)
-      4) Verificación de consistencia entre libros OKX/Bybit (<= 45 bps)
+      4) Verificación de consistencia entre libros OKX/Bybit/KuCoin (<= 45 bps)
       5) Tope de exposición simultánea y relación riesgo-beneficio mínima (>= 1.50)
     """
     eq_arr = np.asarray(equity_curve, dtype=float) if equity_curve else np.array([1000.0])
     cur_eq = float(eq_arr[-1])
-    peak_eq = float(np.max(eq_arr))
+    lb = max(2, int(cfg.dd_lookback_bars)) if cfg.dd_lookback_bars > 0 else len(eq_arr)
+    peak_eq = float(np.max(eq_arr[-min(len(eq_arr), lb):]))
     current_dd = (cur_eq - peak_eq) / max(peak_eq, 1e-6)
     daily_pnl = (cur_eq - float(day_anchor_eq)) / max(float(day_anchor_eq), 1e-6)
 
+    guard_scale = float(dd_guard.get("scale", 1.0)) if dd_guard is not None else 1.0
     risk_mult = float((regime_info or {}).get("risk_multiplier", 1.0))
     sl_buf = float((regime_info or {}).get("sl_atr_buffer", 1.0))
-    eff_risk = float(np.clip(cfg.base_risk_per_trade_pct * risk_mult, 0.0020, 0.0060))
+    eff_risk = float(np.clip(cfg.base_risk_per_trade_pct * risk_mult, 0.0020, 0.0060)) * (guard_scale if guard_scale > 0.0 else 1.0)
+    eff_max_inv = float(max_invested_ratio) * (0.55 if (dd_guard and dd_guard.get("recovery")) else 1.0)
 
     veto_code: Optional[str] = None
-    if current_dd <= cfg.kill_switch_drawdown_pct:
+    if dd_guard is not None:
+        if dd_guard.get("halted"):
+            veto_code = str(dd_guard.get("veto_code") or "KILL_SWITCH_DRAWDOWN")
+    elif current_dd <= cfg.kill_switch_drawdown_pct:
         veto_code = "KILL_SWITCH_DRAWDOWN"
-    elif daily_pnl <= cfg.daily_loss_limit_pct:
-        veto_code = "DAILY_LOSS_LIMIT"
-    elif float(spread_bps) > cfg.max_spread_bps:
-        veto_code = "LIQUIDITY_SPREAD_HIGH"
-    elif float(cross_exchange_bps) > cfg.max_cross_exchange_bps:
-        veto_code = "ORACLE_DIVERGENCE"
-    elif float(current_invested_ratio) >= float(max_invested_ratio) - 1e-4:
-        veto_code = "EXPOSURE_CAP_REACHED"
-    elif float(rr_ratio) < cfg.min_net_rr_ratio:
-        veto_code = "RR_BELOW_MINIMUM"
 
+    if veto_code is None:
+        if daily_pnl <= cfg.daily_loss_limit_pct:
+            veto_code = "DAILY_LOSS_LIMIT"
+        elif float(spread_bps) > cfg.max_spread_bps:
+            veto_code = "LIQUIDITY_SPREAD_HIGH"
+        elif float(cross_exchange_bps) > cfg.max_cross_exchange_bps:
+            veto_code = "ORACLE_DIVERGENCE"
+        elif float(current_invested_ratio) >= eff_max_inv - 1e-4:
+            veto_code = "EXPOSURE_CAP_REACHED"
+        elif float(rr_ratio) < cfg.min_net_rr_ratio:
+            veto_code = "RR_BELOW_MINIMUM"
+
+    rep_dd_pct = float(dd_guard["active_dd_pct"]) if (dd_guard is not None and "active_dd_pct" in dd_guard) else round(current_dd * 100.0, 2)
     return {
         "approved": veto_code is None,
         "veto_code": veto_code,
         "effective_risk_pct": round(eff_risk, 6),
         "sl_buffer_mult": round(sl_buf, 3),
-        "current_dd_pct": round(current_dd * 100.0, 2),
+        "current_dd_pct": rep_dd_pct,
         "daily_pnl_pct": round(daily_pnl * 100.0, 2),
+        "recovery_mode": bool(dd_guard.get("recovery")) if dd_guard is not None else False,
+        "risk_scale": round(guard_scale, 2),
     }
 
 
@@ -346,15 +441,24 @@ def step_bot_a_microtrading(
     """
     entry_fee_map = state.setdefault("entry_fee", {c: 0.0 for c in coins})
     partial_map = state.setdefault("partial_taken", {c: False for c in coins})
+    sl_cd_map = state.setdefault("sl_cooldown_step", {c: -1 for c in coins})
+    bar_step_a = int(state.get("bar_step_a", 0)) + 1
+    state["bar_step_a"] = bar_step_a
     prev_eq = state["eq_curve"][-1]
     if state["cur_day"] != ts.date():
         state["cur_day"] = ts.date()
         state["day_anchor_eq"] = prev_eq
         state["circuit_halted_day"] = False
 
+    dd_guard_a = advance_drawdown_guard_state(
+        state, state["eq_curve"], dd_limit=-0.085, cooldown_bars=96, lookback_bars=960,
+        recovery_gain_pct=0.025, recovery_extra_loss_pct=-0.040,
+    )
     daily_dd = (prev_eq - state["day_anchor_eq"]) / max(state["day_anchor_eq"], 1e-6)
-    if daily_dd <= cfg.daily_circuit_breaker_pct or state.get("circuit_halted_day"):
-        state["circuit_halted_day"] = True
+    if daily_dd <= cfg.daily_circuit_breaker_pct or state.get("circuit_halted_day") or dd_guard_a["halted"]:
+        if daily_dd <= cfg.daily_circuit_breaker_pct:
+            state["circuit_halted_day"] = True
+        act_halt_lbl = "PARADA DRAWDOWN ACUMULADO (-8.5%)" if dd_guard_a["halted"] and not state.get("circuit_halted_day") else "CORTE DIARIO RIESGO (-2.0%)"
         for c in coins:
             qty = state["units"][c]
             if qty > 0.0:
@@ -372,7 +476,7 @@ def step_bot_a_microtrading(
                     "bot_id": "bot_a", "bot_code": "BOT A",
                     "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
                     "coin": c, "instrument": f"{c}-USDT", "side_type": "CLOSE",
-                    "action": "CORTE DIARIO RIESGO (-2.0%)",
+                    "action": act_halt_lbl,
                     "units": round(qty, 6), "price": fmt_px_dec(px_exec),
                     "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
                     "volume_rel": round(float(vrel_prev[c]), 2),
@@ -432,6 +536,8 @@ def step_bot_a_microtrading(
                     "realized_pnl_usd": round(pnl_u, 2), "realized_pnl_pct": round(pnl_p, 2),
                     "telemetry": f"EMA9/21={(e9/max(e21,1e-8)-1)*100:+.2f}% | %B={pb:.2f} | Mom={roc10:+.1f}% | Vol={vrel:.2f}x",
                 })
+                if px_exec <= state["entry"][c] and int(cfg.sl_cooldown_bars) > 0:
+                    sl_cd_map[c] = bar_step_a + int(cfg.sl_cooldown_bars)
                 state["units"][c] = 0.0
                 state["sl"][c] = 0.0
                 state["tp"][c] = 0.0
@@ -503,8 +609,10 @@ def step_bot_a_microtrading(
                         state["peak"][c] - cfg.trail_dist_atr * atr_v,
                     )
         else:
+            if bar_step_a < int(sl_cd_map.get(c, -1)):
+                continue
             atr_pct = atr_v / max(px_prev, 1e-8)
-            vol_edge_ok = atr_pct >= cfg.min_atr_pct
+            vol_edge_ok = (atr_pct >= cfg.min_atr_pct) and ((cfg.tp_atr_mult * atr_pct) >= 4.0 * (2.0 * cfg.fee_rate))
             adx_1h_val = float(adx_1h_prev.get(c, 22.0)) if adx_1h_prev is not None else 22.0
             adx_ok = adx_1h_val >= cfg.min_adx_1h_trend
             bull_candle = px_prev > float(bar_open_prev[c])
@@ -512,7 +620,12 @@ def step_bot_a_microtrading(
             obv_val = float(obv_prev.get(c, 0.0)) if obv_prev is not None else 0.0
             e200_d = float(ema200_dist_prev.get(c, 0.0)) if ema200_dist_prev is not None else 0.0
             spread_ok = (float(spread_bps_map.get(c, 1.0)) <= 12.0) if spread_bps_map is not None else True
-            allow_trend = (regime_code not in ("TENDENCIA_BAJISTA", "MERCADO_LATERAL")) if regime_code else True
+            if regime_code is None:
+                allow_trend = True
+            elif regime_code == "MERCADO_LATERAL":
+                allow_trend = (adx_1h_val >= 22.0) and (vrel >= 1.20)
+            else:
+                allow_trend = regime_code != "TENDENCIA_BAJISTA"
             setup_trend = (
                 spread_ok
                 and allow_trend
@@ -529,8 +642,10 @@ def step_bot_a_microtrading(
                 and (obv_val >= -0.08)
                 and (e200_d <= 0.35)
             )
+            rebound_regime_ok = (regime_code != "TENDENCIA_BAJISTA") and (e21_1h >= e55_1h * 0.990)
             setup_bb_reclaim = (
                 spread_ok
+                and rebound_regime_ok
                 and vol_edge_ok
                 and (pbp < 0.14)
                 and (pb > 0.22)
@@ -546,12 +661,13 @@ def step_bot_a_microtrading(
             invested_now = sum(state["units"][k] * float(bar_close_prev[k]) for k in coins)
             eq_est = state["cash_usd"] + invested_now
             inv_ratio = invested_now / max(eq_est, 1.0)
-            if (setup_trend or setup_bb_reclaim) and open_count < cfg.max_open_positions and inv_ratio < cfg.max_total_invested:
+            eff_cap_a = cfg.max_total_invested * (0.55 if dd_guard_a["recovery"] else 1.0)
+            if (setup_trend or setup_bb_reclaim) and open_count < cfg.max_open_positions and inv_ratio < eff_cap_a:
                 sl_buf = 1.15 if regime_code == "ALTA_VOLATILIDAD" else 1.00
-                eff_risk_pct = float(np.clip(cfg.max_risk_per_trade_pct * float(risk_mult), 0.0022, 0.0065))
+                eff_risk_pct = float(np.clip(cfg.max_risk_per_trade_pct * float(risk_mult), 0.0022, 0.0065)) * float(dd_guard_a["scale"])
                 stop_dist_pct = max(0.0085, (cfg.sl_atr_mult * sl_buf * atr_v) / max(px_prev, 1e-6))
                 risk_w = eff_risk_pct / stop_dist_pct
-                rem_w = max(0.0, cfg.max_total_invested - inv_ratio)
+                rem_w = max(0.0, eff_cap_a - inv_ratio)
                 target_w = min(cfg.max_position_weight, risk_w, rem_w)
                 alloc_usd = min(target_w * eq_est, (eff_risk_pct * eq_est) / stop_dist_pct)
                 if alloc_usd >= cfg.min_order_usd and state["cash_usd"] >= alloc_usd * (1.0 + cfg.fee_rate * 2.0):
@@ -613,7 +729,10 @@ def step_bot_b_daily(
     """Calcula vector de pesos diarios de BOT B con Markowitz/GARCH, penalización L1, OBV/BTC rel, régimen GMM y salida Chandelier ATR."""
     n_assets = len(coins)
     btc_j = coins.index("BTC") if "BTC" in coins else 0
-    macro_b = bool((px_y[btc_j] > e50_y[btc_j]) or (float(np.mean(px_y > s20_y)) >= 0.375))
+    if regime_code == "TENDENCIA_BAJISTA":
+        macro_b = bool(px_y[btc_j] > e50_y[btc_j])
+    else:
+        macro_b = bool((px_y[btc_j] > e50_y[btc_j]) or (float(np.mean(px_y > s20_y)) >= 0.375))
     chandelier_b = px_y >= (pk15_y - chandelier_mult * atr_y)
     bull_b = macro_b & (px_y > s20_y) & (e12_y > e26_y) & (r14_y > 0.5) & (pb_y > 0.52) & chandelier_b
     breadth_b = float(np.mean(bull_b))
@@ -621,8 +740,8 @@ def step_bot_b_daily(
     regime_exp_cap = {
         "TENDENCIA_ALCISTA": 0.92,
         "MERCADO_LATERAL": 0.55,
-        "ALTA_VOLATILIDAD": 0.38,
-        "TENDENCIA_BAJISTA": 0.24,
+        "ALTA_VOLATILIDAD": 0.35,
+        "TENDENCIA_BAJISTA": 0.18,
     }.get(regime_code or "", 0.92)
 
     if np.any(bull_b):
@@ -668,9 +787,9 @@ def step_bot_b_daily(
         else:
             wb = np.zeros(n_assets)
     else:
-        oversold_b = np.where((pb_y < 0.16) & (mh_y > -0.8))[0]
+        oversold_b = np.where((pb_y < 0.16) & (mh_y > -0.35))[0]
         wb = np.zeros(n_assets)
-        if len(oversold_b) > 0 and regime_code != "ALTA_VOLATILIDAD":
+        if len(oversold_b) > 0 and regime_code in (None, "TENDENCIA_ALCISTA", "MERCADO_LATERAL"):
             wb[oversold_b[0]] = min(0.12, max_asset_weight)
 
     wb = np.clip(wb, 0.0, max_asset_weight)
@@ -697,7 +816,7 @@ def step_bot_c_futures(
     oi_vol_ratio: Optional[np.ndarray] = None,
     obv_v: Optional[np.ndarray] = None,
     regime_code: Optional[str] = None,
-    risk_per_leg: float = 0.0085,
+    risk_per_leg: float = 0.0052,
 ) -> np.ndarray:
     """Calcula pesos direccionales (Largos > 0 y Cortos < 0) de BOT C con carry 8h, Open Interest, OBV, régimen GMM y tope <= 1.05x."""
     n_assets = len(px_v)
@@ -708,14 +827,17 @@ def step_bot_c_futures(
     oi_arr = np.asarray(oi_vol_ratio, dtype=float) if oi_vol_ratio is not None else None
     obv_arr = np.asarray(obv_v, dtype=float) if obv_v is not None else None
 
-    min_score_thr = 0.30 if regime_code == "MERCADO_LATERAL" else 0.25
-    leg_risk_mult = {"ALTA_VOLATILIDAD": 0.80, "MERCADO_LATERAL": 0.90}.get(regime_code or "", 1.0)
+    min_score_thr = 0.50 if regime_code == "MERCADO_LATERAL" else 0.38
+    leg_risk_mult = {"ALTA_VOLATILIDAD": 0.75, "MERCADO_LATERAL": 0.80, "TENDENCIA_BAJISTA": 0.85}.get(regime_code or "", 1.0)
     eff_leg_risk = float(risk_per_leg) * leg_risk_mult
+    allow_long_reg = (regime_code is None) or (regime_code != "TENDENCIA_BAJISTA")
+    allow_short_reg = (regime_code is None) or (regime_code != "TENDENCIA_ALCISTA")
+    min_adx_long = 20.0 if regime_code is not None else 0.0
 
     for j in range(n_assets):
         atr_pct = max(0.012, atr_v[j] / max(px_v[j], 1e-6))
         oi_overheat = oi_arr is not None and oi_arr[j] > 6.50
-        if (px_v[j] > e21_v[j] > e55_v[j]) and (r24_v[j] > 1.2) and (pdi_v[j] > mdi_v[j]) and (pb_v[j] > 0.52):
+        if allow_long_reg and (px_v[j] > e21_v[j] > e55_v[j]) and (r24_v[j] > 1.2) and (pdi_v[j] > mdi_v[j]) and (pb_v[j] > 0.52) and (adx_v[j] >= min_adx_long):
             score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
             if fund_arr is not None:
                 score += float(np.clip(-fund_arr[j] * 180.0, -0.35, 0.35))
@@ -723,11 +845,11 @@ def step_bot_c_futures(
                 score += float(np.clip(obv_arr[j] * 0.12, -0.08, 0.08))
             has_long = prev_arr is not None and prev_arr[j] > 0.04
             if has_long:
-                score += 0.35
+                score += 0.45
             if oi_overheat and not has_long:
                 score = 0.0
             dir_scores[j] = score
-        elif (px_v[j] < e21_v[j] < e55_v[j]) and (r24_v[j] < -1.2) and (mdi_v[j] > pdi_v[j]) and (pb_v[j] < 0.48) and (adx_v[j] > 19.0):
+        elif allow_short_reg and (px_v[j] < e21_v[j] < e55_v[j]) and (r24_v[j] < -1.2) and (mdi_v[j] > pdi_v[j]) and (pb_v[j] < 0.48) and (adx_v[j] > 22.0):
             score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
             if fund_arr is not None:
                 score -= float(np.clip(fund_arr[j] * 180.0, -0.35, 0.35))
@@ -735,7 +857,7 @@ def step_bot_c_futures(
                 score += float(np.clip(obv_arr[j] * 0.12, -0.08, 0.08))
             has_short = prev_arr is not None and prev_arr[j] < -0.04
             if has_short:
-                score -= 0.35
+                score -= 0.45
             if oi_overheat and not has_short:
                 score = 0.0
             dir_scores[j] = score

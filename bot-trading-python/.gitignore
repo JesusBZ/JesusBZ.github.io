@@ -21,3 +21,7 @@ venv/
 # Temporary atomic dumps
 *.tmp
 *.json.tmp
+
+# Phase 4 historical backtest cache & local report
+.cache_history/
+backtest_bots_report.json

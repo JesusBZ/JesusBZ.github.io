@@ -60,6 +60,7 @@ from src.strategies.quant_bots_rules import (
     GENESIS_HASH,
     BotAConfig,
     RiskGatekeeperConfig,
+    advance_drawdown_guard_state,
     append_orders_sha256_chain,
     calc_adx_di,
     calc_atr,
@@ -635,6 +636,10 @@ def _step_bot_b_closed_bar(
         btc_rel_y=btc_rel_y,
         regime_code=reg_code_b,
     )
+    dd_guard_b = advance_drawdown_guard_state(
+        pf_b, pf_b["eq_curve"], dd_limit=gatekeeper_cfg.kill_switch_drawdown_pct,
+        cooldown_bars=21, lookback_bars=365, recovery_gain_pct=0.030, recovery_extra_loss_pct=-0.040,
+    )
     gate_b = evaluate_risk_gatekeeper(
         pf_b["eq_curve"],
         prev_eq_b,
@@ -643,9 +648,12 @@ def _step_bot_b_closed_bar(
         regime_info={"risk_multiplier": reg_mult_b, "sl_atr_buffer": 1.0},
         rr_ratio=2.15,
         cfg=gatekeeper_cfg,
+        dd_guard=dd_guard_b,
     )
-    if not gate_b["approved"] and gate_b["veto_code"] == "KILL_SWITCH_DRAWDOWN":
+    if dd_guard_b["halted"]:
         wb = np.zeros(n_assets)
+    elif dd_guard_b["recovery"]:
+        wb = wb * 0.50
 
     turn_b = float(np.sum(np.abs(wb - cur_w)))
     has_full_exit_b = any((float(units_b[c]) > 1e-7 and wb[j] == 0.0) for j, c in enumerate(coins))
@@ -784,8 +792,11 @@ def _step_bot_c_closed_bar(
         atr_cj = max(1e-9, float(atr_prev_c[j]))
 
         if qty_c > 0.0 and float(sl_c.get(c, 0.0)) > 0.0:
-            if b_lo <= float(sl_c[c]):
-                px_sl = float(np.clip(float(sl_c[c]), b_lo, b_hi))
+            hit_sl_l = b_lo <= float(sl_c[c])
+            hit_tp_l = (not hit_sl_l) and float(tp_c.get(c, 0.0)) > 0.0 and b_hi >= float(tp_c[c])
+            if hit_sl_l or hit_tp_l:
+                target_px_l = float(sl_c[c]) if hit_sl_l else float(tp_c[c])
+                px_sl = float(np.clip(target_px_l, b_lo, b_hi))
                 pnl_close = qty_c * (px_sl - float(entry_c[c]))
                 fee_close = abs(qty_c * px_sl) * SETTINGS.futures_fee_rate
                 ent_f = float(entry_fee_c.get(c, 0.0))
@@ -793,7 +804,10 @@ def _step_bot_c_closed_bar(
                 pf_c["fees_cum"] = float(pf_c["fees_cum"]) + fee_close
                 pnl_u = round(pnl_close - fee_close - ent_f, 2)
                 pnl_p = round((((px_sl / max(float(entry_c[c]), 1e-8)) - 1.0) * 100.0) - (2.0 * SETTINGS.futures_fee_rate * 100.0), 2)
-                lbl_c = "SALIDA TRAILING SWAP ATR" if px_sl > float(entry_c[c]) else "CORTE STOP-LOSS SWAP (2.85x ATR)"
+                if hit_tp_l:
+                    lbl_c = "TOMA DE BENEFICIO SWAP (TP ATR)"
+                else:
+                    lbl_c = "SALIDA TRAILING SWAP ATR" if px_sl > float(entry_c[c]) else "CORTE STOP-LOSS SWAP (2.85x ATR)"
                 tr_sl = {
                     "bot_id": "bot_c", "bot_code": "BOT C",
                     "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
@@ -803,7 +817,7 @@ def _step_bot_c_closed_bar(
                     "volume_rel": round(float(vrel_prev_c[j]), 2),
                     "notional_usd": round(abs(qty_c * px_sl), 2), "fee_usd": round(fee_close, 3),
                     "realized_pnl_usd": pnl_u, "realized_pnl_pct": pnl_p,
-                    "telemetry": f"Protección 4H | SL={fmt_px_dec(sl_c[c])} | Reg={reg_code_c} | Vol={vrel_prev_c[j]:.2f}x",
+                    "telemetry": f"Protección 4H | Px={fmt_px_dec(px_sl)} | Reg={reg_code_c} | Vol={vrel_prev_c[j]:.2f}x",
                 }
                 pf_c["trades"].append(tr_sl)
                 emitted.append(tr_sl)
@@ -812,14 +826,18 @@ def _step_bot_c_closed_bar(
                 tp_c[c] = 0.0
                 peak_c[c] = 0.0
                 entry_fee_c[c] = 0.0
-                cooldown_step[c] = bar_step + 3
+                if hit_sl_l and px_sl <= float(entry_c[c]):
+                    cooldown_step[c] = bar_step + 3
             else:
                 peak_c[c] = max(float(peak_c.get(c, 0.0)), b_hi)
-                if peak_c[c] >= float(entry_c[c]) + 2.40 * atr_cj:
-                    sl_c[c] = max(float(sl_c[c]), float(entry_c[c]) * 1.004, peak_c[c] - 1.85 * atr_cj)
+                if peak_c[c] >= float(entry_c[c]) + 1.80 * atr_cj:
+                    sl_c[c] = max(float(sl_c[c]), float(entry_c[c]) * 1.003, peak_c[c] - 2.20 * atr_cj)
         elif qty_c < 0.0 and float(sl_c.get(c, 0.0)) > 0.0:
-            if b_hi >= float(sl_c[c]):
-                px_sl = float(np.clip(float(sl_c[c]), b_lo, b_hi))
+            hit_sl_s = b_hi >= float(sl_c[c])
+            hit_tp_s = (not hit_sl_s) and float(tp_c.get(c, 0.0)) > 0.0 and b_lo <= float(tp_c[c])
+            if hit_sl_s or hit_tp_s:
+                target_px_s = float(sl_c[c]) if hit_sl_s else float(tp_c[c])
+                px_sl = float(np.clip(target_px_s, b_lo, b_hi))
                 pnl_close = qty_c * (px_sl - float(entry_c[c]))
                 fee_close = abs(qty_c * px_sl) * SETTINGS.futures_fee_rate
                 ent_f = float(entry_fee_c.get(c, 0.0))
@@ -827,7 +845,10 @@ def _step_bot_c_closed_bar(
                 pf_c["fees_cum"] = float(pf_c["fees_cum"]) + fee_close
                 pnl_u = round(pnl_close - fee_close - ent_f, 2)
                 pnl_p = round(((-1.0 * ((px_sl / max(float(entry_c[c]), 1e-8)) - 1.0)) * 100.0) - (2.0 * SETTINGS.futures_fee_rate * 100.0), 2)
-                lbl_c = "SALIDA TRAILING SHORT ATR" if px_sl < float(entry_c[c]) else "CORTE STOP-LOSS SHORT (2.85x ATR)"
+                if hit_tp_s:
+                    lbl_c = "TOMA DE BENEFICIO SHORT (TP ATR)"
+                else:
+                    lbl_c = "SALIDA TRAILING SHORT ATR" if px_sl < float(entry_c[c]) else "CORTE STOP-LOSS SHORT (2.85x ATR)"
                 tr_sls = {
                     "bot_id": "bot_c", "bot_code": "BOT C",
                     "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
@@ -837,7 +858,7 @@ def _step_bot_c_closed_bar(
                     "volume_rel": round(float(vrel_prev_c[j]), 2),
                     "notional_usd": round(abs(qty_c * px_sl), 2), "fee_usd": round(fee_close, 3),
                     "realized_pnl_usd": pnl_u, "realized_pnl_pct": pnl_p,
-                    "telemetry": f"Protección Short 4H | SL={fmt_px_dec(sl_c[c])} | Reg={reg_code_c} | Vol={vrel_prev_c[j]:.2f}x",
+                    "telemetry": f"Protección Short 4H | Px={fmt_px_dec(px_sl)} | Reg={reg_code_c} | Vol={vrel_prev_c[j]:.2f}x",
                 }
                 pf_c["trades"].append(tr_sls)
                 emitted.append(tr_sls)
@@ -846,13 +867,18 @@ def _step_bot_c_closed_bar(
                 tp_c[c] = 0.0
                 peak_c[c] = 0.0
                 entry_fee_c[c] = 0.0
-                cooldown_step[c] = bar_step + 3
+                if hit_sl_s and px_sl >= float(entry_c[c]):
+                    cooldown_step[c] = bar_step + 3
             else:
                 peak_c[c] = min(float(peak_c[c]), b_lo) if float(peak_c.get(c, 0.0)) > 0.0 else b_lo
-                if peak_c[c] <= float(entry_c[c]) - 2.40 * atr_cj:
-                    sl_c[c] = min(float(sl_c[c]), float(entry_c[c]) * 0.996, peak_c[c] + 1.85 * atr_cj)
+                if peak_c[c] <= float(entry_c[c]) - 1.80 * atr_cj:
+                    sl_c[c] = min(float(sl_c[c]), float(entry_c[c]) * 0.997, peak_c[c] + 2.20 * atr_cj)
 
-    if (bar_step - 1) % 3 == 0:
+    dd_guard_c = advance_drawdown_guard_state(
+        pf_c, pf_c["eq_curve"], dd_limit=-0.085,
+        cooldown_bars=54, lookback_bars=540, recovery_gain_pct=0.030, recovery_extra_loss_pct=-0.035,
+    )
+    if bar_step >= 1:
         px_v = close_4h.loc[prev_ts].values
         e21_v = ema21_4h.loc[prev_ts].values
         e55_v = ema55_4h.loc[prev_ts].values
@@ -872,23 +898,24 @@ def _step_bot_c_closed_bar(
         gate_c = evaluate_risk_gatekeeper(
             pf_c["eq_curve"], prev_eq_c, gross_ref / max(eq_ref, 1.0), 1.08,
             regime_info={"risk_multiplier": 0.65 if reg_code_c == "ALTA_VOLATILIDAD" else 1.0},
-            rr_ratio=1.60, cfg=gatekeeper_cfg,
+            rr_ratio=1.60, cfg=gatekeeper_cfg, dd_guard=dd_guard_c,
         )
 
         wc = step_bot_c_futures(
             px_v, e21_v, e55_v, r24_v, mh_v, pb_v, adx_v, pdi_v, mdi_v, atr_v,
-            max_gross_leverage=1.05,
+            max_gross_leverage=0.70,
             funding_8h=funding_rates_8h,
             prev_wc=cur_wc,
             oi_vol_ratio=oi_vol_ratio_vec,
             obv_v=obv_v,
             regime_code=reg_code_c,
         )
-        if gate_c["current_dd_pct"] <= -15.0:
+        if dd_guard_c["halted"]:
             wc = np.zeros(len(coins))
-        elif gate_c["veto_code"] == "KILL_SWITCH_DRAWDOWN":
-            wc = wc * 0.55
-        if float(np.sum(np.abs(wc - cur_wc))) >= 0.16:
+        elif dd_guard_c["recovery"]:
+            wc = wc * 0.45
+        force_exit_c = any((abs(float(units_c[c])) > 1e-9 and abs(wc[j]) < 1e-9) or (float(units_c[c]) * wc[j] < -1e-9) for j, c in enumerate(coins))
+        if float(np.sum(np.abs(wc - cur_wc))) >= 0.28 or force_exit_c:
             for j, c in enumerate(coins):
                 if bar_step < int(cooldown_step.get(c, -1)) and abs(float(units_c[c])) <= 1e-9:
                     continue
@@ -902,7 +929,7 @@ def _step_bot_c_closed_bar(
                 same_side = (float(units_c[c]) > 1e-9 and target_notional >= 40.0) or (float(units_c[c]) < -1e-9 and target_notional <= -40.0)
 
                 if same_side:
-                    if abs(delta_notional) >= 75.0:
+                    if abs(delta_notional) >= 140.0:
                         sign_s = 1.0 if float(units_c[c]) > 0 else -1.0
                         if delta_notional * float(units_c[c]) > 0:
                             delta_u = delta_notional / px_exec
@@ -959,7 +986,7 @@ def _step_bot_c_closed_bar(
                             }
                             pf_c["trades"].append(tr_trim)
                             emitted.append(tr_trim)
-                elif abs(delta_notional) >= 48.0:
+                elif abs(delta_notional) >= 48.0 or abs(float(units_c[c])) > 1e-9:
                     pnl_real_u = None
                     pnl_real_p = None
                     closed_notional = abs(cur_notional)
@@ -1098,6 +1125,10 @@ def _step_bot_d_closed_bar(
     peak_d = pf_d.setdefault("peak", {c: 0.0 for c in coins})
     sl_d = pf_d["sl"]
     tp_d = pf_d["tp"]
+    dd_guard_d = advance_drawdown_guard_state(
+        pf_d, pf_d["eq_curve"], dd_limit=gatekeeper_cfg.kill_switch_drawdown_pct,
+        cooldown_bars=36, lookback_bars=540, recovery_gain_pct=0.030, recovery_extra_loss_pct=-0.045,
+    )
 
     for j, c in enumerate(coins):
         px_prev = float(close_4h.loc[prev_ts, c])
@@ -1221,44 +1252,46 @@ def _step_bot_d_closed_bar(
                 regime_info={"risk_multiplier": reg_mult_d, "sl_atr_buffer": sl_buf_d},
                 rr_ratio=2.15 if nn_trend_ok else 2.05,
                 cfg=gatekeeper_cfg,
+                dd_guard=dd_guard_d,
             )
-            if not gate_d["approved"]:
-                pf_d["veto_count"] = int(pf_d.get("veto_count", 0)) + 1
-            elif nn_buy_ok:
-                dir_prob_up = p_up / max(p_up + p_dn, 1e-6)
-                alloc_d, stop_dist_d = compute_bot_d_sizing(
-                    eq_est_d, cash_d, invested_d, px_prev, atr_v * sl_buf_d, dir_prob_up,
-                    max_risk_pct=gate_d["effective_risk_pct"],
-                )
-                if alloc_d >= 48.0 and cash_d >= alloc_d * 1.002:
-                    px_exec = float(np.clip(px_prev, b_lo, b_hi))
-                    fee = alloc_d * SETTINGS.spot_fee_rate
-                    qty = alloc_d / px_exec
-                    cash_d -= (alloc_d + fee)
-                    pf_d["fees_cum"] = float(pf_d["fees_cum"]) + fee
-                    units_d[c] = qty
-                    entry_d[c] = px_exec
-                    entry_fee_d[c] = fee
-                    partial_d[c] = False
-                    peak_d[c] = px_exec
-                    sl_d[c] = px_exec * (1.0 - stop_dist_d)
-                    tp_mult = 2.15
-                    tp_d[c] = px_exec * (1.0 + tp_mult * stop_dist_d)
-                    act_d_in = "COMPRA ENSEMBLE TRIPLE-BARRERA" if nn_trend_ok else "COMPRA REBOTE BOLLINGER ENSEMBLE"
-                    tr_bd = {
-                        "bot_id": "bot_d", "bot_code": "BOT D",
-                        "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
-                        "coin": c, "instrument": f"{c}-USDT", "side_type": "BUY",
-                        "action": act_d_in,
-                        "units": round(qty, 6), "price": fmt_px_dec(px_exec),
-                        "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
-                        "sl_price": fmt_px_dec(sl_d[c]), "tp_price": fmt_px_dec(tp_d[c]),
-                        "volume_rel": round(vrel_v, 2), "notional_usd": round(alloc_d, 2), "fee_usd": round(fee, 3),
-                        "realized_pnl_usd": None, "realized_pnl_pct": None,
-                        "telemetry": f"Alza={p_up*100:.0f}% Lat={p_flat*100:.0f}% Baja={p_dn*100:.0f}% | OBV={obv_v:+.2f} | Reg={reg_code_d}",
-                    }
-                    pf_d["trades"].append(tr_bd)
-                    emitted.append(tr_bd)
+            if nn_buy_ok:
+                if not gate_d["approved"]:
+                    pf_d["veto_count"] = int(pf_d.get("veto_count", 0)) + 1
+                else:
+                    dir_prob_up = p_up / max(p_up + p_dn, 1e-6)
+                    alloc_d, stop_dist_d = compute_bot_d_sizing(
+                        eq_est_d, cash_d, invested_d, px_prev, atr_v * sl_buf_d, dir_prob_up,
+                        max_risk_pct=gate_d["effective_risk_pct"],
+                    )
+                    if alloc_d >= 48.0 and cash_d >= alloc_d * 1.002:
+                        px_exec = float(np.clip(px_prev, b_lo, b_hi))
+                        fee = alloc_d * SETTINGS.spot_fee_rate
+                        qty = alloc_d / px_exec
+                        cash_d -= (alloc_d + fee)
+                        pf_d["fees_cum"] = float(pf_d["fees_cum"]) + fee
+                        units_d[c] = qty
+                        entry_d[c] = px_exec
+                        entry_fee_d[c] = fee
+                        partial_d[c] = False
+                        peak_d[c] = px_exec
+                        sl_d[c] = px_exec * (1.0 - stop_dist_d)
+                        tp_mult = 2.15
+                        tp_d[c] = px_exec * (1.0 + tp_mult * stop_dist_d)
+                        act_d_in = "COMPRA ENSEMBLE TRIPLE-BARRERA" if nn_trend_ok else "COMPRA REBOTE BOLLINGER ENSEMBLE"
+                        tr_bd = {
+                            "bot_id": "bot_d", "bot_code": "BOT D",
+                            "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
+                            "coin": c, "instrument": f"{c}-USDT", "side_type": "BUY",
+                            "action": act_d_in,
+                            "units": round(qty, 6), "price": fmt_px_dec(px_exec),
+                            "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
+                            "sl_price": fmt_px_dec(sl_d[c]), "tp_price": fmt_px_dec(tp_d[c]),
+                            "volume_rel": round(vrel_v, 2), "notional_usd": round(alloc_d, 2), "fee_usd": round(fee, 3),
+                            "realized_pnl_usd": None, "realized_pnl_pct": None,
+                            "telemetry": f"Alza={p_up*100:.0f}% Lat={p_flat*100:.0f}% Baja={p_dn*100:.0f}% | OBV={obv_v:+.2f} | Reg={reg_code_d}",
+                        }
+                        pf_d["trades"].append(tr_bd)
+                        emitted.append(tr_bd)
 
     pf_d["cash_usd"] = cash_d
     cur_eq_d = cash_d + sum(float(units_d[c]) * float(close_4h.loc[ts, c]) for c in coins)
@@ -1280,6 +1313,8 @@ def _sanitize_portfolio_for_json(pf: Dict[str, Any], coins: List[str]) -> Dict[s
         out["partial_taken"] = {c: bool(out["partial_taken"].get(c, False)) for c in coins}
     if "cooldown_step" in out and isinstance(out["cooldown_step"], dict):
         out["cooldown_step"] = {c: int(out["cooldown_step"].get(c, -1)) for c in coins}
+    if "sl_cooldown_step" in out and isinstance(out["sl_cooldown_step"], dict):
+        out["sl_cooldown_step"] = {c: int(out["sl_cooldown_step"].get(c, -1)) for c in coins}
     for num_key in ("cash_usd", "realized_cash_c", "fees_cum", "day_anchor_eq"):
         if num_key in out and out[num_key] is not None:
             out[num_key] = round(float(out[num_key]), 6)
@@ -2494,8 +2529,8 @@ def run_four_algorithmic_bots(
             "inception_utc": inception_map["bot_a"],
             "elapsed_days": elapsed_days_map["bot_a"],
             "latest_order": latest_order_by_bot.get("bot_a"),
-            "methodology": "Velas 15m + Filtro 1H + Modelo GMM 4 Regímenes (EMA 9/21/55, ADX >= 20, ATR >= 0.42%, OBV, distancia EMA200, Bollinger %B, MACD, Volumen >= 1.08x)",
-            "risk_profile": "Presupuesto Dinámico de Riesgo (Taker 0.10% + 2 bps slippage · Riesgo 0.25%–0.50%/orden · Spread <= 12 bps · Parcial 45% a 1.40x ATR · Trailing +0.55% · Límite DD -8.5%)",
+            "methodology": "Velas 15m + Filtro 1H + Modelo GMM 4 Regímenes (EMA 9/21/55, ADX >= 20, ATR >= 0.60%, OBV, distancia EMA200, Bollinger %B con veto bajista, MACD, Volumen >= 1.08x)",
+            "risk_profile": "Presupuesto Dinámico de Riesgo (Taker 0.10% + 2 bps slippage · Riesgo 0.25%–0.50%/orden · Spread <= 12 bps · Parcial 45% a 1.75x ATR · SL 2.00x ATR · Trailing +0.65% · Límite DD -8.5%)",
             "cash_usd": round(cash_a, 4),
             "fees_paid_usd": round(fees_cum_a, 2),
             "is_futures": False,

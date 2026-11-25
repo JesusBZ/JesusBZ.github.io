@@ -1142,6 +1142,107 @@ class TestQuantBotsRules(unittest.TestCase):
         self.assertGreater(al_d, 0.0)
         self.assertLessEqual(al_d, 250.0)
 
+    def test_31_gatekeeper_cooldown_and_recovery_prevents_permanent_deadlock(self) -> None:
+        from src.strategies.quant_bots_rules import advance_drawdown_guard_state
+
+        pf_st: dict = {}
+        gk_cfg = RiskGatekeeperConfig()
+        eq = [1000.0, 910.0]  # -9.0% perfora -8.5%
+
+        # Barra 0 del choque: activa enfriamiento
+        g0 = advance_drawdown_guard_state(pf_st, eq, dd_limit=-0.085, cooldown_bars=3, lookback_bars=100)
+        self.assertTrue(g0["halted"])
+        self.assertEqual(g0["scale"], 0.0)
+        res0 = evaluate_risk_gatekeeper(eq, 915.0, 0.0, 0.74, cfg=gk_cfg, dd_guard=g0)
+        self.assertFalse(res0["approved"])
+
+        # Barras de enfriamiento en efectivo constante ($910): no queda bloqueado perpetuamente
+        eq.append(910.0)
+        g1 = advance_drawdown_guard_state(pf_st, eq, dd_limit=-0.085, cooldown_bars=3, lookback_bars=100)
+        self.assertTrue(g1["halted"])
+        eq.append(910.0)
+        g2 = advance_drawdown_guard_state(pf_st, eq, dd_limit=-0.085, cooldown_bars=3, lookback_bars=100)
+        self.assertTrue(g2["halted"])
+
+        # Al concluir enfriamiento: pasa a modo recuperación a mitad de riesgo (scale=0.50) y autoriza operar
+        eq.append(910.0)
+        g3 = advance_drawdown_guard_state(pf_st, eq, dd_limit=-0.085, cooldown_bars=3, lookback_bars=100)
+        self.assertFalse(g3["halted"])
+        self.assertTrue(g3["recovery"])
+        self.assertAlmostEqual(g3["scale"], 0.50, places=3)
+        res3 = evaluate_risk_gatekeeper(eq, 910.0, 0.0, 0.74, cfg=gk_cfg, dd_guard=g3)
+        self.assertTrue(res3["approved"])
+        self.assertAlmostEqual(res3["effective_risk_pct"], 0.0025, places=5)
+
+        # Al recuperar >= +3.0% sobre el piso ($910 * 1.03 = $937.3): regresa a escala normal 1.0x
+        eq.append(940.0)
+        g4 = advance_drawdown_guard_state(pf_st, eq, dd_limit=-0.085, cooldown_bars=3, lookback_bars=100)
+        self.assertFalse(g4["halted"])
+        self.assertFalse(g4["recovery"])
+        self.assertAlmostEqual(g4["scale"], 1.0, places=3)
+
+    def test_32_phase3_bot_a_bear_rebound_veto_and_bot_c_tp_execution(self) -> None:
+        from main import _step_bot_c_closed_bar
+
+        # 1) BOT A: setup_bb_reclaim se bloquea en TENDENCIA_BAJISTA, pero se autoriza en TENDENCIA_ALCISTA
+        coins = ["BTC"]
+        cfg = BotAConfig()
+        common_reb = dict(
+            coins=coins,
+            bar_open_prev={"BTC": 99.0},
+            bar_close_prev={"BTC": 100.0},
+            bar_close_cur={"BTC": 100.5},
+            bar_low_cur={"BTC": 99.5},
+            bar_high_cur={"BTC": 101.0},
+            atr_prev={"BTC": 1.2},
+            ema9_prev={"BTC": 99.8},
+            ema21_prev={"BTC": 101.5},
+            ema21_1h_prev={"BTC": 101.0},
+            ema55_1h_prev={"BTC": 100.0},
+            roc10_prev={"BTC": -0.5},
+            mh_prev={"BTC": -0.05},
+            mh_prev2={"BTC": -0.15},
+            pb_prev={"BTC": 0.28},
+            pb_prev2={"BTC": 0.10},
+            rsi_prev={"BTC": 38.0},
+            vrel_prev={"BTC": 1.40},
+            breadth_1h=0.50,
+            cfg=cfg,
+            adx_1h_prev={"BTC": 24.0},
+            obv_prev={"BTC": 0.05},
+            ema200_dist_prev={"BTC": 0.02},
+        )
+        st_bear = init_bot_a_state(coins, 1000.0)
+        step_bot_a_microtrading(state=st_bear, ts=pd.Timestamp("2026-11-22 12:00"), regime_code="TENDENCIA_BAJISTA", **common_reb)
+        self.assertEqual(st_bear["units"]["BTC"], 0.0)
+
+        st_bull = init_bot_a_state(coins, 1000.0)
+        step_bot_a_microtrading(state=st_bull, ts=pd.Timestamp("2026-11-22 12:00"), regime_code="TENDENCIA_ALCISTA", **common_reb)
+        self.assertGreater(st_bull["units"]["BTC"], 0.0)
+
+        # 2) BOT C: _step_bot_c_closed_bar ejecuta toma de beneficio cuando high_4h alcanza tp_c
+        idx = pd.date_range("2026-01-01", periods=5, freq="4h")
+        z_df = pd.DataFrame({"BTC": [100.0] * 5}, index=idx)
+        hi_df = pd.DataFrame({"BTC": [100.0, 100.0, 108.0, 100.0, 100.0]}, index=idx)
+        lo_df = pd.DataFrame({"BTC": [99.0] * 5}, index=idx)
+        atr_df = pd.DataFrame({"BTC": [2.0] * 5}, index=idx)
+        pf_c = {
+            "bar_step": 1, "realized_cash_c": 1000.0, "fees_cum": 0.0,
+            "units": {"BTC": 2.0}, "entry": {"BTC": 100.0}, "entry_fee": {"BTC": 0.1},
+            "sl": {"BTC": 94.0}, "tp": {"BTC": 106.0}, "peak": {"BTC": 100.0},
+            "cooldown_step": {"BTC": -1}, "dates": [idx[1].strftime("%Y-%m-%d %H:%M")],
+            "eq_curve": [1000.0], "rets": [], "trades": [],
+        }
+        em_c = _step_bot_c_closed_bar(
+            pf_c, 2, ["BTC"], z_df, lo_df, hi_df,
+            z_df, z_df, z_df * 0.0, z_df * 0.0, z_df * 0.5 / 100.0,
+            z_df * 0.25, z_df * 0.2, z_df * 0.2, atr_df, z_df / 100.0, np.array([0.0001]),
+        )
+        self.assertEqual(pf_c["units"]["BTC"], 0.0)
+        self.assertTrue(len(em_c) >= 1)
+        self.assertIn("TOMA DE BENEFICIO SWAP", em_c[0]["action"])
+        self.assertGreater(em_c[0]["realized_pnl_usd"], 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()
