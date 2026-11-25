@@ -1,11 +1,11 @@
 {
   "schema_version": "v4_hybrid_3tier",
   "first_recorded_utc": "2026-11-24T15:51:45Z",
-  "last_sync_utc": "2026-11-25T16:12:09Z",
-  "execution_cycles": 10,
+  "last_sync_utc": "2026-11-25T22:52:07Z",
+  "execution_cycles": 11,
   "genesis_sha256": "bbaad57ab32ec46d425dbf9ea2e3c69293dc8aebec275a7ce705efb58b7857f3",
-  "chain_root_sha256": "3201369f8fef9227b0df7b1554fe7eb78876a557cddc161fcf72aad9a50e50e0",
-  "total_certified_orders": 84,
+  "chain_root_sha256": "3230f4fd095932763b9526874f4b8d7555952e14260fa3b1a97747eec8116474",
+  "total_certified_orders": 86,
   "bots": {
     "bot_a": {
       "code": "BOT A",
@@ -27,9 +27,9 @@
       "code": "BOT C",
       "timeframe": "Contratos SWAP 4H + Carry 8H & OI",
       "inception_utc": "2026-10-10 08:00 UTC",
-      "final_usd": 1023.07,
-      "net_pnl_usd": 23.07,
-      "total_orders": 165
+      "final_usd": 1011.75,
+      "net_pnl_usd": 11.75,
+      "total_orders": 167
     },
     "bot_d": {
       "code": "BOT D",
@@ -2302,6 +2302,58 @@
       "prev_hash": "f5479bdcfcec2d8ef9c70878da86910ff1b65ebd68e5de570964bb6da452706b",
       "canonical_payload": "f5479bdcfcec2d8ef9c70878da86910ff1b65ebd68e5de570964bb6da452706b|JBZ-C-0084|bot_c|2026-11-25 16:00 UTC|BTC-USDT-SWAP|SHORT|0.003406|58337.0|58280.7|58612.5",
       "sha256": "3201369f8fef9227b0df7b1554fe7eb78876a557cddc161fcf72aad9a50e50e0"
+    },
+    {
+      "bot_id": "bot_c",
+      "bot_code": "BOT C",
+      "time_utc": "2026-11-25 20:00 UTC",
+      "ts_iso": "2026-11-25 20:00",
+      "coin": "AVAX",
+      "instrument": "AVAX-USDT-SWAP",
+      "side_type": "CLOSE",
+      "action": "CIERRE POSICI\u00d3N FUTUROS",
+      "units": 25.430789,
+      "price": 6.59,
+      "bar_low": 6.574,
+      "bar_high": 6.652,
+      "volume_rel": 1.24,
+      "notional_usd": 167.59,
+      "fee_usd": 0.084,
+      "realized_pnl_usd": -6.09,
+      "realized_pnl_pct": -3.77,
+      "telemetry": "Salida por giro EMA21/MACD | Mom24=-0.8% | Vol=1.24x",
+      "bot_inception_utc": "2026-10-10 08:00 UTC",
+      "bot_equity_ref_usd": 1011.75,
+      "tx_id": "JBZ-C-0085",
+      "prev_hash": "3201369f8fef9227b0df7b1554fe7eb78876a557cddc161fcf72aad9a50e50e0",
+      "canonical_payload": "3201369f8fef9227b0df7b1554fe7eb78876a557cddc161fcf72aad9a50e50e0|JBZ-C-0085|bot_c|2026-11-25 20:00 UTC|AVAX-USDT-SWAP|CLOSE|25.430789|6.59|6.574|6.652",
+      "sha256": "2f76baa3bd4e629ec4290cd62a3ae999c9bcfa31f2e948916ef38c62081c31ec"
+    },
+    {
+      "bot_id": "bot_c",
+      "bot_code": "BOT C",
+      "time_utc": "2026-11-25 20:00 UTC",
+      "ts_iso": "2026-11-25 20:00",
+      "coin": "BTC",
+      "instrument": "BTC-USDT-SWAP",
+      "side_type": "CLOSE",
+      "action": "CIERRE POSICI\u00d3N FUTUROS",
+      "units": 0.003406,
+      "price": 59879.3,
+      "bar_low": 59800.0,
+      "bar_high": 60490.0,
+      "volume_rel": 1.4,
+      "notional_usd": 203.97,
+      "fee_usd": 0.102,
+      "realized_pnl_usd": -5.46,
+      "realized_pnl_pct": -2.74,
+      "telemetry": "Salida por giro EMA21/MACD | Mom24=-0.8% | Vol=1.40x",
+      "bot_inception_utc": "2026-10-10 08:00 UTC",
+      "bot_equity_ref_usd": 1011.75,
+      "tx_id": "JBZ-C-0086",
+      "prev_hash": "2f76baa3bd4e629ec4290cd62a3ae999c9bcfa31f2e948916ef38c62081c31ec",
+      "canonical_payload": "2f76baa3bd4e629ec4290cd62a3ae999c9bcfa31f2e948916ef38c62081c31ec|JBZ-C-0086|bot_c|2026-11-25 20:00 UTC|BTC-USDT-SWAP|CLOSE|0.003406|59879.3|59800.0|60490.0",
+      "sha256": "3230f4fd095932763b9526874f4b8d7555952e14260fa3b1a97747eec8116474"
     }
   ],
   "portfolios": {
@@ -2379,11 +2431,6 @@
       },
       "fees_cum": 2.491036,
       "eq_curve": [
-        1000.0,
-        1000.0,
-        1000.0,
-        1000.0,
-        1000.0,
         1000.0,
         1000.0,
         1000.0,
@@ -3406,14 +3453,36 @@
         1011.0032,
         1011.0032,
         1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
         1011.0032
       ],
       "rets": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
         0.0,
         0.0,
         0.0,
@@ -4435,6 +4504,33 @@
         0.0,
         0.0,
         0.0,
+        0.0,
+        2e-08,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
         0.0
       ],
       "trades": [
@@ -5265,11 +5361,6 @@
       "day_anchor_eq": 1011.003216,
       "circuit_halted_day": false,
       "dates": [
-        "2026-11-14 23:15",
-        "2026-11-14 23:30",
-        "2026-11-14 23:45",
-        "2026-11-15 00:00",
-        "2026-11-15 00:15",
         "2026-11-15 00:30",
         "2026-11-15 00:45",
         "2026-11-15 01:00",
@@ -6292,10 +6383,37 @@
         "2026-11-25 15:15",
         "2026-11-25 15:30",
         "2026-11-25 15:45",
-        "2026-11-25 16:00"
+        "2026-11-25 16:00",
+        "2026-11-25 16:15",
+        "2026-11-25 16:30",
+        "2026-11-25 16:45",
+        "2026-11-25 17:00",
+        "2026-11-25 17:15",
+        "2026-11-25 17:30",
+        "2026-11-25 17:45",
+        "2026-11-25 18:00",
+        "2026-11-25 18:15",
+        "2026-11-25 18:30",
+        "2026-11-25 18:45",
+        "2026-11-25 19:00",
+        "2026-11-25 19:15",
+        "2026-11-25 19:30",
+        "2026-11-25 19:45",
+        "2026-11-25 20:00",
+        "2026-11-25 20:15",
+        "2026-11-25 20:30",
+        "2026-11-25 20:45",
+        "2026-11-25 21:00",
+        "2026-11-25 21:15",
+        "2026-11-25 21:30",
+        "2026-11-25 21:45",
+        "2026-11-25 22:00",
+        "2026-11-25 22:15",
+        "2026-11-25 22:30",
+        "2026-11-25 22:45"
       ],
       "inception_utc": "2026-11-14 23:15 UTC",
-      "last_closed_bar": "2026-11-25 16:00",
+      "last_closed_bar": "2026-11-25 22:45",
       "sl_cooldown_step": {
         "BTC": -1,
         "ETH": -1,
@@ -6306,7 +6424,7 @@
         "AVAX": -1,
         "LINK": -1
       },
-      "bar_step_a": 20
+      "bar_step_a": 47
     },
     "bot_b": {
       "inception_utc": "2026-05-28 00:00 UTC",
@@ -9489,18 +9607,18 @@
     },
     "bot_c": {
       "inception_utc": "2026-10-10 08:00 UTC",
-      "last_closed_bar": "2026-11-25 16:00",
-      "bar_step": 278,
-      "realized_cash_c": 1023.11518,
-      "fees_cum": 17.847926,
+      "last_closed_bar": "2026-11-25 20:00",
+      "bar_step": 279,
+      "realized_cash_c": 1011.750366,
+      "fees_cum": 18.033706,
       "units": {
-        "BTC": -0.00340638,
+        "BTC": 0.0,
         "ETH": 0.0,
         "SOL": 0.0,
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": -25.43078936,
+        "AVAX": 0.0,
         "LINK": 0.0
       },
       "entry": {
@@ -9514,43 +9632,43 @@
         "LINK": 8.787
       },
       "entry_fee": {
-        "BTC": 0.09935892,
+        "BTC": 0.0,
         "ETH": 0.0,
         "SOL": 0.0,
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": 0.08083176,
+        "AVAX": 0.0,
         "LINK": 0.0
       },
       "sl": {
-        "BTC": 61894.15856258,
+        "BTC": 0.0,
         "ETH": 0.0,
         "SOL": 0.0,
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": 6.83347065,
+        "AVAX": 0.0,
         "LINK": 0.0
       },
       "tp": {
-        "BTC": 52645.54629987,
+        "BTC": 0.0,
         "ETH": 0.0,
         "SOL": 0.0,
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": 5.59464696,
+        "AVAX": 0.0,
         "LINK": 0.0
       },
       "peak": {
-        "BTC": 58337.0,
+        "BTC": 0.0,
         "ETH": 0.0,
         "SOL": 0.0,
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": 6.348,
+        "AVAX": 0.0,
         "LINK": 0.0
       },
       "cooldown_step": {
@@ -9842,7 +9960,8 @@
         "2026-11-25 04:00",
         "2026-11-25 08:00",
         "2026-11-25 12:00",
-        "2026-11-25 16:00"
+        "2026-11-25 16:00",
+        "2026-11-25 20:00"
       ],
       "eq_curve": [
         1000.0,
@@ -10123,7 +10242,8 @@
         1023.2954,
         1023.2954,
         1023.2954,
-        1022.5612
+        1022.5612,
+        1011.7504
       ],
       "rets": [
         -0.00655418,
@@ -10403,7 +10523,8 @@
         0.0,
         -3e-08,
         -3e-08,
-        -0.00071744
+        -0.00071744,
+        -0.01057231
       ],
       "trades": [
         {
@@ -14201,12 +14322,52 @@
           "realized_pnl_usd": null,
           "realized_pnl_pct": null,
           "telemetry": "EMA21/55=-3.80% | Mom24=-3.9% | ADX=23.7 | Carry=-0.009%"
+        },
+        {
+          "bot_id": "bot_c",
+          "bot_code": "BOT C",
+          "time_utc": "2026-11-25 20:00 UTC",
+          "ts_iso": "2026-11-25 20:00",
+          "coin": "BTC",
+          "instrument": "BTC-USDT-SWAP",
+          "side_type": "CLOSE",
+          "action": "CIERRE POSICI\u00d3N FUTUROS",
+          "units": 0.003406,
+          "price": 59879.3,
+          "bar_low": 59800.0,
+          "bar_high": 60490.0,
+          "volume_rel": 1.4,
+          "notional_usd": 203.97,
+          "fee_usd": 0.102,
+          "realized_pnl_usd": -5.46,
+          "realized_pnl_pct": -2.74,
+          "telemetry": "Salida por giro EMA21/MACD | Mom24=-0.8% | Vol=1.40x"
+        },
+        {
+          "bot_id": "bot_c",
+          "bot_code": "BOT C",
+          "time_utc": "2026-11-25 20:00 UTC",
+          "ts_iso": "2026-11-25 20:00",
+          "coin": "AVAX",
+          "instrument": "AVAX-USDT-SWAP",
+          "side_type": "CLOSE",
+          "action": "CIERRE POSICI\u00d3N FUTUROS",
+          "units": 25.430789,
+          "price": 6.59,
+          "bar_low": 6.574,
+          "bar_high": 6.652,
+          "volume_rel": 1.24,
+          "notional_usd": 167.59,
+          "fee_usd": 0.084,
+          "realized_pnl_usd": -6.09,
+          "realized_pnl_pct": -3.77,
+          "telemetry": "Salida por giro EMA21/MACD | Mom24=-0.8% | Vol=1.24x"
         }
       ]
     },
     "bot_d": {
       "inception_utc": "2026-10-10 08:00 UTC",
-      "last_closed_bar": "2026-11-25 16:00",
+      "last_closed_bar": "2026-11-25 20:00",
       "cash_usd": 1002.621883,
       "fees_cum": 0.421378,
       "units": {
@@ -14558,7 +14719,8 @@
         "2026-11-25 04:00",
         "2026-11-25 08:00",
         "2026-11-25 12:00",
-        "2026-11-25 16:00"
+        "2026-11-25 16:00",
+        "2026-11-25 20:00"
       ],
       "eq_curve": [
         1000.0,
@@ -14826,6 +14988,7 @@
         997.9592,
         998.4171,
         998.7519,
+        1002.6219,
         1002.6219,
         1002.6219,
         1002.6219,
@@ -15119,7 +15282,8 @@
         0.0,
         -2e-08,
         -2e-08,
-        0.0
+        0.0,
+        -2e-08
       ],
       "trades": [
         {
@@ -15310,8 +15474,8 @@
       "veto_count": 0,
       "gov_meta": {
         "version": 1,
-        "oos_brier_score": 0.2082,
-        "oos_expectancy_pct": -0.994,
+        "oos_brier_score": 0.2059,
+        "oos_expectancy_pct": -1.07,
         "train_samples": 2664,
         "purged_gap": 32,
         "reason": "Especificaci\u00f3n Rev. 1 inicializada con validaci\u00f3n cronol\u00f3gica purgada"
@@ -15324,29 +15488,29 @@
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-25T15:00:00Z",
+        "last_bar_utc": "2026-11-25T21:00:00Z",
         "bars_min": 400
       },
       "15m": {
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-25T15:45:00Z",
+        "last_bar_utc": "2026-11-25T22:30:00Z",
         "bars_min": 960
       },
       "4H": {
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-25T12:00:00Z",
+        "last_bar_utc": "2026-11-25T16:00:00Z",
         "bars_min": 960
       }
     },
     "bots_last_closed_bar": {
-      "bot_a": "2026-11-25 16:00",
+      "bot_a": "2026-11-25 22:45",
       "bot_b": "2026-11-25",
-      "bot_c": "2026-11-25 16:00",
-      "bot_d": "2026-11-25 16:00"
+      "bot_c": "2026-11-25 20:00",
+      "bot_d": "2026-11-25 20:00"
     },
     "fresh_15m": true
   },
