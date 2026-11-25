@@ -400,6 +400,32 @@
       color: #0B1B33;
       border-color: #FFFFFF;
     }
+    .hold-pos-pill {
+      display: inline-block;
+      margin-left: 0.34rem;
+      padding: 0.06rem 0.36rem;
+      border-radius: 999px;
+      font-size: 0.64rem;
+      font-weight: 800;
+      line-height: 1.25;
+      vertical-align: middle;
+      background: rgba(148, 163, 184, 0.22);
+      color: #CBD5E1;
+    }
+    .hold-pos-pill.is-open {
+      background: #10B981;
+      color: #052E16;
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.45);
+    }
+    .chart-ctrl-btn.gold-active.active .hold-pos-pill {
+      background: rgba(11, 27, 51, 0.18);
+      color: #0B1B33;
+    }
+    .chart-ctrl-btn.gold-active.active .hold-pos-pill.is-open {
+      background: #065F46;
+      color: #ECFDF5;
+      box-shadow: none;
+    }
     .plotly-canvas {
       width: 100%;
       height: 465px;
@@ -1817,8 +1843,18 @@
 
         <div class="quant-table-wrap" id="activeHoldingsWrap">
           <div class="quant-table-topbar">
-            <span class="quant-table-topbar-title" id="lblActiveHoldingsHdr">Posiciones Abiertas y Reservas de Liquidez &bull; BOT A</span>
-            <span class="quant-table-topbar-sub" id="lblActiveHoldingsSub">Valoración continua Mark-to-Market &bull; Identidad contable exacta</span>
+            <div>
+              <div class="quant-table-topbar-title" id="lblActiveHoldingsHdr">Posiciones Abiertas y Reservas de Liquidez &bull; BOT A</div>
+              <div class="quant-table-topbar-sub" id="lblActiveHoldingsSub">Valoración continua Mark-to-Market &bull; Identidad contable exacta</div>
+            </div>
+            <div class="chart-toolbar-stack">
+              <div class="chart-ctrl-group" id="activeHoldingsBotGroup" role="tablist" aria-label="Selector de cartera activa por algoritmo">
+                <button type="button" class="chart-ctrl-btn gold-active active" data-holdbot="bot_a">BOT A <span class="hold-pos-pill">0 act.</span></button>
+                <button type="button" class="chart-ctrl-btn gold-active" data-holdbot="bot_b">BOT B <span class="hold-pos-pill">0 act.</span></button>
+                <button type="button" class="chart-ctrl-btn gold-active" data-holdbot="bot_c">BOT C <span class="hold-pos-pill">0 act.</span></button>
+                <button type="button" class="chart-ctrl-btn gold-active" data-holdbot="bot_d">BOT D <span class="hold-pos-pill">0 act.</span></button>
+              </div>
+            </div>
           </div>
           <table class="quant-table">
             <thead>
@@ -3233,6 +3269,7 @@
 
       renderLatestOpsAndSlidingMonitor();
       renderBotsInceptionEvolutionTable();
+      renderBotActivePositions(selectedBotKey);
       renderMasterDecisionLog();
     }
 
@@ -4665,7 +4702,27 @@
     }
 
     // Tabla 1: Posiciones Activas del Algoritmo Seleccionado
+    function syncActiveHoldingsBotButtons(activeKey) {
+      var curKey = activeKey || selectedBotKey || 'bot_a';
+      document.querySelectorAll('#activeHoldingsBotGroup .chart-ctrl-btn').forEach(function(btn) {
+        var bk = btn.getAttribute('data-holdbot');
+        var isAct = (bk === curKey);
+        btn.classList.toggle('active', isAct);
+        btn.setAttribute('aria-selected', isAct ? 'true' : 'false');
+        var bObj = SUITE && SUITE.algo_bots && SUITE.algo_bots[bk];
+        if (!bObj) return;
+        var openCnt = (bObj.active_positions || []).filter(function(p) {
+          return p.coin !== 'USDT' && Math.abs(Number(p.units || 0)) > 1e-8;
+        }).length;
+        btn.innerHTML = esc(bObj.code) + '<span class="hold-pos-pill' + (openCnt > 0 ? ' is-open' : '') + '">' + openCnt + ' act.</span>';
+        btn.title = openCnt > 0
+          ? (bObj.code + ': ' + openCnt + (openCnt === 1 ? ' posición abierta en mercado' : ' posiciones abiertas en mercado'))
+          : (bObj.code + ': 0 posiciones abiertas (100% Reserva USDT)');
+      });
+    }
+
     function renderBotActivePositions(botKey) {
+      syncActiveHoldingsBotButtons(botKey);
       if (!SUITE || !SUITE.algo_bots || !SUITE.algo_bots[botKey]) return;
       var b = SUITE.algo_bots[botKey];
 
@@ -5052,6 +5109,22 @@
           btn.classList.add('active');
           selectedSigBot = btn.getAttribute('data-sigbot');
           renderBotTradeSignalsChart();
+        });
+      });
+
+      document.querySelectorAll('#activeHoldingsBotGroup .chart-ctrl-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var bk = btn.getAttribute('data-holdbot');
+          if (!bk) return;
+          selectedBotKey = bk;
+          rtSlidingMode = bk;
+          document.querySelectorAll('#rtSlidingBotGroup .chart-ctrl-btn').forEach(function(b) {
+            b.classList.toggle('active', b.getAttribute('data-rtmode') === rtSlidingMode);
+          });
+          updateHeroAndAlgorithmCards();
+          renderHybridSupervisorPanel();
+          renderBotActivePositions(selectedBotKey);
+          renderLatestOpsAndSlidingMonitor();
         });
       });
 
