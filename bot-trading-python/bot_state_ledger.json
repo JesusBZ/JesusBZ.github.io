@@ -1,11 +1,11 @@
 {
   "schema_version": "v4_hybrid_3tier",
   "first_recorded_utc": "2026-11-24T15:51:45Z",
-  "last_sync_utc": "2026-11-27T02:15:31Z",
-  "execution_cycles": 1818,
+  "last_sync_utc": "2026-11-27T05:13:00Z",
+  "execution_cycles": 1985,
   "genesis_sha256": "bbaad57ab32ec46d425dbf9ea2e3c69293dc8aebec275a7ce705efb58b7857f3",
-  "chain_root_sha256": "a1c36bf5c3cada34f1007e4232773bd0a45ab284c239557f388595ba82ee9e82",
-  "total_certified_orders": 86,
+  "chain_root_sha256": "1650d78a4716d278b85b5476e7f0bf33459a350e5e006574e44aa060fecfa4a5",
+  "total_certified_orders": 87,
   "bots": {
     "bot_a": {
       "code": "BOT A",
@@ -27,9 +27,9 @@
       "code": "BOT C",
       "timeframe": "Contratos SWAP 4H + Carry 8H & OI",
       "inception_utc": "2026-10-10 08:00 UTC",
-      "final_usd": 1011.65,
-      "net_pnl_usd": 11.65,
-      "total_orders": 167
+      "final_usd": 1014.73,
+      "net_pnl_usd": 14.73,
+      "total_orders": 168
     },
     "bot_d": {
       "code": "BOT D",
@@ -2354,6 +2354,34 @@
       "prev_hash": "6d46c8bb733c4a8aa5a28ad02e0c883dc0b91f92f02eb7d23a225c242d2e13d9",
       "canonical_payload": "6d46c8bb733c4a8aa5a28ad02e0c883dc0b91f92f02eb7d23a225c242d2e13d9|JBZ-C-0086|bot_c|2026-11-25 20:00 UTC|BTC-USDT-SWAP|CLOSE|0.003406|59879.3|59879.1|59972.3",
       "sha256": "a1c36bf5c3cada34f1007e4232773bd0a45ab284c239557f388595ba82ee9e82"
+    },
+    {
+      "bot_id": "bot_c",
+      "bot_code": "BOT C",
+      "time_utc": "2026-11-27 04:00 UTC",
+      "ts_iso": "2026-11-27 04:00",
+      "coin": "LINK",
+      "instrument": "LINK-USDT-SWAP",
+      "side_type": "LONG",
+      "action": "APERTURA LARGO FUTUROS",
+      "units": 19.938338,
+      "price": 9.5006,
+      "bar_low": 9.497,
+      "bar_high": 9.5006,
+      "sl_price": 8.8838,
+      "tp_price": 10.4875,
+      "volume_rel": 0.9,
+      "notional_usd": 189.43,
+      "fee_usd": 0.095,
+      "realized_pnl_usd": null,
+      "realized_pnl_pct": null,
+      "telemetry": "EMA21/55=+0.05% | Mom24=+7.0% | ADX=22.0 | Carry=+0.001%",
+      "bot_inception_utc": "2026-10-10 08:00 UTC",
+      "bot_equity_ref_usd": 1011.48,
+      "tx_id": "JBZ-C-0087",
+      "prev_hash": "a1c36bf5c3cada34f1007e4232773bd0a45ab284c239557f388595ba82ee9e82",
+      "canonical_payload": "a1c36bf5c3cada34f1007e4232773bd0a45ab284c239557f388595ba82ee9e82|JBZ-C-0087|bot_c|2026-11-27 04:00 UTC|LINK-USDT-SWAP|LONG|19.938338|9.5006|9.497|9.5006",
+      "sha256": "1650d78a4716d278b85b5476e7f0bf33459a350e5e006574e44aa060fecfa4a5"
     }
   ],
   "portfolios": {
@@ -3330,6 +3358,17 @@
         1010.9126,
         1011.2739,
         1010.6888,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
+        1011.0032,
         1011.0032,
         1011.0032,
         1011.0032,
@@ -4513,6 +4552,17 @@
         0.0,
         0.0,
         2e-08,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
         0.0,
         0.0,
         0.0,
@@ -6416,10 +6466,21 @@
         "2026-11-26 04:00",
         "2026-11-26 04:15",
         "2026-11-26 04:30",
-        "2026-11-27 02:15"
+        "2026-11-27 02:15",
+        "2026-11-27 02:30",
+        "2026-11-27 02:45",
+        "2026-11-27 03:00",
+        "2026-11-27 03:15",
+        "2026-11-27 03:30",
+        "2026-11-27 03:45",
+        "2026-11-27 04:00",
+        "2026-11-27 04:15",
+        "2026-11-27 04:30",
+        "2026-11-27 04:45",
+        "2026-11-27 05:00"
       ],
       "inception_utc": "2026-11-14 23:15 UTC",
-      "last_closed_bar": "2026-11-27 02:15",
+      "last_closed_bar": "2026-11-27 05:00",
       "sl_cooldown_step": {
         "BTC": -1,
         "ETH": -1,
@@ -6430,7 +6491,7 @@
         "AVAX": -1,
         "LINK": -1
       },
-      "bar_step_a": 71
+      "bar_step_a": 82
     },
     "bot_b": {
       "inception_utc": "2026-05-28 00:00 UTC",
@@ -9616,10 +9677,10 @@
     },
     "bot_c": {
       "inception_utc": "2026-10-10 08:00 UTC",
-      "last_closed_bar": "2026-11-27 00:00",
-      "bar_step": 281,
-      "realized_cash_c": 1011.6486,
-      "fees_cum": 18.03,
+      "last_closed_bar": "2026-11-27 04:00",
+      "bar_step": 282,
+      "realized_cash_c": 1011.553887,
+      "fees_cum": 18.124713,
       "units": {
         "BTC": 0.0,
         "ETH": 0.0,
@@ -9628,7 +9689,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 0.0
+        "LINK": 19.93833806
       },
       "entry": {
         "BTC": 58337.0,
@@ -9638,7 +9699,7 @@
         "XRP": 0.9286,
         "ADA": 0.1533,
         "AVAX": 6.357,
-        "LINK": 8.787
+        "LINK": 9.5006
       },
       "entry_fee": {
         "BTC": 0.0,
@@ -9648,7 +9709,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 0.0
+        "LINK": 0.09471309
       },
       "sl": {
         "BTC": 0.0,
@@ -9658,7 +9719,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 0.0
+        "LINK": 8.8837674
       },
       "tp": {
         "BTC": 0.0,
@@ -9668,7 +9729,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 0.0
+        "LINK": 10.48753216
       },
       "peak": {
         "BTC": 0.0,
@@ -9678,7 +9739,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 0.0
+        "LINK": 9.673
       },
       "cooldown_step": {
         "BTC": 255,
@@ -9972,7 +10033,8 @@
         "2026-11-25 16:00",
         "2026-11-25 20:00",
         "2026-11-26 00:00",
-        "2026-11-26 04:00"
+        "2026-11-26 04:00",
+        "2026-11-27 04:00"
       ],
       "eq_curve": [
         1000.0,
@@ -10256,7 +10318,8 @@
         1022.5612,
         1011.7504,
         1011.7504,
-        1011.7504
+        1011.7504,
+        1011.4821
       ],
       "rets": [
         -0.00655418,
@@ -10539,7 +10602,8 @@
         -0.00071744,
         -0.01057231,
         -3e-08,
-        0.0
+        0.0,
+        -0.00026518
       ],
       "trades": [
         {
@@ -14389,12 +14453,34 @@
           "prev_hash": "6d46c8bb733c4a8aa5a28ad02e0c883dc0b91f92f02eb7d23a225c242d2e13d9",
           "canonical_payload": "6d46c8bb733c4a8aa5a28ad02e0c883dc0b91f92f02eb7d23a225c242d2e13d9|JBZ-C-0086|bot_c|2026-11-25 20:00 UTC|BTC-USDT-SWAP|CLOSE|0.003406|59879.3|59879.1|59972.3",
           "sha256": "a1c36bf5c3cada34f1007e4232773bd0a45ab284c239557f388595ba82ee9e82"
+        },
+        {
+          "bot_id": "bot_c",
+          "bot_code": "BOT C",
+          "time_utc": "2026-11-27 04:00 UTC",
+          "ts_iso": "2026-11-27 04:00",
+          "coin": "LINK",
+          "instrument": "LINK-USDT-SWAP",
+          "side_type": "LONG",
+          "action": "APERTURA LARGO FUTUROS",
+          "units": 19.938338,
+          "price": 9.5006,
+          "bar_low": 9.497,
+          "bar_high": 9.5006,
+          "sl_price": 8.8838,
+          "tp_price": 10.4875,
+          "volume_rel": 0.9,
+          "notional_usd": 189.43,
+          "fee_usd": 0.095,
+          "realized_pnl_usd": null,
+          "realized_pnl_pct": null,
+          "telemetry": "EMA21/55=+0.05% | Mom24=+7.0% | ADX=22.0 | Carry=+0.001%"
         }
       ]
     },
     "bot_d": {
       "inception_utc": "2026-10-10 08:00 UTC",
-      "last_closed_bar": "2026-11-27 00:00",
+      "last_closed_bar": "2026-11-27 04:00",
       "cash_usd": 1002.6219,
       "fees_cum": 0.42,
       "units": {
@@ -14749,7 +14835,8 @@
         "2026-11-25 16:00",
         "2026-11-25 20:00",
         "2026-11-26 00:00",
-        "2026-11-26 04:00"
+        "2026-11-26 04:00",
+        "2026-11-27 04:00"
       ],
       "eq_curve": [
         1000.0,
@@ -15017,6 +15104,7 @@
         997.9592,
         998.4171,
         998.7519,
+        1002.6219,
         1002.6219,
         1002.6219,
         1002.6219,
@@ -15316,6 +15404,7 @@
         0.0,
         -2e-08,
         -2e-08,
+        0.0,
         0.0
       ],
       "trades": [
@@ -15507,8 +15596,8 @@
       "veto_count": 0,
       "gov_meta": {
         "version": 1,
-        "oos_brier_score": 0.2022,
-        "oos_expectancy_pct": -0.789,
+        "oos_brier_score": 0.2007,
+        "oos_expectancy_pct": -0.569,
         "train_samples": 2664,
         "purged_gap": 32,
         "reason": "Especificaci\u00f3n Rev. 1 inicializada con validaci\u00f3n cronol\u00f3gica purgada"
@@ -15521,29 +15610,29 @@
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-27T01:00:00Z",
+        "last_bar_utc": "2026-11-27T04:00:00Z",
         "bars_min": 400
       },
       "4H": {
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-26T20:00:00Z",
+        "last_bar_utc": "2026-11-27T00:00:00Z",
         "bars_min": 960
       },
       "15m": {
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-27T02:00:00Z",
+        "last_bar_utc": "2026-11-27T04:45:00Z",
         "bars_min": 960
       }
     },
     "bots_last_closed_bar": {
-      "bot_a": "2026-11-27 02:15",
+      "bot_a": "2026-11-27 05:00",
       "bot_b": "2026-11-27",
-      "bot_c": "2026-11-27 00:00",
-      "bot_d": "2026-11-27 00:00"
+      "bot_c": "2026-11-27 04:00",
+      "bot_d": "2026-11-27 04:00"
     },
     "fresh_15m": true
   },
