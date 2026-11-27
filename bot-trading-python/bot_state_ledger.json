@@ -1,19 +1,19 @@
 {
   "schema_version": "v4_hybrid_3tier",
   "first_recorded_utc": "2026-11-24T15:51:45Z",
-  "last_sync_utc": "2026-11-27T15:24:56Z",
-  "execution_cycles": 2582,
+  "last_sync_utc": "2026-11-27T23:37:17Z",
+  "execution_cycles": 3063,
   "genesis_sha256": "bbaad57ab32ec46d425dbf9ea2e3c69293dc8aebec275a7ce705efb58b7857f3",
-  "chain_root_sha256": "1650d78a4716d278b85b5476e7f0bf33459a350e5e006574e44aa060fecfa4a5",
-  "total_certified_orders": 87,
+  "chain_root_sha256": "7855be1deddf47a618dd6794efaceb35c3ada3b60e491aac887ca19d8bde2d72",
+  "total_certified_orders": 90,
   "bots": {
     "bot_a": {
       "code": "BOT A",
       "timeframe": "Intrad\u00eda 15m / Filtro 1H & GMM",
       "inception_utc": "2026-11-14 23:15 UTC",
-      "final_usd": 1011.0,
-      "net_pnl_usd": 11.0,
-      "total_orders": 36
+      "final_usd": 1008.67,
+      "net_pnl_usd": 8.67,
+      "total_orders": 37
     },
     "bot_b": {
       "code": "BOT B",
@@ -27,9 +27,9 @@
       "code": "BOT C",
       "timeframe": "Contratos SWAP 4H + Carry 8H & OI",
       "inception_utc": "2026-10-10 08:00 UTC",
-      "final_usd": 1006.96,
-      "net_pnl_usd": 6.96,
-      "total_orders": 168
+      "final_usd": 1007.81,
+      "net_pnl_usd": 7.81,
+      "total_orders": 170
     },
     "bot_d": {
       "code": "BOT D",
@@ -2382,11 +2382,93 @@
       "prev_hash": "a1c36bf5c3cada34f1007e4232773bd0a45ab284c239557f388595ba82ee9e82",
       "canonical_payload": "a1c36bf5c3cada34f1007e4232773bd0a45ab284c239557f388595ba82ee9e82|JBZ-C-0087|bot_c|2026-11-27 04:00 UTC|LINK-USDT-SWAP|LONG|19.938338|9.5006|9.497|9.5006",
       "sha256": "1650d78a4716d278b85b5476e7f0bf33459a350e5e006574e44aa060fecfa4a5"
+    },
+    {
+      "bot_id": "bot_a",
+      "bot_code": "BOT A",
+      "time_utc": "2026-11-27 15:45 UTC",
+      "ts_iso": "2026-11-27 15:45",
+      "coin": "AVAX",
+      "instrument": "AVAX-USDT",
+      "side_type": "BUY",
+      "action": "COMPRA REBOTE BOLLINGER 15M",
+      "units": 36.465399,
+      "price": 6.654,
+      "bar_low": 6.649,
+      "bar_high": 6.654,
+      "sl_price": 6.5613,
+      "tp_price": 6.8162,
+      "volume_rel": 1.67,
+      "notional_usd": 242.64,
+      "fee_usd": 0.291,
+      "realized_pnl_usd": null,
+      "realized_pnl_pct": null,
+      "telemetry": "EMA9>21 | ATR=0.70% | ADX1H=22 | OBV=-0.08 | Vol=1.67x | Reg=MERCADO_LATERAL",
+      "bot_inception_utc": "2026-11-14 23:15 UTC",
+      "bot_equity_ref_usd": 1010.71,
+      "tx_id": "JBZ-A-0088",
+      "prev_hash": "1650d78a4716d278b85b5476e7f0bf33459a350e5e006574e44aa060fecfa4a5",
+      "canonical_payload": "1650d78a4716d278b85b5476e7f0bf33459a350e5e006574e44aa060fecfa4a5|JBZ-A-0088|bot_a|2026-11-27 15:45 UTC|AVAX-USDT|BUY|36.465399|6.654|6.649|6.654",
+      "sha256": "31ec7bf45c80927c583fa94c020a4ab01a94f7914dafbb8bb599d8522d48fb61"
+    },
+    {
+      "bot_id": "bot_c",
+      "bot_code": "BOT C",
+      "time_utc": "2026-11-27 16:00 UTC",
+      "ts_iso": "2026-11-27 16:00",
+      "coin": "LINK",
+      "instrument": "LINK-USDT-SWAP",
+      "side_type": "CLOSE",
+      "action": "CIERRE POSICI\u00d3N FUTUROS",
+      "units": 19.938338,
+      "price": 9.3321,
+      "bar_low": 9.3236,
+      "bar_high": 9.3321,
+      "volume_rel": 1.46,
+      "notional_usd": 186.07,
+      "fee_usd": 0.093,
+      "realized_pnl_usd": -3.55,
+      "realized_pnl_pct": -1.87,
+      "telemetry": "Salida por giro EMA21/MACD | Mom24=+0.7% | Vol=1.46x",
+      "bot_inception_utc": "2026-10-10 08:00 UTC",
+      "bot_equity_ref_usd": 1008.08,
+      "tx_id": "JBZ-C-0089",
+      "prev_hash": "31ec7bf45c80927c583fa94c020a4ab01a94f7914dafbb8bb599d8522d48fb61",
+      "canonical_payload": "31ec7bf45c80927c583fa94c020a4ab01a94f7914dafbb8bb599d8522d48fb61|JBZ-C-0089|bot_c|2026-11-27 16:00 UTC|LINK-USDT-SWAP|CLOSE|19.938338|9.3321|9.3236|9.3321",
+      "sha256": "743a050062196486745d5297955916034ff94db60891d0c624fcd93daf299394"
+    },
+    {
+      "bot_id": "bot_c",
+      "bot_code": "BOT C",
+      "time_utc": "2026-11-27 20:00 UTC",
+      "ts_iso": "2026-11-27 20:00",
+      "coin": "LINK",
+      "instrument": "LINK-USDT-SWAP",
+      "side_type": "LONG",
+      "action": "APERTURA LARGO FUTUROS",
+      "units": 19.213226,
+      "price": 9.3772,
+      "bar_low": 9.373,
+      "bar_high": 9.3775,
+      "sl_price": 8.7396,
+      "tp_price": 10.3974,
+      "volume_rel": 1.1,
+      "notional_usd": 180.17,
+      "fee_usd": 0.09,
+      "realized_pnl_usd": null,
+      "realized_pnl_pct": null,
+      "telemetry": "EMA21/55=+0.80% | Mom24=+4.1% | ADX=21.5 | Carry=+0.001%",
+      "bot_inception_utc": "2026-10-10 08:00 UTC",
+      "bot_equity_ref_usd": 1007.91,
+      "tx_id": "JBZ-C-0090",
+      "prev_hash": "743a050062196486745d5297955916034ff94db60891d0c624fcd93daf299394",
+      "canonical_payload": "743a050062196486745d5297955916034ff94db60891d0c624fcd93daf299394|JBZ-C-0090|bot_c|2026-11-27 20:00 UTC|LINK-USDT-SWAP|LONG|19.213226|9.3772|9.373|9.3775",
+      "sha256": "7855be1deddf47a618dd6794efaceb35c3ada3b60e491aac887ca19d8bde2d72"
     }
   ],
   "portfolios": {
     "bot_a": {
-      "cash_usd": 1011.0032,
+      "cash_usd": 768.071263,
       "units": {
         "BTC": 0.0,
         "ETH": 0.0,
@@ -2394,7 +2476,7 @@
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": 0.0,
+        "AVAX": 36.46539946,
         "LINK": 0.0
       },
       "entry": {
@@ -2404,7 +2486,7 @@
         "BNB": 586.89,
         "XRP": 0.963,
         "ADA": 0.1402,
-        "AVAX": 7.029,
+        "AVAX": 6.654,
         "LINK": 8.903
       },
       "entry_fee": {
@@ -2414,7 +2496,7 @@
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": 0.0,
+        "AVAX": 0.29116892,
         "LINK": 0.0
       },
       "partial_taken": {
@@ -2434,7 +2516,7 @@
         "BNB": 589.52,
         "XRP": 0.9752,
         "ADA": 0.1424,
-        "AVAX": 7.263,
+        "AVAX": 6.678,
         "LINK": 8.966
       },
       "sl": {
@@ -2444,7 +2526,7 @@
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": 0.0,
+        "AVAX": 6.56131117,
         "LINK": 0.0
       },
       "tp": {
@@ -2454,10 +2536,10 @@
         "BNB": 0.0,
         "XRP": 0.0,
         "ADA": 0.0,
-        "AVAX": 0.0,
+        "AVAX": 6.81620546,
         "LINK": 0.0
       },
-      "fees_cum": 2.49,
+      "fees_cum": 2.781169,
       "eq_curve": [
         1000.0,
         1005.2101,
@@ -3562,7 +3644,40 @@
         1011.0032,
         1011.0032,
         1011.0032,
-        1011.0032
+        1011.0032,
+        1011.0032,
+        1010.712,
+        1010.3474,
+        1010.3109,
+        1009.5816,
+        1010.8214,
+        1010.0921,
+        1010.712,
+        1008.9982,
+        1008.5241,
+        1010.3838,
+        1010.0921,
+        1009.4722,
+        1009.9098,
+        1010.4203,
+        1010.712,
+        1011.259,
+        1011.2225,
+        1010.785,
+        1010.5662,
+        1010.5297,
+        1010.785,
+        1010.3838,
+        1010.4568,
+        1010.3474,
+        1009.8733,
+        1009.2169,
+        1007.9771,
+        1008.3782,
+        1008.2324,
+        1008.7429,
+        1008.3053,
+        1008.3782
       ],
       "rets": [
         0.0052101,
@@ -4667,7 +4782,40 @@
         0.0,
         0.0,
         0.0,
-        0.0
+        0.0,
+        0.0,
+        -0.000288,
+        -0.00036076,
+        -3.611e-05,
+        -0.00072185,
+        0.00122806,
+        -0.00072147,
+        0.00061374,
+        -0.00169568,
+        -0.00046987,
+        0.00184402,
+        -0.00028868,
+        -0.0006137,
+        0.00043349,
+        0.0005055,
+        0.00028872,
+        0.00054121,
+        -3.605e-05,
+        -0.00043268,
+        -0.0002165,
+        -3.611e-05,
+        0.0002526,
+        -0.00039688,
+        7.222e-05,
+        -0.00010829,
+        -0.00046922,
+        -0.00064993,
+        -0.00122845,
+        0.00039797,
+        -0.0001446,
+        0.00050633,
+        -0.00043379,
+        7.234e-05
       ],
       "trades": [
         {
@@ -5491,6 +5639,28 @@
           "telemetry": "EMA9/21=-0.38% | %B=0.30 | Mom=-0.8% | Vol=0.89x",
           "bot_inception_utc": "2026-11-14 23:15 UTC",
           "bot_equity_ref_usd": 1009.77
+        },
+        {
+          "bot_id": "bot_a",
+          "bot_code": "BOT A",
+          "time_utc": "2026-11-27 15:45 UTC",
+          "ts_iso": "2026-11-27 15:45",
+          "coin": "AVAX",
+          "instrument": "AVAX-USDT",
+          "side_type": "BUY",
+          "action": "COMPRA REBOTE BOLLINGER 15M",
+          "units": 36.465399,
+          "price": 6.654,
+          "bar_low": 6.649,
+          "bar_high": 6.654,
+          "sl_price": 6.5613,
+          "tp_price": 6.8162,
+          "volume_rel": 1.67,
+          "notional_usd": 242.64,
+          "fee_usd": 0.291,
+          "realized_pnl_usd": null,
+          "realized_pnl_pct": null,
+          "telemetry": "EMA9>21 | ATR=0.70% | ADX1H=22 | OBV=-0.08 | Vol=1.67x | Reg=MERCADO_LATERAL"
         }
       ],
       "cur_day": "2026-11-27",
@@ -6600,10 +6770,43 @@
         "2026-11-27 14:30",
         "2026-11-27 14:45",
         "2026-11-27 15:00",
-        "2026-11-27 15:15"
+        "2026-11-27 15:15",
+        "2026-11-27 15:30",
+        "2026-11-27 15:45",
+        "2026-11-27 16:00",
+        "2026-11-27 16:15",
+        "2026-11-27 16:30",
+        "2026-11-27 16:45",
+        "2026-11-27 17:00",
+        "2026-11-27 17:15",
+        "2026-11-27 17:30",
+        "2026-11-27 17:45",
+        "2026-11-27 18:00",
+        "2026-11-27 18:15",
+        "2026-11-27 18:30",
+        "2026-11-27 18:45",
+        "2026-11-27 19:00",
+        "2026-11-27 19:15",
+        "2026-11-27 19:30",
+        "2026-11-27 19:45",
+        "2026-11-27 20:00",
+        "2026-11-27 20:15",
+        "2026-11-27 20:30",
+        "2026-11-27 20:45",
+        "2026-11-27 21:00",
+        "2026-11-27 21:15",
+        "2026-11-27 21:30",
+        "2026-11-27 21:45",
+        "2026-11-27 22:00",
+        "2026-11-27 22:15",
+        "2026-11-27 22:30",
+        "2026-11-27 22:45",
+        "2026-11-27 23:00",
+        "2026-11-27 23:15",
+        "2026-11-27 23:30"
       ],
       "inception_utc": "2026-11-14 23:15 UTC",
-      "last_closed_bar": "2026-11-27 15:15",
+      "last_closed_bar": "2026-11-27 23:30",
       "sl_cooldown_step": {
         "BTC": -1,
         "ETH": -1,
@@ -6614,7 +6817,7 @@
         "AVAX": -1,
         "LINK": -1
       },
-      "bar_step_a": 123
+      "bar_step_a": 156
     },
     "bot_b": {
       "inception_utc": "2026-05-28 00:00 UTC",
@@ -9800,10 +10003,10 @@
     },
     "bot_c": {
       "inception_utc": "2026-10-10 08:00 UTC",
-      "last_closed_bar": "2026-11-27 12:00",
-      "bar_step": 284,
-      "realized_cash_c": 1011.535893,
-      "fees_cum": 18.124713,
+      "last_closed_bar": "2026-11-27 20:00",
+      "bar_step": 286,
+      "realized_cash_c": 1007.988515,
+      "fees_cum": 18.307829,
       "units": {
         "BTC": 0.0,
         "ETH": 0.0,
@@ -9812,7 +10015,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 19.93833806
+        "LINK": 19.21322609
       },
       "entry": {
         "BTC": 58337.0,
@@ -9822,7 +10025,7 @@
         "XRP": 0.9286,
         "ADA": 0.1533,
         "AVAX": 6.357,
-        "LINK": 9.5006
+        "LINK": 9.3772
       },
       "entry_fee": {
         "BTC": 0.0,
@@ -9832,7 +10035,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 0.09471309
+        "LINK": 0.09008313
       },
       "sl": {
         "BTC": 0.0,
@@ -9842,7 +10045,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 8.8837674
+        "LINK": 8.73958848
       },
       "tp": {
         "BTC": 0.0,
@@ -9852,7 +10055,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 10.48753216
+        "LINK": 10.39737844
       },
       "peak": {
         "BTC": 0.0,
@@ -9862,7 +10065,7 @@
         "XRP": 0.0,
         "ADA": 0.0,
         "AVAX": 0.0,
-        "LINK": 9.711
+        "LINK": 9.396
       },
       "cooldown_step": {
         "BTC": 255,
@@ -10159,7 +10362,9 @@
         "2026-11-26 04:00",
         "2026-11-27 04:00",
         "2026-11-27 08:00",
-        "2026-11-27 12:00"
+        "2026-11-27 12:00",
+        "2026-11-27 16:00",
+        "2026-11-27 20:00"
       ],
       "eq_curve": [
         1000.0,
@@ -10446,7 +10651,9 @@
         1011.7504,
         1011.4821,
         1013.3981,
-        1012.0224
+        1012.0224,
+        1008.0786,
+        1007.9078
       ],
       "rets": [
         -0.00655418,
@@ -10732,7 +10939,9 @@
         0.0,
         -0.00026518,
         0.00189428,
-        -0.00135752
+        -0.00135752,
+        -0.00389695,
+        -0.00016941
       ],
       "trades": [
         {
@@ -14604,12 +14813,54 @@
           "realized_pnl_usd": null,
           "realized_pnl_pct": null,
           "telemetry": "EMA21/55=+0.05% | Mom24=+7.0% | ADX=22.0 | Carry=+0.001%"
+        },
+        {
+          "bot_id": "bot_c",
+          "bot_code": "BOT C",
+          "time_utc": "2026-11-27 16:00 UTC",
+          "ts_iso": "2026-11-27 16:00",
+          "coin": "LINK",
+          "instrument": "LINK-USDT-SWAP",
+          "side_type": "CLOSE",
+          "action": "CIERRE POSICI\u00d3N FUTUROS",
+          "units": 19.938338,
+          "price": 9.3321,
+          "bar_low": 9.3236,
+          "bar_high": 9.3321,
+          "volume_rel": 1.46,
+          "notional_usd": 186.07,
+          "fee_usd": 0.093,
+          "realized_pnl_usd": -3.55,
+          "realized_pnl_pct": -1.87,
+          "telemetry": "Salida por giro EMA21/MACD | Mom24=+0.7% | Vol=1.46x"
+        },
+        {
+          "bot_id": "bot_c",
+          "bot_code": "BOT C",
+          "time_utc": "2026-11-27 20:00 UTC",
+          "ts_iso": "2026-11-27 20:00",
+          "coin": "LINK",
+          "instrument": "LINK-USDT-SWAP",
+          "side_type": "LONG",
+          "action": "APERTURA LARGO FUTUROS",
+          "units": 19.213226,
+          "price": 9.3772,
+          "bar_low": 9.373,
+          "bar_high": 9.3775,
+          "sl_price": 8.7396,
+          "tp_price": 10.3974,
+          "volume_rel": 1.1,
+          "notional_usd": 180.17,
+          "fee_usd": 0.09,
+          "realized_pnl_usd": null,
+          "realized_pnl_pct": null,
+          "telemetry": "EMA21/55=+0.80% | Mom24=+4.1% | ADX=21.5 | Carry=+0.001%"
         }
       ]
     },
     "bot_d": {
       "inception_utc": "2026-10-10 08:00 UTC",
-      "last_closed_bar": "2026-11-27 12:00",
+      "last_closed_bar": "2026-11-27 20:00",
       "cash_usd": 1002.6219,
       "fees_cum": 0.42,
       "units": {
@@ -14967,7 +15218,9 @@
         "2026-11-26 04:00",
         "2026-11-27 04:00",
         "2026-11-27 08:00",
-        "2026-11-27 12:00"
+        "2026-11-27 12:00",
+        "2026-11-27 16:00",
+        "2026-11-27 20:00"
       ],
       "eq_curve": [
         1000.0,
@@ -15235,6 +15488,8 @@
         997.9592,
         998.4171,
         998.7519,
+        1002.6219,
+        1002.6219,
         1002.6219,
         1002.6219,
         1002.6219,
@@ -15540,6 +15795,8 @@
         0.0,
         0.0,
         0.0,
+        0.0,
+        0.0,
         0.0
       ],
       "trades": [
@@ -15731,8 +15988,8 @@
       "veto_count": 0,
       "gov_meta": {
         "version": 1,
-        "oos_brier_score": 0.2031,
-        "oos_expectancy_pct": -0.707,
+        "oos_brier_score": 0.203,
+        "oos_expectancy_pct": -0.64,
         "train_samples": 2664,
         "purged_gap": 32,
         "reason": "Especificaci\u00f3n Rev. 1 inicializada con validaci\u00f3n cronol\u00f3gica purgada"
@@ -15745,29 +16002,29 @@
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-27T14:00:00Z",
+        "last_bar_utc": "2026-11-27T22:00:00Z",
         "bars_min": 400
       },
       "4H": {
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-27T08:00:00Z",
+        "last_bar_utc": "2026-11-27T16:00:00Z",
         "bars_min": 960
       },
       "15m": {
         "sources": [
           "KuCoin"
         ],
-        "last_bar_utc": "2026-11-27T15:00:00Z",
+        "last_bar_utc": "2026-11-27T23:15:00Z",
         "bars_min": 960
       }
     },
     "bots_last_closed_bar": {
-      "bot_a": "2026-11-27 15:15",
+      "bot_a": "2026-11-27 23:30",
       "bot_b": "2026-11-27",
-      "bot_c": "2026-11-27 12:00",
-      "bot_d": "2026-11-27 12:00"
+      "bot_c": "2026-11-27 20:00",
+      "bot_d": "2026-11-27 20:00"
     },
     "fresh_15m": true
   },
