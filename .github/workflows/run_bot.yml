@@ -8,6 +8,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: quant-multibot-engine
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+  PYTHONDONTWRITEBYTECODE: '1'
+
 jobs:
   build_and_run:
     runs-on: ubuntu-latest
@@ -29,9 +37,9 @@ jobs:
           python -m pip install --upgrade pip==24.3.1
           pip install --only-binary=:all: -r bot-trading-python/requirements.txt
 
-      - name: Ejecutar Pruebas Automatizadas de Reglas y Motor Multi-Bot (OKX v5 / Bybit v5)
+      - name: Ejecutar Pruebas Automatizadas de Reglas y Motor Multi-Bot (KuCoin / OKX v5 / Bybit v5)
         env:
-          PYTHONDONTWRITEBYTECODE: '1'
+          RENDER_SYNC_URL: 'https://jbz-quant-crypto-multibot.onrender.com'
         run: |
           cd bot-trading-python
           python -B main.py
@@ -62,8 +70,23 @@ jobs:
 
       - name: Registrar Actualización Verificada
         run: |
+          mkdir -p /tmp/jbz_quant_artifacts
+          cp bot-trading-python/history.json bot-trading-python/quant_crypto_suite.json bot-trading-python/bot_state_ledger.json /tmp/jbz_quant_artifacts/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add bot-trading-python/history.json bot-trading-python/quant_crypto_suite.json bot-trading-python/bot_state_ledger.json
-          git diff --cached --quiet || git commit -m "chore(quant): actualizar backtest 5Y, reglas y cadena SHA-256 de 4 algoritmos ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-          git push
+          for attempt in 1 2 3; do
+            git fetch origin master
+            git reset --hard origin/master
+            cp /tmp/jbz_quant_artifacts/history.json /tmp/jbz_quant_artifacts/quant_crypto_suite.json /tmp/jbz_quant_artifacts/bot_state_ledger.json bot-trading-python/
+            git add bot-trading-python/history.json bot-trading-python/quant_crypto_suite.json bot-trading-python/bot_state_ledger.json
+            if git diff --cached --quiet; then
+              echo "Sin cambios incrementales pendientes para publicar."
+              exit 0
+            fi
+            git commit -m "chore(quant): actualizar backtest 5Y, reglas y cadena SHA-256 de 4 algoritmos ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            if git push origin HEAD:master; then
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1

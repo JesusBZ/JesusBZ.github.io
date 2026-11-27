@@ -915,7 +915,11 @@ def _step_bot_c_closed_bar(
         elif dd_guard_c["recovery"]:
             wc = wc * 0.45
         force_exit_c = any((abs(float(units_c[c])) > 1e-9 and abs(wc[j]) < 1e-9) or (float(units_c[c]) * wc[j] < -1e-9) for j, c in enumerate(coins))
-        if float(np.sum(np.abs(wc - cur_wc))) >= 0.28 or force_exit_c:
+        has_fresh_open_c = any(
+            abs(float(units_c[c])) <= 1e-9 and abs(wc[j]) >= 0.14 and abs(wc[j]) * eq_ref >= 48.0
+            for j, c in enumerate(coins)
+        )
+        if float(np.sum(np.abs(wc - cur_wc))) >= 0.28 or force_exit_c or has_fresh_open_c:
             for j, c in enumerate(coins):
                 if bar_step < int(cooldown_step.get(c, -1)) and abs(float(units_c[c])) <= 1e-9:
                     continue
@@ -1216,29 +1220,33 @@ def _step_bot_d_closed_bar(
             pb_prev2 = float(bb_pctb_4h.iloc[idx_i - 2][c])
             mh_prev2 = float(macd_h_4h.iloc[idx_i - 2][c])
             bull_4h = px_prev > float(open_4h.loc[prev_ts, c])
-            p_cut_d = 0.45 if reg_code_d == "TENDENCIA_ALCISTA" else (0.50 if reg_code_d == "MERCADO_LATERAL" else 0.54)
+            p_cut_d = 0.45 if reg_code_d == "TENDENCIA_ALCISTA" else (0.43 if reg_code_d == "MERCADO_LATERAL" else 0.54)
+            allow_d_trend_reg = (reg_code_d == "TENDENCIA_ALCISTA") or (
+                reg_code_d == "MERCADO_LATERAL" and brel_v > 0.004 and vrel_v >= 1.05
+            )
             nn_trend_ok = (
-                (reg_code_d == "TENDENCIA_ALCISTA")
+                allow_d_trend_reg
                 and (p_up >= p_cut_d)
-                and (p_flat < 0.42)
-                and ((p_up - p_dn) >= 0.15)
+                and (p_flat < (0.42 if reg_code_d == "TENDENCIA_ALCISTA" else 0.48))
+                and ((p_up - p_dn) >= (0.15 if reg_code_d == "TENDENCIA_ALCISTA" else 0.16))
                 and (p_r > 0.0010)
-                and (px_prev > e9_v > e21_v >= e55_v * 0.992)
+                and (px_prev > e9_v > e21_v >= e55_v * (0.992 if reg_code_d == "TENDENCIA_ALCISTA" else 1.000))
                 and (mh_v > 0.0)
                 and (obv_v >= 0.05)
                 and (vrel_v >= 0.95)
             )
             nn_rebound_ok = (
                 (reg_code_d != "TENDENCIA_BAJISTA")
-                and (p_up >= 0.58)
-                and ((p_up - p_dn) >= 0.38)
-                and (p_r > 0.0020)
+                and (p_up >= 0.46)
+                and ((p_up - p_dn) >= 0.18)
+                and (p_r > 0.0016)
                 and bull_4h
-                and (pb_v > pb_prev2 and pb_v < 0.55)
+                and (e21_v >= e55_v * 0.995)
+                and (pb_v > pb_prev2 and pb_v < 0.50)
                 and (mh_v > mh_prev2)
                 and (vrel_v >= 1.15)
                 and (brel_v >= 0.0)
-                and (obv_v >= -0.15)
+                and (obv_v >= -0.10)
             )
             nn_buy_ok = nn_trend_ok or nn_rebound_ok
 
@@ -1321,10 +1329,23 @@ def _sanitize_portfolio_for_json(pf: Dict[str, Any], coins: List[str]) -> Dict[s
     dates = list(out.get("dates") or [])
     eq_c = [round(float(x), 4) for x in (out.get("eq_curve") or [])]
     rets = [round(float(x), 8) for x in (out.get("rets") or [])]
-    if len(dates) > 1050 and len(eq_c) == len(dates):
-        dates = dates[-1050:]
-        eq_c = eq_c[-1050:]
-        rets = rets[-1049:]
+    inc_lbl = str(out.get("inception_utc") or "").replace(" UTC", "").strip()
+    if eq_c and abs(eq_c[0] - 1000.0) > 1e-3:
+        anchor_d = (inc_lbl[:10] if len(dates[0]) == 10 else inc_lbl[:16]) if (inc_lbl and dates) else (dates[0] if dates else "2026-11-14 23:15")
+        step_r0 = round((eq_c[0] / 1000.0) - 1.0, 8)
+        dates = [anchor_d] + dates
+        eq_c = [1000.0] + eq_c
+        rets = [step_r0] + rets
+    max_curve_pts = 3600
+    if len(dates) > max_curve_pts and len(eq_c) == len(dates):
+        tail_n = max_curve_pts - 1
+        tail_d = dates[-tail_n:]
+        tail_e = eq_c[-tail_n:]
+        bridge_r = round((tail_e[0] / max(eq_c[0], 1e-6)) - 1.0, 8)
+        tail_r = [bridge_r] + rets[-(tail_n - 1):]
+        dates = [dates[0]] + tail_d
+        eq_c = [eq_c[0]] + tail_e
+        rets = tail_r
     out["dates"] = dates
     out["eq_curve"] = eq_c
     out["rets"] = rets
@@ -1937,6 +1958,13 @@ def run_four_algorithmic_bots(
             pf_obj["dates"] = list(pf_obj.get("dates") or [])
             pf_obj["eq_curve"] = [float(x) for x in (pf_obj.get("eq_curve") or [])]
             pf_obj["rets"] = [float(x) for x in (pf_obj.get("rets") or [])]
+            if pf_obj["eq_curve"] and abs(pf_obj["eq_curve"][0] - float(base_cap)) > 1e-3:
+                inc_raw = str(pf_obj.get("inception_utc") or "").replace(" UTC", "").strip()
+                d0_fmt = (inc_raw[:10] if (pf_obj["dates"] and len(pf_obj["dates"][0]) == 10) else inc_raw[:16]) if inc_raw else "2026-11-14 23:15"
+                r0_bridge = (pf_obj["eq_curve"][0] / max(float(base_cap), 1e-6)) - 1.0
+                pf_obj["dates"] = [d0_fmt] + pf_obj["dates"]
+                pf_obj["eq_curve"] = [float(base_cap)] + pf_obj["eq_curve"]
+                pf_obj["rets"] = [r0_bridge] + pf_obj["rets"]
             pf_obj["trades"] = [dict(t) for t in (pf_obj.get("trades") or [])]
         if isinstance(pf_a.get("cur_day"), str) and pf_a["cur_day"]:
             pf_a["cur_day"] = pd.Timestamp(pf_a["cur_day"]).date()
@@ -2529,7 +2557,7 @@ def run_four_algorithmic_bots(
             "inception_utc": inception_map["bot_a"],
             "elapsed_days": elapsed_days_map["bot_a"],
             "latest_order": latest_order_by_bot.get("bot_a"),
-            "methodology": "Velas 15m + Filtro 1H + Modelo GMM 4 Regímenes (EMA 9/21/55, ADX >= 20, ATR >= 0.60%, OBV, distancia EMA200, Bollinger %B con veto bajista, MACD, Volumen >= 1.08x)",
+            "methodology": "Velas 15m + Filtro 1H + Modelo GMM 4 Regímenes (EMA 9/21/55, ADX >= 20, ATR >= 0.36%, OBV, distancia EMA200, Bollinger %B con veto bajista, MACD, Volumen >= 1.08x)",
             "risk_profile": "Presupuesto Dinámico de Riesgo (Taker 0.10% + 2 bps slippage · Riesgo 0.25%–0.50%/orden · Spread <= 12 bps · Parcial 45% a 1.75x ATR · SL 2.00x ATR · Trailing +0.65% · Límite DD -8.5%)",
             "cash_usd": round(cash_a, 4),
             "fees_paid_usd": round(fees_cum_a, 2),
@@ -2703,6 +2731,62 @@ def _update_persistent_ledger_state(
     return state_obj
 
 
+def _try_sync_ledger_from_render(base_dir: pathlib.Path, render_base_url: str) -> bool:
+    """
+    Sincroniza bot_state_ledger.json desde el servicio primario de ejecución continua en Render
+    antes de ejecutar un ciclo en CI, evitando bifurcaciones SHA-256 entre escritores independientes.
+    """
+    clean_base = str(render_base_url or "").strip().rstrip("/")
+    if not clean_base:
+        return False
+    parsed = urlsplit(clean_base)
+    if parsed.scheme.lower() != "https" or not parsed.hostname:
+        return False
+    ledger_path = base_dir / "bot_state_ledger.json"
+    local_orders_n = 0
+    local_cycles_n = 0
+    if ledger_path.exists():
+        try:
+            loc_st = json.loads(ledger_path.read_text(encoding="utf-8"))
+            if loc_st.get("schema_version") == STATEFUL_LEDGER_SCHEMA:
+                local_orders_n = int(loc_st.get("total_certified_orders", 0))
+                local_cycles_n = int(loc_st.get("execution_cycles", 0))
+        except Exception:
+            pass
+    try:
+        ssl_ctx = ssl.create_default_context()
+        ssl_ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+        req = urllib.request.Request(
+            f"{clean_base}/api/ledger",
+            headers={"Accept": "application/json", "Accept-Encoding": "gzip", "User-Agent": "JBZ-CI-LedgerSync/1.0"},
+        )
+        with urllib.request.urlopen(req, timeout=12, context=ssl_ctx) as resp:
+            raw = resp.read(16 * 1024 * 1024)
+            if (resp.headers.get("Content-Encoding") or "").lower() == "gzip":
+                raw = gzip.decompress(raw)
+        remote_st = json.loads(raw.decode("utf-8"))
+        if not isinstance(remote_st, dict) or remote_st.get("schema_version") != STATEFUL_LEDGER_SCHEMA:
+            return False
+        rem_orders = remote_st.get("certified_orders") or []
+        rem_root = str(remote_st.get("chain_root_sha256") or "")
+        rem_pfs = remote_st.get("portfolios") or {}
+        if set(rem_pfs.keys()) != {"bot_a", "bot_b", "bot_c", "bot_d"} or not rem_orders:
+            return False
+        ok_chain, _, _, _ = verify_orders_sha256_chain(rem_orders, GENESIS_HASH, rem_root)
+        if not ok_chain:
+            logger.warning("Cadena SHA-256 remota no superó validación; conservando estado local.")
+            return False
+        rem_orders_n = len(rem_orders)
+        rem_cycles_n = int(remote_st.get("execution_cycles", 0))
+        if rem_orders_n > local_orders_n or (rem_orders_n == local_orders_n and rem_cycles_n >= local_cycles_n):
+            _atomic_write_json(ledger_path, remote_st)
+            logger.info("Estado sincronizado desde Render (%d órdenes certificadas, ciclo #%d, raíz %s...).", rem_orders_n, rem_cycles_n, rem_root[:12])
+            return True
+    except Exception as exc_sync:
+        logger.info("Sincronización previa con /api/ledger omitida (modo autónomo local): %s", scrub_secrets(str(exc_sync)))
+    return False
+
+
 def run_cycle(
     base_dir: pathlib.Path,
     oracle: MultiExchangeCryptoOracle,
@@ -2712,6 +2796,9 @@ def run_cycle(
     vault_config: Optional[VaultRuntimeConfig] = None,
 ) -> Dict[str, Any]:
     vault_cfg = vault_config or load_vault_config()
+    render_sync_url = os.environ.get("RENDER_SYNC_URL", "").strip()
+    if render_sync_url and cached_daily is None:
+        _try_sync_ledger_from_render(base_dir, render_sync_url)
     today_tag = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     if cached_daily is None or cached_daily.get("day_tag") != today_tag:
         logger.info("=== 1. DESCARGANDO HISTÓRICO DE 5 AÑOS DESDE KUCOIN / OKX v5 (%s) ===", ", ".join(coins))
@@ -3174,6 +3261,14 @@ def start_suite_http_server(
                     self._send_json_response(429, b'{"status":"rate_limited"}', cors_origin, send_body=send_body)
                     return
                 raw, gz = _cached_file_bytes(base_dir / "quant_crypto_suite.json")
+                self._send_json_response(200, raw, cors_origin, send_body=send_body, gz_body=(gz if send_body else None))
+                return
+
+            if clean_path in ("/bot_state_ledger.json", "/api/ledger"):
+                if not rate_limiter.allow(f"data:{client_ip}", max_hits=60, window_sec=60.0):
+                    self._send_json_response(429, b'{"status":"rate_limited"}', cors_origin, send_body=send_body)
+                    return
+                raw, gz = _cached_file_bytes(base_dir / "bot_state_ledger.json")
                 self._send_json_response(200, raw, cors_origin, send_body=send_body, gz_body=(gz if send_body else None))
                 return
 

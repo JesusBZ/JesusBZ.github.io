@@ -218,13 +218,13 @@ class BotAConfig:
     max_open_positions: int = 3
     daily_circuit_breaker_pct: float = -0.020
     sl_atr_mult: float = 2.00
-    tp_atr_mult: float = 3.50
+    tp_atr_mult: float = 3.60
     trail_activate_atr: float = 1.20
-    trail_dist_atr: float = 1.35
+    trail_dist_atr: float = 1.45
     trail_floor_mult: float = 1.0065
     partial_tp_atr: float = 1.75
     partial_tp_frac: float = 0.45
-    min_atr_pct: float = 0.0060
+    min_atr_pct: float = 0.0036
     min_adx_1h_trend: float = 20.0
     min_vol_rel_trend: float = 1.08
     min_vol_rel_rebound: float = 1.25
@@ -571,9 +571,10 @@ def step_bot_a_microtrading(
                 entry_fee_map[c] = 0.0
                 partial_map[c] = False
             else:
-                # 2) Toma parcial 45% al alcanzar +1.65x ATR dejando correr 55% con piso protegido
-                part_target = state["entry"][c] + cfg.partial_tp_atr * atr_v
-                if (not partial_map.get(c, False)) and (b_hi >= part_target) and (qty * part_target >= 95.0):
+                # 2) Toma parcial 35% escalada sobre ATR efectivo dejando correr 65% sin estrangular precio actual
+                eff_atr = max(atr_v, state["entry"][c] * 0.0042)
+                part_target = state["entry"][c] + cfg.partial_tp_atr * eff_atr
+                if (cfg.partial_tp_frac > 0.0) and (not partial_map.get(c, False)) and (b_hi >= part_target) and (qty * part_target >= 95.0):
                     qty_part = qty * cfg.partial_tp_frac
                     px_part = float(np.clip(part_target, b_lo, b_hi))
                     gross_p = qty_part * px_part
@@ -587,27 +588,30 @@ def step_bot_a_microtrading(
                     state["units"][c] = qty - qty_part
                     entry_fee_map[c] = max(0.0, float(entry_fee_map.get(c, 0.0)) - ent_fee_part)
                     partial_map[c] = True
-                    state["sl"][c] = max(state["sl"][c], state["entry"][c] * cfg.trail_floor_mult)
+                    safe_part_sl = min(state["entry"][c] * cfg.trail_floor_mult, float(bar_close_cur[c]) - 0.60 * eff_atr)
+                    state["sl"][c] = max(state["sl"][c], safe_part_sl)
+                    pct_lbl = int(round(cfg.partial_tp_frac * 100))
                     state["trades"].append({
                         "bot_id": "bot_a", "bot_code": "BOT A",
                         "time_utc": ts.strftime("%Y-%m-%d %H:%M UTC"), "ts_iso": ts.strftime("%Y-%m-%d %H:%M"),
                         "coin": c, "instrument": f"{c}-USDT", "side_type": "SELL",
-                        "action": f"TOMA PARCIAL 45% ({cfg.partial_tp_atr:.2f}x ATR)",
+                        "action": f"TOMA PARCIAL {pct_lbl}% ({cfg.partial_tp_atr:.2f}x ATR)",
                         "units": round(qty_part, 6), "price": fmt_px_dec(px_part),
                         "bar_low": fmt_px_dec(b_lo), "bar_high": fmt_px_dec(b_hi),
                         "volume_rel": round(vrel, 2), "notional_usd": round(gross_p, 2), "fee_usd": round(fee_p, 3),
                         "realized_pnl_usd": round(pnl_u_p, 2), "realized_pnl_pct": round(pnl_p_p, 2),
-                        "telemetry": f"Parcial 45% | SL Protegido={fmt_px_dec(state['sl'][c])} | Vol={vrel:.2f}x",
+                        "telemetry": f"Parcial {pct_lbl}% | SL Protegido={fmt_px_dec(state['sl'][c])} | Vol={vrel:.2f}x",
                     })
 
-                # 3) Actualizar pico y trailing stop al cierre de la barra para las velas siguientes
+                # 3) Actualizar pico y trailing stop al cierre de la barra garantizando colchón bajo bar_close_cur
                 state["peak"][c] = max(state["peak"][c], b_hi)
-                if state["peak"][c] >= state["entry"][c] + cfg.trail_activate_atr * atr_v:
-                    state["sl"][c] = max(
-                        state["sl"][c],
+                if state["peak"][c] >= state["entry"][c] + cfg.trail_activate_atr * eff_atr:
+                    raw_trail = max(
                         state["entry"][c] * cfg.trail_floor_mult,
-                        state["peak"][c] - cfg.trail_dist_atr * atr_v,
+                        state["peak"][c] - cfg.trail_dist_atr * eff_atr,
                     )
+                    capped_trail = min(raw_trail, float(bar_close_cur[c]) - 0.50 * eff_atr)
+                    state["sl"][c] = max(state["sl"][c], capped_trail)
         else:
             if bar_step_a < int(sl_cd_map.get(c, -1)):
                 continue
@@ -623,7 +627,7 @@ def step_bot_a_microtrading(
             if regime_code is None:
                 allow_trend = True
             elif regime_code == "MERCADO_LATERAL":
-                allow_trend = (adx_1h_val >= 22.0) and (vrel >= 1.20)
+                allow_trend = (adx_1h_val >= 20.5) and (vrel >= 1.10)
             else:
                 allow_trend = regime_code != "TENDENCIA_BAJISTA"
             setup_trend = (
@@ -790,7 +794,7 @@ def step_bot_b_daily(
         oversold_b = np.where((pb_y < 0.16) & (mh_y > -0.35))[0]
         wb = np.zeros(n_assets)
         if len(oversold_b) > 0 and regime_code in (None, "TENDENCIA_ALCISTA", "MERCADO_LATERAL"):
-            wb[oversold_b[0]] = min(0.12, max_asset_weight)
+            wb[oversold_b[0]] = min(0.18, max_asset_weight)
 
     wb = np.clip(wb, 0.0, max_asset_weight)
     tot_w = float(np.sum(wb))
@@ -827,8 +831,8 @@ def step_bot_c_futures(
     oi_arr = np.asarray(oi_vol_ratio, dtype=float) if oi_vol_ratio is not None else None
     obv_arr = np.asarray(obv_v, dtype=float) if obv_v is not None else None
 
-    min_score_thr = 0.50 if regime_code == "MERCADO_LATERAL" else 0.38
-    leg_risk_mult = {"ALTA_VOLATILIDAD": 0.75, "MERCADO_LATERAL": 0.80, "TENDENCIA_BAJISTA": 0.85}.get(regime_code or "", 1.0)
+    min_score_thr = 0.44 if regime_code == "MERCADO_LATERAL" else 0.38
+    leg_risk_mult = {"ALTA_VOLATILIDAD": 0.75, "MERCADO_LATERAL": 0.82, "TENDENCIA_BAJISTA": 0.88}.get(regime_code or "", 1.0)
     eff_leg_risk = float(risk_per_leg) * leg_risk_mult
     allow_long_reg = (regime_code is None) or (regime_code != "TENDENCIA_BAJISTA")
     allow_short_reg = (regime_code is None) or (regime_code != "TENDENCIA_ALCISTA")
@@ -849,7 +853,7 @@ def step_bot_c_futures(
             if oi_overheat and not has_long:
                 score = 0.0
             dir_scores[j] = score
-        elif allow_short_reg and (px_v[j] < e21_v[j] < e55_v[j]) and (r24_v[j] < -1.2) and (mdi_v[j] > pdi_v[j]) and (pb_v[j] < 0.48) and (adx_v[j] > 22.0):
+        elif allow_short_reg and (px_v[j] < e21_v[j] < e55_v[j]) and (r24_v[j] < -1.2) and (mdi_v[j] > pdi_v[j]) and (pb_v[j] < 0.48) and (adx_v[j] > 20.5):
             score = (r24_v[j] + 4.0 * mh_v[j]) / (atr_pct * 100.0)
             if fund_arr is not None:
                 score -= float(np.clip(fund_arr[j] * 180.0, -0.35, 0.35))
@@ -1077,11 +1081,16 @@ def detect_market_regimes_gmm(
             comp_to_code[hv_idx] = "ALTA_VOLATILIDAD"
             remaining.remove(hv_idx)
         bull_idx = max(remaining, key=lambda k: raw_centers[k, 0] + 0.35 * raw_centers[k, 1])
-        comp_to_code[bull_idx] = "TENDENCIA_ALCISTA"
-        remaining.remove(bull_idx)
-        bear_idx = min(remaining, key=lambda k: raw_centers[k, 0] + 0.35 * raw_centers[k, 1])
-        comp_to_code[bear_idx] = "TENDENCIA_BAJISTA"
-        remaining.remove(bear_idx)
+        bull_sc = float(raw_centers[bull_idx, 0] + 0.35 * raw_centers[bull_idx, 1])
+        if bull_sc > 0.004 or float(raw_centers[bull_idx, 0]) > -0.003:
+            comp_to_code[bull_idx] = "TENDENCIA_ALCISTA"
+            remaining.remove(bull_idx)
+        if remaining:
+            bear_idx = min(remaining, key=lambda k: raw_centers[k, 0] + 0.35 * raw_centers[k, 1])
+            bear_sc = float(raw_centers[bear_idx, 0] + 0.35 * raw_centers[bear_idx, 1])
+            if bear_sc < -0.004 or float(raw_centers[bear_idx, 0]) < 0.003:
+                comp_to_code[bear_idx] = "TENDENCIA_BAJISTA"
+                remaining.remove(bear_idx)
         for k in remaining:
             comp_to_code[k] = "MERCADO_LATERAL"
     else:

@@ -1300,6 +1300,121 @@ class TestQuantBotsRules(unittest.TestCase):
         self.assertEqual(emitted_new[0]["side_type"], "SHORT")
         self.assertLess(pf_c["units"]["BTC"], 0.0)
 
+    def test_34_oracle_spot_and_futures_kucoin_fallback_when_okx_and_bybit_403(self) -> None:
+        from src.data_ingestion.okx_bybit_client import MultiExchangeCryptoOracle
+
+        oracle = MultiExchangeCryptoOracle()
+        coins_t = ["BTC", "ETH"]
+
+        def _fake_get_json(url: str):
+            if "bybit.com" in url:
+                oracle._bybit_blocked = True
+                raise RuntimeError("Bybit endpoint skipped due to upstream regional HTTP 403")
+            if "okx.com" in url:
+                raise RuntimeError("HTTP Error 403: Forbidden on cloud runner")
+            if "api.kucoin.com/api/v1/market/allTickers" in url:
+                return {
+                    "data": {
+                        "ticker": [
+                            {"symbol": "BTC-USDT", "last": "61250.5", "buy": "61250.0", "sell": "61251.0", "high": "62000.0", "low": "60500.0", "changeRate": "0.012", "volValue": "185000000"},
+                            {"symbol": "ETH-USDT", "last": "2450.25", "buy": "2450.00", "sell": "2450.50", "high": "2510.00", "low": "2410.00", "changeRate": "-0.008", "volValue": "92000000"},
+                        ]
+                    }
+                }
+            if "api-futures.kucoin.com" in url:
+                return {
+                    "data": [
+                        {"symbol": "XBTUSDTM", "lastTradePrice": "61265.0", "fundingFeeRate": "0.00012", "openInterest": "12000", "multiplier": "0.001"},
+                        {"symbol": "ETHUSDTM", "lastTradePrice": "2451.0", "fundingFeeRate": "0.00009", "openInterest": "45000", "multiplier": "0.01"},
+                    ]
+                }
+            raise AssertionError(f"Unexpected URL: {url}")
+
+        oracle._get_json = _fake_get_json  # type: ignore[method-assign]
+        snap = oracle.fetch_live_spot_and_futures(coins_t)
+        self.assertAlmostEqual(snap["BTC"]["price"], 61250.5, places=1)
+        self.assertAlmostEqual(snap["ETH"]["price"], 2450.25, places=2)
+        self.assertAlmostEqual(snap["BTC"]["perp_price"], 61265.0, places=1)
+        self.assertEqual(snap["BTC"]["source"], "KuCoin API v1")
+
+    def test_35_bot_c_opens_single_asset_position_from_flat_below_028_turnover(self) -> None:
+        from main import _step_bot_c_closed_bar
+
+        n_bars = 70
+        coins_t = ["BTC"]
+        idx = pd.date_range("2026-11-10 00:00", periods=n_bars, freq="4h")
+        prices = np.concatenate([np.full(45, 100.0), np.linspace(101.0, 128.0, n_bars - 45)])
+        prices[-1] = 128.0
+        df_4h = pd.DataFrame({
+            "open": prices * 0.995, "high": prices * 1.010, "low": prices * 0.990,
+            "close": prices, "volume": np.full(n_bars, 1500.0),
+        }, index=idx)
+        cl = pd.DataFrame({"BTC": prices}, index=idx)
+        lo = pd.DataFrame({"BTC": prices * 0.990}, index=idx)
+        hi = pd.DataFrame({"BTC": prices * 1.010}, index=idx)
+        e21 = cl.ewm(span=21, adjust=False).mean()
+        e55 = cl.ewm(span=55, adjust=False).mean()
+        r24 = (cl.pct_change(24) * 100.0).fillna(0.0)
+        mh = pd.DataFrame({"BTC": compute_macd_pct(cl["BTC"])[2]}, index=idx)
+        pb = pd.DataFrame({"BTC": compute_bollinger(cl["BTC"], 20, 2.0)[3]}, index=idx)
+        adx_s, pdi_s, mdi_s = calc_adx_di(df_4h, 14)
+        adx = pd.DataFrame({"BTC": adx_s.bfill()}, index=idx)
+        pdi = pd.DataFrame({"BTC": pdi_s.bfill()}, index=idx)
+        mdi = pd.DataFrame({"BTC": mdi_s.bfill()}, index=idx)
+        atr = pd.DataFrame({"BTC": calc_atr(df_4h, 14).bfill()}, index=idx)
+        vr = pd.DataFrame({"BTC": np.ones(n_bars)}, index=idx)
+        obv = pd.DataFrame({"BTC": np.full(n_bars, 0.35)}, index=idx)
+        reg = pd.Series(["MERCADO_LATERAL"] * n_bars, index=idx)
+
+        pf_c = {
+            "bar_step": 1, "last_closed_bar": idx[-2].strftime("%Y-%m-%d %H:%M"),
+            "realized_cash_c": 1000.0, "fees_cum": 0.0,
+            "units": {"BTC": 0.0}, "entry": {"BTC": 0.0}, "entry_fee": {"BTC": 0.0},
+            "sl": {"BTC": 0.0}, "tp": {"BTC": 0.0}, "peak": {"BTC": 0.0},
+            "cooldown_step": {"BTC": -1}, "dates": [idx[-2].strftime("%Y-%m-%d %H:%M")],
+            "eq_curve": [1000.0], "rets": [], "trades": [],
+        }
+        emitted = _step_bot_c_closed_bar(
+            pf_c, len(cl) - 1, coins_t, cl, lo, hi, e21, e55, r24, mh, pb, adx, pdi, mdi, atr, vr,
+            np.array([0.0]), obv_4h=obv, regime_series_4h=reg,
+        )
+        self.assertEqual(len(emitted), 1)
+        self.assertEqual(emitted[0]["side_type"], "LONG")
+        self.assertGreater(pf_c["units"]["BTC"], 0.0)
+
+    def test_36_bot_a_realistic_15m_atr_and_trailing_never_exceeds_close(self) -> None:
+        coins = ["SOL"]
+        cfg = BotAConfig()
+        st = init_bot_a_state(coins, base_cap=1000.0)
+        # 1) Entrada válida con ATR 15m de 0.40% (antes bloqueada por 0.60%)
+        step_bot_a_microtrading(
+            state=st, ts=pd.Timestamp("2026-11-26 14:15"), coins=coins,
+            bar_open_prev={"SOL": 100.0}, bar_close_prev={"SOL": 100.4},
+            bar_close_cur={"SOL": 100.5}, bar_low_cur={"SOL": 100.2}, bar_high_cur={"SOL": 100.6},
+            atr_prev={"SOL": 0.40}, ema9_prev={"SOL": 100.1}, ema21_prev={"SOL": 99.8},
+            ema21_1h_prev={"SOL": 100.2}, ema55_1h_prev={"SOL": 99.5},
+            roc10_prev={"SOL": 0.65}, mh_prev={"SOL": 0.12}, mh_prev2={"SOL": 0.05},
+            pb_prev={"SOL": 0.68}, pb_prev2={"SOL": 0.58}, rsi_prev={"SOL": 58.0},
+            vrel_prev={"SOL": 1.25}, breadth_1h=0.50, cfg=cfg,
+            adx_1h_prev={"SOL": 23.0}, obv_prev={"SOL": 0.15}, ema200_dist_prev={"SOL": 0.04},
+            regime_code="MERCADO_LATERAL",
+        )
+        self.assertGreater(st["units"]["SOL"], 0.0)
+        ep = st["entry"]["SOL"]
+
+        # 2) Cuando b_hi sube +0.55% pero close retrocede a +0.45%, el trailing SL jamás supera close_cur
+        step_bot_a_microtrading(
+            state=st, ts=pd.Timestamp("2026-11-26 14:30"), coins=coins,
+            bar_open_prev={"SOL": ep}, bar_close_prev={"SOL": ep * 1.003},
+            bar_close_cur={"SOL": ep * 1.0045}, bar_low_cur={"SOL": ep * 1.001}, bar_high_cur={"SOL": ep * 1.006},
+            atr_prev={"SOL": 0.40}, ema9_prev={"SOL": ep * 1.002}, ema21_prev={"SOL": ep * 0.999},
+            ema21_1h_prev={"SOL": 100.3}, ema55_1h_prev={"SOL": 99.5},
+            roc10_prev={"SOL": 0.70}, mh_prev={"SOL": 0.14}, mh_prev2={"SOL": 0.12},
+            pb_prev={"SOL": 0.72}, pb_prev2={"SOL": 0.68}, rsi_prev={"SOL": 60.0},
+            vrel_prev={"SOL": 1.20}, breadth_1h=0.50, cfg=cfg,
+        )
+        self.assertLess(st["sl"]["SOL"], ep * 1.0045)
+
 
 if __name__ == "__main__":
     unittest.main()

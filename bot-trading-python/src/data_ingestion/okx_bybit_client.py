@@ -25,6 +25,7 @@ ALLOWED_EXCHANGE_HOSTS = frozenset({
     "www.okx.com",
     "api.bybit.com",
     "api.kucoin.com",
+    "api-futures.kucoin.com",
     "api.kraken.com",
 })
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
@@ -97,13 +98,14 @@ class MultiExchangeCryptoOracle:
         if host_low == "api.bybit.com" and self._bybit_blocked:
             raise RuntimeError("Bybit endpoint skipped due to upstream regional HTTP 403")
 
-        is_okx_hist = (host_low == "www.okx.com") and ("history-candles" in parsed.path)
+        is_okx_req = host_low == "www.okx.com"
+        min_gap_s = 0.12 if (is_okx_req and "history-candles" in parsed.path) else (0.05 if is_okx_req else 0.0)
         last_err: Exception = RuntimeError("Empty request state")
         for attempt in range(3):
-            if is_okx_hist:
+            if min_gap_s > 0.0:
                 with self._okx_hist_lock:
                     now_m = time.monotonic()
-                    wait_s = 0.12 - (now_m - self._last_okx_hist_ts)
+                    wait_s = min_gap_s - (now_m - self._last_okx_hist_ts)
                     if wait_s > 0.0:
                         time.sleep(wait_s)
                     self._last_okx_hist_ts = time.monotonic()
@@ -451,7 +453,7 @@ class MultiExchangeCryptoOracle:
                 pass
             return c_sym, 0.0001
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=13) as pool:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
             fut_bybit_ref = pool.submit(_fetch_bybit_ref)
             fut_okx_spot = pool.submit(self._get_json, f"{self.okx_base}/api/v5/market/tickers?instType=SPOT")
             fut_okx_swap = pool.submit(self._get_json, f"{self.okx_base}/api/v5/market/tickers?instType=SWAP")
@@ -460,10 +462,11 @@ class MultiExchangeCryptoOracle:
 
             bybit_ref_map = fut_bybit_ref.result()
             secondary_source = "Bybit v5" if bybit_ref_map else ""
+            kc_tickers_raw: List[Dict[str, Any]] = []
             if self._bybit_blocked or not bybit_ref_map:
                 try:
-                    kc_tickers = self._get_json(f"{self.kucoin_base}/api/v1/market/allTickers").get("data", {}).get("ticker", [])
-                    for item in kc_tickers:
+                    kc_tickers_raw = self._get_json(f"{self.kucoin_base}/api/v1/market/allTickers").get("data", {}).get("ticker", [])
+                    for item in kc_tickers_raw:
                         sym_kc = item.get("symbol", "")
                         if sym_kc.endswith("-USDT"):
                             px_kc = _safe_finite_float(item.get("last"), 0.0)
@@ -477,42 +480,108 @@ class MultiExchangeCryptoOracle:
                 oi_map = fut_okx_oi.result()
             except Exception:
                 oi_map = {}
+            source_used = ""
             try:
                 spot_raw = fut_okx_spot.result().get("data", [])
-                spot_map = {d["instId"]: d for d in spot_raw}
+                spot_map = {d["instId"]: d for d in spot_raw if d.get("instId")}
                 swap_raw = fut_okx_swap.result().get("data", [])
-                swap_map = {d["instId"]: d for d in swap_raw}
-                source_used = "OKX API v5"
+                swap_map = {d["instId"]: d for d in swap_raw if d.get("instId")}
+                if spot_map:
+                    source_used = "OKX API v5"
                 for f_fr in fut_frs:
                     c_sym, fr_val = f_fr.result()
                     funding_map[c_sym] = fr_val
             except Exception as exc:
-                logger.warning("Conmutando consulta primaria a Bybit API v5 (%s)", exc)
-                b_spot = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=spot").get("result", {}).get("list", [])
-                b_lin = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=linear").get("result", {}).get("list", [])
-                for d in b_spot:
-                    sym = d["symbol"]
-                    if sym.endswith("USDT"):
-                        c = sym[:-4]
-                        spot_map[f"{c}-USDT"] = {
-                            "last": d.get("lastPrice", 0),
-                            "open24h": d.get("prevPrice24h", 0),
-                            "high24h": d.get("highPrice24h", 0),
-                            "low24h": d.get("lowPrice24h", 0),
-                            "bidPx": d.get("bid1Price", 0),
-                            "askPx": d.get("ask1Price", 0),
-                            "volCcy24h": d.get("turnover24h", 0),
+                logger.warning("Conmutando consulta primaria desde OKX (%s)", exc)
+
+            if not spot_map and not self._bybit_blocked:
+                try:
+                    b_spot = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=spot").get("result", {}).get("list", [])
+                    b_lin = self._get_json(f"{self.bybit_base}/v5/market/tickers?category=linear").get("result", {}).get("list", [])
+                    for d in b_spot:
+                        sym = d.get("symbol", "")
+                        if sym.endswith("USDT"):
+                            c = sym[:-4]
+                            spot_map[f"{c}-USDT"] = {
+                                "last": d.get("lastPrice", 0),
+                                "open24h": d.get("prevPrice24h", 0),
+                                "high24h": d.get("highPrice24h", 0),
+                                "low24h": d.get("lowPrice24h", 0),
+                                "bidPx": d.get("bid1Price", 0),
+                                "askPx": d.get("ask1Price", 0),
+                                "volCcy24h": d.get("turnover24h", 0),
+                            }
+                    for d in b_lin:
+                        sym = d.get("symbol", "")
+                        if sym.endswith("USDT"):
+                            c = sym[:-4]
+                            swap_map[f"{c}-USDT-SWAP"] = {"last": d.get("lastPrice", 0)}
+                            funding_map[c] = _safe_finite_float(d.get("fundingRate"), 0.0001)
+                            oi_val = _safe_finite_float(d.get("openInterestValue"), 0.0)
+                            if oi_val > 0:
+                                oi_map[f"{c}-USDT-SWAP"] = oi_val
+                    if spot_map:
+                        source_used = "Bybit API v5"
+                except Exception as exc_by:
+                    logger.warning("Respaldo Bybit no disponible, conmutando a KuCoin REST (%s)", exc_by)
+
+            if not spot_map or any(_safe_finite_float(spot_map.get(f"{c}-USDT", {}).get("last"), 0.0) <= 0.0 for c in coins):
+                try:
+                    if not kc_tickers_raw:
+                        kc_tickers_raw = self._get_json(f"{self.kucoin_base}/api/v1/market/allTickers").get("data", {}).get("ticker", [])
+                    for item in kc_tickers_raw:
+                        sym_kc = item.get("symbol", "")
+                        if not sym_kc.endswith("-USDT"):
+                            continue
+                        c_kc = sym_kc[:-5]
+                        if f"{c_kc}-USDT" in spot_map and _safe_finite_float(spot_map[f"{c_kc}-USDT"].get("last"), 0.0) > 0.0:
+                            continue
+                        last_kc = _safe_finite_float(item.get("last"), 0.0)
+                        if last_kc <= 0.0:
+                            continue
+                        chg_rate = _safe_finite_float(item.get("changeRate"), 0.0)
+                        open24_kc = (last_kc / (1.0 + chg_rate)) if (1.0 + chg_rate) > 1e-6 else last_kc
+                        spot_map[f"{c_kc}-USDT"] = {
+                            "last": last_kc,
+                            "open24h": open24_kc,
+                            "high24h": _safe_finite_float(item.get("high"), last_kc) or last_kc,
+                            "low24h": _safe_finite_float(item.get("low"), last_kc) or last_kc,
+                            "bidPx": _safe_finite_float(item.get("buy"), last_kc) or last_kc,
+                            "askPx": _safe_finite_float(item.get("sell"), last_kc) or last_kc,
+                            "volCcy24h": _safe_finite_float(item.get("volValue"), 0.0),
                         }
-                for d in b_lin:
-                    sym = d["symbol"]
-                    if sym.endswith("USDT"):
-                        c = sym[:-4]
-                        swap_map[f"{c}-USDT-SWAP"] = {"last": d.get("lastPrice", 0)}
-                        funding_map[c] = float(d.get("fundingRate") or 0.0)
-                        oi_val = _safe_finite_float(d.get("openInterestValue"), 0.0)
-                        if oi_val > 0:
-                            oi_map[f"{c}-USDT-SWAP"] = oi_val
-                source_used = "Bybit API v5"
+                        if c_kc not in bybit_ref_map:
+                            bybit_ref_map[c_kc] = last_kc
+                    if not source_used and spot_map:
+                        source_used = "KuCoin API v1"
+                except Exception as exc_kc_spot:
+                    logger.warning("Error en respaldo KuCoin Spot (%s)", exc_kc_spot)
+
+                if not swap_map:
+                    try:
+                        kc_fut = self._get_json("https://api-futures.kucoin.com/api/v1/contracts/active").get("data") or []
+                        kc_sym_alias = {"XBTUSDTM": "BTC", "ETHUSDTM": "ETH", "SOLUSDTM": "SOL", "BNBUSDTM": "BNB", "XRPUSDTM": "XRP", "ADAUSDTM": "ADA", "AVAXUSDTM": "AVAX", "LINKUSDTM": "LINK"}
+                        for fc in kc_fut:
+                            c_alias = kc_sym_alias.get(str(fc.get("symbol") or ""))
+                            if not c_alias:
+                                continue
+                            f_px = _safe_finite_float(fc.get("lastTradePrice") or fc.get("markPrice"), 0.0)
+                            if f_px > 0.0:
+                                swap_map[f"{c_alias}-USDT-SWAP"] = {"last": f_px}
+                            if c_alias not in funding_map:
+                                funding_map[c_alias] = _safe_finite_float(fc.get("fundingFeeRate"), 0.0001)
+                            oi_lots = _safe_finite_float(fc.get("openInterest"), 0.0)
+                            mult = _safe_finite_float(fc.get("multiplier"), 0.0)
+                            if oi_lots > 0 and mult > 0 and f_px > 0 and f"{c_alias}-USDT-SWAP" not in oi_map:
+                                oi_map[f"{c_alias}-USDT-SWAP"] = oi_lots * mult * f_px
+                    except Exception:
+                        pass
+
+        missing_coins = [c for c in coins if _safe_finite_float(spot_map.get(f"{c}-USDT", {}).get("last"), 0.0) <= 0.0 and _safe_finite_float(bybit_ref_map.get(c), 0.0) <= 0.0]
+        if missing_coins:
+            raise RuntimeError(f"Cotizaciones Spot no disponibles en OKX/Bybit/KuCoin para: {missing_coins}")
+        if not source_used:
+            source_used = "KuCoin API v1"
 
         result: Dict[str, Dict[str, Any]] = {}
         for c in coins:
